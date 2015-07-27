@@ -1,0 +1,253 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="630d506f-3b16-4d58-92c1-fa8c1e30ba1f" name="BackpackPlanner" linkedPackageId="17ae9dea-23e8-42ad-9100-7b6b0a824a33" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+  <profileInstances>
+    <packageHasProfileInstances Id="41a4b649-aedc-49bc-ac05-08f09d4711fc">
+      <profileInstance Id="5ed4a03e-e4f3-4d32-ae4c-380aac5e1bf2" name="StandardProfileL2">
+        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+      </profileInstance>
+      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="bace9b01-3c11-4003-be43-85fbb8ffae2f">
+      <profileInstance Id="b7e3eb8d-a557-4df9-a6bf-e88ccd142ffb" name="StandardProfileL3">
+        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+      </profileInstance>
+      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="61c888c9-c982-484c-bb9c-4d719b8a020c" name="UserInformation" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="aa7d10b7-f515-4882-b729-918865015197" />
+        <ownedAttributesInternal>
+          <property Id="c1bd4e57-b148-4bbf-bedf-181270c590c4" name="FirstName" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="27721a32-354f-476c-a0e6-50d6021886d3" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="b27b34d9-7f50-48ea-98c5-cd9cc72f923c" LastKnownName="String" />
+            </type_NamedElement>
+          </property>
+          <property Id="7d540162-566e-46b4-b0fe-4ecd4b379017" name="LastName" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="b880127c-7329-4671-b700-bf3b260caa45" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="b27b34d9-7f50-48ea-98c5-cd9cc72f923c" LastKnownName="String" />
+            </type_NamedElement>
+          </property>
+          <property Id="a2d71937-f09d-4e84-8c71-1e5124550928" name="BirthDate" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="56296aee-23e0-4838-b92a-a6d853dd0aad" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="8f3239df-630f-4aca-af1f-795c7d191a31" LastKnownName="DateTime" />
+            </type_NamedElement>
+          </property>
+          <property Id="4644f506-54d1-4ab3-944f-9a2c870c0fe7" name="Sex" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="a3fc4f9a-e080-42ae-a965-f38bc1677298" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="4f97b6d1-1e04-4520-a760-3d4b9c43e7eb" LastKnownName="UserSex" />
+            </type_NamedElement>
+          </property>
+          <property Id="354aeabe-b46e-4410-aedb-c46b16b923fb" name="HeightInInches" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="09d5966b-65a5-45ca-9219-f9091f7698e9" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
+            </type_NamedElement>
+          </property>
+          <property Id="1d06883b-d75a-4ed2-8a71-db310c5ebd96" name="WeightInOunces" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="dcc654cf-236a-4f34-a067-116be6db725b" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="f751db71-7b43-4d84-b13c-d9382bdbce5e" LastKnownName="Integer" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation Id="9478b9f7-fe65-45d2-bb74-398bac33d835" name="SaveToDevice" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="50c999cc-20fa-47ad-829d-a53a3de07932" />
+          </operation>
+          <operation Id="6490930e-493e-40f8-8009-28c3aa04c750" name="LoadFromDevice" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="032d0fc3-9431-4b8f-8ba9-763da7e9112d" />
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <enumeration Id="d7818065-bf7c-408b-882f-787da876c408" name="UserSex" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="73494800-8a78-4532-afdb-e07e16ef5fc7" />
+        <ownedLiterals>
+          <enumerationLiteral Id="c5cd70c4-6c44-44e9-9392-7b027c16f756" name="Female">
+            <elementDefinition Id="3f69db76-5238-4f94-9751-6e2e7be21d27" />
+            <specification>
+              <literalInteger Id="b22fd095-a1f1-4470-8843-79f3ce412754" name="Integer" value="2">
+                <elementDefinition Id="392b8890-5370-43a5-a5d7-2eaf8f213eb7" />
+              </literalInteger>
+            </specification>
+          </enumerationLiteral>
+          <enumerationLiteral Id="1060b5d7-fa52-4ef3-8be4-c2d20732c192" name="Male">
+            <elementDefinition Id="1adc56cd-b00f-4081-8451-d41ee97b8541" />
+            <specification>
+              <literalInteger Id="d6607c2f-9ac6-4ce8-aed1-da2a6b7730b0" name="Integer" value="1">
+                <elementDefinition Id="4c04f9a0-2071-43f6-abe0-297e5b737c09" />
+              </literalInteger>
+            </specification>
+          </enumerationLiteral>
+          <enumerationLiteral Id="15ed34b5-0816-4c05-aab3-0e91fce85040" name="Undefined">
+            <elementDefinition Id="2279f504-b847-471c-a7a7-413255439b45" />
+            <specification>
+              <literalInteger Id="ab045971-858f-4816-bce3-7ae2dffed7ed" name="Integer" value="0">
+                <elementDefinition Id="16d8e1a5-3b18-4025-aa79-b85f763ba12d" />
+              </literalInteger>
+            </specification>
+          </enumerationLiteral>
+        </ownedLiterals>
+      </enumeration>
+    </logicalClassDesignerModelHasTypes>
+    <packageHasNamedElement>
+      <referencedType Id="b27b34d9-7f50-48ea-98c5-cd9cc72f923c" name="String" isAbstract="false" isLeaf="false" cachedFullName="String">
+        <elementDefinition Id="59259974-6d55-42c6-b7bd-763d77ac8ef9" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="8f3239df-630f-4aca-af1f-795c7d191a31" name="DateTime" isAbstract="false" isLeaf="false" cachedFullName="DateTime">
+        <elementDefinition Id="ce6be7dd-5fdf-41f2-9017-1a8a13f6752f" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="4f97b6d1-1e04-4520-a760-3d4b9c43e7eb" name="UserSex" isAbstract="false" isLeaf="false" cachedFullName="BackpackPlanner.Models::UserSex">
+        <elementDefinition Id="73494800-8a78-4532-afdb-e07e16ef5fc7" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="caed887a-4a57-476f-afb1-020ba6923505" name="Integer" isAbstract="false" isLeaf="false" cachedFullName="Integer">
+        <elementDefinition Id="220a3521-e091-4221-bae9-3ef9018e845c" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="f751db71-7b43-4d84-b13c-d9382bdbce5e" name="Integer" isAbstract="false" isLeaf="false" cachedFullName="Integer">
+        <elementDefinition Id="220a3521-e091-4221-bae9-3ef9018e845c" />
+      </referencedType>
+    </packageHasNamedElement>
+    <logicalClassDesignerModelHasTypes>
+      <enumeration Id="192863b5-4a61-4a0a-9a1c-79a7f39a36ce" name="GearCarried" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="b1004958-458f-43ae-8162-ce99a525bbca" />
+        <ownedLiterals>
+          <enumerationLiteral Id="da6944a9-dd57-4ac2-80fe-ff13abec63ef" name="NotCarried">
+            <elementDefinition Id="5f496cd8-4fad-463b-9ca3-2df74ec8b397" />
+            <specification>
+              <literalInteger Id="36b2009c-59aa-4367-85c6-7fa663ed927c" name="Integer" value="0">
+                <elementDefinition Id="07838ed8-ce92-447b-a51f-c402d6fc43f1" />
+              </literalInteger>
+            </specification>
+          </enumerationLiteral>
+          <enumerationLiteral Id="d046078e-4122-4084-baf2-a98c926ca83d" name="Carried">
+            <elementDefinition Id="60f74d1a-b7ee-437c-bc54-751326a4a3de" />
+            <specification>
+              <literalInteger Id="eae4f9e5-fa49-414c-8c92-b2f87694dd4b" name="Integer" value="1">
+                <elementDefinition Id="856230f5-005c-49a2-9aaa-0539418367ec" />
+              </literalInteger>
+            </specification>
+          </enumerationLiteral>
+          <enumerationLiteral Id="93a54ca0-5e41-4554-a3ff-c0d302fd772b" name="Worn">
+            <elementDefinition Id="1ae8d560-6ecc-4e4b-a564-c3f8192c0b8f" />
+            <specification>
+              <literalInteger Id="f6fdfd85-4aaf-4d5c-a2b8-fbd9150cd93b" name="Integer" value="2">
+                <elementDefinition Id="17ede7c9-c85a-4916-8116-90eaaae8f91b" />
+              </literalInteger>
+            </specification>
+          </enumerationLiteral>
+          <enumerationLiteral Id="3f8ecdcc-38e1-4497-9a8b-986f776b79f8" name="Consumable">
+            <elementDefinition Id="a6a703fd-5281-43cc-acaf-bccfad202d67" />
+            <specification>
+              <literalInteger Id="20ee7b91-e159-4888-86b0-180848d89b4f" name="Integer" value="3">
+                <elementDefinition Id="26027203-7d67-414c-9bca-76424787fcf4" />
+              </literalInteger>
+            </specification>
+          </enumerationLiteral>
+        </ownedLiterals>
+      </enumeration>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="26eab2c2-86a0-4ef1-b170-be5db2abfb54" name="GearItem" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="5809aa7c-4685-4ad0-86eb-f97684733d68" />
+        <ownedAttributesInternal>
+          <property Id="9b04729c-5657-458b-898c-a366857dbf59" name="Name" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="d784fbbc-d48c-438d-866e-92eea351c660" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="b27b34d9-7f50-48ea-98c5-cd9cc72f923c" LastKnownName="String" />
+            </type_NamedElement>
+          </property>
+          <property Id="b2fc843f-af78-4fa1-9d83-969b95311826" name="Make" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="7bee2e8e-be6e-42e5-b9d7-806b969ec68e" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="b27b34d9-7f50-48ea-98c5-cd9cc72f923c" LastKnownName="String" />
+            </type_NamedElement>
+          </property>
+          <property Id="08cf79a5-f9fa-47c8-942b-d9cb8e29dc8b" name="Model" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="fb62f8fe-61a2-4ec9-930c-00a0562dff39" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="b27b34d9-7f50-48ea-98c5-cd9cc72f923c" LastKnownName="String" />
+            </type_NamedElement>
+          </property>
+          <property Id="f0d3c68a-cbbc-41e6-9fe9-bc4a8e07c490" name="Url" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="154052e8-2861-4f98-8627-7b5f6506da7b" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="c1fbc032-f474-4c69-8d64-358fabd12a47" LastKnownName="URI" />
+            </type_NamedElement>
+          </property>
+          <property Id="060d82db-c5e9-4bcd-9560-e4d641270abb" name="CostInUSD" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="3d5b073d-2a2e-4868-afa1-bc5a9cee5ea4" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
+            </type_NamedElement>
+          </property>
+          <property Id="14e2b828-7d65-4d2b-a2fb-8c9fb85b81c5" name="WeightInOunces" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="c14a4a2f-4934-48e1-932d-fc8b7e362d7b" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
+            </type_NamedElement>
+          </property>
+          <property Id="8a51036e-f4d2-4434-a10e-023ac458f491" name="Carried" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="5d983250-5a62-4937-98b2-c561021a6291" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="91aff455-426a-44f4-8453-6cacce60dffb" LastKnownName="GearCarried" />
+            </type_NamedElement>
+          </property>
+          <property Id="6f413a8c-478e-412d-b715-8117898b3fec" name="Note" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="cc017f0f-2402-4937-be33-b37f3a7a6e69" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="b27b34d9-7f50-48ea-98c5-cd9cc72f923c" LastKnownName="String" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation Id="41b91d58-3299-40bc-9934-3974091985c3" name="GetCostPerOunceInUSD" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="df9b29ba-7af7-4a1d-b452-ada0009abc3c" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="ca9dd457-0d6d-4118-b97e-326921c928bf" direction="Return">
+                  <elementDefinition Id="f9a8d023-22e9-4d03-b56d-4b6c55af1a33" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="dcfe17df-75c2-45d8-a912-866b491c7780" LastKnownName="Integer" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <packageHasNamedElement>
+      <referencedType Id="c1fbc032-f474-4c69-8d64-358fabd12a47" name="URI" isAbstract="false" isLeaf="false" cachedFullName="URI">
+        <elementDefinition Id="1e9f88f1-5ae4-4f48-98ff-434097bb59e4" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="91aff455-426a-44f4-8453-6cacce60dffb" name="GearCarried" isAbstract="false" isLeaf="false" cachedFullName="BackpackPlanner.Models::GearCarried">
+        <elementDefinition Id="b1004958-458f-43ae-8162-ce99a525bbca" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="dcfe17df-75c2-45d8-a912-866b491c7780" name="Integer" isAbstract="false" isLeaf="false" cachedFullName="Integer">
+        <elementDefinition Id="220a3521-e091-4221-bae9-3ef9018e845c" />
+      </referencedType>
+    </packageHasNamedElement>
+  </packagedElements>
+  <package Id="17ae9dea-23e8-42ad-9100-7b6b0a824a33" name="BackpackPlanner.Models">
+    <elementDefinition Id="10573c90-315f-4ad7-ac83-0e2deb210259" />
+  </package>
+</logicalClassDesignerModel>
