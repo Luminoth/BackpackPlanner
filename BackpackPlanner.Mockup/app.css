@@ -1,0 +1,35 @@
+﻿html, body {
+  height: 100%;
+  min-height: 100%; }
+
+body {
+  padding-top: 80px;
+  background-color: #decd87;
+  color: black;
+  font-family: Arial, Helvetica, Verdana, sans-serif;
+  font-size: 12px; }
+
+.nav, .pagination, .carousel, .panel-title a {
+  cursor: pointer; }
+
+.mockup-navbar {
+  border-color: black; }
+  .mockup-navbar .navbar-brand {
+    color: black; }
+    .mockup-navbar .navbar-brand:focus, .mockup-navbar .navbar-brand:hover {
+      color: black; }
+  .mockup-navbar .navbar-toggle {
+    float: left;
+    display: block; }
+    .mockup-navbar .navbar-toggle:focus, .mockup-navbar .navbar-toggle:hover {
+      background-color: transparent; }
+    .mockup-navbar .navbar-toggle .icon-bar {
+      background-color: black; }
+
+.mockup-page {
+  background-color: #decd87;
+  color: black; }
+
+.mockup-button {
+  background-color: #668000;
+  color: black; }

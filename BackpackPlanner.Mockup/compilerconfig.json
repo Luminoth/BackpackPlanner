@@ -1,0 +1,12 @@
+﻿[
+  {
+    "outputFile": "app.css",
+    "inputFile": "app.scss",
+    "minify": {
+      "enabled": true
+    },
+    "includeInProject": true,
+    "sourceMap": false,
+    "options": {}
+  }
+]
