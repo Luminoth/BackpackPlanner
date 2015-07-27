@@ -12,12 +12,12 @@
    width="210mm"
    height="297mm"
    viewBox="0 0 744.09448819 1052.3622047"
-   id="svg4852"
+   id="svg4168"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="manage gear items page.svg">
+   sodipodi:docname="add gear item page.svg">
   <defs
-     id="defs4854" />
+     id="defs4170" />
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7"
-     inkscape:cx="312.19444"
-     inkscape:cy="540.72738"
+     inkscape:zoom="0.49497475"
+     inkscape:cx="176.12956"
+     inkscape:cy="520.67004"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -37,14 +37,14 @@
      inkscape:window-y="-8"
      inkscape:window-maximized="1" />
   <metadata
-     id="metadata4857">
+     id="metadata4173">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -53,60 +53,37 @@
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       style="fill:#decd87;fill-opacity:0.84023665;fill-rule:nonzero;stroke:#000000;stroke-width:0.84684771;stroke-linecap:round;stroke-linejoin:bevel;stroke-opacity:1"
+       style="fill:#decd87;fill-opacity:0.84023665;fill-rule:nonzero;stroke:#000000;stroke-width:1.16655838;stroke-linecap:round;stroke-linejoin:bevel;stroke-opacity:1"
        id="rect4280"
-       width="431.48828"
-       height="477.95532"
-       x="145.68443"
-       y="115.18589" />
+       width="431.16858"
+       height="907.63562"
+       x="158.70142"
+       y="120.34576" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
-       x="221.59425"
-       y="34.957897"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="234.4514"
+       y="39.957897"
        id="text4282"
        sodipodi:linespacing="125%"><tspan
-         id="tspan4284"
          sodipodi:role="line"
-         x="221.59425"
-         y="34.957897">Manage Gear Items Page</tspan></text>
-    <g
-       id="g4286"
-       transform="translate(77.070685,130.63146)"
-       style="fill:#445500">
-      <rect
-         y="81.605606"
-         x="108.08632"
-         height="70.710678"
-         width="345.47217"
-         id="rect4288"
-         style="fill:#445500;fill-opacity:0.84023665;fill-rule:nonzero;stroke:#000000;stroke-linecap:round;stroke-linejoin:bevel;stroke-opacity:1" />
-      <text
-         sodipodi:linespacing="125%"
-         id="text4290"
-         y="124.03201"
-         x="144.45181"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.5px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         xml:space="preserve"><tspan
-           y="124.03201"
-           x="144.45181"
-           sodipodi:role="line"
-           id="tspan4330">Gear Item 1 Name</tspan></text>
-    </g>
+         x="234.4514"
+         y="39.957897"
+         id="tspan4827">Add Gear Item Page</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="222.41368"
-       y="140.16966"
+       x="235.27083"
+       y="145.16965"
        id="text4294"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
-         id="tspan4296"
-         x="222.41368"
-         y="140.16966">Manage Gear Items</tspan></text>
+         x="235.27083"
+         y="145.16965"
+         id="tspan4831">Add Gear Item</tspan></text>
     <g
        id="g4298"
-       transform="translate(-286.79666,83.572693)">
+       transform="translate(-273.93952,88.572691)">
       <rect
          y="41.199509"
          x="448.50772"
@@ -130,60 +107,7 @@
          style="fill:#000000;fill-opacity:0.84023665;fill-rule:nonzero;stroke:#000000;stroke-linecap:round;stroke-linejoin:bevel;stroke-opacity:1" />
     </g>
     <g
-       transform="translate(75.050375,219.52493)"
-       id="g4306"
-       style="fill:#445500">
-      <rect
-         style="fill:#445500;fill-opacity:0.84023665;fill-rule:nonzero;stroke:#000000;stroke-linecap:round;stroke-linejoin:bevel;stroke-opacity:1"
-         id="rect4308"
-         width="345.47217"
-         height="70.710678"
-         x="108.08632"
-         y="81.605606" />
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.5px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         x="149.50258"
-         y="128.07262"
-         id="text4310"
-         sodipodi:linespacing="125%"><tspan
-           sodipodi:role="line"
-           id="tspan4312"
-           x="149.50258"
-           y="128.07262">Gear Item 2 Name</tspan></text>
-    </g>
-    <g
-       id="g4314"
-       transform="translate(78.080835,314.47923)"
-       style="fill:#445500">
-      <rect
-         y="82.615761"
-         x="105.05586"
-         height="70.710678"
-         width="345.47217"
-         id="rect4316"
-         style="fill:#445500;fill-opacity:0.84023665;fill-rule:nonzero;stroke:#000000;stroke-linecap:round;stroke-linejoin:bevel;stroke-opacity:1" />
-      <text
-         sodipodi:linespacing="125%"
-         id="text4318"
-         y="130.09293"
-         x="148.49243"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.5px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         xml:space="preserve"><tspan
-           id="tspan4320"
-           y="130.09293"
-           x="148.49243"
-           sodipodi:role="line">Gear Item 3 Name</tspan></text>
-    </g>
-    <rect
-       style="fill:#000000;fill-opacity:0.84023665;fill-rule:nonzero;stroke:#000000;stroke-linecap:round;stroke-linejoin:bevel;stroke-opacity:1"
-       id="rect4342"
-       width="16.162441"
-       height="258.59906"
-       x="546.79163"
-       y="210.21678" />
-    <g
-       transform="translate(81.111295,408.42343)"
+       transform="translate(99.682722,854.852)"
        id="g4344"
        style="fill:#501616">
       <rect
@@ -225,7 +149,7 @@
     </g>
     <g
        id="g4211"
-       transform="translate(1104.2154,-25.507493)">
+       transform="translate(1117.0726,-20.507492)">
       <ellipse
          ry="1.7150961"
          rx="1.7980365"
@@ -247,6 +171,96 @@
          cx="-550.10828"
          id="ellipse4209"
          style="fill:#000000;fill-opacity:0.84023665;fill-rule:nonzero;stroke:#000000;stroke-width:0.75871187;stroke-linecap:round;stroke-linejoin:bevel;stroke-opacity:1" />
+    </g>
+    <g
+       id="g4853">
+      <text
+         inkscape:transform-center-y="-1.7857143"
+         inkscape:transform-center-x="10.714286"
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="190"
+         y="279.50507"
+         id="text4841"
+         sodipodi:linespacing="125%"><tspan
+           id="tspan4845"
+           sodipodi:role="line"
+           x="190"
+           y="279.50507">Make:</tspan></text>
+      <rect
+         style="fill:#ffffff;fill-opacity:0.84023665;fill-rule:nonzero;stroke:#000000;stroke-linecap:round;stroke-linejoin:bevel;stroke-opacity:1"
+         id="rect4849"
+         width="292.85715"
+         height="22.857143"
+         x="276.78571"
+         y="261.29077" />
+    </g>
+    <g
+       id="g4871">
+      <text
+         sodipodi:linespacing="125%"
+         id="text4835"
+         y="240.93362"
+         x="190"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           y="240.93362"
+           x="190"
+           id="tspan4837"
+           sodipodi:role="line">Name: </tspan></text>
+      <rect
+         y="222.3622"
+         x="277.14285"
+         height="22.857143"
+         width="292.85715"
+         id="rect4839"
+         style="fill:#ffffff;fill-opacity:0.84023665;fill-rule:nonzero;stroke:#000000;stroke-linecap:round;stroke-linejoin:bevel;stroke-opacity:1" />
+      <path
+         transform="matrix(1.2634663,0,0,1.1403448,-48.356562,-34.160066)"
+         inkscape:transform-center-y="-0.34709499"
+         inkscape:transform-center-x="-0.057305937"
+         d="m 185.86807,230.09805 -2.09371,-1.21085 -2.18442,1.03828 0.5046,-2.3654 -1.6625,-1.75667 2.40557,-0.25104 1.15695,-2.12397 0.98212,2.21025 2.37753,0.44399 -1.79859,1.61705 z"
+         inkscape:randomized="0"
+         inkscape:rounded="0"
+         inkscape:flatsided="false"
+         sodipodi:arg2="1.6111123"
+         sodipodi:arg1="0.98279372"
+         sodipodi:r2="1.8210784"
+         sodipodi:r1="3.6421568"
+         sodipodi:cy="227.0676"
+         sodipodi:cx="183.84776"
+         sodipodi:sides="5"
+         id="path4851"
+         style="fill:#ff0000;fill-opacity:0.84023665;fill-rule:nonzero;stroke:#000000;stroke-linecap:round;stroke-linejoin:bevel;stroke-opacity:1"
+         sodipodi:type="star" />
+    </g>
+    <g
+       id="g4858"
+       transform="translate(-2.0203051,33.335034)">
+      <g
+         id="g4866"
+         transform="translate(2.0203051,1.0101525)">
+        <text
+           inkscape:transform-center-y="-1.7857143"
+           inkscape:transform-center-x="10.714286"
+           xml:space="preserve"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           x="190"
+           y="279.50507"
+           id="text4860"
+           sodipodi:linespacing="125%"><tspan
+             id="tspan4862"
+             sodipodi:role="line"
+             x="190"
+             y="279.50507">Model:</tspan></text>
+        <rect
+           style="fill:#ffffff;fill-opacity:0.84023665;fill-rule:nonzero;stroke:#000000;stroke-linecap:round;stroke-linejoin:bevel;stroke-opacity:1"
+           id="rect4864"
+           width="292.85715"
+           height="22.857143"
+           x="276.78571"
+           y="261.29077" />
+      </g>
     </g>
   </g>
 </svg>
