@@ -28,6 +28,9 @@
       <DependentUpon>app.css</DependentUpon>
     </Content>
     <Content Include="index.html" />
+    <Content Include="partials\gear\items-delete.html" />
+    <Content Include="partials\gear\items.html" />
+    <Content Include="partials\gear\manage.html" />
     <Content Include="partials\main.html" />
     <Content Include="web.config" />
   </ItemGroup>
