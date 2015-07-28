@@ -7,7 +7,7 @@
     <title>Backpacking Planner Mockup</title>
     <link href="//ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.css" rel="stylesheet"/>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="app.css" rel="stylesheet" />
+    <link href="/app.css" rel="stylesheet" />
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -15,22 +15,55 @@
       <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body>
-<md-content>
-    <md-toolbar class="mockup-toolbar">
-        <div class="md-toolbar-tools">
-            <md-button class="md-icon-button">
-                <ng-md-icon icon="menu"></ng-md-icon>
-            </md-button>
-            <h2 class="mockup-toolbar-title"><a href="/#/" ng-bind="$root.title"></a></h2>
-            <span flex></span>
-            <md-button class="md-icon-button">
-                <ng-md-icon icon="more_vert"></ng-md-icon>
-            </md-button>
-        </div>
-    </md-toolbar>
-</md-content>
-<div ng-view></div>
+<body layout="column" ng-controller="AppCtrl" ng-cloak>
+<md-toolbar layout="row">
+    <div class="md-toolbar-tools" layout="row">
+        <md-button class="md-icon-button" ng-click="toggleSidenav()">
+            <ng-md-icon icon="menu"></ng-md-icon>
+        </md-button>
+        <h2 class="mockup-toolbar-title"><a href="/#/" ng-bind="$root.title"></a></h2>
+        <span flex></span>
+        <md-button class="md-icon-button">
+            <ng-md-icon icon="more_vert"></ng-md-icon>
+        </md-button>
+    </div>
+</md-toolbar>
+<section layout="row" flex>
+    <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+        <md-toolbar layout="column">
+            <div class="md-toolbar-tools" layout="column">
+                <md-button class="md-accent" href="/#/personal">Username Here</md-button>
+            </div>
+        </md-toolbar>
+        <md-content flex layout-padding>
+            <md-list>
+                <md-list-item>
+                    <md-button class="md-primary" href="/#/gear/items">Gear Items</md-button>
+                </md-list-item>
+                <md-list-item>
+                    <md-button class="md-primary" href="/#/gear/systems">Gear Systems</md-button>
+                </md-list-item>
+                <md-list-item>
+                    <md-button class="md-primary" href="/#/gear/collections">Gear Collections</md-button>
+                </md-list-item>
+                <md-divider></md-divider>
+                <md-list-item>
+                    <md-button class="md-primary" href="/#/trip/itineraries">Trip Itineraries</md-button>
+                </md-list-item>
+                <md-list-item>
+                    <md-button class="md-primary" href="/#/trip/plans">Trip Plans</md-button>
+                </md-list-item>
+                <md-divider></md-divider>
+                <md-list-item>
+                    <md-button class="md-primary" href="/#/settings">Settings</md-button>
+                </md-list-item>
+            </md-list>
+        </md-content>
+    </md-sidenav>
+    <md-content flex layout-padding>
+        <div layout="column" layout-fill layout-align="top center" ng-view></div>
+    </md-content>
+</section>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-animate.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-aria.js"></script>
@@ -39,6 +72,7 @@
 <script src="//ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.5.0/angular-material-icons.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.0/ui-bootstrap-tpls.js"></script>
-<script src="app.js"></script>
+<script src="/scripts/app.js"></script>
+<script src="/scripts/controllers.js"></script>
 </body>
 </html>

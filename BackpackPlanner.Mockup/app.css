@@ -3,8 +3,6 @@
   min-height: 100%; }
 
 body {
-  background-color: #decd87;
-  color: black;
   font-family: Arial, Helvetica, Verdana, sans-serif;
   font-size: 12px; }
 
@@ -17,46 +15,9 @@ ng-md-icon {
   display: inline-block;
   line-height: 1; }
 
-.mockup-toolbar {
-  background-color: #decd87;
-  color: black;
-  border-bottom: solid 1px black; }
-
-.mockup-toolbar-title > a {
-  text-decoration: none; }
-
-.mockup-toolbar-title:focus, .mockup-toolbar-title:hover {
-  text-decoration: none; }
-
-.mockup-page {
-  padding-top: 20px;
-  background-color: #decd87;
-  color: black;
-  text-align: center; }
-
-.mockup-notes {
-  padding-top: 100px;
-  padding-left: 20px;
-  background-color: #decd87;
-  color: black;
-  text-align: center; }
-
-.mockup-button {
-  width: 200px;
-  background-color: #668000;
-  color: black;
-  font-weight: bold; }
-
-.mockup-list-item {
-  margin-top: 5px;
-  margin-bottom: 5px;
-  background-color: #668000;
-  color: black;
-  text-align: center; }
-
-.mockup-list-item-text {
-  width: 100%;
-  text-align: center; }
-
-.mockup-delete {
-  background-color: red; }
+.mockup-toolbar-title {
+  white-space: nowrap; }
+  .mockup-toolbar-title > a {
+    text-decoration: none; }
+  .mockup-toolbar-title:focus, .mockup-toolbar-title:hover {
+    text-decoration: none; }
