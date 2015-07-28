@@ -2,6 +2,7 @@
     "ngRoute",
     "ngMaterial",
     "ngMdIcons",
+    "ngTouch",
     "ui.bootstrap"
 ]);
 
@@ -19,6 +20,18 @@ mockupApp.config(["$routeProvider",
             templateUrl: "partials/gear/items.html",
             title: "Gear Items"
         })
+        .when("/gear/items/item", {
+            templateUrl: "partials/gear/items-item.html",
+            title: "Gear Item"
+        })
+        .when("/gear/items/add", {
+            templateUrl: "partials/gear/items-add.html",
+            title: "Add Gear Item"
+        })
+        .when("/gear/items/delete", {
+            templateUrl: "partials/gear/items-delete.html",
+            title: "Gear Items"
+        })
         .otherwise({
             redirectTo: "/index"
         });
@@ -32,5 +45,21 @@ mockupApp.run(["$rootScope",
                 $rootScope.title = currentRoute.title;
             }
         );
+    }
+]);
+
+mockupApp.controller("GearItemCtrl", ["$scope",
+    function($scope) {
+        $scope.onClick = function(event) {
+            window.location.replace("/#/gear/items/item");
+        }
+
+        $scope.onSwipeRight = function(event) {
+            window.location.replace("/#/gear/items/delete");
+        };
+
+        $scope.onSwipeLeft = function(event) {
+            window.location.replace("/#/gear/items");
+        };
     }
 ]);

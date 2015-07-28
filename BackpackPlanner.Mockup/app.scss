@@ -24,6 +24,13 @@ body {
 
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
+/* fix for ng-md-icon's icon being top aligned */
+ng-md-icon {
+    vertical-align: middle;
+    display: inline-block;
+    line-height: 1;
+}
+
 .mockup-toolbar {
     background-color: $page-background-color;
     color: $page-color;
@@ -31,8 +38,27 @@ body {
     border-bottom: solid 1px black;
 }
 
+.mockup-toolbar-title {
+    > a {
+        text-decoration: none;
+    }
+    &:focus, &:hover {
+        text-decoration: none;
+    }
+}
+
 .mockup-page {
     padding-top: 20px;
+
+    background-color: $page-background-color;
+    color: $page-color;
+
+    text-align: center;
+}
+
+.mockup-notes {
+    padding-top: 100px;
+    padding-left: 20px;
 
     background-color: $page-background-color;
     color: $page-color;
@@ -55,6 +81,14 @@ body {
 
     background-color: $button-background-color;
     color: $button-color;
+
+    text-align: center;
+}
+
+.mockup-list-item-text {
+    width: 100%;
+
+    text-align: center;
 }
 
 .mockup-delete {

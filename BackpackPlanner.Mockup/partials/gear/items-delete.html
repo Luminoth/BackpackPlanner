@@ -1,25 +1,30 @@
 ﻿<md-content>
     <div class="mockup-page">
-        <div><md-button class="mockup-button">Add Gear Item</md-button></div>
+        <div>
+            <md-button class="mockup-button" href="/#/gear/items/add">
+                <ng-md-icon icon="add"></ng-md-icon> Add Gear Item
+            </md-button>
+        </div>
         <md-list>
-            <md-list-item class="md-2-line mockup-list-item" href="test">
-                <div class="md-list-item-text">
+            <md-list-item class="md-2-line mockup-list-item" ng-controller="GearItemCtrl">
+                <div class="md-list-item-text mockup-list-item-text">
                     <h3>Backpack</h3>
                     <h4>ULA Circuit</h4>
                 </div>
             </md-list-item>
-            <md-list-item class="md-2-line mockup-list-item mockup-delete">
-                <div class="md-list-item-text">
-                    <h3>Water Filter</h3>
-                    <h4>Sawyer Mini</h4>
+            <md-list-item class="md-2-line mockup-list-item mockup-delete" md-swipe-left="onSwipeLeft()" ng-controller="GearItemCtrl">
+                <div class="md-list-item-text mockup-list-item-text">
+                    <h3>Swipe left to go back</h3>
                 </div>
             </md-list-item>
-            <md-list-item class="md-2-line mockup-list-item">
-                <div class="md-list-item-text">
-                    <h3>Water Filter</h3>
-                    <h4>Sawyer Mini</h4>
+            <md-list-item class="md-2-line mockup-list-item" ng-click="onClick()" ng-controller="GearItemCtrl">
+                <div class="md-list-item-text mockup-list-item-text">
+                    <h3>Click me to go to the item</h3>
                 </div>
             </md-list-item>
         </md-list>
+    </div>
+    <div class="mockup-notes">
+        Can't actually swipe left here, it should be animated similar to Inbox.
     </div>
 </md-content>
