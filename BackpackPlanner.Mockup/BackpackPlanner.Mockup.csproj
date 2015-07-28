@@ -22,13 +22,17 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app.css" />
+    <Content Include="app.css">
+      <DependentUpon>app.scss</DependentUpon>
+    </Content>
     <Content Include="app.js" />
     <Content Include="app.min.css">
       <DependentUpon>app.css</DependentUpon>
     </Content>
     <Content Include="index.html" />
+    <Content Include="partials\gear\items-add.html" />
     <Content Include="partials\gear\items-delete.html" />
+    <Content Include="partials\gear\items-item.html" />
     <Content Include="partials\gear\items.html" />
     <Content Include="partials\gear\manage.html" />
     <Content Include="partials\main.html" />
