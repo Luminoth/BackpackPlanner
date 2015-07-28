@@ -7,14 +7,14 @@ $font-size: 12px;
 $button-background-color: #668000;
 $button-color: black;
 
+$delete-color: red;
+
 html, body {
     height: 100%;
     min-height: 100%
 }
 
 body {
-    padding-top: 80px;
-
     background-color: $page-background-color;
     color: $page-color;
 
@@ -24,37 +24,39 @@ body {
 
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
-.mockup-navbar {
-    border-color: black;
+.mockup-toolbar {
+    background-color: $page-background-color;
+    color: $page-color;
 
-    .navbar-brand {
-        color: black;
-
-        &:focus, &:hover {
-            color: black;
-        }
-    }
-
-    .navbar-toggle {
-        float: left;
-        display: block;
-
-        &:focus, &:hover {
-            background-color: transparent;
-        }
-
-        .icon-bar {
-            background-color: black;
-        }
-    }
+    border-bottom: solid 1px black;
 }
 
 .mockup-page {
+    padding-top: 20px;
+
     background-color: $page-background-color;
     color: $page-color;
+
+    text-align: center;
 }
 
 .mockup-button {
+    width: 200px;
+
     background-color: $button-background-color;
     color: $button-color;
+
+    font-weight: bold;
+}
+
+.mockup-list-item {
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+    background-color: $button-background-color;
+    color: $button-color;
+}
+
+.mockup-delete {
+    background-color: $delete-color;
 }

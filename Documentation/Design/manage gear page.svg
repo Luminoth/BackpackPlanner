@@ -26,10 +26,10 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
-     inkscape:cx="119.42859"
+     inkscape:cx="173.86305"
      inkscape:cy="529.89651"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g4200"
      showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="1027"
@@ -44,7 +44,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -84,14 +84,14 @@
       <text
          xml:space="preserve"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.5px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         x="144.45181"
-         y="124.03201"
+         x="204.45181"
+         y="126.88916"
          id="text4204"
          sodipodi:linespacing="125%"><tspan
            sodipodi:role="line"
            id="tspan4206"
-           x="144.45181"
-           y="124.03201">Manage Gear Items</tspan></text>
+           x="204.45181"
+           y="126.88916">Gear Items</tspan></text>
     </g>
     <text
        sodipodi:linespacing="125%"
@@ -143,14 +143,14 @@
       <text
          sodipodi:linespacing="125%"
          id="text4224"
-         y="126.05231"
-         x="126.26907"
+         y="123.19516"
+         x="187.69765"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.5px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          xml:space="preserve"><tspan
-           y="126.05231"
-           x="126.26907"
-           id="tspan4226"
-           sodipodi:role="line">Manage Gear Systems</tspan></text>
+           y="123.19516"
+           x="187.69765"
+           sodipodi:role="line"
+           id="tspan4160">Gear Systems</tspan></text>
     </g>
     <g
        transform="translate(103.79507,315.23199)"
@@ -166,14 +166,14 @@
       <text
          xml:space="preserve"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.5px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         x="106.48444"
-         y="126.47074"
+         x="166.48444"
+         y="127.89931"
          id="text4232"
          sodipodi:linespacing="125%"><tspan
            sodipodi:role="line"
-           x="106.48444"
-           y="126.47074"
-           id="tspan4236">Manage Gear Collections</tspan></text>
+           x="166.48444"
+           y="127.89931"
+           id="tspan4236">Gear Collections</tspan></text>
     </g>
     <g
        transform="translate(1137.8489,-27.39835)"

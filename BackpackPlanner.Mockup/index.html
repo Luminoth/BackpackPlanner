@@ -16,23 +16,28 @@
     <![endif]-->
 </head>
 <body>
-<nav class="navbar navbar-fixed-top mockup-navbar">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="/#/">Backpacking Planner</a>
-    </div>
-</nav>
+<md-content>
+    <md-toolbar class="mockup-toolbar">
+        <div class="md-toolbar-tools">
+            <md-button class="md-icon-button">
+                <ng-md-icon icon="menu"></ng-md-icon>
+            </md-button>
+            <h2><span ng-bind="$root.title"></span></h2>
+            <span flex></span>
+            <md-button class="md-icon-button">
+                <ng-md-icon icon="more_vert"></ng-md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+</md-content>
 <div ng-view></div>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-animate.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-aria.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-route.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.0/ui-bootstrap-tpls.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-animate.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-aria.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-route.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.5.0/angular-material-icons.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.0/ui-bootstrap-tpls.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

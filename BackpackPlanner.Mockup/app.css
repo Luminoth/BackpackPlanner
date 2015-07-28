@@ -3,7 +3,6 @@
   min-height: 100%; }
 
 body {
-  padding-top: 80px;
   background-color: #decd87;
   color: black;
   font-family: Arial, Helvetica, Verdana, sans-serif;
@@ -12,24 +11,28 @@ body {
 .nav, .pagination, .carousel, .panel-title a {
   cursor: pointer; }
 
-.mockup-navbar {
-  border-color: black; }
-  .mockup-navbar .navbar-brand {
-    color: black; }
-    .mockup-navbar .navbar-brand:focus, .mockup-navbar .navbar-brand:hover {
-      color: black; }
-  .mockup-navbar .navbar-toggle {
-    float: left;
-    display: block; }
-    .mockup-navbar .navbar-toggle:focus, .mockup-navbar .navbar-toggle:hover {
-      background-color: transparent; }
-    .mockup-navbar .navbar-toggle .icon-bar {
-      background-color: black; }
+.mockup-toolbar {
+  background-color: #decd87;
+  color: black;
+  border-bottom: solid 1px black; }
 
 .mockup-page {
+  padding-top: 20px;
   background-color: #decd87;
-  color: black; }
+  color: black;
+  text-align: center; }
 
 .mockup-button {
+  width: 200px;
+  background-color: #668000;
+  color: black;
+  font-weight: bold; }
+
+.mockup-list-item {
+  margin-top: 5px;
+  margin-bottom: 5px;
   background-color: #668000;
   color: black; }
+
+.mockup-delete {
+  background-color: red; }
