@@ -58,6 +58,10 @@ mockupApp.config(["$routeProvider",
             templateUrl: "partials/settings.html",
             title: "Settings"
         })
+        .when("/help", {
+            templateUrl: "partials/help.html",
+            title: "Help"
+        })
 
         .otherwise({
             redirectTo: "/index"
@@ -69,14 +73,16 @@ mockupApp.config(["$mdThemingProvider",
     function($mdThemingProvider) {
         var primaryPalette = $mdThemingProvider.extendPalette("green", {
             "500": "668000",
-            "A100": "501616"
+            "A100": "501616",
+            "contrastDefaultColor": "light"
         });
 
         var backgroundPalette = $mdThemingProvider.extendPalette("brown", {
-            "A100": "decd87"
+            "500": "decd87"
         });
 
         var accentPalette = $mdThemingProvider.extendPalette("grey", {
+            "500": "ffffff"
         });
 
         $mdThemingProvider.definePalette("mockupPrimaryPalette", primaryPalette);
@@ -85,11 +91,15 @@ mockupApp.config(["$mdThemingProvider",
 
         $mdThemingProvider.theme("default")
             .primaryPalette("mockupPrimaryPalette", {
-                "hue-1": "100"
-            }).dark()
-            .backgroundPalette("mockupBackgroundPalette", {
+                "default": "500",
                 "hue-1": "A100"
             })
-            .accentPalette("mockupAccentPalette");
+            .backgroundPalette("mockupBackgroundPalette", {
+                "default": "500"
+            })
+            .accentPalette("mockupAccentPalette", {
+                "default": "500"
+            })
+            .dark();
     }
 ]);

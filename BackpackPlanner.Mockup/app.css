@@ -21,3 +21,19 @@ ng-md-icon {
     text-decoration: none; }
   .mockup-toolbar-title:focus, .mockup-toolbar-title:hover {
     text-decoration: none; }
+
+/* fix the fucking upper-case bullshit */
+.mockup-button, .mockup-sidenav-button {
+  text-transform: none; }
+
+.mockup-sidenav-button {
+  text-align: left; }
+
+.mockup-sidenav-divider {
+  background-color: #668000; }
+
+.mockup-card {
+  background-color: white; }
+
+.mockup-card-content {
+  background-color: #668000; }

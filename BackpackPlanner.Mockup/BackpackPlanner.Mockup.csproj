@@ -25,6 +25,7 @@
     <Content Include="app.css">
       <DependentUpon>app.scss</DependentUpon>
     </Content>
+    <Content Include="partials\help.html" />
     <Content Include="partials\gear\collections.html" />
     <Content Include="partials\gear\items.html" />
     <Content Include="partials\gear\systems.html" />
