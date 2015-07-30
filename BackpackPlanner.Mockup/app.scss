@@ -44,6 +44,14 @@ ng-md-icon {
     text-align: left;
 }
 
+.mockup-add-button {
+    @extend .mockup-button;
+
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
+}
+
 .mockup-sidenav-divider {
     background-color: $primary-background-color;
 }

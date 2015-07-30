@@ -23,11 +23,16 @@ ng-md-icon {
     text-decoration: none; }
 
 /* fix the fucking upper-case bullshit */
-.mockup-button, .mockup-sidenav-button {
+.mockup-button, .mockup-sidenav-button, .mockup-add-button {
   text-transform: none; }
 
 .mockup-sidenav-button {
   text-align: left; }
+
+.mockup-add-button {
+  position: fixed;
+  bottom: 5%;
+  right: 5%; }
 
 .mockup-sidenav-divider {
   background-color: #668000; }
