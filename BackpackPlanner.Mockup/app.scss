@@ -13,6 +13,7 @@ body {
     font-size: $font-size;
 }
 
+/* fix bootstrap CSS for angular */ 
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
 /* fix for ng-md-icon's icon being top aligned */
@@ -27,9 +28,11 @@ ng-md-icon {
 
     > a {
         text-decoration: none;
-    }
-    &:focus, &:hover {
-        text-decoration: none;
+        
+        &:focus, &:hover {
+            color: white;
+            text-decoration: none;
+        }
     }
 }
 
