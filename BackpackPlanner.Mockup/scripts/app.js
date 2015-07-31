@@ -2,7 +2,7 @@
     "ngRoute",
     "ngMaterial",
     "ngMdIcons",
-    "ngTouch",
+    //"ngTouch",        // this breaks md-button ng-click operation
     "ui.bootstrap",
 
     "mockupControllers"
