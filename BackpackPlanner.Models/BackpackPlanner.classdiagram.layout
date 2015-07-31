@@ -21,11 +21,11 @@
         <LiteralElementListCompartment Id="b96ee6b0-4e49-434f-af12-f8541aa42b02" absoluteBounds="3.265, 3.64, 1.2200000000000002, 0.68164060264825821" name="LiteralsCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </enumerationShape>
-    <classShape Id="e38b1447-5306-4259-83ba-04d0e2e61c3b" absoluteBounds="0.5, 3, 2.375, 2.5039061854283009" hideQualifiedName="false" increaseHeight="0" customColor="181, 193, 223">
+    <classShape Id="e38b1447-5306-4259-83ba-04d0e2e61c3b" absoluteBounds="0.5, 3, 2.375, 2.6640624304612466" hideQualifiedName="false" increaseHeight="0" customColor="181, 193, 223">
       <classMoniker Id="26eab2c2-86a0-4ef1-b170-be5db2abfb54" LastKnownName="GearItem" />
       <nestedChildShapes>
-        <AttributeElementListCompartment Id="e74aa113-85a7-4eea-a1fa-a7c2cb7aeafd" absoluteBounds="0.515, 3.39, 2.3449999999999998, 1.6425780728459358" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
-        <OperationElementListCompartment Id="d81088c7-0845-45cd-9fea-0bfb76b992ce" absoluteBounds="0.515, 5.0425780728459362, 2.3449999999999998, 0.36132811258236552" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <AttributeElementListCompartment Id="e74aa113-85a7-4eea-a1fa-a7c2cb7aeafd" absoluteBounds="0.515, 3.39, 2.3449999999999998, 1.8027343178788819" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <OperationElementListCompartment Id="d81088c7-0845-45cd-9fea-0bfb76b992ce" absoluteBounds="0.515, 5.2027343178788819, 2.3449999999999998, 0.36132811258236552" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="6ca14895-029b-4902-a591-719d19ce91b8" absoluteBounds="6.625, 0.5, 3.375, 2.5039061854283022" hideQualifiedName="false" increaseHeight="0" customColor="181, 193, 223">

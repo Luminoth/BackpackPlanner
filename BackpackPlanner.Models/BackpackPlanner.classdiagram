@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="630d506f-3b16-4d58-92c1-fa8c1e30ba1f" name="BackpackPlanner" linkedPackageId="17ae9dea-23e8-42ad-9100-7b6b0a824a33" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="630d506f-3b16-4d58-92c1-fa8c1e30ba1f" name="BackpackPlanner" linkedPackageId="17ae9dea-23e8-42ad-9100-7b6b0a824a33" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
   <packagedElements>
     <logicalClassDesignerModelHasTypes>
       <class Id="61c888c9-c982-484c-bb9c-4d719b8a020c" name="UserInformation" isAbstract="false" isLeaf="false" isActiveClass="false">
@@ -195,6 +195,12 @@
             <elementDefinition Id="1e3edbf7-eb6a-4d15-b0c5-58537f678c48" />
             <type_NamedElement>
               <referencedTypeMoniker Id="6b4d1192-6315-4e8d-ab99-bab8a497a541" LastKnownName="Boolean" />
+            </type_NamedElement>
+          </property>
+          <property Id="9f6a9072-1c68-4984-986f-54ee877a8ed2" name="ConsumedPerDay" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="aeb4df9a-f867-45ec-bbcd-db28c17a61b1" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
             </type_NamedElement>
           </property>
         </ownedAttributesInternal>
