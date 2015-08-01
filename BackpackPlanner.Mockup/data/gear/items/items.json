@@ -1,0 +1,20 @@
+﻿[
+    {
+        "Id": 1,
+        "Name": "Carried Consumable Item",
+        "Make": "Make",
+        "Model": "Model"
+    },
+    {
+        "Id": 2,
+        "Name": "Carried Item",
+        "Make": "Make",
+        "Model": "Model"
+    },
+    {
+        "Id": 3,
+        "Name": "Leave this in the car",
+        "Make": "Make",
+        "Model": "Model"
+    }
+]

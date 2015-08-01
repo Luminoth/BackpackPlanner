@@ -1,11 +1,14 @@
 ﻿var mockupApp = angular.module("mockupApp", [
     "ngRoute",
+    "ngAria",
     "ngMaterial",
     "ngMdIcons",
+    "ngMessages",
     //"ngTouch",        // this breaks md-button ng-click operation
     "ui.bootstrap",
 
-    "mockupControllers"
+    "mockupControllers",
+    "mockupServices"
 ]);
 
 mockupApp.run(["$rootScope",
@@ -25,25 +28,41 @@ mockupApp.config(["$routeProvider",
             title: "Backpacking Planner"
         })
 
-        // gear
+        // gear items
         .when("/gear/items", {
             templateUrl: "partials/gear/items.html",
+            controller: "GearItemsCtrl",
             title: "Gear Items"
         })
+        .when("/gear/items/add", {
+            templateUrl: "partials/gear/add.html",
+            title: "Add a Gear Item"
+        })
+        .when("/gear/items/:gearItemId", {
+            templateUrl: "partials/gear/item.html",
+            controller: "GearItemCtrl",
+            title: "Gear Item"
+        })
+
+        // gear systems
         .when("/gear/systems", {
             templateUrl: "partials/gear/systems.html",
             title: "Gear Systems"
         })
+
+        // gear collections
         .when("/gear/collections", {
             templateUrl: "partials/gear/collections.html",
             title: "Gear Collections"
         })
 
-        // trips
+        // trip itineraries
         .when("/trip/itineraries", {
             templateUrl: "partials/trip/itineraries.html",
             title: "Trip Itineraries"
         })
+
+        // trip plans
         .when("/trip/plans", {
             templateUrl: "partials/trip/plans.html",
             title: "Trip Plans"
@@ -81,8 +100,8 @@ mockupApp.config(["$mdThemingProvider",
             "500": "decd87"
         });
 
-        var accentPalette = $mdThemingProvider.extendPalette("grey", {
-            "500": "ffffff"
+        var accentPalette = $mdThemingProvider.extendPalette("blue-grey", {
+            //"500": "ffffff"
         });
 
         $mdThemingProvider.definePalette("mockupPrimaryPalette", primaryPalette);
@@ -99,7 +118,6 @@ mockupApp.config(["$mdThemingProvider",
             })
             .accentPalette("mockupAccentPalette", {
                 "default": "500"
-            })
-            .dark();
+            });
     }
 ]);

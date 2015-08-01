@@ -25,7 +25,7 @@ ng-md-icon {
       text-decoration: none; }
 
 /* fix the fucking upper-case bullshit */
-.mockup-button, .mockup-sidenav-button, .mockup-add-button {
+.mockup-button, .mockup-sidenav-button, .mockup-add-button, .mockup-card-button {
   text-transform: none; }
 
 .mockup-sidenav-button {
@@ -36,6 +36,13 @@ ng-md-icon {
   bottom: 5%;
   right: 5%; }
 
+.mockup-card-button {
+  width: 100%;
+  text-align: left; }
+  .mockup-card-button:focus, .mockup-card-button:hover {
+    color: black;
+    text-decoration: none; }
+
 .mockup-sidenav-divider {
   background-color: #668000; }
 
@@ -44,3 +51,6 @@ ng-md-icon {
 
 .mockup-card-content {
   background-color: #668000; }
+
+.mockup-input-container {
+  background-color: white; }

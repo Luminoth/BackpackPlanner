@@ -1,0 +1,13 @@
+﻿{
+    "Id": 1,
+    "Name": "Leave this in the car",
+    "Url": "",
+    "Make": "Make",
+    "Model": "Model",
+    "Carried": "NotCarried",
+    "WeightInOunces": 0,
+    "CostInUSD": 0,
+    "IsConsumable": false,
+    "ConsumedPerDay": 0,
+    "Note": "This gear is not carried"
+}

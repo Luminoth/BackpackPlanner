@@ -1,0 +1,13 @@
+﻿{
+    "Id": 2,
+    "Name": "Carried Item",
+    "Url": "",
+    "Make": "Make",
+    "Model": "Model",
+    "Carried": "Carried",
+    "WeightInOunces": 0,
+    "CostInUSD": 0,
+    "IsConsumable": false,
+    "ConsumedPerDay": 0,
+    "Note": "This gear is carried but not consumable"
+}

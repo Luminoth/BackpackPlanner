@@ -28,7 +28,7 @@ ng-md-icon {
 
     > a {
         text-decoration: none;
-        
+
         &:focus, &:hover {
             color: white;
             text-decoration: none;
@@ -55,6 +55,19 @@ ng-md-icon {
     right: 5%;
 }
 
+.mockup-card-button {
+    @extend .mockup-button;
+
+    width: 100%;
+
+    text-align: left;
+
+    &:focus, &:hover {
+        color: black;
+        text-decoration: none;
+    }
+}
+
 .mockup-sidenav-divider {
     background-color: $primary-background-color;
 }
@@ -65,4 +78,8 @@ ng-md-icon {
 
 .mockup-card-content {
     background-color: $primary-background-color;
+}
+
+.mockup-input-container {
+    background-color: white;
 }

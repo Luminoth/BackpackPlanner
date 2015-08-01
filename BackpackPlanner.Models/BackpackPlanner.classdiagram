@@ -72,7 +72,7 @@
               </literalInteger>
             </specification>
           </enumerationLiteral>
-          <enumerationLiteral Id="15ed34b5-0816-4c05-aab3-0e91fce85040" name="Undefined">
+          <enumerationLiteral Id="15ed34b5-0816-4c05-aab3-0e91fce85040" name="NotSpecified">
             <elementDefinition Id="2279f504-b847-471c-a7a7-413255439b45" />
             <specification>
               <literalInteger Id="ab045971-858f-4816-bce3-7ae2dffed7ed" name="Integer" value="0">
@@ -199,6 +199,12 @@
           </property>
           <property Id="9f6a9072-1c68-4984-986f-54ee877a8ed2" name="ConsumedPerDay" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="aeb4df9a-f867-45ec-bbcd-db28c17a61b1" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
+            </type_NamedElement>
+          </property>
+          <property Id="c6f19ae2-8337-4dd1-8e77-dfa3f8a41001" name="Id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="9e933cc1-ff4b-4d33-923f-3617389fb793" />
             <type_NamedElement>
               <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
             </type_NamedElement>
@@ -408,6 +414,12 @@
             <elementDefinition Id="3620bd47-8117-4ef9-aaf4-64cf82ac8f35" />
             <type_NamedElement>
               <referencedTypeMoniker Id="b27b34d9-7f50-48ea-98c5-cd9cc72f923c" LastKnownName="String" />
+            </type_NamedElement>
+          </property>
+          <property Id="308dc2f0-5006-4a2c-acb8-2069ef24565a" name="Id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="3059c3e3-6b4a-415b-9118-107bc6558cd7" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
             </type_NamedElement>
           </property>
         </ownedAttributesInternal>
@@ -623,6 +635,12 @@
               <referencedTypeMoniker Id="b27b34d9-7f50-48ea-98c5-cd9cc72f923c" LastKnownName="String" />
             </type_NamedElement>
           </property>
+          <property Id="d45231d3-7249-4111-862a-9aeb53e93560" name="Id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="a4b3b96a-6851-4390-a3f2-1e95f92a03fb" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
+            </type_NamedElement>
+          </property>
         </ownedAttributesInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
@@ -797,6 +815,12 @@
               <referencedTypeMoniker Id="b27b34d9-7f50-48ea-98c5-cd9cc72f923c" LastKnownName="String" />
             </type_NamedElement>
           </property>
+          <property Id="60c5eb5c-2467-4e1c-afd6-d7094bf77746" name="Id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="8ea7f4e6-6b90-416e-b0f2-610afc02b120" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
+            </type_NamedElement>
+          </property>
         </ownedAttributesInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
@@ -845,6 +869,12 @@
               <referencedTypeMoniker Id="b27b34d9-7f50-48ea-98c5-cd9cc72f923c" LastKnownName="String" />
             </type_NamedElement>
           </property>
+          <property Id="b5b5c09d-6ed5-48b8-ab68-9b01b462c77b" name="Id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="5e35c37e-065d-46b3-9c2c-93ee4cdfa020" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
+            </type_NamedElement>
+          </property>
         </ownedAttributesInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
@@ -856,6 +886,12 @@
             <elementDefinition Id="297f1a4a-be04-497a-a54c-3f82e5073051" />
             <type_NamedElement>
               <referencedTypeMoniker Id="b27b34d9-7f50-48ea-98c5-cd9cc72f923c" LastKnownName="String" />
+            </type_NamedElement>
+          </property>
+          <property Id="07b4bc63-356d-4389-bf82-d5478051214f" name="Id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="dd939a3c-f698-4a52-ae5b-3ede5bac8b0d" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
             </type_NamedElement>
           </property>
         </ownedAttributesInternal>
@@ -907,6 +943,12 @@
             <elementDefinition Id="0932c7a5-0b32-4100-b6fe-d6ebba479d3f" />
             <type_NamedElement>
               <referencedTypeMoniker Id="b27b34d9-7f50-48ea-98c5-cd9cc72f923c" LastKnownName="String" />
+            </type_NamedElement>
+          </property>
+          <property Id="624a6c61-ed76-4c09-9b1a-f6d24f2ab4a3" name="Id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="746db8a2-8db2-4e18-b5d7-2113c49205c3" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
             </type_NamedElement>
           </property>
         </ownedAttributesInternal>
@@ -1054,6 +1096,12 @@
             <elementDefinition Id="2af862ba-447a-48d5-a21a-ad1490bedf60" />
             <type_NamedElement>
               <referencedTypeMoniker Id="5a83d6b1-927d-4eea-8bfc-00599aef9f93" LastKnownName="TripItinerary" />
+            </type_NamedElement>
+          </property>
+          <property Id="20bcc316-550a-4da3-97e8-bb22e614a0b6" name="Id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="f6c8c7bf-c8f5-4418-9695-e5b237593cef" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
             </type_NamedElement>
           </property>
         </ownedAttributesInternal>
