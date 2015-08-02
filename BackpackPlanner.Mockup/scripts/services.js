@@ -1,5 +1,13 @@
 ﻿var mockupServices = angular.module("mockupServices", [ "ngResource" ]);
 
+mockupServices.factory("AppSettings", ["$resource",
+    function ($resource) {
+        return $resource("data/settings.json", {}, {
+            query: { method: "GET" }
+        });
+    }
+]);
+
 mockupServices.factory("UserInfo", ["$resource",
     function ($resource) {
         return $resource("data/user.json", {}, {

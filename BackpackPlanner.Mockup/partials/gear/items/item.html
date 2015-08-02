@@ -1,58 +1,61 @@
-﻿<div layout="column" class="md-whiteframe-z1" flex>
-    <form name="gearItemForm" class="mockup-input-container">
-        <md-input-container>
-            <label>Name</label>
-            <input type="text" ng-model="gearItem.Name" required name="name" />
-            <div ng-messages="gearItemForm.name.$error">
-                <div ng-message="required">The gear item name is required</div>
-            </div>
+﻿<form name="gearItemForm">
+<div layout="column" flex ng-cloak>
+    <md-input-container>
+        <label>Name</label>
+        <input type="text" ng-model="gearItem.Name" required name="name" />
+        <div ng-messages="gearItemForm.name.$error">
+            <div ng-message="required">The gear item name is required</div>
+        </div>
+    </md-input-container>
+    <div layout="row" layout-sm="column" flex>
+        <md-input-container flex>
+            <label>Make</label>
+            <input type="text" ng-model="gearItem.Make" name="make" />
         </md-input-container>
-        <div layout="row" layout-sm="column" flex>
-            <md-input-container style="width: 100%">
-                <label>Make</label>
-                <input type="text" ng-model="gearItem.Make" name="make" />
-            </md-input-container>
-            <md-input-container style="width: 100%">
-                <label>Model</label>
-                <input type="text" ng-model="gearItem.Model" name="model" />
-            </md-input-container>
-        </div>
-        <md-input-container>
-            <label>Website</label>
-            <input type="url" ng-model="gearItem.Url" name="url" />
+        <md-input-container flex>
+            <label>Model</label>
+            <input type="text" ng-model="gearItem.Model" name="model" />
         </md-input-container>
-        <md-radio-group ng-model="gearItem.Carried" layout="row" layout-sm="column">
-            <md-radio-button value="Carried">Carried</md-radio-button>
-            <md-radio-button value="Worn">Worn</md-radio-button>
-            <md-radio-button value="NotCarried">Not Carried</md-radio-button>
-        </md-radio-group>
-        <div layout="row" layout-sm="column" flex ng-show="'NotCarried' != gearItem.Carried">
-            <md-checkbox ng-model="gearItem.IsConsumable" name="consumable">
-                Consumable
-            </md-checkbox>
-            <md-input-container ng-show="true == gearItem.IsConsumable">
-                <label>Consumed per Day</label>
-                <input type="number" ng-model="gearItem.ConsumedPerDay" name="consumedPerDay" />
-            </md-input-container>
-        </div>
-        <div layout="row" layout-sm="column" flex>
-            <md-input-container style="width: 100%;" ng-show="'NotCarried' != gearItem.Carried">
-                <label>Weight (ounces)</label>
-                <input type="number" ng-model="gearItem.WeightInOunces" name="weight" />
-            </md-input-container>
-            <md-input-container style="width: 100%;">
-                <label>Cost (USD)</label>
-                <input type="number" ng-model="gearItem.CostInUSD" name="weight" />
-            </md-input-container>
-        </div>
-        <md-input-container>
-            <label>Note</label>
-            <textarea ng-model="gearItem.Note" name="note"></textarea>
+    </div>
+    <md-input-container>
+        <label>Website</label>
+        <input type="url" ng-model="gearItem.Url" name="url" />
+    </md-input-container>
+    <md-radio-group ng-model="gearItem.Carried" layout="row" layout-sm="column">
+        <md-radio-button value="Carried">Carried</md-radio-button>
+        <md-radio-button value="Worn">Worn</md-radio-button>
+        <md-radio-button value="NotCarried">Not Carried</md-radio-button>
+    </md-radio-group>
+    <div layout="row" layout-sm="column" flex ng-show="'NotCarried' != gearItem.Carried">
+        <md-checkbox ng-model="gearItem.IsConsumable" name="consumable">
+            Consumable
+        </md-checkbox>
+        <md-input-container ng-show="true == gearItem.IsConsumable">
+            <label>Consumed per Day</label>
+            <input type="number" ng-model="gearItem.ConsumedPerDay" name="consumedPerDay" />
         </md-input-container>
-        <div style="text-align: center;" flex>
-            <md-button class="md-raised md-warn mockup-button" ng-click="showDeleteConfirm($event)">
-                Delete Item
-            </md-button>
-        </div>
-    </form>
+    </div>
+    <div layout="row" layout-sm="column" flex>
+        <md-input-container flex ng-show="'NotCarried' != gearItem.Carried">
+            <label>Weight (ounces)</label>
+            <input type="number" ng-model="gearItem.WeightInOunces" name="weight" />
+        </md-input-container>
+        <md-input-container flex>
+            <label>Cost (USD)</label>
+            <input type="number" ng-model="gearItem.CostInUSD" name="weight" />
+        </md-input-container>
+    </div>
+    <md-input-container>
+        <label>Note</label>
+        <textarea ng-model="gearItem.Note" name="note"></textarea>
+    </md-input-container>
+    <div flex></div>
+    <div layout="row">
+        <div flex></div>
+        <md-button class="md-raised md-warn mockup-button" ng-click="showDeleteConfirm($event)">
+            Delete Item
+        </md-button>
+        <div flex></div>
+    </div>
 </div>
+</form>

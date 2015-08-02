@@ -5,9 +5,9 @@
     "Make": "Make",
     "Model": "Model",
     "Carried": "Carried",
-    "WeightInOunces": 0,
-    "CostInUSD": 0,
+    "WeightInOunces": 3,
+    "CostInUSD": 5,
     "IsConsumable": true,
-    "ConsumedPerDay": 0,
+    "ConsumedPerDay": 1,
     "Note": "This gear item is carried and consumable"
 }

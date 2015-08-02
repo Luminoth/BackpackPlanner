@@ -1,36 +1,37 @@
-﻿<div layout="column" class="md-whiteframe-z1" flex>
-    <form name="userInfoForm" class="mockup-input-container">
-        <div layout="row" layout-sm="column" flex>
-            <md-input-container style="width: 100%;">
-                <label>First Name</label>
-                <input type="text" ng-model="userInfo.FirstName" required name="firstName" />
-                <div ng-messages="userInfoForm.firstName.$error">
-                    <div ng-message="required">A first name is required</div>
-                </div>
-            </md-input-container>
-            <md-input-container style="width: 100%;">
-                <label>Last Name</label>
-                <input type="text" ng-model="userInfo.LastName" name="firstName" />
-            </md-input-container>
-        </div>
-        <md-radio-group ng-model="userInfo.Sex" layout="row" layout-sm="column">
-            <md-radio-button value="Male">Male</md-radio-button>
-            <md-radio-button value="Female">Female</md-radio-button>
-            <md-radio-button value="NotSpecified">Not Specified</md-radio-button>
-        </md-radio-group>
-        <div layout="row" layout-sm="column" flex>
-            <md-input-container style="width: 100%;">
-                <label>Height (inches)</label>
-                <input type="number" ng-model="userInfo.HeightInInches" name="height" />
-            </md-input-container>
-            <md-input-container style="width: 100%;">
-                <label>Weight (ounces)</label>
-                <input type="number" ng-model="userInfo.WeightInOunces" name="weight" />
-            </md-input-container>
-            <md-input-container style="width: 100%;">
-                <label>Birth Date (FIXME)</label>
-                <input type="date" ng-model="userInfo.BirthDate" name="birthDate" />
-            </md-input-container>
-        </div>
-    </form>
+﻿<form name="userInfoForm">
+<div layout="column" flex ng-cloak>
+    <div layout="row" layout-sm="column" flex>
+        <md-input-container flex>
+            <label>First Name</label>
+            <input type="text" ng-model="userInfo.FirstName" required name="firstName" />
+            <div ng-messages="userInfoForm.firstName.$error">
+                <div ng-message="required">A first name is required</div>
+            </div>
+        </md-input-container>
+        <md-input-container flex>
+            <label>Last Name</label>
+            <input type="text" ng-model="userInfo.LastName" name="firstName" />
+        </md-input-container>
+    </div>
+    <md-radio-group ng-model="userInfo.Sex" layout="row" layout-sm="column">
+        <md-radio-button value="Male">Male</md-radio-button>
+        <md-radio-button value="Female">Female</md-radio-button>
+        <md-radio-button value="NotSpecified">Not Specified</md-radio-button>
+    </md-radio-group>
+    <div layout="row" layout-sm="column" flex>
+        <md-input-container flex>
+            <label>Height (inches)</label>
+            <input type="number" ng-model="userInfo.HeightInInches" name="height" />
+        </md-input-container>
+        <md-input-container flex>
+            <label>Weight (ounces)</label>
+            <input type="number" ng-model="userInfo.WeightInOunces" name="weight" />
+        </md-input-container>
+        <md-input-container flex>
+            <label>Birth Date (FIXME)</label>
+            <input type="date" ng-model="userInfo.BirthDate" name="birthDate" />
+        </md-input-container>
+    </div>
+    <div flex></div>
 </div>
+</form>

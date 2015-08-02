@@ -31,26 +31,22 @@ ng-md-icon {
 .mockup-sidenav-button {
   text-align: left; }
 
+.mockup-sidenav-divider {
+  background-color: #668000; }
+
 .mockup-add-button {
   position: fixed;
   bottom: 5%;
   right: 5%; }
 
 .mockup-card-button {
-  width: 100%;
   text-align: left; }
   .mockup-card-button:focus, .mockup-card-button:hover {
     color: black;
     text-decoration: none; }
-
-.mockup-sidenav-divider {
-  background-color: #668000; }
 
 .mockup-card {
   background-color: white; }
 
 .mockup-card-content {
   background-color: #668000; }
-
-.mockup-input-container {
-  background-color: white; }

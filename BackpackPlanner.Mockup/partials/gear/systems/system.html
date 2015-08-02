@@ -1,21 +1,24 @@
-﻿<div layout="column" class="md-whiteframe-z1" flex>
-    <form name="gearSystemForm" class="mockup-input-container">
-        <md-input-container>
-            <label>Name</label>
-            <input type="text" ng-model="gearSystem.Name" required name="name" />
-            <div ng-messages="gearSystemForm.name.$error">
-                <div ng-message="required">The gear system name is required</div>
-            </div>
-        </md-input-container>
-        <p>TODO: items</p>
-        <md-input-container>
-            <label>Note</label>
-            <textarea ng-model="gearSystem.Note" name="note"></textarea>
-        </md-input-container>
-        <div style="text-align: center;" flex>
-            <md-button class="md-raised md-warn mockup-button" ng-click="showDeleteConfirm($event)">
-                Delete System
-            </md-button>
+﻿<form name="gearSystemForm">
+<div layout="column" flex ng-cloak>
+    <md-input-container>
+        <label>Name</label>
+        <input type="text" ng-model="gearSystem.Name" required name="name" />
+        <div ng-messages="gearSystemForm.name.$error">
+            <div ng-message="required">The gear system name is required</div>
         </div>
-    </form>
+    </md-input-container>
+    <p>TODO: items</p>
+    <md-input-container>
+        <label>Note</label>
+        <textarea ng-model="gearSystem.Note" name="note"></textarea>
+    </md-input-container>
+    <div flex></div>
+    <div layout="row">
+        <div flex></div>
+        <md-button class="md-raised md-warn mockup-button" ng-click="showDeleteConfirm($event)">
+            Delete System
+        </md-button>
+        <div flex></div>
+    </div>
 </div>
+</form>

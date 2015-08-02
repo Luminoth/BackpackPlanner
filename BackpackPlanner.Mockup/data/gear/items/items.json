@@ -2,19 +2,35 @@
     {
         "Id": 1,
         "Name": "Carried Consumable Item",
+        "Url": "",
         "Make": "Make",
-        "Model": "Model"
+        "Model": "Model",
+        "Carried": "Carried",
+        "WeightInOunces": 3,
+        "CostInUSD": 5,
+        "IsConsumable": true,
+        "ConsumedPerDay": 1
     },
     {
         "Id": 2,
         "Name": "Carried Item",
+        "Url": "",
         "Make": "Make",
-        "Model": "Model"
+        "Model": "Model",
+        "Carried": "Carried",
+        "WeightInOunces": 1,
+        "CostInUSD": 10,
+        "IsConsumable": false
     },
     {
-        "Id": 3,
+        "Id": 1,
         "Name": "Leave this in the car",
+        "Url": "",
         "Make": "Make",
-        "Model": "Model"
+        "Model": "Model",
+        "Carried": "NotCarried",
+        "WeightInOunces": 2,
+        "CostInUSD": 3,
+        "IsConsumable": false
     }
 ]

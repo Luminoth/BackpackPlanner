@@ -1,7 +1,9 @@
 ﻿var mockupControllers = angular.module("mockupControllers", []);
 
-mockupControllers.controller("AppCtrl", ["$scope", "$location", "$mdSidenav", "UserInfo",
-    function($scope, $location, $mdSidenav, UserInfo) {
+mockupControllers.controller("AppCtrl", ["$scope", "$location", "$mdSidenav", "AppSettings", "UserInfo",
+    function($scope, $location, $mdSidenav, AppSettings, UserInfo) {
+        $scope.appSettings = AppSettings.get();
+
         // TODO: this keeps giving an error, I dunno what to do to fix it
         var userInfo = UserInfo.get();
         userInfo.BirthDate = new Date(userInfo.BirthDate);
@@ -23,6 +25,7 @@ mockupControllers.controller("AppCtrl", ["$scope", "$location", "$mdSidenav", "U
 mockupControllers.controller("GearItemsCtrl", ["$scope", "GearItem",
     function ($scope, GearItem) {
         $scope.gearItems = GearItem.query();
+        $scope.orderBy = "Name";
     }
 ]);
 

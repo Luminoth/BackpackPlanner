@@ -70,13 +70,13 @@ mockupApp.config(["$routeProvider",
 
         // trip itineraries
         .when("/trip/itineraries", {
-            templateUrl: "partials/trip/itineraries.html",
+            templateUrl: "partials/trip/itineraries/itineraries.html",
             title: "Trip Itineraries"
         })
 
         // trip plans
         .when("/trip/plans", {
-            templateUrl: "partials/trip/plans.html",
+            templateUrl: "partials/trip/plans/plans.html",
             title: "Trip Plans"
         })
 

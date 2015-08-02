@@ -1,11 +1,26 @@
-﻿<div layout="column" flex>
-    <md-button class="mockup-card-button" ng-repeat="gearItem in gearItems" href="#/gear/items/{{ gearItem.Id}} ">
-        <md-card class="mockup-card">
+﻿<div layout="column" flex ng-cloak>
+    <div layout="column" layout-padding>
+        <md-input-container md-no-float flex>
+            <input type="text" ng-model="filter.Name" name="filter" placeholder="Filter" />
+        </md-input-container>
+        <label>Sort by</label>
+        <md-radio-group ng-model="orderBy" layout="row">
+            <md-radio-button value="Name">Name</md-radio-button>
+            <md-radio-button value="-WeightInOunces">Weight</md-radio-button>
+            <md-radio-button value="-CostInUSD">Cost</md-radio-button>
+        </md-radio-group>
+    </div>
+    <md-button class="mockup-card-button" layout-fill ng-repeat="gearItem in gearItems | filter:filter | orderBy:orderBy" href="#/gear/items/{{ gearItem.Id}} ">
+        <md-card class="mockup-card" flex>
             <md-card-content class="mockup-card-content">
                 <h2 class="md-title">{{ gearItem.Name }}</h2>
                 <p layout-padding>{{ gearItem.Make }} {{ gearItem.Model }}</p>
             </md-card-content>
-            <p layout-padding>TODO: More Information</p>
+            <div layout="row" layout-sm="column">
+                <p layout-padding ng-if="'NotCarried' != gearItem.Carried">Weight: {{ gearItem.WeightInOunces }} Ounces</p>
+                <p layout-padding>Cost: ${{ gearItem.CostInUSD }} USD</p>
+                <p layout-padding ng-if="gearItem.IsConsumable">Consumed per day: {{ gearItem.ConsumedPerDay }}</p>
+            </div>
         </md-card>
     </md-button>
     <md-button class="md-fab md-primary md-hue-1 mockup-add-button" href="#/gear/items/add">
