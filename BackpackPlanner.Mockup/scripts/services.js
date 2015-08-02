@@ -15,3 +15,11 @@ mockupServices.factory("GearItem", ["$resource",
         });
     }
 ]);
+
+mockupServices.factory("GearSystem", ["$resource",
+    function ($resource) {
+        return $resource("data/gear/systems/:gearSystemId.json", {}, {
+            query: { method: "GET", params: { gearSystemId: "systems" }, isArray: true }
+        });
+    }
+]);

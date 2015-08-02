@@ -25,17 +25,19 @@
     <Content Include="app.css">
       <DependentUpon>app.scss</DependentUpon>
     </Content>
-    <Content Include="partials\gear\add.html" />
-    <Content Include="partials\gear\item.html" />
+    <Content Include="partials\gear\items\add.html" />
+    <Content Include="partials\gear\items\item.html" />
+    <Content Include="partials\gear\systems\add.html" />
+    <Content Include="partials\gear\systems\system.html" />
     <Content Include="partials\help.html" />
-    <Content Include="partials\gear\collections.html" />
-    <Content Include="partials\gear\items.html" />
-    <Content Include="partials\gear\systems.html" />
+    <Content Include="partials\gear\collections\collections.html" />
+    <Content Include="partials\gear\items\items.html" />
+    <Content Include="partials\gear\systems\systems.html" />
     <Content Include="partials\main.html" />
     <Content Include="partials\personal.html" />
     <Content Include="partials\settings.html" />
-    <Content Include="partials\trip\itineraries.html" />
-    <Content Include="partials\trip\plans.html" />
+    <Content Include="partials\trip\itineraries\itineraries.html" />
+    <Content Include="partials\trip\plans\plans.html" />
     <Content Include="scripts\app.js" />
     <Content Include="app.min.css">
       <DependentUpon>app.css</DependentUpon>
@@ -53,6 +55,8 @@
     <Content Include="data\user.json" />
     <Content Include="data\gear\items\2.json" />
     <Content Include="data\gear\items\3.json" />
+    <Content Include="data\gear\systems\systems.json" />
+    <Content Include="data\gear\systems\1.json" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

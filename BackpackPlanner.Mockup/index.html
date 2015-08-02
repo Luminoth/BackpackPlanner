@@ -28,7 +28,7 @@
         </md-button>
     </div>
 </md-toolbar>
-<section layout="row" flex>
+<div layout="row" flex>
     <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
         <md-toolbar layout="column">
             <div class="md-toolbar-tools" layout="column">
@@ -37,6 +37,10 @@
         </md-toolbar>
         <md-content flex layout-padding>
             <md-list>
+                <md-list-item>
+                    <md-button class="md-primary mockup-sidenav-button" href="#/" ng-click="toggleSidenav()">Home</md-button>
+                </md-list-item>
+                <md-divider class="mockup-sidenav-divider"></md-divider>
                 <md-list-item>
                     <md-button class="md-primary mockup-sidenav-button" href="#/gear/items" ng-click="toggleSidenav()">Gear Items</md-button>
                 </md-list-item>
@@ -63,10 +67,8 @@
             </md-list>
         </md-content>
     </md-sidenav>
-    <md-content flex layout-padding>
-        <div layout="column" layout-fill ng-view></div>
-    </md-content>
-</section>
+    <md-content flex ng-view>Content loading, please wait...</md-content>
+</div>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-animate.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-aria.js"></script>

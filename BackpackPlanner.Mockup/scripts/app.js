@@ -30,29 +30,41 @@ mockupApp.config(["$routeProvider",
 
         // gear items
         .when("/gear/items", {
-            templateUrl: "partials/gear/items.html",
+            templateUrl: "partials/gear/items/items.html",
             controller: "GearItemsCtrl",
             title: "Gear Items"
         })
         .when("/gear/items/add", {
-            templateUrl: "partials/gear/add.html",
+            templateUrl: "partials/gear/items/add.html",
+            controller: "AddGearItemCtrl",
             title: "Add a Gear Item"
         })
         .when("/gear/items/:gearItemId", {
-            templateUrl: "partials/gear/item.html",
+            templateUrl: "partials/gear/items/item.html",
             controller: "GearItemCtrl",
             title: "Gear Item"
         })
 
         // gear systems
         .when("/gear/systems", {
-            templateUrl: "partials/gear/systems.html",
+            templateUrl: "partials/gear/systems/systems.html",
+            controller: "GearSystemsCtrl",
             title: "Gear Systems"
+        })
+        .when("/gear/systems/add", {
+            templateUrl: "partials/gear/systems/add.html",
+            controller: "AddGearSystemCtrl",
+            title: "Add a Gear System"
+        })
+        .when("/gear/systems/:gearSystemId", {
+            templateUrl: "partials/gear/systems/system.html",
+            controller: "GearSystemCtrl",
+            title: "Gear System"
         })
 
         // gear collections
         .when("/gear/collections", {
-            templateUrl: "partials/gear/collections.html",
+            templateUrl: "partials/gear/collections/collections.html",
             title: "Gear Collections"
         })
 
