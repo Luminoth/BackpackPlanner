@@ -87,7 +87,8 @@ mockupControllers.controller("GearSystemsCtrl", ["$scope", "GearSystem",
 
 mockupControllers.controller("GearSystemCtrl", ["$scope", "$routeParams", "$location", "$mdDialog", "GearSystem",
     function ($scope, $routeParams, $location, $mdDialog, GearSystem) {
-        $scope.gearSystem = GearSystem.get({ gearSystemId: $routeParams.gearSystemId });
+        var gearSystem = GearSystem.get({ gearSystemId: $routeParams.gearSystemId });
+        $scope.gearSystem = gearSystem;
 
         $scope.showDeleteConfirm = function (event) {
             var confirm = $mdDialog.confirm()
@@ -112,6 +113,33 @@ mockupControllers.controller("GearSystemCtrl", ["$scope", "$routeParams", "$loca
                             $location.path("/gear/systems");
                         });
                 });
+        }
+
+        function addGearItemDlgCtrl($scope, $mdDialog, GearItem, gearSystem) {
+            $scope.gearSystem = gearSystem;
+            $scope.gearItems = GearItem.query();
+            $scope.selectedGearItems = [];
+
+            $scope.cancel = function() {
+                $mdDialog.cancel();
+            };
+
+            $scope.addGearItems = function() {
+                $mdDialog.hide($scope.selectedGearItems);
+            };
+        }
+
+        $scope.showAddGearItem = function (event) {
+            $mdDialog.show({
+                controller: addGearItemDlgCtrl,
+                templateUrl: "/partials/gear/systems/add-item.html",
+                parent: angular.element(document.body),
+                targetEvent: event,
+                locals: {
+                    gearSystem: gearSystem
+                }
+            }).then(function (gearItems) {
+            });
         }
     }
 ]);

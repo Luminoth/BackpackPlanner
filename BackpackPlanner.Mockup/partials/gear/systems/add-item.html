@@ -1,0 +1,32 @@
+﻿<md-dialog ng-cloak>
+    <md-toolbar layout="row">
+        <div class="md-toolbar-tools" layout="row">
+            <h2>Add Gear Items</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <ng-md-icon icon="close"></ng-md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <form name="addGearItemForm">
+    <div layout="column" layout-padding flex ng-cloak>
+        <p>TODO: filter and sort here</p>
+        <md-dialog-content>
+            <md-list>
+                <md-list-item ng-repeat="gearItem in gearItems">
+                    <md-checkbox ng-model="selectedGearItems" name="selectedGearItems">
+                        Item: {{ gearItem.Name }}
+                    </md-checkbox>
+                </md-list-item>
+            </md-list>
+        </md-dialog-content>
+        <div layout="row">
+            <span flex></span>
+            <md-button class="md-raised md-primary mockup-button" ng-click="addGearItems()">
+                Add Gear Items
+            </md-button>
+            <span flex></span>
+        </div>
+    </div>
+    </form>
+</md-dialog>
