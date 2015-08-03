@@ -1,5 +1,5 @@
 ﻿<form name="gearItemForm">
-<div layout="column" flex ng-cloak>
+<div layout="column" layout-padding flex ng-cloak>
     <md-input-container>
         <label>Name</label>
         <input type="text" ng-model="gearItem.Name" required name="name" />
@@ -27,9 +27,9 @@
         <md-radio-button value="NotCarried">Not Carried</md-radio-button>
     </md-radio-group>
     <div layout="row" layout-sm="column" flex ng-show="'NotCarried' != gearItem.Carried">
-        <md-checkbox ng-model="gearItem.IsConsumable" name="consumable">
+        <md-switch ng-model="gearItem.IsConsumable" name="consumable">
             Consumable
-        </md-checkbox>
+        </md-switch>
         <md-input-container ng-show="true == gearItem.IsConsumable">
             <label>Consumed per Day</label>
             <input type="number" ng-model="gearItem.ConsumedPerDay" name="consumedPerDay" />

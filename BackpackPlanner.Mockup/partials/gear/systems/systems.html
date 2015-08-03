@@ -1,21 +1,24 @@
-﻿<div layout="column" flex ng-cloak>
-    <div layout="column" layout-padding>
-        <md-input-container md-no-float flex>
-            <input type="text" ng-model="filter.Name" name="filter" placeholder="Filter" />
-        </md-input-container>
-        <label>Sort by</label>
-        <md-radio-group ng-model="orderBy" layout="row">
-            <md-radio-button value="Name">Name</md-radio-button>
-            <md-radio-button value="-WeightInOunces">Weight</md-radio-button>
-            <md-radio-button value="-CostInUSD">Cost</md-radio-button>
-        </md-radio-group>
-    </div>
+﻿<div layout="column" layout-padding flex ng-cloak>
+    <md-input-container md-no-float flex>
+        <input type="text" ng-model="filter.Name" name="filter" placeholder="Filter" />
+    </md-input-container>
+    <label>Sort by</label>
+    <md-radio-group ng-model="orderBy" layout="row">
+        <md-radio-button value="Name">Name</md-radio-button>
+        <md-radio-button value="-NumberOfItems">Items</md-radio-button>
+        <md-radio-button value="-WeightInOunces">Weight</md-radio-button>
+        <md-radio-button value="-CostInUSD">Cost</md-radio-button>
+    </md-radio-group>
     <md-button class="mockup-card-button" layout-fill ng-repeat="gearSystem in gearSystems | filter:filter | orderBy:orderBy" href="#/gear/systems/{{ gearSystem.Id}} ">
         <md-card class="mockup-card" flex>
             <md-card-content class="mockup-card-content">
                 <h2 class="md-title">{{ gearSystem.Name }}</h2>
             </md-card-content>
-            <p layout-padding>TODO: More Information</p>
+            <div layout="row" layout-sm="column">
+                <p layout-padding>Number of items: {{ gearSystem.NumberOfItems }}</p>
+                <p layout-padding>Weight: {{ gearSystem.WeightInOunces }} Ounces</p>
+                <p layout-padding>Cost: ${{ gearSystem.CostInUSD }} USD</p>
+            </div>
         </md-card>
     </md-button>
     <md-button class="md-fab md-primary md-hue-1 mockup-add-button" href="#/gear/systems/add">

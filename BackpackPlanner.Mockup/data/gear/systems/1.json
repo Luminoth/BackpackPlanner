@@ -3,5 +3,7 @@
     "Name": "Gear System",
     "GearItems": [
     ],
+    "WeightInOunces": 1,
+    "CostInUSD": 3,
     "Note": "This is a gear system"
 }

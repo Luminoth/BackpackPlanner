@@ -81,6 +81,7 @@ mockupControllers.controller("AddGearItemCtrl", ["$scope", "$location",
 mockupControllers.controller("GearSystemsCtrl", ["$scope", "GearSystem",
     function ($scope, GearSystem) {
         $scope.gearSystems = GearSystem.query();
+        $scope.orderBy = "Name";
     }
 ]);
 

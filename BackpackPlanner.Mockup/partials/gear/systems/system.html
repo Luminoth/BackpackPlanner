@@ -1,5 +1,5 @@
 ﻿<form name="gearSystemForm">
-<div layout="column" flex ng-cloak>
+<div layout="column" layout-padding flex ng-cloak>
     <md-input-container>
         <label>Name</label>
         <input type="text" ng-model="gearSystem.Name" required name="name" />
@@ -7,7 +7,19 @@
             <div ng-message="required">The gear system name is required</div>
         </div>
     </md-input-container>
-    <p>TODO: items</p>
+    <label>Gear Items</label>
+    <p ng-show="gearSystem.NumberOfItems < 1">No Gear Items</p>
+    <md-list ng-show="gearSystem.NumberOfItems > 0" style="border: solid 1px black;">
+        <md-list-item ng-repeat="gearItem in gearSystem.GearItems">
+        </md-list-item>
+    </md-list>
+    <div layout="row">
+        <div flex></div>
+        <md-button class="md-raised md-primary mockup-button">
+            Add Gear Item
+        </md-button>
+        <div flex></div>
+    </div>
     <md-input-container>
         <label>Note</label>
         <textarea ng-model="gearSystem.Note" name="note"></textarea>

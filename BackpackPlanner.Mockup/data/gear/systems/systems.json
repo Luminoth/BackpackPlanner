@@ -2,6 +2,8 @@
     {
         "Id": 1,
         "Name": "Gear System",
-        "NumberOfItems": 1
+        "NumberOfItems": 0,
+        "WeightInOunces": 1,
+        "CostInUSD": 3
     }
 ]
