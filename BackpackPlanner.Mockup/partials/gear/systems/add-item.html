@@ -10,15 +10,13 @@
     </md-toolbar>
     <form name="addGearItemForm">
     <div layout="column" layout-padding flex ng-cloak>
-        <p>TODO: filter and sort here</p>
-        <md-dialog-content>
-            <md-list>
-                <md-list-item ng-repeat="gearItem in gearItems">
-                    <md-checkbox ng-model="selectedGearItems" name="selectedGearItems">
-                        Item: {{ gearItem.Name }}
-                    </md-checkbox>
-                </md-list-item>
-            </md-list>
+        <md-input-container md-no-float flex>
+            <input type="text" ng-model="filter.Name" name="filter" placeholder="Filter" />
+        </md-input-container>
+        <md-dialog-content layout="column">
+            <md-checkbox ng-repeat="gearItem in gearItems | filter:filter | orderBy:orderBy" ng-model="selectedGearItems" name="selectedGearItems">
+                <span style="white-space: nowrap;">{{ gearItem.Name }}</span>
+            </md-checkbox>
         </md-dialog-content>
         <div layout="row">
             <span flex></span>

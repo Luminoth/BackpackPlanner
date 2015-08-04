@@ -1,13 +1,17 @@
 ﻿var mockupControllers = angular.module("mockupControllers", []);
 
-mockupControllers.controller("AppCtrl", ["$scope", "$location", "$mdSidenav", "AppSettings", "UserInfo",
-    function($scope, $location, $mdSidenav, AppSettings, UserInfo) {
+mockupControllers.controller("AppCtrl", ["$scope", "$location", "$mdSidenav", "AppSettings", "UserInfo", "GearItem", "GearSystem",
+    function($scope, $location, $mdSidenav, AppSettings, UserInfo, GearItem, GearSystem) {
         $scope.appSettings = AppSettings.get();
 
         // TODO: this keeps giving an error, I dunno what to do to fix it
         var userInfo = UserInfo.get();
         userInfo.BirthDate = new Date(userInfo.BirthDate);
         $scope.userInfo = userInfo;
+
+        // load the data globally to better simulate the application working
+        $scope.gearItems = GearItem.query();
+        $scope.gearSystems = GearSystem.query();
 
         $scope.isActive = function(viewLocation) {
             // set the nav item as active when we're looking at its location
@@ -22,9 +26,8 @@ mockupControllers.controller("AppCtrl", ["$scope", "$location", "$mdSidenav", "A
 
 /* gear items */
 
-mockupControllers.controller("GearItemsCtrl", ["$scope", "GearItem",
-    function ($scope, GearItem) {
-        $scope.gearItems = GearItem.query();
+mockupControllers.controller("GearItemsCtrl", ["$scope",
+    function ($scope) {
         $scope.orderBy = "Name";
     }
 ]);
@@ -53,6 +56,7 @@ mockupControllers.controller("GearItemCtrl", ["$scope", "$routeParams", "$locati
                 function () {
                     $mdDialog.show(receipt).then(
                         function () {
+                            //$scope.gearItems.splice(index, 1);
                             $location.path("/gear/items");
                         });
                 });
@@ -71,6 +75,7 @@ mockupControllers.controller("AddGearItemCtrl", ["$scope", "$location",
 
         $scope.addItem = function(gearItem) {
             $scope.gearItem = angular.copy(gearItem);
+            $scope.gearItems.push($scope.gearItem);
             $location.path("/gear/items");
         }
     }
@@ -78,17 +83,15 @@ mockupControllers.controller("AddGearItemCtrl", ["$scope", "$location",
 
 /* gear systems */
 
-mockupControllers.controller("GearSystemsCtrl", ["$scope", "GearSystem",
-    function ($scope, GearSystem) {
-        $scope.gearSystems = GearSystem.query();
+mockupControllers.controller("GearSystemsCtrl", ["$scope",
+    function ($scope) {
         $scope.orderBy = "Name";
     }
 ]);
 
 mockupControllers.controller("GearSystemCtrl", ["$scope", "$routeParams", "$location", "$mdDialog", "GearSystem",
     function ($scope, $routeParams, $location, $mdDialog, GearSystem) {
-        var gearSystem = GearSystem.get({ gearSystemId: $routeParams.gearSystemId });
-        $scope.gearSystem = gearSystem;
+        $scope.gearSystem = GearSystem.get({ gearSystemId: $routeParams.gearSystemId });
 
         $scope.showDeleteConfirm = function (event) {
             var confirm = $mdDialog.confirm()
@@ -110,14 +113,16 @@ mockupControllers.controller("GearSystemCtrl", ["$scope", "$routeParams", "$loca
                 function () {
                     $mdDialog.show(receipt).then(
                         function () {
+                            //$scope.gearSystems.splice(index, 1);
                             $location.path("/gear/systems");
                         });
                 });
         }
 
-        function addGearItemDlgCtrl($scope, $mdDialog, GearItem, gearSystem) {
+        function addGearItemDlgCtrl($scope, $mdDialog, gearSystem, gearItems) {
             $scope.gearSystem = gearSystem;
-            $scope.gearItems = GearItem.query();
+            $scope.gearItems = gearItems;
+            $scope.orderBy = "Name";
             $scope.selectedGearItems = [];
 
             $scope.cancel = function() {
@@ -125,6 +130,7 @@ mockupControllers.controller("GearSystemCtrl", ["$scope", "$routeParams", "$loca
             };
 
             $scope.addGearItems = function() {
+                // TODO: how???
                 $mdDialog.hide($scope.selectedGearItems);
             };
         }
@@ -136,9 +142,12 @@ mockupControllers.controller("GearSystemCtrl", ["$scope", "$routeParams", "$loca
                 parent: angular.element(document.body),
                 targetEvent: event,
                 locals: {
-                    gearSystem: gearSystem
+                    gearSystem: $scope.gearSystem,
+                    gearItems: $scope.gearItems
                 }
             }).then(function (gearItems) {
+                alert(gearItems);
+                $scope.gearSystem.gearItems.push(gearItems);
             });
         }
     }
@@ -151,6 +160,7 @@ mockupControllers.controller("AddGearSystemCtrl", ["$scope", "$location",
 
         $scope.addSystem = function(gearSystem) {
             $scope.gearSystem = angular.copy(gearSystem);
+            $scope.gearSystems.push($scope.gearSystem);
             $location.path("/gear/systems");
         }
     }
