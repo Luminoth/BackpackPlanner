@@ -14,17 +14,10 @@
             <input type="text" ng-model="filter.Name" name="filter" placeholder="Filter" />
         </md-input-container>
         <md-dialog-content layout="column">
-            <md-checkbox ng-repeat="gearItem in gearItems | filter:filter | orderBy:orderBy" ng-model="selectedGearItems" name="selectedGearItems">
+            <md-checkbox ng-repeat="gearItem in gearItems | filter:filter | orderBy:orderBy" ng-checked="isSelected(gearItem)" ng-click="toggle(gearItem)">
                 <span style="white-space: nowrap;">{{ gearItem.Name }}</span>
             </md-checkbox>
         </md-dialog-content>
-        <div layout="row">
-            <span flex></span>
-            <md-button class="md-raised md-primary mockup-button" ng-click="addGearItems()">
-                Add Gear Items
-            </md-button>
-            <span flex></span>
-        </div>
     </div>
     </form>
 </md-dialog>

@@ -18,16 +18,16 @@ mockupServices.factory("UserInfo", ["$resource",
 
 mockupServices.factory("GearItem", ["$resource",
     function ($resource) {
-        return $resource("data/gear/items/:gearItemId.json", {}, {
-            query: { method: "GET", params: { gearItemId: "items" }, isArray: true }
+        return $resource("data/gear/items.json", {}, {
+            query: { method: "GET", isArray: true }
         });
     }
 ]);
 
 mockupServices.factory("GearSystem", ["$resource",
     function ($resource) {
-        return $resource("data/gear/systems/:gearSystemId.json", {}, {
-            query: { method: "GET", params: { gearSystemId: "systems" }, isArray: true }
+        return $resource("data/gear/systems.json", {}, {
+            query: { method: "GET", isArray: true }
         });
     }
 ]);

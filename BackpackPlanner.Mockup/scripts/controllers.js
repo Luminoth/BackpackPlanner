@@ -32,9 +32,8 @@ mockupControllers.controller("GearItemsCtrl", ["$scope",
     }
 ]);
 
-mockupControllers.controller("GearItemCtrl", ["$scope", "$routeParams", "$location", "$mdDialog", "GearItem",
-    function ($scope, $routeParams, $location, $mdDialog, GearItem) {
-        $scope.gearItem = GearItem.get({ gearItemId: $routeParams.gearItemId });
+mockupControllers.controller("GearItemCtrl", ["$scope", "$routeParams", "$location", "$mdDialog",
+    function ($scope, $routeParams, $location, $mdDialog) {
 
         $scope.showDeleteConfirm = function (event) {
             var confirm = $mdDialog.confirm()
@@ -56,7 +55,13 @@ mockupControllers.controller("GearItemCtrl", ["$scope", "$routeParams", "$locati
                 function () {
                     $mdDialog.show(receipt).then(
                         function () {
-                            //$scope.gearItems.splice(index, 1);
+                            var idx = $scope.gearItems.indexOf($scope.gearItem);
+                            if(idx > -1) {
+                                $scope.gearItems.splice(idx, 1);
+                            } else {
+                                alert("Couldn't find item to delete!");
+                            }
+                            // TODO: remove the item from the systems, collections, and trip plans it belongs to
                             $location.path("/gear/items");
                         });
                 });
@@ -75,6 +80,7 @@ mockupControllers.controller("AddGearItemCtrl", ["$scope", "$location",
 
         $scope.addItem = function(gearItem) {
             $scope.gearItem = angular.copy(gearItem);
+            //TODO: $scope.gearItem.Id = ???
             $scope.gearItems.push($scope.gearItem);
             $location.path("/gear/items");
         }
@@ -89,9 +95,8 @@ mockupControllers.controller("GearSystemsCtrl", ["$scope",
     }
 ]);
 
-mockupControllers.controller("GearSystemCtrl", ["$scope", "$routeParams", "$location", "$mdDialog", "GearSystem",
-    function ($scope, $routeParams, $location, $mdDialog, GearSystem) {
-        $scope.gearSystem = GearSystem.get({ gearSystemId: $routeParams.gearSystemId });
+mockupControllers.controller("GearSystemCtrl", ["$scope", "$routeParams", "$location", "$mdDialog",
+    function ($scope, $routeParams, $location, $mdDialog) {
 
         $scope.showDeleteConfirm = function (event) {
             var confirm = $mdDialog.confirm()
@@ -113,7 +118,13 @@ mockupControllers.controller("GearSystemCtrl", ["$scope", "$routeParams", "$loca
                 function () {
                     $mdDialog.show(receipt).then(
                         function () {
-                            //$scope.gearSystems.splice(index, 1);
+                            var idx = $scope.gearSystems.indexOf($scope.gearSystem);
+                            if(idx > -1) {
+                                $scope.gearSystems.splice(idx, 1);
+                            } else {
+                                alert("Couldn't find item to delete!");
+                            }
+                            // TODO: remove the system from the collections, and trip plans it belongs to
                             $location.path("/gear/systems");
                         });
                 });
@@ -123,15 +134,26 @@ mockupControllers.controller("GearSystemCtrl", ["$scope", "$routeParams", "$loca
             $scope.gearSystem = gearSystem;
             $scope.gearItems = gearItems;
             $scope.orderBy = "Name";
-            $scope.selectedGearItems = [];
 
             $scope.cancel = function() {
                 $mdDialog.cancel();
             };
 
+            $scope.isSelected = function (gearItem) {
+                return $scope.gearSystem.GearItems.indexOf(gearItem) > -1;
+            }
+
+            $scope.toggle = function (gearItem) {
+                var idx = $scope.gearSystem.GearItems.indexOf(gearItem);
+                if(idx > -1) {
+                    $scope.gearSystem.GearItems.splice(idx, 1);
+                } else {
+                    $scope.gearSystem.GearItems.push(gearItem);
+                }
+            };
+
             $scope.addGearItems = function() {
-                // TODO: how???
-                $mdDialog.hide($scope.selectedGearItems);
+                $mdDialog.hide();
             };
         }
 
@@ -145,9 +167,6 @@ mockupControllers.controller("GearSystemCtrl", ["$scope", "$routeParams", "$loca
                     gearSystem: $scope.gearSystem,
                     gearItems: $scope.gearItems
                 }
-            }).then(function (gearItems) {
-                alert(gearItems);
-                $scope.gearSystem.gearItems.push(gearItems);
             });
         }
     }
@@ -156,10 +175,12 @@ mockupControllers.controller("GearSystemCtrl", ["$scope", "$routeParams", "$loca
 mockupControllers.controller("AddGearSystemCtrl", ["$scope", "$location",
     function ($scope, $location) {
         $scope.gearSystem = {
+            GearItems: []
         }
 
         $scope.addSystem = function(gearSystem) {
             $scope.gearSystem = angular.copy(gearSystem);
+            //TODO: $scope.gearSystem.Id = ???
             $scope.gearSystems.push($scope.gearSystem);
             $location.path("/gear/systems");
         }

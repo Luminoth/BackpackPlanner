@@ -8,9 +8,10 @@
         </div>
     </md-input-container>
     <label>Gear Items</label>
-    <p ng-show="gearSystem.NumberOfItems < 1">No Gear Items</p>
-    <md-list ng-show="gearSystem.NumberOfItems > 0" style="border: solid 1px black;">
+    <p ng-show="gearSystem.GearItems.length < 1">No Gear Items</p>
+    <md-list ng-show="gearSystem.GearItems.length > 0">
         <md-list-item ng-repeat="gearItem in gearSystem.GearItems">
+            {{ gearItem.Name }}
         </md-list-item>
     </md-list>
     <div layout="row">
