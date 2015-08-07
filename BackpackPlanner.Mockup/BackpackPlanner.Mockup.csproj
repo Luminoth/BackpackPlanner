@@ -25,6 +25,7 @@
     <Content Include="app.css">
       <DependentUpon>app.scss</DependentUpon>
     </Content>
+    <None Include="data\gear\collections.json" />
     <Content Include="partials\gear\items\add.html" />
     <Content Include="partials\gear\items\item.html" />
     <Content Include="partials\gear\systems\add-item.html" />
@@ -43,9 +44,14 @@
     <Content Include="app.min.css">
       <DependentUpon>app.css</DependentUpon>
     </Content>
+    <Content Include="scripts\gear\collections.js" />
     <Content Include="scripts\controllers.js" />
     <Content Include="index.html" />
+    <Content Include="scripts\gear\items.js" />
     <Content Include="scripts\services.js" />
+    <Content Include="scripts\gear\systems.js" />
+    <Content Include="scripts\trip\itineraries.js" />
+    <Content Include="scripts\trip\plans.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
