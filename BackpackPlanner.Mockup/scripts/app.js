@@ -1,10 +1,13 @@
 ﻿var mockupApp = angular.module("mockupApp", [
-    "ngRoute",
+    "ngAnimate",
     "ngAria",
+    "ngMessages",
+    "ngResource",
+    "ngRoute",
+    "ngSanitize",
+    //"ngTouch",        // this breaks md-button ng-click operation
     "ngMaterial",
     "ngMdIcons",
-    "ngMessages",
-    //"ngTouch",        // this breaks md-button ng-click operation
     "ui.bootstrap",
 
     "mockupControllers",
@@ -23,90 +26,106 @@ mockupApp.run(["$rootScope",
 
 mockupApp.config(["$routeProvider",
     function($routeProvider) {
-        $routeProvider.when("/index", {
-            templateUrl: "partials/main.html",
+        $routeProvider.when("/", {
+            redirectTo: "/index"
+        })
+        .when("/index", {
+            templateUrl: "content/partials/main.html",
             title: "Backpacking Planner"
         })
 
         // gear items
         .when("/gear/items", {
-            templateUrl: "partials/gear/items/items.html",
+            templateUrl: "content/partials/gear/items/items.html",
             controller: "GearItemsCtrl",
             title: "Gear Items"
         })
         .when("/gear/items/add", {
-            templateUrl: "partials/gear/items/add.html",
+            templateUrl: "content/partials/gear/items/add.html",
             controller: "AddGearItemCtrl",
             title: "Add a Gear Item"
         })
         .when("/gear/items/:gearItemId", {
-            templateUrl: "partials/gear/items/item.html",
+            templateUrl: "content/partials/gear/items/item.html",
             controller: "GearItemCtrl",
             title: "Gear Item"
         })
 
         // gear systems
         .when("/gear/systems", {
-            templateUrl: "partials/gear/systems/systems.html",
+            templateUrl: "content/partials/gear/systems/systems.html",
             controller: "GearSystemsCtrl",
             title: "Gear Systems"
         })
         .when("/gear/systems/add", {
-            templateUrl: "partials/gear/systems/add.html",
+            templateUrl: "content/partials/gear/systems/add.html",
             controller: "AddGearSystemCtrl",
             title: "Add a Gear System"
         })
         .when("/gear/systems/:gearSystemId", {
-            templateUrl: "partials/gear/systems/system.html",
+            templateUrl: "content/partials/gear/systems/system.html",
             controller: "GearSystemCtrl",
             title: "Gear System"
         })
 
         // gear collections
         .when("/gear/collections", {
-            templateUrl: "partials/gear/collections/collections.html",
+            templateUrl: "content/partials/gear/collections/collections.html",
             controller: "GearCollectionsCtrl",
             title: "Gear Collections"
         })
         .when("/gear/collections/add", {
-            templateUrl: "partials/gear/collections/add.html",
+            templateUrl: "content/partials/gear/collections/add.html",
             controller: "AddGearCollectionCtrl",
             title: "Add a Gear Collection"
         })
         .when("/gear/collections/:gearCollectionId", {
-            templateUrl: "partials/gear/collections/collection.html",
+            templateUrl: "content/partials/gear/collections/collection.html",
             controller: "GearCollectionCtrl",
             title: "Gear Collection"
         })
 
+        // meals
+        .when("/meals", {
+            templateUrl: "content/partials/meals.html",
+            title: "Meals"
+        })
+
         // trip itineraries
         .when("/trip/itineraries", {
-            templateUrl: "partials/trip/itineraries/itineraries.html",
+            templateUrl: "content/partials/trip/itineraries/itineraries.html",
             title: "Trip Itineraries"
         })
 
         // trip plans
         .when("/trip/plans", {
-            templateUrl: "partials/trip/plans/plans.html",
+            templateUrl: "content/partials/trip/plans/plans.html",
             title: "Trip Plans"
         })
 
         // personal information and settings
         .when("/personal", {
-            templateUrl: "partials/personal.html",
+            templateUrl: "content/partials/personal.html",
             title: "Personal Information"
         })
         .when("/settings", {
-            templateUrl: "partials/settings.html",
+            templateUrl: "content/partials/settings.html",
             title: "Settings"
         })
         .when("/help", {
-            templateUrl: "partials/help.html",
+            templateUrl: "content/partials/help.html",
             title: "Help"
         })
 
+        .when("/404", {
+            templateUrl: "content/partials/404.html",
+            title: "Backpacking Planner"
+        }).when("/500", {
+            templateUrl: "content/partials/500.html",
+            title: "Backpacking Planner"
+        })
         .otherwise({
-            redirectTo: "/index"
+            redirectTo: "/404"
         });
     }
 ]);

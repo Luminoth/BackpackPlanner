@@ -14,6 +14,9 @@ mockupControllers.controller("AppCtrl", ["$scope", "$location", "$mdSidenav",
         $scope.gearItems = GearItem.query();
         $scope.gearSystems = GearSystem.query();
         $scope.gearCollections = GearCollection.query();
+        $scope.meals = [];
+        $scope.tripItineraries = [];
+        $scope.tripPlans = [];
 
         $scope.isActive = function(viewLocation) {
             // set the nav item as active when we're looking at its location
@@ -229,7 +232,7 @@ mockupControllers.controller("GearSystemCtrl", ["$scope", "$routeParams", "$loca
         $scope.showAddGearItem = function (event) {
             $mdDialog.show({
                 controller: addGearItemDlgCtrl,
-                templateUrl: "partials/gear/systems/add-item.html",
+                templateUrl: "content/partials/gear/systems/add-item.html",
                 parent: angular.element(document.body),
                 targetEvent: event,
                 locals: {

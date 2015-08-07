@@ -22,28 +22,31 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app.css">
-      <DependentUpon>app.scss</DependentUpon>
-    </Content>
+    <Content Include="content\mockup.js.map" />
     <None Include="data\gear\collections.json" />
-    <Content Include="partials\gear\items\add.html" />
-    <Content Include="partials\gear\items\item.html" />
-    <Content Include="partials\gear\systems\add-item.html" />
-    <Content Include="partials\gear\systems\add.html" />
-    <Content Include="partials\gear\systems\system.html" />
-    <Content Include="partials\help.html" />
-    <Content Include="partials\gear\collections\collections.html" />
-    <Content Include="partials\gear\items\items.html" />
-    <Content Include="partials\gear\systems\systems.html" />
-    <Content Include="partials\main.html" />
-    <Content Include="partials\personal.html" />
-    <Content Include="partials\settings.html" />
-    <Content Include="partials\trip\itineraries\itineraries.html" />
-    <Content Include="partials\trip\plans\plans.html" />
-    <Content Include="scripts\app.js" />
-    <Content Include="app.min.css">
+    <Content Include="content\app.css" />
+    <Content Include="content\app.min.css">
       <DependentUpon>app.css</DependentUpon>
     </Content>
+    <Content Include="content\mockup.js" />
+    <Content Include="content\partials\404.html" />
+    <Content Include="content\partials\500.html" />
+    <Content Include="content\partials\gear\items\add.html" />
+    <Content Include="content\partials\gear\items\item.html" />
+    <Content Include="content\partials\gear\systems\add-item.html" />
+    <Content Include="content\partials\gear\systems\add.html" />
+    <Content Include="content\partials\gear\systems\system.html" />
+    <Content Include="content\partials\help.html" />
+    <Content Include="content\partials\gear\collections\collections.html" />
+    <Content Include="content\partials\gear\items\items.html" />
+    <Content Include="content\partials\gear\systems\systems.html" />
+    <Content Include="content\partials\main.html" />
+    <Content Include="content\partials\meals.html" />
+    <Content Include="content\partials\personal.html" />
+    <Content Include="content\partials\settings.html" />
+    <Content Include="content\partials\trip\itineraries\itineraries.html" />
+    <Content Include="content\partials\trip\plans\plans.html" />
+    <Content Include="scripts\app.js" />
     <Content Include="scripts\gear\collections.js" />
     <Content Include="scripts\controllers.js" />
     <Content Include="index.html" />
@@ -61,6 +64,7 @@
     <Content Include="data\user.json" />
     <Content Include="data\gear\systems.json" />
     <Content Include="data\settings.json" />
+    <Content Include="packages.config" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -68,7 +72,25 @@
       <DependentUpon>web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="app\controllers\" />
+    <Folder Include="app\models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="app\App.ts" />
+    <TypeScriptCompile Include="app\RootScopeConfig.ts" />
+    <TypeScriptCompile Include="app\RouteConfig.ts" />
+    <TypeScriptCompile Include="app\ThemeConfig.ts" />
+    <TypeScriptCompile Include="scripts\typings\angular-material\angular-material.d.ts" />
+    <TypeScriptCompile Include="scripts\typings\angularjs\angular-animate.d.ts" />
+    <TypeScriptCompile Include="scripts\typings\angularjs\angular-cookies.d.ts" />
+    <TypeScriptCompile Include="scripts\typings\angularjs\angular-mocks.d.ts" />
+    <TypeScriptCompile Include="scripts\typings\angularjs\angular-resource.d.ts" />
+    <TypeScriptCompile Include="scripts\typings\angularjs\angular-route.d.ts" />
+    <TypeScriptCompile Include="scripts\typings\angularjs\angular-sanitize.d.ts" />
+    <TypeScriptCompile Include="scripts\typings\angularjs\angular.d.ts" />
+    <TypeScriptCompile Include="scripts\typings\jquery\jquery.d.ts" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
   </PropertyGroup>
@@ -100,9 +122,9 @@
     <TypeScriptSourceMap>true</TypeScriptSourceMap>
     <TypeScriptTarget>ES5</TypeScriptTarget>
     <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
-    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptNoImplicitAny>True</TypeScriptNoImplicitAny>
     <TypeScriptModuleKind>None</TypeScriptModuleKind>
-    <TypeScriptOutFile>scripts/mockup.js</TypeScriptOutFile>
+    <TypeScriptOutFile>content/mockup.js</TypeScriptOutFile>
     <TypeScriptOutDir />
     <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
     <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
@@ -116,7 +138,7 @@
     <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
     <TypeScriptNoImplicitAny>True</TypeScriptNoImplicitAny>
     <TypeScriptModuleKind>None</TypeScriptModuleKind>
-    <TypeScriptOutFile>scripts/mockup.js</TypeScriptOutFile>
+    <TypeScriptOutFile>content/mockup.js</TypeScriptOutFile>
     <TypeScriptOutDir />
     <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
     <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
