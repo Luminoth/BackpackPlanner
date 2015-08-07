@@ -8,7 +8,7 @@
         </div>
     </md-input-container>
     <label>Gear Items</label>
-    <p ng-show="gearSystem.GearItems.length < 1">No Gear Items</p>
+    <p ng-show="gearSystem.GearItems.length < 1">You have no gear items in this system! Try adding one!</p>
     <md-list ng-show="gearSystem.GearItems.length > 0">
         <md-list-item ng-repeat="gearItem in gearSystem.GearItems">
             {{ gearItem.Name }}

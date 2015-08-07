@@ -1,3 +1,31 @@
 ﻿<div layout="column" layout-padding flex ng-cloak>
-    Gear Collections
+    <div ng-show="gearCollections.length < 1">You have no gear collections! Try adding one!</div>
+    <div layout="column" flex ng-show="gearCollections.length > 0">
+        <md-input-container md-no-float flex>
+            <input type="text" ng-model="filter.Name" name="filter" placeholder="Filter" />
+        </md-input-container>
+        <label>Sort by</label>
+        <md-radio-group ng-model="orderBy" layout="row">
+            <md-radio-button value="Name">Name</md-radio-button>
+            <md-radio-button value="-(GearSystems.length + GearItems.length)">Items</md-radio-button>
+            <md-radio-button value="-WeightInOunces">Weight</md-radio-button>
+            <md-radio-button value="-CostInUSD">Cost</md-radio-button>
+        </md-radio-group>
+        <md-button class="mockup-card-button" layout-fill ng-repeat="gearCollection in gearCollections | filter:filter | orderBy:orderBy" href="#/gear/collections/{{ gearCollection.Id}} ">
+            <md-card class="mockup-card" flex>
+                <md-card-content class="mockup-card-content">
+                    <h2 class="md-title">{{ gearCollection.Name }}</h2>
+                </md-card-content>
+                <div layout="row" layout-sm="column">
+                    <p layout-padding>Number of systems: {{ gearCollection.GearSystems.length }}</p>
+                    <p layout-padding>Number of items: {{ gearCollection.GearItems.length }}</p>
+                    <p layout-padding>Weight: {{ gearCollection.WeightInOunces }} Ounces</p>
+                    <p layout-padding>Cost: ${{ gearCollection.CostInUSD }} USD</p>
+                </div>
+            </md-card>
+        </md-button>
+    </div>
+    <md-button class="md-fab md-primary md-hue-1 mockup-add-button" href="#/gear/systems/add">
+        <ng-md-icon icon="add" style="fill: white"></ng-md-icon>
+    </md-button>
 </div>

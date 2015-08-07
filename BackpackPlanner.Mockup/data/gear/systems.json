@@ -1,20 +1,34 @@
 ﻿[
     {
         "Id": 1,
-        "Name": "Gear System",
+        "Name": "Carried System",
         "GearItems": [
+            {
+                "Id": 1,
+                "Name": "Carried Consumable Item",
+                "WeightInOunces": 3,
+                "CostInUSD": 5
+            },
+            {
+                "Id": 2,
+                "Name": "Carried Item",
+                "WeightInOunces": 1,
+                "CostInUSD": 10
+            }
         ],
-        "WeightInOunces": 1,
-        "CostInUSD": 3,
-        "Note": "This is a gear system"
+        "Note": "This is a carried gear system"
     },
     {
         "Id": 2,
         "Name": "Gear System",
         "GearItems": [
+            {
+                "Id": 3,
+                "Name": "Leave this in the car",
+                "WeightInOunces": 2,
+                "CostInUSD": 3
+            }
         ],
-        "WeightInOunces": 1,
-        "CostInUSD": 3,
-        "Note": "This is a gear system"
+        "Note": "This is non-carried a gear system"
     }
 ]

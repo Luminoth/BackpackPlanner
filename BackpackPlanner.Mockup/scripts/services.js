@@ -31,3 +31,11 @@ mockupServices.factory("GearSystem", ["$resource",
         });
     }
 ]);
+
+mockupServices.factory("GearCollection", ["$resource",
+    function ($resource) {
+        return $resource("data/gear/collections.json", {}, {
+            query: { method: "GET", isArray: true }
+        });
+    }
+]);

@@ -65,7 +65,18 @@ mockupApp.config(["$routeProvider",
         // gear collections
         .when("/gear/collections", {
             templateUrl: "partials/gear/collections/collections.html",
+            controller: "GearCollectionsCtrl",
             title: "Gear Collections"
+        })
+        .when("/gear/collections/add", {
+            templateUrl: "partials/gear/collections/add.html",
+            controller: "AddGearCollectionCtrl",
+            title: "Add a Gear Collection"
+        })
+        .when("/gear/collections/:gearCollectionId", {
+            templateUrl: "partials/gear/collections/collection.html",
+            controller: "GearCollectionCtrl",
+            title: "Gear Collection"
         })
 
         // trip itineraries

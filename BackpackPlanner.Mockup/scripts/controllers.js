@@ -1,41 +1,8 @@
-﻿function findGearItemById($filter, gearItems, gearItemId) {
-    var foundItems = $filter("filter")(gearItems, { Id: parseInt(gearItemId) }, true);
-    return foundItems.length > 0 ? foundItems[0] : null;
-}
+﻿var mockupControllers = angular.module("mockupControllers", []);
 
-function deleteGearItem(gearItems, gearSystems, gearItem) {
-    var idx = gearItems.indexOf(gearItem);
-    if(idx < 0) {
-        return false;
-    }
-    gearItems.splice(idx, 1);
-
-    // TODO: remove the item from the systems, collections, and trip plans it belongs to
-
-    return true;
-}
-
-function findGearSystemById($filter, gearSystems, gearSystemId) {
-    var foundSystems = $filter("filter")(gearSystems, { Id: parseInt(gearSystemId) }, true);
-    return foundSystems.length > 0 ? foundSystems[0] : null;
-}
-
-function deleteGearSystem(gearSystems, gearSystem) {
-    var idx = gearSystems.indexOf(gearSystem);
-    if(idx < 0) {
-        return false;
-    }
-    gearSystems.splice(idx, 1);
-
-    // TODO: remove the system from the collections, and trip plans it belongs to
-
-    return true;
-}
-
-var mockupControllers = angular.module("mockupControllers", []);
-
-mockupControllers.controller("AppCtrl", ["$scope", "$location", "$mdSidenav", "AppSettings", "UserInfo", "GearItem", "GearSystem",
-    function($scope, $location, $mdSidenav, AppSettings, UserInfo, GearItem, GearSystem) {
+mockupControllers.controller("AppCtrl", ["$scope", "$location", "$mdSidenav",
+    "AppSettings", "UserInfo", "GearItem", "GearSystem", "GearCollection",
+    function($scope, $location, $mdSidenav, AppSettings, UserInfo, GearItem, GearSystem, GearCollection) {
         $scope.appSettings = AppSettings.get();
 
         // TODO: this keeps giving an error, I dunno what to do to fix it
@@ -46,6 +13,7 @@ mockupControllers.controller("AppCtrl", ["$scope", "$location", "$mdSidenav", "A
         // load the data globally to better simulate the application working
         $scope.gearItems = GearItem.query();
         $scope.gearSystems = GearSystem.query();
+        $scope.gearCollections = GearCollection.query();
 
         $scope.isActive = function(viewLocation) {
             // set the nav item as active when we're looking at its location
@@ -58,7 +26,7 @@ mockupControllers.controller("AppCtrl", ["$scope", "$location", "$mdSidenav", "A
     }
 ]);
 
-/* gear items */
+/* Gear Item Controllers */
 
 mockupControllers.controller("GearItemsCtrl", ["$scope",
     function ($scope) {
@@ -66,9 +34,9 @@ mockupControllers.controller("GearItemsCtrl", ["$scope",
     }
 ]);
 
-mockupControllers.controller("GearItemCtrl", ["$scope", "$routeParams", "$location", "$filter", "$mdDialog", "$mdToast",
-    function ($scope, $routeParams, $location, $filter, $mdDialog, $mdToast) {
-        var gearItem = findGearItemById($filter, $scope.gearItems, $routeParams.gearItemId);
+mockupControllers.controller("GearItemCtrl", ["$scope", "$routeParams", "$location", "$mdDialog", "$mdToast",
+    function ($scope, $routeParams, $location, $mdDialog, $mdToast) {
+        var gearItem = getGearItemById($scope.gearItems, $routeParams.gearItemId);
         if(null == gearItem) {
             alert("The gear item does not exist!");
             $location.path("/gear/items");
@@ -106,7 +74,7 @@ mockupControllers.controller("GearItemCtrl", ["$scope", "$routeParams", "$locati
                 function () {
                     $mdDialog.show(receipt).then(
                         function () {
-                            if(!deleteGearItem($scope.gearItems, $scope.gearSystems, $scope.gearItem)) {
+                            if(!deleteGearItem($scope.gearItems, $scope.gearSystems, $scope.gearCollections, $scope.gearItem)) {
                                 alert("Couldn't find the gear item to delete!");
                                 return;
                             }
@@ -151,24 +119,32 @@ mockupControllers.controller("AddGearItemCtrl", ["$scope", "$location", "$mdToas
 
             $location.path("/gear/items");
             $mdToast.show(addToast).then(function() {
-                deleteGearItem($scope.gearItems, $scope.gearSystems, $scope.gearItem);
+                deleteGearItem($scope.gearItems, $scope.gearSystems, $scope.gearCollections, $scope.gearItem);
                 $mdToast.show(undoAddToast);
             });
         }
     }
 ]);
 
-/* gear systems */
+/* Gear System Controllers */
 
 mockupControllers.controller("GearSystemsCtrl", ["$scope",
     function ($scope) {
         $scope.orderBy = "Name";
+
+        $scope.getWeightInOunces = function(gearSystem) {
+            return getGearSystemWeightInOunces(gearSystem);
+        };
+
+        $scope.getCostInUSD = function(gearSystem) {
+            return getGearSystemCostInUSD(gearSystem);
+        };
     }
 ]);
 
-mockupControllers.controller("GearSystemCtrl", ["$scope", "$routeParams", "$location", "$filter", "$mdDialog", "$mdToast",
-    function ($scope, $routeParams, $location, $filter, $mdDialog, $mdToast) {
-        var gearSystem = findGearSystemById($filter, $scope.gearSystems, $routeParams.gearSystemId);
+mockupControllers.controller("GearSystemCtrl", ["$scope", "$routeParams", "$location", "$mdDialog", "$mdToast",
+    function ($scope, $routeParams, $location, $mdDialog, $mdToast) {
+        var gearSystem = getGearSystemById($scope.gearSystems, $routeParams.gearSystemId);
         if(null == gearSystem) {
             alert("The gear system does not exist!");
             $location.path("/gear/system");
@@ -206,7 +182,7 @@ mockupControllers.controller("GearSystemCtrl", ["$scope", "$routeParams", "$loca
                 function () {
                     $mdDialog.show(receipt).then(
                         function () {
-                            if(!deleteGearSystem($scope.gearSystems, $scope.gearSystem)) {
+                            if(!deleteGearSystem($scope.gearSystems, $scope.gearCollections, $scope.gearSystem)) {
                                 alert("Couldn't find the gear system to delete!");
                                 return;
                             }
@@ -233,16 +209,16 @@ mockupControllers.controller("GearSystemCtrl", ["$scope", "$routeParams", "$loca
             };
 
             $scope.isSelected = function (gearItem) {
-                return $scope.gearSystem.GearItems.indexOf(gearItem) > -1;
+                return null != getGearItemById($scope.gearSystem.GearItems, gearItem.Id);
             }
 
             $scope.toggle = function (gearItem) {
-                var idx = $scope.gearSystem.GearItems.indexOf(gearItem);
-                if(idx > -1) {
-                    $scope.gearSystem.GearItems.splice(idx, 1);
-                } else {
+                var idx = getGearItemIndexById($scope.gearSystem.GearItems, gearItem.Id);
+                if(idx < 0) {
                     $scope.gearSystem.GearItems.push(gearItem);
-                }
+                } else {
+                    $scope.gearSystem.GearItems.splice(idx, 1);
+                } 
             };
 
             $scope.addGearItems = function() {
@@ -253,7 +229,7 @@ mockupControllers.controller("GearSystemCtrl", ["$scope", "$routeParams", "$loca
         $scope.showAddGearItem = function (event) {
             $mdDialog.show({
                 controller: addGearItemDlgCtrl,
-                templateUrl: "/partials/gear/systems/add-item.html",
+                templateUrl: "partials/gear/systems/add-item.html",
                 parent: angular.element(document.body),
                 targetEvent: event,
                 locals: {
@@ -288,9 +264,17 @@ mockupControllers.controller("AddGearSystemCtrl", ["$scope", "$location", "$mdTo
 
             $location.path("/gear/systems");
             $mdToast.show(addToast).then(function() {
-                deleteGearSystem($scope.gearSystems, $scope.gearSystem);
+                deleteGearSystem($scope.gearSystems, $scope.gearCollections, $scope.gearSystem);
                 $mdToast.show(undoAddToast);
             });
         }
+    }
+]);
+
+/* Gear Collection Controllers */
+
+mockupControllers.controller("GearCollectionsCtrl", ["$scope",
+    function ($scope) {
+        $scope.orderBy = "Name";
     }
 ]);
