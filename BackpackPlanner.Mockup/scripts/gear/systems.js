@@ -13,8 +13,8 @@ function getGearSystemById(gearSystems, gearSystemId) {
     return idx < 0 ? null : gearSystems[idx];
 }
 
-function deleteGearSystem(gearSystems, gearSystem, gearCollections) {
-    var idx = gearSystems.indexOf(gearSystem);
+function deleteGearSystem(gearSystems, gearCollections, gearSystem) {
+    var idx = getGearSystemIndexById(gearSystems, gearSystem.Id);
     if(idx < 0) {
         return false;
     }

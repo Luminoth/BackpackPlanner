@@ -14,7 +14,7 @@ function getGearItemById(gearItems, gearItemId) {
 }
 
 function deleteGearItem(gearItems, gearSystems, gearCollections, gearItem) {
-    var idx = getGearItemIndexById(gearItems, gearItem);
+    var idx = getGearItemIndexById(gearItems, gearItem.Id);
     if(idx < 0) {
         return false;
     }
