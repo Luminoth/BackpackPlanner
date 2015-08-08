@@ -1,4 +1,5 @@
 ﻿///<reference path="../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../scripts/typings/angularjs/angular-route.d.ts" />
 
 module BackpackPlanner.Mockup {
     "use strict";
@@ -7,11 +8,14 @@ module BackpackPlanner.Mockup {
         title: string;
     }
 
+    export interface ICustomRoute extends ng.route.ICurrentRoute {
+        title: string;
+    }
+
     export class RootScopeConfig {
         constructor($rootScope: IRootScope) {
             $rootScope.$on("$routeChangeSuccess",
-                // TODO: find a way to make current/previous static typed
-                (event : ng.IAngularEvent, currentRoute : any, previousRoute : any) => {
+                (event: ng.IAngularEvent, currentRoute: ICustomRoute, previousRoute: ICustomRoute) => {
                     // change the app menu title when the route changes
                     $rootScope.title = currentRoute.title;
                 });

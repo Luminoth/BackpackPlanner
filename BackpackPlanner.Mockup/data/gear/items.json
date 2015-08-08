@@ -22,6 +22,7 @@
         "WeightInOunces": 1,
         "CostInUSD": 10,
         "IsConsumable": false,
+        "ConsumedPerDay": 0,
         "Note": "This gear is carried but not consumable"
     },
     {
@@ -34,6 +35,7 @@
         "WeightInOunces": 2,
         "CostInUSD": 3,
         "IsConsumable": false,
+        "ConsumedPerDay": 0,
         "Note": "This gear is not carried"
     }
 ]

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
   dslVersion="1.0.0.0"
   Id="10573c90-315f-4ad7-ac83-0e2deb210259"
   name="BackpackPlanner.Models" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
@@ -2269,7 +2269,7 @@
     <packageHasNamedElement>
       <class
         Id="8da70c99-f664-4aaf-ace8-550879d99f40"
-        name="ApplicationSettings"
+        name="AppSettings"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
@@ -2289,24 +2289,6 @@
               <enumerationMoniker
                 Id="52512ebf-0444-4e53-b157-c9624d525813"
                 LastKnownName="Units"
-                LastKnownLocation="BackpackPlanner.Models.uml" />
-            </type_NamedElement>
-          </property>
-          <property
-            Id="02e2dadf-b23c-4a0a-94b6-6cd1f9253025"
-            name="UserInformation"
-            isLeaf="false"
-            isStatic="false"
-            isReadOnly="false"
-            isUnique="false"
-            isDerived="false"
-            isDerivedUnion="false"
-            aggregation="None"
-            isComposite="false">
-            <type_NamedElement>
-              <classMoniker
-                Id="aa7d10b7-f515-4882-b729-918865015197"
-                LastKnownName="UserInformation"
                 LastKnownLocation="BackpackPlanner.Models.uml" />
             </type_NamedElement>
           </property>

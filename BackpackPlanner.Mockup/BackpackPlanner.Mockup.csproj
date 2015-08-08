@@ -46,15 +46,7 @@
     <Content Include="content\partials\settings.html" />
     <Content Include="content\partials\trip\itineraries\itineraries.html" />
     <Content Include="content\partials\trip\plans\plans.html" />
-    <Content Include="scripts\app.js" />
-    <Content Include="scripts\gear\collections.js" />
-    <Content Include="scripts\controllers.js" />
     <Content Include="index.html" />
-    <Content Include="scripts\gear\items.js" />
-    <Content Include="scripts\services.js" />
-    <Content Include="scripts\gear\systems.js" />
-    <Content Include="scripts\trip\itineraries.js" />
-    <Content Include="scripts\trip\plans.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -72,12 +64,23 @@
       <DependentUpon>web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="app\controllers\" />
-    <Folder Include="app\models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <TypeScriptCompile Include="app\App.ts" />
+    <TypeScriptCompile Include="app\Controllers\AppCtrl.ts" />
+    <TypeScriptCompile Include="app\Controllers\Gear\AddGearItemCtrl.ts" />
+    <TypeScriptCompile Include="app\Controllers\Gear\AddGearItemDlgCtrl.ts" />
+    <TypeScriptCompile Include="app\Controllers\Gear\AddGearSystemCtrl.ts" />
+    <TypeScriptCompile Include="app\Controllers\Gear\GearCollectionsCtrl.ts" />
+    <TypeScriptCompile Include="app\Controllers\Gear\GearItemCtrl.ts" />
+    <TypeScriptCompile Include="app\Controllers\Gear\GearItemsCtrl.ts" />
+    <TypeScriptCompile Include="app\Controllers\Gear\GearSystemCtrl.ts" />
+    <TypeScriptCompile Include="app\Controllers\Gear\GearSystemsCtrl.ts" />
+    <TypeScriptCompile Include="app\Models\AppSettings.ts" />
+    <TypeScriptCompile Include="app\Models\Gear\GearCollection.ts" />
+    <TypeScriptCompile Include="app\Models\Gear\GearItem.ts" />
+    <TypeScriptCompile Include="app\Models\Gear\GearSystem.ts" />
+    <TypeScriptCompile Include="app\Models\UserInformation.ts" />
     <TypeScriptCompile Include="app\RootScopeConfig.ts" />
     <TypeScriptCompile Include="app\RouteConfig.ts" />
     <TypeScriptCompile Include="app\ThemeConfig.ts" />

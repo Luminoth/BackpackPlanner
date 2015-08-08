@@ -7,7 +7,20 @@
             <div ng-message="required">The gear system name is required</div>
         </div>
     </md-input-container>
-    <p>TODO: items</p>
+    <label>Gear Items</label>
+    <p ng-show="gearSystem.GearItems.length < 1">You have no gear items in this system! Try adding one!</p>
+    <md-list ng-show="gearSystem.GearItems.length > 0">
+        <md-list-item ng-repeat="gearItemId in gearSystem.GearItems">
+            {{ getGearItem(gearItemId).Name }}
+        </md-list-item>
+    </md-list>
+    <div layout="row">
+        <span flex></span>
+        <md-button class="md-raised md-primary mockup-button" ng-click="showAddGearItem($event)">
+            Add Gear Items
+        </md-button>
+        <span flex></span>
+    </div>
     <md-input-container>
         <label>Note</label>
         <textarea ng-model="gearSystem.Note" name="note"></textarea>

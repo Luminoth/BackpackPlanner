@@ -53,7 +53,7 @@ module BackpackPlanner.Mockup {
                 controller: "GearCollectionsCtrl",
                 title: "Gear Collections"
             })
-            .when("/gear/collections/add", {
+            /*.when("/gear/collections/add", {
                 templateUrl: "content/partials/gear/collections/add.html",
                 controller: "AddGearCollectionCtrl",
                 title: "Add a Gear Collection"
@@ -62,7 +62,7 @@ module BackpackPlanner.Mockup {
                 templateUrl: "content/partials/gear/collections/collection.html",
                 controller: "GearCollectionCtrl",
                 title: "Gear Collection"
-            })
+            })*/
 
             // meals
             .when("/meals", {

@@ -10,8 +10,8 @@
     <label>Gear Items</label>
     <p ng-show="gearSystem.GearItems.length < 1">You have no gear items in this system! Try adding one!</p>
     <md-list ng-show="gearSystem.GearItems.length > 0">
-        <md-list-item ng-repeat="gearItem in gearSystem.GearItems">
-            {{ gearItem.Name }}
+        <md-list-item ng-repeat="gearItemId in gearSystem.GearItems">
+            {{ getGearItem(gearItemId).Name }}
         </md-list-item>
     </md-list>
     <div layout="row">

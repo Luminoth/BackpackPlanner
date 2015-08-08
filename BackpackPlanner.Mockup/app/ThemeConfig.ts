@@ -5,17 +5,17 @@ module BackpackPlanner.Mockup {
 
     export class ThemeConfig {
         constructor($mdThemingProvider: ng.material.IThemingProvider) {
-            var primaryPalette = $mdThemingProvider.extendPalette("green", {
+            const primaryPalette = $mdThemingProvider.extendPalette("green", {
                 "500": "668000",
                 "A100": "501616",
                 "contrastDefaultColor": "light"
             });
 
-            var backgroundPalette = $mdThemingProvider.extendPalette("brown", {
+            const backgroundPalette = $mdThemingProvider.extendPalette("brown", {
                 "500": "decd87"
             });
 
-            var accentPalette = $mdThemingProvider.extendPalette("blue-grey", {
+            const accentPalette = $mdThemingProvider.extendPalette("blue-grey", {
                 //"500": "ffffff"
             });
 

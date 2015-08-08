@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="630d506f-3b16-4d58-92c1-fa8c1e30ba1f" name="BackpackPlanner" linkedPackageId="17ae9dea-23e8-42ad-9100-7b6b0a824a33" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="630d506f-3b16-4d58-92c1-fa8c1e30ba1f" name="BackpackPlanner" linkedPackageId="17ae9dea-23e8-42ad-9100-7b6b0a824a33" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
   <packagedElements>
     <logicalClassDesignerModelHasTypes>
       <class Id="61c888c9-c982-484c-bb9c-4d719b8a020c" name="UserInformation" isAbstract="false" isLeaf="false" isActiveClass="false">
@@ -1174,7 +1174,7 @@
       </enumeration>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
-      <class Id="2841fbd6-9947-4a99-9749-e44fb39f4ae6" name="ApplicationSettings" isAbstract="false" isLeaf="false" isActiveClass="false">
+      <class Id="2841fbd6-9947-4a99-9749-e44fb39f4ae6" name="AppSettings" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="8da70c99-f664-4aaf-ace8-550879d99f40" />
         <ownedAttributesInternal>
           <property Id="7d4b512d-8482-408a-9f3d-b6e82a102b56" name="Units" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
@@ -1183,23 +1183,12 @@
               <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="Units" />
             </type_NamedElement>
           </property>
-          <property Id="01213104-6f67-4baf-9350-12c0393a2d0d" name="UserInformation" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="02e2dadf-b23c-4a0a-94b6-6cd1f9253025" />
-            <type_NamedElement>
-              <referencedTypeMoniker Id="ea7ea488-46d4-43f8-ba29-e5a46b2e48de" LastKnownName="UserInformation" />
-            </type_NamedElement>
-          </property>
         </ownedAttributesInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
     <packageHasNamedElement>
       <referencedType Id="c448b291-87b8-4469-a987-6dd410ce81c9" name="Units" isAbstract="false" isLeaf="false" cachedFullName="BackpackPlanner.Models::Units">
         <elementDefinition Id="52512ebf-0444-4e53-b157-c9624d525813" />
-      </referencedType>
-    </packageHasNamedElement>
-    <packageHasNamedElement>
-      <referencedType Id="ea7ea488-46d4-43f8-ba29-e5a46b2e48de" name="UserInformation" isAbstract="false" isLeaf="false" cachedFullName="BackpackPlanner.Models::UserInformation">
-        <elementDefinition Id="aa7d10b7-f515-4882-b729-918865015197" />
       </referencedType>
     </packageHasNamedElement>
   </packagedElements>
