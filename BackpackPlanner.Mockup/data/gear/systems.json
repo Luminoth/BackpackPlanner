@@ -1,14 +1,20 @@
 ﻿[
     {
         "Id": 1,
-        "Name": "Carried System",
-        "GearItems": [ 1, 2 ],
-        "Note": "This is a carried gear system"
+        "Name": "New Hammock Setup",
+        "GearItems": [ 2, 3, 5, 6 ],
+        "Note": "3 season"
     },
     {
         "Id": 2,
-        "Name": "Gear System",
-        "GearItems": [ 3 ],
-        "Note": "This is non-carried a gear system"
+        "Name": "Old Hammock Setup",
+        "GearItems": [ 2, 3, 4, 5 ],
+        "Note": "3 season"
+    },
+    {
+        "Id": 3,
+        "Name": "Car Camping",
+        "GearItems": [ 9 ],
+        "Note": "Leave this junk in the car"
     }
 ]

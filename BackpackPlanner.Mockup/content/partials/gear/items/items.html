@@ -17,6 +17,7 @@
                     <p layout-padding>{{ gearItem.Make }} {{ gearItem.Model }}</p>
                 </md-card-content>
                 <div layout="row" layout-sm="column">
+                    <p layout-padding>Count: {{ gearItem.Count }}</p>
                     <p layout-padding ng-if="'NotCarried' != gearItem.Carried">Weight: {{ gearItem.WeightInOunces }} Ounces</p>
                     <p layout-padding>Cost: ${{ gearItem.CostInUSD }} USD</p>
                     <p layout-padding ng-if="gearItem.IsConsumable">Consumed per day: {{ gearItem.ConsumedPerDay }}</p>

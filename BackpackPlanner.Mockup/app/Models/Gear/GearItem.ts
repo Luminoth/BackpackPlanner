@@ -16,6 +16,7 @@ module BackpackPlanner.Mockup.Models.Gear {
         Make: string;
         Model: string;
         Carried: GearCarried;
+        Count: number;
         WeightInOunces: number;
         CostInUSD: number;
         IsConsumable: boolean;
@@ -46,6 +47,7 @@ module BackpackPlanner.Mockup.Models.Gear {
             Make: "",
             Model: "",
             Carried: GearCarried.Carried,
+            Count: 0,
             WeightInOunces: 0,
             CostInUSD: 0,
             IsConsumable: false,

@@ -36,6 +36,10 @@
         </md-input-container>
     </div>
     <div layout="row" layout-sm="column" flex>
+        <md-input-container flex>
+            <label>Count</label>
+            <input type="number" ng-model="gearItem.Count" name="count" />
+        </md-input-container>
         <md-input-container flex ng-show="'NotCarried' != gearItem.Carried">
             <label>Weight (ounces)</label>
             <input type="number" ng-model="gearItem.WeightInOunces" name="weight" />

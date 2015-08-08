@@ -85,6 +85,7 @@ var BackpackPlanner;
                         Make: "",
                         Model: "",
                         Carried: GearCarried.Carried,
+                        Count: 0,
                         WeightInOunces: 0,
                         CostInUSD: 0,
                         IsConsumable: false,
