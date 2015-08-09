@@ -1,92 +1,99 @@
-﻿///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
+﻿///<reference path="../../AppManager.ts" />
+
+///<reference path="../../Resources/Gear/GearSystemResource.ts"/>
 
 module BackpackPlanner.Mockup.Models.Gear {
     "use strict";
 
-    export interface IGearSystem extends ng.resource.IResource<IGearSystem> {
+    export interface IGearSystem {
         Id: number;
         Name: string;
-        GearItems: number[];
         Note: string;
+
+        GearItems: IGearItemEntry[];
     }
 
-    export interface IGearSystemResource extends ng.resource.IResourceClass<IGearSystem> {
-        query(): Array<IGearSystem>;
-    }
+    export class GearSystem implements IGearSystem {
+        public Id = -1;
+        public Name = "";
+        public Note = "";
 
-    export function gearSystemResourceFactory($resource: ng.resource.IResourceService) : IGearSystemResource {
-        const queryAction: ng.resource.IActionDescriptor = {
-            method: "GET",
-            isArray: true
-        };
+        public GearItems = <Array<IGearItemEntry>>[];
 
-        return <IGearSystemResource> $resource("data/gear/systems.json", {}, {
-            query: queryAction
-        });
-    }
+        constructor(gearSystemResource?: Resources.Gear.IGearSystemResource) {
+            if(gearSystemResource) {
+                this.Id = gearSystemResource.Id;
+                this.Name = gearSystemResource.Name;
+                this.Note = gearSystemResource.Note;
 
-    export function newGearSystem() : IGearSystem {
-        return <IGearSystem> {
-            Id: -1,
-            Name: "",
-            GearItems: <Array<number>>[],
-            Note: ""
-        };
-    }
-
-    export function getNextGearSystemId() : number {
-        // TODO: write this
-        return -1;
-    }
-
-    export function getGearSystemIndexById(gearSystems: IGearSystem[], gearSystemId: number) : number {
-        for(let i=0; i<gearSystems.length; ++i) {
-            const gearSystem = gearSystems[i];
-            if(gearSystem.Id == gearSystemId) {
-                return i;
+                this.GearItems = gearSystemResource.GearItems;
             }
         }
-        return -1;
-    }
 
-    export function getGearSystemById(gearSystems: IGearSystem[], gearSystemId: number) : IGearSystem {
-        const idx = getGearSystemIndexById(gearSystems, gearSystemId);
-        return idx < 0 ? null : gearSystems[idx];
-    }
-
-    export function deleteGearSystem(gearSystems: IGearSystem[], gearCollections: IGearCollection[], gearSystem: IGearSystem) : boolean {
-        const idx = getGearSystemIndexById(gearSystems, gearSystem.Id);
-        if(idx < 0) {
-            return false;
-        }
-        gearSystems.splice(idx, 1);
-
-        // TODO: remove the system from the collections, and trip plans it belongs to
-
-        return true;
-    }
-
-    export function getGearSystemWeightInOunces(gearSystem: IGearSystem, gearItems: IGearItem[]) {
-        let weightInOunces = 0;
-        for(let i=0; i<gearSystem.GearItems.length; ++i) {
-            const gearItem = getGearItemById(gearItems, gearSystem.GearItems[i]);
-            if(null == gearItem) {
-                continue;
+        public getNumberOfItems() {
+            let count = 0;
+            for(let i=0; i<this.GearItems.length; ++i) {
+                const gearItemEntry = this.GearItems[i];
+                count += gearItemEntry.Count;
             }
-            weightInOunces += gearItem.WeightInOunces;
+            return count;
         }
-        return weightInOunces;
+
+        public getWeightInOunces() {
+            let weightInOunces = 0;
+            for(let i=0; i<this.GearItems.length; ++i) {
+                const gearItemEntry = this.GearItems[i];
+                const gearItem = AppManager.getInstance().getGearItemById(gearItemEntry.GearItemId);
+                if(null == gearItem) {
+                    continue;
+                }
+                weightInOunces += gearItemEntry.Count * gearItem.WeightInOunces;
+            }
+            return weightInOunces;
+        }
+
+        public getCostInUSD() {
+            let costInUSD = 0;
+            for(let i=0; i<this.GearItems.length; ++i) {
+                const gearItemEntry = this.GearItems[i];
+                const gearItem = AppManager.getInstance().getGearItemById(gearItemEntry.GearItemId);
+                if(null == gearItem) {
+                    continue;
+                }
+                costInUSD += gearItemEntry.Count * gearItem.CostInUSD;
+            }
+            return costInUSD;
+        }
+
+        public getGearItemEntryIndexById(gearItemId: number) : number {
+            for(let i=0; i<this.GearItems.length; ++i) {
+                const gearItemEntry = this.GearItems[i];
+                if(gearItemEntry.GearItemId == gearItemId) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        public getGearItemEntryById(gearItemId: number) : IGearItemEntry {
+            const idx = this.getGearItemEntryIndexById(gearItemId);
+            return idx < 0 ? null : this.GearItems[idx];
+        }
     }
 
-    export function getGearSystemCostInUSD(gearSystem: IGearSystem, gearItems: IGearItem[]) {
-        let costInUSD = 0;
-        for(let i=0; i<gearSystem.GearItems.length; ++i) {
-            const gearItem = getGearItemById(gearItems, gearSystem.GearItems[i]);
-            if(null == gearItem) {
-                continue;
-            }
-            costInUSD += gearItem.CostInUSD;
+    export interface IGearSystemEntry {
+        GearSystemId: number;
+        Count: number;
+        IsPacked: boolean;
+    }
+
+    export class GearSystemEntry implements IGearSystemEntry {
+        public GearSystemId = -1;
+        public Count = 1;
+        public IsPacked = false;
+
+        constructor(gearSystemId: number) {
+            this.GearSystemId = gearSystemId;
         }
-        return costInUSD;
     }
 }

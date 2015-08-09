@@ -33,7 +33,7 @@
     <md-sidenav class="md-sidenav-left md-whiteframe-z2" layout="column" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" ng-cloak>
         <md-toolbar layout="column">
             <div class="md-toolbar-tools" layout="column">
-                <md-button class="mockup-button" href="#/personal" ng-click="toggleSidenav()">{{ userInfo.FirstName }} {{ userInfo.LastName }}</md-button>
+                <md-button class="mockup-button" href="#/personal" ng-click="toggleSidenav()">{{ getUserInfo().FirstName }} {{ getUserInfo().LastName }}</md-button>
             </div>
         </md-toolbar>
         <md-content flex layout-padding>

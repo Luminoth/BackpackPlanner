@@ -2,19 +2,58 @@
     {
         "Id": 1,
         "Name": "New Hammock Setup",
-        "GearItems": [ 2, 3, 5, 6 ],
+        "GearItems": [
+            {
+                "GearItemId": 2,
+                "Count": 1
+            },
+            {
+                "GearItemId": 3,
+                "Count": 1
+            },
+            {
+                "GearItemId": 5,
+                "Count": 1
+            },
+            {
+                "GearItemId": 6,
+                "Count": 1
+            }
+        ],
         "Note": "3 season"
     },
     {
         "Id": 2,
         "Name": "Old Hammock Setup",
-        "GearItems": [ 2, 3, 4, 5 ],
+        "GearItems": [
+            {
+                "GearItemId": 2,
+                "Count": 1
+            },
+            {
+                "GearItemId": 3,
+                "Count": 1
+            },
+            {
+                "GearItemId": 4,
+                "Count": 1
+            },
+            {
+                "GearItemId": 5,
+                "Count": 1
+            }
+        ],
         "Note": "3 season"
     },
     {
         "Id": 3,
         "Name": "Car Camping",
-        "GearItems": [ 9 ],
+        "GearItems": [
+            {
+                "GearItemId": 9,
+                "Count": 1
+            }
+        ],
         "Note": "Leave this junk in the car"
     }
 ]

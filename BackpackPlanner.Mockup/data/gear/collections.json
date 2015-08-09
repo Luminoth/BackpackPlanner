@@ -1,2 +1,9 @@
 ﻿[
+    {
+        "Id": 1,
+        "Name": "Test",
+        "GearSystems": [],
+        "GearItems": [],
+        "Note": "Test Collection"
+    }
 ]

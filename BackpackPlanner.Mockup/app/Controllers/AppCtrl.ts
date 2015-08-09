@@ -7,33 +7,45 @@
 ///<reference path="../Models/Gear/GearSystem.ts" />
 ///<reference path="../Models/Gear/GearCollection.ts" />
 
+///<reference path="../Services/AppSettingsService.ts"/>
+///<reference path="../Services/UserInformationService.ts"/>
+///<reference path="../Services/gear/GearCollectionService.ts"/>
+///<reference path="../Services/gear/GearItemService.ts"/>
+///<reference path="../Services/gear/GearSystemService.ts"/>
+
 module BackpackPlanner.Mockup.Controllers {
     "use strict";
 
     export interface IAppScope extends ng.IScope {
         appSettingsLoading: boolean;
-        appSettings: Models.IAppSettings;
+        getAppSettings: () => Models.AppSettings;
 
         userInfoLoading: boolean;
-        userInfo: Models.IUserInformation;
+        getUserInfo: () => Models.UserInformation;
 
         gearItemsLoading: boolean;
-        gearItems: Models.Gear.IGearItem[];
+        getGearItems: () => Models.Gear.GearItem[];
+        getGearItemById: (gearItemId: number) => Models.Gear.GearItem;
 
         gearSystemsLoading: boolean;
-        gearSystems: Models.Gear.IGearSystem[];
+        getGearSystems: () => Models.Gear.GearSystem[];
+        getGearSystemById: (gearSystemId: number) => Models.Gear.GearSystem;
 
         gearCollectionsLoading: boolean;
-        gearCollections: Models.Gear.IGearCollection[];
+        getGearCollections: () => Models.Gear.GearCollection[];
+        getGearCollectionById: (gearCollectionId: number) => Models.Gear.GearCollection;
 
         mealsLoading: boolean;
-        meals: any[];
+        getMeals: () => any[];
+        getMealById: (mealId: number) => any;
 
         tripItinerariesLoading: boolean;
-        tripItineraries: any[];
+        getTripItineraries: () => any[];
+        getTripItineraryById: (tripItineraryId: number) => any;
 
         tripPlansLoading: boolean;
-        tripPlans: any[];
+        getTripPlans: () => any[];
+        getTripPlanById: (tripPlanId: number) => any;
 
         isActive: (viewLocation: string) => boolean;
         toggleSidenav: () => void;
@@ -41,68 +53,115 @@ module BackpackPlanner.Mockup.Controllers {
 
     export class AppCtrl {
         constructor($scope: IAppScope, $location: ng.ILocationService, $mdSidenav: ng.material.ISidenavService,
-            appSettingsResource: Models.IAppSettingsResource, userInformationResource: Models.IUserInformationResource,
-            gearItemResource: Models.Gear.IGearItemResource, gearSystemResource: Models.Gear.IGearSystemResource, gearCollectionResource: Models.Gear.IGearCollectionResource) {
+            appSettingsService: Services.IAppSettingsService, userInformationService: Services.IUserInformationService,
+            gearItemService: Services.Gear.IGearItemService, gearSystemService: Services.Gear.IGearSystemService, gearCollectionService: Services.Gear.IGearCollectionService) {
 
             // load the application settings
             $scope.appSettingsLoading = true;
-            appSettingsResource.get().$promise.then(
-                (appSettings: Models.IAppSettings) => {
-                    $scope.appSettings = appSettings;
+            appSettingsService.get().$promise.then(
+                (appSettingsResource: Resources.IAppSettingsResource) => {
+                    AppManager.getInstance().setAppSettings(appSettingsResource);
                     $scope.appSettingsLoading = false;
                 }
             );
 
+            $scope.getAppSettings = () => {
+                return AppManager.getInstance().getAppSettings();
+            }
+
             // load the user's personal information
             $scope.userInfoLoading = true;
-            userInformationResource.get().$promise.then(
-                (userInformation: Models.IUserInformation) => {
-                    $scope.userInfo = userInformation;
+            userInformationService.get().$promise.then(
+                (userInfoResource: Resources.IUserInformationResource) => {
+                    AppManager.getInstance().setUserInformation(userInfoResource);
                     $scope.userInfoLoading = false;
                 }
             );
 
+            $scope.getUserInfo = () => {
+                return AppManager.getInstance().getUserInformation();
+            }
+
             // load the gear items
             $scope.gearItemsLoading = true;
-            gearItemResource.query().$promise.then(
-                (gearItems: Models.Gear.IGearItem[]) => {
-                    $scope.gearItems = gearItems;
+            gearItemService.query().$promise.then(
+                (gearItemsResource: Resources.Gear.IGearItemResource[]) => {
+                    AppManager.getInstance().setGearItems(gearItemsResource);
                     $scope.gearItemsLoading = false;
                 }
             );
 
+            $scope.getGearItems = () => {
+                return AppManager.getInstance().getGearItems();
+            }
+
+            $scope.getGearItemById = (gearItemId: number) => {
+                return AppManager.getInstance().getGearItemById(gearItemId);
+            }
+
             // load the gear systems
             $scope.gearSystemsLoading = true;
-            gearSystemResource.query().$promise.then(
-                (gearSystems: Models.Gear.IGearSystem[]) => {
-                    $scope.gearSystems = gearSystems;
+            gearSystemService.query().$promise.then(
+                (gearSystemsResource: Resources.Gear.IGearSystemResource[]) => {
+                    AppManager.getInstance().setGearSystems(gearSystemsResource);
                     $scope.gearSystemsLoading = false;
                 }
             );
 
+            $scope.getGearSystems = () => {
+                return AppManager.getInstance().getGearSystems();
+            }
+
+            $scope.getGearSystemById = (gearSystemId: number) => {
+                return AppManager.getInstance().getGearSystemById(gearSystemId);
+            }
+
             // load the gear collections
             $scope.gearCollectionsLoading = true;
-            gearCollectionResource.query().$promise.then(
-                (gearCollections: Models.Gear.IGearCollection[]) => {
-                    $scope.gearCollections = gearCollections;
+            gearCollectionService.query().$promise.then(
+                (gearCollectionsResource: Resources.Gear.IGearCollectionResource[]) => {
+                    AppManager.getInstance().setGearCollections(gearCollectionsResource);
                     $scope.gearCollectionsLoading = false;
                 }
             );
 
+            $scope.getGearCollections = () => {
+                return AppManager.getInstance().getGearCollections();
+            }
+
+            $scope.getGearCollectionById = (gearCollectionId: number) => {
+                return AppManager.getInstance().getGearCollectionById(gearCollectionId);
+            }
+
             // load the meals
             $scope.mealsLoading = true;
-            $scope.meals = [];
-                        $scope.mealsLoading = false;
+            $scope.getMeals = () => {
+                return <Array<any>>[];
+            }
+            $scope.getMealById = (mealId: number) => {
+                return <any> null;
+            }
+            $scope.mealsLoading = false;
 
             // load the trip itineraries
             $scope.tripItinerariesLoading = true;
-            $scope.tripItineraries = [];
-                        $scope.tripItinerariesLoading = false;
+            $scope.getTripItineraries = () => {
+                return <Array<any>>[];
+            }
+            $scope.getTripItineraryById = (tripItineraryId: number) => {
+                return <any> null;
+            }
+            $scope.tripItinerariesLoading = false;
 
             // load the trip plans
             $scope.tripPlansLoading = true;
-            $scope.tripPlans = [];
-                        $scope.tripPlansLoading = false;
+            $scope.getTripPlans = () => {
+                return <Array<any>>[];
+            }
+            $scope.getTripPlanById = (tripPlanId: number) => {
+                return <any> null;
+            }
+            $scope.tripPlansLoading = false;
 
             $scope.isActive = (viewLocation: string) => {
                 // set the nav item as active when we're looking at its location
@@ -113,12 +172,8 @@ module BackpackPlanner.Mockup.Controllers {
                 $mdSidenav("left").toggle();
             }
         }
-
-        public getGearItemById(): Models.Gear.IGearItem {
-            return null;
-        }
     }
 
-    AppCtrl.$inject = ["$scope", "$location", "$mdSidenav", "AppSettingsResource", "UserInformationResource",
-        "GearItemResource", "GearSystemResource", "GearCollectionResource"];
+    AppCtrl.$inject = ["$scope", "$location", "$mdSidenav", "AppSettingsService", "UserInformationService",
+        "GearItemService", "GearSystemService", "GearCollectionService"];
 }

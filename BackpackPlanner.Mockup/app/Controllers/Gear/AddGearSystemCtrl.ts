@@ -7,20 +7,15 @@ module BackpackPlanner.Mockup.Controllers.Gear {
     "use strict";
 
     export interface IAddGearSystemScope extends IAppScope {
-        gearSystem: Models.Gear.IGearSystem;
+        gearSystem: Models.Gear.GearSystem;
 
-        getGearItem: (gearItemId: number) => Models.Gear.IGearItem;
         showAddGearItem: (event: MouseEvent) => void;
-        addSystem: (gearSystem: Models.Gear.IGearSystem) => void;
+        addSystem: (gearSystem: Models.Gear.GearSystem) => void;
     }
 
     export class AddGearSystemCtrl {
         constructor($scope: IAddGearSystemScope, $location: ng.ILocationService, $mdDialog: ng.material.IDialogService, $mdToast: ng.material.IToastService) {
-            $scope.gearSystem = Models.Gear.newGearSystem();
-
-            $scope.getGearItem = (gearItemId) => {
-                return Models.Gear.getGearItemById($scope.gearItems, gearItemId);
-            };
+            $scope.gearSystem = new Models.Gear.GearSystem();
 
             $scope.showAddGearItem = (event) => {
                 $mdDialog.show({
@@ -29,7 +24,6 @@ module BackpackPlanner.Mockup.Controllers.Gear {
                     parent: angular.element(document.body),
                     targetEvent: event,
                     locals: {
-                        gearItems: $scope.gearItems,
                         gearSystem: $scope.gearSystem
                     }
                 });
@@ -37,8 +31,8 @@ module BackpackPlanner.Mockup.Controllers.Gear {
 
             $scope.addSystem = (gearSystem) => {
                 $scope.gearSystem = angular.copy(gearSystem);
-                $scope.gearSystem.Id = Models.Gear.getNextGearSystemId();
-                $scope.gearSystems.push($scope.gearSystem);
+                $scope.gearSystem.Id = AppManager.getInstance().getNextGearSystemId();
+                AppManager.getInstance().getGearSystems().push($scope.gearSystem);
 
                 var addToast = $mdToast.simple()
                     .content(`Added gear system: ${$scope.gearSystem.Name}`)
@@ -52,7 +46,7 @@ module BackpackPlanner.Mockup.Controllers.Gear {
 
                 $location.path("/gear/systems");
                 $mdToast.show(addToast).then(() => {
-                    Models.Gear.deleteGearSystem($scope.gearSystems, $scope.gearCollections, $scope.gearSystem);
+                    AppManager.getInstance().deleteGearSystem($scope.gearSystem);
                     $mdToast.show(undoAddToast);
                 });
             }

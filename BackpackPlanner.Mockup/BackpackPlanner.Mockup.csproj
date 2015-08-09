@@ -67,6 +67,7 @@
   <ItemGroup />
   <ItemGroup>
     <TypeScriptCompile Include="app\App.ts" />
+    <TypeScriptCompile Include="app\AppManager.ts" />
     <TypeScriptCompile Include="app\Controllers\AppCtrl.ts" />
     <TypeScriptCompile Include="app\Controllers\Gear\AddGearItemCtrl.ts" />
     <TypeScriptCompile Include="app\Controllers\Gear\AddGearItemDlgCtrl.ts" />
@@ -81,6 +82,16 @@
     <TypeScriptCompile Include="app\Models\Gear\GearItem.ts" />
     <TypeScriptCompile Include="app\Models\Gear\GearSystem.ts" />
     <TypeScriptCompile Include="app\Models\UserInformation.ts" />
+    <TypeScriptCompile Include="app\Resources\AppSettingsResource.ts" />
+    <TypeScriptCompile Include="app\Resources\Gear\GearCollectionResource.ts" />
+    <TypeScriptCompile Include="app\Resources\Gear\GearItemResource.ts" />
+    <TypeScriptCompile Include="app\Resources\Gear\GearSystemResource.ts" />
+    <TypeScriptCompile Include="app\Resources\UserInformationResource.ts" />
+    <TypeScriptCompile Include="app\Services\AppSettingsService.ts" />
+    <TypeScriptCompile Include="app\Services\Gear\GearCollectionService.ts" />
+    <TypeScriptCompile Include="app\Services\Gear\GearItemService.ts" />
+    <TypeScriptCompile Include="app\Services\Gear\GearSystemService.ts" />
+    <TypeScriptCompile Include="app\Services\UserInformationService.ts" />
     <TypeScriptCompile Include="app\RootScopeConfig.ts" />
     <TypeScriptCompile Include="app\RouteConfig.ts" />
     <TypeScriptCompile Include="app\ThemeConfig.ts" />

@@ -7,19 +7,19 @@ module BackpackPlanner.Mockup.Controllers.Gear {
     "use strict";
 
     export interface IAddGearItemScope extends IAppScope {
-        gearItem: Models.Gear.IGearItem;
+        gearItem: Models.Gear.GearItem;
 
-        addItem: (gearItem: Models.Gear.IGearItem) => void;
+        addItem: (gearItem: Models.Gear.GearItem) => void;
     }
 
     export class AddGearItemCtrl {
         constructor($scope: IAddGearItemScope, $location: ng.ILocationService, $mdToast: ng.material.IToastService) {
-            $scope.gearItem = Models.Gear.newGearItem();
+            $scope.gearItem = new Models.Gear.GearItem();
 
             $scope.addItem = (gearItem) => {
                 $scope.gearItem = angular.copy(gearItem);
-                $scope.gearItem.Id = Models.Gear.getNextGearItemId();
-                $scope.gearItems.push($scope.gearItem);
+                $scope.gearItem.Id = AppManager.getInstance().getNextGearItemId();
+                AppManager.getInstance().getGearItems().push($scope.gearItem);
 
                 var addToast = $mdToast.simple()
                     .content(`Added gear item: ${$scope.gearItem.Name}`)
@@ -33,7 +33,7 @@ module BackpackPlanner.Mockup.Controllers.Gear {
 
                 $location.path("/gear/items");
                 $mdToast.show(addToast).then(() => {
-                    Models.Gear.deleteGearItem($scope.gearItems, $scope.gearSystems, $scope.gearCollections, $scope.gearItem);
+                    AppManager.getInstance().deleteGearItem($scope.gearItem);
                     $mdToast.show(undoAddToast);
                 });
             }

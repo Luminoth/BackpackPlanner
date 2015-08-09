@@ -8,9 +8,8 @@ module BackpackPlanner.Mockup.Controllers.Gear {
     "use strict";
 
     export interface IGearSystemScope extends IAppScope {
-        gearSystem: Models.Gear.IGearSystem;
+        gearSystem: Models.Gear.GearSystem;
 
-        getGearItem: (gearItemId: number) => Models.Gear.IGearItem;
         showAddGearItem: (event: MouseEvent) => void;
         showDeleteConfirm: (event: MouseEvent) => void;
     }
@@ -23,16 +22,12 @@ module BackpackPlanner.Mockup.Controllers.Gear {
         constructor($scope: IGearSystemScope, $routeParams: IGearSystemRouteParams, $location: ng.ILocationService,
             $mdDialog: ng.material.IDialogService, $mdToast: ng.material.IToastService) {
         
-            $scope.gearSystem = Models.Gear.getGearSystemById($scope.gearSystems, $routeParams.gearSystemId);
+            $scope.gearSystem = AppManager.getInstance().getGearSystemById($routeParams.gearSystemId);
             if(null == $scope.gearSystem) {
                 alert("The gear system does not exist!");
                 $location.path("/gear/system");
                 return;
             }
-
-            $scope.getGearItem = (gearItemId) => {
-                return Models.Gear.getGearItemById($scope.gearItems, gearItemId);
-            };
 
             $scope.showAddGearItem = (event) => {
                 $mdDialog.show({
@@ -41,7 +36,6 @@ module BackpackPlanner.Mockup.Controllers.Gear {
                     parent: angular.element(document.body),
                     targetEvent: event,
                     locals: {
-                        gearItems: $scope.gearItems,
                         gearSystem: $scope.gearSystem
                     }
                 });
@@ -75,7 +69,7 @@ module BackpackPlanner.Mockup.Controllers.Gear {
 
                 $mdDialog.show(confirm).then(() => {
                     $mdDialog.show(receipt).then(() => {
-                        if(!Models.Gear.deleteGearSystem($scope.gearSystems, $scope.gearCollections, $scope.gearSystem)) {
+                        if(!AppManager.getInstance().deleteGearSystem($scope.gearSystem)) {
                             alert("Couldn't find the gear system to delete!");
                             return;
                         }
@@ -84,7 +78,7 @@ module BackpackPlanner.Mockup.Controllers.Gear {
                         $mdToast.show(deleteToast).then(() => {
                             // TODO: this does *not* restore the system to its containers
                             // and it should probably do so... but how?
-                            $scope.gearSystems.push($scope.gearSystem);
+                            AppManager.getInstance().getGearSystems().push($scope.gearSystem);
                             $mdToast.show(undoDeleteToast);
                             $location.path(`/gear/systems/${$scope.gearSystem.Id}`);
                         });

@@ -1,4 +1,4 @@
-﻿///<reference path="../../scripts/typings/angularjs/angular-resource.d.ts" />
+﻿///<reference path="../Resources/UserInformationResource.ts"/>
 
 module BackpackPlanner.Mockup.Models {
     "use strict";
@@ -9,7 +9,7 @@ module BackpackPlanner.Mockup.Models {
         Female
     }
 
-    export interface IUserInformation extends ng.resource.IResource<IUserInformation> {
+    export interface IUserInformation {
         FirstName: string;
         LastName: string;
         BirthDate: Date;
@@ -18,18 +18,23 @@ module BackpackPlanner.Mockup.Models {
         WeightInOunces: number;
     }
 
-    export interface IUserInformationResource extends ng.resource.IResourceClass<IUserInformation> {
-        get(): IUserInformation;
-    }
+    export class UserInformation implements IUserInformation {
+        public FirstName = "";
+        public LastName = "";
+        public BirthDate = new Date();
+        public Sex = Sex.NotSpecified;
+        public HeightInInches = 0;
+        public WeightInOunces = 0;
 
-    export function userInformationResourceFactory($resource: ng.resource.IResourceService) : IUserInformationResource {
-        const queryAction: ng.resource.IActionDescriptor = {
-            method: "GET",
-            isArray: false
-        };
-
-        return <IUserInformationResource> $resource("data/user.json", {}, {
-            get: queryAction
-        });
+        constructor(userInfoResource?: Resources.IUserInformationResource) {
+            if(userInfoResource) {
+                this.FirstName = userInfoResource.FirstName;
+                this.LastName = userInfoResource.LastName;
+                this.BirthDate = userInfoResource.BirthDate;
+                this.Sex = userInfoResource.Sex;
+                this.HeightInInches = userInfoResource.HeightInInches;
+                this.WeightInOunces = userInfoResource.WeightInOunces;
+            }
+        }
     }
 }

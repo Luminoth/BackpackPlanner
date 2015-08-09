@@ -8,7 +8,7 @@ module BackpackPlanner.Mockup.Controllers.Gear {
     "use strict";
 
     export interface IGearItemScope extends IAppScope {
-        gearItem: Models.Gear.IGearItem;
+        gearItem: Models.Gear.GearItem;
 
         showDeleteConfirm: (event: MouseEvent) => void;
     }
@@ -21,7 +21,7 @@ module BackpackPlanner.Mockup.Controllers.Gear {
         constructor($scope: IGearItemScope, $routeParams: IGearItemRouteParams, $location: ng.ILocationService,
             $mdDialog: ng.material.IDialogService, $mdToast: ng.material.IToastService) {
         
-            $scope.gearItem = Models.Gear.getGearItemById($scope.gearItems, $routeParams.gearItemId);
+            $scope.gearItem = AppManager.getInstance().getGearItemById($routeParams.gearItemId);
             if(null == $scope.gearItem) {
                 alert("The gear item does not exist!");
                 $location.path("/gear/items");
@@ -56,7 +56,7 @@ module BackpackPlanner.Mockup.Controllers.Gear {
 
                 $mdDialog.show(confirm).then(() => {
                     $mdDialog.show(receipt).then(() => {
-                        if(!Models.Gear.deleteGearItem($scope.gearItems, $scope.gearSystems, $scope.gearCollections, $scope.gearItem)) {
+                        if(!AppManager.getInstance().deleteGearItem($scope.gearItem)) {
                             alert("Couldn't find the gear item to delete!");
                             return;
                         }
@@ -65,7 +65,7 @@ module BackpackPlanner.Mockup.Controllers.Gear {
                         $mdToast.show(deleteToast).then(() => {
                             // TODO: this does *not* restore the item to its containers
                             // and it should probably do so... but how?
-                            $scope.gearItems.push($scope.gearItem);
+                            AppManager.getInstance().getGearItems().push($scope.gearItem);
                             $mdToast.show(undoDeleteToast);
                             $location.path(`/gear/items/${$scope.gearItem.Id}`);
                         });

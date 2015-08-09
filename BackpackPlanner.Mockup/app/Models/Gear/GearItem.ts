@@ -1,4 +1,4 @@
-﻿///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
+﻿///<reference path="../../Resources/Gear/GearItemResource.ts"/>
 
 module BackpackPlanner.Mockup.Models.Gear {
     "use strict";
@@ -9,14 +9,13 @@ module BackpackPlanner.Mockup.Models.Gear {
         Worn
     }
 
-    export interface IGearItem extends ng.resource.IResource<IGearItem> {
+    export interface IGearItem {
         Id: number;
         Name: string;
         Url: string;
         Make: string;
         Model: string;
         Carried: GearCarried;
-        Count: number;
         WeightInOunces: number;
         CostInUSD: number;
         IsConsumable: boolean;
@@ -24,67 +23,53 @@ module BackpackPlanner.Mockup.Models.Gear {
         Note: string;
     }
 
-    export interface IGearItemResource extends ng.resource.IResourceClass<IGearItem> {
-        query(): Array<IGearItem>;
-    }
+    export class GearItem implements IGearItem {
+        public Id = -1;
+        public Name = "";
+        public Url = "";
+        public Make = "";
+        public Model = "";
+        public Carried = GearCarried.Carried;
+        public WeightInOunces = 0;
+        public CostInUSD = 0;
+        public IsConsumable = false;
+        public ConsumedPerDay = 0;
+        public Note = "";
 
-    export function gearItemResourceFactory($resource: ng.resource.IResourceService) : IGearItemResource {
-        const queryAction: ng.resource.IActionDescriptor = {
-            method: "GET",
-            isArray: true
-        };
-
-        return <IGearItemResource> $resource("data/gear/items.json", {}, {
-            query: queryAction
-        });
-    }
-
-    export function newGearItem() : IGearItem {
-        return <IGearItem> {
-            Id: -1,
-            Name: "",
-            Url: "",
-            Make: "",
-            Model: "",
-            Carried: GearCarried.Carried,
-            Count: 0,
-            WeightInOunces: 0,
-            CostInUSD: 0,
-            IsConsumable: false,
-            ConsumedPerDay: 0,
-            Note: ""
-        };
-    }
-
-    export function getNextGearItemId() : number {
-        // TODO: write this
-        return -1;
-    }
-
-    export function getGearItemIndexById(gearItems: IGearItem[], gearItemId: number) : number {
-        for(let i=0; i<gearItems.length; ++i) {
-            const gearItem = gearItems[i];
-            if(gearItem.Id == gearItemId) {
-                return i;
+        constructor(gearItemResource?: Resources.Gear.IGearItemResource) {
+            if(gearItemResource) {
+                this.Id = gearItemResource.Id;
+                this.Name = gearItemResource.Name;
+                this.Url = gearItemResource.Url;
+                this.Make = gearItemResource.Make;
+                this.Model = gearItemResource.Model;
+                this.Carried = gearItemResource.Carried;
+                this.WeightInOunces = gearItemResource.WeightInOunces;
+                this.CostInUSD = gearItemResource.CostInUSD;
+                this.IsConsumable = gearItemResource.IsConsumable;
+                this.ConsumedPerDay = gearItemResource.ConsumedPerDay;
+                this.Note = gearItemResource.Note;
             }
         }
-        return -1;
-    }
 
-    export function getGearItemById(gearItems: IGearItem[], gearItemId: number) : IGearItem {
-        const idx = getGearItemIndexById(gearItems, gearItemId);
-        return idx < 0 ? null : gearItems[idx];
-    }
-
-    export function deleteGearItem(gearItems: IGearItem[], gearSystems: IGearSystem[], gearCollections: IGearCollection[], gearItem: IGearItem) : boolean {
-        const idx = getGearItemIndexById(gearItems, gearItem.Id);
-        if(idx < 0) {
-            return false;
+        public CarriedAsString() : string {
+            return GearCarried[this.Carried];
         }
-        gearItems.splice(idx, 1);
+    }
 
-        // TODO: remove the item from the systems, collections, and trip plans it belongs to
+    export interface IGearItemEntry {
+        GearItemId: number;
+        Count: number;
+        IsPacked: boolean;
+    }
 
-        return true;
+    export class GearItemEntry implements IGearItemEntry {
+        public GearItemId = -1;
+        public Count = 1;
+        public IsPacked = false;
+
+        constructor(gearItemId: number) {
+            this.GearItemId = gearItemId;
+        }
     }
 }

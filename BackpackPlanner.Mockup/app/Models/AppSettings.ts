@@ -1,4 +1,4 @@
-﻿///<reference path="../../scripts/typings/angularjs/angular-resource.d.ts" />
+﻿///<reference path="../Resources/AppSettingsResource.ts"/>
 
 module BackpackPlanner.Mockup.Models {
     "use strict";
@@ -8,22 +8,17 @@ module BackpackPlanner.Mockup.Models {
         Metric
     }
 
-    export interface IAppSettings extends ng.resource.IResource<IAppSettings> {
-        units: Units;
+    export interface IAppSettings {
+        Units: Units;
     }
 
-    export interface IAppSettingsResource extends ng.resource.IResourceClass<IAppSettings> {
-        get(): IAppSettings;
-    }
+    export class AppSettings implements IAppSettings {
+        public Units = Units.Imperial;
 
-    export function appSettingsResourceFactory($resource: ng.resource.IResourceService) : IAppSettingsResource {
-        const queryAction: ng.resource.IActionDescriptor = {
-            method: "GET",
-            isArray: false
-        };
-
-        return <IAppSettingsResource> $resource("data/settings.json", {}, {
-            get: queryAction
-        });
+        constructor(appSettingsResource?: Resources.IAppSettingsResource) {
+            if(appSettingsResource) {
+                this.Units = appSettingsResource.Units;
+            }
+        }
     }
 }
