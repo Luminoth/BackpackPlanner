@@ -1,6 +1,6 @@
-﻿///<reference path="../Resources/UserInformationResource.ts"/>
+﻿///<reference path="../../Resources/Personal/UserInformationResource.ts"/>
 
-module BackpackPlanner.Mockup.Models {
+module BackpackPlanner.Mockup.Models.Personal {
     "use strict";
 
     export interface IUserInformation {
@@ -22,7 +22,7 @@ module BackpackPlanner.Mockup.Models {
 
         public BirthDateAsDate = new Date();
 
-        constructor(userInfoResource?: Resources.IUserInformationResource) {
+        constructor(userInfoResource?: Resources.Personal.IUserInformationResource) {
             if(userInfoResource) {
                 this.FirstName = userInfoResource.FirstName;
                 this.LastName = userInfoResource.LastName;

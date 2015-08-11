@@ -1,4 +1,5 @@
 ﻿///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
 
 ///<reference path="../../AppCtrl.ts" />
 
@@ -7,13 +8,24 @@ module BackpackPlanner.Mockup.Controllers.Gear.Systems {
 
     export interface IGearSystemsScope extends IAppScope {
         orderBy: string;
+
+        showWhatIsGearSystem: (event: MouseEvent) => void;
     }
 
     export class GearSystemsCtrl {
-        constructor($scope: IGearSystemsScope) {
+        constructor($scope: IGearSystemsScope, $mdDialog: ng.material.IDialogService) {
             $scope.orderBy = "Name";
+
+            $scope.showWhatIsGearSystem = (event) => {
+                $mdDialog.show({
+                    controller: WhatIsGearSystemDlgCtrl,
+                    templateUrl: "content/partials/gear/systems/what.html",
+                    parent: angular.element(document.body),
+                    targetEvent: event
+                });
+            }
         }
     }
     
-    GearSystemsCtrl.$inject = ["$scope"];
+    GearSystemsCtrl.$inject = ["$scope", "$mdDialog"];
 }

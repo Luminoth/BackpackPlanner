@@ -1,3 +1,64 @@
+///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
+///<reference path="../../Models/Personal/UserInformation.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Resources;
+        (function (Resources) {
+            var Personal;
+            (function (Personal) {
+                "use strict";
+            })(Personal = Resources.Personal || (Resources.Personal = {}));
+        })(Resources = Mockup.Resources || (Mockup.Resources = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../Resources/Personal/UserInformationResource.ts"/>
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Models;
+        (function (Models) {
+            var Personal;
+            (function (Personal) {
+                "use strict";
+                var UserInformation = (function () {
+                    function UserInformation(userInfoResource) {
+                        this.FirstName = "";
+                        this.LastName = "";
+                        this.BirthDate = "";
+                        this.Sex = "NotSpecified";
+                        this.HeightInCm = 0;
+                        this.WeightInGrams = 0;
+                        this.BirthDateAsDate = new Date();
+                        if (userInfoResource) {
+                            this.FirstName = userInfoResource.FirstName;
+                            this.LastName = userInfoResource.LastName;
+                            this.BirthDate = userInfoResource.BirthDate;
+                            this.Sex = userInfoResource.Sex;
+                            this.HeightInCm = userInfoResource.HeightInCm;
+                            this.WeightInGrams = userInfoResource.WeightInGrams;
+                            this.BirthDateAsDate = new Date(this.BirthDate);
+                        }
+                    }
+                    UserInformation.prototype.heightInUnits = function (height) {
+                        return arguments.length
+                            ? (this.HeightInCm = Mockup.convertUnitsToCentimeters(height, Mockup.AppState.getInstance().getAppSettings().Units))
+                            : parseFloat(Mockup.convertCentimetersToUnits(this.HeightInCm, Mockup.AppState.getInstance().getAppSettings().Units).toFixed(2));
+                    };
+                    UserInformation.prototype.weightInUnits = function (weight) {
+                        return arguments.length
+                            ? (this.WeightInGrams = Mockup.convertUnitsToGrams(weight, Mockup.AppState.getInstance().getAppSettings().Units))
+                            : parseFloat(Mockup.convertGramsToUnits(this.WeightInGrams, Mockup.AppState.getInstance().getAppSettings().Units).toFixed(2));
+                    };
+                    return UserInformation;
+                })();
+                Personal.UserInformation = UserInformation;
+            })(Personal = Models.Personal || (Models.Personal = {}));
+        })(Models = Mockup.Models || (Mockup.Models = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../scripts/typings/angularjs/angular-resource.d.ts" />
 ///<reference path="../Models/AppSettings.ts" />
 var BackpackPlanner;
@@ -30,61 +91,6 @@ var BackpackPlanner;
                 return AppSettings;
             })();
             Models.AppSettings = AppSettings;
-        })(Models = Mockup.Models || (Mockup.Models = {}));
-    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
-})(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../scripts/typings/angularjs/angular-resource.d.ts" />
-///<reference path="../Models/UserInformation.ts" />
-var BackpackPlanner;
-(function (BackpackPlanner) {
-    var Mockup;
-    (function (Mockup) {
-        var Resources;
-        (function (Resources) {
-            "use strict";
-        })(Resources = Mockup.Resources || (Mockup.Resources = {}));
-    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
-})(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../Resources/UserInformationResource.ts"/>
-var BackpackPlanner;
-(function (BackpackPlanner) {
-    var Mockup;
-    (function (Mockup) {
-        var Models;
-        (function (Models) {
-            "use strict";
-            var UserInformation = (function () {
-                function UserInformation(userInfoResource) {
-                    this.FirstName = "";
-                    this.LastName = "";
-                    this.BirthDate = "";
-                    this.Sex = "NotSpecified";
-                    this.HeightInCm = 0;
-                    this.WeightInGrams = 0;
-                    this.BirthDateAsDate = new Date();
-                    if (userInfoResource) {
-                        this.FirstName = userInfoResource.FirstName;
-                        this.LastName = userInfoResource.LastName;
-                        this.BirthDate = userInfoResource.BirthDate;
-                        this.Sex = userInfoResource.Sex;
-                        this.HeightInCm = userInfoResource.HeightInCm;
-                        this.WeightInGrams = userInfoResource.WeightInGrams;
-                        this.BirthDateAsDate = new Date(this.BirthDate);
-                    }
-                }
-                UserInformation.prototype.heightInUnits = function (height) {
-                    return arguments.length
-                        ? (this.HeightInCm = Mockup.convertUnitsToCentimeters(height, Mockup.AppState.getInstance().getAppSettings().Units))
-                        : parseFloat(Mockup.convertCentimetersToUnits(this.HeightInCm, Mockup.AppState.getInstance().getAppSettings().Units).toFixed(2));
-                };
-                UserInformation.prototype.weightInUnits = function (weight) {
-                    return arguments.length
-                        ? (this.WeightInGrams = Mockup.convertUnitsToGrams(weight, Mockup.AppState.getInstance().getAppSettings().Units))
-                        : parseFloat(Mockup.convertGramsToUnits(this.WeightInGrams, Mockup.AppState.getInstance().getAppSettings().Units).toFixed(2));
-                };
-                return UserInformation;
-            })();
-            Models.UserInformation = UserInformation;
         })(Models = Mockup.Models || (Mockup.Models = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
@@ -848,10 +854,10 @@ var BackpackPlanner;
         Mockup.TripState = TripState;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="Models/Personal/UserInformation.ts" />
 ///<reference path="Models/AppSettings.ts" />
-///<reference path="Models/UserInformation.ts" />
+///<reference path="Resources/Personal/UserInformationResource.ts" />
 ///<reference path="Resources/AppSettingsResource.ts" />
-///<reference path="Resources/UserInformationResource.ts" />
 ///<reference path="GearState.ts" />
 ///<reference path="MealState.ts" />
 ///<reference path="TripState.ts" />
@@ -891,7 +897,7 @@ var BackpackPlanner;
                 if (this._userInformation) {
                     throw new Error("User information already loaded!");
                 }
-                this._userInformation = new Mockup.Models.UserInformation(userInfoResource);
+                this._userInformation = new Mockup.Models.Personal.UserInformation(userInfoResource);
             };
             AppState.prototype.getGearState = function () {
                 return this._gearState;
@@ -1041,42 +1047,6 @@ var BackpackPlanner;
         })(Resources = Mockup.Resources || (Mockup.Resources = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../scripts/typings/angularjs/angular-resource.d.ts" />
-///<reference path="../Resources/AppSettingsResource.ts" />
-var BackpackPlanner;
-(function (BackpackPlanner) {
-    var Mockup;
-    (function (Mockup) {
-        var Services;
-        (function (Services) {
-            "use strict";
-            function appSettingsServiceFactory($resource) {
-                return $resource("data/settings.json", {}, {
-                    get: { method: "GET", isArray: false }
-                });
-            }
-            Services.appSettingsServiceFactory = appSettingsServiceFactory;
-        })(Services = Mockup.Services || (Mockup.Services = {}));
-    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
-})(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../scripts/typings/angularjs/angular-resource.d.ts" />
-///<reference path="../Resources/UserInformationResource.ts" />
-var BackpackPlanner;
-(function (BackpackPlanner) {
-    var Mockup;
-    (function (Mockup) {
-        var Services;
-        (function (Services) {
-            "use strict";
-            function userInformationServiceFactory($resource) {
-                return $resource("data/user.json", {}, {
-                    get: { method: "GET", isArray: false }
-                });
-            }
-            Services.userInformationServiceFactory = userInformationServiceFactory;
-        })(Services = Mockup.Services || (Mockup.Services = {}));
-    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
-})(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
 ///<reference path="../../Resources/Gear/GearCollectionResource.ts" />
 var BackpackPlanner;
@@ -1137,6 +1107,45 @@ var BackpackPlanner;
                 }
                 Gear.gearSystemServiceFactory = gearSystemServiceFactory;
             })(Gear = Services.Gear || (Services.Gear = {}));
+        })(Services = Mockup.Services || (Mockup.Services = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
+///<reference path="../../Resources/Personal/UserInformationResource.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Services;
+        (function (Services) {
+            var Personal;
+            (function (Personal) {
+                "use strict";
+                function userInformationServiceFactory($resource) {
+                    return $resource("data/user.json", {}, {
+                        get: { method: "GET", isArray: false }
+                    });
+                }
+                Personal.userInformationServiceFactory = userInformationServiceFactory;
+            })(Personal = Services.Personal || (Services.Personal = {}));
+        })(Services = Mockup.Services || (Mockup.Services = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../scripts/typings/angularjs/angular-resource.d.ts" />
+///<reference path="../Resources/AppSettingsResource.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Services;
+        (function (Services) {
+            "use strict";
+            function appSettingsServiceFactory($resource) {
+                return $resource("data/settings.json", {}, {
+                    get: { method: "GET", isArray: false }
+                });
+            }
+            Services.appSettingsServiceFactory = appSettingsServiceFactory;
         })(Services = Mockup.Services || (Mockup.Services = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
@@ -1264,13 +1273,13 @@ var BackpackPlanner;
 ///<reference path="../Models/Meals/Meal.ts" />
 ///<reference path="../Models/Trips/TripItinerary.ts" />
 ///<reference path="../Models/Trips/TripPlan.ts" />
+///<reference path="../Models/Personal/UserInformation.ts" />
 ///<reference path="../Models/AppSettings.ts" />
-///<reference path="../Models/UserInformation.ts" />
+///<reference path="../Services/Gear/GearCollectionService.ts"/>
+///<reference path="../Services/Gear/GearItemService.ts"/>
+///<reference path="../Services/Gear/GearSystemService.ts"/>
+///<reference path="../Services/Personal/UserInformationService.ts"/>
 ///<reference path="../Services/AppSettingsService.ts"/>
-///<reference path="../Services/UserInformationService.ts"/>
-///<reference path="../Services/gear/GearCollectionService.ts"/>
-///<reference path="../Services/gear/GearItemService.ts"/>
-///<reference path="../Services/gear/GearSystemService.ts"/>
 ///<reference path="../UnitConversion.ts"/>
 var BackpackPlanner;
 (function (BackpackPlanner) {
@@ -1290,9 +1299,6 @@ var BackpackPlanner;
                     appSettingsService.get().$promise.then(function (appSettingsResource) {
                         Mockup.AppState.getInstance().loadAppSettings(appSettingsResource);
                     });
-                    $scope.getAppSettings = function () {
-                        return Mockup.AppState.getInstance().getAppSettings();
-                    };
                     // load the user's personal information
                     userInformationService.get().$promise.then(function (userInfoResource) {
                         Mockup.AppState.getInstance().loadUserInformation(userInfoResource);
@@ -1372,8 +1378,12 @@ var BackpackPlanner;
                 return AppCtrl;
             })();
             Controllers.AppCtrl = AppCtrl;
-            AppCtrl.$inject = ["$scope", "$location", "$mdSidenav", "AppSettingsService", "UserInformationService",
-                "GearItemService", "GearSystemService", "GearCollectionService"];
+            AppCtrl.$inject = ["$scope", "$location", "$mdSidenav",
+                "AppSettingsService", "UserInformationService",
+                "GearItemService", "GearSystemService", "GearCollectionService" /*
+                MealService,
+                TripItineraryService, TripPlanService*/
+            ];
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
@@ -1538,6 +1548,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
 ///<reference path="../../AppCtrl.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
@@ -1551,13 +1562,21 @@ var BackpackPlanner;
                 (function (Collections) {
                     "use strict";
                     var GearCollectionsCtrl = (function () {
-                        function GearCollectionsCtrl($scope) {
+                        function GearCollectionsCtrl($scope, $mdDialog) {
                             $scope.orderBy = "Name";
+                            $scope.showWhatIsGearCollection = function (event) {
+                                $mdDialog.show({
+                                    controller: Collections.WhatIsGearCollectionDlgCtrl,
+                                    templateUrl: "content/partials/gear/collections/what.html",
+                                    parent: angular.element(document.body),
+                                    targetEvent: event
+                                });
+                            };
                         }
                         return GearCollectionsCtrl;
                     })();
                     Collections.GearCollectionsCtrl = GearCollectionsCtrl;
-                    GearCollectionsCtrl.$inject = ["$scope"];
+                    GearCollectionsCtrl.$inject = ["$scope", "$mdDialog"];
                 })(Collections = Gear.Collections || (Gear.Collections = {}));
             })(Gear = Controllers.Gear || (Controllers.Gear = {}));
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
@@ -1680,6 +1699,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
 ///<reference path="../../AppCtrl.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
@@ -1693,13 +1713,21 @@ var BackpackPlanner;
                 (function (Items) {
                     "use strict";
                     var GearItemsCtrl = (function () {
-                        function GearItemsCtrl($scope) {
+                        function GearItemsCtrl($scope, $mdDialog) {
                             $scope.orderBy = "Name";
+                            $scope.showWhatIsGearItem = function (event) {
+                                $mdDialog.show({
+                                    controller: Items.WhatIsGearItemDlgCtrl,
+                                    templateUrl: "content/partials/gear/items/what.html",
+                                    parent: angular.element(document.body),
+                                    targetEvent: event
+                                });
+                            };
                         }
                         return GearItemsCtrl;
                     })();
                     Items.GearItemsCtrl = GearItemsCtrl;
-                    GearItemsCtrl.$inject = ["$scope"];
+                    GearItemsCtrl.$inject = ["$scope", "$mdDialog"];
                 })(Items = Gear.Items || (Gear.Items = {}));
             })(Gear = Controllers.Gear || (Controllers.Gear = {}));
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
@@ -1844,6 +1872,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
 ///<reference path="../../AppCtrl.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
@@ -1857,15 +1886,179 @@ var BackpackPlanner;
                 (function (Systems) {
                     "use strict";
                     var GearSystemsCtrl = (function () {
-                        function GearSystemsCtrl($scope) {
+                        function GearSystemsCtrl($scope, $mdDialog) {
                             $scope.orderBy = "Name";
+                            $scope.showWhatIsGearSystem = function (event) {
+                                $mdDialog.show({
+                                    controller: Systems.WhatIsGearSystemDlgCtrl,
+                                    templateUrl: "content/partials/gear/systems/what.html",
+                                    parent: angular.element(document.body),
+                                    targetEvent: event
+                                });
+                            };
                         }
                         return GearSystemsCtrl;
                     })();
                     Systems.GearSystemsCtrl = GearSystemsCtrl;
-                    GearSystemsCtrl.$inject = ["$scope"];
+                    GearSystemsCtrl.$inject = ["$scope", "$mdDialog"];
                 })(Systems = Gear.Systems || (Gear.Systems = {}));
             })(Gear = Controllers.Gear || (Controllers.Gear = {}));
+        })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../AppCtrl.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Controllers;
+        (function (Controllers) {
+            var Meals;
+            (function (Meals) {
+                "use strict";
+                var MealsCtrl = (function () {
+                    function MealsCtrl($scope, $mdDialog) {
+                        $scope.orderBy = "Name";
+                        $scope.showWhatIsMeal = function (event) {
+                            $mdDialog.show({
+                                controller: Meals.WhatIsMealDlgCtrl,
+                                templateUrl: "content/partials/meals/what.html",
+                                parent: angular.element(document.body),
+                                targetEvent: event
+                            });
+                        };
+                    }
+                    return MealsCtrl;
+                })();
+                Meals.MealsCtrl = MealsCtrl;
+                MealsCtrl.$inject = ["$scope", "$mdDialog"];
+            })(Meals = Controllers.Meals || (Controllers.Meals = {}));
+        })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../AppCtrl.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Controllers;
+        (function (Controllers) {
+            var Trips;
+            (function (Trips) {
+                var Itineraries;
+                (function (Itineraries) {
+                    "use strict";
+                    var TripItinerariesCtrl = (function () {
+                        function TripItinerariesCtrl($scope, $mdDialog) {
+                            $scope.orderBy = "Name";
+                            $scope.showWhatIsTripItinerary = function (event) {
+                                $mdDialog.show({
+                                    controller: Itineraries.WhatIsTripItineraryDlgCtrl,
+                                    templateUrl: "content/partials/trips/itineraries/what.html",
+                                    parent: angular.element(document.body),
+                                    targetEvent: event
+                                });
+                            };
+                        }
+                        return TripItinerariesCtrl;
+                    })();
+                    Itineraries.TripItinerariesCtrl = TripItinerariesCtrl;
+                    TripItinerariesCtrl.$inject = ["$scope", "$mdDialog"];
+                })(Itineraries = Trips.Itineraries || (Trips.Itineraries = {}));
+            })(Trips = Controllers.Trips || (Controllers.Trips = {}));
+        })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../AppCtrl.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Controllers;
+        (function (Controllers) {
+            var Trips;
+            (function (Trips) {
+                var Plans;
+                (function (Plans) {
+                    "use strict";
+                    var TripPlansCtrl = (function () {
+                        function TripPlansCtrl($scope, $mdDialog) {
+                            $scope.orderBy = "Name";
+                            $scope.showWhatIsTripPlan = function (event) {
+                                $mdDialog.show({
+                                    controller: Plans.WhatIsTripPlanDlgCtrl,
+                                    templateUrl: "content/partials/trips/plans/what.html",
+                                    parent: angular.element(document.body),
+                                    targetEvent: event
+                                });
+                            };
+                        }
+                        return TripPlansCtrl;
+                    })();
+                    Plans.TripPlansCtrl = TripPlansCtrl;
+                    TripPlansCtrl.$inject = ["$scope", "$mdDialog"];
+                })(Plans = Trips.Plans || (Trips.Plans = {}));
+            })(Trips = Controllers.Trips || (Controllers.Trips = {}));
+        })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../Models/AppSettings.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Controllers;
+        (function (Controllers) {
+            var Personal;
+            (function (Personal) {
+                "use strict";
+                var UserInformationCtrl = (function () {
+                    function UserInformationCtrl($scope, $mdDialog) {
+                        $scope.showWhatIsPersonal = function (event) {
+                            $mdDialog.show({
+                                controller: Personal.WhatIsPersonalDlgCtrl,
+                                templateUrl: "content/partials/personal/what.html",
+                                parent: angular.element(document.body),
+                                targetEvent: event
+                            });
+                        };
+                    }
+                    return UserInformationCtrl;
+                })();
+                Personal.UserInformationCtrl = UserInformationCtrl;
+                UserInformationCtrl.$inject = ["$scope", "$mdDialog"];
+            })(Personal = Controllers.Personal || (Controllers.Personal = {}));
+        })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../Models/AppSettings.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Controllers;
+        (function (Controllers) {
+            "use strict";
+            var AppSettingsCtrl = (function () {
+                function AppSettingsCtrl($scope) {
+                    $scope.getAppSettings = function () {
+                        return Mockup.AppState.getInstance().getAppSettings();
+                    };
+                }
+                return AppSettingsCtrl;
+            })();
+            Controllers.AppSettingsCtrl = AppSettingsCtrl;
+            AppSettingsCtrl.$inject = ["$scope"];
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
@@ -1952,22 +2145,27 @@ var BackpackPlanner;
                 })
                     .when("/meals", {
                     templateUrl: "content/partials/meals/meals.html",
+                    controller: "MealsCtrl",
                     title: "Meals"
                 })
                     .when("/trips/itineraries", {
                     templateUrl: "content/partials/trips/itineraries/itineraries.html",
+                    controller: "TripItinerariesCtrl",
                     title: "Trip Itineraries"
                 })
                     .when("/trips/plans", {
                     templateUrl: "content/partials/trips/plans/plans.html",
+                    controller: "TripPlansCtrl",
                     title: "Trip Plans"
                 })
                     .when("/personal", {
-                    templateUrl: "content/partials/personal.html",
+                    templateUrl: "content/partials/personal/personal.html",
+                    controller: "UserInformationCtrl",
                     title: "Personal Information"
                 })
                     .when("/settings", {
                     templateUrl: "content/partials/settings.html",
+                    controller: "AppSettingsCtrl",
                     title: "Settings"
                 })
                     .when("/help", {
@@ -2032,7 +2230,6 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="Controllers/AppCtrl.ts" />
 ///<reference path="Controllers/Gear/Collections/AddGearCollectionCtrl.ts" />
 ///<reference path="Controllers/Gear/Collections/GearCollectionCtrl.ts" />
 ///<reference path="Controllers/Gear/Collections/GearCollectionsCtrl.ts" />
@@ -2042,6 +2239,12 @@ var BackpackPlanner;
 ///<reference path="Controllers/Gear/Systems/AddGearSystemCtrl.ts" />
 ///<reference path="Controllers/Gear/Systems/GearSystemCtrl.ts" />
 ///<reference path="Controllers/Gear/Systems/GearSystemsCtrl.ts" />
+///<reference path="Controllers/Meals/MealsCtrl.ts" />
+///<reference path="Controllers/Trips/Itineraries/TripItinerariesCtrl.ts" />
+///<reference path="Controllers/Trips/Plans/TripPlansCtrl.ts" />
+///<reference path="Controllers/Personal/UserInformationCtrl.ts" />
+///<reference path="Controllers/AppCtrl.ts" />
+///<reference path="Controllers/AppSettingsCtrl.ts" />
 ///<reference path="RootScopeConfig.ts" />
 ///<reference path="RouteConfig.ts" />
 ///<reference path="ThemeConfig.ts" />
@@ -2070,12 +2273,14 @@ var BackpackPlanner;
         mockupApp.config(Mockup.ThemeConfig);
         // inject services
         mockupApp.factory("AppSettingsService", ["$resource", Mockup.Services.appSettingsServiceFactory]);
-        mockupApp.factory("UserInformationService", ["$resource", Mockup.Services.userInformationServiceFactory]);
+        mockupApp.factory("UserInformationService", ["$resource", Mockup.Services.Personal.userInformationServiceFactory]);
         mockupApp.factory("GearItemService", ["$resource", Mockup.Services.Gear.gearItemServiceFactory]);
         mockupApp.factory("GearSystemService", ["$resource", Mockup.Services.Gear.gearSystemServiceFactory]);
         mockupApp.factory("GearCollectionService", ["$resource", Mockup.Services.Gear.gearCollectionServiceFactory]);
         // inject controllers
         mockupApp.controller("AppCtrl", Mockup.Controllers.AppCtrl);
+        mockupApp.controller("AppSettingsCtrl", Mockup.Controllers.AppSettingsCtrl);
+        mockupApp.controller("UserInformationCtrl", Mockup.Controllers.Personal.UserInformationCtrl);
         mockupApp.controller("AddGearCollectionCtrl", Mockup.Controllers.Gear.Collections.AddGearCollectionCtrl);
         mockupApp.controller("GearCollectionCtrl", Mockup.Controllers.Gear.Collections.GearCollectionCtrl);
         mockupApp.controller("GearCollectionsCtrl", Mockup.Controllers.Gear.Collections.GearCollectionsCtrl);
@@ -2085,6 +2290,9 @@ var BackpackPlanner;
         mockupApp.controller("GearSystemCtrl", Mockup.Controllers.Gear.Systems.GearSystemCtrl);
         mockupApp.controller("GearSystemsCtrl", Mockup.Controllers.Gear.Systems.GearSystemsCtrl);
         mockupApp.controller("AddGearSystemCtrl", Mockup.Controllers.Gear.Systems.AddGearSystemCtrl);
+        mockupApp.controller("MealsCtrl", Mockup.Controllers.Meals.MealsCtrl);
+        mockupApp.controller("TripItinerariesCtrl", Mockup.Controllers.Trips.Itineraries.TripItinerariesCtrl);
+        mockupApp.controller("TripPlansCtrl", Mockup.Controllers.Trips.Plans.TripPlansCtrl);
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
@@ -2179,6 +2387,60 @@ var BackpackPlanner;
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
 ///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Controllers;
+        (function (Controllers) {
+            var Gear;
+            (function (Gear) {
+                var Collections;
+                (function (Collections) {
+                    "use strict";
+                    var WhatIsGearCollectionDlgCtrl = (function () {
+                        function WhatIsGearCollectionDlgCtrl($scope, $mdDialog) {
+                            $scope.close = function () {
+                                $mdDialog.hide();
+                            };
+                        }
+                        return WhatIsGearCollectionDlgCtrl;
+                    })();
+                    Collections.WhatIsGearCollectionDlgCtrl = WhatIsGearCollectionDlgCtrl;
+                })(Collections = Gear.Collections || (Gear.Collections = {}));
+            })(Gear = Controllers.Gear || (Controllers.Gear = {}));
+        })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Controllers;
+        (function (Controllers) {
+            var Gear;
+            (function (Gear) {
+                var Items;
+                (function (Items) {
+                    "use strict";
+                    var WhatIsGearItemDlgCtrl = (function () {
+                        function WhatIsGearItemDlgCtrl($scope, $mdDialog) {
+                            $scope.close = function () {
+                                $mdDialog.hide();
+                            };
+                        }
+                        return WhatIsGearItemDlgCtrl;
+                    })();
+                    Items.WhatIsGearItemDlgCtrl = WhatIsGearItemDlgCtrl;
+                })(Items = Gear.Items || (Gear.Items = {}));
+            })(Gear = Controllers.Gear || (Controllers.Gear = {}));
+        })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
 ///<reference path="../../../AppState.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
@@ -2219,6 +2481,135 @@ var BackpackPlanner;
                     Systems.AddGearItemDlgCtrl = AddGearItemDlgCtrl;
                 })(Systems = Gear.Systems || (Gear.Systems = {}));
             })(Gear = Controllers.Gear || (Controllers.Gear = {}));
+        })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Controllers;
+        (function (Controllers) {
+            var Gear;
+            (function (Gear) {
+                var Systems;
+                (function (Systems) {
+                    "use strict";
+                    var WhatIsGearSystemDlgCtrl = (function () {
+                        function WhatIsGearSystemDlgCtrl($scope, $mdDialog) {
+                            $scope.close = function () {
+                                $mdDialog.hide();
+                            };
+                        }
+                        return WhatIsGearSystemDlgCtrl;
+                    })();
+                    Systems.WhatIsGearSystemDlgCtrl = WhatIsGearSystemDlgCtrl;
+                })(Systems = Gear.Systems || (Gear.Systems = {}));
+            })(Gear = Controllers.Gear || (Controllers.Gear = {}));
+        })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../../../scripts/typings/angular-material/angular-material.d.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Controllers;
+        (function (Controllers) {
+            var Meals;
+            (function (Meals) {
+                "use strict";
+                var WhatIsMealDlgCtrl = (function () {
+                    function WhatIsMealDlgCtrl($scope, $mdDialog) {
+                        $scope.close = function () {
+                            $mdDialog.hide();
+                        };
+                    }
+                    return WhatIsMealDlgCtrl;
+                })();
+                Meals.WhatIsMealDlgCtrl = WhatIsMealDlgCtrl;
+            })(Meals = Controllers.Meals || (Controllers.Meals = {}));
+        })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../../../scripts/typings/angular-material/angular-material.d.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Controllers;
+        (function (Controllers) {
+            var Personal;
+            (function (Personal) {
+                "use strict";
+                var WhatIsPersonalDlgCtrl = (function () {
+                    function WhatIsPersonalDlgCtrl($scope, $mdDialog) {
+                        $scope.close = function () {
+                            $mdDialog.hide();
+                        };
+                    }
+                    return WhatIsPersonalDlgCtrl;
+                })();
+                Personal.WhatIsPersonalDlgCtrl = WhatIsPersonalDlgCtrl;
+            })(Personal = Controllers.Personal || (Controllers.Personal = {}));
+        })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Controllers;
+        (function (Controllers) {
+            var Trips;
+            (function (Trips) {
+                var Itineraries;
+                (function (Itineraries) {
+                    "use strict";
+                    var WhatIsTripItineraryDlgCtrl = (function () {
+                        function WhatIsTripItineraryDlgCtrl($scope, $mdDialog) {
+                            $scope.close = function () {
+                                $mdDialog.hide();
+                            };
+                        }
+                        return WhatIsTripItineraryDlgCtrl;
+                    })();
+                    Itineraries.WhatIsTripItineraryDlgCtrl = WhatIsTripItineraryDlgCtrl;
+                })(Itineraries = Trips.Itineraries || (Trips.Itineraries = {}));
+            })(Trips = Controllers.Trips || (Controllers.Trips = {}));
+        })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Controllers;
+        (function (Controllers) {
+            var Trips;
+            (function (Trips) {
+                var Plans;
+                (function (Plans) {
+                    "use strict";
+                    var WhatIsTripPlanDlgCtrl = (function () {
+                        function WhatIsTripPlanDlgCtrl($scope, $mdDialog) {
+                            $scope.close = function () {
+                                $mdDialog.hide();
+                            };
+                        }
+                        return WhatIsTripPlanDlgCtrl;
+                    })();
+                    Plans.WhatIsTripPlanDlgCtrl = WhatIsTripPlanDlgCtrl;
+                })(Plans = Trips.Plans || (Trips.Plans = {}));
+            })(Trips = Controllers.Trips || (Controllers.Trips = {}));
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));

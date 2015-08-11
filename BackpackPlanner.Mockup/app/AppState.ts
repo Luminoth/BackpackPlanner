@@ -1,8 +1,8 @@
-﻿///<reference path="Models/AppSettings.ts" />
-///<reference path="Models/UserInformation.ts" />
+﻿///<reference path="Models/Personal/UserInformation.ts" />
+///<reference path="Models/AppSettings.ts" />
 
+///<reference path="Resources/Personal/UserInformationResource.ts" />
 ///<reference path="Resources/AppSettingsResource.ts" />
-///<reference path="Resources/UserInformationResource.ts" />
 
 ///<reference path="GearState.ts" />
 ///<reference path="MealState.ts" />
@@ -43,17 +43,17 @@ module BackpackPlanner.Mockup {
 
         /* User Information */
 
-        private _userInformation: Models.UserInformation;
+        private _userInformation: Models.Personal.UserInformation;
 
-        public getUserInformation() : Models.UserInformation {
+        public getUserInformation() : Models.Personal.UserInformation {
             return this._userInformation;
         }
 
-        public loadUserInformation(userInfoResource: Resources.IUserInformationResource) {
+        public loadUserInformation(userInfoResource: Resources.Personal.IUserInformationResource) {
             if(this._userInformation) {
                 throw new Error("User information already loaded!");
             }
-            this._userInformation = new Models.UserInformation(userInfoResource);
+            this._userInformation = new Models.Personal.UserInformation(userInfoResource);
         }
 
         /* Gear State */

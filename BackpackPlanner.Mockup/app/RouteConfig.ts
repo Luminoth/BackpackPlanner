@@ -67,28 +67,33 @@ module BackpackPlanner.Mockup {
             // meals
             .when("/meals", {
                 templateUrl: "content/partials/meals/meals.html",
+                controller: "MealsCtrl",
                 title: "Meals"
             })
 
             // trip itineraries
             .when("/trips/itineraries", {
                 templateUrl: "content/partials/trips/itineraries/itineraries.html",
+                controller: "TripItinerariesCtrl",
                 title: "Trip Itineraries"
             })
 
             // trip plans
             .when("/trips/plans", {
                 templateUrl: "content/partials/trips/plans/plans.html",
+                controller: "TripPlansCtrl",
                 title: "Trip Plans"
             })
 
             // personal information and settings
             .when("/personal", {
-                templateUrl: "content/partials/personal.html",
+                templateUrl: "content/partials/personal/personal.html",
+                controller: "UserInformationCtrl",
                 title: "Personal Information"
             })
             .when("/settings", {
                 templateUrl: "content/partials/settings.html",
+                controller: "AppSettingsCtrl",
                 title: "Settings"
             })
             .when("/help", {
