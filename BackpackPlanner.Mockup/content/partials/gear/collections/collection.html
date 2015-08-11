@@ -1,0 +1,51 @@
+<form name="gearCollectionForm">
+<div layout="column" layout-padding flex ng-cloak>
+    <md-input-container>
+        <label>Name</label>
+        <input type="text" ng-model="gearCollection.Name" required name="name" />
+        <div ng-messages="gearCollectionForm.name.$error">
+            <div ng-message="required">The gear collection name is required</div>
+        </div>
+    </md-input-container>
+    <label>Gear Systems</label>
+    <p ng-show="gearCollection.GearSystems.length < 1">You have no gear systems in this collection! Try adding one!</p>
+    <md-list ng-show="gearCollection.GearSystems.length > 0">
+        <md-list-item ng-repeat="gearSystemEntry in gearCollection.GearSystems">
+            {{ gearSystemEntry.Count }}x {{ getGearSystemById(gearSystemEntry.GearSystemId).Name }}
+        </md-list-item>
+    </md-list>
+    <div layout="row">
+        <span flex></span>
+        <md-button class="md-raised md-primary mockup-button" ng-click="showAddGearSystem($event)">
+            Add Gear Systems
+        </md-button>
+        <span flex></span>
+    </div>
+    <label>Gear Items</label>
+    <p ng-show="gearCollection.GearItems.length < 1">You have no gear items in this collection! Try adding one!</p>
+    <md-list ng-show="gearCollection.GearItems.length > 0">
+        <md-list-item ng-repeat="gearItemEntry in gearCollection.GearItems">
+            {{ gearItemEntry.Count }}x {{ getGearItemById(gearItemEntry.GearItemId).Name }}
+        </md-list-item>
+    </md-list>
+    <div layout="row">
+        <span flex></span>
+        <md-button class="md-raised md-primary mockup-button" ng-click="showAddGearItem($event)">
+            Add Gear Items
+        </md-button>
+        <span flex></span>
+    </div>
+    <md-input-container>
+        <label>Note</label>
+        <textarea ng-model="gearCollection.Note" name="note"></textarea>
+    </md-input-container>
+    <div flex></div>
+    <div layout="row">
+        <span flex></span>
+        <md-button class="md-raised md-warn mockup-button" ng-click="showDeleteConfirm($event)">
+            Delete Collection
+        </md-button>
+        <span flex></span>
+    </div>
+</div>
+</form>

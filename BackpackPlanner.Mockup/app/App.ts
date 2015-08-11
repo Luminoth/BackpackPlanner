@@ -1,13 +1,14 @@
 ﻿///<reference path="../scripts/typings/angularjs/angular.d.ts" />
 
 ///<reference path="Controllers/AppCtrl.ts" />
-///<reference path="Controllers/Gear/AddGearItemCtrl.ts" />
-///<reference path="Controllers/Gear/GearItemCtrl.ts" />
-///<reference path="Controllers/Gear/GearItemsCtrl.ts" />
-///<reference path="Controllers/Gear/AddGearSystemCtrl.ts" />
-///<reference path="Controllers/Gear/GearSystemCtrl.ts" />
-///<reference path="Controllers/Gear/GearSystemsCtrl.ts" />
-///<reference path="Controllers/Gear/GearCollectionsCtrl.ts" />
+///<reference path="Controllers/Gear/Collections/GearCollectionCtrl.ts" />
+///<reference path="Controllers/Gear/Collections/GearCollectionsCtrl.ts" />
+///<reference path="Controllers/Gear/Items/AddGearItemCtrl.ts" />
+///<reference path="Controllers/Gear/Items/GearItemCtrl.ts" />
+///<reference path="Controllers/Gear/Items/GearItemsCtrl.ts" />
+///<reference path="Controllers/Gear/Systems/AddGearSystemCtrl.ts" />
+///<reference path="Controllers/Gear/Systems/GearSystemCtrl.ts" />
+///<reference path="Controllers/Gear/Systems/GearSystemsCtrl.ts" />
 
 ///<reference path="RootScopeConfig.ts" />
 ///<reference path="RouteConfig.ts" />
@@ -47,11 +48,12 @@ module BackpackPlanner.Mockup {
 
     // inject controllers
     mockupApp.controller("AppCtrl", Controllers.AppCtrl);
-    mockupApp.controller("GearItemCtrl", Controllers.Gear.GearItemCtrl);
-    mockupApp.controller("GearItemsCtrl", Controllers.Gear.GearItemsCtrl);
-    mockupApp.controller("AddGearItemCtrl", Controllers.Gear.AddGearItemCtrl);
-    mockupApp.controller("GearSystemCtrl", Controllers.Gear.GearSystemCtrl);
-    mockupApp.controller("GearSystemsCtrl", Controllers.Gear.GearSystemsCtrl);
-    mockupApp.controller("AddGearSystemCtrl", Controllers.Gear.AddGearSystemCtrl);
-    mockupApp.controller("GearCollectionsCtrl", Controllers.Gear.GearCollectionsCtrl);
+    mockupApp.controller("GearCollectionCtrl", Controllers.Gear.Collections.GearCollectionCtrl);
+    mockupApp.controller("GearCollectionsCtrl", Controllers.Gear.Collections.GearCollectionsCtrl);
+    mockupApp.controller("GearItemCtrl", Controllers.Gear.Items.GearItemCtrl);
+    mockupApp.controller("GearItemsCtrl", Controllers.Gear.Items.GearItemsCtrl);
+    mockupApp.controller("AddGearItemCtrl", Controllers.Gear.Items.AddGearItemCtrl);
+    mockupApp.controller("GearSystemCtrl", Controllers.Gear.Systems.GearSystemCtrl);
+    mockupApp.controller("GearSystemsCtrl", Controllers.Gear.Systems.GearSystemsCtrl);
+    mockupApp.controller("AddGearSystemCtrl", Controllers.Gear.Systems.AddGearSystemCtrl);
 }

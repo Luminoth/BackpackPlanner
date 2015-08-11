@@ -1,10 +1,10 @@
-﻿///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../scripts/typings/angular-material/angular-material.d.ts" />
-///<reference path="../../../scripts/typings/angularjs/angular-route.d.ts" />
+﻿///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../../scripts/typings/angularjs/angular-route.d.ts" />
 
-///<reference path="../AppCtrl.ts" />
+///<reference path="../../AppCtrl.ts" />
 
-module BackpackPlanner.Mockup.Controllers.Gear {
+module BackpackPlanner.Mockup.Controllers.Gear.Systems {
     "use strict";
 
     export interface IGearSystemScope extends IAppScope {
@@ -25,7 +25,7 @@ module BackpackPlanner.Mockup.Controllers.Gear {
             $scope.gearSystem = AppState.getInstance().getGearState().getGearSystemById($routeParams.gearSystemId);
             if(null == $scope.gearSystem) {
                 alert("The gear system does not exist!");
-                $location.path("/gear/system");
+                $location.path("/gear/systems");
                 return;
             }
 

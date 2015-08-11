@@ -1,9 +1,9 @@
-﻿///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../scripts/typings/angular-material/angular-material.d.ts" />
+﻿///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
 
-///<reference path="../../AppState.ts" />
+///<reference path="../../../AppState.ts" />
 
-module BackpackPlanner.Mockup.Controllers.Gear {
+module BackpackPlanner.Mockup.Controllers.Gear.Systems {
     "use strict";
 
     export interface IAddGearItemDlgScope extends ng.IScope {

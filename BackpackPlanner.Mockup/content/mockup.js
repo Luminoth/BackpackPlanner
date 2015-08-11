@@ -1,3 +1,15 @@
+///<reference path="../../scripts/typings/angularjs/angular-resource.d.ts" />
+///<reference path="../Models/AppSettings.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Resources;
+        (function (Resources) {
+            "use strict";
+        })(Resources = Mockup.Resources || (Mockup.Resources = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../Resources/AppSettingsResource.ts"/>
 var BackpackPlanner;
 (function (BackpackPlanner) {
@@ -22,7 +34,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../scripts/typings/angularjs/angular-resource.d.ts" />
-///<reference path="../Models/AppSettings.ts" />
+///<reference path="../Models/UserInformation.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -63,12 +75,12 @@ var BackpackPlanner;
                 UserInformation.prototype.heightInUnits = function (height) {
                     return arguments.length
                         ? (this.HeightInCm = Mockup.convertUnitsToCentimeters(height, Mockup.AppState.getInstance().getAppSettings().Units))
-                        : Math.floor(Mockup.convertCentimetersToUnits(this.HeightInCm, Mockup.AppState.getInstance().getAppSettings().Units));
+                        : parseFloat(Mockup.convertCentimetersToUnits(this.HeightInCm, Mockup.AppState.getInstance().getAppSettings().Units).toFixed(2));
                 };
                 UserInformation.prototype.weightInUnits = function (weight) {
                     return arguments.length
                         ? (this.WeightInGrams = Mockup.convertUnitsToGrams(weight, Mockup.AppState.getInstance().getAppSettings().Units))
-                        : Math.floor(Mockup.convertGramsToUnits(this.WeightInGrams, Mockup.AppState.getInstance().getAppSettings().Units));
+                        : parseFloat(Mockup.convertGramsToUnits(this.WeightInGrams, Mockup.AppState.getInstance().getAppSettings().Units).toFixed(2));
                 };
                 return UserInformation;
             })();
@@ -76,15 +88,18 @@ var BackpackPlanner;
         })(Models = Mockup.Models || (Mockup.Models = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../scripts/typings/angularjs/angular-resource.d.ts" />
-///<reference path="../Models/UserInformation.ts" />
+///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
+///<reference path="../../Models/Gear/GearItem.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
     (function (Mockup) {
         var Resources;
         (function (Resources) {
-            "use strict";
+            var Gear;
+            (function (Gear) {
+                "use strict";
+            })(Gear = Resources.Gear || (Resources.Gear = {}));
         })(Resources = Mockup.Resources || (Mockup.Resources = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
@@ -979,12 +994,12 @@ var BackpackPlanner;
                     GearItem.prototype.weightInUnits = function (weight) {
                         return arguments.length
                             ? (this.WeightInGrams = Mockup.convertUnitsToGrams(weight, Mockup.AppState.getInstance().getAppSettings().Units))
-                            : Math.floor(Mockup.convertGramsToUnits(this.WeightInGrams, Mockup.AppState.getInstance().getAppSettings().Units));
+                            : parseFloat(Mockup.convertGramsToUnits(this.WeightInGrams, Mockup.AppState.getInstance().getAppSettings().Units).toFixed(2));
                     };
                     GearItem.prototype.costInCurrency = function (cost) {
                         return arguments.length
                             ? (this.CostInUSDP = Mockup.convertCurrencyToUSDP(cost, Mockup.AppState.getInstance().getAppSettings().Currency))
-                            : Math.floor(Mockup.convertUSDPToCurrency(this.CostInUSDP, Mockup.AppState.getInstance().getAppSettings().Currency));
+                            : Mockup.convertUSDPToCurrency(this.CostInUSDP, Mockup.AppState.getInstance().getAppSettings().Currency);
                     };
                     return GearItem;
                 })();
@@ -1021,21 +1036,6 @@ var BackpackPlanner;
                 Gear.GearItemEntry = GearItemEntry;
             })(Gear = Models.Gear || (Models.Gear = {}));
         })(Models = Mockup.Models || (Mockup.Models = {}));
-    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
-})(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
-///<reference path="../../Models/Gear/GearItem.ts" />
-var BackpackPlanner;
-(function (BackpackPlanner) {
-    var Mockup;
-    (function (Mockup) {
-        var Resources;
-        (function (Resources) {
-            var Gear;
-            (function (Gear) {
-                "use strict";
-            })(Gear = Resources.Gear || (Resources.Gear = {}));
-        })(Resources = Mockup.Resources || (Mockup.Resources = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../scripts/typings/angularjs/angular-resource.d.ts" />
@@ -1371,9 +1371,10 @@ var BackpackPlanner;
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../scripts/typings/angular-material/angular-material.d.ts" />
-///<reference path="../AppCtrl.ts" />
+///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../../scripts/typings/angularjs/angular-route.d.ts" />
+///<reference path="../../AppCtrl.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -1382,262 +1383,232 @@ var BackpackPlanner;
         (function (Controllers) {
             var Gear;
             (function (Gear) {
-                "use strict";
-                var AddGearItemCtrl = (function () {
-                    function AddGearItemCtrl($scope, $location, $mdToast) {
-                        $scope.gearItem = new Mockup.Models.Gear.GearItem();
-                        $scope.addItem = function (gearItem) {
-                            $scope.gearItem = angular.copy(gearItem);
-                            $scope.gearItem.Id = Mockup.AppState.getInstance().getGearState().addGearItem($scope.gearItem);
-                            var addToast = $mdToast.simple()
-                                .content("Added gear item: " + $scope.gearItem.Name)
-                                .action("Undo")
-                                .position("bottom left");
-                            var undoAddToast = $mdToast.simple()
-                                .content("Removed gear item: " + $scope.gearItem.Name)
-                                .action("OK")
-                                .position("bottom left");
-                            $location.path("/gear/items");
-                            $mdToast.show(addToast).then(function () {
-                                Mockup.AppState.getInstance().getGearState().deleteGearItem($scope.gearItem);
-                                $mdToast.show(undoAddToast);
-                            });
-                        };
-                    }
-                    return AddGearItemCtrl;
-                })();
-                Gear.AddGearItemCtrl = AddGearItemCtrl;
-                AddGearItemCtrl.$inject = ["$scope", "$location", "$mdToast"];
-            })(Gear = Controllers.Gear || (Controllers.Gear = {}));
-        })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
-    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
-})(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../scripts/typings/angular-material/angular-material.d.ts" />
-///<reference path="../../../scripts/typings/angularjs/angular-route.d.ts" />
-///<reference path="../AppCtrl.ts" />
-var BackpackPlanner;
-(function (BackpackPlanner) {
-    var Mockup;
-    (function (Mockup) {
-        var Controllers;
-        (function (Controllers) {
-            var Gear;
-            (function (Gear) {
-                "use strict";
-                var GearItemCtrl = (function () {
-                    function GearItemCtrl($scope, $routeParams, $location, $mdDialog, $mdToast) {
-                        $scope.gearItem = Mockup.AppState.getInstance().getGearState().getGearItemById($routeParams.gearItemId);
-                        if (null == $scope.gearItem) {
-                            alert("The gear item does not exist!");
-                            $location.path("/gear/items");
-                            return;
-                        }
-                        $scope.showDeleteConfirm = function (event) {
-                            var confirm = $mdDialog.confirm()
-                                .parent(angular.element(document.body))
-                                .title("Delete Gear Item")
-                                .content("Are you sure you wish to delete this gear item?")
-                                .ok("Yes")
-                                .cancel("No")
-                                .targetEvent(event);
-                            var receipt = $mdDialog.alert()
-                                .parent(angular.element(document.body))
-                                .title("Gear item deleted!")
-                                .content("The gear item has been deleted.")
-                                .ok("OK")
-                                .targetEvent(event);
-                            var deleteToast = $mdToast.simple()
-                                .content("Deleted gear item: " + $scope.gearItem.Name)
-                                .action("Undo")
-                                .position("bottom left");
-                            var undoDeleteToast = $mdToast.simple()
-                                .content("Restored gear item: " + $scope.gearItem.Name)
-                                .action("OK")
-                                .position("bottom left");
-                            $mdDialog.show(confirm).then(function () {
-                                $mdDialog.show(receipt).then(function () {
-                                    if (!Mockup.AppState.getInstance().getGearState().deleteGearItem($scope.gearItem)) {
-                                        alert("Couldn't find the gear item to delete!");
-                                        return;
+                var Collections;
+                (function (Collections) {
+                    "use strict";
+                    var GearCollectionCtrl = (function () {
+                        function GearCollectionCtrl($scope, $routeParams, $location, $mdDialog, $mdToast) {
+                            $scope.gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById($routeParams.gearCollectionId);
+                            if (null == $scope.gearCollection) {
+                                alert("The gear collection does not exist!");
+                                $location.path("/gear/collections");
+                                return;
+                            }
+                            $scope.showAddGearItem = function (event) {
+                                $mdDialog.show({
+                                    controller: Collections.AddGearItemDlgCtrl,
+                                    templateUrl: "content/partials/gear/collections/add-item.html",
+                                    parent: angular.element(document.body),
+                                    targetEvent: event,
+                                    locals: {
+                                        gearCollection: $scope.gearCollection
                                     }
-                                    $location.path("/gear/items");
-                                    $mdToast.show(deleteToast).then(function () {
-                                        // TODO: this does *not* restore the item to its containers
-                                        // and it should probably do so... but how?
-                                        Mockup.AppState.getInstance().getGearState().addGearItem($scope.gearItem);
-                                        $mdToast.show(undoDeleteToast);
-                                        $location.path("/gear/items/" + $scope.gearItem.Id);
+                                });
+                            };
+                            $scope.showAddGearSystem = function (event) {
+                                $mdDialog.show({
+                                    controller: Collections.AddGearSystemDlgCtrl,
+                                    templateUrl: "content/partials/gear/collections/add-system.html",
+                                    parent: angular.element(document.body),
+                                    targetEvent: event,
+                                    locals: {
+                                        gearCollection: $scope.gearCollection
+                                    }
+                                });
+                            };
+                            $scope.showDeleteConfirm = function (event) {
+                                var confirm = $mdDialog.confirm()
+                                    .parent(angular.element(document.body))
+                                    .title("Delete Gear Collection")
+                                    .content("Are you sure you wish to delete this gear collection?")
+                                    .ok("Yes")
+                                    .cancel("No")
+                                    .targetEvent(event);
+                                var receipt = $mdDialog.alert()
+                                    .parent(angular.element(document.body))
+                                    .title("Gear collection deleted!")
+                                    .content("The gear collection has been deleted.")
+                                    .ok("OK")
+                                    .targetEvent(event);
+                                var deleteToast = $mdToast.simple()
+                                    .content("Deleted gear collection: " + $scope.gearCollection.Name)
+                                    .action("Undo")
+                                    .position("bottom left");
+                                var undoDeleteToast = $mdToast.simple()
+                                    .content("Restored gear collection: " + $scope.gearCollection.Name)
+                                    .action("OK")
+                                    .position("bottom left");
+                                $mdDialog.show(confirm).then(function () {
+                                    $mdDialog.show(receipt).then(function () {
+                                        if (!Mockup.AppState.getInstance().getGearState().deleteGearCollection($scope.gearCollection)) {
+                                            alert("Couldn't find the gear collection to delete!");
+                                            return;
+                                        }
+                                        $location.path("/gear/collections");
+                                        $mdToast.show(deleteToast).then(function () {
+                                            // TODO: this does *not* restore the collection to its containers
+                                            // and it should probably do so... but how?
+                                            Mockup.AppState.getInstance().getGearState().addGearCollection($scope.gearCollection);
+                                            $mdToast.show(undoDeleteToast);
+                                            $location.path("/gear/collections/" + $scope.gearCollection.Id);
+                                        });
                                     });
                                 });
-                            });
-                        };
-                    }
-                    return GearItemCtrl;
-                })();
-                Gear.GearItemCtrl = GearItemCtrl;
-                GearItemCtrl.$inject = ["$scope", "$routeParams", "$location", "$mdDialog", "$mdToast"];
-            })(Gear = Controllers.Gear || (Controllers.Gear = {}));
-        })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
-    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
-})(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../AppCtrl.ts" />
-var BackpackPlanner;
-(function (BackpackPlanner) {
-    var Mockup;
-    (function (Mockup) {
-        var Controllers;
-        (function (Controllers) {
-            var Gear;
-            (function (Gear) {
-                "use strict";
-                var GearItemsCtrl = (function () {
-                    function GearItemsCtrl($scope) {
-                        $scope.orderBy = "Name";
-                    }
-                    return GearItemsCtrl;
-                })();
-                Gear.GearItemsCtrl = GearItemsCtrl;
-                GearItemsCtrl.$inject = ["$scope"];
-            })(Gear = Controllers.Gear || (Controllers.Gear = {}));
-        })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
-    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
-})(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../scripts/typings/angular-material/angular-material.d.ts" />
-///<reference path="../AppCtrl.ts" />
-var BackpackPlanner;
-(function (BackpackPlanner) {
-    var Mockup;
-    (function (Mockup) {
-        var Controllers;
-        (function (Controllers) {
-            var Gear;
-            (function (Gear) {
-                "use strict";
-                var AddGearSystemCtrl = (function () {
-                    function AddGearSystemCtrl($scope, $location, $mdDialog, $mdToast) {
-                        $scope.gearSystem = new Mockup.Models.Gear.GearSystem();
-                        $scope.showAddGearItem = function (event) {
-                            $mdDialog.show({
-                                controller: Gear.AddGearItemDlgCtrl,
-                                templateUrl: "content/partials/gear/systems/add-item.html",
-                                parent: angular.element(document.body),
-                                targetEvent: event,
-                                locals: {
-                                    gearSystem: $scope.gearSystem
-                                }
-                            });
-                        };
-                        $scope.addSystem = function (gearSystem) {
-                            $scope.gearSystem = angular.copy(gearSystem);
-                            $scope.gearSystem.Id = Mockup.AppState.getInstance().getGearState().addGearSystem($scope.gearSystem);
-                            var addToast = $mdToast.simple()
-                                .content("Added gear system: " + $scope.gearSystem.Name)
-                                .action("Undo")
-                                .position("bottom left");
-                            var undoAddToast = $mdToast.simple()
-                                .content("Removed gear system: " + $scope.gearSystem.Name)
-                                .action("OK")
-                                .position("bottom left");
-                            $location.path("/gear/systems");
-                            $mdToast.show(addToast).then(function () {
-                                Mockup.AppState.getInstance().getGearState().deleteGearSystem($scope.gearSystem);
-                                $mdToast.show(undoAddToast);
-                            });
-                        };
-                    }
-                    return AddGearSystemCtrl;
-                })();
-                Gear.AddGearSystemCtrl = AddGearSystemCtrl;
-                AddGearSystemCtrl.$inject = ["$scope", "$location", "$mdDialog", "$mdToast"];
-            })(Gear = Controllers.Gear || (Controllers.Gear = {}));
-        })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
-    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
-})(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../scripts/typings/angular-material/angular-material.d.ts" />
-///<reference path="../../../scripts/typings/angularjs/angular-route.d.ts" />
-///<reference path="../AppCtrl.ts" />
-var BackpackPlanner;
-(function (BackpackPlanner) {
-    var Mockup;
-    (function (Mockup) {
-        var Controllers;
-        (function (Controllers) {
-            var Gear;
-            (function (Gear) {
-                "use strict";
-                var GearSystemCtrl = (function () {
-                    function GearSystemCtrl($scope, $routeParams, $location, $mdDialog, $mdToast) {
-                        $scope.gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById($routeParams.gearSystemId);
-                        if (null == $scope.gearSystem) {
-                            alert("The gear system does not exist!");
-                            $location.path("/gear/system");
-                            return;
+                            };
                         }
-                        $scope.showAddGearItem = function (event) {
-                            $mdDialog.show({
-                                controller: Gear.AddGearItemDlgCtrl,
-                                templateUrl: "content/partials/gear/systems/add-item.html",
-                                parent: angular.element(document.body),
-                                targetEvent: event,
-                                locals: {
-                                    gearSystem: $scope.gearSystem
-                                }
-                            });
-                        };
-                        $scope.showDeleteConfirm = function (event) {
-                            var confirm = $mdDialog.confirm()
-                                .parent(angular.element(document.body))
-                                .title("Delete Gear System")
-                                .content("Are you sure you wish to delete this gear system?")
-                                .ok("Yes")
-                                .cancel("No")
-                                .targetEvent(event);
-                            var receipt = $mdDialog.alert()
-                                .parent(angular.element(document.body))
-                                .title("Gear system deleted!")
-                                .content("The gear system has been deleted.")
-                                .ok("OK")
-                                .targetEvent(event);
-                            var deleteToast = $mdToast.simple()
-                                .content("Deleted gear system: " + $scope.gearSystem.Name)
-                                .action("Undo")
-                                .position("bottom left");
-                            var undoDeleteToast = $mdToast.simple()
-                                .content("Restored gear system: " + $scope.gearSystem.Name)
-                                .action("OK")
-                                .position("bottom left");
-                            $mdDialog.show(confirm).then(function () {
-                                $mdDialog.show(receipt).then(function () {
-                                    if (!Mockup.AppState.getInstance().getGearState().deleteGearSystem($scope.gearSystem)) {
-                                        alert("Couldn't find the gear system to delete!");
-                                        return;
-                                    }
-                                    $location.path("/gear/systems");
-                                    $mdToast.show(deleteToast).then(function () {
-                                        // TODO: this does *not* restore the system to its containers
-                                        // and it should probably do so... but how?
-                                        Mockup.AppState.getInstance().getGearState().addGearSystem($scope.gearSystem);
-                                        $mdToast.show(undoDeleteToast);
-                                        $location.path("/gear/systems/" + $scope.gearSystem.Id);
+                        return GearCollectionCtrl;
+                    })();
+                    Collections.GearCollectionCtrl = GearCollectionCtrl;
+                    GearCollectionCtrl.$inject = ["$scope", "$routeParams", "$location", "$mdDialog", "$mdToast"];
+                })(Collections = Gear.Collections || (Gear.Collections = {}));
+            })(Gear = Controllers.Gear || (Controllers.Gear = {}));
+        })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../../AppCtrl.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Controllers;
+        (function (Controllers) {
+            var Gear;
+            (function (Gear) {
+                var Collections;
+                (function (Collections) {
+                    "use strict";
+                    var GearCollectionsCtrl = (function () {
+                        function GearCollectionsCtrl($scope) {
+                            $scope.orderBy = "Name";
+                        }
+                        return GearCollectionsCtrl;
+                    })();
+                    Collections.GearCollectionsCtrl = GearCollectionsCtrl;
+                    GearCollectionsCtrl.$inject = ["$scope"];
+                })(Collections = Gear.Collections || (Gear.Collections = {}));
+            })(Gear = Controllers.Gear || (Controllers.Gear = {}));
+        })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../AppCtrl.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Controllers;
+        (function (Controllers) {
+            var Gear;
+            (function (Gear) {
+                var Items;
+                (function (Items) {
+                    "use strict";
+                    var AddGearItemCtrl = (function () {
+                        function AddGearItemCtrl($scope, $location, $mdToast) {
+                            $scope.gearItem = new Mockup.Models.Gear.GearItem();
+                            $scope.addItem = function (gearItem) {
+                                $scope.gearItem = angular.copy(gearItem);
+                                $scope.gearItem.Id = Mockup.AppState.getInstance().getGearState().addGearItem($scope.gearItem);
+                                var addToast = $mdToast.simple()
+                                    .content("Added gear item: " + $scope.gearItem.Name)
+                                    .action("Undo")
+                                    .position("bottom left");
+                                var undoAddToast = $mdToast.simple()
+                                    .content("Removed gear item: " + $scope.gearItem.Name)
+                                    .action("OK")
+                                    .position("bottom left");
+                                $location.path("/gear/items");
+                                $mdToast.show(addToast).then(function () {
+                                    Mockup.AppState.getInstance().getGearState().deleteGearItem($scope.gearItem);
+                                    $mdToast.show(undoAddToast);
+                                });
+                            };
+                        }
+                        return AddGearItemCtrl;
+                    })();
+                    Items.AddGearItemCtrl = AddGearItemCtrl;
+                    AddGearItemCtrl.$inject = ["$scope", "$location", "$mdToast"];
+                })(Items = Gear.Items || (Gear.Items = {}));
+            })(Gear = Controllers.Gear || (Controllers.Gear = {}));
+        })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../../scripts/typings/angularjs/angular-route.d.ts" />
+///<reference path="../../AppCtrl.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Controllers;
+        (function (Controllers) {
+            var Gear;
+            (function (Gear) {
+                var Items;
+                (function (Items) {
+                    "use strict";
+                    var GearItemCtrl = (function () {
+                        function GearItemCtrl($scope, $routeParams, $location, $mdDialog, $mdToast) {
+                            $scope.gearItem = Mockup.AppState.getInstance().getGearState().getGearItemById($routeParams.gearItemId);
+                            if (null == $scope.gearItem) {
+                                alert("The gear item does not exist!");
+                                $location.path("/gear/items");
+                                return;
+                            }
+                            $scope.showDeleteConfirm = function (event) {
+                                var confirm = $mdDialog.confirm()
+                                    .parent(angular.element(document.body))
+                                    .title("Delete Gear Item")
+                                    .content("Are you sure you wish to delete this gear item?")
+                                    .ok("Yes")
+                                    .cancel("No")
+                                    .targetEvent(event);
+                                var receipt = $mdDialog.alert()
+                                    .parent(angular.element(document.body))
+                                    .title("Gear item deleted!")
+                                    .content("The gear item has been deleted.")
+                                    .ok("OK")
+                                    .targetEvent(event);
+                                var deleteToast = $mdToast.simple()
+                                    .content("Deleted gear item: " + $scope.gearItem.Name)
+                                    .action("Undo")
+                                    .position("bottom left");
+                                var undoDeleteToast = $mdToast.simple()
+                                    .content("Restored gear item: " + $scope.gearItem.Name)
+                                    .action("OK")
+                                    .position("bottom left");
+                                $mdDialog.show(confirm).then(function () {
+                                    $mdDialog.show(receipt).then(function () {
+                                        if (!Mockup.AppState.getInstance().getGearState().deleteGearItem($scope.gearItem)) {
+                                            alert("Couldn't find the gear item to delete!");
+                                            return;
+                                        }
+                                        $location.path("/gear/items");
+                                        $mdToast.show(deleteToast).then(function () {
+                                            // TODO: this does *not* restore the item to its containers
+                                            // and it should probably do so... but how?
+                                            Mockup.AppState.getInstance().getGearState().addGearItem($scope.gearItem);
+                                            $mdToast.show(undoDeleteToast);
+                                            $location.path("/gear/items/" + $scope.gearItem.Id);
+                                        });
                                     });
                                 });
-                            });
-                        };
-                    }
-                    return GearSystemCtrl;
-                })();
-                Gear.GearSystemCtrl = GearSystemCtrl;
-                GearSystemCtrl.$inject = ["$scope", "$routeParams", "$location", "$mdDialog", "$mdToast"];
+                            };
+                        }
+                        return GearItemCtrl;
+                    })();
+                    Items.GearItemCtrl = GearItemCtrl;
+                    GearItemCtrl.$inject = ["$scope", "$routeParams", "$location", "$mdDialog", "$mdToast"];
+                })(Items = Gear.Items || (Gear.Items = {}));
             })(Gear = Controllers.Gear || (Controllers.Gear = {}));
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../AppCtrl.ts" />
+///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../../AppCtrl.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -1646,21 +1617,25 @@ var BackpackPlanner;
         (function (Controllers) {
             var Gear;
             (function (Gear) {
-                "use strict";
-                var GearSystemsCtrl = (function () {
-                    function GearSystemsCtrl($scope) {
-                        $scope.orderBy = "Name";
-                    }
-                    return GearSystemsCtrl;
-                })();
-                Gear.GearSystemsCtrl = GearSystemsCtrl;
-                GearSystemsCtrl.$inject = ["$scope"];
+                var Items;
+                (function (Items) {
+                    "use strict";
+                    var GearItemsCtrl = (function () {
+                        function GearItemsCtrl($scope) {
+                            $scope.orderBy = "Name";
+                        }
+                        return GearItemsCtrl;
+                    })();
+                    Items.GearItemsCtrl = GearItemsCtrl;
+                    GearItemsCtrl.$inject = ["$scope"];
+                })(Items = Gear.Items || (Gear.Items = {}));
             })(Gear = Controllers.Gear || (Controllers.Gear = {}));
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../AppCtrl.ts" />
+///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../AppCtrl.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -1669,15 +1644,155 @@ var BackpackPlanner;
         (function (Controllers) {
             var Gear;
             (function (Gear) {
-                "use strict";
-                var GearCollectionsCtrl = (function () {
-                    function GearCollectionsCtrl($scope) {
-                        $scope.orderBy = "Name";
-                    }
-                    return GearCollectionsCtrl;
-                })();
-                Gear.GearCollectionsCtrl = GearCollectionsCtrl;
-                GearCollectionsCtrl.$inject = ["$scope"];
+                var Systems;
+                (function (Systems) {
+                    "use strict";
+                    var AddGearSystemCtrl = (function () {
+                        function AddGearSystemCtrl($scope, $location, $mdDialog, $mdToast) {
+                            $scope.gearSystem = new Mockup.Models.Gear.GearSystem();
+                            $scope.showAddGearItem = function (event) {
+                                $mdDialog.show({
+                                    controller: Systems.AddGearItemDlgCtrl,
+                                    templateUrl: "content/partials/gear/systems/add-item.html",
+                                    parent: angular.element(document.body),
+                                    targetEvent: event,
+                                    locals: {
+                                        gearSystem: $scope.gearSystem
+                                    }
+                                });
+                            };
+                            $scope.addSystem = function (gearSystem) {
+                                $scope.gearSystem = angular.copy(gearSystem);
+                                $scope.gearSystem.Id = Mockup.AppState.getInstance().getGearState().addGearSystem($scope.gearSystem);
+                                var addToast = $mdToast.simple()
+                                    .content("Added gear system: " + $scope.gearSystem.Name)
+                                    .action("Undo")
+                                    .position("bottom left");
+                                var undoAddToast = $mdToast.simple()
+                                    .content("Removed gear system: " + $scope.gearSystem.Name)
+                                    .action("OK")
+                                    .position("bottom left");
+                                $location.path("/gear/systems");
+                                $mdToast.show(addToast).then(function () {
+                                    Mockup.AppState.getInstance().getGearState().deleteGearSystem($scope.gearSystem);
+                                    $mdToast.show(undoAddToast);
+                                });
+                            };
+                        }
+                        return AddGearSystemCtrl;
+                    })();
+                    Systems.AddGearSystemCtrl = AddGearSystemCtrl;
+                    AddGearSystemCtrl.$inject = ["$scope", "$location", "$mdDialog", "$mdToast"];
+                })(Systems = Gear.Systems || (Gear.Systems = {}));
+            })(Gear = Controllers.Gear || (Controllers.Gear = {}));
+        })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../../scripts/typings/angularjs/angular-route.d.ts" />
+///<reference path="../../AppCtrl.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Controllers;
+        (function (Controllers) {
+            var Gear;
+            (function (Gear) {
+                var Systems;
+                (function (Systems) {
+                    "use strict";
+                    var GearSystemCtrl = (function () {
+                        function GearSystemCtrl($scope, $routeParams, $location, $mdDialog, $mdToast) {
+                            $scope.gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById($routeParams.gearSystemId);
+                            if (null == $scope.gearSystem) {
+                                alert("The gear system does not exist!");
+                                $location.path("/gear/systems");
+                                return;
+                            }
+                            $scope.showAddGearItem = function (event) {
+                                $mdDialog.show({
+                                    controller: Systems.AddGearItemDlgCtrl,
+                                    templateUrl: "content/partials/gear/systems/add-item.html",
+                                    parent: angular.element(document.body),
+                                    targetEvent: event,
+                                    locals: {
+                                        gearSystem: $scope.gearSystem
+                                    }
+                                });
+                            };
+                            $scope.showDeleteConfirm = function (event) {
+                                var confirm = $mdDialog.confirm()
+                                    .parent(angular.element(document.body))
+                                    .title("Delete Gear System")
+                                    .content("Are you sure you wish to delete this gear system?")
+                                    .ok("Yes")
+                                    .cancel("No")
+                                    .targetEvent(event);
+                                var receipt = $mdDialog.alert()
+                                    .parent(angular.element(document.body))
+                                    .title("Gear system deleted!")
+                                    .content("The gear system has been deleted.")
+                                    .ok("OK")
+                                    .targetEvent(event);
+                                var deleteToast = $mdToast.simple()
+                                    .content("Deleted gear system: " + $scope.gearSystem.Name)
+                                    .action("Undo")
+                                    .position("bottom left");
+                                var undoDeleteToast = $mdToast.simple()
+                                    .content("Restored gear system: " + $scope.gearSystem.Name)
+                                    .action("OK")
+                                    .position("bottom left");
+                                $mdDialog.show(confirm).then(function () {
+                                    $mdDialog.show(receipt).then(function () {
+                                        if (!Mockup.AppState.getInstance().getGearState().deleteGearSystem($scope.gearSystem)) {
+                                            alert("Couldn't find the gear system to delete!");
+                                            return;
+                                        }
+                                        $location.path("/gear/systems");
+                                        $mdToast.show(deleteToast).then(function () {
+                                            // TODO: this does *not* restore the system to its containers
+                                            // and it should probably do so... but how?
+                                            Mockup.AppState.getInstance().getGearState().addGearSystem($scope.gearSystem);
+                                            $mdToast.show(undoDeleteToast);
+                                            $location.path("/gear/systems/" + $scope.gearSystem.Id);
+                                        });
+                                    });
+                                });
+                            };
+                        }
+                        return GearSystemCtrl;
+                    })();
+                    Systems.GearSystemCtrl = GearSystemCtrl;
+                    GearSystemCtrl.$inject = ["$scope", "$routeParams", "$location", "$mdDialog", "$mdToast"];
+                })(Systems = Gear.Systems || (Gear.Systems = {}));
+            })(Gear = Controllers.Gear || (Controllers.Gear = {}));
+        })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../../AppCtrl.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Controllers;
+        (function (Controllers) {
+            var Gear;
+            (function (Gear) {
+                var Systems;
+                (function (Systems) {
+                    "use strict";
+                    var GearSystemsCtrl = (function () {
+                        function GearSystemsCtrl($scope) {
+                            $scope.orderBy = "Name";
+                        }
+                        return GearSystemsCtrl;
+                    })();
+                    Systems.GearSystemsCtrl = GearSystemsCtrl;
+                    GearSystemsCtrl.$inject = ["$scope"];
+                })(Systems = Gear.Systems || (Gear.Systems = {}));
             })(Gear = Controllers.Gear || (Controllers.Gear = {}));
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
@@ -1723,35 +1838,40 @@ var BackpackPlanner;
                     controller: "GearItemsCtrl",
                     title: "Gear Items"
                 })
-                    .when("/gear/items/add", {
-                    templateUrl: "content/partials/gear/items/add.html",
-                    controller: "AddGearItemCtrl",
-                    title: "Add a Gear Item"
-                })
                     .when("/gear/items/:gearItemId", {
                     templateUrl: "content/partials/gear/items/item.html",
                     controller: "GearItemCtrl",
                     title: "Gear Item"
+                })
+                    .when("/gear/items/add", {
+                    templateUrl: "content/partials/gear/items/add.html",
+                    controller: "AddGearItemCtrl",
+                    title: "Add a Gear Item"
                 })
                     .when("/gear/systems", {
                     templateUrl: "content/partials/gear/systems/systems.html",
                     controller: "GearSystemsCtrl",
                     title: "Gear Systems"
                 })
-                    .when("/gear/systems/add", {
-                    templateUrl: "content/partials/gear/systems/add.html",
-                    controller: "AddGearSystemCtrl",
-                    title: "Add a Gear System"
-                })
                     .when("/gear/systems/:gearSystemId", {
                     templateUrl: "content/partials/gear/systems/system.html",
                     controller: "GearSystemCtrl",
                     title: "Gear System"
                 })
+                    .when("/gear/systems/add", {
+                    templateUrl: "content/partials/gear/systems/add.html",
+                    controller: "AddGearSystemCtrl",
+                    title: "Add a Gear System"
+                })
                     .when("/gear/collections", {
                     templateUrl: "content/partials/gear/collections/collections.html",
                     controller: "GearCollectionsCtrl",
                     title: "Gear Collections"
+                })
+                    .when("/gear/collections/:gearCollectionId", {
+                    templateUrl: "content/partials/gear/collections/collection.html",
+                    controller: "GearCollectionCtrl",
+                    title: "Gear Collection"
                 })
                     .when("/meals", {
                     templateUrl: "content/partials/meals.html",
@@ -1836,13 +1956,14 @@ var BackpackPlanner;
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../scripts/typings/angularjs/angular.d.ts" />
 ///<reference path="Controllers/AppCtrl.ts" />
-///<reference path="Controllers/Gear/AddGearItemCtrl.ts" />
-///<reference path="Controllers/Gear/GearItemCtrl.ts" />
-///<reference path="Controllers/Gear/GearItemsCtrl.ts" />
-///<reference path="Controllers/Gear/AddGearSystemCtrl.ts" />
-///<reference path="Controllers/Gear/GearSystemCtrl.ts" />
-///<reference path="Controllers/Gear/GearSystemsCtrl.ts" />
-///<reference path="Controllers/Gear/GearCollectionsCtrl.ts" />
+///<reference path="Controllers/Gear/Collections/GearCollectionCtrl.ts" />
+///<reference path="Controllers/Gear/Collections/GearCollectionsCtrl.ts" />
+///<reference path="Controllers/Gear/Items/AddGearItemCtrl.ts" />
+///<reference path="Controllers/Gear/Items/GearItemCtrl.ts" />
+///<reference path="Controllers/Gear/Items/GearItemsCtrl.ts" />
+///<reference path="Controllers/Gear/Systems/AddGearSystemCtrl.ts" />
+///<reference path="Controllers/Gear/Systems/GearSystemCtrl.ts" />
+///<reference path="Controllers/Gear/Systems/GearSystemsCtrl.ts" />
 ///<reference path="RootScopeConfig.ts" />
 ///<reference path="RouteConfig.ts" />
 ///<reference path="ThemeConfig.ts" />
@@ -1877,18 +1998,19 @@ var BackpackPlanner;
         mockupApp.factory("GearCollectionService", ["$resource", Mockup.Services.Gear.gearCollectionServiceFactory]);
         // inject controllers
         mockupApp.controller("AppCtrl", Mockup.Controllers.AppCtrl);
-        mockupApp.controller("GearItemCtrl", Mockup.Controllers.Gear.GearItemCtrl);
-        mockupApp.controller("GearItemsCtrl", Mockup.Controllers.Gear.GearItemsCtrl);
-        mockupApp.controller("AddGearItemCtrl", Mockup.Controllers.Gear.AddGearItemCtrl);
-        mockupApp.controller("GearSystemCtrl", Mockup.Controllers.Gear.GearSystemCtrl);
-        mockupApp.controller("GearSystemsCtrl", Mockup.Controllers.Gear.GearSystemsCtrl);
-        mockupApp.controller("AddGearSystemCtrl", Mockup.Controllers.Gear.AddGearSystemCtrl);
-        mockupApp.controller("GearCollectionsCtrl", Mockup.Controllers.Gear.GearCollectionsCtrl);
+        mockupApp.controller("GearCollectionCtrl", Mockup.Controllers.Gear.Collections.GearCollectionCtrl);
+        mockupApp.controller("GearCollectionsCtrl", Mockup.Controllers.Gear.Collections.GearCollectionsCtrl);
+        mockupApp.controller("GearItemCtrl", Mockup.Controllers.Gear.Items.GearItemCtrl);
+        mockupApp.controller("GearItemsCtrl", Mockup.Controllers.Gear.Items.GearItemsCtrl);
+        mockupApp.controller("AddGearItemCtrl", Mockup.Controllers.Gear.Items.AddGearItemCtrl);
+        mockupApp.controller("GearSystemCtrl", Mockup.Controllers.Gear.Systems.GearSystemCtrl);
+        mockupApp.controller("GearSystemsCtrl", Mockup.Controllers.Gear.Systems.GearSystemsCtrl);
+        mockupApp.controller("AddGearSystemCtrl", Mockup.Controllers.Gear.Systems.AddGearSystemCtrl);
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../scripts/typings/angular-material/angular-material.d.ts" />
-///<reference path="../../AppState.ts" />
+///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../AppState.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -1897,33 +2019,126 @@ var BackpackPlanner;
         (function (Controllers) {
             var Gear;
             (function (Gear) {
-                "use strict";
-                var AddGearItemDlgCtrl = (function () {
-                    function AddGearItemDlgCtrl($scope, $mdDialog, gearSystem) {
-                        $scope.gearSystem = gearSystem;
-                        $scope.orderBy = "Name";
-                        $scope.getGearItems = function () {
-                            return Mockup.AppState.getInstance().getGearState().getGearItems();
-                        };
-                        $scope.close = function () {
-                            $mdDialog.hide();
-                        };
-                        $scope.isSelected = function (gearItem) {
-                            return $scope.gearSystem.getGearItemEntryIndexById(gearItem.Id) >= 0;
-                        };
-                        $scope.toggle = function (gearItem) {
-                            var idx = $scope.gearSystem.getGearItemEntryIndexById(gearItem.Id);
-                            if (idx < 0) {
-                                $scope.gearSystem.GearItems.push(new Mockup.Models.Gear.GearItemEntry(gearItem.Id));
-                            }
-                            else {
-                                $scope.gearSystem.GearItems.splice(idx, 1);
-                            }
-                        };
-                    }
-                    return AddGearItemDlgCtrl;
-                })();
-                Gear.AddGearItemDlgCtrl = AddGearItemDlgCtrl;
+                var Collections;
+                (function (Collections) {
+                    "use strict";
+                    var AddGearItemDlgCtrl = (function () {
+                        function AddGearItemDlgCtrl($scope, $mdDialog, gearCollection) {
+                            $scope.gearCollection = gearCollection;
+                            $scope.orderBy = "Name";
+                            $scope.getGearItems = function () {
+                                return Mockup.AppState.getInstance().getGearState().getGearItems();
+                            };
+                            $scope.close = function () {
+                                $mdDialog.hide();
+                            };
+                            $scope.isSelected = function (gearItem) {
+                                return $scope.gearCollection.getGearItemEntryIndexById(gearItem.Id) >= 0;
+                            };
+                            $scope.toggle = function (gearItem) {
+                                var idx = $scope.gearCollection.getGearItemEntryIndexById(gearItem.Id);
+                                if (idx < 0) {
+                                    $scope.gearCollection.GearItems.push(new Mockup.Models.Gear.GearItemEntry(gearItem.Id));
+                                }
+                                else {
+                                    $scope.gearCollection.GearItems.splice(idx, 1);
+                                }
+                            };
+                        }
+                        return AddGearItemDlgCtrl;
+                    })();
+                    Collections.AddGearItemDlgCtrl = AddGearItemDlgCtrl;
+                })(Collections = Gear.Collections || (Gear.Collections = {}));
+            })(Gear = Controllers.Gear || (Controllers.Gear = {}));
+        })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../AppState.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Controllers;
+        (function (Controllers) {
+            var Gear;
+            (function (Gear) {
+                var Collections;
+                (function (Collections) {
+                    "use strict";
+                    var AddGearSystemDlgCtrl = (function () {
+                        function AddGearSystemDlgCtrl($scope, $mdDialog, gearCollection) {
+                            $scope.gearCollection = gearCollection;
+                            $scope.orderBy = "Name";
+                            $scope.getGearSystems = function () {
+                                return Mockup.AppState.getInstance().getGearState().getGearSystems();
+                            };
+                            $scope.close = function () {
+                                $mdDialog.hide();
+                            };
+                            $scope.isSelected = function (gearSystem) {
+                                return $scope.gearCollection.getGearSystemEntryIndexById(gearSystem.Id) >= 0;
+                            };
+                            $scope.toggle = function (gearSystem) {
+                                var idx = $scope.gearCollection.getGearSystemEntryIndexById(gearSystem.Id);
+                                if (idx < 0) {
+                                    $scope.gearCollection.GearSystems.push(new Mockup.Models.Gear.GearSystemEntry(gearSystem.Id));
+                                }
+                                else {
+                                    $scope.gearCollection.GearSystems.splice(idx, 1);
+                                }
+                            };
+                        }
+                        return AddGearSystemDlgCtrl;
+                    })();
+                    Collections.AddGearSystemDlgCtrl = AddGearSystemDlgCtrl;
+                })(Collections = Gear.Collections || (Gear.Collections = {}));
+            })(Gear = Controllers.Gear || (Controllers.Gear = {}));
+        })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../AppState.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Controllers;
+        (function (Controllers) {
+            var Gear;
+            (function (Gear) {
+                var Systems;
+                (function (Systems) {
+                    "use strict";
+                    var AddGearItemDlgCtrl = (function () {
+                        function AddGearItemDlgCtrl($scope, $mdDialog, gearSystem) {
+                            $scope.gearSystem = gearSystem;
+                            $scope.orderBy = "Name";
+                            $scope.getGearItems = function () {
+                                return Mockup.AppState.getInstance().getGearState().getGearItems();
+                            };
+                            $scope.close = function () {
+                                $mdDialog.hide();
+                            };
+                            $scope.isSelected = function (gearItem) {
+                                return $scope.gearSystem.getGearItemEntryIndexById(gearItem.Id) >= 0;
+                            };
+                            $scope.toggle = function (gearItem) {
+                                var idx = $scope.gearSystem.getGearItemEntryIndexById(gearItem.Id);
+                                if (idx < 0) {
+                                    $scope.gearSystem.GearItems.push(new Mockup.Models.Gear.GearItemEntry(gearItem.Id));
+                                }
+                                else {
+                                    $scope.gearSystem.GearItems.splice(idx, 1);
+                                }
+                            };
+                        }
+                        return AddGearItemDlgCtrl;
+                    })();
+                    Systems.AddGearItemDlgCtrl = AddGearItemDlgCtrl;
+                })(Systems = Gear.Systems || (Gear.Systems = {}));
             })(Gear = Controllers.Gear || (Controllers.Gear = {}));
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));

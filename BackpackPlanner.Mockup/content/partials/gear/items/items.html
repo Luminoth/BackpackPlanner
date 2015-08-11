@@ -15,10 +15,10 @@
             <md-card class="mockup-card" flex>
                 <md-card-content class="mockup-card-content">
                     <h2 class="md-title">{{ gearItem.Name }}</h2>
-                    <p layout-padding style="white-space: normal;">{{ gearItem.Make }} {{ gearItem.Model }}</p>
+                    <p style="white-space: normal;" layout-padding>{{ gearItem.Make }} {{ gearItem.Model }}</p>
                 </md-card-content>
                 <div layout="row" layout-sm="column">
-                    <p layout-padding ng-if="'NotCarried' != gearItem.Carried">Weight: {{ gearItem.weightInUnits() | number:2 }} {{ getUnitsWeightString() }}s</p>
+                    <p layout-padding ng-if="'NotCarried' != gearItem.Carried">Weight: {{ gearItem.weightInUnits() }} {{ getUnitsWeightString() }}s</p>
                     <p layout-padding>Cost: {{ gearItem.costInCurrency() | currency }} ({{ gearItem.getCostPerUnitInCurrency() | currency }} per {{ getUnitsWeightString() }})</p>
                     <p layout-padding ng-if="gearItem.IsConsumable">Consumed per day: {{ gearItem.ConsumedPerDay }}</p>
                 </div>

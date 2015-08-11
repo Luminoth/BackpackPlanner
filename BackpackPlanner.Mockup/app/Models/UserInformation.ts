@@ -38,13 +38,13 @@ module BackpackPlanner.Mockup.Models {
         public heightInUnits(height: number) : number {
             return arguments.length
                 ? (this.HeightInCm = convertUnitsToCentimeters(height, AppState.getInstance().getAppSettings().Units))
-                : Math.floor(convertCentimetersToUnits(this.HeightInCm, AppState.getInstance().getAppSettings().Units));
+                : parseFloat(convertCentimetersToUnits(this.HeightInCm, AppState.getInstance().getAppSettings().Units).toFixed(2));
         }
 
         public weightInUnits(weight: number) : number {
             return arguments.length
                 ? (this.WeightInGrams = convertUnitsToGrams(weight, AppState.getInstance().getAppSettings().Units))
-                : Math.floor(convertGramsToUnits(this.WeightInGrams, AppState.getInstance().getAppSettings().Units));
+                : parseFloat(convertGramsToUnits(this.WeightInGrams, AppState.getInstance().getAppSettings().Units).toFixed(2));
         }
     }
 }

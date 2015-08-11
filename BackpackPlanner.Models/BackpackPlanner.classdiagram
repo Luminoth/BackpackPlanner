@@ -297,6 +297,19 @@
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
+          <operation Id="45a69f74-a96a-4e1d-bc45-6909fa30b695" name="GetInstance" isLeaf="false" isStatic="true" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="c1a39e34-8894-4a57-beab-b12f7156fa77" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="ea17bda1-1374-4ead-8420-27cc09091334" direction="Return" isUnique="false">
+                  <elementDefinition Id="e82670fa-357a-4eac-aea8-a6612eadc519" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="3e1ce8bd-e633-4748-8fdc-3c846f2ded70" LastKnownName="AppState" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
         </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
@@ -315,7 +328,7 @@
               <referencedTypeMoniker Id="b27b34d9-7f50-48ea-98c5-cd9cc72f923c" LastKnownName="String" />
             </type_NamedElement>
           </property>
-          <property Id="edaaac05-4866-474e-b2f1-7f94fea70354" name="GearItems" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+          <property Id="edaaac05-4866-474e-b2f1-7f94fea70354" name="GearItems" isLeaf="false" isStatic="false" isReadOnly="true" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <lowerValueInternal>
               <literalString Id="6f99f066-8600-48fb-ba5e-6ba1e5a79844" name="Lower" value="*">
                 <elementDefinition Id="d6e4fe46-8efc-4bbd-a876-609a22756531" />
@@ -557,7 +570,7 @@
               <referencedTypeMoniker Id="b27b34d9-7f50-48ea-98c5-cd9cc72f923c" LastKnownName="String" />
             </type_NamedElement>
           </property>
-          <property Id="93a25ed2-1bfb-4e88-b43e-fb6d5569a5e6" name="GearSystems" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+          <property Id="93a25ed2-1bfb-4e88-b43e-fb6d5569a5e6" name="GearSystems" isLeaf="false" isStatic="false" isReadOnly="true" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <lowerValueInternal>
               <literalString Id="aab65aef-bad5-463f-b897-42a1e6300810" name="Lower" value="*">
                 <elementDefinition Id="08698386-4dad-4cc7-a3ca-cacafde40b1f" />
@@ -573,7 +586,7 @@
               <referencedTypeMoniker Id="6b6c6fdb-494c-4f96-8af2-65b96a4db95d" LastKnownName="GearSystemEntry" />
             </type_NamedElement>
           </property>
-          <property Id="24d0baa7-2c34-40dc-93bf-cb69667e8953" name="GearItems" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+          <property Id="24d0baa7-2c34-40dc-93bf-cb69667e8953" name="GearItems" isLeaf="false" isStatic="false" isReadOnly="true" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <lowerValueInternal>
               <literalString Id="ca0a145e-dec9-4d56-9ab8-c0018ee48524" name="Lower" value="*">
                 <elementDefinition Id="bd1c987a-603e-4bb5-9596-fff591f994e8" />
@@ -1038,7 +1051,7 @@
               <referencedTypeMoniker Id="b27b34d9-7f50-48ea-98c5-cd9cc72f923c" LastKnownName="String" />
             </type_NamedElement>
           </property>
-          <property Id="c05b69e0-98af-4e91-bfd0-c443003a82c4" name="RouteDescriptions" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+          <property Id="c05b69e0-98af-4e91-bfd0-c443003a82c4" name="RouteDescriptions" isLeaf="false" isStatic="false" isReadOnly="true" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <lowerValueInternal>
               <literalString Id="419d0cb4-d0a6-4b18-9d84-55b81ce5ca41" name="Lower" value="*">
                 <elementDefinition Id="b98dd9db-2bb0-4ebe-861d-3105c3c4ffab" />
@@ -1054,7 +1067,7 @@
               <referencedTypeMoniker Id="057f6b4c-7940-488e-be46-e992a6b8d8b5" LastKnownName="RouteDescription" />
             </type_NamedElement>
           </property>
-          <property Id="037c6614-2136-4bd7-97f2-4816af5e8f51" name="PointsOfInterest" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+          <property Id="037c6614-2136-4bd7-97f2-4816af5e8f51" name="PointsOfInterest" isLeaf="false" isStatic="false" isReadOnly="true" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <lowerValueInternal>
               <literalString Id="c7e6758d-87d3-42c2-bae3-c162fc8d6287" name="Lower" value="*">
                 <elementDefinition Id="7d611428-ad04-433d-9bc3-71492eadf05f" />
@@ -1153,7 +1166,7 @@
               <referencedTypeMoniker Id="8f3239df-630f-4aca-af1f-795c7d191a31" LastKnownName="DateTime" />
             </type_NamedElement>
           </property>
-          <property Id="d54042b9-0e61-4204-8dfd-b37297eac01f" name="GearCollections" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+          <property Id="d54042b9-0e61-4204-8dfd-b37297eac01f" name="GearCollections" isLeaf="false" isStatic="false" isReadOnly="true" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <lowerValueInternal>
               <literalString Id="deb04a99-58c0-443e-afce-1ac8f5f691e7" name="Lower" value="*">
                 <elementDefinition Id="202c7a8f-ab73-434e-aa10-af7d50aca23c" />
@@ -1169,7 +1182,7 @@
               <referencedTypeMoniker Id="8a34c8b9-3e20-4ca7-a796-4e17a104d534" LastKnownName="GearCollectionEntry" />
             </type_NamedElement>
           </property>
-          <property Id="31723179-85db-4076-be43-bef9b50b44a1" name="GearSystems" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+          <property Id="31723179-85db-4076-be43-bef9b50b44a1" name="GearSystems" isLeaf="false" isStatic="false" isReadOnly="true" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <lowerValueInternal>
               <literalString Id="0ca9e2a2-2398-4cc3-a802-3d5545a20f02" name="Lower" value="*">
                 <elementDefinition Id="8561d6eb-5010-43ff-9d77-f0d4ad346e79" />
@@ -1185,7 +1198,7 @@
               <referencedTypeMoniker Id="6b6c6fdb-494c-4f96-8af2-65b96a4db95d" LastKnownName="GearSystemEntry" />
             </type_NamedElement>
           </property>
-          <property Id="ae531dae-024f-479c-9f67-51df596d9b54" name="GearItems" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+          <property Id="ae531dae-024f-479c-9f67-51df596d9b54" name="GearItems" isLeaf="false" isStatic="false" isReadOnly="true" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <lowerValueInternal>
               <literalString Id="c240c588-8d74-4ab8-a14e-d8af011c3e7d" name="Lower" value="*">
                 <elementDefinition Id="03994c61-9d7e-4516-842e-c8be127ff987" />
@@ -1201,7 +1214,7 @@
               <referencedTypeMoniker Id="14b41725-c8a8-412a-93f8-249118c42aa2" LastKnownName="GearItemEntry" />
             </type_NamedElement>
           </property>
-          <property Id="84655edb-5a48-45e4-bab5-9de6f73832c6" name="Meals" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+          <property Id="84655edb-5a48-45e4-bab5-9de6f73832c6" name="Meals" isLeaf="false" isStatic="false" isReadOnly="true" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <lowerValueInternal>
               <literalString Id="47ee6549-1a0f-4048-bab8-153a3c9df7fa" name="Lower" value="*">
                 <elementDefinition Id="1faf4594-460e-46a1-b5fc-19f7d1181698" />
@@ -1332,7 +1345,7 @@
       <class Id="329924b1-b5e7-44a7-b77a-7fa6bf96ce73" name="GearState" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="6cba91d8-cff8-4c3f-878b-477cb8197394" />
         <ownedAttributesInternal>
-          <property Id="37fcf2c4-977e-4153-b709-26c0c9cd17bb" name="GearCollections" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+          <property Id="37fcf2c4-977e-4153-b709-26c0c9cd17bb" name="GearCollections" isLeaf="false" isStatic="false" isReadOnly="true" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <lowerValueInternal>
               <literalString Id="78c5ffdf-c64c-4fad-8034-61de980da4b4" name="Lower" value="*">
                 <elementDefinition Id="38e171fe-1fea-458c-902a-340eb30f5fac" />
@@ -1348,7 +1361,7 @@
               <referencedTypeMoniker Id="b58974db-5b07-466c-9762-a5b3de6b2676" LastKnownName="GearCollection" />
             </type_NamedElement>
           </property>
-          <property Id="61504793-a30b-48e3-a214-befe32b2651c" name="GearItems" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+          <property Id="61504793-a30b-48e3-a214-befe32b2651c" name="GearItems" isLeaf="false" isStatic="false" isReadOnly="true" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <lowerValueInternal>
               <literalString Id="a0aa9049-7225-4e9d-bd3c-cb7696dde2f4" name="Lower" value="*">
                 <elementDefinition Id="e67530a8-87f6-4e19-bdb0-57a9cee3f380" />
@@ -1364,7 +1377,7 @@
               <referencedTypeMoniker Id="cbd1a84d-eb03-4ab3-8b44-111821d29c5f" LastKnownName="GearItem" />
             </type_NamedElement>
           </property>
-          <property Id="4fd8523f-ccda-4c69-b387-b116537cadc7" name="GearSystems" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+          <property Id="4fd8523f-ccda-4c69-b387-b116537cadc7" name="GearSystems" isLeaf="false" isStatic="false" isReadOnly="true" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <lowerValueInternal>
               <literalString Id="edbe9c0c-f87d-45ac-a010-00d93d62d29a" name="Lower" value="*">
                 <elementDefinition Id="a92859ba-992f-4d38-ab9a-d7e1d4e6cd08" />
@@ -1395,7 +1408,7 @@
       <class Id="ef96afe8-8e4a-4596-8a2a-66efcde2a4a1" name="MealState" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="0d1c65a0-0e8d-4d8a-bfcc-f491b22d36ed" />
         <ownedAttributesInternal>
-          <property Id="dc9a2f0e-2335-4950-a7c0-1739c3f8f3eb" name="Meals" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+          <property Id="dc9a2f0e-2335-4950-a7c0-1739c3f8f3eb" name="Meals" isLeaf="false" isStatic="false" isReadOnly="true" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <lowerValueInternal>
               <literalString Id="c7b46350-4014-4f21-bc30-50a38336a734" name="Lower" value="*">
                 <elementDefinition Id="d6e5500d-140d-4f34-b043-ba5a3cd5e642" />
@@ -1426,7 +1439,7 @@
       <class Id="90f9baf3-0888-47ad-ad53-f933e8df5384" name="TripState" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="c952f3f4-e978-48a3-befc-76c18bf5f0fb" />
         <ownedAttributesInternal>
-          <property Id="37fbc837-0b03-4dbe-ba67-74e01b1f84fd" name="TripItineraries" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+          <property Id="37fbc837-0b03-4dbe-ba67-74e01b1f84fd" name="TripItineraries" isLeaf="false" isStatic="false" isReadOnly="true" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <lowerValueInternal>
               <literalString Id="29fa7edc-7d75-4a3c-8642-ad4a2b890c79" name="Lower" value="*">
                 <elementDefinition Id="97021d55-2932-42f8-b8e6-5a35529c0463" />
@@ -1442,7 +1455,7 @@
               <referencedTypeMoniker Id="5a83d6b1-927d-4eea-8bfc-00599aef9f93" LastKnownName="TripItinerary" />
             </type_NamedElement>
           </property>
-          <property Id="b0f78f04-728b-4561-bf7d-886c83f910a8" name="TripPlans" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+          <property Id="b0f78f04-728b-4561-bf7d-886c83f910a8" name="TripPlans" isLeaf="false" isStatic="false" isReadOnly="true" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <lowerValueInternal>
               <literalString Id="7d141ad0-57b8-46f1-a586-19622d239f35" name="Lower" value="*">
                 <elementDefinition Id="4ccaebfb-c877-4b82-844d-f38f50e67802" />
@@ -1542,6 +1555,11 @@
     <packageHasNamedElement>
       <referencedType Id="dcb9e38d-963f-493a-a263-f9e24f70c3a9" name="Integer" isAbstract="false" isLeaf="false" cachedFullName="Integer">
         <elementDefinition Id="220a3521-e091-4221-bae9-3ef9018e845c" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="3e1ce8bd-e633-4748-8fdc-3c846f2ded70" name="AppState" isAbstract="false" isLeaf="false" cachedFullName="BackpackPlanner.Models::AppState">
+        <elementDefinition Id="baeeda19-7dbe-4e13-8029-565d4d121ed9" />
       </referencedType>
     </packageHasNamedElement>
   </packagedElements>

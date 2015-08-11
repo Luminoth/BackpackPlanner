@@ -28,11 +28,11 @@
         <OperationElementListCompartment Id="d81088c7-0845-45cd-9fea-0bfb76b992ce" absoluteBounds="0.515, 8.1128905629118275, 2.3449999999999998, 0.36132811258236552" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="6ca14895-029b-4902-a591-719d19ce91b8" absoluteBounds="0.5, 0.5, 3.375, 2.3437499403953552" hideQualifiedName="false" increaseHeight="0" customColor="181, 193, 223">
+    <classShape Id="6ca14895-029b-4902-a591-719d19ce91b8" absoluteBounds="0.5, 0.5, 3.375, 2.5039061854283013" hideQualifiedName="false" increaseHeight="0" customColor="181, 193, 223">
       <classMoniker Id="bba169e1-f6f4-4bb1-baf7-ac18868a08f6" LastKnownName="AppState" />
       <nestedChildShapes>
         <AttributeElementListCompartment Id="b99d4cb5-fc8b-4e45-bf6a-9050a44e46e8" absoluteBounds="0.51500000000000057, 0.88999999999999968, 3.3449999999999998, 1.0019530927141507" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
-        <OperationElementListCompartment Id="80824cab-50cd-4489-b29d-573e25cabacc" absoluteBounds="0.51499999999999968, 1.9019530927141508, 3.3449999999999998, 0.84179684768120455" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <OperationElementListCompartment Id="80824cab-50cd-4489-b29d-573e25cabacc" absoluteBounds="0.51499999999999968, 1.9019530927141508, 3.3449999999999998, 1.0019530927141507" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="48709e6a-f361-490a-b9b1-14e766dbe40f" absoluteBounds="0.5, 9, 2.75, 2.3437499403953552" hideQualifiedName="false" increaseHeight="0" customColor="181, 193, 223">

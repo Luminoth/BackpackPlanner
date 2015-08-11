@@ -1,8 +1,8 @@
-﻿///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
+﻿///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
 
-///<reference path="../AppCtrl.ts" />
+///<reference path="../../AppCtrl.ts" />
 
-module BackpackPlanner.Mockup.Controllers.Gear {
+module BackpackPlanner.Mockup.Controllers.Gear.Systems {
     "use strict";
 
     export interface IGearSystemsScope extends IAppScope {
