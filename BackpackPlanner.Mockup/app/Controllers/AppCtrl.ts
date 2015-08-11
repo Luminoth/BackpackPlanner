@@ -1,11 +1,14 @@
 ﻿///<reference path="../../scripts/typings/angularjs/angular.d.ts" />
 ///<reference path="../../scripts/typings/angular-material/angular-material.d.ts" />
 
-///<reference path="../Models/AppSettings.ts" />
-///<reference path="../Models/UserInformation.ts" />
 ///<reference path="../Models/Gear/GearItem.ts" />
 ///<reference path="../Models/Gear/GearSystem.ts" />
 ///<reference path="../Models/Gear/GearCollection.ts" />
+///<reference path="../Models/Meals/Meal.ts" />
+///<reference path="../Models/Trips/TripItinerary.ts" />
+///<reference path="../Models/Trips/TripPlan.ts" />
+///<reference path="../Models/AppSettings.ts" />
+///<reference path="../Models/UserInformation.ts" />
 
 ///<reference path="../Services/AppSettingsService.ts"/>
 ///<reference path="../Services/UserInformationService.ts"/>
@@ -33,8 +36,8 @@ module BackpackPlanner.Mockup.Controllers {
         getGearCollections: () => Models.Gear.GearCollection[];
         getGearCollectionById: (gearCollectionId: number) => Models.Gear.GearCollection;
 
-        getMeals: () => Models.Meal[];
-        getMealById: (mealId: number) => Models.Meal;
+        getMeals: () => Models.Meals.Meal[];
+        getMealById: (mealId: number) => Models.Meals.Meal;
 
         getTripItineraries: () => Models.Trips.TripItinerary[];
         getTripItineraryById: (tripItineraryId: number) => Models.Trips.TripItinerary;
@@ -132,10 +135,10 @@ module BackpackPlanner.Mockup.Controllers {
 
             // load the meals
             $scope.getMeals = () => {
-                return <Array<Models.Meal>>[];
+                return <Array<Models.Meals.Meal>>[];
             }
             $scope.getMealById = (mealId: number) => {
-                return <Models.Meal> null;
+                return <Models.Meals.Meal> null;
             }
 
             // load the trip itineraries

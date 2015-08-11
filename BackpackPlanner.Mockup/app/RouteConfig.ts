@@ -19,15 +19,15 @@ module BackpackPlanner.Mockup {
                 controller: "GearItemsCtrl",
                 title: "Gear Items"
             })
-            .when("/gear/items/:gearItemId", {
-                templateUrl: "content/partials/gear/items/item.html",
-                controller: "GearItemCtrl",
-                title: "Gear Item"
-            })
             .when("/gear/items/add", {
                 templateUrl: "content/partials/gear/items/add.html",
                 controller: "AddGearItemCtrl",
                 title: "Add a Gear Item"
+            })
+            .when("/gear/items/:gearItemId", {
+                templateUrl: "content/partials/gear/items/item.html",
+                controller: "GearItemCtrl",
+                title: "Gear Item"
             })
 
             // gear systems
@@ -36,15 +36,15 @@ module BackpackPlanner.Mockup {
                 controller: "GearSystemsCtrl",
                 title: "Gear Systems"
             })
-            .when("/gear/systems/:gearSystemId", {
-                templateUrl: "content/partials/gear/systems/system.html",
-                controller: "GearSystemCtrl",
-                title: "Gear System"
-            })
             .when("/gear/systems/add", {
                 templateUrl: "content/partials/gear/systems/add.html",
                 controller: "AddGearSystemCtrl",
                 title: "Add a Gear System"
+            })
+            .when("/gear/systems/:gearSystemId", {
+                templateUrl: "content/partials/gear/systems/system.html",
+                controller: "GearSystemCtrl",
+                title: "Gear System"
             })
 
             // gear collections
@@ -53,32 +53,32 @@ module BackpackPlanner.Mockup {
                 controller: "GearCollectionsCtrl",
                 title: "Gear Collections"
             })
+            .when("/gear/collections/add", {
+                templateUrl: "content/partials/gear/collections/add.html",
+                controller: "AddGearCollectionCtrl",
+                title: "Add a Gear Collection"
+            })
             .when("/gear/collections/:gearCollectionId", {
                 templateUrl: "content/partials/gear/collections/collection.html",
                 controller: "GearCollectionCtrl",
                 title: "Gear Collection"
             })
-            /*.when("/gear/collections/add", {
-                templateUrl: "content/partials/gear/collections/add.html",
-                controller: "AddGearCollectionCtrl",
-                title: "Add a Gear Collection"
-            })*/
 
             // meals
             .when("/meals", {
-                templateUrl: "content/partials/meals.html",
+                templateUrl: "content/partials/meals/meals.html",
                 title: "Meals"
             })
 
             // trip itineraries
-            .when("/trip/itineraries", {
-                templateUrl: "content/partials/trip/itineraries/itineraries.html",
+            .when("/trips/itineraries", {
+                templateUrl: "content/partials/trips/itineraries/itineraries.html",
                 title: "Trip Itineraries"
             })
 
             // trip plans
-            .when("/trip/plans", {
-                templateUrl: "content/partials/trip/plans/plans.html",
+            .when("/trips/plans", {
+                templateUrl: "content/partials/trips/plans/plans.html",
                 title: "Trip Plans"
             })
 

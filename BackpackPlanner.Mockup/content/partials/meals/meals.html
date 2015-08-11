@@ -1,0 +1,15 @@
+﻿<div layout="column" layout-padding flex ng-cloak>
+    <div flex>
+        <md-button class="mockup-button">
+            <ng-md-icon icon="help"></ng-md-icon>
+            What is a meal?
+        </md-button>
+        <span flex></span>
+    </div>
+    <div ng-show="getMeals().length < 1">You have no meals! Try adding one!</div>
+    <div layout="column" flex ng-show="getMeals().length > 0">
+    </div>
+    <!--<md-button class="md-fab md-primary md-hue-1 mockup-add-button" href="#/meals/add">
+        <ng-md-icon icon="add" style="fill: white"></ng-md-icon>
+    </md-button>-->
+</div>

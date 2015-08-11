@@ -1,4 +1,4 @@
-﻿module BackpackPlanner.Mockup.Models {
+﻿module BackpackPlanner.Mockup.Models.Meals {
     "use strict";
 
     export interface IMeal {

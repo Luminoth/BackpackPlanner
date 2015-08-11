@@ -1,6 +1,7 @@
 ﻿///<reference path="../scripts/typings/angularjs/angular.d.ts" />
 
 ///<reference path="Controllers/AppCtrl.ts" />
+///<reference path="Controllers/Gear/Collections/AddGearCollectionCtrl.ts" />
 ///<reference path="Controllers/Gear/Collections/GearCollectionCtrl.ts" />
 ///<reference path="Controllers/Gear/Collections/GearCollectionsCtrl.ts" />
 ///<reference path="Controllers/Gear/Items/AddGearItemCtrl.ts" />
@@ -48,6 +49,7 @@ module BackpackPlanner.Mockup {
 
     // inject controllers
     mockupApp.controller("AppCtrl", Controllers.AppCtrl);
+    mockupApp.controller("AddGearCollectionCtrl", Controllers.Gear.Collections.AddGearCollectionCtrl);
     mockupApp.controller("GearCollectionCtrl", Controllers.Gear.Collections.GearCollectionCtrl);
     mockupApp.controller("GearCollectionsCtrl", Controllers.Gear.Collections.GearCollectionsCtrl);
     mockupApp.controller("GearItemCtrl", Controllers.Gear.Items.GearItemCtrl);

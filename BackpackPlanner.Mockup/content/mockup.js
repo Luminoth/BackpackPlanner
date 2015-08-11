@@ -89,21 +89,6 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
-///<reference path="../../Models/Gear/GearItem.ts" />
-var BackpackPlanner;
-(function (BackpackPlanner) {
-    var Mockup;
-    (function (Mockup) {
-        var Resources;
-        (function (Resources) {
-            var Gear;
-            (function (Gear) {
-                "use strict";
-            })(Gear = Resources.Gear || (Resources.Gear = {}));
-        })(Resources = Mockup.Resources || (Mockup.Resources = {}));
-    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
-})(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
 ///<reference path="../../Models/Gear/GearCollection.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
@@ -617,24 +602,27 @@ var BackpackPlanner;
     (function (Mockup) {
         var Models;
         (function (Models) {
-            "use strict";
-            var Meal = (function () {
-                function Meal() {
-                    this.Id = -1;
-                }
-                return Meal;
-            })();
-            Models.Meal = Meal;
-            var MealEntry = (function () {
-                function MealEntry() {
-                }
-                return MealEntry;
-            })();
-            Models.MealEntry = MealEntry;
+            var Meals;
+            (function (Meals) {
+                "use strict";
+                var Meal = (function () {
+                    function Meal() {
+                        this.Id = -1;
+                    }
+                    return Meal;
+                })();
+                Meals.Meal = Meal;
+                var MealEntry = (function () {
+                    function MealEntry() {
+                    }
+                    return MealEntry;
+                })();
+                Meals.MealEntry = MealEntry;
+            })(Meals = Models.Meals || (Models.Meals = {}));
         })(Models = Mockup.Models || (Mockup.Models = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="Models/Meal.ts" />
+///<reference path="Models/Meals/Meal.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -1038,6 +1026,21 @@ var BackpackPlanner;
         })(Models = Mockup.Models || (Mockup.Models = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
+///<reference path="../../Models/Gear/GearItem.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Resources;
+        (function (Resources) {
+            var Gear;
+            (function (Gear) {
+                "use strict";
+            })(Gear = Resources.Gear || (Resources.Gear = {}));
+        })(Resources = Mockup.Resources || (Mockup.Resources = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../scripts/typings/angularjs/angular-resource.d.ts" />
 ///<reference path="../Resources/AppSettingsResource.ts" />
 var BackpackPlanner;
@@ -1255,11 +1258,14 @@ var BackpackPlanner;
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../scripts/typings/angularjs/angular.d.ts" />
 ///<reference path="../../scripts/typings/angular-material/angular-material.d.ts" />
-///<reference path="../Models/AppSettings.ts" />
-///<reference path="../Models/UserInformation.ts" />
 ///<reference path="../Models/Gear/GearItem.ts" />
 ///<reference path="../Models/Gear/GearSystem.ts" />
 ///<reference path="../Models/Gear/GearCollection.ts" />
+///<reference path="../Models/Meals/Meal.ts" />
+///<reference path="../Models/Trips/TripItinerary.ts" />
+///<reference path="../Models/Trips/TripPlan.ts" />
+///<reference path="../Models/AppSettings.ts" />
+///<reference path="../Models/UserInformation.ts" />
 ///<reference path="../Services/AppSettingsService.ts"/>
 ///<reference path="../Services/UserInformationService.ts"/>
 ///<reference path="../Services/gear/GearCollectionService.ts"/>
@@ -1368,6 +1374,72 @@ var BackpackPlanner;
             Controllers.AppCtrl = AppCtrl;
             AppCtrl.$inject = ["$scope", "$location", "$mdSidenav", "AppSettingsService", "UserInformationService",
                 "GearItemService", "GearSystemService", "GearCollectionService"];
+        })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../AppCtrl.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Controllers;
+        (function (Controllers) {
+            var Gear;
+            (function (Gear) {
+                var Collections;
+                (function (Collections) {
+                    "use strict";
+                    var AddGearCollectionCtrl = (function () {
+                        function AddGearCollectionCtrl($scope, $location, $mdDialog, $mdToast) {
+                            $scope.gearCollection = new Mockup.Models.Gear.GearCollection();
+                            $scope.showAddGearItem = function (event) {
+                                $mdDialog.show({
+                                    controller: Collections.AddGearItemDlgCtrl,
+                                    templateUrl: "content/partials/gear/collections/add-item.html",
+                                    parent: angular.element(document.body),
+                                    targetEvent: event,
+                                    locals: {
+                                        gearCollection: $scope.gearCollection
+                                    }
+                                });
+                            };
+                            $scope.showAddGearSystem = function (event) {
+                                $mdDialog.show({
+                                    controller: Collections.AddGearSystemDlgCtrl,
+                                    templateUrl: "content/partials/gear/collections/add-system.html",
+                                    parent: angular.element(document.body),
+                                    targetEvent: event,
+                                    locals: {
+                                        gearCollection: $scope.gearCollection
+                                    }
+                                });
+                            };
+                            $scope.addCollection = function (gearCollection) {
+                                $scope.gearCollection = angular.copy(gearCollection);
+                                $scope.gearCollection.Id = Mockup.AppState.getInstance().getGearState().addGearCollection($scope.gearCollection);
+                                var addToast = $mdToast.simple()
+                                    .content("Added gear collection: " + $scope.gearCollection.Name)
+                                    .action("Undo")
+                                    .position("bottom left");
+                                var undoAddToast = $mdToast.simple()
+                                    .content("Removed gear collection: " + $scope.gearCollection.Name)
+                                    .action("OK")
+                                    .position("bottom left");
+                                $location.path("/gear/collections");
+                                $mdToast.show(addToast).then(function () {
+                                    Mockup.AppState.getInstance().getGearState().deleteGearCollection($scope.gearCollection);
+                                    $mdToast.show(undoAddToast);
+                                });
+                            };
+                        }
+                        return AddGearCollectionCtrl;
+                    })();
+                    Collections.AddGearCollectionCtrl = AddGearCollectionCtrl;
+                    AddGearCollectionCtrl.$inject = ["$scope", "$location", "$mdDialog", "$mdToast"];
+                })(Collections = Gear.Collections || (Gear.Collections = {}));
+            })(Gear = Controllers.Gear || (Controllers.Gear = {}));
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
@@ -1838,35 +1910,40 @@ var BackpackPlanner;
                     controller: "GearItemsCtrl",
                     title: "Gear Items"
                 })
-                    .when("/gear/items/:gearItemId", {
-                    templateUrl: "content/partials/gear/items/item.html",
-                    controller: "GearItemCtrl",
-                    title: "Gear Item"
-                })
                     .when("/gear/items/add", {
                     templateUrl: "content/partials/gear/items/add.html",
                     controller: "AddGearItemCtrl",
                     title: "Add a Gear Item"
+                })
+                    .when("/gear/items/:gearItemId", {
+                    templateUrl: "content/partials/gear/items/item.html",
+                    controller: "GearItemCtrl",
+                    title: "Gear Item"
                 })
                     .when("/gear/systems", {
                     templateUrl: "content/partials/gear/systems/systems.html",
                     controller: "GearSystemsCtrl",
                     title: "Gear Systems"
                 })
-                    .when("/gear/systems/:gearSystemId", {
-                    templateUrl: "content/partials/gear/systems/system.html",
-                    controller: "GearSystemCtrl",
-                    title: "Gear System"
-                })
                     .when("/gear/systems/add", {
                     templateUrl: "content/partials/gear/systems/add.html",
                     controller: "AddGearSystemCtrl",
                     title: "Add a Gear System"
                 })
+                    .when("/gear/systems/:gearSystemId", {
+                    templateUrl: "content/partials/gear/systems/system.html",
+                    controller: "GearSystemCtrl",
+                    title: "Gear System"
+                })
                     .when("/gear/collections", {
                     templateUrl: "content/partials/gear/collections/collections.html",
                     controller: "GearCollectionsCtrl",
                     title: "Gear Collections"
+                })
+                    .when("/gear/collections/add", {
+                    templateUrl: "content/partials/gear/collections/add.html",
+                    controller: "AddGearCollectionCtrl",
+                    title: "Add a Gear Collection"
                 })
                     .when("/gear/collections/:gearCollectionId", {
                     templateUrl: "content/partials/gear/collections/collection.html",
@@ -1874,15 +1951,15 @@ var BackpackPlanner;
                     title: "Gear Collection"
                 })
                     .when("/meals", {
-                    templateUrl: "content/partials/meals.html",
+                    templateUrl: "content/partials/meals/meals.html",
                     title: "Meals"
                 })
-                    .when("/trip/itineraries", {
-                    templateUrl: "content/partials/trip/itineraries/itineraries.html",
+                    .when("/trips/itineraries", {
+                    templateUrl: "content/partials/trips/itineraries/itineraries.html",
                     title: "Trip Itineraries"
                 })
-                    .when("/trip/plans", {
-                    templateUrl: "content/partials/trip/plans/plans.html",
+                    .when("/trips/plans", {
+                    templateUrl: "content/partials/trips/plans/plans.html",
                     title: "Trip Plans"
                 })
                     .when("/personal", {
@@ -1956,6 +2033,7 @@ var BackpackPlanner;
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../scripts/typings/angularjs/angular.d.ts" />
 ///<reference path="Controllers/AppCtrl.ts" />
+///<reference path="Controllers/Gear/Collections/AddGearCollectionCtrl.ts" />
 ///<reference path="Controllers/Gear/Collections/GearCollectionCtrl.ts" />
 ///<reference path="Controllers/Gear/Collections/GearCollectionsCtrl.ts" />
 ///<reference path="Controllers/Gear/Items/AddGearItemCtrl.ts" />
@@ -1998,6 +2076,7 @@ var BackpackPlanner;
         mockupApp.factory("GearCollectionService", ["$resource", Mockup.Services.Gear.gearCollectionServiceFactory]);
         // inject controllers
         mockupApp.controller("AppCtrl", Mockup.Controllers.AppCtrl);
+        mockupApp.controller("AddGearCollectionCtrl", Mockup.Controllers.Gear.Collections.AddGearCollectionCtrl);
         mockupApp.controller("GearCollectionCtrl", Mockup.Controllers.Gear.Collections.GearCollectionCtrl);
         mockupApp.controller("GearCollectionsCtrl", Mockup.Controllers.Gear.Collections.GearCollectionsCtrl);
         mockupApp.controller("GearItemCtrl", Mockup.Controllers.Gear.Items.GearItemCtrl);

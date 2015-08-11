@@ -33,6 +33,7 @@
     <Content Include="content\partials\500.html" />
     <Content Include="content\partials\gear\collections\add-item.html" />
     <Content Include="content\partials\gear\collections\add-system.html" />
+    <Content Include="content\partials\gear\collections\add.html" />
     <Content Include="content\partials\gear\collections\collection.html" />
     <Content Include="content\partials\gear\items\add.html" />
     <Content Include="content\partials\gear\items\item.html" />
@@ -44,11 +45,11 @@
     <Content Include="content\partials\gear\items\items.html" />
     <Content Include="content\partials\gear\systems\systems.html" />
     <Content Include="content\partials\main.html" />
-    <Content Include="content\partials\meals.html" />
+    <Content Include="content\partials\meals\meals.html" />
     <Content Include="content\partials\personal.html" />
     <Content Include="content\partials\settings.html" />
-    <Content Include="content\partials\trip\itineraries\itineraries.html" />
-    <Content Include="content\partials\trip\plans\plans.html" />
+    <Content Include="content\partials\trips\itineraries\itineraries.html" />
+    <Content Include="content\partials\trips\plans\plans.html" />
     <Content Include="index.html" />
     <Content Include="web.config" />
   </ItemGroup>
@@ -72,6 +73,7 @@
     <TypeScriptCompile Include="app\App.ts" />
     <TypeScriptCompile Include="app\AppState.ts" />
     <TypeScriptCompile Include="app\Controllers\AppCtrl.ts" />
+    <TypeScriptCompile Include="app\Controllers\Gear\Collections\AddGearCollectionCtrl.ts" />
     <TypeScriptCompile Include="app\Controllers\Gear\Collections\AddGearItemDlgCtrl.ts" />
     <TypeScriptCompile Include="app\Controllers\Gear\Collections\AddGearSystemDlgCtrl.ts" />
     <TypeScriptCompile Include="app\Controllers\Gear\Items\AddGearItemCtrl.ts" />
@@ -89,7 +91,7 @@
     <TypeScriptCompile Include="app\Models\Gear\GearCollection.ts" />
     <TypeScriptCompile Include="app\Models\Gear\GearItem.ts" />
     <TypeScriptCompile Include="app\Models\Gear\GearSystem.ts" />
-    <TypeScriptCompile Include="app\Models\Meal.ts" />
+    <TypeScriptCompile Include="app\Models\Meals\Meal.ts" />
     <TypeScriptCompile Include="app\Models\Trips\TripItinerary.ts" />
     <TypeScriptCompile Include="app\Models\Trips\TripPlan.ts" />
     <TypeScriptCompile Include="app\Models\UserInformation.ts" />

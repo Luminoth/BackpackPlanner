@@ -1,4 +1,11 @@
 ﻿<div layout="column" layout-padding flex ng-cloak>
+    <div flex>
+        <md-button class="mockup-button">
+            <ng-md-icon icon="help"></ng-md-icon>
+            What is a gear collection?
+        </md-button>
+        <span flex></span>
+    </div>
     <div ng-show="getGearCollections().length < 1">You have no gear collections! Try adding one!</div>
     <div layout="column" flex ng-show="getGearCollections().length > 0">
         <md-input-container md-no-float flex>
@@ -7,7 +14,7 @@
         <label>Sort by</label>
         <md-radio-group ng-model="orderBy" layout="row" layout-sm="column">
             <md-radio-button value="Name">Name</md-radio-button>
-            <md-radio-button value="-getTotalNumberOfItems()">Items</md-radio-button>
+            <md-radio-button value="-getTotalGearItemCount()">Items</md-radio-button>
             <md-radio-button value="-getWeightInGrams()">Weight</md-radio-button>
             <md-radio-button value="-getCostInUSDP()">Cost</md-radio-button>
             <md-radio-button value="-getCostPerGramInUSDP()">Cost / Weight</md-radio-button>
@@ -26,7 +33,7 @@
             </md-card>
         </md-button>
     </div>
-    <!--<md-button class="md-fab md-primary md-hue-1 mockup-add-button" href="#/gear/collections/add">
+    <md-button class="md-fab md-primary md-hue-1 mockup-add-button" href="#/gear/collections/add">
         <ng-md-icon icon="add" style="fill: white"></ng-md-icon>
-    </md-button>-->
+    </md-button>
 </div>

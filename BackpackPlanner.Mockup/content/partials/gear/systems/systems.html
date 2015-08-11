@@ -1,4 +1,11 @@
 ﻿<div layout="column" layout-padding flex ng-cloak>
+    <div flex>
+        <md-button class="mockup-button">
+            <ng-md-icon icon="help"></ng-md-icon>
+            What is a gear system?
+        </md-button>
+        <span flex></span>
+    </div>
     <div ng-show="getGearSystems().length < 1">You have no gear systems! Try adding one!</div>
     <div layout="column" flex ng-show="getGearSystems().length > 0">
         <md-input-container md-no-float flex>

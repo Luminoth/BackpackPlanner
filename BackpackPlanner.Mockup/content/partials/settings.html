@@ -1,10 +1,12 @@
 ﻿<form name="appSettingsForm">
 <div layout="column" layout-padding flex ng-cloak>
+    <label>Measurement Units</label>
     <md-radio-group ng-model="getAppSettings().Units" layout="row" layout-sm="column">
         <md-radio-button value="Metric">Metric Units</md-radio-button>
         <md-radio-button value="Imperial">Imperial Units</md-radio-button>
     </md-radio-group>
-    <!--<md-radio-group ng-model="getAppSettings().Currency" layout="row" layout-sm="column">
+    <!--<label>Currency</label>
+    <md-radio-group ng-model="getAppSettings().Currency" layout="row" layout-sm="column">
         <md-radio-button value="USD">United States Dollars</md-radio-button>
     </md-radio-group>-->
     <div flex></div>

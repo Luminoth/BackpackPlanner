@@ -1,4 +1,4 @@
-﻿///<reference path="Models/Meal.ts" />
+﻿///<reference path="Models/Meals/Meal.ts" />
 
 module BackpackPlanner.Mockup {
     "use strict";
@@ -6,9 +6,9 @@ module BackpackPlanner.Mockup {
     export class MealState {
         /* Meals */
 
-        private _meals: Models.Meal[];
+        private _meals: Models.Meals.Meal[];
 
-        public getMeals() : Models.Meal[] {
+        public getMeals() : Models.Meals.Meal[] {
             return this._meals;
         }
 
@@ -17,7 +17,7 @@ module BackpackPlanner.Mockup {
                 throw new Error("Meals already loaded!");
             }
 
-            this._meals = <Array<Models.Meal>>[];
+            this._meals = <Array<Models.Meals.Meal>>[];
             for(let i=0; i<mealResource.length; ++i) {
                 //this._meals.push(new Models.Meal(mealResource[i]));
             }
@@ -38,12 +38,12 @@ module BackpackPlanner.Mockup {
             return -1;
         }
 
-        public getMealById(mealId: number) : Models.Meal {
+        public getMealById(mealId: number) : Models.Meals.Meal {
             const idx = this.getMealIndexById(mealId);
             return idx < 0 ? null : this._meals[idx];
         }
 
-        public addMeal(meal: Models.Meal) : number {
+        public addMeal(meal: Models.Meals.Meal) : number {
             if(meal.Id < 0) {
                 meal.Id = this.getNextMealId();
             }
@@ -51,7 +51,7 @@ module BackpackPlanner.Mockup {
             return meal.Id;
         }
 
-        public deleteMeal(meal: Models.Meal) : boolean {
+        public deleteMeal(meal: Models.Meals.Meal) : boolean {
             const idx = this.getMealIndexById(meal.Id);
             if(idx < 0) {
                 return false;
