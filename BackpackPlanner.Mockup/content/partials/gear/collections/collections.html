@@ -5,11 +5,12 @@
             <input type="text" ng-model="filter.Name" name="filter" placeholder="Filter" />
         </md-input-container>
         <label>Sort by</label>
-        <md-radio-group ng-model="orderBy" layout="row">
+        <md-radio-group ng-model="orderBy" layout="row" layout-sm="column">
             <md-radio-button value="Name">Name</md-radio-button>
             <md-radio-button value="-getTotalNumberOfItems()">Items</md-radio-button>
-            <md-radio-button value="-getWeightInOunces()">Weight</md-radio-button>
-            <md-radio-button value="-getCostInUSD()">Cost</md-radio-button>
+            <md-radio-button value="-getWeightInGrams()">Weight</md-radio-button>
+            <md-radio-button value="-getCostInUSDP()">Cost</md-radio-button>
+            <md-radio-button value="-getCostPerGramInUSDP()">Cost / Weight</md-radio-button>
         </md-radio-group>
         <md-button class="mockup-card-button" layout-fill ng-repeat="gearCollection in getGearCollections() | filter:filter | orderBy:orderBy" href="#/gear/collections/{{ gearCollection.Id }}">
             <md-card class="mockup-card" flex>
@@ -17,10 +18,10 @@
                     <h2 class="md-title">{{ gearCollection.Name }}</h2>
                 </md-card-content>
                 <div layout="row" layout-sm="column">
-                    <p layout-padding>Number of systems: {{ gearCollection.getNumberOfSystems() }}</p>
-                    <p layout-padding>Number of items: {{ gearCollection.getNumberOfItems() }}</p>
-                    <p layout-padding>Weight: {{ gearCollection.getWeightInOunces() }} Ounces</p>
-                    <p layout-padding>Cost: ${{ gearCollection.getCostInUSD() }} USD</p>
+                    <p layout-padding>Systems: {{ gearCollection.getGearSystemCount() }}</p>
+                    <p layout-padding>Items: {{ gearCollection.getGearItemCount() }} ({{ gearCollection.getTotalGearItemCount() }} total)</p>
+                    <p layout-padding>Weight: {{ gearCollection.getWeightInUnits() | number:2 }} {{ getUnitsWeightString() }}s</p>
+                    <p layout-padding>Cost: {{ gearCollection.getCostInCurrency() | currency }} ({{ gearCollection.getCostPerUnitInCurrency() | currency }} per {{ getUnitsWeightString() }})</p>
                 </div>
             </md-card>
         </md-button>

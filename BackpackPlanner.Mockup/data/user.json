@@ -3,6 +3,6 @@
     "LastName": "Doe",
     "BirthDate": "1990-01-25",
     "Sex": "NotSpecified",
-    "HeightInInches": 70,
-    "WeightInOunces": 2560
+    "HeightInCm": 170,
+    "WeightInGrams": 72574
 }

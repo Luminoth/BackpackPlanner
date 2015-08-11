@@ -21,7 +21,7 @@ module BackpackPlanner.Mockup.Controllers.Gear {
         constructor($scope: IGearItemScope, $routeParams: IGearItemRouteParams, $location: ng.ILocationService,
             $mdDialog: ng.material.IDialogService, $mdToast: ng.material.IToastService) {
         
-            $scope.gearItem = AppManager.getInstance().getGearItemById($routeParams.gearItemId);
+            $scope.gearItem = AppState.getInstance().getGearState().getGearItemById($routeParams.gearItemId);
             if(null == $scope.gearItem) {
                 alert("The gear item does not exist!");
                 $location.path("/gear/items");
@@ -56,7 +56,7 @@ module BackpackPlanner.Mockup.Controllers.Gear {
 
                 $mdDialog.show(confirm).then(() => {
                     $mdDialog.show(receipt).then(() => {
-                        if(!AppManager.getInstance().deleteGearItem($scope.gearItem)) {
+                        if(!AppState.getInstance().getGearState().deleteGearItem($scope.gearItem)) {
                             alert("Couldn't find the gear item to delete!");
                             return;
                         }
@@ -65,7 +65,7 @@ module BackpackPlanner.Mockup.Controllers.Gear {
                         $mdToast.show(deleteToast).then(() => {
                             // TODO: this does *not* restore the item to its containers
                             // and it should probably do so... but how?
-                            AppManager.getInstance().getGearItems().push($scope.gearItem);
+                            AppState.getInstance().getGearState().addGearItem($scope.gearItem);
                             $mdToast.show(undoDeleteToast);
                             $location.path(`/gear/items/${$scope.gearItem.Id}`);
                         });

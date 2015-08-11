@@ -21,7 +21,7 @@
         <label>Website</label>
         <input type="url" ng-model="gearItem.Url" name="url" />
     </md-input-container>
-    <md-radio-group ng-model="gearItem.CarriedAsString()" layout="row" layout-sm="column">
+    <md-radio-group ng-model="gearItem.Carried" layout="row" layout-sm="column">
         <md-radio-button value="Carried">Carried</md-radio-button>
         <md-radio-button value="Worn">Worn</md-radio-button>
         <md-radio-button value="NotCarried">Not Carried</md-radio-button>
@@ -37,12 +37,12 @@
     </div>
     <div layout="row" layout-sm="column" flex>
         <md-input-container ng-show="'NotCarried' != gearItem.Carried" flex>
-            <label>Weight (ounces)</label>
-            <input type="number" ng-model="gearItem.WeightInOunces" name="weight" />
+            <label>Weight ({{ getUnitsWeightString() }})</label>
+            <input type="number" ng-model="gearItem.weightInUnits" ng-model-options="{ getterSetter: true, debounce: 500 }" name="weight" />
         </md-input-container>
         <md-input-container flex>
-            <label>Cost (USD)</label>
-            <input type="number" ng-model="gearItem.CostInUSD" name="weight" />
+            <label>Cost ({{ getCurrencyString() }})</label>
+            <input type="number" ng-model="gearItem.costInCurrency" ng-model-options="{ getterSetter: true, debounce: 500 }" name="weight" />
         </md-input-container>
     </div>
     <md-input-container>

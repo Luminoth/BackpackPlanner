@@ -3,28 +3,24 @@
 module BackpackPlanner.Mockup.Models {
     "use strict";
 
-    export enum Sex {
-        NotSpecified,
-        Male,
-        Female
-    }
-
     export interface IUserInformation {
         FirstName: string;
         LastName: string;
-        BirthDate: Date;
-        Sex: Sex;
-        HeightInInches: number;
-        WeightInOunces: number;
+        BirthDate: string;
+        Sex: string;
+        HeightInCm: number;
+        WeightInGrams: number;
     }
 
     export class UserInformation implements IUserInformation {
         public FirstName = "";
         public LastName = "";
-        public BirthDate = new Date();
-        public Sex = Sex.NotSpecified;
-        public HeightInInches = 0;
-        public WeightInOunces = 0;
+        public BirthDate = "";
+        public Sex = "NotSpecified";
+        public HeightInCm = 0;
+        public WeightInGrams = 0;
+
+        public BirthDateAsDate = new Date();
 
         constructor(userInfoResource?: Resources.IUserInformationResource) {
             if(userInfoResource) {
@@ -32,9 +28,23 @@ module BackpackPlanner.Mockup.Models {
                 this.LastName = userInfoResource.LastName;
                 this.BirthDate = userInfoResource.BirthDate;
                 this.Sex = userInfoResource.Sex;
-                this.HeightInInches = userInfoResource.HeightInInches;
-                this.WeightInOunces = userInfoResource.WeightInOunces;
+                this.HeightInCm = userInfoResource.HeightInCm;
+                this.WeightInGrams = userInfoResource.WeightInGrams;
+
+                this.BirthDateAsDate = new Date(this.BirthDate);
             }
+        }
+
+        public heightInUnits(height: number) : number {
+            return arguments.length
+                ? (this.HeightInCm = convertUnitsToCentimeters(height, AppState.getInstance().getAppSettings().Units))
+                : Math.floor(convertCentimetersToUnits(this.HeightInCm, AppState.getInstance().getAppSettings().Units));
+        }
+
+        public weightInUnits(weight: number) : number {
+            return arguments.length
+                ? (this.WeightInGrams = convertUnitsToGrams(weight, AppState.getInstance().getAppSettings().Units))
+                : Math.floor(convertGramsToUnits(this.WeightInGrams, AppState.getInstance().getAppSettings().Units));
         }
     }
 }

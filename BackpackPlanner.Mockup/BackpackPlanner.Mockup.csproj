@@ -67,7 +67,7 @@
   <ItemGroup />
   <ItemGroup>
     <TypeScriptCompile Include="app\App.ts" />
-    <TypeScriptCompile Include="app\AppManager.ts" />
+    <TypeScriptCompile Include="app\AppState.ts" />
     <TypeScriptCompile Include="app\Controllers\AppCtrl.ts" />
     <TypeScriptCompile Include="app\Controllers\Gear\AddGearItemCtrl.ts" />
     <TypeScriptCompile Include="app\Controllers\Gear\AddGearItemDlgCtrl.ts" />
@@ -77,10 +77,15 @@
     <TypeScriptCompile Include="app\Controllers\Gear\GearItemsCtrl.ts" />
     <TypeScriptCompile Include="app\Controllers\Gear\GearSystemCtrl.ts" />
     <TypeScriptCompile Include="app\Controllers\Gear\GearSystemsCtrl.ts" />
+    <TypeScriptCompile Include="app\GearState.ts" />
+    <TypeScriptCompile Include="app\MealState.ts" />
     <TypeScriptCompile Include="app\Models\AppSettings.ts" />
     <TypeScriptCompile Include="app\Models\Gear\GearCollection.ts" />
     <TypeScriptCompile Include="app\Models\Gear\GearItem.ts" />
     <TypeScriptCompile Include="app\Models\Gear\GearSystem.ts" />
+    <TypeScriptCompile Include="app\Models\Meal.ts" />
+    <TypeScriptCompile Include="app\Models\Trips\TripItinerary.ts" />
+    <TypeScriptCompile Include="app\Models\Trips\TripPlan.ts" />
     <TypeScriptCompile Include="app\Models\UserInformation.ts" />
     <TypeScriptCompile Include="app\Resources\AppSettingsResource.ts" />
     <TypeScriptCompile Include="app\Resources\Gear\GearCollectionResource.ts" />
@@ -95,6 +100,8 @@
     <TypeScriptCompile Include="app\RootScopeConfig.ts" />
     <TypeScriptCompile Include="app\RouteConfig.ts" />
     <TypeScriptCompile Include="app\ThemeConfig.ts" />
+    <TypeScriptCompile Include="app\TripState.ts" />
+    <TypeScriptCompile Include="app\UnitConversion.ts" />
     <TypeScriptCompile Include="scripts\typings\angular-material\angular-material.d.ts" />
     <TypeScriptCompile Include="scripts\typings\angularjs\angular-animate.d.ts" />
     <TypeScriptCompile Include="scripts\typings\angularjs\angular-cookies.d.ts" />

@@ -1,13 +1,9 @@
 ﻿///<reference path="../../Resources/Gear/GearItemResource.ts"/>
 
+///<reference path="../../AppState.ts"/>
+
 module BackpackPlanner.Mockup.Models.Gear {
     "use strict";
-
-    export enum GearCarried {
-        NotCarried,
-        Carried,
-        Worn
-    }
 
     export interface IGearItem {
         Id: number;
@@ -15,9 +11,9 @@ module BackpackPlanner.Mockup.Models.Gear {
         Url: string;
         Make: string;
         Model: string;
-        Carried: GearCarried;
-        WeightInOunces: number;
-        CostInUSD: number;
+        Carried: string;
+        WeightInGrams: number;
+        CostInUSDP: number;
         IsConsumable: boolean;
         ConsumedPerDay: number;
         Note: string;
@@ -29,9 +25,9 @@ module BackpackPlanner.Mockup.Models.Gear {
         public Url = "";
         public Make = "";
         public Model = "";
-        public Carried = GearCarried.Carried;
-        public WeightInOunces = 0;
-        public CostInUSD = 0;
+        public Carried = "Carried";
+        public WeightInGrams = 0;
+        public CostInUSDP = 0;
         public IsConsumable = false;
         public ConsumedPerDay = 0;
         public Note = "";
@@ -44,16 +40,39 @@ module BackpackPlanner.Mockup.Models.Gear {
                 this.Make = gearItemResource.Make;
                 this.Model = gearItemResource.Model;
                 this.Carried = gearItemResource.Carried;
-                this.WeightInOunces = gearItemResource.WeightInOunces;
-                this.CostInUSD = gearItemResource.CostInUSD;
+                this.WeightInGrams = gearItemResource.WeightInGrams;
+                this.CostInUSDP = gearItemResource.CostInUSDP;
                 this.IsConsumable = gearItemResource.IsConsumable;
                 this.ConsumedPerDay = gearItemResource.ConsumedPerDay;
                 this.Note = gearItemResource.Note;
             }
         }
 
-        public CarriedAsString() : string {
-            return GearCarried[this.Carried];
+        public getCostPerGramInUSDP() {
+            return 0 == this.WeightInGrams
+                ? this.CostInUSDP
+                : this.CostInUSDP / this.WeightInGrams;
+        }
+
+        public getCostPerUnitInCurrency() {
+            const costInCurrency = convertUSDPToCurrency(this.CostInUSDP, AppState.getInstance().getAppSettings().Currency);
+            const weightInUnits = convertGramsToUnits(this.WeightInGrams, AppState.getInstance().getAppSettings().Units);
+
+            return 0 == weightInUnits
+                ? costInCurrency
+                : costInCurrency / weightInUnits;
+        }
+
+        public weightInUnits(weight: number) : number {
+            return arguments.length
+                ? (this.WeightInGrams = convertUnitsToGrams(weight, AppState.getInstance().getAppSettings().Units))
+                : Math.floor(convertGramsToUnits(this.WeightInGrams, AppState.getInstance().getAppSettings().Units));
+        }
+
+        public costInCurrency(cost: number) : number {
+            return arguments.length
+                ? (this.CostInUSDP = convertCurrencyToUSDP(cost, AppState.getInstance().getAppSettings().Currency))
+                : Math.floor(convertUSDPToCurrency(this.CostInUSDP, AppState.getInstance().getAppSettings().Currency));
         }
     }
 
@@ -68,8 +87,32 @@ module BackpackPlanner.Mockup.Models.Gear {
         public Count = 1;
         public IsPacked = false;
 
-        constructor(gearItemId: number) {
+        constructor(gearItemId: number, count?: number, isPacked?: boolean) {
             this.GearItemId = gearItemId;
+
+            if(count) {
+                this.Count = count;
+            }
+
+            if(isPacked) {
+                this.IsPacked = isPacked;
+            }
+        }
+
+        public getWeightInGrams() {
+            const gearItem = AppState.getInstance().getGearState().getGearItemById(this.GearItemId);
+            if(!gearItem) {
+                return 0;
+            }
+            return this.Count * gearItem.WeightInGrams;
+        }
+
+        public getCostInUSDP() {
+            const gearItem = AppState.getInstance().getGearState().getGearItemById(this.GearItemId);
+            if(!gearItem) {
+                return 0;
+            }
+            return this.Count * gearItem.CostInUSDP;
         }
     }
 }

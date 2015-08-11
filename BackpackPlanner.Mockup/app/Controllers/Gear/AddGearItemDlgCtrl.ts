@@ -1,7 +1,7 @@
 ﻿///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
 ///<reference path="../../../scripts/typings/angular-material/angular-material.d.ts" />
 
-///<reference path="../../AppManager.ts" />
+///<reference path="../../AppState.ts" />
 
 module BackpackPlanner.Mockup.Controllers.Gear {
     "use strict";
@@ -22,7 +22,7 @@ module BackpackPlanner.Mockup.Controllers.Gear {
             $scope.orderBy = "Name";
 
             $scope.getGearItems = () => {
-                return AppManager.getInstance().getGearItems();
+                return AppState.getInstance().getGearState().getGearItems();
             }
 
             $scope.close = () => {

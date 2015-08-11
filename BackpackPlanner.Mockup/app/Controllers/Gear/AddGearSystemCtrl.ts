@@ -31,8 +31,7 @@ module BackpackPlanner.Mockup.Controllers.Gear {
 
             $scope.addSystem = (gearSystem) => {
                 $scope.gearSystem = angular.copy(gearSystem);
-                $scope.gearSystem.Id = AppManager.getInstance().getNextGearSystemId();
-                AppManager.getInstance().getGearSystems().push($scope.gearSystem);
+                $scope.gearSystem.Id = AppState.getInstance().getGearState().addGearSystem($scope.gearSystem);
 
                 var addToast = $mdToast.simple()
                     .content(`Added gear system: ${$scope.gearSystem.Name}`)
@@ -46,7 +45,7 @@ module BackpackPlanner.Mockup.Controllers.Gear {
 
                 $location.path("/gear/systems");
                 $mdToast.show(addToast).then(() => {
-                    AppManager.getInstance().deleteGearSystem($scope.gearSystem);
+                    AppState.getInstance().getGearState().deleteGearSystem($scope.gearSystem);
                     $mdToast.show(undoAddToast);
                 });
             }

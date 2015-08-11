@@ -22,7 +22,7 @@ module BackpackPlanner.Mockup.Controllers.Gear {
         constructor($scope: IGearSystemScope, $routeParams: IGearSystemRouteParams, $location: ng.ILocationService,
             $mdDialog: ng.material.IDialogService, $mdToast: ng.material.IToastService) {
         
-            $scope.gearSystem = AppManager.getInstance().getGearSystemById($routeParams.gearSystemId);
+            $scope.gearSystem = AppState.getInstance().getGearState().getGearSystemById($routeParams.gearSystemId);
             if(null == $scope.gearSystem) {
                 alert("The gear system does not exist!");
                 $location.path("/gear/system");
@@ -69,7 +69,7 @@ module BackpackPlanner.Mockup.Controllers.Gear {
 
                 $mdDialog.show(confirm).then(() => {
                     $mdDialog.show(receipt).then(() => {
-                        if(!AppManager.getInstance().deleteGearSystem($scope.gearSystem)) {
+                        if(!AppState.getInstance().getGearState().deleteGearSystem($scope.gearSystem)) {
                             alert("Couldn't find the gear system to delete!");
                             return;
                         }
@@ -78,7 +78,7 @@ module BackpackPlanner.Mockup.Controllers.Gear {
                         $mdToast.show(deleteToast).then(() => {
                             // TODO: this does *not* restore the system to its containers
                             // and it should probably do so... but how?
-                            AppManager.getInstance().getGearSystems().push($scope.gearSystem);
+                            AppState.getInstance().getGearState().addGearSystem($scope.gearSystem);
                             $mdToast.show(undoDeleteToast);
                             $location.path(`/gear/systems/${$scope.gearSystem.Id}`);
                         });

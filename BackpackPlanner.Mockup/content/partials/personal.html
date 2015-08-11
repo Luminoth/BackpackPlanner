@@ -20,16 +20,16 @@
     </md-radio-group>
     <div layout="row" layout-sm="column" flex>
         <md-input-container flex>
-            <label>Height (inches)</label>
-            <input type="number" ng-model="getUserInfo().HeightInInches" name="height" />
+            <label>Height ({{ getUnitsLengthString() }})</label>
+            <input type="number" ng-model="getUserInfo().heightInUnits" ng-model-options="{ getterSetter: true, debounce: 500 }" name="height" />
         </md-input-container>
         <md-input-container flex>
-            <label>Weight (ounces)</label>
-            <input type="number" ng-model="getUserInfo().WeightInOunces" name="weight" />
+            <label>Weight ({{ getUnitsWeightString() }})</label>
+            <input type="number" ng-model="getUserInfo().weightInUnits" ng-model-options="{ getterSetter: true, debounce: 500 }" name="weight" />
         </md-input-container>
         <md-input-container flex>
-            <label>Birth Date (FIXME: {{ getUserInfo().BirthDate }})</label>
-            <input type="date" ng-model="getUserInfo().BirthDate" name="birthDate" />
+            <label>Birth Date</label>
+            <input type="date" ng-model="getUserInfo().BirthDateAsDate" name="birthDate" />
         </md-input-container>
     </div>
     <div flex></div>

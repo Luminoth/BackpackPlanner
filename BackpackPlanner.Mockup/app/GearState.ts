@@ -1,11 +1,7 @@
-﻿///<reference path="Models/AppSettings.ts" />
-///<reference path="Models/UserInformation.ts" />
-///<reference path="Models/Gear/GearCollection.ts" />
+﻿///<reference path="Models/Gear/GearCollection.ts" />
 ///<reference path="Models/Gear/GearItem.ts" />
 ///<reference path="Models/Gear/GearSystem.ts" />
 
-///<reference path="Resources/AppSettingsResource.ts" />
-///<reference path="Resources/UserInformationResource.ts" />
 ///<reference path="Resources/Gear/GearCollectionResource.ts" />
 ///<reference path="Resources/Gear/GearItemResource.ts" />
 ///<reference path="Resources/Gear/GearSystemResource.ts" />
@@ -13,38 +9,8 @@
 module BackpackPlanner.Mockup {
     "use strict";
 
-    export class AppManager {
-        private static _instance = new AppManager();
-
-        public static getInstance() : AppManager {
-            return AppManager._instance;
-        }
-
-        private _appSettings: Models.AppSettings;
-
-        public getAppSettings() : Models.AppSettings {
-            return this._appSettings;
-        }
-
-        public setAppSettings(appSettingsResource: Resources.IAppSettingsResource) {
-            if(this._appSettings) {
-                throw new Error("Application settings already set!");
-            }
-            this._appSettings = new Models.AppSettings(appSettingsResource);
-        }
-
-        private _userInformation: Models.UserInformation;
-
-        public getUserInformation() : Models.UserInformation {
-            return this._userInformation;
-        }
-
-        public setUserInformation(userInfoResource: Resources.IUserInformationResource) {
-            if(this._userInformation) {
-                throw new Error("User information already set!");
-            }
-            this._userInformation = new Models.UserInformation(userInfoResource);
-        }
+    export class GearState {
+        /* Gear Items */
 
         private _gearItems: Models.Gear.GearItem[];
 
@@ -52,9 +18,9 @@ module BackpackPlanner.Mockup {
             return this._gearItems;
         }
 
-        public setGearItems(gearItemsResource: Resources.Gear.IGearItemResource[]) {
+        public loadGearItems(gearItemsResource: Resources.Gear.IGearItemResource[]) {
             if(this._gearItems) {
-                throw new Error("Gear items already set!");
+                throw new Error("Gear items already loaded!");
             }
 
             this._gearItems = <Array<Models.Gear.GearItem>>[];
@@ -63,7 +29,7 @@ module BackpackPlanner.Mockup {
             }
         }
 
-        public getNextGearItemId() : number {
+        private getNextGearItemId() : number {
             // TODO: write this
             return -1;
         }
@@ -83,6 +49,14 @@ module BackpackPlanner.Mockup {
             return idx < 0 ? null : this._gearItems[idx];
         }
 
+        public addGearItem(gearItem: Models.Gear.GearItem) : number {
+            if(gearItem.Id < 0) {
+                gearItem.Id = this.getNextGearItemId();
+            }
+            this._gearItems.push(gearItem);
+            return gearItem.Id;
+        }
+
         public deleteGearItem(gearItem: Models.Gear.GearItem) : boolean {
             const idx = this.getGearItemIndexById(gearItem.Id);
             if(idx < 0) {
@@ -95,15 +69,17 @@ module BackpackPlanner.Mockup {
             return true;
         }
 
+        /* Gear Systems */
+
         private _gearSystems: Models.Gear.GearSystem[];
 
         public getGearSystems() : Models.Gear.GearSystem[] {
             return this._gearSystems;
         }
 
-        public setGearSystems(gearSystemsResource: Resources.Gear.IGearSystemResource[]) {
+        public loadGearSystems(gearSystemsResource: Resources.Gear.IGearSystemResource[]) {
             if(this._gearSystems) {
-                throw new Error("Gear systems already set!");
+                throw new Error("Gear systems already loaded!");
             }
 
             this._gearSystems = <Array<Models.Gear.GearSystem>>[];
@@ -112,7 +88,7 @@ module BackpackPlanner.Mockup {
             }
         }
 
-        public getNextGearSystemId() : number {
+        private getNextGearSystemId() : number {
             // TODO: write this
             return -1;
         }
@@ -132,6 +108,14 @@ module BackpackPlanner.Mockup {
             return idx < 0 ? null : this._gearSystems[idx];
         }
 
+        public addGearSystem(gearSystem: Models.Gear.GearSystem) : number {
+            if(gearSystem.Id < 0) {
+                gearSystem.Id = this.getNextGearSystemId();
+            }
+            this._gearSystems.push(gearSystem);
+            return gearSystem.Id;
+        }
+
         public deleteGearSystem(gearSystem: Models.Gear.GearSystem) : boolean {
             const idx = this.getGearSystemIndexById(gearSystem.Id);
             if(idx < 0) {
@@ -144,15 +128,17 @@ module BackpackPlanner.Mockup {
             return true;
         }
 
+        /* Gear Collections */
+
         private _gearCollections: Models.Gear.GearCollection[];
 
         public getGearCollections() : Models.Gear.GearCollection[] {
             return this._gearCollections;
         }
 
-        public setGearCollections(gearCollectionsResource: Resources.Gear.IGearCollectionResource[]) {
+        public loadGearCollections(gearCollectionsResource: Resources.Gear.IGearCollectionResource[]) {
             if(this._gearCollections) {
-                throw new Error("Gear collections already set!");
+                throw new Error("Gear collections already loaded!");
             }
 
             this._gearCollections = <Array<Models.Gear.GearCollection>>[];
@@ -161,7 +147,7 @@ module BackpackPlanner.Mockup {
             }
         }
 
-        public getNextGearCollectionId() : number {
+        private getNextGearCollectionId() : number {
             // TODO: write this
             return -1;
         }
@@ -181,6 +167,14 @@ module BackpackPlanner.Mockup {
             return idx < 0 ? null : this._gearCollections[idx];
         }
 
+        public addGearCollection(gearCollection: Models.Gear.GearCollection) : number {
+            if(gearCollection.Id < 0) {
+                gearCollection.Id = this.getNextGearCollectionId();
+            }
+            this._gearCollections.push(gearCollection);
+            return gearCollection.Id;
+        }
+
         public deleteGearCollection(gearCollection: Models.Gear.GearCollection) : boolean {
             const idx = this.getGearCollectionIndexById(gearCollection.Id);
             if(idx < 0) {
@@ -193,10 +187,14 @@ module BackpackPlanner.Mockup {
             return true;
         }
 
-        constructor() {
-            if(AppManager._instance) {
-                throw new Error("Error: AppManager already instantiated!");
-            }
+        /* Load/Save */
+
+        public loadFromDevice() {
+            // TODO: load from the resources here and return a promise
+        }
+
+        public saveToDevice() {
+            // TODO: don't do anything here, just return a promise
         }
     }
 }

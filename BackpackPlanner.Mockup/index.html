@@ -17,7 +17,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.js"></script>
 </head>
 <body layout="column" ng-controller="AppCtrl">
-<md-toolbar layout="row" ng-cloak>
+<md-toolbar class="md-whiteframe-z2" layout="row" ng-cloak>
     <div class="md-toolbar-tools" layout="row">
         <md-button class="md-icon-button" ng-click="toggleSidenav()">
             <ng-md-icon icon="menu"></ng-md-icon>
@@ -30,7 +30,7 @@
     </div>
 </md-toolbar>
 <div layout="row" flex>
-    <md-sidenav class="md-sidenav-left md-whiteframe-z2" layout="column" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" ng-cloak>
+    <md-sidenav class="md-sidenav-left md-whiteframe-z3" layout="column" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" ng-cloak>
         <md-toolbar layout="column">
             <div class="md-toolbar-tools" layout="column">
                 <md-button class="mockup-button" href="#/personal" ng-click="toggleSidenav()">{{ getUserInfo().FirstName }} {{ getUserInfo().LastName }}</md-button>

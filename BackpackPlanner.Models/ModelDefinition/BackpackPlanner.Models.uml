@@ -100,7 +100,7 @@
           </property>
           <property
             Id="09d5966b-65a5-45ca-9219-f9091f7698e9"
-            name="HeightInInches"
+            name="HeightInCm"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -118,7 +118,7 @@
           </property>
           <property
             Id="dcc654cf-236a-4f34-a067-116be6db725b"
-            name="WeightInOunces"
+            name="WeightInGrams"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -135,24 +135,6 @@
             </type_NamedElement>
           </property>
         </ownedAttributesInternal>
-        <ownedOperationsInternal>
-          <operation
-            Id="50c999cc-20fa-47ad-829d-a53a3de07932"
-            name="SaveToDevice"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
-          <operation
-            Id="032d0fc3-9431-4b8f-8ba9-763da7e9112d"
-            name="LoadFromDevice"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false" />
-        </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
     <packageHasNamedElement>
@@ -332,7 +314,7 @@
           </property>
           <property
             Id="3d5b073d-2a2e-4868-afa1-bc5a9cee5ea4"
-            name="CostInUSD"
+            name="CostInUSDP"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -350,7 +332,7 @@
           </property>
           <property
             Id="c14a4a2f-4934-48e1-932d-fc8b7e362d7b"
-            name="WeightInOunces"
+            name="WeightInGrams"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -460,7 +442,7 @@
         <ownedOperationsInternal>
           <operation
             Id="df9b29ba-7af7-4a1d-b452-ada0009abc3c"
-            name="GetCostPerOunceInUSD"
+            name="GetCostPerGramInUSDP"
             isLeaf="false"
             isStatic="false"
             isAbstract="false"
@@ -470,7 +452,8 @@
               <operationHasOwnedParameters>
                 <parameter
                   Id="f9a8d023-22e9-4d03-b56d-4b6c55af1a33"
-                  direction="Return">
+                  direction="Return"
+                  isUnique="false">
                   <type_NamedElement>
                     <primitiveTypeMoniker
                       Id="220a3521-e091-4221-bae9-3ef9018e845c"
@@ -492,14 +475,14 @@
     <packageHasNamedElement>
       <class
         Id="baeeda19-7dbe-4e13-8029-565d4d121ed9"
-        name="GearManager"
+        name="AppState"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
         <ownedAttributesInternal>
           <property
-            Id="f487cb5e-b1e7-48ab-9c27-25348b2b476e"
-            name="GearItems"
+            Id="3733980a-fe5f-4840-b355-078ccea26d80"
+            name="GearState"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -508,28 +491,16 @@
             isDerivedUnion="false"
             aggregation="None"
             isComposite="false">
-            <lowerValueInternal>
-              <literalString
-                Id="5e4abc98-a159-4d5a-92fd-c7e75d1ab3d9"
-                name="Lower"
-                value="*" />
-            </lowerValueInternal>
-            <upperValueInternal>
-              <literalString
-                Id="b9626af2-06e2-4982-bff5-5e8513af3b5d"
-                name="Upper"
-                value="*" />
-            </upperValueInternal>
             <type_NamedElement>
               <classMoniker
-                Id="5809aa7c-4685-4ad0-86eb-f97684733d68"
-                LastKnownName="GearItem"
+                Id="6cba91d8-cff8-4c3f-878b-477cb8197394"
+                LastKnownName="GearState"
                 LastKnownLocation="BackpackPlanner.Models.uml" />
             </type_NamedElement>
           </property>
           <property
-            Id="2d5dc97c-809e-4e54-9af9-f42fea23fd39"
-            name="GearSystems"
+            Id="be6a440e-12fb-4ac9-8e14-3dfb11c6ae1e"
+            name="MealState"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -538,28 +509,16 @@
             isDerivedUnion="false"
             aggregation="None"
             isComposite="false">
-            <lowerValueInternal>
-              <literalString
-                Id="d2007917-e3ca-4837-96e5-821ede03bbf0"
-                name="Lower"
-                value="*" />
-            </lowerValueInternal>
-            <upperValueInternal>
-              <literalString
-                Id="bdbceec3-b0cb-49e7-820d-f4e9cf69edf6"
-                name="Upper"
-                value="*" />
-            </upperValueInternal>
             <type_NamedElement>
               <classMoniker
-                Id="b575f591-1bbc-4461-9a95-db73e0822b77"
-                LastKnownName="GearSystem"
+                Id="0d1c65a0-0e8d-4d8a-bfcc-f491b22d36ed"
+                LastKnownName="MealState"
                 LastKnownLocation="BackpackPlanner.Models.uml" />
             </type_NamedElement>
           </property>
           <property
-            Id="1fd931fd-460d-4d27-934d-94b08493d3ab"
-            name="GearCollections"
+            Id="9ee73a6c-58a6-430f-9674-43ac8ded2553"
+            name="TripState"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -568,28 +527,16 @@
             isDerivedUnion="false"
             aggregation="None"
             isComposite="false">
-            <lowerValueInternal>
-              <literalString
-                Id="71eda329-7dec-4646-a76f-bb5f89a7692d"
-                name="Lower"
-                value="*" />
-            </lowerValueInternal>
-            <upperValueInternal>
-              <literalString
-                Id="3c155678-846c-4826-82e1-eb4070a8a520"
-                name="Upper"
-                value="*" />
-            </upperValueInternal>
             <type_NamedElement>
               <classMoniker
-                Id="33e3cdad-b8ff-4b4a-adb1-222253ea2238"
-                LastKnownName="GearCollection"
+                Id="c952f3f4-e978-48a3-befc-76c18bf5f0fb"
+                LastKnownName="TripState"
                 LastKnownLocation="BackpackPlanner.Models.uml" />
             </type_NamedElement>
           </property>
           <property
-            Id="e6689fff-4d17-4c2c-b65b-242dfb45bf87"
-            name="Meals"
+            Id="ff9557da-bd4f-49d2-a55f-b8b40dace71e"
+            name="AppSettings"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -598,28 +545,16 @@
             isDerivedUnion="false"
             aggregation="None"
             isComposite="false">
-            <lowerValueInternal>
-              <literalString
-                Id="7f8bde23-1be4-450b-8e2c-db4cde38cacd"
-                name="Lower"
-                value="*" />
-            </lowerValueInternal>
-            <upperValueInternal>
-              <literalString
-                Id="23c18dcc-7ee3-4880-832f-02e20f9cee71"
-                name="Upper"
-                value="*" />
-            </upperValueInternal>
             <type_NamedElement>
               <classMoniker
-                Id="8d453b61-ca0c-4505-8684-19c350e29520"
-                LastKnownName="Meal"
+                Id="8da70c99-f664-4aaf-ace8-550879d99f40"
+                LastKnownName="AppSettings"
                 LastKnownLocation="BackpackPlanner.Models.uml" />
             </type_NamedElement>
           </property>
           <property
-            Id="acd4537b-6df4-4d41-afe2-88502488cd74"
-            name="TripItineraries"
+            Id="a52d52aa-75fb-4b9c-9240-a834993bfb41"
+            name="UserInformation"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -628,52 +563,10 @@
             isDerivedUnion="false"
             aggregation="None"
             isComposite="false">
-            <lowerValueInternal>
-              <literalString
-                Id="f9ff605c-a06b-4a0a-b435-c793550944fc"
-                name="Lower"
-                value="*" />
-            </lowerValueInternal>
-            <upperValueInternal>
-              <literalString
-                Id="a9601748-70e6-48b0-82ec-4bf59467cf7e"
-                name="Upper"
-                value="*" />
-            </upperValueInternal>
             <type_NamedElement>
               <classMoniker
-                Id="517c8c88-fcf7-4e6b-9508-76e880fabaae"
-                LastKnownName="TripItinerary"
-                LastKnownLocation="BackpackPlanner.Models.uml" />
-            </type_NamedElement>
-          </property>
-          <property
-            Id="32430999-e733-40ba-8045-e46524979919"
-            name="TripPlans"
-            isLeaf="false"
-            isStatic="false"
-            isReadOnly="false"
-            isUnique="false"
-            isDerived="false"
-            isDerivedUnion="false"
-            aggregation="None"
-            isComposite="false">
-            <lowerValueInternal>
-              <literalString
-                Id="88ad38d5-1003-46ac-abc0-59e80b7bbf36"
-                name="Lower"
-                value="*" />
-            </lowerValueInternal>
-            <upperValueInternal>
-              <literalString
-                Id="8c2d9513-bc95-4d03-8a00-b27e6c6286a5"
-                name="Upper"
-                value="*" />
-            </upperValueInternal>
-            <type_NamedElement>
-              <classMoniker
-                Id="62469b36-e5f2-4403-91a4-e46b639521d8"
-                LastKnownName="TripPlan"
+                Id="aa7d10b7-f515-4882-b729-918865015197"
+                LastKnownName="UserInformation"
                 LastKnownLocation="BackpackPlanner.Models.uml" />
             </type_NamedElement>
           </property>
@@ -898,7 +791,7 @@
           </operation>
           <operation
             Id="5bd9893d-deae-49fe-9f6e-dbdb07f8d938"
-            name="GetTotalGearItemCount"
+            name="GetGearItemCount"
             isLeaf="false"
             isStatic="false"
             isAbstract="false"
@@ -922,7 +815,7 @@
           </operation>
           <operation
             Id="12a93648-6d02-4914-a846-93468625a7e0"
-            name="GetTotalWeightInOunces"
+            name="GetWeightInGrams"
             isLeaf="false"
             isStatic="false"
             isAbstract="false"
@@ -946,7 +839,7 @@
           </operation>
           <operation
             Id="393439da-9cb8-441b-88e0-036d3adf33ee"
-            name="GetTotalCostInUSD"
+            name="GetCostInUSDP"
             isLeaf="false"
             isStatic="false"
             isAbstract="false"
@@ -1037,7 +930,7 @@
         <ownedOperationsInternal>
           <operation
             Id="48689da5-2bbe-457b-9cc9-c2428d0e15c2"
-            name="GetTotalWeightInOunces"
+            name="GetWeightInGrams"
             isLeaf="false"
             isStatic="false"
             isAbstract="false"
@@ -1047,6 +940,30 @@
               <operationHasOwnedParameters>
                 <parameter
                   Id="41586841-758d-4a11-b6b4-fd15b24dfedb"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="BackpackPlanner.Models.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="1ba1af75-8842-4371-8c27-9d50eb1e6b7a"
+            name="GetCostInUSDP"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="0cfd1b53-1dfa-41f6-b673-6517d657adfc"
                   direction="Return"
                   isUnique="false">
                   <type_NamedElement>
@@ -1128,7 +1045,7 @@
         <ownedOperationsInternal>
           <operation
             Id="8d264dd0-573e-428f-bc04-fafb95b9880d"
-            name="GetTotalWeightInOunces"
+            name="GetWeightInGrams"
             isLeaf="false"
             isStatic="false"
             isAbstract="false"
@@ -1138,6 +1055,54 @@
               <operationHasOwnedParameters>
                 <parameter
                   Id="154fb64a-0000-47e4-9a9d-4b5ef15fa55d"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="BackpackPlanner.Models.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="015963eb-7c0f-4d9a-977f-f847dd99a125"
+            name="GetCostInUSDP"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="ced36433-4f6d-43aa-acb2-21d56cf2181b"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="BackpackPlanner.Models.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="7a860e26-d53d-494a-a460-1e78cbdb5ee4"
+            name="GetGearItemCount"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="d8ba345f-760a-4eb6-803d-86a7a04118d6"
                   direction="Return"
                   isUnique="false">
                   <type_NamedElement>
@@ -1276,6 +1241,228 @@
             </type_NamedElement>
           </property>
         </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="bfcf7adf-2925-4663-a8db-2a43a7035083"
+            name="GetTotalGearItemCount"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="488350bb-b44c-4fdd-87c1-fe1ff417dbb0"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="BackpackPlanner.Models.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="8e911214-ab14-42dd-bd89-c5f1bbbbab84"
+            name="GetGearSystemCount"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="3877a6a7-9cd8-451a-8e9f-13e843a3de5e"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="BackpackPlanner.Models.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="e2a5aa5e-9fc4-4feb-9ee0-adc5c223aa2d"
+            name="GetGearItemCount"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="4e1d74f4-86c4-4535-b1f7-f7ec3054483d"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="BackpackPlanner.Models.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="4998d570-d770-4f45-8834-85ce6d5e6099"
+            name="GetWeightInGrams"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="0906332e-8c5c-4ea3-aa3a-fc9c3ecc4dae"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="BackpackPlanner.Models.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="4c4a7804-bec7-48c3-9e5e-415698e7ec56"
+            name="GetCostInUSDP"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="55952fea-931d-4ce5-990e-8f2a2755be0e"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="BackpackPlanner.Models.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="8e8c9eae-4d5d-430c-bcbc-93fd9a736a4f"
+            name="AddGearSystem"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="c329e986-5185-43ab-8ca2-6e55ef4d5989"
+                  name="gearSystem"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="b575f591-1bbc-4461-9a95-db73e0822b77"
+                      LastKnownName="GearSystem"
+                      LastKnownLocation="BackpackPlanner.Models.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="c032af44-84ba-4669-90ee-9171cd617b99"
+            name="AddGearItem"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="5de49d5a-c0fd-4ca2-a729-c8c1cebb5f93"
+                  name="gearItem"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="5809aa7c-4685-4ad0-86eb-f97684733d68"
+                      LastKnownName="GearItem"
+                      LastKnownLocation="BackpackPlanner.Models.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="03c95f26-42eb-464b-b16b-6a9cd697596f"
+            name="RemoveGearItem"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="c3b72834-978d-4b66-a734-497b61da4af7"
+                  name="gearItem"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="5809aa7c-4685-4ad0-86eb-f97684733d68"
+                      LastKnownName="GearItem"
+                      LastKnownLocation="BackpackPlanner.Models.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="37084442-4fc4-45c7-a665-7376deb92043"
+            name="RemoveGearSystem"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="d503ff12-b5a2-4f90-bea8-d408fa96aac7"
+                  name="gearSystem"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="b575f591-1bbc-4461-9a95-db73e0822b77"
+                      LastKnownName="GearSystem"
+                      LastKnownLocation="BackpackPlanner.Models.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
     <packageHasNamedElement>
@@ -1349,7 +1536,7 @@
         <ownedOperationsInternal>
           <operation
             Id="3fcb08aa-777e-415e-9e09-1edec4abb722"
-            name="GetTotalWeightInOunces"
+            name="GetWeightInGrams"
             isLeaf="false"
             isStatic="false"
             isAbstract="false"
@@ -1359,6 +1546,102 @@
               <operationHasOwnedParameters>
                 <parameter
                   Id="b47764a5-ecca-474b-9682-072f0acf23b3"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="BackpackPlanner.Models.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="304cf79c-f35c-46ee-9be2-2e79eaf3b500"
+            name="GetCostInUSDP"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="fe716422-9e25-443b-b764-f52aaaa37515"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="BackpackPlanner.Models.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="995e0dc8-3827-40f8-929f-3463cb76f1e6"
+            name="GetGearItemCount"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="efcb1a91-ff30-4a99-b818-a9a0e16fe0a9"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="BackpackPlanner.Models.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="63483c6c-8d05-4abf-94b9-e9ed890436bc"
+            name="GetTotalGearItemCount"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="a56f99a6-3280-4835-a80f-9eb8f96bb674"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="BackpackPlanner.Models.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="8bc3aa98-3a92-4c33-9038-1e96f357d19a"
+            name="GetGearSystemCount"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="3bf039d7-55d8-4404-a6ba-2a8d86acbe0b"
                   direction="Return"
                   isUnique="false">
                   <type_NamedElement>
@@ -1570,7 +1853,7 @@
           </property>
           <property
             Id="44a136ed-44ae-488f-906a-340acea1f455"
-            name="WeightInOunces"
+            name="WeightInGrams"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -1588,7 +1871,7 @@
           </property>
           <property
             Id="18776078-7179-465b-9001-b8f705db7516"
-            name="CostInUSD"
+            name="CostInUSDP"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -2250,7 +2533,7 @@
               <literalInteger
                 Id="647b9d9e-cb73-41a5-b95b-afd6f31714df"
                 name="Integer"
-                value="1" />
+                value="2" />
             </specification>
           </enumerationLiteral>
           <enumerationLiteral
@@ -2260,7 +2543,7 @@
               <literalInteger
                 Id="ff2518ff-5dc8-4e12-8c81-386b74aed3b0"
                 name="Integer"
-                value="2" />
+                value="1" />
             </specification>
           </enumerationLiteral>
         </ownedLiterals>
@@ -2292,8 +2575,313 @@
                 LastKnownLocation="BackpackPlanner.Models.uml" />
             </type_NamedElement>
           </property>
+          <property
+            Id="861213bf-4ca5-4585-b67c-644d7a6c7d2e"
+            name="Currency"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <enumerationMoniker
+                Id="8d816674-2287-4da4-ae42-407c35874f0f"
+                LastKnownName="Currency"
+                LastKnownLocation="BackpackPlanner.Models.uml" />
+            </type_NamedElement>
+          </property>
         </ownedAttributesInternal>
       </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="6cba91d8-cff8-4c3f-878b-477cb8197394"
+        name="GearState"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedAttributesInternal>
+          <property
+            Id="0a790150-a981-45cb-8539-0b602a9f699f"
+            name="GearCollections"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <lowerValueInternal>
+              <literalString
+                Id="38e171fe-1fea-458c-902a-340eb30f5fac"
+                name="Lower"
+                value="*" />
+            </lowerValueInternal>
+            <upperValueInternal>
+              <literalString
+                Id="17615043-67ac-4a77-9ef7-2483f8953f20"
+                name="Upper"
+                value="*" />
+            </upperValueInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="33e3cdad-b8ff-4b4a-adb1-222253ea2238"
+                LastKnownName="GearCollection"
+                LastKnownLocation="BackpackPlanner.Models.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="2a0f6b98-b021-4364-a7b5-da9b33721a08"
+            name="GearItems"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <lowerValueInternal>
+              <literalString
+                Id="e67530a8-87f6-4e19-bdb0-57a9cee3f380"
+                name="Lower"
+                value="*" />
+            </lowerValueInternal>
+            <upperValueInternal>
+              <literalString
+                Id="9bba3535-a118-4a4a-a79f-6fbfb53c7645"
+                name="Upper"
+                value="*" />
+            </upperValueInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="5809aa7c-4685-4ad0-86eb-f97684733d68"
+                LastKnownName="GearItem"
+                LastKnownLocation="BackpackPlanner.Models.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="e736727f-e869-412a-aed9-3a7338b9b5dd"
+            name="GearSystems"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <lowerValueInternal>
+              <literalString
+                Id="a92859ba-992f-4d38-ab9a-d7e1d4e6cd08"
+                name="Lower"
+                value="*" />
+            </lowerValueInternal>
+            <upperValueInternal>
+              <literalString
+                Id="5bad390b-9bc5-4512-912d-9e78d347cabb"
+                name="Upper"
+                value="*" />
+            </upperValueInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="b575f591-1bbc-4461-9a95-db73e0822b77"
+                LastKnownName="GearSystem"
+                LastKnownLocation="BackpackPlanner.Models.uml" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="d52b3fae-ae3e-40ef-82f9-a6a9d37ac39c"
+            name="LoadFromDevice"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="e6d55142-52d9-4f82-8a56-9b94af3c3474"
+            name="SaveToDevice"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="0d1c65a0-0e8d-4d8a-bfcc-f491b22d36ed"
+        name="MealState"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedAttributesInternal>
+          <property
+            Id="51588f11-ffac-40b7-a2db-36caf2b0ede0"
+            name="Meals"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <lowerValueInternal>
+              <literalString
+                Id="d6e5500d-140d-4f34-b043-ba5a3cd5e642"
+                name="Lower"
+                value="*" />
+            </lowerValueInternal>
+            <upperValueInternal>
+              <literalString
+                Id="83e92438-a4de-458e-945e-8586edf35dc3"
+                name="Upper"
+                value="*" />
+            </upperValueInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="8d453b61-ca0c-4505-8684-19c350e29520"
+                LastKnownName="Meal"
+                LastKnownLocation="BackpackPlanner.Models.uml" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="b07c5bed-df38-499a-b47b-1b94a6042d32"
+            name="LoadFromDevice"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="60ed811e-749b-426c-b6d3-f2463dc9fd8c"
+            name="SaveToDevice"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="c952f3f4-e978-48a3-befc-76c18bf5f0fb"
+        name="TripState"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedAttributesInternal>
+          <property
+            Id="bef92ba5-5bd1-4967-b2c2-40557873c35e"
+            name="TripItineraries"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <lowerValueInternal>
+              <literalString
+                Id="97021d55-2932-42f8-b8e6-5a35529c0463"
+                name="Lower"
+                value="*" />
+            </lowerValueInternal>
+            <upperValueInternal>
+              <literalString
+                Id="d004071d-c22c-464f-b4b7-e8fe8d0b7e58"
+                name="Upper"
+                value="*" />
+            </upperValueInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="517c8c88-fcf7-4e6b-9508-76e880fabaae"
+                LastKnownName="TripItinerary"
+                LastKnownLocation="BackpackPlanner.Models.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="151e5901-fc6d-413f-a3d9-1a360dc5c2ab"
+            name="TripPlans"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <lowerValueInternal>
+              <literalString
+                Id="4ccaebfb-c877-4b82-844d-f38f50e67802"
+                name="Lower"
+                value="*" />
+            </lowerValueInternal>
+            <upperValueInternal>
+              <literalString
+                Id="5f0c306e-d00d-4616-ab64-006dd6f76ed4"
+                name="Upper"
+                value="*" />
+            </upperValueInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="62469b36-e5f2-4403-91a4-e46b639521d8"
+                LastKnownName="TripPlan"
+                LastKnownLocation="BackpackPlanner.Models.uml" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="a0e55aa8-d91a-4f01-8d3d-47554d19eba5"
+            name="LoadFromDevice"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="9d4ffa54-d9b5-42b2-995d-eb5319127bf9"
+            name="SaveToDevice"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <enumeration
+        Id="8d816674-2287-4da4-ae42-407c35874f0f"
+        name="Currency"
+        isAbstract="false"
+        isLeaf="false">
+        <ownedLiterals>
+          <enumerationLiteral
+            Id="207ec27e-d4d7-4afc-a79b-d1f1e3889e78"
+            name="USD">
+            <specification>
+              <literalInteger
+                Id="f04d5bc4-72a1-4d05-be14-da528178192c"
+                name="Integer"
+                value="1" />
+            </specification>
+          </enumerationLiteral>
+        </ownedLiterals>
+      </enumeration>
     </packageHasNamedElement>
   </packagedElements>
   <primitiveType

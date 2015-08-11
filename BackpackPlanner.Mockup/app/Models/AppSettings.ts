@@ -3,21 +3,19 @@
 module BackpackPlanner.Mockup.Models {
     "use strict";
 
-    export enum Units {
-        Imperial,
-        Metric
-    }
-
     export interface IAppSettings {
-        Units: Units;
+        Units: string;
+        Currency: string;
     }
 
     export class AppSettings implements IAppSettings {
-        public Units = Units.Imperial;
+        public Units = "Metric";
+        public Currency = "USD";
 
         constructor(appSettingsResource?: Resources.IAppSettingsResource) {
             if(appSettingsResource) {
                 this.Units = appSettingsResource.Units;
+                this.Currency = appSettingsResource.Currency;
             }
         }
     }
