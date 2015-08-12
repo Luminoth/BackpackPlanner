@@ -7,6 +7,13 @@
     </div>
     <div ng-show="getTripPlans().length < 1">You have no trip plans! Try adding one!</div>
     <div layout="column" flex ng-show="getTripPlans().length > 0">
+        <div layout="row">
+            <span flex></span>
+            <md-button class="md-raised md-warn mockup-button" ng-click="">
+                Delete All Trip Plans
+            </md-button>
+            <span flex></span>
+        </div>
     </div>
     <!--<md-button class="md-fab md-primary md-hue-1 mockup-add-button" href="#/trips/plans/add">
         <ng-md-icon icon="add" style="fill: white"></ng-md-icon>

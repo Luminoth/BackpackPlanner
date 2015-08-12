@@ -63,6 +63,10 @@ module BackpackPlanner.Mockup {
             return true;
         }
 
+        public deleteAllMeals() : void {
+            this._meals = <Array<Models.Meals.Meal>>[];
+        }
+
         /* Load/Save */
 
         public loadFromDevice() {

@@ -64,6 +64,10 @@ module BackpackPlanner.Mockup {
             return true;
         }
 
+        public deleteAllTripItineraries() : void {
+            this._tripItineraries = <Array<Models.Trips.TripItinerary>>[];
+        }
+
         /* Trip Plans */
 
         private _tripPlans: Models.Trips.TripPlan[];
@@ -119,6 +123,10 @@ module BackpackPlanner.Mockup {
             this._tripPlans.splice(idx, 1);
 
             return true;
+        }
+
+        public deleteAllTripPlans() : void {
+            this._tripPlans = <Array<Models.Trips.TripPlan>>[];
         }
 
         /* Load/Save */

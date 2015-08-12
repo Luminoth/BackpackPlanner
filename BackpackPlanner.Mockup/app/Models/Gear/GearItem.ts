@@ -99,12 +99,24 @@ module BackpackPlanner.Mockup.Models.Gear {
             }
         }
 
-        public getWeightInGrams() {
+        public getName() : string {
+            const gearItem = AppState.getInstance().getGearState().getGearItemById(this.GearItemId);
+            if(!gearItem) {
+                return "";
+            }
+            return gearItem.Name;
+        }
+
+        public getWeightInGrams() : number {
             const gearItem = AppState.getInstance().getGearState().getGearItemById(this.GearItemId);
             if(!gearItem) {
                 return 0;
             }
             return this.Count * gearItem.WeightInGrams;
+        }
+
+        public getWeightInUnits() : number {
+            return parseFloat(convertGramsToUnits(this.getWeightInGrams(), AppState.getInstance().getAppSettings().Units).toFixed(2));
         }
 
         public getCostInUSDP() {

@@ -127,6 +127,14 @@ module BackpackPlanner.Mockup.Models.Gear {
             }
         }
 
+        public getName() : string {
+            const gearSystem = AppState.getInstance().getGearState().getGearSystemById(this.GearSystemId);
+            if(!gearSystem) {
+                return "";
+            }
+            return gearSystem.Name;
+        }
+
         public getGearItemCount() : number {
             const gearSystem = AppState.getInstance().getGearState().getGearSystemById(this.GearSystemId);
             if(!gearSystem) {
@@ -135,12 +143,16 @@ module BackpackPlanner.Mockup.Models.Gear {
             return this.Count * gearSystem.getGearItemCount();
         }
 
-        public getWeightInGrams() {
+        public getWeightInGrams() : number {
             const gearSystem = AppState.getInstance().getGearState().getGearSystemById(this.GearSystemId);
             if(!gearSystem) {
                 return 0;
             }
             return this.Count * gearSystem.getWeightInGrams();
+        }
+
+        public getWeightInUnits() : number {
+            return parseFloat(convertGramsToUnits(this.getWeightInGrams(), AppState.getInstance().getAppSettings().Units).toFixed(2));
         }
 
         public getCostInUSDP() {

@@ -9,6 +9,8 @@ module BackpackPlanner.Mockup.Controllers.Gear.Collections {
 
     export interface IGearCollectionScope extends IAppScope {
         gearCollection: Models.Gear.GearCollection;
+        orderGearItemsBy: string;
+        orderGearSystemsBy: string;
 
         showAddGearItem: (event: MouseEvent) => void;
         showAddGearSystem: (event: MouseEvent) => void;
@@ -22,6 +24,8 @@ module BackpackPlanner.Mockup.Controllers.Gear.Collections {
     export class GearCollectionCtrl {
         constructor($scope: IGearCollectionScope, $routeParams: IGearCollectionRouteParams, $location: ng.ILocationService,
             $mdDialog: ng.material.IDialogService, $mdToast: ng.material.IToastService) {
+            $scope.orderGearItemsBy = "getName()";
+            $scope.orderGearSystemsBy = "getName()";
         
             $scope.gearCollection = AppState.getInstance().getGearState().getGearCollectionById($routeParams.gearCollectionId);
             if(null == $scope.gearCollection) {

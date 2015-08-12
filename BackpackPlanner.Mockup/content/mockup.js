@@ -256,6 +256,13 @@ var BackpackPlanner;
                             this.IsPacked = isPacked;
                         }
                     }
+                    GearCollectionEntry.prototype.getName = function () {
+                        var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this.GearCollectionId);
+                        if (!gearCollection) {
+                            return "";
+                        }
+                        return gearCollection.Name;
+                    };
                     GearCollectionEntry.prototype.getTotalGearItemCount = function () {
                         var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this.GearCollectionId);
                         if (!gearCollection) {
@@ -283,6 +290,9 @@ var BackpackPlanner;
                             return 0;
                         }
                         return this.Count * gearCollection.getWeightInGrams();
+                    };
+                    GearCollectionEntry.prototype.getWeightInUnits = function () {
+                        return parseFloat(Mockup.convertGramsToUnits(this.getWeightInGrams(), Mockup.AppState.getInstance().getAppSettings().Units).toFixed(2));
                     };
                     GearCollectionEntry.prototype.getCostInUSDP = function () {
                         var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this.GearCollectionId);
@@ -413,6 +423,13 @@ var BackpackPlanner;
                             this.IsPacked = isPacked;
                         }
                     }
+                    GearSystemEntry.prototype.getName = function () {
+                        var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(this.GearSystemId);
+                        if (!gearSystem) {
+                            return "";
+                        }
+                        return gearSystem.Name;
+                    };
                     GearSystemEntry.prototype.getGearItemCount = function () {
                         var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(this.GearSystemId);
                         if (!gearSystem) {
@@ -426,6 +443,9 @@ var BackpackPlanner;
                             return 0;
                         }
                         return this.Count * gearSystem.getWeightInGrams();
+                    };
+                    GearSystemEntry.prototype.getWeightInUnits = function () {
+                        return parseFloat(Mockup.convertGramsToUnits(this.getWeightInGrams(), Mockup.AppState.getInstance().getAppSettings().Units).toFixed(2));
                     };
                     GearSystemEntry.prototype.getCostInUSDP = function () {
                         var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(this.GearSystemId);
@@ -500,6 +520,9 @@ var BackpackPlanner;
                 // TODO: remove the item from the systems, collections, and trip plans it belongs to
                 return true;
             };
+            GearState.prototype.deleteAllGearItems = function () {
+                this._gearItems = [];
+            };
             GearState.prototype.getGearSystems = function () {
                 return this._gearSystems;
             };
@@ -545,6 +568,9 @@ var BackpackPlanner;
                 // TODO: remove the system from the collections, and trip plans it belongs to
                 return true;
             };
+            GearState.prototype.deleteAllGearSystems = function () {
+                this._gearSystems = [];
+            };
             GearState.prototype.getGearCollections = function () {
                 return this._gearCollections;
             };
@@ -589,6 +615,9 @@ var BackpackPlanner;
                 this._gearCollections.splice(idx, 1);
                 // TODO: remove the collection from the trip plans it belongs to
                 return true;
+            };
+            GearState.prototype.deleteAllGearCollections = function () {
+                this._gearCollections = [];
             };
             /* Load/Save */
             GearState.prototype.loadFromDevice = function () {
@@ -680,6 +709,9 @@ var BackpackPlanner;
                 this._meals.splice(idx, 1);
                 // TODO: remove the meal from the trip plans it belongs to
                 return true;
+            };
+            MealState.prototype.deleteAllMeals = function () {
+                this._meals = [];
             };
             /* Load/Save */
             MealState.prototype.loadFromDevice = function () {
@@ -799,6 +831,9 @@ var BackpackPlanner;
                 // TODO: remove the itinerary from the trip plans it belongs to
                 return true;
             };
+            TripState.prototype.deleteAllTripItineraries = function () {
+                this._tripItineraries = [];
+            };
             TripState.prototype.getTripPlans = function () {
                 return this._tripPlans;
             };
@@ -841,6 +876,9 @@ var BackpackPlanner;
                 }
                 this._tripPlans.splice(idx, 1);
                 return true;
+            };
+            TripState.prototype.deleteAllTripPlans = function () {
+                this._tripPlans = [];
             };
             /* Load/Save */
             TripState.prototype.loadFromDevice = function () {
@@ -1011,12 +1049,22 @@ var BackpackPlanner;
                             this.IsPacked = isPacked;
                         }
                     }
+                    GearItemEntry.prototype.getName = function () {
+                        var gearItem = Mockup.AppState.getInstance().getGearState().getGearItemById(this.GearItemId);
+                        if (!gearItem) {
+                            return "";
+                        }
+                        return gearItem.Name;
+                    };
                     GearItemEntry.prototype.getWeightInGrams = function () {
                         var gearItem = Mockup.AppState.getInstance().getGearState().getGearItemById(this.GearItemId);
                         if (!gearItem) {
                             return 0;
                         }
                         return this.Count * gearItem.WeightInGrams;
+                    };
+                    GearItemEntry.prototype.getWeightInUnits = function () {
+                        return parseFloat(Mockup.convertGramsToUnits(this.getWeightInGrams(), Mockup.AppState.getInstance().getAppSettings().Units).toFixed(2));
                     };
                     GearItemEntry.prototype.getCostInUSDP = function () {
                         var gearItem = Mockup.AppState.getInstance().getGearState().getGearItemById(this.GearItemId);
@@ -1316,6 +1364,10 @@ var BackpackPlanner;
                     $scope.getGearItemById = function (gearItemId) {
                         return Mockup.AppState.getInstance().getGearState().getGearItemById(gearItemId);
                     };
+                    $scope.deleteAllGearItems = function () {
+                        // TODO: md alert verify this!
+                        Mockup.AppState.getInstance().getGearState().deleteAllGearItems();
+                    };
                     // load the gear systems
                     gearSystemService.query().$promise.then(function (gearSystemsResource) {
                         Mockup.AppState.getInstance().getGearState().loadGearSystems(gearSystemsResource);
@@ -1325,6 +1377,10 @@ var BackpackPlanner;
                     };
                     $scope.getGearSystemById = function (gearSystemId) {
                         return Mockup.AppState.getInstance().getGearState().getGearSystemById(gearSystemId);
+                    };
+                    $scope.deleteAllGearSystems = function () {
+                        // TODO: md alert verify this!
+                        Mockup.AppState.getInstance().getGearState().deleteAllGearSystems();
                     };
                     // load the gear collections
                     gearCollectionService.query().$promise.then(function (gearCollectionsResource) {
@@ -1336,12 +1392,20 @@ var BackpackPlanner;
                     $scope.getGearCollectionById = function (gearCollectionId) {
                         return Mockup.AppState.getInstance().getGearState().getGearCollectionById(gearCollectionId);
                     };
+                    $scope.deleteAllGearCollections = function () {
+                        // TODO: md alert verify this!
+                        Mockup.AppState.getInstance().getGearState().deleteAllGearCollections();
+                    };
                     // load the meals
                     $scope.getMeals = function () {
                         return [];
                     };
                     $scope.getMealById = function (mealId) {
                         return null;
+                    };
+                    $scope.deleteAllMeals = function () {
+                        // TODO: md alert verify this!
+                        Mockup.AppState.getInstance().getMealState().deleteAllMeals();
                     };
                     // load the trip itineraries
                     $scope.getTripItineraries = function () {
@@ -1350,12 +1414,20 @@ var BackpackPlanner;
                     $scope.getTripItineraryById = function (tripItineraryId) {
                         return null;
                     };
+                    $scope.deleteAllTripItineraries = function () {
+                        // TODO: md alert verify this!
+                        Mockup.AppState.getInstance().getTripState().deleteAllTripItineraries();
+                    };
                     // load the trip plans
                     $scope.getTripPlans = function () {
                         return [];
                     };
                     $scope.getTripPlanById = function (tripPlanId) {
                         return null;
+                    };
+                    $scope.deleteAllTripPlans = function () {
+                        // TODO: md alert verify this!
+                        Mockup.AppState.getInstance().getTripState().deleteAllTripPlans();
                     };
                     /* TODO: end move all of this into the AppState.loadFromDevice() call */
                     $scope.getUnitsWeightString = function () {
@@ -1403,6 +1475,8 @@ var BackpackPlanner;
                     "use strict";
                     var AddGearCollectionCtrl = (function () {
                         function AddGearCollectionCtrl($scope, $location, $mdDialog, $mdToast) {
+                            $scope.orderGearItemsBy = "getName()";
+                            $scope.orderGearSystemsBy = "getName()";
                             $scope.gearCollection = new Mockup.Models.Gear.GearCollection();
                             $scope.showAddGearItem = function (event) {
                                 $mdDialog.show({
@@ -1470,6 +1544,8 @@ var BackpackPlanner;
                     "use strict";
                     var GearCollectionCtrl = (function () {
                         function GearCollectionCtrl($scope, $routeParams, $location, $mdDialog, $mdToast) {
+                            $scope.orderGearItemsBy = "getName()";
+                            $scope.orderGearSystemsBy = "getName()";
                             $scope.gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById($routeParams.gearCollectionId);
                             if (null == $scope.gearCollection) {
                                 alert("The gear collection does not exist!");
@@ -1749,6 +1825,7 @@ var BackpackPlanner;
                     "use strict";
                     var AddGearSystemCtrl = (function () {
                         function AddGearSystemCtrl($scope, $location, $mdDialog, $mdToast) {
+                            $scope.orderGearItemsBy = "getName()";
                             $scope.gearSystem = new Mockup.Models.Gear.GearSystem();
                             $scope.showAddGearItem = function (event) {
                                 $mdDialog.show({
@@ -1805,6 +1882,7 @@ var BackpackPlanner;
                     "use strict";
                     var GearSystemCtrl = (function () {
                         function GearSystemCtrl($scope, $routeParams, $location, $mdDialog, $mdToast) {
+                            $scope.orderGearItemsBy = "getName()";
                             $scope.gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById($routeParams.gearSystemId);
                             if (null == $scope.gearSystem) {
                                 alert("The gear system does not exist!");

@@ -69,6 +69,10 @@ module BackpackPlanner.Mockup {
             return true;
         }
 
+        public deleteAllGearItems() : void {
+            this._gearItems = <Array<Models.Gear.GearItem>>[];
+        }
+
         /* Gear Systems */
 
         private _gearSystems: Models.Gear.GearSystem[];
@@ -128,6 +132,10 @@ module BackpackPlanner.Mockup {
             return true;
         }
 
+        public deleteAllGearSystems() : void {
+            this._gearSystems = <Array<Models.Gear.GearSystem>>[];
+        }
+
         /* Gear Collections */
 
         private _gearCollections: Models.Gear.GearCollection[];
@@ -185,6 +193,10 @@ module BackpackPlanner.Mockup {
             // TODO: remove the collection from the trip plans it belongs to
 
             return true;
+        }
+
+        public deleteAllGearCollections() : void {
+            this._gearCollections = <Array<Models.Gear.GearCollection>>[];
         }
 
         /* Load/Save */

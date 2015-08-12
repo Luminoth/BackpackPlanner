@@ -143,25 +143,25 @@
         <OperationElementListCompartment Id="dc86bf42-d4f9-405f-9266-b863fe36b642" absoluteBounds="6.14, 1.421484357615312, 1.7200000000000002, 0.20117186754941951" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="4611ea84-b615-40e6-bc65-8bdf239b0efa" absoluteBounds="0.5, 3.25, 2.5, 1.7031249602635703" hideQualifiedName="false" increaseHeight="0" customColor="181, 193, 223">
+    <classShape Id="4611ea84-b615-40e6-bc65-8bdf239b0efa" absoluteBounds="0.5, 3.25, 2.5, 2.1835936953624087" hideQualifiedName="false" increaseHeight="0" customColor="181, 193, 223">
       <classMoniker Id="329924b1-b5e7-44a7-b77a-7fa6bf96ce73" LastKnownName="GearState" />
       <nestedChildShapes>
         <AttributeElementListCompartment Id="fe64cb25-a7c4-4aa4-8d53-65ca9df9d40f" absoluteBounds="0.51500000000000057, 3.6399999999999997, 2.4699999999999998, 0.68164060264825821" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
-        <OperationElementListCompartment Id="4b79df57-74c3-4b11-9d9e-d1a6708d6c48" absoluteBounds="0.51500000000000057, 4.3316406026482586, 2.4699999999999998, 0.52148435761531187" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <OperationElementListCompartment Id="4b79df57-74c3-4b11-9d9e-d1a6708d6c48" absoluteBounds="0.51500000000000057, 4.3316406026482586, 2.4699999999999998, 1.0019530927141507" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="a9eef730-4a9c-4f16-aa6a-aa7a2bc9325a" absoluteBounds="3.25, 3.25, 1.5, 1.3828124701976776" hideQualifiedName="false" increaseHeight="0" customColor="181, 193, 223">
+    <classShape Id="a9eef730-4a9c-4f16-aa6a-aa7a2bc9325a" absoluteBounds="3.25, 3.25, 1.5, 1.5429687152306233" hideQualifiedName="false" increaseHeight="0" customColor="181, 193, 223">
       <classMoniker Id="ef96afe8-8e4a-4596-8a2a-66efcde2a4a1" LastKnownName="MealState" />
       <nestedChildShapes>
         <AttributeElementListCompartment Id="24974f5d-d98c-4f79-aa56-b64456e4822d" absoluteBounds="3.2650000000000006, 3.64, 1.4700000000000002, 0.36132811258236563" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
-        <OperationElementListCompartment Id="d3e7b002-b221-438c-a8c9-48b39441f74c" absoluteBounds="3.2650000000000006, 4.0113281125823654, 1.4700000000000002, 0.52148435761531187" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <OperationElementListCompartment Id="d3e7b002-b221-438c-a8c9-48b39441f74c" absoluteBounds="3.2650000000000006, 4.0113281125823654, 1.4700000000000002, 0.68164060264825821" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="5168c553-3a29-4976-9822-8112c6735606" absoluteBounds="5.125, 3.25, 2.25, 1.5429687152306237" hideQualifiedName="false" increaseHeight="0" customColor="181, 193, 223">
+    <classShape Id="5168c553-3a29-4976-9822-8112c6735606" absoluteBounds="5.125, 3.25, 2.25, 1.8632812052965164" hideQualifiedName="false" increaseHeight="0" customColor="181, 193, 223">
       <classMoniker Id="90f9baf3-0888-47ad-ad53-f933e8df5384" LastKnownName="TripState" />
       <nestedChildShapes>
         <AttributeElementListCompartment Id="aa50a2a8-050d-45a9-8e10-4a5f8e01ccb6" absoluteBounds="5.14, 3.64, 2.2199999999999998, 0.52148435761531187" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
-        <OperationElementListCompartment Id="fb4806ea-671d-479c-978e-4df5ca1fe27d" absoluteBounds="5.14, 4.171484357615312, 2.2199999999999998, 0.52148435761531176" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <OperationElementListCompartment Id="fb4806ea-671d-479c-978e-4df5ca1fe27d" absoluteBounds="5.14, 4.171484357615312, 2.2199999999999998, 0.84179684768120444" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <enumerationShape Id="e452bf5e-ad95-4fa0-a013-f85516e22a1e" absoluteBounds="10.125, 0.5, 1.5, 0.85132811258236574" hideQualifiedName="false" increaseHeight="0" customColor="161, 150, 103">

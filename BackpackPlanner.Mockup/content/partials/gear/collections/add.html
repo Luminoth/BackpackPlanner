@@ -9,11 +9,19 @@
     </md-input-container>
     <label>Gear Systems</label>
     <p ng-show="gearCollection.GearSystems.length < 1">You have no gear systems in this collection! Try adding one!</p>
-    <md-list ng-show="gearCollection.GearSystems.length > 0">
-        <md-list-item ng-repeat="gearSystemEntry in gearCollection.GearSystems">
-            {{ gearSystemEntry.Count }}x {{ getGearSystemById(gearSystemEntry.GearSystemId).Name }}
-        </md-list-item>
-    </md-list>
+    <div layout="column" ng-show="gearCollection.GearSystems.length > 0">
+        <label>Sort by</label>
+        <md-radio-group ng-model="orderGearSystemsBy" layout="row" layout-sm="column">
+            <md-radio-button value="getName()">Name</md-radio-button>
+            <md-radio-button value="-Count">Count</md-radio-button>
+            <md-radio-button value="-getWeightInGrams()">Weight</md-radio-button>
+        </md-radio-group>
+        <md-list>
+            <md-list-item ng-repeat="gearSystemEntry in gearCollection.GearSystems | orderBy:orderGearSystemsBy" ng-init="gearSystem = getGearSystemById(gearSystemEntry.GearSystemId)">
+                {{ gearSystemEntry.Count }}x {{ gearSystemEntry.getName() }} ({{ gearSystemEntry.getWeightInUnits() | number:2 }} {{ getUnitsWeightString() }}s)
+            </md-list-item>
+        </md-list>
+    </div>
     <div layout="row">
         <span flex></span>
         <md-button class="md-raised md-primary mockup-button" ng-click="showAddGearSystem($event)">
@@ -23,11 +31,19 @@
     </div>
     <label>Gear Items</label>
     <p ng-show="gearCollection.GearItems.length < 1">You have no gear items in this Collection! Try adding one!</p>
-    <md-list ng-show="gearCollection.GearItems.length > 0">
-        <md-list-item ng-repeat="gearItemEntry in gearCollection.GearItems">
-            {{ gearItemEntry.Count }}x {{ getGearItemById(gearItemEntry.GearItemId).Name }}
-        </md-list-item>
-    </md-list>
+    <div layout="column" ng-show="gearCollection.GearItems.length > 0">
+        <label>Sort by</label>
+        <md-radio-group ng-model="orderGearItemsBy" layout="row" layout-sm="column">
+            <md-radio-button value="getName()">Name</md-radio-button>
+            <md-radio-button value="-Count">Count</md-radio-button>
+            <md-radio-button value="-getWeightInGrams()">Weight</md-radio-button>
+        </md-radio-group>
+        <md-list>
+            <md-list-item ng-repeat="gearItemEntry in gearCollection.GearItems | orderBy:orderGearItemsBy" ng-init="gearItem = getGearItemById(gearItemEntry.GearItemId)">
+                {{ gearItemEntry.Count }}x {{ gearItemEntry.getName() }} ({{ gearItemEntry.getWeightInUnits() | number:2 }} {{ getUnitsWeightString() }}s)
+            </md-list-item>
+        </md-list>
+    </div>
     <div layout="row">
         <span flex></span>
         <md-button class="md-raised md-primary mockup-button" ng-click="showAddGearItem($event)">

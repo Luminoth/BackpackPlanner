@@ -28,21 +28,27 @@ module BackpackPlanner.Mockup.Controllers {
 
         getGearItems: () => Models.Gear.GearItem[];
         getGearItemById: (gearItemId: number) => Models.Gear.GearItem;
+        deleteAllGearItems: () => void;
 
         getGearSystems: () => Models.Gear.GearSystem[];
         getGearSystemById: (gearSystemId: number) => Models.Gear.GearSystem;
+        deleteAllGearSystems: () => void;
 
         getGearCollections: () => Models.Gear.GearCollection[];
         getGearCollectionById: (gearCollectionId: number) => Models.Gear.GearCollection;
+        deleteAllGearCollections: () => void;
 
         getMeals: () => Models.Meals.Meal[];
         getMealById: (mealId: number) => Models.Meals.Meal;
+        deleteAllMeals: () => void;
 
         getTripItineraries: () => Models.Trips.TripItinerary[];
         getTripItineraryById: (tripItineraryId: number) => Models.Trips.TripItinerary;
+        deleteAllTripItineraries: () => void;
 
         getTripPlans: () => Models.Trips.TripPlan[];
         getTripPlanById: (tripPlanId: number) => Models.Trips.TripPlan;
+        deleteAllTripPlans: () => void;
 
         getUnitsWeightString: () => string;
         getUnitsLengthString: () => string;
@@ -99,6 +105,11 @@ module BackpackPlanner.Mockup.Controllers {
                 return AppState.getInstance().getGearState().getGearItemById(gearItemId);
             }
 
+            $scope.deleteAllGearItems = () => {
+                // TODO: md alert verify this!
+                AppState.getInstance().getGearState().deleteAllGearItems();
+            }
+
             // load the gear systems
             gearSystemService.query().$promise.then(
                 (gearSystemsResource: Resources.Gear.IGearSystemResource[]) => {
@@ -112,6 +123,11 @@ module BackpackPlanner.Mockup.Controllers {
 
             $scope.getGearSystemById = (gearSystemId: number) => {
                 return AppState.getInstance().getGearState().getGearSystemById(gearSystemId);
+            }
+
+            $scope.deleteAllGearSystems = () => {
+                // TODO: md alert verify this!
+                AppState.getInstance().getGearState().deleteAllGearSystems();
             }
 
             // load the gear collections
@@ -129,20 +145,37 @@ module BackpackPlanner.Mockup.Controllers {
                 return AppState.getInstance().getGearState().getGearCollectionById(gearCollectionId);
             }
 
+            $scope.deleteAllGearCollections = () => {
+                // TODO: md alert verify this!
+                AppState.getInstance().getGearState().deleteAllGearCollections();
+            }
+
             // load the meals
             $scope.getMeals = () => {
                 return <Array<Models.Meals.Meal>>[];
             }
+
             $scope.getMealById = (mealId: number) => {
                 return <Models.Meals.Meal> null;
+            }
+
+            $scope.deleteAllMeals = () => {
+                // TODO: md alert verify this!
+                AppState.getInstance().getMealState().deleteAllMeals();
             }
 
             // load the trip itineraries
             $scope.getTripItineraries = () => {
                 return <Array<Models.Trips.TripItinerary>>[];
             }
+
             $scope.getTripItineraryById = (tripItineraryId: number) => {
                 return <Models.Trips.TripItinerary> null;
+            }
+
+            $scope.deleteAllTripItineraries = () => {
+                // TODO: md alert verify this!
+                AppState.getInstance().getTripState().deleteAllTripItineraries();
             }
 
             // load the trip plans
@@ -151,6 +184,11 @@ module BackpackPlanner.Mockup.Controllers {
             }
             $scope.getTripPlanById = (tripPlanId: number) => {
                 return <Models.Trips.TripPlan> null;
+            }
+
+            $scope.deleteAllTripPlans = () => {
+                // TODO: md alert verify this!
+                AppState.getInstance().getTripState().deleteAllTripPlans();
             }
 
 /* TODO: end move all of this into the AppState.loadFromDevice() call */

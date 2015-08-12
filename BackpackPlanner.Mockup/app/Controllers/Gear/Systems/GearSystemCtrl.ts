@@ -9,6 +9,7 @@ module BackpackPlanner.Mockup.Controllers.Gear.Systems {
 
     export interface IGearSystemScope extends IAppScope {
         gearSystem: Models.Gear.GearSystem;
+        orderGearItemsBy: string;
 
         showAddGearItem: (event: MouseEvent) => void;
         showDeleteConfirm: (event: MouseEvent) => void;
@@ -21,6 +22,7 @@ module BackpackPlanner.Mockup.Controllers.Gear.Systems {
     export class GearSystemCtrl {
         constructor($scope: IGearSystemScope, $routeParams: IGearSystemRouteParams, $location: ng.ILocationService,
             $mdDialog: ng.material.IDialogService, $mdToast: ng.material.IToastService) {
+            $scope.orderGearItemsBy = "getName()";
         
             $scope.gearSystem = AppState.getInstance().getGearState().getGearSystemById($routeParams.gearSystemId);
             if(null == $scope.gearSystem) {

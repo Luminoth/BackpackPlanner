@@ -2736,6 +2736,30 @@
             isAbstract="false"
             concurrency="Sequential"
             isQuery="false" />
+          <operation
+            Id="b83da056-443d-442b-a35f-8dd49b2130ee"
+            name="DeleteAllGearItems"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="4aa7ef2a-31f4-45f6-bb3f-60637f6ba60b"
+            name="DeleteAllGearSystems"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="7db9c267-191e-45a6-b4cf-9971b765f1b4"
+            name="DeleteAllGearCollections"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -2790,6 +2814,14 @@
           <operation
             Id="60ed811e-749b-426c-b6d3-f2463dc9fd8c"
             name="SaveToDevice"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="d1d9073a-9605-4f7f-baa9-479a31a0c0f5"
+            name="DeleteAllMeals"
             isLeaf="false"
             isStatic="false"
             isAbstract="false"
@@ -2879,6 +2911,22 @@
           <operation
             Id="9d4ffa54-d9b5-42b2-995d-eb5319127bf9"
             name="SaveToDevice"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="b8261943-dc34-433f-a3b3-cbfecf0186a6"
+            name="DeleteAllTripItineraries"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="04b09af7-7e0a-4e79-8c41-2fd263ee068e"
+            name="DeleteAllTripPlans"
             isLeaf="false"
             isStatic="false"
             isAbstract="false"

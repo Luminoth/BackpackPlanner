@@ -1401,6 +1401,15 @@
           <operation Id="048a2de8-c9dd-4569-82fe-7d67e8b74b22" name="SaveToDevice" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="e6d55142-52d9-4f82-8a56-9b94af3c3474" />
           </operation>
+          <operation Id="cecb27e3-c746-495d-b5dd-d1714eea251d" name="DeleteAllGearItems" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="b83da056-443d-442b-a35f-8dd49b2130ee" />
+          </operation>
+          <operation Id="ab793a57-e06e-4f0e-b65a-68327015c8c7" name="DeleteAllGearSystems" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="4aa7ef2a-31f4-45f6-bb3f-60637f6ba60b" />
+          </operation>
+          <operation Id="c43a7857-26f0-4aa9-a79b-45191dd70f77" name="DeleteAllGearCollections" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="7db9c267-191e-45a6-b4cf-9971b765f1b4" />
+          </operation>
         </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
@@ -1431,6 +1440,9 @@
           </operation>
           <operation Id="ecc3e2c9-1e61-4ae0-b400-e810abe3340c" name="SaveToDevice" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="60ed811e-749b-426c-b6d3-f2463dc9fd8c" />
+          </operation>
+          <operation Id="a1404289-e014-477a-8ea9-636e762e61e9" name="DeleteAllMeals" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="d1d9073a-9605-4f7f-baa9-479a31a0c0f5" />
           </operation>
         </ownedOperationsInternal>
       </class>
@@ -1478,6 +1490,12 @@
           </operation>
           <operation Id="e518ed95-1586-4785-a0f7-4e48dda2dc4c" name="SaveToDevice" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="9d4ffa54-d9b5-42b2-995d-eb5319127bf9" />
+          </operation>
+          <operation Id="c936e165-52c8-4a15-b365-52eee304cdbf" name="DeleteAllTripItineraries" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="b8261943-dc34-433f-a3b3-cbfecf0186a6" />
+          </operation>
+          <operation Id="f36e6854-2226-4903-8dd5-ca843f3bb6e9" name="DeleteAllTripPlans" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="04b09af7-7e0a-4e79-8c41-2fd263ee068e" />
           </operation>
         </ownedOperationsInternal>
       </class>
