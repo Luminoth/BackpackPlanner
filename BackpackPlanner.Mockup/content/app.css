@@ -50,3 +50,9 @@ ng-md-icon {
 
 .mockup-card-content {
   background-color: #668000; }
+
+md-radio-button {
+  white-space: nowrap; }
+
+label {
+  white-space: nowrap; }

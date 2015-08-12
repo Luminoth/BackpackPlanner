@@ -56,7 +56,7 @@ module BackpackPlanner.Mockup.Models.Gear {
         public getGearSystemCount() {
             let count = 0;
             for(let i=0; i<this.GearSystems.length; ++i) {
-                const gearSystemEntry = this.GearItems[i];
+                const gearSystemEntry = this.GearSystems[i];
                 count += gearSystemEntry.Count;
             }
             return count;

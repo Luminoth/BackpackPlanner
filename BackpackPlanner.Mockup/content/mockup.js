@@ -156,7 +156,7 @@ var BackpackPlanner;
                     GearCollection.prototype.getGearSystemCount = function () {
                         var count = 0;
                         for (var i = 0; i < this.GearSystems.length; ++i) {
-                            var gearSystemEntry = this.GearItems[i];
+                            var gearSystemEntry = this.GearSystems[i];
                             count += gearSystemEntry.Count;
                         }
                         return count;
