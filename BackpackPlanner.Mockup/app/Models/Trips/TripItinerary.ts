@@ -3,6 +3,7 @@
 //<reference path="../../Resources/Trips/TripItineraryResource.ts"/>
 
 module BackpackPlanner.Mockup.Models.Trips {
+    import GearItemEntry = BackpackPlanner.Mockup.Models.Gear.GearItemEntry;
     "use strict";
 
     export interface IRouteDescription {
@@ -13,6 +14,11 @@ module BackpackPlanner.Mockup.Models.Trips {
     export class RouteDescription implements IRouteDescription {
         public Id = -1;
         public Description = "";
+
+        constructor(id: number, description: string) {
+            this.Id = id;
+            this.Description = description;
+        }
     }
 
     export interface IPointOfInterest {
@@ -25,6 +31,12 @@ module BackpackPlanner.Mockup.Models.Trips {
         public Id = -1;
         public Name = "";
         public GpsCoordinate = "";
+
+        constructor(id: number, name: string, gpsCoordinate: string) {
+            this.Id = id;
+            this.Name = name;
+            this.GpsCoordinate = gpsCoordinate;
+        }
     }
 
     export interface ITripItinerary {
@@ -51,7 +63,15 @@ module BackpackPlanner.Mockup.Models.Trips {
             this.Name = tripItineraryResource.Name;
             this.Note = tripItineraryResource.Note;
 
-            // TODO: descriptions and points of interest
+            for(let i=0; i<tripItineraryResource.RouteDescriptions.length; ++i) {
+                const routeDescription = tripItineraryResource.RouteDescriptions[i];
+                this.RouteDescriptions.push(new RouteDescription(routeDescription.Id, routeDescription.Description));
+            }
+
+            for(let i=0; i<tripItineraryResource.PointsOfInterest.length; ++i) {
+                const pointOfInterest = tripItineraryResource.PointsOfInterest[i];
+                this.PointsOfInterest.push(new PointOfInterest(pointOfInterest.Id, pointOfInterest.Name, pointOfInterest.GpsCoordinate));
+            }
 
             return $q.defer().promise;
         }

@@ -20,7 +20,10 @@
         <md-list>
             <md-list-item ng-repeat="gearSystemEntry in gearCollection.GearSystems | orderBy:orderGearSystemsBy" ng-init="gearSystem = getGearSystemById(gearSystemEntry.GearSystemId)">
                 <md-input-container flex>
-                    <label>{{ gearSystemEntry.getName() }}<br />{{ gearSystemEntry.getWeightInUnits() | number:2 }} total {{ getUnitsWeightString() }}s</label>
+                    <label>
+                        {{ gearSystemEntry.getName() }}<br />
+                        {{ gearSystemEntry.getWeightInUnits() | number:2 }} total {{ getUnitsWeightString() }}s<br />
+                    </label>
                     <input type="number" ng-model="gearSystemEntry.Count" min="1" max="1000000" name="count" />
                 </md-input-container>   
             </md-list-item>
@@ -46,7 +49,10 @@
         <md-list>
             <md-list-item ng-repeat="gearItemEntry in gearCollection.GearItems | orderBy:orderGearItemsBy" ng-init="gearItem = getGearItemById(gearItemEntry.GearItemId)">
                 <md-input-container flex>
-                    <label>{{ gearItemEntry.getName() }}<br />{{ gearItemEntry.getWeightInUnits() | number:2 }} total {{ getUnitsWeightString() }}s</label>
+                    <label>
+                        {{ gearItemEntry.getName() }}<br />
+                        {{ gearItemEntry.getWeightInUnits() | number:2 }} total {{ getUnitsWeightString() }}s<br />
+                    </label>
                     <input type="number" ng-model="gearItemEntry.Count" min="1" max="1000000" name="count" />
                 </md-input-container>
             </md-list-item>

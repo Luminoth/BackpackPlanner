@@ -3,11 +3,11 @@
 
 ///<reference path="../../../AppState.ts" />
 
-module BackpackPlanner.Mockup.Controllers.Gear.Collections {
+module BackpackPlanner.Mockup.Controllers.Trips.Plans {
     "use strict";
 
     export interface IAddGearSystemDlgScope extends ng.IScope {
-        gearCollection: Models.Gear.GearCollection;
+        tripPlan: Models.Trips.TripPlan;
         orderBy: string;
 
         getGearSystems: () => Models.Gear.GearSystem[];
@@ -17,8 +17,8 @@ module BackpackPlanner.Mockup.Controllers.Gear.Collections {
     }
 
     export class AddGearSystemDlgCtrl {
-        constructor($scope: IAddGearSystemDlgScope, $mdDialog: ng.material.IDialogService, gearCollection: Models.Gear.GearCollection) {
-            $scope.gearCollection = gearCollection;
+        constructor($scope: IAddGearSystemDlgScope, $mdDialog: ng.material.IDialogService, tripPlan: Models.Trips.TripPlan) {
+            $scope.tripPlan = tripPlan;
             $scope.orderBy = "Name";
 
             $scope.getGearSystems = () => {
@@ -30,14 +30,14 @@ module BackpackPlanner.Mockup.Controllers.Gear.Collections {
             };
 
             $scope.isSelected = (gearSystem) => {
-                return $scope.gearCollection.containsGearSystem(gearSystem);
+                return $scope.tripPlan.containsGearSystem(gearSystem);
             }
 
             $scope.toggle = (gearSystem) => {
-                if(!$scope.gearCollection.containsGearSystem(gearSystem)) {
-                    $scope.gearCollection.addGearSystem(gearSystem);
+                if(!$scope.tripPlan.containsGearSystem(gearSystem)) {
+                    $scope.tripPlan.addGearSystem(gearSystem);
                 } else {
-                    $scope.gearCollection.removeGearSystem(gearSystem);
+                    $scope.tripPlan.removeGearSystem(gearSystem);
                 } 
             };
         }

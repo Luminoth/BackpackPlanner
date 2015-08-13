@@ -7,6 +7,122 @@
             <div ng-message="required">The trip plan name is required</div>
         </div>
     </md-input-container>
+    <label>Gear Collections</label>
+    <p ng-show="tripPlan.GearCollections.length < 1">You have no gear collections in this plan! Try adding one!</p>
+    <div layout="column" ng-show="tripPlan.GearCollections.length > 0">
+        <md-input-container>
+            <md-radio-group ng-model="orderGearCollectionsBy" layout="row">
+                <md-radio-button value="getName()">Name</md-radio-button>
+                <md-radio-button value="-Count">Count</md-radio-button>
+                <md-radio-button value="-getWeightInUnits()">Total Weight</md-radio-button>
+            </md-radio-group>
+        </md-input-container>
+        <md-list>
+            <md-list-item ng-repeat="gearCollectionEntry in tripPlan.GearCollections | orderBy:orderGearCollectionsBy" ng-init="gearCollection = getGearCollectionById(gearCollectionEntry.GearCollectionId)">
+                <md-input-container flex>
+                    <label>
+                        {{ gearCollectionEntry.getName() }}<br />
+                        {{ gearCollectionEntry.getWeightInUnits() | number:2 }} total {{ getUnitsWeightString() }}s<br />
+                    </label>
+                    <input type="number" ng-model="gearCollectionEntry.Count" min="1" max="1000000" name="count" />
+                </md-input-container>                
+            </md-list-item>
+        </md-list>
+    </div>
+    <div layout="row">
+        <span flex></span>
+        <md-button class="md-raised md-primary mockup-button" ng-click="showAddGearCollection($event)">
+            Add Gear Collections
+        </md-button>
+        <span flex></span>
+    </div>
+    <label>Gear Systems</label>
+    <p ng-show="tripPlan.GearSystems.length < 1">You have no gear systems in this plan! Try adding one!</p>
+    <div layout="column" ng-show="tripPlan.GearSystems.length > 0">
+        <md-input-container>
+            <md-radio-group ng-model="orderGearSystemsBy" layout="row">
+                <md-radio-button value="getName()">Name</md-radio-button>
+                <md-radio-button value="-Count">Count</md-radio-button>
+                <md-radio-button value="-getWeightInUnits()">Total Weight</md-radio-button>
+            </md-radio-group>
+        </md-input-container>
+        <md-list>
+            <md-list-item ng-repeat="gearSystemEntry in tripPlan.GearSystems | orderBy:orderGearSystemsBy" ng-init="gearSystem = getGearSystemById(gearSystemEntry.GearSystemId)">
+                <md-input-container flex>
+                    <label>
+                        {{ gearSystemEntry.getName() }}<br />
+                        {{ gearSystemEntry.getWeightInUnits() | number:2 }} total {{ getUnitsWeightString() }}s<br />
+                    </label>
+                    <input type="number" ng-model="gearSystemEntry.Count" min="1" max="1000000" name="count" />
+                </md-input-container>                
+            </md-list-item>
+        </md-list>
+    </div>
+    <div layout="row">
+        <span flex></span>
+        <md-button class="md-raised md-primary mockup-button" ng-click="showAddGearSystem($event)">
+            Add Gear Systems
+        </md-button>
+        <span flex></span>
+    </div>
+    <label>Gear Items</label>
+    <p ng-show="tripPlan.GearItems.length < 1">You have no gear items in this plan! Try adding one!</p>
+    <div layout="column" ng-show="tripPlan.GearItems.length > 0">
+        <md-input-container>
+            <md-radio-group ng-model="orderGearItemsBy" layout="row">
+                <md-radio-button value="getName()">Name</md-radio-button>
+                <md-radio-button value="-Count">Count</md-radio-button>
+                <md-radio-button value="-getWeightInUnits()">Total Weight</md-radio-button>
+            </md-radio-group>
+        </md-input-container>
+        <md-list>
+            <md-list-item ng-repeat="gearItemEntry in tripPlan.GearItems | orderBy:orderGearItemsBy" ng-init="gearItem = getGearItemById(gearItemEntry.GearItemId)">
+                <md-input-container flex>
+                    <label>
+                        {{ gearItemEntry.getName() }}<br />
+                        {{ gearItemEntry.getWeightInUnits() | number:2 }} total {{ getUnitsWeightString() }}s<br />
+                    </label>
+                    <input type="number" ng-model="gearItemEntry.Count" min="1" max="1000000" name="count" />
+                </md-input-container>
+            </md-list-item>
+        </md-list>
+    </div>
+    <div layout="row">
+        <span flex></span>
+        <md-button class="md-raised md-primary mockup-button" ng-click="showAddGearItem($event)">
+            Add Gear Items
+        </md-button>
+        <span flex></span>
+    </div>
+    <label>Meals</label>
+    <p ng-show="tripPlan.Meals.length < 1">You have no meals in this plan! Try adding one!</p>
+    <div layout="column" ng-show="tripPlan.Meals.length > 0">
+        <md-input-container>
+            <md-radio-group ng-model="orderMealsBy" layout="row">
+                <md-radio-button value="getName()">Name</md-radio-button>
+                <md-radio-button value="-Count">Count</md-radio-button>
+                <md-radio-button value="-getWeightInUnits()">Total Weight</md-radio-button>
+            </md-radio-group>
+        </md-input-container>
+        <md-list>
+            <md-list-item ng-repeat="mealEntry in tripPlan.Meals | orderBy:orderMealsBy" ng-init="meal = getMealById(mealEntry.MealId)">
+                <md-input-container flex>
+                    <label>
+                        {{ mealEntry.getName() }}<br />
+                        {{ mealEntry.getWeightInUnits() | number:2 }} total {{ getUnitsWeightString() }}s<br />
+                    </label>
+                    <input type="number" ng-model="mealEntry.Count" min="1" max="1000000" name="count" />
+                </md-input-container>
+            </md-list-item>
+        </md-list>
+    </div>
+    <div layout="row">
+        <span flex></span>
+        <md-button class="md-raised md-primary mockup-button" ng-click="showAddMeal($event)">
+            Add Meals
+        </md-button>
+        <span flex></span>
+    </div>
     <md-input-container>
         <label>Note</label>
         <textarea ng-model="tripPlan.Note" name="note"></textarea>

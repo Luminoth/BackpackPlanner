@@ -55,5 +55,20 @@
             }
         ],
         "Note": "Leave this junk in the car"
+    },
+    {
+        "Id": 4,
+        "Name": "Cook System",
+        "GearItems": [
+            {
+                "GearItemId": 11,
+                "Count": 1
+            },
+            {
+                "GearItemId": 12,
+                "Count": 1
+            }
+        ],
+        "Note": ""
     }
 ]

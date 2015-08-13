@@ -9,11 +9,11 @@ module BackpackPlanner.Mockup.Controllers.Gear.Collections {
 
     export interface IGearCollectionScope extends IAppScope {
         gearCollection: Models.Gear.GearCollection;
-        orderGearItemsBy: string;
         orderGearSystemsBy: string;
+        orderGearItemsBy: string;
 
-        showAddGearItem: (event: MouseEvent) => void;
         showAddGearSystem: (event: MouseEvent) => void;
+        showAddGearItem: (event: MouseEvent) => void;
         showDeleteConfirm: (event: MouseEvent) => void;
     }
 
@@ -24,8 +24,8 @@ module BackpackPlanner.Mockup.Controllers.Gear.Collections {
     export class GearCollectionCtrl {
         constructor($scope: IGearCollectionScope, $routeParams: IGearCollectionRouteParams, $location: ng.ILocationService,
             $mdDialog: ng.material.IDialogService, $mdToast: ng.material.IToastService) {
-            $scope.orderGearItemsBy = "getName()";
             $scope.orderGearSystemsBy = "getName()";
+            $scope.orderGearItemsBy = "getName()";
         
             $scope.gearCollection = AppState.getInstance().getGearState().getGearCollectionById($routeParams.gearCollectionId);
             if(null == $scope.gearCollection) {
@@ -34,10 +34,10 @@ module BackpackPlanner.Mockup.Controllers.Gear.Collections {
                 return;
             }
 
-            $scope.showAddGearItem = (event) => {
+            $scope.showAddGearSystem = (event) => {
                 $mdDialog.show({
-                    controller: AddGearItemDlgCtrl,
-                    templateUrl: "content/partials/gear/collections/add-item.html",
+                    controller: AddGearSystemDlgCtrl,
+                    templateUrl: "content/partials/gear/collections/add-system.html",
                     parent: angular.element(document.body),
                     targetEvent: event,
                     locals: {
@@ -46,10 +46,10 @@ module BackpackPlanner.Mockup.Controllers.Gear.Collections {
                 });
             }
 
-            $scope.showAddGearSystem = (event) => {
+            $scope.showAddGearItem = (event) => {
                 $mdDialog.show({
-                    controller: AddGearSystemDlgCtrl,
-                    templateUrl: "content/partials/gear/collections/add-system.html",
+                    controller: AddGearItemDlgCtrl,
+                    templateUrl: "content/partials/gear/collections/add-item.html",
                     parent: angular.element(document.body),
                     targetEvent: event,
                     locals: {

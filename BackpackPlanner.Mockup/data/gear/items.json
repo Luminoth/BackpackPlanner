@@ -115,5 +115,44 @@
         "IsConsumable": false,
         "ConsumedPerDay": 1,
         "Note": ""
+    },
+    {
+        "Id": 10,
+        "Name": "Head Lamp",
+        "Url": "",
+        "Make": "Petzl",
+        "Model": "Tikka Plus 2",
+        "Carried": "Carried",
+        "WeightInGrams": 79.38,
+        "CostInUSDP": 2995,
+        "IsConsumable": false,
+        "ConsumedPerDay": 1,
+        "Note": ""
+    },
+    {
+        "Id": 11,
+        "Name": "Alcohol Stove",
+        "Url": "http://www.woodgaz-stove.com/starlyte-burner-with-lid.php",
+        "Make": "Zelph's Stoveworks",
+        "Model": "StarLyte",
+        "Carried": "Carried",
+        "WeightInGrams": 19.84,
+        "CostInUSDP": 1300,
+        "IsConsumable": false,
+        "ConsumedPerDay": 1,
+        "Note": ""
+    },
+    {
+        "Id": 12,
+        "Name": "Wind Screen",
+        "Url": "http://www.traildesigns.com/stoves/caldera-cone-system",
+        "Make": "Trail Designs",
+        "Model": "Caldera Cone System",
+        "Carried": "Carried",
+        "WeightInGrams": 141.74,
+        "CostInUSDP": 3495,
+        "IsConsumable": false,
+        "ConsumedPerDay": 1,
+        "Note": ""
     }
 ]

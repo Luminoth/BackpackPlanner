@@ -5,10 +5,25 @@
         "StartDate": "06-20-2015",
         "EndDate": "06-27-2015",
         "TripItineraryId": 1,
-        "GearCollections": [],
+        "GearCollections": [
+            {
+                "GearCollectionId": 1,
+                "Count": 1
+            }
+        ],
         "GearSystems": [],
-        "GearItems": [],
-        "Meals": [],
+        "GearItems": [
+            {
+                "GearItemId": 9,
+                "Count": 1
+            }
+        ],
+        "Meals": [
+            {
+                "MealId": 1,
+                "Count": 1
+            }
+        ],
         "Note": "Never again..."
     }
 ]

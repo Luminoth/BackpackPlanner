@@ -1,0 +1,23 @@
+<md-dialog ng-cloak>
+    <md-toolbar layout="row">
+        <div class="md-toolbar-tools" layout="row">
+            <h2>Add Gear Systems</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="close()">
+                <ng-md-icon icon="close"></ng-md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <form name="addGearSystemForm">
+    <div layout="column" layout-padding flex ng-cloak>
+        <md-input-container md-no-float flex>
+            <input type="text" ng-model="filter.Name" name="filter" placeholder="Filter" />
+        </md-input-container>
+        <md-dialog-content layout="column">
+            <md-checkbox ng-repeat="gearSystem in getGearSystems() | filter:filter | orderBy:orderBy" ng-checked="isSelected(gearSystem)" ng-click="toggle(gearSystem)">
+                <span style="white-space: nowrap;">{{ gearSystem.Name }}</span>
+            </md-checkbox>
+        </md-dialog-content>
+    </div>
+    </form>
+</md-dialog>

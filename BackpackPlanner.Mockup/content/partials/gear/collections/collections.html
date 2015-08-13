@@ -34,7 +34,10 @@
             <md-card class="mockup-card" flex>
                 <md-card-content class="mockup-card-content">
                     <h2 class="md-title">{{ gearCollection.Name }}</h2>
-                    <p layout-padding>{{ gearCollection.getGearSystemCount() }} system(s)<br />{{ gearCollection.getGearItemCount() }} item(s) ({{ gearCollection.getTotalGearItemCount() }} total)</p>
+                    <p layout-padding>
+                        {{ gearCollection.getGearSystemCount() }} system(s)<br />
+                        {{ gearCollection.getGearItemCount() }} item(s) ({{ gearCollection.getTotalGearItemCount() }} total)<br />
+                    </p>
                 </md-card-content>
                 <div layout="row" layout-sm="column">
                     <p layout-padding>Weight: {{ gearCollection.getWeightInUnits() | number:2 }} {{ getUnitsWeightString() }}s</p>

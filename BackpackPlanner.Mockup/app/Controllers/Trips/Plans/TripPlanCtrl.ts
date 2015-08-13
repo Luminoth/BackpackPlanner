@@ -9,7 +9,15 @@ module BackpackPlanner.Mockup.Controllers.Trips.Plans {
 
     export interface ITripPlanScope extends IAppScope {
         tripPlan: Models.Trips.TripPlan;
+        orderGearCollectionsBy: string;
+        orderGearSystemsBy: string;
+        orderGearItemsBy: string;
+        orderMealsBy: string;
 
+        showAddGearCollection: (event: MouseEvent) => void;
+        showAddGearSystem: (event: MouseEvent) => void;
+        showAddGearItem: (event: MouseEvent) => void;
+        showAddMeal: (event: MouseEvent) => void;
         showDeleteConfirm: (event: MouseEvent) => void;
     }
 
@@ -20,12 +28,64 @@ module BackpackPlanner.Mockup.Controllers.Trips.Plans {
     export class TripPlanCtrl {
         constructor($scope: ITripPlanScope, $routeParams: ITripPlanParams, $location: ng.ILocationService,
             $mdDialog: ng.material.IDialogService, $mdToast: ng.material.IToastService) {
+            $scope.orderGearCollectionsBy = "getName()";
+            $scope.orderGearSystemsBy = "getName()";
+            $scope.orderGearItemsBy = "getName()";
+            $scope.orderMealsBy = "getName()";
         
             $scope.tripPlan = AppState.getInstance().getTripState().getTripPlanById($routeParams.tripPlanId);
             if(null == $scope.tripPlan) {
                 alert("The trip plan does not exist!");
                 $location.path("/trips/plans");
                 return;
+            }
+
+            $scope.showAddGearCollection = (event) => {
+                $mdDialog.show({
+                    controller: AddGearCollectionDlgCtrl,
+                    templateUrl: "content/partials/trips/plans/add-collection.html",
+                    parent: angular.element(document.body),
+                    targetEvent: event,
+                    locals: {
+                        tripPlan: $scope.tripPlan
+                    }
+                });
+            }
+
+            $scope.showAddGearSystem = (event) => {
+                $mdDialog.show({
+                    controller: AddGearSystemDlgCtrl,
+                    templateUrl: "content/partials/trips/plans/add-system.html",
+                    parent: angular.element(document.body),
+                    targetEvent: event,
+                    locals: {
+                        tripPlan: $scope.tripPlan
+                    }
+                });
+            }
+
+            $scope.showAddGearItem = (event) => {
+                $mdDialog.show({
+                    controller: AddGearItemDlgCtrl,
+                    templateUrl: "content/partials/trips/plans/add-item.html",
+                    parent: angular.element(document.body),
+                    targetEvent: event,
+                    locals: {
+                        tripPlan: $scope.tripPlan
+                    }
+                });
+            }
+
+            $scope.showAddMeal = (event) => {
+                $mdDialog.show({
+                    controller: AddMealDlgCtrl,
+                    templateUrl: "content/partials/trips/plans/add-meal.html",
+                    parent: angular.element(document.body),
+                    targetEvent: event,
+                    locals: {
+                        tripPlan: $scope.tripPlan
+                    }
+                });
             }
 
             $scope.showDeleteConfirm = (event) => {

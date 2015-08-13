@@ -113,6 +113,10 @@
     <TypeScriptCompile Include="app\Controllers\Trips\Itineraries\TripItinerariesCtrl.ts" />
     <TypeScriptCompile Include="app\Controllers\Trips\Itineraries\TripItineraryCtrl.ts" />
     <TypeScriptCompile Include="app\Controllers\Trips\Itineraries\WhatIsTripItineraryDlgCtrl.ts" />
+    <TypeScriptCompile Include="app\Controllers\Trips\Plans\AddGearCollectionDlgCtrl.ts" />
+    <TypeScriptCompile Include="app\Controllers\Trips\Plans\AddGearItemDlgCtrl.ts" />
+    <TypeScriptCompile Include="app\Controllers\Trips\Plans\AddGearSystemDlgCtrl.ts" />
+    <TypeScriptCompile Include="app\Controllers\Trips\Plans\AddMealDlgCtrl.ts" />
     <TypeScriptCompile Include="app\Controllers\Trips\Plans\AddTripPlanCtrl.ts" />
     <TypeScriptCompile Include="app\Controllers\Trips\Plans\TripPlanCtrl.ts" />
     <TypeScriptCompile Include="app\Controllers\Trips\Plans\TripPlansCtrl.ts" />

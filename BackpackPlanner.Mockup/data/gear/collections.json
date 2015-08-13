@@ -1,9 +1,27 @@
 ﻿[
     {
         "Id": 1,
-        "Name": "Test",
-        "GearSystems": [],
-        "GearItems": [],
+        "Name": "3 Season Hammock",
+        "GearSystems": [
+            {
+                "GearSystemId": 1,
+                "Count": 1
+            },
+            {
+                "GearSystemId": 4,
+                "Count": 1
+            }
+        ],
+        "GearItems": [
+            {
+                "GearItemId": 1,
+                "Count": 1
+            },
+            {
+                "GearItemId": 10,
+                "Count": 1
+            }
+        ],
         "Note": "Test Collection"
     }
 ]

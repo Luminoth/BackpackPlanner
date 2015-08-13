@@ -32,7 +32,9 @@
             <md-card class="mockup-card" flex>
                 <md-card-content class="mockup-card-content">
                     <h2 class="md-title">{{ gearItem.Name }}</h2>
-                    <p style="white-space: normal;" layout-padding>{{ gearItem.Make }} {{ gearItem.Model }}</p>
+                    <p style="white-space: normal;" layout-padding>
+                        {{ gearItem.Make }} {{ gearItem.Model }}<br />
+                    </p>
                 </md-card-content>
                 <div layout="row" layout-sm="column">
                     <p layout-padding ng-if="'NotCarried' != gearItem.Carried">Weight: {{ gearItem.weightInUnits() | number:2 }} {{ getUnitsWeightString() }}s</p>
