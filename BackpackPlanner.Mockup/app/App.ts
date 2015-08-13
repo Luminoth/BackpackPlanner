@@ -64,7 +64,9 @@ module BackpackPlanner.Mockup {
     mockupApp.factory("GearItemService", ["$resource", Services.Gear.gearItemServiceFactory]);
     mockupApp.factory("GearSystemService", ["$resource", Services.Gear.gearSystemServiceFactory]);
     mockupApp.factory("GearCollectionService", ["$resource", Services.Gear.gearCollectionServiceFactory]);
+    mockupApp.factory("MealService", ["$resource", Services.Meals.mealServiceFactory]);
     mockupApp.factory("TripItineraryService", ["$resource", Services.Trips.tripItineraryServiceFactory]);
+    mockupApp.factory("TripPlanService", ["$resource", Services.Trips.tripPlanServiceFactory]);
 
     // inject controllers
     mockupApp.controller("AppCtrl", Controllers.AppCtrl);
