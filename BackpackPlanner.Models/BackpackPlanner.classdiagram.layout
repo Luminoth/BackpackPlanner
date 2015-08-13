@@ -70,10 +70,10 @@
         <OperationElementListCompartment Id="7b3abf5e-fb08-490a-bb83-ea5abc13c490" absoluteBounds="5.64, 15.456640602648259, 3.0949999999999998, 1.0019530927141507" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <enumerationShape Id="92dabae3-b2e5-4f05-a4ed-1842f4837e84" absoluteBounds="5.625, 17.875, 1.5, 1.4919530927141498" hideQualifiedName="false" increaseHeight="0" customColor="161, 150, 103">
+    <enumerationShape Id="92dabae3-b2e5-4f05-a4ed-1842f4837e84" absoluteBounds="5.625, 17.875, 1.5, 1.652109337747099" hideQualifiedName="false" increaseHeight="0" customColor="161, 150, 103">
       <enumerationMoniker Id="2cc32a3e-487e-46cc-a9f5-242ff87ad798" LastKnownName="MealTime" />
       <nestedChildShapes>
-        <LiteralElementListCompartment Id="bba85d10-4417-472d-9b4c-bc8a02bbe573" absoluteBounds="5.6400000000000006, 18.265, 1.4700000000000002, 1.0019530927141507" name="LiteralsCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <LiteralElementListCompartment Id="bba85d10-4417-472d-9b4c-bc8a02bbe573" absoluteBounds="5.6400000000000006, 18.265, 1.4700000000000002, 1.162109337747097" name="LiteralsCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </enumerationShape>
     <classShape Id="713cc342-7605-400a-947c-c98740bcb015" absoluteBounds="0.5, 17.625, 4.75, 3.1445311655600889" hideQualifiedName="false" increaseHeight="0" customColor="181, 193, 223">

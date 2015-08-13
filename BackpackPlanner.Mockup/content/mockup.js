@@ -9,21 +9,6 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
-///<reference path="../../Models/Gear/GearItem.ts" />
-var BackpackPlanner;
-(function (BackpackPlanner) {
-    var Mockup;
-    (function (Mockup) {
-        var Resources;
-        (function (Resources) {
-            var Gear;
-            (function (Gear) {
-                "use strict";
-            })(Gear = Resources.Gear || (Resources.Gear = {}));
-        })(Resources = Mockup.Resources || (Mockup.Resources = {}));
-    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
-})(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
 ///<reference path="../../Models/Personal/UserInformation.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
@@ -598,10 +583,10 @@ var BackpackPlanner;
                         this.Meal = "Other";
                         this.ServingCount = 0;
                         this.WeightInGrams = 0;
+                        this.CostInUSDP = 0;
                         this.Calories = 0;
                         this.ProteinInGrams = 0;
                         this.FiberInGrams = 0;
-                        this.CostInUSDP = 0;
                         this.Note = "";
                         if (mealResource) {
                             this.Id = mealResource.Id;
@@ -610,10 +595,10 @@ var BackpackPlanner;
                             this.Meal = mealResource.Meal;
                             this.ServingCount = mealResource.ServingCount;
                             this.WeightInGrams = mealResource.WeightInGrams;
+                            this.CostInUSDP = mealResource.CostInUSDP;
                             this.Calories = mealResource.Calories;
                             this.ProteinInGrams = mealResource.ProteinInGrams;
                             this.FiberInGrams = mealResource.FiberInGrams;
-                            this.CostInUSDP = mealResource.CostInUSDP;
                             this.Note = mealResource.Note;
                         }
                     }
@@ -1515,6 +1500,21 @@ var BackpackPlanner;
         })(Models = Mockup.Models || (Mockup.Models = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
+///<reference path="../../Models/Gear/GearItem.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Resources;
+        (function (Resources) {
+            var Gear;
+            (function (Gear) {
+                "use strict";
+            })(Gear = Resources.Gear || (Resources.Gear = {}));
+        })(Resources = Mockup.Resources || (Mockup.Resources = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="Models/AppSettings.ts"/>
 var BackpackPlanner;
 (function (BackpackPlanner) {
@@ -2319,6 +2319,116 @@ var BackpackPlanner;
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../scripts/typings/angularjs/angular-route.d.ts" />
+///<reference path="../AppCtrl.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Controllers;
+        (function (Controllers) {
+            var Meals;
+            (function (Meals) {
+                "use strict";
+                var MealCtrl = (function () {
+                    function MealCtrl($scope, $routeParams, $location, $mdDialog, $mdToast) {
+                        $scope.meal = Mockup.AppState.getInstance().getMealState().getMealById($routeParams.mealId);
+                        if (null == $scope.meal) {
+                            alert("The meal does not exist!");
+                            $location.path("/meals");
+                            return;
+                        }
+                        $scope.showDeleteConfirm = function (event) {
+                            var confirm = $mdDialog.confirm()
+                                .parent(angular.element(document.body))
+                                .title("Delete Meal")
+                                .content("Are you sure you wish to delete this meal?")
+                                .ok("Yes")
+                                .cancel("No")
+                                .targetEvent(event);
+                            var receipt = $mdDialog.alert()
+                                .parent(angular.element(document.body))
+                                .title("Meal deleted!")
+                                .content("The meal has been deleted.")
+                                .ok("OK")
+                                .targetEvent(event);
+                            var deleteToast = $mdToast.simple()
+                                .content("Deleted meal: " + $scope.meal.Name)
+                                .action("Undo")
+                                .position("bottom left");
+                            var undoDeleteToast = $mdToast.simple()
+                                .content("Restored meal: " + $scope.meal.Name)
+                                .action("OK")
+                                .position("bottom left");
+                            $mdDialog.show(confirm).then(function () {
+                                $mdDialog.show(receipt).then(function () {
+                                    if (!Mockup.AppState.getInstance().getMealState().deleteMeal($scope.meal)) {
+                                        alert("Couldn't find the meal to delete!");
+                                        return;
+                                    }
+                                    $location.path("/meals");
+                                    $mdToast.show(deleteToast).then(function () {
+                                        // TODO: this does *not* restore the meal to its containers
+                                        // and it should probably do so... but how?
+                                        Mockup.AppState.getInstance().getMealState().addMeal($scope.meal);
+                                        $mdToast.show(undoDeleteToast);
+                                        $location.path("/meals/" + $scope.meal.Id);
+                                    });
+                                });
+                            });
+                        };
+                    }
+                    return MealCtrl;
+                })();
+                Meals.MealCtrl = MealCtrl;
+                MealCtrl.$inject = ["$scope", "$routeParams", "$location", "$mdDialog", "$mdToast"];
+            })(Meals = Controllers.Meals || (Controllers.Meals = {}));
+        })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../AppCtrl.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Controllers;
+        (function (Controllers) {
+            var Meals;
+            (function (Meals) {
+                "use strict";
+                var AddMealCtrl = (function () {
+                    function AddMealCtrl($scope, $location, $mdToast) {
+                        $scope.meal = new Mockup.Models.Meals.Meal();
+                        $scope.addMeal = function (meal) {
+                            $scope.meal = angular.copy(meal);
+                            $scope.meal.Id = Mockup.AppState.getInstance().getMealState().addMeal($scope.meal);
+                            var addToast = $mdToast.simple()
+                                .content("Added meal: " + $scope.meal.Name)
+                                .action("Undo")
+                                .position("bottom left");
+                            var undoAddToast = $mdToast.simple()
+                                .content("Removed meal: " + $scope.meal.Name)
+                                .action("OK")
+                                .position("bottom left");
+                            $location.path("/meals");
+                            $mdToast.show(addToast).then(function () {
+                                Mockup.AppState.getInstance().getMealState().deleteMeal($scope.meal);
+                                $mdToast.show(undoAddToast);
+                            });
+                        };
+                    }
+                    return AddMealCtrl;
+                })();
+                Meals.AddMealCtrl = AddMealCtrl;
+                AddMealCtrl.$inject = ["$scope", "$location", "$mdToast"];
+            })(Meals = Controllers.Meals || (Controllers.Meals = {}));
+        })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
 ///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
 ///<reference path="../../AppCtrl.ts" />
@@ -2529,6 +2639,16 @@ var BackpackPlanner;
                     controller: "MealsCtrl",
                     title: "Meals"
                 })
+                    .when("/meals/add", {
+                    templateUrl: "content/partials/meals/add.html",
+                    controller: "AddMealCtrl",
+                    title: "Add a Meal"
+                })
+                    .when("/meals/:mealId", {
+                    templateUrl: "content/partials/meals/meal.html",
+                    controller: "MealCtrl",
+                    title: "Meal"
+                })
                     .when("/trips/itineraries", {
                     templateUrl: "content/partials/trips/itineraries/itineraries.html",
                     controller: "TripItinerariesCtrl",
@@ -2621,14 +2741,14 @@ var BackpackPlanner;
 ///<reference path="Controllers/Gear/Systems/GearSystemCtrl.ts" />
 ///<reference path="Controllers/Gear/Systems/GearSystemsCtrl.ts" />
 ///<reference path="Controllers/Meals/MealsCtrl.ts" />
-/*///<reference path="Controllers/Meals/MealCtrl.ts" />
-///<reference path="Controllers/Meals/AddMealCtrl.ts" />*/
+///<reference path="Controllers/Meals/MealCtrl.ts" />
+///<reference path="Controllers/Meals/AddMealCtrl.ts" />
 ///<reference path="Controllers/Trips/Itineraries/TripItinerariesCtrl.ts" />
-/*///<reference path="Controllers/Trips/Itineraries/TripItineraryCtrl.ts" />
-///<reference path="Controllers/Trips/Itineraries/AddTripItineraryCtrl.ts" />*/
+/////<reference path="Controllers/Trips/Itineraries/TripItineraryCtrl.ts" />
+/////<reference path="Controllers/Trips/Itineraries/AddTripItineraryCtrl.ts" />
 ///<reference path="Controllers/Trips/Plans/TripPlansCtrl.ts" />
-/*///<reference path="Controllers/Trips/Plans/TripPlanCtrl.ts" />
-///<reference path="Controllers/Trips/Plans/AddTripPlanCtrl.ts" />*/
+/////<reference path="Controllers/Trips/Plans/TripPlanCtrl.ts" />
+/////<reference path="Controllers/Trips/Plans/AddTripPlanCtrl.ts" />
 ///<reference path="Controllers/Personal/UserInformationCtrl.ts" />
 ///<reference path="Controllers/AppCtrl.ts" />
 ///<reference path="Controllers/AppSettingsCtrl.ts" />
@@ -2681,11 +2801,11 @@ var BackpackPlanner;
         mockupApp.controller("GearSystemsCtrl", Mockup.Controllers.Gear.Systems.GearSystemsCtrl);
         mockupApp.controller("AddGearSystemCtrl", Mockup.Controllers.Gear.Systems.AddGearSystemCtrl);
         mockupApp.controller("MealsCtrl", Mockup.Controllers.Meals.MealsCtrl);
-        /*mockupApp.controller("MealCtrl", Controllers.Meals.MealCtrl);
-        mockupApp.controller("AddMealCtrl", Controllers.Meals.AddMealCtrl);*/
+        mockupApp.controller("MealCtrl", Mockup.Controllers.Meals.MealCtrl);
+        mockupApp.controller("AddMealCtrl", Mockup.Controllers.Meals.AddMealCtrl);
         mockupApp.controller("TripItinerariesCtrl", Mockup.Controllers.Trips.Itineraries.TripItinerariesCtrl);
-        /*mockupApp.controller("TripItineraryCtrl", Controllers.Trips.Itineraries.TripItineraryCtrl);
-        mockupApp.controller("AddTripItineraryCtrl", Controllers.Trips.Itineraries.AddTripItineraryCtrl);*/
+        //mockupApp.controller("TripItineraryCtrl", Controllers.Trips.Itineraries.TripItineraryCtrl);
+        //mockupApp.controller("AddTripItineraryCtrl", Controllers.Trips.Itineraries.AddTripItineraryCtrl);
         mockupApp.controller("TripPlansCtrl", Mockup.Controllers.Trips.Plans.TripPlansCtrl);
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));

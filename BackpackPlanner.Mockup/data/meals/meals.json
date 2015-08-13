@@ -1,2 +1,15 @@
 [
+    {
+        "Id": 1,
+        "Name": "Cheesy Chicken Dinner",
+        "Url": "",
+        "Meal": "Dinner",
+        "ServingCount": 1,
+        "WeightInGrams": 300,
+        "CostInUSDP": 10,
+        "Calories": 300,
+        "ProteinInGrams": 20,
+        "FiberInGrams": 5,
+        "Note": "Cheesy!"
+    }
 ]

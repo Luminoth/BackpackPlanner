@@ -48,6 +48,8 @@
     <Content Include="content\partials\gear\items\items.html" />
     <Content Include="content\partials\gear\systems\systems.html" />
     <Content Include="content\partials\main.html" />
+    <Content Include="content\partials\meals\add.html" />
+    <Content Include="content\partials\meals\meal.html" />
     <Content Include="content\partials\meals\meals.html" />
     <Content Include="content\partials\meals\what.html" />
     <Content Include="content\partials\personal\personal.html" />
@@ -98,6 +100,8 @@
     <TypeScriptCompile Include="app\Controllers\Gear\Systems\GearSystemCtrl.ts" />
     <TypeScriptCompile Include="app\Controllers\Gear\Systems\GearSystemsCtrl.ts" />
     <TypeScriptCompile Include="app\Controllers\Gear\Systems\WhatIsGearSystemDlgCtrl.ts" />
+    <TypeScriptCompile Include="app\Controllers\Meals\AddMealCtrl.ts" />
+    <TypeScriptCompile Include="app\Controllers\Meals\MealCtrl.ts" />
     <TypeScriptCompile Include="app\Controllers\Meals\MealsCtrl.ts" />
     <TypeScriptCompile Include="app\Controllers\Meals\WhatIsMealDlgCtrl.ts" />
     <TypeScriptCompile Include="app\Controllers\Personal\WhatIsPersonalDlgCtrl.ts" />

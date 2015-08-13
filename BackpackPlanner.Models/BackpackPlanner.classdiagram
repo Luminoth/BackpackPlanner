@@ -1203,7 +1203,7 @@
           <enumerationLiteral Id="15a7ce34-c331-40cc-b430-416b47e3bd8f" name="Breakfast">
             <elementDefinition Id="214a2b46-f570-406b-9ec0-5ce387b45a60" />
             <specification>
-              <literalInteger Id="bd4b0d5a-33ca-4762-bd41-af57cb32ded2" name="Integer" value="1">
+              <literalInteger Id="bd4b0d5a-33ca-4762-bd41-af57cb32ded2" name="Integer" value="2">
                 <elementDefinition Id="8ebb6709-79fa-4226-8393-cb47e939ef3d" />
               </literalInteger>
             </specification>
@@ -1211,7 +1211,7 @@
           <enumerationLiteral Id="d019f098-4afa-4615-ab8f-c8415d5f68b8" name="Lunch">
             <elementDefinition Id="beba04e2-0693-4493-855f-a0a756c12a2d" />
             <specification>
-              <literalInteger Id="ef12f2ed-8614-4e3b-b766-af66643d9b0d" name="Integer" value="2">
+              <literalInteger Id="ef12f2ed-8614-4e3b-b766-af66643d9b0d" name="Integer" value="3">
                 <elementDefinition Id="b76f1534-7be5-4bcc-86ad-f5185d6b97db" />
               </literalInteger>
             </specification>
@@ -1227,8 +1227,16 @@
           <enumerationLiteral Id="589ac1c7-0995-4a13-a169-9188ec5051fe" name="Snack">
             <elementDefinition Id="92364de9-676f-41ae-89f3-aa660e4f0a33" />
             <specification>
-              <literalInteger Id="b1ef4b9b-3b97-4707-a8ea-464a62e6546a" name="Integer" value="8">
+              <literalInteger Id="b1ef4b9b-3b97-4707-a8ea-464a62e6546a" name="Integer" value="5">
                 <elementDefinition Id="a992436c-cf3f-47dd-8d45-6538083dc3cd" />
+              </literalInteger>
+            </specification>
+          </enumerationLiteral>
+          <enumerationLiteral Id="52ff8fba-6188-4b91-8c9a-dc55e708d41f" name="Drink">
+            <elementDefinition Id="2fb86e36-6507-4b69-afd6-8c798253490f" />
+            <specification>
+              <literalInteger Id="019ceebb-1e65-44f0-bf2e-5a89c6535a3a" name="Integer" value="1">
+                <elementDefinition Id="44b841c4-ccd8-4732-8bb9-663ec8f37ca5" />
               </literalInteger>
             </specification>
           </enumerationLiteral>

@@ -12,10 +12,10 @@ module BackpackPlanner.Mockup.Models.Meals {
         Meal: string;
         ServingCount: number;
         WeightInGrams: number;
+        CostInUSDP: number;
         Calories: number;
         ProteinInGrams: number;
         FiberInGrams: number;
-        CostInUSDP: number;
         Note: string;
     }
 
@@ -26,10 +26,10 @@ module BackpackPlanner.Mockup.Models.Meals {
         public Meal = "Other";
         public ServingCount = 0;
         public WeightInGrams = 0;
+        public CostInUSDP = 0;
         public Calories = 0;
         public ProteinInGrams = 0;
         public FiberInGrams = 0;
-        public CostInUSDP = 0;
         public Note = "";
 
         constructor(mealResource?: Resources.Meals.IMealResource) {
@@ -40,10 +40,10 @@ module BackpackPlanner.Mockup.Models.Meals {
                 this.Meal = mealResource.Meal;
                 this.ServingCount = mealResource.ServingCount;
                 this.WeightInGrams = mealResource.WeightInGrams;
+                this.CostInUSDP = mealResource.CostInUSDP;
                 this.Calories = mealResource.Calories;
                 this.ProteinInGrams = mealResource.ProteinInGrams;
                 this.FiberInGrams = mealResource.FiberInGrams;
-                this.CostInUSDP = mealResource.CostInUSDP;
                 this.Note = mealResource.Note;
             }
         }

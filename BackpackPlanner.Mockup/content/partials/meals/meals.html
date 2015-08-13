@@ -22,6 +22,12 @@
                 <md-card-content class="mockup-card-content">
                     <h2 class="md-title">{{ meal.Name }}</h2>
                 </md-card-content>
+                <div layout="row" layout-sm="column">
+                    <p layout-padding>Meal: {{ meal.Meal }}</p>
+                    <p layout-padding>Weight: {{ meal.weightInUnits() | number:2 }} {{ getUnitsWeightString() }}s</p>
+                    <p layout-padding>Cost: {{ meal.costInCurrency() | currency }} ({{ meal.getCostPerUnitInCurrency() | currency }} per {{ getUnitsWeightString() }})</p>
+                    <p layout-padding>Calories: {{ meal.Calories }}</p>
+                </div>
             </md-card>
         </md-button>
         <div layout="row">
@@ -32,7 +38,7 @@
             <span flex></span>
         </div>
     </div>
-    <!--<md-button class="md-fab md-primary md-hue-1 mockup-add-button" href="#/meals/add">
+    <md-button class="md-fab md-primary md-hue-1 mockup-add-button" href="#/meals/add">
         <ng-md-icon icon="add" style="fill: white"></ng-md-icon>
-    </md-button>-->
+    </md-button>
 </div>

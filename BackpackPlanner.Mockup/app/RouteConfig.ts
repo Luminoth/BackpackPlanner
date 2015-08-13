@@ -70,7 +70,7 @@ module BackpackPlanner.Mockup {
                 controller: "MealsCtrl",
                 title: "Meals"
             })
-            /*.when("/meals/add", {
+            .when("/meals/add", {
                 templateUrl: "content/partials/meals/add.html",
                 controller: "AddMealCtrl",
                 title: "Add a Meal"
@@ -79,7 +79,7 @@ module BackpackPlanner.Mockup {
                 templateUrl: "content/partials/meals/meal.html",
                 controller: "MealCtrl",
                 title: "Meal"
-            })*/
+            })
 
             // trip itineraries
             .when("/trips/itineraries", {
@@ -91,8 +91,8 @@ module BackpackPlanner.Mockup {
                 templateUrl: "content/partials/trips/itineraries/add.html",
                 controller: "AddTripItineraryCtrl",
                 title: "Add a Trip Itinerary"
-            })
-            .when("/trips/itineraries/:tripItineraryId", {
+            })*/
+            /*.when("/trips/itineraries/:tripItineraryId", {
                 templateUrl: "content/partials/trips/itineraries/itinerary.html",
                 controller: "TripItineraryCtrl",
                 title: "Trip Itinerary"
@@ -108,8 +108,8 @@ module BackpackPlanner.Mockup {
                 templateUrl: "content/partials/trips/plans/add.html",
                 controller: "AddTripPlanCtrl",
                 title: "Add a Trip Plan"
-            })
-            .when("/trips/plans/:tripItineraryId", {
+            })*/
+            /*.when("/trips/plans/:tripItineraryId", {
                 templateUrl: "content/partials/trips/plans/plan.html",
                 controller: "TripPlanCtrl",
                 title: "Trip Plan"

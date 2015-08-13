@@ -1,0 +1,63 @@
+<form name="addMealForm">
+<div layout="column" layout-padding flex ng-cloak>
+    <md-input-container>
+        <label>Name</label>
+        <input type="text" ng-model="meal.Name" required name="name" />
+        <div ng-messages="addMealForm.name.$error">
+            <div ng-message="required">The meal name is required</div>
+        </div>
+    </md-input-container>
+    <md-input-container>
+        <label>Website</label>
+        <input type="url" ng-model="meal.Url" name="url" />
+    </md-input-container>
+    <md-radio-group ng-model="meal.Meal" layout="row" layout-sm="column">
+        <md-radio-button value="Breakfast">Breakfast</md-radio-button>
+        <md-radio-button value="Lunch">Lunch</md-radio-button>
+        <md-radio-button value="Dinner">Dinner</md-radio-button>
+        <md-radio-button value="Snack">Snack</md-radio-button>
+        <md-radio-button value="Drink">Drink</md-radio-button>
+        <md-radio-button value="Other">Other</md-radio-button>
+    </md-radio-group>
+    <div layout="row" layout-sm="column" flex>
+        <md-input-container flex>
+            <label>Servings</label>
+            <input type="number" ng-model="meal.ServingCount" min="0" max="100" name="servingCount" />
+        </md-input-container>
+        <md-input-container flex>
+            <label>Weight ({{ getUnitsWeightString() }}s)</label>
+            <input type="number" ng-model="meal.weightInUnits" ng-model-options="{ getterSetter: true, debounce: 500 }" min="0" max="1000000" name="weight" />
+        </md-input-container>
+        <md-input-container flex>
+            <label>Cost ({{ getCurrencyString() }})</label>
+            <input type="number" ng-model="meal.costInCurrency" ng-model-options="{ getterSetter: true, debounce: 500 }" min="0" max="1000000" name="cost" />
+        </md-input-container>
+    </div>
+    <div layout="row" layout-sm="column" flex>
+        <md-input-container flex>
+            <label>Calories</label>
+            <input type="number" ng-model="meal.Calories" min="0" max="1000000" name="calories" />
+        </md-input-container>
+        <md-input-container flex>
+            <label>Protein (grams)</label>
+            <input type="number" ng-model="meal.ProteinInGrams" min="0" max="1000000" name="protein" />
+        </md-input-container>
+        <md-input-container flex>
+            <label>Fiber (grams)</label>
+            <input type="number" ng-model="meal.FiberInGrams" min="0" max="1000000" name="fiber" />
+        </md-input-container>
+    </div>
+    <md-input-container>
+        <label>Note</label>
+        <textarea ng-model="meal.Note" name="note"></textarea>
+    </md-input-container>
+    <div flex></div>
+    <div layout="row">
+        <span flex></span>
+        <md-button type="submit" class="md-raised md-primary mockup-button" ng-click="addMeal(meal)" ng-disabled="addMealForm.$invalid">
+            Add Meal
+        </md-button>
+        <span flex></span>
+    </div>
+</div>
+</form>

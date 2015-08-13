@@ -2323,7 +2323,7 @@
               <literalInteger
                 Id="8ebb6709-79fa-4226-8393-cb47e939ef3d"
                 name="Integer"
-                value="1" />
+                value="2" />
             </specification>
           </enumerationLiteral>
           <enumerationLiteral
@@ -2333,7 +2333,7 @@
               <literalInteger
                 Id="b76f1534-7be5-4bcc-86ad-f5185d6b97db"
                 name="Integer"
-                value="2" />
+                value="3" />
             </specification>
           </enumerationLiteral>
           <enumerationLiteral
@@ -2353,7 +2353,17 @@
               <literalInteger
                 Id="a992436c-cf3f-47dd-8d45-6538083dc3cd"
                 name="Integer"
-                value="8" />
+                value="5" />
+            </specification>
+          </enumerationLiteral>
+          <enumerationLiteral
+            Id="2fb86e36-6507-4b69-afd6-8c798253490f"
+            name="Drink">
+            <specification>
+              <literalInteger
+                Id="44b841c4-ccd8-4732-8bb9-663ec8f37ca5"
+                name="Integer"
+                value="1" />
             </specification>
           </enumerationLiteral>
         </ownedLiterals>
