@@ -17,12 +17,12 @@
 ///<reference path="Controllers/Meals/AddMealCtrl.ts" />
 
 ///<reference path="Controllers/Trips/Itineraries/TripItinerariesCtrl.ts" />
-/////<reference path="Controllers/Trips/Itineraries/TripItineraryCtrl.ts" />
-/////<reference path="Controllers/Trips/Itineraries/AddTripItineraryCtrl.ts" />
+///<reference path="Controllers/Trips/Itineraries/TripItineraryCtrl.ts" />
+///<reference path="Controllers/Trips/Itineraries/AddTripItineraryCtrl.ts" />
 
 ///<reference path="Controllers/Trips/Plans/TripPlansCtrl.ts" />
-/////<reference path="Controllers/Trips/Plans/TripPlanCtrl.ts" />
-/////<reference path="Controllers/Trips/Plans/AddTripPlanCtrl.ts" />
+///<reference path="Controllers/Trips/Plans/TripPlanCtrl.ts" />
+///<reference path="Controllers/Trips/Plans/AddTripPlanCtrl.ts" />
 
 ///<reference path="Controllers/Personal/UserInformationCtrl.ts" />
 
@@ -91,10 +91,10 @@ module BackpackPlanner.Mockup {
     mockupApp.controller("AddMealCtrl", Controllers.Meals.AddMealCtrl);
 
     mockupApp.controller("TripItinerariesCtrl", Controllers.Trips.Itineraries.TripItinerariesCtrl);
-    //mockupApp.controller("TripItineraryCtrl", Controllers.Trips.Itineraries.TripItineraryCtrl);
-    //mockupApp.controller("AddTripItineraryCtrl", Controllers.Trips.Itineraries.AddTripItineraryCtrl);
+    mockupApp.controller("TripItineraryCtrl", Controllers.Trips.Itineraries.TripItineraryCtrl);
+    mockupApp.controller("AddTripItineraryCtrl", Controllers.Trips.Itineraries.AddTripItineraryCtrl);
 
     mockupApp.controller("TripPlansCtrl", Controllers.Trips.Plans.TripPlansCtrl);
-    //mockupApp.controller("TripPlanCtrl", Controllers.Trips.Plans.TripPlanCtrl);
-    //mockupApp.controller("AddTripPlanCtrl", Controllers.Trips.Plans.AddTripPlanCtrl);
+    mockupApp.controller("TripPlanCtrl", Controllers.Trips.Plans.TripPlanCtrl);
+    mockupApp.controller("AddTripPlanCtrl", Controllers.Trips.Plans.AddTripPlanCtrl);
 }

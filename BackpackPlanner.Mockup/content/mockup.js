@@ -858,12 +858,12 @@ var BackpackPlanner;
                         this.Name = "";
                         this.StartDate = "";
                         this.EndDate = "";
+                        this.TripItineraryId = -1;
                         this.Note = "";
                         this.GearCollections = [];
                         this.GearSystems = [];
                         this.GearItems = [];
                         this.Meals = [];
-                        this.TripItinerary = new Trips.TripItinerary();
                         this.StartDateAsDate = new Date();
                         this.EndDateAsDate = new Date();
                     }
@@ -873,8 +873,9 @@ var BackpackPlanner;
                         this.Name = tripPlanResource.Name;
                         this.StartDate = tripPlanResource.StartDate;
                         this.EndDate = tripPlanResource.EndDate;
+                        this.TripItineraryId = tripPlanResource.TripItineraryId;
                         this.Note = tripPlanResource.Note;
-                        // TODO: gear/meals/itinerary
+                        // TODO: gear/meals
                         this.StartDateAsDate = new Date(this.StartDate);
                         this.EndDateAsDate = new Date(this.EndDate);
                         return $q.defer().promise;
@@ -2559,6 +2560,122 @@ var BackpackPlanner;
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
 ///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../../scripts/typings/angularjs/angular-route.d.ts" />
+///<reference path="../../AppCtrl.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Controllers;
+        (function (Controllers) {
+            var Trips;
+            (function (Trips) {
+                var Itineraries;
+                (function (Itineraries) {
+                    "use strict";
+                    var TripItineraryCtrl = (function () {
+                        function TripItineraryCtrl($scope, $routeParams, $location, $mdDialog, $mdToast) {
+                            $scope.tripItinerary = Mockup.AppState.getInstance().getTripState().getTripItineraryById($routeParams.tripItineraryId);
+                            if (null == $scope.tripItinerary) {
+                                alert("The trip itinerary does not exist!");
+                                $location.path("/trips/itineraries");
+                                return;
+                            }
+                            $scope.showDeleteConfirm = function (event) {
+                                var confirm = $mdDialog.confirm()
+                                    .parent(angular.element(document.body))
+                                    .title("Delete Trip Itinerary")
+                                    .content("Are you sure you wish to delete this trip itinerary?")
+                                    .ok("Yes")
+                                    .cancel("No")
+                                    .targetEvent(event);
+                                var receipt = $mdDialog.alert()
+                                    .parent(angular.element(document.body))
+                                    .title("Trip itinerary deleted!")
+                                    .content("The trip itinerary has been deleted.")
+                                    .ok("OK")
+                                    .targetEvent(event);
+                                var deleteToast = $mdToast.simple()
+                                    .content("Deleted trip itinerary: " + $scope.tripItinerary.Name)
+                                    .action("Undo")
+                                    .position("bottom left");
+                                var undoDeleteToast = $mdToast.simple()
+                                    .content("Restored trip itinerary: " + $scope.tripItinerary.Name)
+                                    .action("OK")
+                                    .position("bottom left");
+                                $mdDialog.show(confirm).then(function () {
+                                    $mdDialog.show(receipt).then(function () {
+                                        if (!Mockup.AppState.getInstance().getTripState().deleteTripItinerary($scope.tripItinerary)) {
+                                            alert("Couldn't find the trip itinerary to delete!");
+                                            return;
+                                        }
+                                        $location.path("/trips/itineraries");
+                                        $mdToast.show(deleteToast).then(function () {
+                                            // TODO: this does *not* restore the itinerary to its containers
+                                            // and it should probably do so... but how?
+                                            Mockup.AppState.getInstance().getTripState().addTripItinerary($scope.tripItinerary);
+                                            $mdToast.show(undoDeleteToast);
+                                            $location.path("/trips/itineraries/" + $scope.tripItinerary.Id);
+                                        });
+                                    });
+                                });
+                            };
+                        }
+                        return TripItineraryCtrl;
+                    })();
+                    Itineraries.TripItineraryCtrl = TripItineraryCtrl;
+                    TripItineraryCtrl.$inject = ["$scope", "$routeParams", "$location", "$mdDialog", "$mdToast"];
+                })(Itineraries = Trips.Itineraries || (Trips.Itineraries = {}));
+            })(Trips = Controllers.Trips || (Controllers.Trips = {}));
+        })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../AppCtrl.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Controllers;
+        (function (Controllers) {
+            var Trips;
+            (function (Trips) {
+                var Itineraries;
+                (function (Itineraries) {
+                    "use strict";
+                    var AddTripItineraryCtrl = (function () {
+                        function AddTripItineraryCtrl($scope, $location, $mdToast) {
+                            $scope.tripItinerary = new Mockup.Models.Trips.TripItinerary();
+                            $scope.addTripItinerary = function (tripItinerary) {
+                                $scope.tripItinerary = angular.copy(tripItinerary);
+                                $scope.tripItinerary.Id = Mockup.AppState.getInstance().getTripState().addTripItinerary($scope.tripItinerary);
+                                var addToast = $mdToast.simple()
+                                    .content("Added trip itinerary: " + $scope.tripItinerary.Name)
+                                    .action("Undo")
+                                    .position("bottom left");
+                                var undoAddToast = $mdToast.simple()
+                                    .content("Removed trip itinerary: " + $scope.tripItinerary.Name)
+                                    .action("OK")
+                                    .position("bottom left");
+                                $location.path("/trips/itineraries");
+                                $mdToast.show(addToast).then(function () {
+                                    Mockup.AppState.getInstance().getTripState().deleteTripItinerary($scope.tripItinerary);
+                                    $mdToast.show(undoAddToast);
+                                });
+                            };
+                        }
+                        return AddTripItineraryCtrl;
+                    })();
+                    Itineraries.AddTripItineraryCtrl = AddTripItineraryCtrl;
+                    AddTripItineraryCtrl.$inject = ["$scope", "$location", "$mdToast"];
+                })(Itineraries = Trips.Itineraries || (Trips.Itineraries = {}));
+            })(Trips = Controllers.Trips || (Controllers.Trips = {}));
+        })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
 ///<reference path="../../AppCtrl.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
@@ -2587,6 +2704,120 @@ var BackpackPlanner;
                     })();
                     Plans.TripPlansCtrl = TripPlansCtrl;
                     TripPlansCtrl.$inject = ["$scope", "$mdDialog"];
+                })(Plans = Trips.Plans || (Trips.Plans = {}));
+            })(Trips = Controllers.Trips || (Controllers.Trips = {}));
+        })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../../scripts/typings/angularjs/angular-route.d.ts" />
+///<reference path="../../AppCtrl.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Controllers;
+        (function (Controllers) {
+            var Trips;
+            (function (Trips) {
+                var Plans;
+                (function (Plans) {
+                    "use strict";
+                    var TripPlanCtrl = (function () {
+                        function TripPlanCtrl($scope, $routeParams, $location, $mdDialog, $mdToast) {
+                            $scope.tripPlan = Mockup.AppState.getInstance().getTripState().getTripPlanById($routeParams.tripPlanId);
+                            if (null == $scope.tripPlan) {
+                                alert("The trip plan does not exist!");
+                                $location.path("/trips/plans");
+                                return;
+                            }
+                            $scope.showDeleteConfirm = function (event) {
+                                var confirm = $mdDialog.confirm()
+                                    .parent(angular.element(document.body))
+                                    .title("Delete Trip Plan")
+                                    .content("Are you sure you wish to delete this trip plan?")
+                                    .ok("Yes")
+                                    .cancel("No")
+                                    .targetEvent(event);
+                                var receipt = $mdDialog.alert()
+                                    .parent(angular.element(document.body))
+                                    .title("Trip plan deleted!")
+                                    .content("The trip plan has been deleted.")
+                                    .ok("OK")
+                                    .targetEvent(event);
+                                var deleteToast = $mdToast.simple()
+                                    .content("Deleted trip plan: " + $scope.tripPlan.Name)
+                                    .action("Undo")
+                                    .position("bottom left");
+                                var undoDeleteToast = $mdToast.simple()
+                                    .content("Restored trip plan: " + $scope.tripPlan.Name)
+                                    .action("OK")
+                                    .position("bottom left");
+                                $mdDialog.show(confirm).then(function () {
+                                    $mdDialog.show(receipt).then(function () {
+                                        if (!Mockup.AppState.getInstance().getTripState().deleteTripPlan($scope.tripPlan)) {
+                                            alert("Couldn't find the trip plan to delete!");
+                                            return;
+                                        }
+                                        $location.path("/trips/plans");
+                                        $mdToast.show(deleteToast).then(function () {
+                                            Mockup.AppState.getInstance().getTripState().addTripPlan($scope.tripPlan);
+                                            $mdToast.show(undoDeleteToast);
+                                            $location.path("/trips/plans/" + $scope.tripPlan.Id);
+                                        });
+                                    });
+                                });
+                            };
+                        }
+                        return TripPlanCtrl;
+                    })();
+                    Plans.TripPlanCtrl = TripPlanCtrl;
+                    TripPlanCtrl.$inject = ["$scope", "$routeParams", "$location", "$mdDialog", "$mdToast"];
+                })(Plans = Trips.Plans || (Trips.Plans = {}));
+            })(Trips = Controllers.Trips || (Controllers.Trips = {}));
+        })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../AppCtrl.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Controllers;
+        (function (Controllers) {
+            var Trips;
+            (function (Trips) {
+                var Plans;
+                (function (Plans) {
+                    "use strict";
+                    var AddTripPlanCtrl = (function () {
+                        function AddTripPlanCtrl($scope, $location, $mdToast) {
+                            $scope.tripPlan = new Mockup.Models.Trips.TripPlan();
+                            $scope.addTripPlan = function (tripPlan) {
+                                $scope.tripPlan = angular.copy(tripPlan);
+                                $scope.tripPlan.Id = Mockup.AppState.getInstance().getTripState().addTripPlan($scope.tripPlan);
+                                var addToast = $mdToast.simple()
+                                    .content("Added trip plan: " + $scope.tripPlan.Name)
+                                    .action("Undo")
+                                    .position("bottom left");
+                                var undoAddToast = $mdToast.simple()
+                                    .content("Removed trip plan: " + $scope.tripPlan.Name)
+                                    .action("OK")
+                                    .position("bottom left");
+                                $location.path("/trips/plans");
+                                $mdToast.show(addToast).then(function () {
+                                    Mockup.AppState.getInstance().getTripState().deleteTripPlan($scope.tripPlan);
+                                    $mdToast.show(undoAddToast);
+                                });
+                            };
+                        }
+                        return AddTripPlanCtrl;
+                    })();
+                    Plans.AddTripPlanCtrl = AddTripPlanCtrl;
+                    AddTripPlanCtrl.$inject = ["$scope", "$location", "$mdToast"];
                 })(Plans = Trips.Plans || (Trips.Plans = {}));
             })(Trips = Controllers.Trips || (Controllers.Trips = {}));
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
@@ -2747,10 +2978,30 @@ var BackpackPlanner;
                     controller: "TripItinerariesCtrl",
                     title: "Trip Itineraries"
                 })
+                    .when("/trips/itineraries/add", {
+                    templateUrl: "content/partials/trips/itineraries/add.html",
+                    controller: "AddTripItineraryCtrl",
+                    title: "Add a Trip Itinerary"
+                })
+                    .when("/trips/itineraries/:tripItineraryId", {
+                    templateUrl: "content/partials/trips/itineraries/itinerary.html",
+                    controller: "TripItineraryCtrl",
+                    title: "Trip Itinerary"
+                })
                     .when("/trips/plans", {
                     templateUrl: "content/partials/trips/plans/plans.html",
                     controller: "TripPlansCtrl",
                     title: "Trip Plans"
+                })
+                    .when("/trips/plans/add", {
+                    templateUrl: "content/partials/trips/plans/add.html",
+                    controller: "AddTripPlanCtrl",
+                    title: "Add a Trip Plan"
+                })
+                    .when("/trips/plans/:tripPlanId", {
+                    templateUrl: "content/partials/trips/plans/plan.html",
+                    controller: "TripPlanCtrl",
+                    title: "Trip Plan"
                 })
                     .when("/personal", {
                     templateUrl: "content/partials/personal/personal.html",
@@ -2837,11 +3088,11 @@ var BackpackPlanner;
 ///<reference path="Controllers/Meals/MealCtrl.ts" />
 ///<reference path="Controllers/Meals/AddMealCtrl.ts" />
 ///<reference path="Controllers/Trips/Itineraries/TripItinerariesCtrl.ts" />
-/////<reference path="Controllers/Trips/Itineraries/TripItineraryCtrl.ts" />
-/////<reference path="Controllers/Trips/Itineraries/AddTripItineraryCtrl.ts" />
+///<reference path="Controllers/Trips/Itineraries/TripItineraryCtrl.ts" />
+///<reference path="Controllers/Trips/Itineraries/AddTripItineraryCtrl.ts" />
 ///<reference path="Controllers/Trips/Plans/TripPlansCtrl.ts" />
-/////<reference path="Controllers/Trips/Plans/TripPlanCtrl.ts" />
-/////<reference path="Controllers/Trips/Plans/AddTripPlanCtrl.ts" />
+///<reference path="Controllers/Trips/Plans/TripPlanCtrl.ts" />
+///<reference path="Controllers/Trips/Plans/AddTripPlanCtrl.ts" />
 ///<reference path="Controllers/Personal/UserInformationCtrl.ts" />
 ///<reference path="Controllers/AppCtrl.ts" />
 ///<reference path="Controllers/AppSettingsCtrl.ts" />
@@ -2897,9 +3148,11 @@ var BackpackPlanner;
         mockupApp.controller("MealCtrl", Mockup.Controllers.Meals.MealCtrl);
         mockupApp.controller("AddMealCtrl", Mockup.Controllers.Meals.AddMealCtrl);
         mockupApp.controller("TripItinerariesCtrl", Mockup.Controllers.Trips.Itineraries.TripItinerariesCtrl);
-        //mockupApp.controller("TripItineraryCtrl", Controllers.Trips.Itineraries.TripItineraryCtrl);
-        //mockupApp.controller("AddTripItineraryCtrl", Controllers.Trips.Itineraries.AddTripItineraryCtrl);
+        mockupApp.controller("TripItineraryCtrl", Mockup.Controllers.Trips.Itineraries.TripItineraryCtrl);
+        mockupApp.controller("AddTripItineraryCtrl", Mockup.Controllers.Trips.Itineraries.AddTripItineraryCtrl);
         mockupApp.controller("TripPlansCtrl", Mockup.Controllers.Trips.Plans.TripPlansCtrl);
+        mockupApp.controller("TripPlanCtrl", Mockup.Controllers.Trips.Plans.TripPlanCtrl);
+        mockupApp.controller("AddTripPlanCtrl", Mockup.Controllers.Trips.Plans.AddTripPlanCtrl);
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />

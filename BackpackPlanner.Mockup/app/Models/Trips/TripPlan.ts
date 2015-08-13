@@ -18,6 +18,7 @@ module BackpackPlanner.Mockup.Models.Trips {
         Name: string;
         StartDate: string;
         EndDate: string;
+        TripItineraryId: number;
         Note: string;
 
         GearCollections: Models.Gear.IGearCollectionEntry[];
@@ -25,8 +26,6 @@ module BackpackPlanner.Mockup.Models.Trips {
         GearItems: Models.Gear.IGearItemEntry[];
 
         Meals: Models.Meals.IMealEntry[];
-
-        TripItinerary: ITripItinerary;
     }
 
     export class TripPlan implements ITripPlan {
@@ -34,6 +33,7 @@ module BackpackPlanner.Mockup.Models.Trips {
         public Name = "";
         public StartDate = "";
         public EndDate = "";
+        public TripItineraryId = -1;
         public Note = "";
 
         public GearCollections = <Array<Models.Gear.GearCollectionEntry>>[];
@@ -41,8 +41,6 @@ module BackpackPlanner.Mockup.Models.Trips {
         public GearItems = <Array<Models.Gear.GearItemEntry>>[];
 
         public Meals = <Array<Models.Meals.MealEntry>>[];
-
-        public TripItinerary = new TripItinerary();
 
         public StartDateAsDate = new Date();
         public EndDateAsDate = new Date();
@@ -54,9 +52,10 @@ module BackpackPlanner.Mockup.Models.Trips {
             this.Name = tripPlanResource.Name;
             this.StartDate = tripPlanResource.StartDate;
             this.EndDate = tripPlanResource.EndDate;
+            this.TripItineraryId = tripPlanResource.TripItineraryId;
             this.Note = tripPlanResource.Note;
 
-            // TODO: gear/meals/itinerary
+            // TODO: gear/meals
 
             this.StartDateAsDate = new Date(this.StartDate);
             this.EndDateAsDate = new Date(this.EndDate);

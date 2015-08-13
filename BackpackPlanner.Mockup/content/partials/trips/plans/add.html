@@ -1,0 +1,23 @@
+<form name="addTripPlanForm">
+<div layout="column" layout-padding flex ng-cloak>
+    <md-input-container>
+        <label>Name</label>
+        <input type="text" ng-model="tripPlan.Name" required name="name" />
+        <div ng-messages="addTripPlanForm.name.$error">
+            <div ng-message="required">The trip plan name is required</div>
+        </div>
+    </md-input-container>
+    <md-input-container>
+        <label>Note</label>
+        <textarea ng-model="tripPlan.Note" name="note"></textarea>
+    </md-input-container>
+    <div flex></div>
+    <div layout="row">
+        <span flex></span>
+        <md-button type="submit" class="md-raised md-primary mockup-button" ng-click="addTripPlan(tripPlan)" ng-disabled="addTripPlanForm.$invalid">
+            Add Trip Plan
+        </md-button>
+        <span flex></span>
+    </div>
+</div>
+</form>

@@ -1,2 +1,14 @@
 [
+    {
+        "Id": 1,
+        "Name": "Turkey Camp 2015",
+        "StartDate": "06-20-2015",
+        "EndDate": "06-27-2015",
+        "TripItineraryId": 1,
+        "GearCollections": [],
+        "GearSystems": [],
+        "GearItems": [],
+        "Meals": [],
+        "Note": "Never again..."
+    }
 ]

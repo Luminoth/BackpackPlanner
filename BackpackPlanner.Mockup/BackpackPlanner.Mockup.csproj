@@ -55,8 +55,12 @@
     <Content Include="content\partials\personal\personal.html" />
     <Content Include="content\partials\personal\what.html" />
     <Content Include="content\partials\settings.html" />
+    <Content Include="content\partials\trips\itineraries\add.html" />
     <Content Include="content\partials\trips\itineraries\itineraries.html" />
+    <Content Include="content\partials\trips\itineraries\itinerary.html" />
     <Content Include="content\partials\trips\itineraries\what.html" />
+    <Content Include="content\partials\trips\plans\add.html" />
+    <Content Include="content\partials\trips\plans\plan.html" />
     <Content Include="content\partials\trips\plans\plans.html" />
     <Content Include="content\partials\trips\plans\what.html" />
     <Content Include="index.html" />
@@ -105,8 +109,12 @@
     <TypeScriptCompile Include="app\Controllers\Meals\MealsCtrl.ts" />
     <TypeScriptCompile Include="app\Controllers\Meals\WhatIsMealDlgCtrl.ts" />
     <TypeScriptCompile Include="app\Controllers\Personal\WhatIsPersonalDlgCtrl.ts" />
+    <TypeScriptCompile Include="app\Controllers\Trips\Itineraries\AddTripItineraryCtrl.ts" />
     <TypeScriptCompile Include="app\Controllers\Trips\Itineraries\TripItinerariesCtrl.ts" />
+    <TypeScriptCompile Include="app\Controllers\Trips\Itineraries\TripItineraryCtrl.ts" />
     <TypeScriptCompile Include="app\Controllers\Trips\Itineraries\WhatIsTripItineraryDlgCtrl.ts" />
+    <TypeScriptCompile Include="app\Controllers\Trips\Plans\AddTripPlanCtrl.ts" />
+    <TypeScriptCompile Include="app\Controllers\Trips\Plans\TripPlanCtrl.ts" />
     <TypeScriptCompile Include="app\Controllers\Trips\Plans\TripPlansCtrl.ts" />
     <TypeScriptCompile Include="app\Controllers\Trips\Plans\WhatIsTripPlanDlgCtrl.ts" />
     <TypeScriptCompile Include="app\Controllers\Personal\UserInformationCtrl.ts" />

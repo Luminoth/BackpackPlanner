@@ -1,0 +1,23 @@
+<form name="tripItineraryForm">
+<div layout="column" layout-padding flex ng-cloak>
+    <md-input-container>
+        <label>Name</label>
+        <input type="text" ng-model="tripItinerary.Name" required name="name" />
+        <div ng-messages="tripItineraryForm.name.$error">
+            <div ng-message="required">The trip itinerary name is required</div>
+        </div>
+    </md-input-container>
+    <md-input-container>
+        <label>Note</label>
+        <textarea ng-model="tripItinerary.Note" name="note"></textarea>
+    </md-input-container>
+    <div flex></div>
+    <div layout="row">
+        <span flex></span>
+        <md-button class="md-raised md-warn mockup-button" ng-click="showDeleteConfirm($event)">
+            Delete Trip Itinerary
+        </md-button>
+        <span flex></span>
+    </div>
+</div>
+</form>
