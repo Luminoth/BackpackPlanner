@@ -21,28 +21,30 @@
         <label>Website</label>
         <input type="url" ng-model="gearItem.Url" name="url" />
     </md-input-container>
-    <md-radio-group ng-model="gearItem.Carried" layout="row" layout-sm="column">
-        <md-radio-button value="Carried">Carried</md-radio-button>
-        <md-radio-button value="Worn">Worn</md-radio-button>
-        <md-radio-button value="NotCarried">Not Carried</md-radio-button>
-    </md-radio-group>
+    <md-input-container>
+        <md-radio-group ng-model="gearItem.Carried" layout="row">
+            <md-radio-button value="Carried">Carried</md-radio-button>
+            <md-radio-button value="Worn">Worn</md-radio-button>
+            <md-radio-button value="NotCarried">Not Carried</md-radio-button>
+        </md-radio-group>
+    </md-input-container>
     <div layout="row" layout-sm="column" flex ng-show="'NotCarried' != gearItem.Carried">
         <md-switch ng-model="gearItem.IsConsumable" name="consumable">
             Consumable
         </md-switch>
         <md-input-container ng-show="true == gearItem.IsConsumable">
             <label>Consumed per Day</label>
-            <input type="number" ng-model="gearItem.ConsumedPerDay" name="consumedPerDay" />
+            <input type="number" ng-model="gearItem.ConsumedPerDay" min="1" max="1000" name="consumedPerDay" />
         </md-input-container>
     </div>
     <div layout="row" layout-sm="column" flex>
-        <md-input-container ng-show="'NotCarried' != gearItem.Carried" flex>
-            <label>Weight ({{ getUnitsWeightString() }})</label>
-            <input type="number" ng-model="gearItem.weightInUnits" ng-model-options="{ getterSetter: true, debounce: 500 }" name="weight" />
+        <md-input-container flex ng-show="'NotCarried' != gearItem.Carried">
+            <label>Weight ({{ getUnitsWeightString() }}s)</label>
+            <input type="number" ng-model="gearItem.weightInUnits" ng-model-options="{ getterSetter: true, debounce: 500 }" min="0" max="1000000" name="weight" />
         </md-input-container>
         <md-input-container flex>
             <label>Cost ({{ getCurrencyString() }})</label>
-            <input type="number" ng-model="gearItem.costInCurrency" ng-model-options="{ getterSetter: true, debounce: 500 }" name="weight" />
+            <input type="number" ng-model="gearItem.costInCurrency" ng-model-options="{ getterSetter: true, debounce: 500 }" min="0" max="1000000" name="cost" />
         </md-input-container>
     </div>
     <md-input-container>

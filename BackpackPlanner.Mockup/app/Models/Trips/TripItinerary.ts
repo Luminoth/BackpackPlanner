@@ -1,4 +1,8 @@
-﻿module BackpackPlanner.Mockup.Models.Trips {
+﻿///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
+
+//<reference path="../../Resources/Trips/TripItineraryResource.ts"/>
+
+module BackpackPlanner.Mockup.Models.Trips {
     "use strict";
 
     export interface IRouteDescription {
@@ -39,5 +43,22 @@
 
         public RouteDescriptions = <Array<RouteDescription>>[];
         public PointsOfInterest = <Array<PointOfInterest>>[];
+
+        /* Load/Save */
+
+        public loadFromDevice($q: ng.IQService, tripItineraryResource: Resources.Trips.ITripItineraryResource) : ng.IPromise<any> {
+            this.Id = tripItineraryResource.Id;
+            this.Name = tripItineraryResource.Name;
+            this.Note = tripItineraryResource.Note;
+
+            // TODO: descriptions and points of interest
+
+            return $q.defer().promise;
+        }
+
+        public saveToDevice($q: ng.IQService) : ng.IPromise<any> {
+            // mockup does nothing here
+            return $q.defer().promise;
+        }
     }
 }

@@ -9,7 +9,7 @@
         "WeightInGrams": 986.56,
         "CostInUSDP": 22500,
         "IsConsumable": false,
-        "ConsumedPerDay": 0,
+        "ConsumedPerDay": 1,
         "Note": "Medium torso (18\" - 21\"). Medium hipbelt (34\" - 38\"). J-Curve shoulder strap. Aluminum stay removed. Includes hanging s-biner \"Ahhh\" and water shoe carabiner. 39L main body. Max 15 pound base weight, 30-35 pack weight."
     },
     {
@@ -22,7 +22,7 @@
         "WeightInGrams": 422.41,
         "CostInUSDP": 0,
         "IsConsumable": false,
-        "ConsumedPerDay": 0,
+        "ConsumedPerDay": 1,
         "Note": "Includes adjustable ridge line and 2x whoopie slings from whoopieslings.com, and bishop bag."
     },
     {
@@ -35,7 +35,7 @@
         "WeightInGrams": 198.44,
         "CostInUSDP": 1200,
         "IsConsumable": false,
-        "ConsumedPerDay": 0,
+        "ConsumedPerDay": 1,
         "Note": "12'x1\". Includes dutch buckle and titanium dutch clip (max 300 pounds)."
     },
     {
@@ -48,7 +48,7 @@
         "WeightInGrams": 887.34,
         "CostInUSDP": 0,
         "IsConsumable": false,
-        "ConsumedPerDay": 0,
+        "ConsumedPerDay": 1,
         "Note": "Synthetic material. Need to have Aaron or Joe possibly remove some material from the overstuff collars to get the size and weight down on this."
     },
     {
@@ -61,7 +61,7 @@
         "WeightInGrams": 802.29,
         "CostInUSDP": 17900,
         "IsConsumable": false,
-        "ConsumedPerDay": 0,
+        "ConsumedPerDay": 1,
         "Note": "6oz APEX Climashield synthetic"
     },
     {
@@ -74,7 +74,7 @@
         "WeightInGrams": 566.99,
         "CostInUSDP": 7500,
         "IsConsumable": false,
-        "ConsumedPerDay": 0,
+        "ConsumedPerDay": 1,
         "Note": "6oz APEX Climashield synthetic"
     },
     {
@@ -100,7 +100,7 @@
         "WeightInGrams": 989.39,
         "CostInUSDP": 33000,
         "IsConsumable": false,
-        "ConsumedPerDay": 0,
+        "ConsumedPerDay": 1,
         "Note": "100% cotton. Cargo pockets removed (3.8 ounces each)."
     },
     {
@@ -113,7 +113,7 @@
         "WeightInGrams": 0,
         "CostInUSDP": 0,
         "IsConsumable": false,
-        "ConsumedPerDay": 0,
+        "ConsumedPerDay": 1,
         "Note": ""
     }
 ]

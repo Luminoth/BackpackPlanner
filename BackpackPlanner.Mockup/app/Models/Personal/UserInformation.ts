@@ -22,18 +22,7 @@ module BackpackPlanner.Mockup.Models.Personal {
 
         public BirthDateAsDate = new Date();
 
-        constructor(userInfoResource?: Resources.Personal.IUserInformationResource) {
-            if(userInfoResource) {
-                this.FirstName = userInfoResource.FirstName;
-                this.LastName = userInfoResource.LastName;
-                this.BirthDate = userInfoResource.BirthDate;
-                this.Sex = userInfoResource.Sex;
-                this.HeightInCm = userInfoResource.HeightInCm;
-                this.WeightInGrams = userInfoResource.WeightInGrams;
-
-                this.BirthDateAsDate = new Date(this.BirthDate);
-            }
-        }
+        /* Height/Weight */
 
         public heightInUnits(height: number) : number {
             return arguments.length
@@ -45,6 +34,26 @@ module BackpackPlanner.Mockup.Models.Personal {
             return arguments.length
                 ? (this.WeightInGrams = convertUnitsToGrams(weight, AppState.getInstance().getAppSettings().Units))
                 : parseFloat(convertGramsToUnits(this.WeightInGrams, AppState.getInstance().getAppSettings().Units).toFixed(2));
+        }
+
+        /* Load/Save */
+
+        public loadFromDevice($q: ng.IQService, userInfoResource: Resources.Personal.IUserInformationResource) : ng.IPromise<any> {
+            this.FirstName = userInfoResource.FirstName;
+            this.LastName = userInfoResource.LastName;
+            this.BirthDate = userInfoResource.BirthDate;
+            this.Sex = userInfoResource.Sex;
+            this.HeightInCm = userInfoResource.HeightInCm;
+            this.WeightInGrams = userInfoResource.WeightInGrams;
+
+            this.BirthDateAsDate = new Date(this.BirthDate);
+
+            return $q.defer().promise;
+        }
+
+        public saveToDevice($q: ng.IQService) : ng.IPromise<any> {
+            // mockup does nothing here
+            return $q.defer().promise;
         }
     }
 }

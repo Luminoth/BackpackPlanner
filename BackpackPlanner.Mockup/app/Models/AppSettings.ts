@@ -1,4 +1,6 @@
-﻿///<reference path="../Resources/AppSettingsResource.ts"/>
+﻿///<reference path="../../scripts/typings/angularjs/angular.d.ts" />
+
+///<reference path="../Resources/AppSettingsResource.ts"/>
 
 module BackpackPlanner.Mockup.Models {
     "use strict";
@@ -12,11 +14,17 @@ module BackpackPlanner.Mockup.Models {
         public Units = "Metric";
         public Currency = "USD";
 
-        constructor(appSettingsResource?: Resources.IAppSettingsResource) {
-            if(appSettingsResource) {
-                this.Units = appSettingsResource.Units;
-                this.Currency = appSettingsResource.Currency;
-            }
+        /* Load/Save */
+
+        public loadFromDevice($q: ng.IQService, appSettingsResource: Resources.IAppSettingsResource) : ng.IPromise<any> {
+            this.Units = appSettingsResource.Units;
+            this.Currency = appSettingsResource.Currency;
+
+            return $q.defer().promise;
+        }
+
+        public saveToDevice($q: ng.IQService) : ng.IPromise<any> {
+            return $q.defer().promise;
         }
     }
 }

@@ -10,13 +10,24 @@
         <md-input-container md-no-float flex>
             <input type="text" ng-model="filter.Name" name="filter" placeholder="Filter" />
         </md-input-container>
-        <label>Sort by</label>
-        <md-radio-group ng-model="orderBy" layout="row" layout-sm="column">
-            <md-radio-button value="Name">Name</md-radio-button>
-            <md-radio-button value="-WeightInGrams">Weight</md-radio-button>
-            <md-radio-button value="-CostInUSDP">Cost</md-radio-button>
-            <md-radio-button value="-getCostPerUnitInCurrency()">Cost / Weight</md-radio-button>
-        </md-radio-group>
+        <label hide-sm>Sort by</label>
+        <md-input-container hide-sm>
+            <md-radio-group ng-model="orderBy" layout="row">
+                <md-radio-button value="Name">Name</md-radio-button>
+                <md-radio-button value="-WeightInGrams">Weight</md-radio-button>
+                <md-radio-button value="-CostInUSDP">Cost</md-radio-button>
+                <md-radio-button value="-getCostPerUnitInCurrency()">Cost / Weight</md-radio-button>
+            </md-radio-group>
+        </md-input-container>
+        <md-input-container hide-gt-sm>
+            <label>Sort by</label>
+            <md-select ng-model="orderBy">
+                <md-option value="Name">Name</md-option>
+                <md-option value="-WeightInGrams">Weight</md-option>
+                <md-option value="-CostInUSDP">Cost</md-option>
+                <md-option value="-getCostPerUnitInCurrency()">Cost / Weight</md-option>
+            </md-select>
+        </md-input-container>
         <md-button class="mockup-card-button" layout-fill ng-repeat="gearItem in getGearItems() | filter:filter | orderBy:orderBy" href="#/gear/items/{{ gearItem.Id }}">
             <md-card class="mockup-card" flex>
                 <md-card-content class="mockup-card-content">

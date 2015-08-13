@@ -1,4 +1,6 @@
-﻿//<reference path="../../Resources/Meals/MealResource.ts"/>
+﻿///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
+
+//<reference path="../../Resources/Meals/MealResource.ts"/>
 
 ///<reference path="../../AppState.ts"/>
 
@@ -32,30 +34,7 @@ module BackpackPlanner.Mockup.Models.Meals {
         public FiberInGrams = 0;
         public Note = "";
 
-        constructor(mealResource?: Resources.Meals.IMealResource) {
-            if(mealResource) {
-                this.Id = mealResource.Id;
-                this.Name = mealResource.Name;
-                this.Url = mealResource.Url;
-                this.Meal = mealResource.Meal;
-                this.ServingCount = mealResource.ServingCount;
-                this.WeightInGrams = mealResource.WeightInGrams;
-                this.CostInUSDP = mealResource.CostInUSDP;
-                this.Calories = mealResource.Calories;
-                this.ProteinInGrams = mealResource.ProteinInGrams;
-                this.FiberInGrams = mealResource.FiberInGrams;
-                this.Note = mealResource.Note;
-            }
-        }
-
-        public getCostPerUnitInCurrency() {
-            const costInCurrency = convertUSDPToCurrency(this.CostInUSDP, AppState.getInstance().getAppSettings().Currency);
-            const weightInUnits = convertGramsToUnits(this.WeightInGrams, AppState.getInstance().getAppSettings().Units);
-
-            return 0 == weightInUnits
-                ? costInCurrency
-                : costInCurrency / weightInUnits;
-        }
+        /* Weight/Cost */
 
         public weightInUnits(weight: number) : number {
             return arguments.length
@@ -67,6 +46,38 @@ module BackpackPlanner.Mockup.Models.Meals {
             return arguments.length
                 ? (this.CostInUSDP = convertCurrencyToUSDP(cost, AppState.getInstance().getAppSettings().Currency))
                 : convertUSDPToCurrency(this.CostInUSDP, AppState.getInstance().getAppSettings().Currency);
+        }
+
+        public getCostPerUnitInCurrency() {
+            const costInCurrency = convertUSDPToCurrency(this.CostInUSDP, AppState.getInstance().getAppSettings().Currency);
+            const weightInUnits = convertGramsToUnits(this.WeightInGrams, AppState.getInstance().getAppSettings().Units);
+
+            return 0 == weightInUnits
+                ? costInCurrency
+                : costInCurrency / weightInUnits;
+        }
+
+        /* Load/Save */
+
+        public loadFromDevice($q: ng.IQService, mealResource: Resources.Meals.IMealResource) : ng.IPromise<any> {
+            this.Id = mealResource.Id;
+            this.Name = mealResource.Name;
+            this.Url = mealResource.Url;
+            this.Meal = mealResource.Meal;
+            this.ServingCount = mealResource.ServingCount;
+            this.WeightInGrams = mealResource.WeightInGrams;
+            this.CostInUSDP = mealResource.CostInUSDP;
+            this.Calories = mealResource.Calories;
+            this.ProteinInGrams = mealResource.ProteinInGrams;
+            this.FiberInGrams = mealResource.FiberInGrams;
+            this.Note = mealResource.Note;
+
+            return $q.defer().promise;
+        }
+
+        public saveToDevice($q: ng.IQService) : ng.IPromise<any> {
+            // mockup does nothing here
+            return $q.defer().promise;
         }
     }
 

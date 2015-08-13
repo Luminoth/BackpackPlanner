@@ -1,4 +1,6 @@
-﻿///<reference path="../../Resources/Gear/GearCollectionResource.ts"/>
+﻿///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
+
+///<reference path="../../Resources/Gear/GearCollectionResource.ts"/>
 
 ///<reference path="../../AppState.ts"/>
 
@@ -25,22 +27,29 @@ module BackpackPlanner.Mockup.Models.Gear {
         public GearSystems = <Array<GearSystemEntry>>[];
         public GearItems = <Array<GearItemEntry>>[];
 
-        constructor(gearCollectionResource?: Resources.Gear.IGearCollectionResource) {
-            if(gearCollectionResource) {
-                this.Id = gearCollectionResource.Id;
-                this.Name = gearCollectionResource.Name;
-                this.Note = gearCollectionResource.Note;
-
-                for(let i=0; i<gearCollectionResource.GearSystems.length; ++i) {
-                    const gearSystemEntry = gearCollectionResource.GearSystems[i];
-                    this.GearSystems.push(new GearSystemEntry(gearSystemEntry.GearSystemId, gearSystemEntry.Count, gearSystemEntry.IsPacked));
-                }
-
-                for(let i=0; i<gearCollectionResource.GearItems.length; ++i) {
-                    const gearItemEntry = gearCollectionResource.GearItems[i];
-                    this.GearItems.push(new GearItemEntry(gearItemEntry.GearItemId, gearItemEntry.Count, gearItemEntry.IsPacked));
-                }
+        public getTotalGearItemCount() {
+            let count = 0;
+            for(let i=0; i<this.GearSystems.length; ++i) {
+                const gearSystemEntry = this.GearSystems[i];
+                count += gearSystemEntry.getGearItemCount();
             }
+
+            for(let i=0; i<this.GearItems.length; ++i) {
+                const gearItemEntry = this.GearItems[i];
+                count += gearItemEntry.Count;
+            }
+            return count;
+        }
+
+        /* Gear Systems */
+
+        public getGearSystemCount() {
+            let count = 0;
+            for(let i=0; i<this.GearSystems.length; ++i) {
+                const gearSystemEntry = this.GearSystems[i];
+                count += gearSystemEntry.Count;
+            }
+            return count;
         }
 
         private getGearSystemEntryIndexById(gearSystemId: number) : number {
@@ -72,6 +81,17 @@ module BackpackPlanner.Mockup.Models.Gear {
             this.GearSystems.splice(idx, 1);
         }
 
+        /* Gear Items */
+
+        public getGearItemCount() {
+            let count = 0;
+            for(let i=0; i<this.GearItems.length; ++i) {
+                const gearItemEntry = this.GearItems[i];
+                count += gearItemEntry.Count;
+            }
+            return count;
+        }
+
         private getGearItemEntryIndexById(gearItemId: number) : number {
             for(let i=0; i<this.GearItems.length; ++i) {
                 const gearItemEntry = this.GearItems[i];
@@ -101,37 +121,7 @@ module BackpackPlanner.Mockup.Models.Gear {
             this.GearItems.splice(idx, 1);
         }
 
-        public getTotalGearItemCount() {
-            let count = 0;
-            for(let i=0; i<this.GearSystems.length; ++i) {
-                const gearSystemEntry = this.GearSystems[i];
-                count += gearSystemEntry.getGearItemCount();
-            }
-
-            for(let i=0; i<this.GearItems.length; ++i) {
-                const gearItemEntry = this.GearItems[i];
-                count += gearItemEntry.Count;
-            }
-            return count;
-        }
-
-        public getGearSystemCount() {
-            let count = 0;
-            for(let i=0; i<this.GearSystems.length; ++i) {
-                const gearSystemEntry = this.GearSystems[i];
-                count += gearSystemEntry.Count;
-            }
-            return count;
-        }
-
-        public getGearItemCount() {
-            let count = 0;
-            for(let i=0; i<this.GearItems.length; ++i) {
-                const gearItemEntry = this.GearItems[i];
-                count += gearItemEntry.Count;
-            }
-            return count;
-        }
+        /* Weight/Cost */
 
         public getWeightInGrams() {
             let weightInGrams = 0;
@@ -176,6 +166,31 @@ module BackpackPlanner.Mockup.Models.Gear {
             return 0 == weightInUnits
                 ? costInCurrency
                 : costInCurrency / weightInUnits;
+        }
+
+        /* Load/Save */
+
+        public loadFromDevice($q: ng.IQService, gearCollectionResource: Resources.Gear.IGearCollectionResource) : ng.IPromise<any> {
+            this.Id = gearCollectionResource.Id;
+            this.Name = gearCollectionResource.Name;
+            this.Note = gearCollectionResource.Note;
+
+            for(let i=0; i<gearCollectionResource.GearSystems.length; ++i) {
+                const gearSystemEntry = gearCollectionResource.GearSystems[i];
+                this.GearSystems.push(new GearSystemEntry(gearSystemEntry.GearSystemId, gearSystemEntry.Count, gearSystemEntry.IsPacked));
+            }
+
+            for(let i=0; i<gearCollectionResource.GearItems.length; ++i) {
+                const gearItemEntry = gearCollectionResource.GearItems[i];
+                this.GearItems.push(new GearItemEntry(gearItemEntry.GearItemId, gearItemEntry.Count, gearItemEntry.IsPacked));
+            }
+
+            return $q.defer().promise;
+        }
+
+        public saveToDevice($q: ng.IQService) : ng.IPromise<any> {
+            // mockup does nothing here
+            return $q.defer().promise;
         }
     }
 

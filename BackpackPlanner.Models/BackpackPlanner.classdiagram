@@ -127,6 +127,12 @@
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
+          <operation Id="5e7635f9-b836-442a-ad9f-564f41492f99" name="SaveToDevice" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="0961cc93-867e-4131-8fb0-04de4cd12739" />
+          </operation>
+          <operation Id="61c83b65-844a-444d-a8a0-5edf1f124dbd" name="LoadFromDevice" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="b67ea4e3-a31d-4ec3-b05b-d546cf95f81d" />
+          </operation>
         </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
@@ -355,6 +361,12 @@
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
+          <operation Id="88b94a3e-89b4-4d3b-845a-e6fa651e1bb0" name="LoadFromDevice" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="14c5b154-d8b6-41cc-a8e5-e47b191587a5" />
+          </operation>
+          <operation Id="b642af35-738d-485d-81a7-a4811170d412" name="SaveToDevice" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="734634bb-2aaa-47e4-9aa8-fc299997a996" />
+          </operation>
         </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
@@ -404,12 +416,6 @@
           </property>
         </ownedAttributesInternal>
         <ownedOperationsInternal>
-          <operation Id="495f84b9-bfca-49fc-b1af-9db7f109e786" name="SaveToDevice" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="aba3e8b0-57e0-4825-8d2a-f648e4c30757" />
-          </operation>
-          <operation Id="2792521f-701e-4b4f-a4d6-578536dbd107" name="LoadFromDevice" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="d5e71561-afbd-46fa-8a06-ff98109dee9f" />
-          </operation>
           <operation Id="1b6cfacb-9276-4444-b91f-32b112efccbe" name="ExportToCloudStorage" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="4bfbf305-f9f8-4459-a49e-b956cd530bfe" />
             <ownedParameters>
@@ -627,6 +633,12 @@
                 </parameter>
               </operationHasOwnedParameters>
             </ownedParameters>
+          </operation>
+          <operation Id="b72e4be3-b53b-4a17-9f03-3426e7e672b7" name="SaveToDevice" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="381e9518-262d-44a1-b245-13fb4eba6756" />
+          </operation>
+          <operation Id="8e12cbcc-93e3-4a5d-826c-96a5b5d9f2d0" name="LoadFromDevice" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="91d99873-dd13-4e7a-82ae-c9e85434626c" />
           </operation>
         </ownedOperationsInternal>
       </class>
@@ -1057,6 +1069,12 @@
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
+          <operation Id="993446a8-5ec9-490c-bb1d-0c862bb01e1d" name="LoadFromDevice" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="a098aebd-d094-4add-9195-9f963f0baa81" />
+          </operation>
+          <operation Id="96af51e0-fbc7-490f-84d8-a8929441f718" name="SaveToDevice" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="49eff07d-38d8-4db4-b123-b5128bd6a191" />
+          </operation>
         </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
@@ -1386,6 +1404,12 @@
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
+          <operation Id="a656bdba-cdf0-4eab-bc1d-87faa56a60a7" name="LoadFromDevice" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="5336afa8-5cc1-42e9-80f8-a576004c1b7a" />
+          </operation>
+          <operation Id="8adda323-e9a9-4d5d-85e4-72e312718bf6" name="SaveToDevice" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="73acfbff-0972-460a-a7ea-0574809baaad" />
+          </operation>
         </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
@@ -1567,6 +1591,14 @@
             </type_NamedElement>
           </property>
         </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation Id="c75bcc1a-9701-495f-9af1-12d0909679f6" name="LoadFromDevice" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="459a52db-74b1-45b7-b866-7a09f673c647" />
+          </operation>
+          <operation Id="0827b15f-f34b-4c61-81f2-ff7e793bab37" name="SaveToDevice" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="e14dcd53-229f-4a36-8875-8a0dea39f3e6" />
+          </operation>
+        </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
     <packageHasNamedElement>
@@ -1734,6 +1766,12 @@
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
+          <operation Id="cc8e723f-1447-46a6-b9eb-63ae0ebb4c96" name="LoadFromDevice" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="6e86dd1a-980d-4560-a5a9-ecd983eae567" />
+          </operation>
+          <operation Id="5069c8e5-be50-4d2a-bd05-ffc2aef81b38" name="SaveToDevice" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="10011c5a-6373-4e9d-be0c-096097c42179" />
+          </operation>
         </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
@@ -1820,6 +1858,14 @@
             </type_NamedElement>
           </property>
         </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation Id="d3f422e1-2b46-4256-a082-54092a91399d" name="SaveToDevice" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="e8d01b0a-d430-4774-b80e-f49b5f7cb035" />
+          </operation>
+          <operation Id="d83ae767-cd8b-47c8-9d74-1b2277995956" name="LoadFromDevice" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="33602caf-58fa-450c-a684-ed04b16d4b20" />
+          </operation>
+        </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
     <packageHasNamedElement>

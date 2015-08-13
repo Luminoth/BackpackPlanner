@@ -39,7 +39,7 @@ module BackpackPlanner.Mockup {
 
         /* App Settings */
 
-        private _appSettings: Models.AppSettings;
+        private _appSettings: Models.AppSettings = new Models.AppSettings();
 
         public getAppSettings() : Models.AppSettings {
             return this._appSettings;
@@ -47,7 +47,7 @@ module BackpackPlanner.Mockup {
 
         /* User Information */
 
-        private _userInformation: Models.Personal.UserInformation;
+        private _userInformation: Models.Personal.UserInformation = new Models.Personal.UserInformation();
 
         public getUserInformation() : Models.Personal.UserInformation {
             return this._userInformation;
@@ -79,54 +79,37 @@ module BackpackPlanner.Mockup {
 
         /* Load/Save */
 
-        private loadAppSettings(appSettingsResource: Resources.IAppSettingsResource) {
-            if(this._appSettings) {
-                throw new Error("Application settings already loaded!");
-            }
-            this._appSettings = new Models.AppSettings(appSettingsResource);
-        }
-
-        private loadUserInformation(userInfoResource: Resources.Personal.IUserInformationResource) {
-            if(this._userInformation) {
-                throw new Error("User information already loaded!");
-            }
-            this._userInformation = new Models.Personal.UserInformation(userInfoResource);
-        }
-
         public loadFromDevice($q: ng.IQService,
             appSettingsService: Services.IAppSettingsService, userInformationService: Services.Personal.IUserInformationService,
             gearItemService: Services.Gear.IGearItemService, gearSystemService: Services.Gear.IGearSystemService, gearCollectionService: Services.Gear.IGearCollectionService,
             mealService: Services.Meals.IMealService,
             tripItineraryService: Services.Trips.ITripItineraryService, tripPlanService: Services.Trips.ITripPlanService) : ng.IPromise<any[]> {
+
             const promises = <Array<ng.IPromise<any>>>[];
 
             // load the application settings
             promises.push(appSettingsService.get().$promise.then(
                 (appSettingsResource: Resources.IAppSettingsResource) => {
-                    this.loadAppSettings(appSettingsResource);
+                    this._appSettings.loadFromDevice($q, appSettingsResource).then(
+                        () => {
+                        }
+                    );
                 }
             ));
 
             // load the user's personal information
             promises.push(userInformationService.get().$promise.then(
                 (userInfoResource: Resources.Personal.IUserInformationResource) => {
-                    this.loadUserInformation(userInfoResource);
+                    this._userInformation.loadFromDevice($q, userInfoResource).then(
+                        () => {
+                        }
+                    );
                 }
             ));
 
             promises.push(this._gearState.loadFromDevice($q, gearItemService, gearSystemService, gearCollectionService));
             promises.push(this._mealState.loadFromDevice($q, mealService));
             promises.push(this._tripState.loadFromDevice($q, tripItineraryService, tripPlanService));
-
-            return $q.all(promises);
-        }
-
-        public saveToDevice($q: ng.IQService) : ng.IPromise<any> {
-            const promises = <Array<ng.IPromise<any>>>[];
-
-            promises.push(this._gearState.saveToDevice($q));
-            promises.push(this._mealState.saveToDevice($q));
-            promises.push(this._tripState.saveToDevice($q));
 
             return $q.all(promises);
         }

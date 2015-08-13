@@ -1,4 +1,8 @@
-﻿///<reference path="../Gear/GearCollection.ts"/>
+﻿///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
+
+//<reference path="../../Resources/Trips/TripPlanResource.ts"/>
+
+///<reference path="../Gear/GearCollection.ts"/>
 ///<reference path="../Gear/GearItem.ts"/>
 ///<reference path="../Gear/GearSystem.ts"/>
 
@@ -42,5 +46,27 @@ module BackpackPlanner.Mockup.Models.Trips {
 
         public StartDateAsDate = new Date();
         public EndDateAsDate = new Date();
+
+        /* Load/Save */
+
+        public loadFromDevice($q: ng.IQService, tripPlanResource: Resources.Trips.ITripPlanResource) : ng.IPromise<any> {
+            this.Id = tripPlanResource.Id;
+            this.Name = tripPlanResource.Name;
+            this.StartDate = tripPlanResource.StartDate;
+            this.EndDate = tripPlanResource.EndDate;
+            this.Note = tripPlanResource.Note;
+
+            // TODO: gear/meals/itinerary
+
+            this.StartDateAsDate = new Date(this.StartDate);
+            this.EndDateAsDate = new Date(this.EndDate);
+
+            return $q.defer().promise;
+        }
+
+        public saveToDevice($q: ng.IQService) : ng.IPromise<any> {
+            // mockup does nothing here
+            return $q.defer().promise;
+        }
     }
 }

@@ -18,7 +18,7 @@ module BackpackPlanner.Mockup {
     export class GearState {
         /* Gear Items */
 
-        private _gearItems: Models.Gear.GearItem[];
+        private _gearItems = <Array<Models.Gear.GearItem>>[];
 
         // TODO: this should be a read-only collection
         public getGearItems() : Models.Gear.GearItem[] {
@@ -71,7 +71,7 @@ module BackpackPlanner.Mockup {
 
         /* Gear Systems */
 
-        private _gearSystems: Models.Gear.GearSystem[];
+        private _gearSystems = <Array<Models.Gear.GearSystem>>[];
 
         // TODO: this should be a read-only collection
         public getGearSystems() : Models.Gear.GearSystem[] {
@@ -124,7 +124,7 @@ module BackpackPlanner.Mockup {
 
         /* Gear Collections */
 
-        private _gearCollections: Models.Gear.GearCollection[];
+        private _gearCollections = <Array<Models.Gear.GearCollection>>[];
 
         // TODO: this should be a read-only collection
         public getGearCollections() : Models.Gear.GearCollection[] {
@@ -177,37 +177,37 @@ module BackpackPlanner.Mockup {
 
         /* Load/Save */
 
-        private loadGearItems(gearItemResources: Resources.Gear.IGearItemResource[]) {
-            if(this._gearItems) {
-                throw new Error("Gear items already loaded!");
-            }
-
+        private loadGearItems($q: ng.IQService, gearItemResources: Resources.Gear.IGearItemResource[]) {
+            const promises = <Array<ng.IPromise<any>>>[];
             this._gearItems = <Array<Models.Gear.GearItem>>[];
             for(let i=0; i<gearItemResources.length; ++i) {
-                this._gearItems.push(new Models.Gear.GearItem(gearItemResources[i]));
+                const gearItem = new Models.Gear.GearItem();
+                promises.push(gearItem.loadFromDevice($q, gearItemResources[i]));
+                this._gearItems.push(gearItem);
             }
+            return $q.all(promises);
         }
 
-        private loadGearSystems(gearSystemResources: Resources.Gear.IGearSystemResource[]) {
-            if(this._gearSystems) {
-                throw new Error("Gear systems already loaded!");
-            }
-
+        private loadGearSystems($q: ng.IQService, gearSystemResources: Resources.Gear.IGearSystemResource[]) {
+            const promises = <Array<ng.IPromise<any>>>[];
             this._gearSystems = <Array<Models.Gear.GearSystem>>[];
             for(let i=0; i<gearSystemResources.length; ++i) {
-                this._gearSystems.push(new Models.Gear.GearSystem(gearSystemResources[i]));
+                const gearSystem = new Models.Gear.GearSystem();
+                promises.push(gearSystem.loadFromDevice($q, gearSystemResources[i]));
+                this._gearSystems.push(gearSystem);
             }
+            return $q.all(promises);
         }
 
-        private loadGearCollections(gearCollectionResources: Resources.Gear.IGearCollectionResource[]) {
-            if(this._gearCollections) {
-                throw new Error("Gear collections already loaded!");
-            }
-
+        private loadGearCollections($q: ng.IQService, gearCollectionResources: Resources.Gear.IGearCollectionResource[]) {
+            const promises = <Array<ng.IPromise<any>>>[];
             this._gearCollections = <Array<Models.Gear.GearCollection>>[];
             for(let i=0; i<gearCollectionResources.length; ++i) {
-                this._gearCollections.push(new Models.Gear.GearCollection(gearCollectionResources[i]));
+                const gearCollection = new Models.Gear.GearCollection();
+                promises.push(gearCollection.loadFromDevice($q, gearCollectionResources[i]));
+                this._gearCollections.push(gearCollection);
             }
+            return $q.all(promises);
         }
 
         public loadFromDevice($q: ng.IQService, gearItemService: Services.Gear.IGearItemService, gearSystemService: Services.Gear.IGearSystemService, gearCollectionService: Services.Gear.IGearCollectionService) : ng.IPromise<any[]> {
@@ -215,19 +215,28 @@ module BackpackPlanner.Mockup {
 
             promises.push(gearItemService.query().$promise.then(
                 (gearItemResources: Resources.Gear.IGearItemResource[]) => {
-                    this.loadGearItems(gearItemResources);
+                    this.loadGearItems($q, gearItemResources).then(
+                        () => {
+                        }
+                    );
                 }
             ));
 
             promises.push(gearSystemService.query().$promise.then(
                 (gearSystemResources: Resources.Gear.IGearSystemResource[]) => {
-                    this.loadGearSystems(gearSystemResources);
+                    this.loadGearSystems($q, gearSystemResources).then(
+                        () => {
+                        }
+                    );
                 }
             ));
 
             promises.push(gearCollectionService.query().$promise.then(
                 (gearCollectionResources: Resources.Gear.IGearCollectionResource[]) => {
-                    this.loadGearCollections(gearCollectionResources);
+                    this.loadGearCollections($q, gearCollectionResources).then(
+                        () => {
+                        }
+                    );
                 }
             ));
 

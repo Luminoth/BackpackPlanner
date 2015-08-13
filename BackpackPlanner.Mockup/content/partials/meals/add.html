@@ -11,14 +11,27 @@
         <label>Website</label>
         <input type="url" ng-model="meal.Url" name="url" />
     </md-input-container>
-    <md-radio-group ng-model="meal.Meal" layout="row" layout-sm="column">
-        <md-radio-button value="Breakfast">Breakfast</md-radio-button>
-        <md-radio-button value="Lunch">Lunch</md-radio-button>
-        <md-radio-button value="Dinner">Dinner</md-radio-button>
-        <md-radio-button value="Snack">Snack</md-radio-button>
-        <md-radio-button value="Drink">Drink</md-radio-button>
-        <md-radio-button value="Other">Other</md-radio-button>
-    </md-radio-group>
+    <md-input-container hide-sm>
+        <md-radio-group ng-model="meal.Meal" layout="row">
+            <md-radio-button value="Breakfast">Breakfast</md-radio-button>
+            <md-radio-button value="Lunch">Lunch</md-radio-button>
+            <md-radio-button value="Dinner">Dinner</md-radio-button>
+            <md-radio-button value="Snack">Snack</md-radio-button>
+            <md-radio-button value="Drink">Drink</md-radio-button>
+            <md-radio-button value="Other">Other</md-radio-button>
+        </md-radio-group>
+    </md-input-container>
+    <md-input-container hide-gt-sm>
+        <label>Meal</label>
+        <md-select ng-model="meal.Meal">
+            <md-option value="Breakfast">Breakfast</md-option>
+            <md-option value="Lunch">Lunch</md-option>
+            <md-option value="Dinner">Dinner</md-option>
+            <md-option value="Snack">Snack</md-option>
+            <md-option value="Drink">Drink</md-option>
+            <md-option value="Other">Other</md-option>
+        </md-select>
+    </md-input-container>
     <div layout="row" layout-sm="column" flex>
         <md-input-container flex>
             <label>Servings</label>

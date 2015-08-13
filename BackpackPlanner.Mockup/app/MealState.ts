@@ -12,7 +12,7 @@ module BackpackPlanner.Mockup {
     export class MealState {
         /* Meals */
 
-        private _meals: Models.Meals.Meal[];
+        private _meals = <Array<Models.Meals.Meal>>[];
 
         // TODO: this should be a read-only collection
         public getMeals() : Models.Meals.Meal[] {
@@ -65,15 +65,15 @@ module BackpackPlanner.Mockup {
 
         /* Load/Save */
 
-        private loadMeals(mealResources: Resources.Meals.IMealResource[]) {
-            if(this._meals) {
-                throw new Error("Meals already loaded!");
-            }
-
+        private loadMeals($q: ng.IQService, mealResources: Resources.Meals.IMealResource[]) {
+            const promises = <Array<ng.IPromise<any>>>[];
             this._meals = <Array<Models.Meals.Meal>>[];
             for(let i=0; i<mealResources.length; ++i) {
-                this._meals.push(new Models.Meals.Meal(mealResources[i]));
+                const meal = new Models.Meals.Meal();
+                promises.push(meal.loadFromDevice($q, mealResources[i]));
+                this._meals.push(meal);
             }
+            return $q.all(promises);
         }
 
         public loadFromDevice($q: ng.IQService, mealService: Services.Meals.IMealService) : ng.IPromise<any[]> {
@@ -81,7 +81,10 @@ module BackpackPlanner.Mockup {
 
             promises.push(mealService.query().$promise.then(
                 (mealResources: Resources.Meals.IMealResource[]) => {
-                    this.loadMeals(mealResources);
+                    this.loadMeals($q, mealResources).then(
+                        () => {
+                        }
+                    );
                 }
             ));
 

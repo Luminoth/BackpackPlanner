@@ -10,22 +10,33 @@
         <md-input-container md-no-float flex>
             <input type="text" ng-model="filter.Name" name="filter" placeholder="Filter" />
         </md-input-container>
-        <label>Sort by</label>
-        <md-radio-group ng-model="orderBy" layout="row" layout-sm="column">
-            <md-radio-button value="Name">Name</md-radio-button>
-            <md-radio-button value="-getTotalGearItemCount()">Items</md-radio-button>
-            <md-radio-button value="-getWeightInUnits()">Weight</md-radio-button>
-            <md-radio-button value="-getCostInCurrency()">Cost</md-radio-button>
-            <md-radio-button value="-getCostPerUnitInCurrency()">Cost / Weight</md-radio-button>
-        </md-radio-group>
+        <label hide-sm>Sort by</label>
+        <md-input-container hide-sm>
+            <md-radio-group ng-model="orderBy" layout="row">
+                <md-radio-button value="Name">Name</md-radio-button>
+                <md-radio-button value="-getTotalGearItemCount()">Items</md-radio-button>
+                <md-radio-button value="-getWeightInUnits()">Weight</md-radio-button>
+                <md-radio-button value="-getCostInCurrency()">Cost</md-radio-button>
+                <md-radio-button value="-getCostPerUnitInCurrency()">Cost / Weight</md-radio-button>
+            </md-radio-group>
+        </md-input-container>
+        <md-input-container hide-gt-sm>
+            <label>Sort by</label>
+            <md-select ng-model="orderBy">
+                <md-option value="Name">Name</md-option>
+                <md-option value="-getTotalGearItemCount()">Items</md-option>
+                <md-option value="-getWeightInUnits()">Weight</md-option>
+                <md-option value="-getCostInCurrency()">Cost</md-option>
+                <md-option value="-getCostPerUnitInCurrency()">Cost / Weight</md-option>
+            </md-select>
+        </md-input-container>
         <md-button class="mockup-card-button" layout-fill ng-repeat="gearCollection in getGearCollections() | filter:filter | orderBy:orderBy" href="#/gear/collections/{{ gearCollection.Id }}">
             <md-card class="mockup-card" flex>
                 <md-card-content class="mockup-card-content">
                     <h2 class="md-title">{{ gearCollection.Name }}</h2>
+                    <p layout-padding>{{ gearCollection.getGearSystemCount() }} system(s)<br />{{ gearCollection.getGearItemCount() }} item(s) ({{ gearCollection.getTotalGearItemCount() }} total)</p>
                 </md-card-content>
                 <div layout="row" layout-sm="column">
-                    <p layout-padding>Systems: {{ gearCollection.getGearSystemCount() }}</p>
-                    <p layout-padding>Items: {{ gearCollection.getGearItemCount() }} ({{ gearCollection.getTotalGearItemCount() }} total)</p>
                     <p layout-padding>Weight: {{ gearCollection.getWeightInUnits() | number:2 }} {{ getUnitsWeightString() }}s</p>
                     <p layout-padding>Cost: {{ gearCollection.getCostInCurrency() | currency }} ({{ gearCollection.getCostPerUnitInCurrency() | currency }} per {{ getUnitsWeightString() }})</p>
                 </div>

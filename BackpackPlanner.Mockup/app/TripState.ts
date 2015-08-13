@@ -15,7 +15,7 @@ module BackpackPlanner.Mockup {
     export class TripState {
         /* Trip Itineraries */
 
-        private _tripItineraries: Models.Trips.TripItinerary[];
+        private _tripItineraries = <Array<Models.Trips.TripItinerary>>[];
 
         // TODO: this should be a read-only collection
         public getTripItineraries() : Models.Trips.TripItinerary[] {
@@ -68,7 +68,7 @@ module BackpackPlanner.Mockup {
 
         /* Trip Plans */
 
-        private _tripPlans: Models.Trips.TripPlan[];
+        private _tripPlans = <Array<Models.Trips.TripPlan>>[];
 
         // TODO: this should be a read-only collection
         public getTripPlans() : Models.Trips.TripPlan[] {
@@ -119,26 +119,26 @@ module BackpackPlanner.Mockup {
 
         /* Load/Save */
 
-        private loadTripItineraries(tripItineraryResources: Resources.Trips.ITripItineraryResource[]) {
-            if(this._tripItineraries) {
-                throw new Error("Trip itineraries already loaded!");
-            }
-
+        private loadTripItineraries($q: ng.IQService, tripItineraryResources: Resources.Trips.ITripItineraryResource[]) {
+            const promises = <Array<ng.IPromise<any>>>[];
             this._tripItineraries = <Array<Models.Trips.TripItinerary>>[];
             for(let i=0; i<tripItineraryResources.length; ++i) {
-                //this._tripItineraries.push(new Models.Trips.TripItinerary(tripItineraryResources[i]));
+                const tripItinerary = new Models.Trips.TripItinerary();
+                promises.push(tripItinerary.loadFromDevice($q, tripItineraryResources[i]));
+                this._tripItineraries.push(tripItinerary);
             }
+            return $q.all(promises);
         }
 
-        private loadTripPlans(tripPlanResources: Resources.Trips.ITripPlanResource[]) {
-            if(this._tripPlans) {
-                throw new Error("Trip plans already loaded!");
-            }
-
+        private loadTripPlans($q: ng.IQService, tripPlanResources: Resources.Trips.ITripPlanResource[]) {
+            const promises = <Array<ng.IPromise<any>>>[];
             this._tripPlans = <Array<Models.Trips.TripPlan>>[];
             for(let i=0; i<tripPlanResources.length; ++i) {
-                //this._tripPlans.push(new Models.Trips.TripPlan(tripPlanResources[i]));
+                const tripPlan = new Models.Trips.TripPlan();
+                promises.push(tripPlan.loadFromDevice($q, tripPlanResources[i]));
+                this._tripPlans.push(tripPlan);
             }
+            return $q.all(promises);
         }
 
         public loadFromDevice($q: ng.IQService, tripItineraryService: Services.Trips.ITripItineraryService, tripPlanService: Services.Trips.ITripPlanService) : ng.IPromise<any[]> {
@@ -146,13 +146,19 @@ module BackpackPlanner.Mockup {
 
             promises.push(tripItineraryService.query().$promise.then(
                 (tripItineraryResources: Resources.Trips.ITripItineraryResource[]) => {
-                    this.loadTripItineraries(tripItineraryResources);
+                    this.loadTripItineraries($q, tripItineraryResources).then(
+                        () => {
+                        }
+                    );
                 }
             ));
 
             promises.push(tripPlanService.query().$promise.then(
                 (tripPlanResources: Resources.Trips.ITripPlanResource[]) => {
-                    this.loadTripPlans(tripPlanResources);
+                    this.loadTripPlans($q, tripPlanResources).then(
+                        () => {
+                        }
+                    );
                 }
             ));
 
