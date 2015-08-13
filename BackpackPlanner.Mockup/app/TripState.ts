@@ -1,5 +1,13 @@
-﻿///<reference path="Models/Trips/TripItinerary.ts" />
+﻿///<reference path="../scripts/typings/angularjs/angular.d.ts" />
+
+///<reference path="Models/Trips/TripItinerary.ts" />
 ///<reference path="Models/Trips/TripPlan.ts" />
+
+///<reference path="Resources/Trips/TripItineraryResource.ts" />
+///<reference path="Resources/Trips/TripPlanResource.ts" />
+
+///<reference path="Services/Trips/TripItineraryService.ts" />
+///<reference path="Services/Trips/TripPlanService.ts" />
 
 module BackpackPlanner.Mockup {
     "use strict";
@@ -9,24 +17,9 @@ module BackpackPlanner.Mockup {
 
         private _tripItineraries: Models.Trips.TripItinerary[];
 
+        // TODO: this should be a read-only collection
         public getTripItineraries() : Models.Trips.TripItinerary[] {
             return this._tripItineraries;
-        }
-
-        public loadTripItineraries(tripItineraryResource: any[]) {
-            if(this._tripItineraries) {
-                throw new Error("Trip itineraries already loaded!");
-            }
-
-            this._tripItineraries = <Array<Models.Trips.TripItinerary>>[];
-            for(let i=0; i<tripItineraryResource.length; ++i) {
-                //this._tripItineraries.push(new Models.Trips.TripItinerary(tripItineraryResource[i]));
-            }
-        }
-
-        private getNextTripItineraryId() : number {
-            // TODO: write this
-            return -1;
         }
 
         public getTripItineraryIndexById(tripItineraryId: number) : number {
@@ -42,6 +35,11 @@ module BackpackPlanner.Mockup {
         public getTripItineraryById(tripItineraryId: number) : Models.Trips.TripItinerary {
             const idx = this.getTripItineraryIndexById(tripItineraryId);
             return idx < 0 ? null : this._tripItineraries[idx];
+        }
+
+        private getNextTripItineraryId() : number {
+            // TODO: write this
+            return -1;
         }
 
         public addTripItinerary(tripItinerary: Models.Trips.TripItinerary) : number {
@@ -72,24 +70,9 @@ module BackpackPlanner.Mockup {
 
         private _tripPlans: Models.Trips.TripPlan[];
 
+        // TODO: this should be a read-only collection
         public getTripPlans() : Models.Trips.TripPlan[] {
             return this._tripPlans;
-        }
-
-        public loadTripPlans(tripPlanResource: any[]) {
-            if(this._tripPlans) {
-                throw new Error("Trip plans already loaded!");
-            }
-
-            this._tripPlans = <Array<Models.Trips.TripPlan>>[];
-            for(let i=0; i<tripPlanResource.length; ++i) {
-                //this._tripPlans.push(new Models.Trips.TripPlan(tripPlanResource[i]));
-            }
-        }
-
-        private getNextTripPlanId() : number {
-            // TODO: write this
-            return -1;
         }
 
         public getTripPlanIndexById(tripPlanId: number) : number {
@@ -105,6 +88,11 @@ module BackpackPlanner.Mockup {
         public getTripPlanById(tripPlanId: number) : Models.Trips.TripPlan {
             const idx = this.getTripPlanIndexById(tripPlanId);
             return idx < 0 ? null : this._tripPlans[idx];
+        }
+
+        private getNextTripPlanId() : number {
+            // TODO: write this
+            return -1;
         }
 
         public addTripPlan(tripPlan: Models.Trips.TripPlan) : number {
@@ -131,12 +119,49 @@ module BackpackPlanner.Mockup {
 
         /* Load/Save */
 
-        public loadFromDevice() {
-            // TODO: load from the resources here and return a promise
+        private loadTripItineraries(tripItineraryResources: Resources.Trips.ITripItineraryResource[]) {
+            if(this._tripItineraries) {
+                throw new Error("Trip itineraries already loaded!");
+            }
+
+            this._tripItineraries = <Array<Models.Trips.TripItinerary>>[];
+            for(let i=0; i<tripItineraryResources.length; ++i) {
+                //this._tripItineraries.push(new Models.Trips.TripItinerary(tripItineraryResources[i]));
+            }
         }
 
-        public saveToDevice() {
-            // TODO: don't do anything here, just return a promise
+        private loadTripPlans(tripPlanResources: Resources.Trips.ITripPlanResource[]) {
+            if(this._tripPlans) {
+                throw new Error("Trip plans already loaded!");
+            }
+
+            this._tripPlans = <Array<Models.Trips.TripPlan>>[];
+            for(let i=0; i<tripPlanResources.length; ++i) {
+                //this._tripPlans.push(new Models.Trips.TripPlan(tripPlanResources[i]));
+            }
+        }
+
+        public loadFromDevice($q: ng.IQService, tripItineraryService: Services.Trips.ITripItineraryService, tripPlanService: Services.Trips.ITripPlanService) : ng.IPromise<any[]> {
+            const promises = <Array<ng.IPromise<any>>>[];
+
+            promises.push(tripItineraryService.query().$promise.then(
+                (tripItineraryResources: Resources.Trips.ITripItineraryResource[]) => {
+                    this.loadTripItineraries(tripItineraryResources);
+                }
+            ));
+
+            promises.push(tripPlanService.query().$promise.then(
+                (tripPlanResources: Resources.Trips.ITripPlanResource[]) => {
+                    this.loadTripPlans(tripPlanResources);
+                }
+            ));
+
+            return $q.all(promises);
+        }
+
+        public saveToDevice($q: ng.IQService) : ng.IPromise<any> {
+            // mockup does nothing here
+            return $q.defer().promise;
         }
     }
 }

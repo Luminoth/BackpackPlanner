@@ -2,6 +2,8 @@
 
 ///<reference path="../../AppState.ts"/>
 
+///<reference path="GearItem.ts"/>
+
 module BackpackPlanner.Mockup.Models.Gear {
     "use strict";
 
@@ -33,6 +35,35 @@ module BackpackPlanner.Mockup.Models.Gear {
             }
         }
 
+        private getGearItemEntryIndexById(gearItemId: number) : number {
+            for(let i=0; i<this.GearItems.length; ++i) {
+                const gearItemEntry = this.GearItems[i];
+                if(gearItemEntry.GearItemId == gearItemId) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        public containsGearItem(gearItem: GearItem) {
+            return this.getGearItemEntryIndexById(gearItem.Id) >= 0;
+        }
+
+        public addGearItem(gearItem: GearItem) {
+            if(this.containsGearItem(gearItem)) {
+                return;
+            }
+            this.GearItems.push(new GearItemEntry(gearItem.Id));
+        }
+
+        public removeGearItem(gearItem: GearItem) {
+            const idx = this.getGearItemEntryIndexById(gearItem.Id);
+            if(idx < 0) {
+                return;
+            }
+            this.GearItems.splice(idx, 1);
+        }
+
         public getGearItemCount() {
             let count = 0;
             for(let i=0; i<this.GearItems.length; ++i) {
@@ -52,7 +83,7 @@ module BackpackPlanner.Mockup.Models.Gear {
         }
 
         public getWeightInUnits() {
-            return convertGramsToUnits(this.getWeightInGrams(), AppState.getInstance().getAppSettings().Units);
+            return parseFloat(convertGramsToUnits(this.getWeightInGrams(), AppState.getInstance().getAppSettings().Units).toFixed(2));
         }
 
         public getCostInUSDP() {
@@ -68,15 +99,6 @@ module BackpackPlanner.Mockup.Models.Gear {
             return convertUSDPToCurrency(this.getCostInUSDP(), AppState.getInstance().getAppSettings().Currency);
         }
 
-        public getCostPerGramInUSDP() {
-            const costInUSDP = this.getCostInUSDP();
-            const weightInGrams = this.getWeightInGrams();
-
-            return 0 == weightInGrams
-                ? costInUSDP
-                : costInUSDP / weightInGrams;
-        }
-
         public getCostPerUnitInCurrency() {
             const costInCurrency = convertUSDPToCurrency(this.getCostInUSDP(), AppState.getInstance().getAppSettings().Currency);
             const weightInUnits = convertGramsToUnits(this.getWeightInGrams(), AppState.getInstance().getAppSettings().Units);
@@ -85,23 +107,6 @@ module BackpackPlanner.Mockup.Models.Gear {
                 ? costInCurrency
                 : costInCurrency / weightInUnits;
         }
-
-        public getGearItemEntryIndexById(gearItemId: number) : number {
-            for(let i=0; i<this.GearItems.length; ++i) {
-                const gearItemEntry = this.GearItems[i];
-                if(gearItemEntry.GearItemId == gearItemId) {
-                    return i;
-                }
-            }
-            return -1;
-        }
-
-        public getGearItemEntryById(gearItemId: number) : GearItemEntry {
-            const idx = this.getGearItemEntryIndexById(gearItemId);
-            return idx < 0 ? null : this.GearItems[idx];
-        }
-
-        // TODO: add/remove item entries
     }
 
     export interface IGearSystemEntry {
@@ -161,6 +166,10 @@ module BackpackPlanner.Mockup.Models.Gear {
                 return 0;
             }
             return this.Count * gearSystem.getCostInUSDP();
+        }
+
+        public getCostInCurrency() {
+            return convertUSDPToCurrency(this.getCostInUSDP(), AppState.getInstance().getAppSettings().Currency);
         }
     }
 }

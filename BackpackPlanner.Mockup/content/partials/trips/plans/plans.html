@@ -7,6 +7,20 @@
     </div>
     <div ng-show="getTripPlans().length < 1">You have no trip plans! Try adding one!</div>
     <div layout="column" flex ng-show="getTripPlans().length > 0">
+        <md-input-container md-no-float flex>
+            <input type="text" ng-model="filter.Name" name="filter" placeholder="Filter" />
+        </md-input-container>
+        <label>Sort by</label>
+        <md-radio-group ng-model="orderBy" layout="row" layout-sm="column">
+            <md-radio-button value="Name">Name</md-radio-button>
+        </md-radio-group>
+        <md-button class="mockup-card-button" layout-fill ng-repeat="tripPlan in getTripPlans() | filter:filter | orderBy:orderBy" href="#/trips/plans/{{ tripPlan.Id }}">
+            <md-card class="mockup-card" flex>
+                <md-card-content class="mockup-card-content">
+                    <h2 class="md-title">{{ tripPlan.Name }}</h2>
+                </md-card-content>
+            </md-card>
+        </md-button>
         <div layout="row">
             <span flex></span>
             <md-button class="md-raised md-warn mockup-button" ng-click="">

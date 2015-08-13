@@ -68,6 +68,7 @@
     <Content Include="data\gear\systems.json" />
     <Content Include="data\settings.json" />
     <Content Include="packages.config" />
+    <Content Include="data\meals\meals.json" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -77,6 +78,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <TypeScriptCompile Include="app\Actions\Command.ts" />
     <TypeScriptCompile Include="app\App.ts" />
     <TypeScriptCompile Include="app\AppState.ts" />
     <TypeScriptCompile Include="app\Controllers\AppCtrl.ts" />
@@ -118,17 +120,25 @@
     <TypeScriptCompile Include="app\Resources\Gear\GearCollectionResource.ts" />
     <TypeScriptCompile Include="app\Resources\Gear\GearItemResource.ts" />
     <TypeScriptCompile Include="app\Resources\Gear\GearSystemResource.ts" />
+    <TypeScriptCompile Include="app\Resources\Meals\MealResource.ts" />
     <TypeScriptCompile Include="app\Resources\Personal\UserInformationResource.ts" />
+    <TypeScriptCompile Include="app\Resources\Trips\TripItineraryResource.ts" />
+    <TypeScriptCompile Include="app\Resources\Trips\TripPlanResource.ts" />
     <TypeScriptCompile Include="app\Services\AppSettingsService.ts" />
     <TypeScriptCompile Include="app\Services\Gear\GearCollectionService.ts" />
     <TypeScriptCompile Include="app\Services\Gear\GearItemService.ts" />
     <TypeScriptCompile Include="app\Services\Gear\GearSystemService.ts" />
+    <TypeScriptCompile Include="app\Services\Meals\MealService.ts" />
     <TypeScriptCompile Include="app\Services\Personal\UserInformationService.ts" />
     <TypeScriptCompile Include="app\RootScopeConfig.ts" />
     <TypeScriptCompile Include="app\RouteConfig.ts" />
+    <TypeScriptCompile Include="app\Services\Trips\TripItineraryService.ts" />
+    <TypeScriptCompile Include="app\Services\Trips\TripPlanService.ts" />
     <TypeScriptCompile Include="app\ThemeConfig.ts" />
     <TypeScriptCompile Include="app\TripState.ts" />
     <TypeScriptCompile Include="app\UnitConversion.ts" />
+    <None Include="data\trips\itineraries.json" />
+    <None Include="data\trips\plans.json" />
     <TypeScriptCompile Include="scripts\typings\angular-material\angular-material.d.ts" />
     <TypeScriptCompile Include="scripts\typings\angularjs\angular-animate.d.ts" />
     <TypeScriptCompile Include="scripts\typings\angularjs\angular-cookies.d.ts" />

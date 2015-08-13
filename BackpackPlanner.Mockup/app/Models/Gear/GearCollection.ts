@@ -2,6 +2,9 @@
 
 ///<reference path="../../AppState.ts"/>
 
+///<reference path="GearItem.ts"/>
+///<reference path="GearSystem.ts"/>
+
 module BackpackPlanner.Mockup.Models.Gear {
     "use strict";
 
@@ -40,12 +43,71 @@ module BackpackPlanner.Mockup.Models.Gear {
             }
         }
 
+        private getGearSystemEntryIndexById(gearSystemId: number) : number {
+            for(let i=0; i<this.GearSystems.length; ++i) {
+                const gearSystemEntry = this.GearSystems[i];
+                if(gearSystemEntry.GearSystemId == gearSystemId) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        public containsGearSystem(gearSystem: GearSystem) {
+            return this.getGearSystemEntryIndexById(gearSystem.Id) >= 0;
+        }
+
+        public addGearSystem(gearSystem: GearSystem) {
+            if(this.containsGearSystem(gearSystem)) {
+                return;
+            }
+            this.GearSystems.push(new GearSystemEntry(gearSystem.Id));
+        }
+
+        public removeGearSystem(gearSystem: GearSystem) {
+            const idx = this.getGearSystemEntryIndexById(gearSystem.Id);
+            if(idx < 0) {
+                return;
+            }
+            this.GearSystems.splice(idx, 1);
+        }
+
+        private getGearItemEntryIndexById(gearItemId: number) : number {
+            for(let i=0; i<this.GearItems.length; ++i) {
+                const gearItemEntry = this.GearItems[i];
+                if(gearItemEntry.GearItemId == gearItemId) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        public containsGearItem(gearItem: GearItem) {
+            return this.getGearItemEntryIndexById(gearItem.Id) >= 0;
+        }
+
+        public addGearItem(gearItem: GearItem) {
+            if(this.containsGearItem(gearItem)) {
+                return;
+            }
+            this.GearItems.push(new GearItemEntry(gearItem.Id));
+        }
+
+        public removeGearItem(gearItem: GearItem) {
+            const idx = this.getGearItemEntryIndexById(gearItem.Id);
+            if(idx < 0) {
+                return;
+            }
+            this.GearItems.splice(idx, 1);
+        }
+
         public getTotalGearItemCount() {
             let count = 0;
             for(let i=0; i<this.GearSystems.length; ++i) {
                 const gearSystemEntry = this.GearSystems[i];
                 count += gearSystemEntry.getGearItemCount();
             }
+
             for(let i=0; i<this.GearItems.length; ++i) {
                 const gearItemEntry = this.GearItems[i];
                 count += gearItemEntry.Count;
@@ -77,6 +139,7 @@ module BackpackPlanner.Mockup.Models.Gear {
                 const gearSystemEntry = this.GearSystems[i];
                 weightInGrams += gearSystemEntry.getWeightInGrams();
             }
+
             for(let i=0; i<this.GearItems.length; ++i) {
                 const gearItemEntry = this.GearItems[i];
                 weightInGrams += gearItemEntry.getWeightInGrams();
@@ -94,6 +157,7 @@ module BackpackPlanner.Mockup.Models.Gear {
                 const gearSystemEntry = this.GearSystems[i];
                 costInUSDP += gearSystemEntry.getCostInUSDP();
             }
+
             for(let i=0; i<this.GearItems.length; ++i) {
                 const gearItemEntry = this.GearItems[i];
                 costInUSDP += gearItemEntry.getCostInUSDP();
@@ -105,15 +169,6 @@ module BackpackPlanner.Mockup.Models.Gear {
             return convertUSDPToCurrency(this.getCostInUSDP(), AppState.getInstance().getAppSettings().Currency);
         }
 
-        public getCostPerGramInUSDP() {
-            const costInUSDP = this.getCostInUSDP();
-            const weightInGrams = this.getWeightInGrams();
-
-            return 0 == weightInGrams
-                ? costInUSDP
-                : costInUSDP / weightInGrams;
-        }
-
         public getCostPerUnitInCurrency() {
             const costInCurrency = convertUSDPToCurrency(this.getCostInUSDP(), AppState.getInstance().getAppSettings().Currency);
             const weightInUnits = convertGramsToUnits(this.getWeightInGrams(), AppState.getInstance().getAppSettings().Units);
@@ -122,40 +177,6 @@ module BackpackPlanner.Mockup.Models.Gear {
                 ? costInCurrency
                 : costInCurrency / weightInUnits;
         }
-
-        public getGearSystemEntryIndexById(gearSystemId: number) : number {
-            for(let i=0; i<this.GearSystems.length; ++i) {
-                const gearSystemEntry = this.GearSystems[i];
-                if(gearSystemEntry.GearSystemId == gearSystemId) {
-                    return i;
-                }
-            }
-            return -1;
-        }
-
-        public getGearSystemEntryById(gearSystemId: number) : GearSystemEntry {
-            const idx = this.getGearSystemEntryIndexById(gearSystemId);
-            return idx < 0 ? null : this.GearSystems[idx];
-        }
-
-        // TODO: add/remove system entries
-
-        public getGearItemEntryIndexById(gearItemId: number) : number {
-            for(let i=0; i<this.GearItems.length; ++i) {
-                const gearItemEntry = this.GearItems[i];
-                if(gearItemEntry.GearItemId == gearItemId) {
-                    return i;
-                }
-            }
-            return -1;
-        }
-
-        public getGearItemEntryById(gearItemId: number) : GearItemEntry {
-            const idx = this.getGearItemEntryIndexById(gearItemId);
-            return idx < 0 ? null : this.GearItems[idx];
-        }
-
-        // TODO: add/remove item entries
     }
 
     export interface IGearCollectionEntry {
@@ -231,6 +252,10 @@ module BackpackPlanner.Mockup.Models.Gear {
                 return 0;
             }
             return this.Count * gearCollection.getCostInUSDP();
+        }
+
+        public getCostInCurrency() {
+            return convertUSDPToCurrency(this.getCostInUSDP(), AppState.getInstance().getAppSettings().Currency);
         }
     }
 }

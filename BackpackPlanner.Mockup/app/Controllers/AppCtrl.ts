@@ -13,6 +13,9 @@
 ///<reference path="../Services/Gear/GearCollectionService.ts"/>
 ///<reference path="../Services/Gear/GearItemService.ts"/>
 ///<reference path="../Services/Gear/GearSystemService.ts"/>
+///<reference path="../Services/Meals/MealService.ts"/>
+///<reference path="../Services/Trips/TripItineraryService.ts"/>
+///<reference path="../Services/Trips/TripPlanService.ts"/>
 ///<reference path="../Services/Personal/UserInformationService.ts"/>
 ///<reference path="../Services/AppSettingsService.ts"/>
 
@@ -59,44 +62,26 @@ module BackpackPlanner.Mockup.Controllers {
     }
 
     export class AppCtrl {
-        constructor($scope: IAppScope, $location: ng.ILocationService, $mdSidenav: ng.material.ISidenavService,
+        constructor($scope: IAppScope, $q: ng.IQService, $location: ng.ILocationService, $mdSidenav: ng.material.ISidenavService,
             appSettingsService: Services.IAppSettingsService, userInformationService: Services.Personal.IUserInformationService,
-            gearItemService: Services.Gear.IGearItemService, gearSystemService: Services.Gear.IGearSystemService, gearCollectionService: Services.Gear.IGearCollectionService
-            /*mealsService: Services.Meals.IMealService,
-            tripItinerariesService: Services.Trips.ITripItineraryService, tripPlansService: Services.Trips.ITripPlansService*/) {
+            gearItemService: Services.Gear.IGearItemService, gearSystemService: Services.Gear.IGearSystemService, gearCollectionService: Services.Gear.IGearCollectionService,
+            mealService: Services.Meals.IMealService, tripItineraryService: Services.Trips.ITripItineraryService, tripPlanService: Services.Trips.ITripPlanService) {
 
             $scope.appStateLoading = true;
-            AppState.getInstance().loadFromDevice()/*.$promise.then(
-                $scope.appStateLoading = false;
-            )*/;
-
-/* TODO: move all of this into the AppState.loadFromDevice() call */
-
-            // load the application settings
-            appSettingsService.get().$promise.then(
-                (appSettingsResource: Resources.IAppSettingsResource) => {
-                    AppState.getInstance().loadAppSettings(appSettingsResource);
+            AppState.getInstance().loadFromDevice($q, appSettingsService, userInformationService,
+                gearItemService, gearSystemService, gearCollectionService,
+                mealService, tripItineraryService, tripPlanService).then(
+                () => {
+                    $scope.appStateLoading = false;
                 }
             );
 
-            // load the user's personal information
-            userInformationService.get().$promise.then(
-                (userInfoResource: Resources.Personal.IUserInformationResource) => {
-                    AppState.getInstance().loadUserInformation(userInfoResource);
-                }
-            );
-
+            // user information
             $scope.getUserInfo = () => {
                 return AppState.getInstance().getUserInformation();
             }
 
-            // load the gear items
-            gearItemService.query().$promise.then(
-                (gearItemsResource: Resources.Gear.IGearItemResource[]) => {
-                    AppState.getInstance().getGearState().loadGearItems(gearItemsResource);
-                }
-            );
-
+            // gear items
             $scope.getGearItems = () => {
                 return AppState.getInstance().getGearState().getGearItems();
             }
@@ -110,13 +95,7 @@ module BackpackPlanner.Mockup.Controllers {
                 AppState.getInstance().getGearState().deleteAllGearItems();
             }
 
-            // load the gear systems
-            gearSystemService.query().$promise.then(
-                (gearSystemsResource: Resources.Gear.IGearSystemResource[]) => {
-                    AppState.getInstance().getGearState().loadGearSystems(gearSystemsResource);
-                }
-            );
-
+            // gear systems
             $scope.getGearSystems = () => {
                 return AppState.getInstance().getGearState().getGearSystems();
             }
@@ -130,13 +109,7 @@ module BackpackPlanner.Mockup.Controllers {
                 AppState.getInstance().getGearState().deleteAllGearSystems();
             }
 
-            // load the gear collections
-            gearCollectionService.query().$promise.then(
-                (gearCollectionsResource: Resources.Gear.IGearCollectionResource[]) => {
-                    AppState.getInstance().getGearState().loadGearCollections(gearCollectionsResource);
-                }
-            );
-
+            // gear collections
             $scope.getGearCollections = () => {
                 return AppState.getInstance().getGearState().getGearCollections();
             }
@@ -150,13 +123,13 @@ module BackpackPlanner.Mockup.Controllers {
                 AppState.getInstance().getGearState().deleteAllGearCollections();
             }
 
-            // load the meals
+            // meals
             $scope.getMeals = () => {
-                return <Array<Models.Meals.Meal>>[];
+                return AppState.getInstance().getMealState().getMeals();
             }
 
             $scope.getMealById = (mealId: number) => {
-                return <Models.Meals.Meal> null;
+                return AppState.getInstance().getMealState().getMealById(mealId);
             }
 
             $scope.deleteAllMeals = () => {
@@ -164,13 +137,13 @@ module BackpackPlanner.Mockup.Controllers {
                 AppState.getInstance().getMealState().deleteAllMeals();
             }
 
-            // load the trip itineraries
+            // trip itineraries
             $scope.getTripItineraries = () => {
-                return <Array<Models.Trips.TripItinerary>>[];
+                return AppState.getInstance().getTripState().getTripItineraries();
             }
 
             $scope.getTripItineraryById = (tripItineraryId: number) => {
-                return <Models.Trips.TripItinerary> null;
+                return AppState.getInstance().getTripState().getTripItineraryById(tripItineraryId);
             }
 
             $scope.deleteAllTripItineraries = () => {
@@ -178,12 +151,13 @@ module BackpackPlanner.Mockup.Controllers {
                 AppState.getInstance().getTripState().deleteAllTripItineraries();
             }
 
-            // load the trip plans
+            // trip plans
             $scope.getTripPlans = () => {
-                return <Array<Models.Trips.TripPlan>>[];
+                return AppState.getInstance().getTripState().getTripPlans();
             }
+
             $scope.getTripPlanById = (tripPlanId: number) => {
-                return <Models.Trips.TripPlan> null;
+                return AppState.getInstance().getTripState().getTripPlanById(tripPlanId);
             }
 
             $scope.deleteAllTripPlans = () => {
@@ -191,8 +165,7 @@ module BackpackPlanner.Mockup.Controllers {
                 AppState.getInstance().getTripState().deleteAllTripPlans();
             }
 
-/* TODO: end move all of this into the AppState.loadFromDevice() call */
-
+            // unit utilities
             $scope.getUnitsWeightString = () => {
                 return getUnitsWeightString(AppState.getInstance().getAppSettings().Units);
             }
@@ -205,6 +178,7 @@ module BackpackPlanner.Mockup.Controllers {
                 return getCurrencyString(AppState.getInstance().getAppSettings().Currency);
             }
 
+            // view utilities
             $scope.isActive = (viewLocation: string) => {
                 // set the nav item as active when we're looking at its location
                 return $location.path() === viewLocation;
@@ -216,9 +190,8 @@ module BackpackPlanner.Mockup.Controllers {
         }
     }
 
-    AppCtrl.$inject = ["$scope", "$location", "$mdSidenav",
+    AppCtrl.$inject = ["$scope", "$q", "$location", "$mdSidenav",
         "AppSettingsService", "UserInformationService",
-        "GearItemService", "GearSystemService", "GearCollectionService"/*
-        MealService,
-        TripItineraryService, TripPlanService*/];
+        "GearItemService", "GearSystemService", "GearCollectionService",
+        "MealService", "TripItineraryService", "TripPlanService"];
 }

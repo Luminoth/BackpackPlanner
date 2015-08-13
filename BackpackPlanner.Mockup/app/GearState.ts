@@ -1,10 +1,16 @@
-﻿///<reference path="Models/Gear/GearCollection.ts" />
+﻿///<reference path="../scripts/typings/angularjs/angular.d.ts" />
+
+///<reference path="Models/Gear/GearCollection.ts" />
 ///<reference path="Models/Gear/GearItem.ts" />
 ///<reference path="Models/Gear/GearSystem.ts" />
 
 ///<reference path="Resources/Gear/GearCollectionResource.ts" />
 ///<reference path="Resources/Gear/GearItemResource.ts" />
 ///<reference path="Resources/Gear/GearSystemResource.ts" />
+
+///<reference path="Services/Gear/GearCollectionService.ts"/>
+///<reference path="Services/Gear/GearItemService.ts"/>
+///<reference path="Services/Gear/GearSystemService.ts"/>
 
 module BackpackPlanner.Mockup {
     "use strict";
@@ -14,24 +20,9 @@ module BackpackPlanner.Mockup {
 
         private _gearItems: Models.Gear.GearItem[];
 
+        // TODO: this should be a read-only collection
         public getGearItems() : Models.Gear.GearItem[] {
             return this._gearItems;
-        }
-
-        public loadGearItems(gearItemsResource: Resources.Gear.IGearItemResource[]) {
-            if(this._gearItems) {
-                throw new Error("Gear items already loaded!");
-            }
-
-            this._gearItems = <Array<Models.Gear.GearItem>>[];
-            for(let i=0; i<gearItemsResource.length; ++i) {
-                this._gearItems.push(new Models.Gear.GearItem(gearItemsResource[i]));
-            }
-        }
-
-        private getNextGearItemId() : number {
-            // TODO: write this
-            return -1;
         }
 
         public getGearItemIndexById(gearItemId: number) : number {
@@ -47,6 +38,11 @@ module BackpackPlanner.Mockup {
         public getGearItemById(gearItemId: number) : Models.Gear.GearItem {
             const idx = this.getGearItemIndexById(gearItemId);
             return idx < 0 ? null : this._gearItems[idx];
+        }
+
+        private getNextGearItemId() : number {
+            // TODO: write this
+            return -1;
         }
 
         public addGearItem(gearItem: Models.Gear.GearItem) : number {
@@ -77,24 +73,9 @@ module BackpackPlanner.Mockup {
 
         private _gearSystems: Models.Gear.GearSystem[];
 
+        // TODO: this should be a read-only collection
         public getGearSystems() : Models.Gear.GearSystem[] {
             return this._gearSystems;
-        }
-
-        public loadGearSystems(gearSystemsResource: Resources.Gear.IGearSystemResource[]) {
-            if(this._gearSystems) {
-                throw new Error("Gear systems already loaded!");
-            }
-
-            this._gearSystems = <Array<Models.Gear.GearSystem>>[];
-            for(let i=0; i<gearSystemsResource.length; ++i) {
-                this._gearSystems.push(new Models.Gear.GearSystem(gearSystemsResource[i]));
-            }
-        }
-
-        private getNextGearSystemId() : number {
-            // TODO: write this
-            return -1;
         }
 
         public getGearSystemIndexById(gearSystemId: number) : number {
@@ -110,6 +91,11 @@ module BackpackPlanner.Mockup {
         public getGearSystemById(gearSystemId: number) : Models.Gear.GearSystem {
             const idx = this.getGearSystemIndexById(gearSystemId);
             return idx < 0 ? null : this._gearSystems[idx];
+        }
+
+        private getNextGearSystemId() : number {
+            // TODO: write this
+            return -1;
         }
 
         public addGearSystem(gearSystem: Models.Gear.GearSystem) : number {
@@ -140,24 +126,9 @@ module BackpackPlanner.Mockup {
 
         private _gearCollections: Models.Gear.GearCollection[];
 
+        // TODO: this should be a read-only collection
         public getGearCollections() : Models.Gear.GearCollection[] {
             return this._gearCollections;
-        }
-
-        public loadGearCollections(gearCollectionsResource: Resources.Gear.IGearCollectionResource[]) {
-            if(this._gearCollections) {
-                throw new Error("Gear collections already loaded!");
-            }
-
-            this._gearCollections = <Array<Models.Gear.GearCollection>>[];
-            for(let i=0; i<gearCollectionsResource.length; ++i) {
-                this._gearCollections.push(new Models.Gear.GearCollection(gearCollectionsResource[i]));
-            }
-        }
-
-        private getNextGearCollectionId() : number {
-            // TODO: write this
-            return -1;
         }
 
         public getGearCollectionIndexById(gearCollectionId: number) : number {
@@ -173,6 +144,11 @@ module BackpackPlanner.Mockup {
         public getGearCollectionById(gearCollectionId: number) : Models.Gear.GearCollection {
             const idx = this.getGearCollectionIndexById(gearCollectionId);
             return idx < 0 ? null : this._gearCollections[idx];
+        }
+
+        private getNextGearCollectionId() : number {
+            // TODO: write this
+            return -1;
         }
 
         public addGearCollection(gearCollection: Models.Gear.GearCollection) : number {
@@ -201,12 +177,66 @@ module BackpackPlanner.Mockup {
 
         /* Load/Save */
 
-        public loadFromDevice() {
-            // TODO: load from the resources here and return a promise
+        private loadGearItems(gearItemResources: Resources.Gear.IGearItemResource[]) {
+            if(this._gearItems) {
+                throw new Error("Gear items already loaded!");
+            }
+
+            this._gearItems = <Array<Models.Gear.GearItem>>[];
+            for(let i=0; i<gearItemResources.length; ++i) {
+                this._gearItems.push(new Models.Gear.GearItem(gearItemResources[i]));
+            }
         }
 
-        public saveToDevice() {
-            // TODO: don't do anything here, just return a promise
+        private loadGearSystems(gearSystemResources: Resources.Gear.IGearSystemResource[]) {
+            if(this._gearSystems) {
+                throw new Error("Gear systems already loaded!");
+            }
+
+            this._gearSystems = <Array<Models.Gear.GearSystem>>[];
+            for(let i=0; i<gearSystemResources.length; ++i) {
+                this._gearSystems.push(new Models.Gear.GearSystem(gearSystemResources[i]));
+            }
+        }
+
+        private loadGearCollections(gearCollectionResources: Resources.Gear.IGearCollectionResource[]) {
+            if(this._gearCollections) {
+                throw new Error("Gear collections already loaded!");
+            }
+
+            this._gearCollections = <Array<Models.Gear.GearCollection>>[];
+            for(let i=0; i<gearCollectionResources.length; ++i) {
+                this._gearCollections.push(new Models.Gear.GearCollection(gearCollectionResources[i]));
+            }
+        }
+
+        public loadFromDevice($q: ng.IQService, gearItemService: Services.Gear.IGearItemService, gearSystemService: Services.Gear.IGearSystemService, gearCollectionService: Services.Gear.IGearCollectionService) : ng.IPromise<any[]> {
+            const promises = <Array<ng.IPromise<any>>>[];
+
+            promises.push(gearItemService.query().$promise.then(
+                (gearItemResources: Resources.Gear.IGearItemResource[]) => {
+                    this.loadGearItems(gearItemResources);
+                }
+            ));
+
+            promises.push(gearSystemService.query().$promise.then(
+                (gearSystemResources: Resources.Gear.IGearSystemResource[]) => {
+                    this.loadGearSystems(gearSystemResources);
+                }
+            ));
+
+            promises.push(gearCollectionService.query().$promise.then(
+                (gearCollectionResources: Resources.Gear.IGearCollectionResource[]) => {
+                    this.loadGearCollections(gearCollectionResources);
+                }
+            ));
+
+            return $q.all(promises);
+        }
+
+        public saveToDevice($q: ng.IQService) : ng.IPromise<any> {
+            // mockup does nothing here
+            return $q.defer().promise;
         }
     }
 }

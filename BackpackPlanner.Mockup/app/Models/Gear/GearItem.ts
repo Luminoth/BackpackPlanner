@@ -48,12 +48,6 @@ module BackpackPlanner.Mockup.Models.Gear {
             }
         }
 
-        public getCostPerGramInUSDP() {
-            return 0 == this.WeightInGrams
-                ? this.CostInUSDP
-                : this.CostInUSDP / this.WeightInGrams;
-        }
-
         public getCostPerUnitInCurrency() {
             const costInCurrency = convertUSDPToCurrency(this.CostInUSDP, AppState.getInstance().getAppSettings().Currency);
             const weightInUnits = convertGramsToUnits(this.WeightInGrams, AppState.getInstance().getAppSettings().Units);
@@ -125,6 +119,10 @@ module BackpackPlanner.Mockup.Models.Gear {
                 return 0;
             }
             return this.Count * gearItem.CostInUSDP;
+        }
+
+        public getCostInCurrency() {
+            return convertUSDPToCurrency(this.getCostInUSDP(), AppState.getInstance().getAppSettings().Currency);
         }
     }
 }

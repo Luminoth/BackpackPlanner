@@ -15,7 +15,7 @@
             <md-radio-button value="Name">Name</md-radio-button>
             <md-radio-button value="-WeightInGrams">Weight</md-radio-button>
             <md-radio-button value="-CostInUSDP">Cost</md-radio-button>
-            <md-radio-button value="-getCostPerGramInUSDP()">Cost / Weight</md-radio-button>
+            <md-radio-button value="-getCostPerUnitInCurrency()">Cost / Weight</md-radio-button>
         </md-radio-group>
         <md-button class="mockup-card-button" layout-fill ng-repeat="gearItem in getGearItems() | filter:filter | orderBy:orderBy" href="#/gear/items/{{ gearItem.Id }}">
             <md-card class="mockup-card" flex>

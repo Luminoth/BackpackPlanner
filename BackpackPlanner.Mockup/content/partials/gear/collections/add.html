@@ -13,7 +13,7 @@
         <md-radio-group ng-model="orderGearSystemsBy" layout="row">
             <md-radio-button value="getName()">Name</md-radio-button>
             <md-radio-button value="-Count">Count</md-radio-button>
-            <md-radio-button value="-getWeightInGrams()">Weight</md-radio-button>
+            <md-radio-button value="-getWeightInUnits()">Weight</md-radio-button>
         </md-radio-group>
         <md-list>
             <md-list-item ng-repeat="gearSystemEntry in gearCollection.GearSystems | orderBy:orderGearSystemsBy" ng-init="gearSystem = getGearSystemById(gearSystemEntry.GearSystemId)">
@@ -43,7 +43,7 @@
         <md-radio-group ng-model="orderGearItemsBy" layout="row">
             <md-radio-button value="getName()">Name</md-radio-button>
             <md-radio-button value="-Count">Count</md-radio-button>
-            <md-radio-button value="-getWeightInGrams()">Weight</md-radio-button>
+            <md-radio-button value="-getWeightInUnits()">Weight</md-radio-button>
         </md-radio-group>
         <md-list>
             <md-list-item ng-repeat="gearItemEntry in gearCollection.GearItems | orderBy:orderGearItemsBy" ng-init="gearItem = getGearItemById(gearItemEntry.GearItemId)">

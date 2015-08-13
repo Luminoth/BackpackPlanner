@@ -30,15 +30,14 @@ module BackpackPlanner.Mockup.Controllers.Gear.Systems {
             };
 
             $scope.isSelected = (gearItem) => {
-                return $scope.gearSystem.getGearItemEntryIndexById(gearItem.Id) >= 0;
+                return $scope.gearSystem.containsGearItem(gearItem);
             }
 
             $scope.toggle = (gearItem) => {
-                var idx = $scope.gearSystem.getGearItemEntryIndexById(gearItem.Id);
-                if(idx < 0) {
-                    $scope.gearSystem.GearItems.push(new Models.Gear.GearItemEntry(gearItem.Id));
+                if(!$scope.gearSystem.containsGearItem(gearItem)) {
+                    $scope.gearSystem.addGearItem(gearItem);
                 } else {
-                    $scope.gearSystem.GearItems.splice(idx, 1);
+                    $scope.gearSystem.removeGearItem(gearItem);
                 } 
             };
         }

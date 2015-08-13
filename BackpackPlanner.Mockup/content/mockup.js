@@ -1,3 +1,28 @@
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Actions;
+        (function (Actions) {
+            "use strict";
+        })(Actions = Mockup.Actions || (Mockup.Actions = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
+///<reference path="../../Models/Gear/GearItem.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Resources;
+        (function (Resources) {
+            var Gear;
+            (function (Gear) {
+                "use strict";
+            })(Gear = Resources.Gear || (Resources.Gear = {}));
+        })(Resources = Mockup.Resources || (Mockup.Resources = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
 ///<reference path="../../Models/Personal/UserInformation.ts" />
 var BackpackPlanner;
@@ -95,7 +120,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
-///<reference path="../../Models/Gear/GearCollection.ts" />
+///<reference path="../../Models/Gear/GearSystem.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -109,8 +134,157 @@ var BackpackPlanner;
         })(Resources = Mockup.Resources || (Mockup.Resources = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../Resources/Gear/GearSystemResource.ts"/>
+///<reference path="../../AppState.ts"/>
+///<reference path="GearItem.ts"/>
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Models;
+        (function (Models) {
+            var Gear;
+            (function (Gear) {
+                "use strict";
+                var GearSystem = (function () {
+                    function GearSystem(gearSystemResource) {
+                        this.Id = -1;
+                        this.Name = "";
+                        this.Note = "";
+                        this.GearItems = [];
+                        if (gearSystemResource) {
+                            this.Id = gearSystemResource.Id;
+                            this.Name = gearSystemResource.Name;
+                            this.Note = gearSystemResource.Note;
+                            for (var i = 0; i < gearSystemResource.GearItems.length; ++i) {
+                                var gearItemEntry = gearSystemResource.GearItems[i];
+                                this.GearItems.push(new Gear.GearItemEntry(gearItemEntry.GearItemId, gearItemEntry.Count, gearItemEntry.IsPacked));
+                            }
+                        }
+                    }
+                    GearSystem.prototype.getGearItemEntryIndexById = function (gearItemId) {
+                        for (var i = 0; i < this.GearItems.length; ++i) {
+                            var gearItemEntry = this.GearItems[i];
+                            if (gearItemEntry.GearItemId == gearItemId) {
+                                return i;
+                            }
+                        }
+                        return -1;
+                    };
+                    GearSystem.prototype.containsGearItem = function (gearItem) {
+                        return this.getGearItemEntryIndexById(gearItem.Id) >= 0;
+                    };
+                    GearSystem.prototype.addGearItem = function (gearItem) {
+                        if (this.containsGearItem(gearItem)) {
+                            return;
+                        }
+                        this.GearItems.push(new Gear.GearItemEntry(gearItem.Id));
+                    };
+                    GearSystem.prototype.removeGearItem = function (gearItem) {
+                        var idx = this.getGearItemEntryIndexById(gearItem.Id);
+                        if (idx < 0) {
+                            return;
+                        }
+                        this.GearItems.splice(idx, 1);
+                    };
+                    GearSystem.prototype.getGearItemCount = function () {
+                        var count = 0;
+                        for (var i = 0; i < this.GearItems.length; ++i) {
+                            var gearItemEntry = this.GearItems[i];
+                            count += gearItemEntry.Count;
+                        }
+                        return count;
+                    };
+                    GearSystem.prototype.getWeightInGrams = function () {
+                        var weightInGrams = 0;
+                        for (var i = 0; i < this.GearItems.length; ++i) {
+                            var gearItemEntry = this.GearItems[i];
+                            weightInGrams += gearItemEntry.getWeightInGrams();
+                        }
+                        return weightInGrams;
+                    };
+                    GearSystem.prototype.getWeightInUnits = function () {
+                        return parseFloat(Mockup.convertGramsToUnits(this.getWeightInGrams(), Mockup.AppState.getInstance().getAppSettings().Units).toFixed(2));
+                    };
+                    GearSystem.prototype.getCostInUSDP = function () {
+                        var costInUSDP = 0;
+                        for (var i = 0; i < this.GearItems.length; ++i) {
+                            var gearItemEntry = this.GearItems[i];
+                            costInUSDP += gearItemEntry.getCostInUSDP();
+                        }
+                        return costInUSDP;
+                    };
+                    GearSystem.prototype.getCostInCurrency = function () {
+                        return Mockup.convertUSDPToCurrency(this.getCostInUSDP(), Mockup.AppState.getInstance().getAppSettings().Currency);
+                    };
+                    GearSystem.prototype.getCostPerUnitInCurrency = function () {
+                        var costInCurrency = Mockup.convertUSDPToCurrency(this.getCostInUSDP(), Mockup.AppState.getInstance().getAppSettings().Currency);
+                        var weightInUnits = Mockup.convertGramsToUnits(this.getWeightInGrams(), Mockup.AppState.getInstance().getAppSettings().Units);
+                        return 0 == weightInUnits
+                            ? costInCurrency
+                            : costInCurrency / weightInUnits;
+                    };
+                    return GearSystem;
+                })();
+                Gear.GearSystem = GearSystem;
+                var GearSystemEntry = (function () {
+                    function GearSystemEntry(gearSystemId, count, isPacked) {
+                        this.GearSystemId = -1;
+                        this.Count = 1;
+                        this.IsPacked = false;
+                        this.GearSystemId = gearSystemId;
+                        if (count) {
+                            this.Count = count;
+                        }
+                        if (isPacked) {
+                            this.IsPacked = isPacked;
+                        }
+                    }
+                    GearSystemEntry.prototype.getName = function () {
+                        var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(this.GearSystemId);
+                        if (!gearSystem) {
+                            return "";
+                        }
+                        return gearSystem.Name;
+                    };
+                    GearSystemEntry.prototype.getGearItemCount = function () {
+                        var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(this.GearSystemId);
+                        if (!gearSystem) {
+                            return 0;
+                        }
+                        return this.Count * gearSystem.getGearItemCount();
+                    };
+                    GearSystemEntry.prototype.getWeightInGrams = function () {
+                        var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(this.GearSystemId);
+                        if (!gearSystem) {
+                            return 0;
+                        }
+                        return this.Count * gearSystem.getWeightInGrams();
+                    };
+                    GearSystemEntry.prototype.getWeightInUnits = function () {
+                        return parseFloat(Mockup.convertGramsToUnits(this.getWeightInGrams(), Mockup.AppState.getInstance().getAppSettings().Units).toFixed(2));
+                    };
+                    GearSystemEntry.prototype.getCostInUSDP = function () {
+                        var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(this.GearSystemId);
+                        if (!gearSystem) {
+                            return 0;
+                        }
+                        return this.Count * gearSystem.getCostInUSDP();
+                    };
+                    GearSystemEntry.prototype.getCostInCurrency = function () {
+                        return Mockup.convertUSDPToCurrency(this.getCostInUSDP(), Mockup.AppState.getInstance().getAppSettings().Currency);
+                    };
+                    return GearSystemEntry;
+                })();
+                Gear.GearSystemEntry = GearSystemEntry;
+            })(Gear = Models.Gear || (Models.Gear = {}));
+        })(Models = Mockup.Models || (Mockup.Models = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../Resources/Gear/GearCollectionResource.ts"/>
 ///<reference path="../../AppState.ts"/>
+///<reference path="GearItem.ts"/>
+///<reference path="GearSystem.ts"/>
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -141,6 +315,56 @@ var BackpackPlanner;
                             }
                         }
                     }
+                    GearCollection.prototype.getGearSystemEntryIndexById = function (gearSystemId) {
+                        for (var i = 0; i < this.GearSystems.length; ++i) {
+                            var gearSystemEntry = this.GearSystems[i];
+                            if (gearSystemEntry.GearSystemId == gearSystemId) {
+                                return i;
+                            }
+                        }
+                        return -1;
+                    };
+                    GearCollection.prototype.containsGearSystem = function (gearSystem) {
+                        return this.getGearSystemEntryIndexById(gearSystem.Id) >= 0;
+                    };
+                    GearCollection.prototype.addGearSystem = function (gearSystem) {
+                        if (this.containsGearSystem(gearSystem)) {
+                            return;
+                        }
+                        this.GearSystems.push(new Gear.GearSystemEntry(gearSystem.Id));
+                    };
+                    GearCollection.prototype.removeGearSystem = function (gearSystem) {
+                        var idx = this.getGearSystemEntryIndexById(gearSystem.Id);
+                        if (idx < 0) {
+                            return;
+                        }
+                        this.GearSystems.splice(idx, 1);
+                    };
+                    GearCollection.prototype.getGearItemEntryIndexById = function (gearItemId) {
+                        for (var i = 0; i < this.GearItems.length; ++i) {
+                            var gearItemEntry = this.GearItems[i];
+                            if (gearItemEntry.GearItemId == gearItemId) {
+                                return i;
+                            }
+                        }
+                        return -1;
+                    };
+                    GearCollection.prototype.containsGearItem = function (gearItem) {
+                        return this.getGearItemEntryIndexById(gearItem.Id) >= 0;
+                    };
+                    GearCollection.prototype.addGearItem = function (gearItem) {
+                        if (this.containsGearItem(gearItem)) {
+                            return;
+                        }
+                        this.GearItems.push(new Gear.GearItemEntry(gearItem.Id));
+                    };
+                    GearCollection.prototype.removeGearItem = function (gearItem) {
+                        var idx = this.getGearItemEntryIndexById(gearItem.Id);
+                        if (idx < 0) {
+                            return;
+                        }
+                        this.GearItems.splice(idx, 1);
+                    };
                     GearCollection.prototype.getTotalGearItemCount = function () {
                         var count = 0;
                         for (var i = 0; i < this.GearSystems.length; ++i) {
@@ -199,46 +423,12 @@ var BackpackPlanner;
                     GearCollection.prototype.getCostInCurrency = function () {
                         return Mockup.convertUSDPToCurrency(this.getCostInUSDP(), Mockup.AppState.getInstance().getAppSettings().Currency);
                     };
-                    GearCollection.prototype.getCostPerGramInUSDP = function () {
-                        var costInUSDP = this.getCostInUSDP();
-                        var weightInGrams = this.getWeightInGrams();
-                        return 0 == weightInGrams
-                            ? costInUSDP
-                            : costInUSDP / weightInGrams;
-                    };
                     GearCollection.prototype.getCostPerUnitInCurrency = function () {
                         var costInCurrency = Mockup.convertUSDPToCurrency(this.getCostInUSDP(), Mockup.AppState.getInstance().getAppSettings().Currency);
                         var weightInUnits = Mockup.convertGramsToUnits(this.getWeightInGrams(), Mockup.AppState.getInstance().getAppSettings().Units);
                         return 0 == weightInUnits
                             ? costInCurrency
                             : costInCurrency / weightInUnits;
-                    };
-                    GearCollection.prototype.getGearSystemEntryIndexById = function (gearSystemId) {
-                        for (var i = 0; i < this.GearSystems.length; ++i) {
-                            var gearSystemEntry = this.GearSystems[i];
-                            if (gearSystemEntry.GearSystemId == gearSystemId) {
-                                return i;
-                            }
-                        }
-                        return -1;
-                    };
-                    GearCollection.prototype.getGearSystemEntryById = function (gearSystemId) {
-                        var idx = this.getGearSystemEntryIndexById(gearSystemId);
-                        return idx < 0 ? null : this.GearSystems[idx];
-                    };
-                    // TODO: add/remove system entries
-                    GearCollection.prototype.getGearItemEntryIndexById = function (gearItemId) {
-                        for (var i = 0; i < this.GearItems.length; ++i) {
-                            var gearItemEntry = this.GearItems[i];
-                            if (gearItemEntry.GearItemId == gearItemId) {
-                                return i;
-                            }
-                        }
-                        return -1;
-                    };
-                    GearCollection.prototype.getGearItemEntryById = function (gearItemId) {
-                        var idx = this.getGearItemEntryIndexById(gearItemId);
-                        return idx < 0 ? null : this.GearItems[idx];
                     };
                     return GearCollection;
                 })();
@@ -301,6 +491,9 @@ var BackpackPlanner;
                         }
                         return this.Count * gearCollection.getCostInUSDP();
                     };
+                    GearCollectionEntry.prototype.getCostInCurrency = function () {
+                        return Mockup.convertUSDPToCurrency(this.getCostInUSDP(), Mockup.AppState.getInstance().getAppSettings().Currency);
+                    };
                     return GearCollectionEntry;
                 })();
                 Gear.GearCollectionEntry = GearCollectionEntry;
@@ -309,779 +502,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
-///<reference path="../../Models/Gear/GearSystem.ts" />
-var BackpackPlanner;
-(function (BackpackPlanner) {
-    var Mockup;
-    (function (Mockup) {
-        var Resources;
-        (function (Resources) {
-            var Gear;
-            (function (Gear) {
-                "use strict";
-            })(Gear = Resources.Gear || (Resources.Gear = {}));
-        })(Resources = Mockup.Resources || (Mockup.Resources = {}));
-    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
-})(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../Resources/Gear/GearSystemResource.ts"/>
-///<reference path="../../AppState.ts"/>
-var BackpackPlanner;
-(function (BackpackPlanner) {
-    var Mockup;
-    (function (Mockup) {
-        var Models;
-        (function (Models) {
-            var Gear;
-            (function (Gear) {
-                "use strict";
-                var GearSystem = (function () {
-                    function GearSystem(gearSystemResource) {
-                        this.Id = -1;
-                        this.Name = "";
-                        this.Note = "";
-                        this.GearItems = [];
-                        if (gearSystemResource) {
-                            this.Id = gearSystemResource.Id;
-                            this.Name = gearSystemResource.Name;
-                            this.Note = gearSystemResource.Note;
-                            for (var i = 0; i < gearSystemResource.GearItems.length; ++i) {
-                                var gearItemEntry = gearSystemResource.GearItems[i];
-                                this.GearItems.push(new Gear.GearItemEntry(gearItemEntry.GearItemId, gearItemEntry.Count, gearItemEntry.IsPacked));
-                            }
-                        }
-                    }
-                    GearSystem.prototype.getGearItemCount = function () {
-                        var count = 0;
-                        for (var i = 0; i < this.GearItems.length; ++i) {
-                            var gearItemEntry = this.GearItems[i];
-                            count += gearItemEntry.Count;
-                        }
-                        return count;
-                    };
-                    GearSystem.prototype.getWeightInGrams = function () {
-                        var weightInGrams = 0;
-                        for (var i = 0; i < this.GearItems.length; ++i) {
-                            var gearItemEntry = this.GearItems[i];
-                            weightInGrams += gearItemEntry.getWeightInGrams();
-                        }
-                        return weightInGrams;
-                    };
-                    GearSystem.prototype.getWeightInUnits = function () {
-                        return Mockup.convertGramsToUnits(this.getWeightInGrams(), Mockup.AppState.getInstance().getAppSettings().Units);
-                    };
-                    GearSystem.prototype.getCostInUSDP = function () {
-                        var costInUSDP = 0;
-                        for (var i = 0; i < this.GearItems.length; ++i) {
-                            var gearItemEntry = this.GearItems[i];
-                            costInUSDP += gearItemEntry.getCostInUSDP();
-                        }
-                        return costInUSDP;
-                    };
-                    GearSystem.prototype.getCostInCurrency = function () {
-                        return Mockup.convertUSDPToCurrency(this.getCostInUSDP(), Mockup.AppState.getInstance().getAppSettings().Currency);
-                    };
-                    GearSystem.prototype.getCostPerGramInUSDP = function () {
-                        var costInUSDP = this.getCostInUSDP();
-                        var weightInGrams = this.getWeightInGrams();
-                        return 0 == weightInGrams
-                            ? costInUSDP
-                            : costInUSDP / weightInGrams;
-                    };
-                    GearSystem.prototype.getCostPerUnitInCurrency = function () {
-                        var costInCurrency = Mockup.convertUSDPToCurrency(this.getCostInUSDP(), Mockup.AppState.getInstance().getAppSettings().Currency);
-                        var weightInUnits = Mockup.convertGramsToUnits(this.getWeightInGrams(), Mockup.AppState.getInstance().getAppSettings().Units);
-                        return 0 == weightInUnits
-                            ? costInCurrency
-                            : costInCurrency / weightInUnits;
-                    };
-                    GearSystem.prototype.getGearItemEntryIndexById = function (gearItemId) {
-                        for (var i = 0; i < this.GearItems.length; ++i) {
-                            var gearItemEntry = this.GearItems[i];
-                            if (gearItemEntry.GearItemId == gearItemId) {
-                                return i;
-                            }
-                        }
-                        return -1;
-                    };
-                    GearSystem.prototype.getGearItemEntryById = function (gearItemId) {
-                        var idx = this.getGearItemEntryIndexById(gearItemId);
-                        return idx < 0 ? null : this.GearItems[idx];
-                    };
-                    return GearSystem;
-                })();
-                Gear.GearSystem = GearSystem;
-                var GearSystemEntry = (function () {
-                    function GearSystemEntry(gearSystemId, count, isPacked) {
-                        this.GearSystemId = -1;
-                        this.Count = 1;
-                        this.IsPacked = false;
-                        this.GearSystemId = gearSystemId;
-                        if (count) {
-                            this.Count = count;
-                        }
-                        if (isPacked) {
-                            this.IsPacked = isPacked;
-                        }
-                    }
-                    GearSystemEntry.prototype.getName = function () {
-                        var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(this.GearSystemId);
-                        if (!gearSystem) {
-                            return "";
-                        }
-                        return gearSystem.Name;
-                    };
-                    GearSystemEntry.prototype.getGearItemCount = function () {
-                        var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(this.GearSystemId);
-                        if (!gearSystem) {
-                            return 0;
-                        }
-                        return this.Count * gearSystem.getGearItemCount();
-                    };
-                    GearSystemEntry.prototype.getWeightInGrams = function () {
-                        var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(this.GearSystemId);
-                        if (!gearSystem) {
-                            return 0;
-                        }
-                        return this.Count * gearSystem.getWeightInGrams();
-                    };
-                    GearSystemEntry.prototype.getWeightInUnits = function () {
-                        return parseFloat(Mockup.convertGramsToUnits(this.getWeightInGrams(), Mockup.AppState.getInstance().getAppSettings().Units).toFixed(2));
-                    };
-                    GearSystemEntry.prototype.getCostInUSDP = function () {
-                        var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(this.GearSystemId);
-                        if (!gearSystem) {
-                            return 0;
-                        }
-                        return this.Count * gearSystem.getCostInUSDP();
-                    };
-                    return GearSystemEntry;
-                })();
-                Gear.GearSystemEntry = GearSystemEntry;
-            })(Gear = Models.Gear || (Models.Gear = {}));
-        })(Models = Mockup.Models || (Mockup.Models = {}));
-    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
-})(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="Models/Gear/GearCollection.ts" />
-///<reference path="Models/Gear/GearItem.ts" />
-///<reference path="Models/Gear/GearSystem.ts" />
-///<reference path="Resources/Gear/GearCollectionResource.ts" />
-///<reference path="Resources/Gear/GearItemResource.ts" />
-///<reference path="Resources/Gear/GearSystemResource.ts" />
-var BackpackPlanner;
-(function (BackpackPlanner) {
-    var Mockup;
-    (function (Mockup) {
-        "use strict";
-        var GearState = (function () {
-            function GearState() {
-            }
-            GearState.prototype.getGearItems = function () {
-                return this._gearItems;
-            };
-            GearState.prototype.loadGearItems = function (gearItemsResource) {
-                if (this._gearItems) {
-                    throw new Error("Gear items already loaded!");
-                }
-                this._gearItems = [];
-                for (var i = 0; i < gearItemsResource.length; ++i) {
-                    this._gearItems.push(new Mockup.Models.Gear.GearItem(gearItemsResource[i]));
-                }
-            };
-            GearState.prototype.getNextGearItemId = function () {
-                // TODO: write this
-                return -1;
-            };
-            GearState.prototype.getGearItemIndexById = function (gearItemId) {
-                for (var i = 0; i < this._gearItems.length; ++i) {
-                    var gearItem = this._gearItems[i];
-                    if (gearItem.Id == gearItemId) {
-                        return i;
-                    }
-                }
-                return -1;
-            };
-            GearState.prototype.getGearItemById = function (gearItemId) {
-                var idx = this.getGearItemIndexById(gearItemId);
-                return idx < 0 ? null : this._gearItems[idx];
-            };
-            GearState.prototype.addGearItem = function (gearItem) {
-                if (gearItem.Id < 0) {
-                    gearItem.Id = this.getNextGearItemId();
-                }
-                this._gearItems.push(gearItem);
-                return gearItem.Id;
-            };
-            GearState.prototype.deleteGearItem = function (gearItem) {
-                var idx = this.getGearItemIndexById(gearItem.Id);
-                if (idx < 0) {
-                    return false;
-                }
-                this._gearItems.splice(idx, 1);
-                // TODO: remove the item from the systems, collections, and trip plans it belongs to
-                return true;
-            };
-            GearState.prototype.deleteAllGearItems = function () {
-                this._gearItems = [];
-            };
-            GearState.prototype.getGearSystems = function () {
-                return this._gearSystems;
-            };
-            GearState.prototype.loadGearSystems = function (gearSystemsResource) {
-                if (this._gearSystems) {
-                    throw new Error("Gear systems already loaded!");
-                }
-                this._gearSystems = [];
-                for (var i = 0; i < gearSystemsResource.length; ++i) {
-                    this._gearSystems.push(new Mockup.Models.Gear.GearSystem(gearSystemsResource[i]));
-                }
-            };
-            GearState.prototype.getNextGearSystemId = function () {
-                // TODO: write this
-                return -1;
-            };
-            GearState.prototype.getGearSystemIndexById = function (gearSystemId) {
-                for (var i = 0; i < this._gearSystems.length; ++i) {
-                    var gearSystem = this._gearSystems[i];
-                    if (gearSystem.Id == gearSystemId) {
-                        return i;
-                    }
-                }
-                return -1;
-            };
-            GearState.prototype.getGearSystemById = function (gearSystemId) {
-                var idx = this.getGearSystemIndexById(gearSystemId);
-                return idx < 0 ? null : this._gearSystems[idx];
-            };
-            GearState.prototype.addGearSystem = function (gearSystem) {
-                if (gearSystem.Id < 0) {
-                    gearSystem.Id = this.getNextGearSystemId();
-                }
-                this._gearSystems.push(gearSystem);
-                return gearSystem.Id;
-            };
-            GearState.prototype.deleteGearSystem = function (gearSystem) {
-                var idx = this.getGearSystemIndexById(gearSystem.Id);
-                if (idx < 0) {
-                    return false;
-                }
-                this._gearSystems.splice(idx, 1);
-                // TODO: remove the system from the collections, and trip plans it belongs to
-                return true;
-            };
-            GearState.prototype.deleteAllGearSystems = function () {
-                this._gearSystems = [];
-            };
-            GearState.prototype.getGearCollections = function () {
-                return this._gearCollections;
-            };
-            GearState.prototype.loadGearCollections = function (gearCollectionsResource) {
-                if (this._gearCollections) {
-                    throw new Error("Gear collections already loaded!");
-                }
-                this._gearCollections = [];
-                for (var i = 0; i < gearCollectionsResource.length; ++i) {
-                    this._gearCollections.push(new Mockup.Models.Gear.GearCollection(gearCollectionsResource[i]));
-                }
-            };
-            GearState.prototype.getNextGearCollectionId = function () {
-                // TODO: write this
-                return -1;
-            };
-            GearState.prototype.getGearCollectionIndexById = function (gearCollectionId) {
-                for (var i = 0; i < this._gearCollections.length; ++i) {
-                    var gearCollection = this._gearCollections[i];
-                    if (gearCollection.Id == gearCollectionId) {
-                        return i;
-                    }
-                }
-                return -1;
-            };
-            GearState.prototype.getGearCollectionById = function (gearCollectionId) {
-                var idx = this.getGearCollectionIndexById(gearCollectionId);
-                return idx < 0 ? null : this._gearCollections[idx];
-            };
-            GearState.prototype.addGearCollection = function (gearCollection) {
-                if (gearCollection.Id < 0) {
-                    gearCollection.Id = this.getNextGearCollectionId();
-                }
-                this._gearCollections.push(gearCollection);
-                return gearCollection.Id;
-            };
-            GearState.prototype.deleteGearCollection = function (gearCollection) {
-                var idx = this.getGearCollectionIndexById(gearCollection.Id);
-                if (idx < 0) {
-                    return false;
-                }
-                this._gearCollections.splice(idx, 1);
-                // TODO: remove the collection from the trip plans it belongs to
-                return true;
-            };
-            GearState.prototype.deleteAllGearCollections = function () {
-                this._gearCollections = [];
-            };
-            /* Load/Save */
-            GearState.prototype.loadFromDevice = function () {
-                // TODO: load from the resources here and return a promise
-            };
-            GearState.prototype.saveToDevice = function () {
-                // TODO: don't do anything here, just return a promise
-            };
-            return GearState;
-        })();
-        Mockup.GearState = GearState;
-    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
-})(BackpackPlanner || (BackpackPlanner = {}));
-var BackpackPlanner;
-(function (BackpackPlanner) {
-    var Mockup;
-    (function (Mockup) {
-        var Models;
-        (function (Models) {
-            var Meals;
-            (function (Meals) {
-                "use strict";
-                var Meal = (function () {
-                    function Meal() {
-                        this.Id = -1;
-                    }
-                    return Meal;
-                })();
-                Meals.Meal = Meal;
-                var MealEntry = (function () {
-                    function MealEntry() {
-                    }
-                    return MealEntry;
-                })();
-                Meals.MealEntry = MealEntry;
-            })(Meals = Models.Meals || (Models.Meals = {}));
-        })(Models = Mockup.Models || (Mockup.Models = {}));
-    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
-})(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="Models/Meals/Meal.ts" />
-var BackpackPlanner;
-(function (BackpackPlanner) {
-    var Mockup;
-    (function (Mockup) {
-        "use strict";
-        var MealState = (function () {
-            function MealState() {
-            }
-            MealState.prototype.getMeals = function () {
-                return this._meals;
-            };
-            MealState.prototype.loadMeals = function (mealResource) {
-                if (this._meals) {
-                    throw new Error("Meals already loaded!");
-                }
-                this._meals = [];
-                for (var i = 0; i < mealResource.length; ++i) {
-                }
-            };
-            MealState.prototype.getNextMealId = function () {
-                // TODO: write this
-                return -1;
-            };
-            MealState.prototype.getMealIndexById = function (mealId) {
-                for (var i = 0; i < this._meals.length; ++i) {
-                    var meal = this._meals[i];
-                    if (meal.Id == mealId) {
-                        return i;
-                    }
-                }
-                return -1;
-            };
-            MealState.prototype.getMealById = function (mealId) {
-                var idx = this.getMealIndexById(mealId);
-                return idx < 0 ? null : this._meals[idx];
-            };
-            MealState.prototype.addMeal = function (meal) {
-                if (meal.Id < 0) {
-                    meal.Id = this.getNextMealId();
-                }
-                this._meals.push(meal);
-                return meal.Id;
-            };
-            MealState.prototype.deleteMeal = function (meal) {
-                var idx = this.getMealIndexById(meal.Id);
-                if (idx < 0) {
-                    return false;
-                }
-                this._meals.splice(idx, 1);
-                // TODO: remove the meal from the trip plans it belongs to
-                return true;
-            };
-            MealState.prototype.deleteAllMeals = function () {
-                this._meals = [];
-            };
-            /* Load/Save */
-            MealState.prototype.loadFromDevice = function () {
-                // TODO: load from the resources here and return a promise
-            };
-            MealState.prototype.saveToDevice = function () {
-                // TODO: don't do anything here, just return a promise
-            };
-            return MealState;
-        })();
-        Mockup.MealState = MealState;
-    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
-})(BackpackPlanner || (BackpackPlanner = {}));
-var BackpackPlanner;
-(function (BackpackPlanner) {
-    var Mockup;
-    (function (Mockup) {
-        var Models;
-        (function (Models) {
-            var Trips;
-            (function (Trips) {
-                "use strict";
-                var TripItinerary = (function () {
-                    function TripItinerary() {
-                        this.Id = -1;
-                    }
-                    return TripItinerary;
-                })();
-                Trips.TripItinerary = TripItinerary;
-                var TripItineraryEntry = (function () {
-                    function TripItineraryEntry() {
-                    }
-                    return TripItineraryEntry;
-                })();
-                Trips.TripItineraryEntry = TripItineraryEntry;
-            })(Trips = Models.Trips || (Models.Trips = {}));
-        })(Models = Mockup.Models || (Mockup.Models = {}));
-    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
-})(BackpackPlanner || (BackpackPlanner = {}));
-var BackpackPlanner;
-(function (BackpackPlanner) {
-    var Mockup;
-    (function (Mockup) {
-        var Models;
-        (function (Models) {
-            var Trips;
-            (function (Trips) {
-                "use strict";
-                var TripPlan = (function () {
-                    function TripPlan() {
-                        this.Id = -1;
-                    }
-                    return TripPlan;
-                })();
-                Trips.TripPlan = TripPlan;
-                var TripPlanEntry = (function () {
-                    function TripPlanEntry() {
-                    }
-                    return TripPlanEntry;
-                })();
-                Trips.TripPlanEntry = TripPlanEntry;
-            })(Trips = Models.Trips || (Models.Trips = {}));
-        })(Models = Mockup.Models || (Mockup.Models = {}));
-    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
-})(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="Models/Trips/TripItinerary.ts" />
-///<reference path="Models/Trips/TripPlan.ts" />
-var BackpackPlanner;
-(function (BackpackPlanner) {
-    var Mockup;
-    (function (Mockup) {
-        "use strict";
-        var TripState = (function () {
-            function TripState() {
-            }
-            TripState.prototype.getTripItineraries = function () {
-                return this._tripItineraries;
-            };
-            TripState.prototype.loadTripItineraries = function (tripItineraryResource) {
-                if (this._tripItineraries) {
-                    throw new Error("Trip itineraries already loaded!");
-                }
-                this._tripItineraries = [];
-                for (var i = 0; i < tripItineraryResource.length; ++i) {
-                }
-            };
-            TripState.prototype.getNextTripItineraryId = function () {
-                // TODO: write this
-                return -1;
-            };
-            TripState.prototype.getTripItineraryIndexById = function (tripItineraryId) {
-                for (var i = 0; i < this._tripItineraries.length; ++i) {
-                    var tripItinerary = this._tripItineraries[i];
-                    if (tripItinerary.Id == tripItineraryId) {
-                        return i;
-                    }
-                }
-                return -1;
-            };
-            TripState.prototype.getTripItineraryById = function (tripItineraryId) {
-                var idx = this.getTripItineraryIndexById(tripItineraryId);
-                return idx < 0 ? null : this._tripItineraries[idx];
-            };
-            TripState.prototype.addTripItinerary = function (tripItinerary) {
-                if (tripItinerary.Id < 0) {
-                    tripItinerary.Id = this.getNextTripItineraryId();
-                }
-                this._tripItineraries.push(tripItinerary);
-                return tripItinerary.Id;
-            };
-            TripState.prototype.deleteTripItinerary = function (tripItinerary) {
-                var idx = this.getTripItineraryIndexById(tripItinerary.Id);
-                if (idx < 0) {
-                    return false;
-                }
-                this._tripItineraries.splice(idx, 1);
-                // TODO: remove the itinerary from the trip plans it belongs to
-                return true;
-            };
-            TripState.prototype.deleteAllTripItineraries = function () {
-                this._tripItineraries = [];
-            };
-            TripState.prototype.getTripPlans = function () {
-                return this._tripPlans;
-            };
-            TripState.prototype.loadTripPlans = function (tripPlanResource) {
-                if (this._tripPlans) {
-                    throw new Error("Trip plans already loaded!");
-                }
-                this._tripPlans = [];
-                for (var i = 0; i < tripPlanResource.length; ++i) {
-                }
-            };
-            TripState.prototype.getNextTripPlanId = function () {
-                // TODO: write this
-                return -1;
-            };
-            TripState.prototype.getTripPlanIndexById = function (tripPlanId) {
-                for (var i = 0; i < this._tripPlans.length; ++i) {
-                    var tripPlan = this._tripPlans[i];
-                    if (tripPlan.Id == tripPlanId) {
-                        return i;
-                    }
-                }
-                return -1;
-            };
-            TripState.prototype.getTripPlanById = function (tripPlanId) {
-                var idx = this.getTripPlanIndexById(tripPlanId);
-                return idx < 0 ? null : this._tripPlans[idx];
-            };
-            TripState.prototype.addTripPlan = function (tripPlan) {
-                if (tripPlan.Id < 0) {
-                    tripPlan.Id = this.getNextTripPlanId();
-                }
-                this._tripPlans.push(tripPlan);
-                return tripPlan.Id;
-            };
-            TripState.prototype.deleteTripPlan = function (tripPlan) {
-                var idx = this.getTripPlanIndexById(tripPlan.Id);
-                if (idx < 0) {
-                    return false;
-                }
-                this._tripPlans.splice(idx, 1);
-                return true;
-            };
-            TripState.prototype.deleteAllTripPlans = function () {
-                this._tripPlans = [];
-            };
-            /* Load/Save */
-            TripState.prototype.loadFromDevice = function () {
-                // TODO: load from the resources here and return a promise
-            };
-            TripState.prototype.saveToDevice = function () {
-                // TODO: don't do anything here, just return a promise
-            };
-            return TripState;
-        })();
-        Mockup.TripState = TripState;
-    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
-})(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="Models/Personal/UserInformation.ts" />
-///<reference path="Models/AppSettings.ts" />
-///<reference path="Resources/Personal/UserInformationResource.ts" />
-///<reference path="Resources/AppSettingsResource.ts" />
-///<reference path="GearState.ts" />
-///<reference path="MealState.ts" />
-///<reference path="TripState.ts" />
-var BackpackPlanner;
-(function (BackpackPlanner) {
-    var Mockup;
-    (function (Mockup) {
-        "use strict";
-        var AppState = (function () {
-            function AppState() {
-                /* Gear State */
-                this._gearState = new Mockup.GearState();
-                /* Meal State */
-                this._mealState = new Mockup.MealState();
-                /* Trip State */
-                this._tripState = new Mockup.TripState();
-                if (AppState._instance) {
-                    throw new Error("Error: AppState already instantiated!");
-                }
-            }
-            AppState.getInstance = function () {
-                return AppState._instance;
-            };
-            AppState.prototype.getAppSettings = function () {
-                return this._appSettings;
-            };
-            AppState.prototype.loadAppSettings = function (appSettingsResource) {
-                if (this._appSettings) {
-                    throw new Error("Application settings already loaded!");
-                }
-                this._appSettings = new Mockup.Models.AppSettings(appSettingsResource);
-            };
-            AppState.prototype.getUserInformation = function () {
-                return this._userInformation;
-            };
-            AppState.prototype.loadUserInformation = function (userInfoResource) {
-                if (this._userInformation) {
-                    throw new Error("User information already loaded!");
-                }
-                this._userInformation = new Mockup.Models.Personal.UserInformation(userInfoResource);
-            };
-            AppState.prototype.getGearState = function () {
-                return this._gearState;
-            };
-            AppState.prototype.getMealState = function () {
-                return this._mealState;
-            };
-            AppState.prototype.getTripState = function () {
-                return this._tripState;
-            };
-            /* Load/Save */
-            AppState.prototype.loadFromDevice = function () {
-                // TODO: load from the resources here and return a promise
-                this._gearState.loadFromDevice();
-                this._mealState.loadFromDevice();
-                this._tripState.loadFromDevice();
-            };
-            AppState.prototype.saveToDevice = function () {
-                // TODO: don't do anything here, just return a promise
-                this._gearState.saveToDevice();
-                this._mealState.saveToDevice();
-                this._tripState.saveToDevice();
-            };
-            /* Import/Export */
-            AppState.prototype.importFromCloudStorage = function (cloudStorage) {
-                // TODO: don't do anything here, just return a promise
-            };
-            AppState.prototype.exportToCloudStorage = function (cloudStorage) {
-                // TODO: don't do anything here, just return a promise
-            };
-            /* Singleton */
-            AppState._instance = new AppState();
-            return AppState;
-        })();
-        Mockup.AppState = AppState;
-    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
-})(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../Resources/Gear/GearItemResource.ts"/>
-///<reference path="../../AppState.ts"/>
-var BackpackPlanner;
-(function (BackpackPlanner) {
-    var Mockup;
-    (function (Mockup) {
-        var Models;
-        (function (Models) {
-            var Gear;
-            (function (Gear) {
-                "use strict";
-                var GearItem = (function () {
-                    function GearItem(gearItemResource) {
-                        this.Id = -1;
-                        this.Name = "";
-                        this.Url = "";
-                        this.Make = "";
-                        this.Model = "";
-                        this.Carried = "Carried";
-                        this.WeightInGrams = 0;
-                        this.CostInUSDP = 0;
-                        this.IsConsumable = false;
-                        this.ConsumedPerDay = 0;
-                        this.Note = "";
-                        if (gearItemResource) {
-                            this.Id = gearItemResource.Id;
-                            this.Name = gearItemResource.Name;
-                            this.Url = gearItemResource.Url;
-                            this.Make = gearItemResource.Make;
-                            this.Model = gearItemResource.Model;
-                            this.Carried = gearItemResource.Carried;
-                            this.WeightInGrams = gearItemResource.WeightInGrams;
-                            this.CostInUSDP = gearItemResource.CostInUSDP;
-                            this.IsConsumable = gearItemResource.IsConsumable;
-                            this.ConsumedPerDay = gearItemResource.ConsumedPerDay;
-                            this.Note = gearItemResource.Note;
-                        }
-                    }
-                    GearItem.prototype.getCostPerGramInUSDP = function () {
-                        return 0 == this.WeightInGrams
-                            ? this.CostInUSDP
-                            : this.CostInUSDP / this.WeightInGrams;
-                    };
-                    GearItem.prototype.getCostPerUnitInCurrency = function () {
-                        var costInCurrency = Mockup.convertUSDPToCurrency(this.CostInUSDP, Mockup.AppState.getInstance().getAppSettings().Currency);
-                        var weightInUnits = Mockup.convertGramsToUnits(this.WeightInGrams, Mockup.AppState.getInstance().getAppSettings().Units);
-                        return 0 == weightInUnits
-                            ? costInCurrency
-                            : costInCurrency / weightInUnits;
-                    };
-                    GearItem.prototype.weightInUnits = function (weight) {
-                        return arguments.length
-                            ? (this.WeightInGrams = Mockup.convertUnitsToGrams(weight, Mockup.AppState.getInstance().getAppSettings().Units))
-                            : parseFloat(Mockup.convertGramsToUnits(this.WeightInGrams, Mockup.AppState.getInstance().getAppSettings().Units).toFixed(2));
-                    };
-                    GearItem.prototype.costInCurrency = function (cost) {
-                        return arguments.length
-                            ? (this.CostInUSDP = Mockup.convertCurrencyToUSDP(cost, Mockup.AppState.getInstance().getAppSettings().Currency))
-                            : Mockup.convertUSDPToCurrency(this.CostInUSDP, Mockup.AppState.getInstance().getAppSettings().Currency);
-                    };
-                    return GearItem;
-                })();
-                Gear.GearItem = GearItem;
-                var GearItemEntry = (function () {
-                    function GearItemEntry(gearItemId, count, isPacked) {
-                        this.GearItemId = -1;
-                        this.Count = 1;
-                        this.IsPacked = false;
-                        this.GearItemId = gearItemId;
-                        if (count) {
-                            this.Count = count;
-                        }
-                        if (isPacked) {
-                            this.IsPacked = isPacked;
-                        }
-                    }
-                    GearItemEntry.prototype.getName = function () {
-                        var gearItem = Mockup.AppState.getInstance().getGearState().getGearItemById(this.GearItemId);
-                        if (!gearItem) {
-                            return "";
-                        }
-                        return gearItem.Name;
-                    };
-                    GearItemEntry.prototype.getWeightInGrams = function () {
-                        var gearItem = Mockup.AppState.getInstance().getGearState().getGearItemById(this.GearItemId);
-                        if (!gearItem) {
-                            return 0;
-                        }
-                        return this.Count * gearItem.WeightInGrams;
-                    };
-                    GearItemEntry.prototype.getWeightInUnits = function () {
-                        return parseFloat(Mockup.convertGramsToUnits(this.getWeightInGrams(), Mockup.AppState.getInstance().getAppSettings().Units).toFixed(2));
-                    };
-                    GearItemEntry.prototype.getCostInUSDP = function () {
-                        var gearItem = Mockup.AppState.getInstance().getGearState().getGearItemById(this.GearItemId);
-                        if (!gearItem) {
-                            return 0;
-                        }
-                        return this.Count * gearItem.CostInUSDP;
-                    };
-                    return GearItemEntry;
-                })();
-                Gear.GearItemEntry = GearItemEntry;
-            })(Gear = Models.Gear || (Models.Gear = {}));
-        })(Models = Mockup.Models || (Mockup.Models = {}));
-    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
-})(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
-///<reference path="../../Models/Gear/GearItem.ts" />
+///<reference path="../../Models/Gear/GearCollection.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -1158,6 +579,296 @@ var BackpackPlanner;
         })(Services = Mockup.Services || (Mockup.Services = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
+//<reference path="../../Resources/Meals/MealResource.ts"/>
+///<reference path="../../AppState.ts"/>
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Models;
+        (function (Models) {
+            var Meals;
+            (function (Meals) {
+                "use strict";
+                var Meal = (function () {
+                    function Meal(mealResource) {
+                        this.Id = -1;
+                        this.Name = "";
+                        this.Url = "";
+                        this.Meal = "Other";
+                        this.ServingCount = 0;
+                        this.WeightInGrams = 0;
+                        this.Calories = 0;
+                        this.ProteinInGrams = 0;
+                        this.FiberInGrams = 0;
+                        this.CostInUSDP = 0;
+                        this.Note = "";
+                        if (mealResource) {
+                            this.Id = mealResource.Id;
+                            this.Name = mealResource.Name;
+                            this.Url = mealResource.Url;
+                            this.Meal = mealResource.Meal;
+                            this.ServingCount = mealResource.ServingCount;
+                            this.WeightInGrams = mealResource.WeightInGrams;
+                            this.Calories = mealResource.Calories;
+                            this.ProteinInGrams = mealResource.ProteinInGrams;
+                            this.FiberInGrams = mealResource.FiberInGrams;
+                            this.CostInUSDP = mealResource.CostInUSDP;
+                            this.Note = mealResource.Note;
+                        }
+                    }
+                    Meal.prototype.getCostPerUnitInCurrency = function () {
+                        var costInCurrency = Mockup.convertUSDPToCurrency(this.CostInUSDP, Mockup.AppState.getInstance().getAppSettings().Currency);
+                        var weightInUnits = Mockup.convertGramsToUnits(this.WeightInGrams, Mockup.AppState.getInstance().getAppSettings().Units);
+                        return 0 == weightInUnits
+                            ? costInCurrency
+                            : costInCurrency / weightInUnits;
+                    };
+                    Meal.prototype.weightInUnits = function (weight) {
+                        return arguments.length
+                            ? (this.WeightInGrams = Mockup.convertUnitsToGrams(weight, Mockup.AppState.getInstance().getAppSettings().Units))
+                            : parseFloat(Mockup.convertGramsToUnits(this.WeightInGrams, Mockup.AppState.getInstance().getAppSettings().Units).toFixed(2));
+                    };
+                    Meal.prototype.costInCurrency = function (cost) {
+                        return arguments.length
+                            ? (this.CostInUSDP = Mockup.convertCurrencyToUSDP(cost, Mockup.AppState.getInstance().getAppSettings().Currency))
+                            : Mockup.convertUSDPToCurrency(this.CostInUSDP, Mockup.AppState.getInstance().getAppSettings().Currency);
+                    };
+                    return Meal;
+                })();
+                Meals.Meal = Meal;
+                var MealEntry = (function () {
+                    function MealEntry(mealId, count, isPacked) {
+                        this.MealId = -1;
+                        this.Count = 1;
+                        this.IsPacked = false;
+                        this.MealId = mealId;
+                        if (count) {
+                            this.Count = count;
+                        }
+                        if (isPacked) {
+                            this.IsPacked = isPacked;
+                        }
+                    }
+                    MealEntry.prototype.getName = function () {
+                        var meal = Mockup.AppState.getInstance().getMealState().getMealById(this.MealId);
+                        if (!meal) {
+                            return "";
+                        }
+                        return meal.Name;
+                    };
+                    MealEntry.prototype.getWeightInGrams = function () {
+                        var meal = Mockup.AppState.getInstance().getMealState().getMealById(this.MealId);
+                        if (!meal) {
+                            return 0;
+                        }
+                        return this.Count * meal.WeightInGrams;
+                    };
+                    MealEntry.prototype.getWeightInUnits = function () {
+                        return parseFloat(Mockup.convertGramsToUnits(this.getWeightInGrams(), Mockup.AppState.getInstance().getAppSettings().Units).toFixed(2));
+                    };
+                    MealEntry.prototype.getCostInUSDP = function () {
+                        var meal = Mockup.AppState.getInstance().getMealState().getMealById(this.MealId);
+                        if (!meal) {
+                            return 0;
+                        }
+                        return this.Count * meal.CostInUSDP;
+                    };
+                    MealEntry.prototype.getCostInCurrency = function () {
+                        return Mockup.convertUSDPToCurrency(this.getCostInUSDP(), Mockup.AppState.getInstance().getAppSettings().Currency);
+                    };
+                    return MealEntry;
+                })();
+                Meals.MealEntry = MealEntry;
+            })(Meals = Models.Meals || (Models.Meals = {}));
+        })(Models = Mockup.Models || (Mockup.Models = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
+///<reference path="../../Models/Meals/Meal.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Resources;
+        (function (Resources) {
+            var Meals;
+            (function (Meals) {
+                "use strict";
+            })(Meals = Resources.Meals || (Resources.Meals = {}));
+        })(Resources = Mockup.Resources || (Mockup.Resources = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
+///<reference path="../../Resources/Meals/MealResource.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Services;
+        (function (Services) {
+            var Meals;
+            (function (Meals) {
+                "use strict";
+                function mealServiceFactory($resource) {
+                    return $resource("data/meals/meals.json", {}, {
+                        query: { method: "GET", isArray: true }
+                    });
+                }
+                Meals.mealServiceFactory = mealServiceFactory;
+            })(Meals = Services.Meals || (Services.Meals = {}));
+        })(Services = Mockup.Services || (Mockup.Services = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Models;
+        (function (Models) {
+            var Trips;
+            (function (Trips) {
+                "use strict";
+                var RouteDescription = (function () {
+                    function RouteDescription() {
+                        this.Id = -1;
+                        this.Description = "";
+                    }
+                    return RouteDescription;
+                })();
+                Trips.RouteDescription = RouteDescription;
+                var PointOfInterest = (function () {
+                    function PointOfInterest() {
+                        this.Id = -1;
+                        this.Name = "";
+                        this.GpsCoordinate = "";
+                    }
+                    return PointOfInterest;
+                })();
+                Trips.PointOfInterest = PointOfInterest;
+                var TripItinerary = (function () {
+                    function TripItinerary() {
+                        this.Id = -1;
+                        this.Name = "";
+                        this.Note = "";
+                        this.RouteDescriptions = [];
+                        this.PointsOfInterest = [];
+                    }
+                    return TripItinerary;
+                })();
+                Trips.TripItinerary = TripItinerary;
+            })(Trips = Models.Trips || (Models.Trips = {}));
+        })(Models = Mockup.Models || (Mockup.Models = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
+///<reference path="../../Models/Trips/TripItinerary.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Resources;
+        (function (Resources) {
+            var Trips;
+            (function (Trips) {
+                "use strict";
+            })(Trips = Resources.Trips || (Resources.Trips = {}));
+        })(Resources = Mockup.Resources || (Mockup.Resources = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
+///<reference path="../../Resources/Trips/TripItineraryResource.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Services;
+        (function (Services) {
+            var Trips;
+            (function (Trips) {
+                "use strict";
+                function tripItineraryServiceFactory($resource) {
+                    return $resource("data/trips/itineraries.json", {}, {
+                        query: { method: "GET", isArray: true }
+                    });
+                }
+                Trips.tripItineraryServiceFactory = tripItineraryServiceFactory;
+            })(Trips = Services.Trips || (Services.Trips = {}));
+        })(Services = Mockup.Services || (Mockup.Services = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../Gear/GearCollection.ts"/>
+///<reference path="../Gear/GearItem.ts"/>
+///<reference path="../Gear/GearSystem.ts"/>
+///<reference path="../Meals/Meal.ts"/>
+///<reference path="TripItinerary.ts"/>
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Models;
+        (function (Models) {
+            var Trips;
+            (function (Trips) {
+                "use strict";
+                var TripPlan = (function () {
+                    function TripPlan() {
+                        this.Id = -1;
+                        this.Name = "";
+                        this.StartDate = "";
+                        this.EndDate = "";
+                        this.Note = "";
+                        this.GearCollections = [];
+                        this.GearSystems = [];
+                        this.GearItems = [];
+                        this.Meals = [];
+                        this.TripItinerary = new Trips.TripItinerary();
+                        this.StartDateAsDate = new Date();
+                        this.EndDateAsDate = new Date();
+                    }
+                    return TripPlan;
+                })();
+                Trips.TripPlan = TripPlan;
+            })(Trips = Models.Trips || (Models.Trips = {}));
+        })(Models = Mockup.Models || (Mockup.Models = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
+///<reference path="../../Models/Trips/TripPlan.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Resources;
+        (function (Resources) {
+            var Trips;
+            (function (Trips) {
+                "use strict";
+            })(Trips = Resources.Trips || (Resources.Trips = {}));
+        })(Resources = Mockup.Resources || (Mockup.Resources = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
+///<reference path="../../Resources/Trips/TripPlanResource.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Services;
+        (function (Services) {
+            var Trips;
+            (function (Trips) {
+                "use strict";
+                function tripPlanServiceFactory($resource) {
+                    return $resource("data/trips/plans.json", {}, {
+                        query: { method: "GET", isArray: true }
+                    });
+                }
+                Trips.tripPlanServiceFactory = tripPlanServiceFactory;
+            })(Trips = Services.Trips || (Services.Trips = {}));
+        })(Services = Mockup.Services || (Mockup.Services = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
 ///<reference path="../../Resources/Personal/UserInformationResource.ts" />
 var BackpackPlanner;
@@ -1195,6 +906,613 @@ var BackpackPlanner;
             }
             Services.appSettingsServiceFactory = appSettingsServiceFactory;
         })(Services = Mockup.Services || (Mockup.Services = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="Models/Gear/GearCollection.ts" />
+///<reference path="Models/Gear/GearItem.ts" />
+///<reference path="Models/Gear/GearSystem.ts" />
+///<reference path="Resources/Gear/GearCollectionResource.ts" />
+///<reference path="Resources/Gear/GearItemResource.ts" />
+///<reference path="Resources/Gear/GearSystemResource.ts" />
+///<reference path="Services/Gear/GearCollectionService.ts"/>
+///<reference path="Services/Gear/GearItemService.ts"/>
+///<reference path="Services/Gear/GearSystemService.ts"/>
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        "use strict";
+        var GearState = (function () {
+            function GearState() {
+            }
+            // TODO: this should be a read-only collection
+            GearState.prototype.getGearItems = function () {
+                return this._gearItems;
+            };
+            GearState.prototype.getGearItemIndexById = function (gearItemId) {
+                for (var i = 0; i < this._gearItems.length; ++i) {
+                    var gearItem = this._gearItems[i];
+                    if (gearItem.Id == gearItemId) {
+                        return i;
+                    }
+                }
+                return -1;
+            };
+            GearState.prototype.getGearItemById = function (gearItemId) {
+                var idx = this.getGearItemIndexById(gearItemId);
+                return idx < 0 ? null : this._gearItems[idx];
+            };
+            GearState.prototype.getNextGearItemId = function () {
+                // TODO: write this
+                return -1;
+            };
+            GearState.prototype.addGearItem = function (gearItem) {
+                if (gearItem.Id < 0) {
+                    gearItem.Id = this.getNextGearItemId();
+                }
+                this._gearItems.push(gearItem);
+                return gearItem.Id;
+            };
+            GearState.prototype.deleteGearItem = function (gearItem) {
+                var idx = this.getGearItemIndexById(gearItem.Id);
+                if (idx < 0) {
+                    return false;
+                }
+                this._gearItems.splice(idx, 1);
+                // TODO: remove the item from the systems, collections, and trip plans it belongs to
+                return true;
+            };
+            GearState.prototype.deleteAllGearItems = function () {
+                this._gearItems = [];
+            };
+            // TODO: this should be a read-only collection
+            GearState.prototype.getGearSystems = function () {
+                return this._gearSystems;
+            };
+            GearState.prototype.getGearSystemIndexById = function (gearSystemId) {
+                for (var i = 0; i < this._gearSystems.length; ++i) {
+                    var gearSystem = this._gearSystems[i];
+                    if (gearSystem.Id == gearSystemId) {
+                        return i;
+                    }
+                }
+                return -1;
+            };
+            GearState.prototype.getGearSystemById = function (gearSystemId) {
+                var idx = this.getGearSystemIndexById(gearSystemId);
+                return idx < 0 ? null : this._gearSystems[idx];
+            };
+            GearState.prototype.getNextGearSystemId = function () {
+                // TODO: write this
+                return -1;
+            };
+            GearState.prototype.addGearSystem = function (gearSystem) {
+                if (gearSystem.Id < 0) {
+                    gearSystem.Id = this.getNextGearSystemId();
+                }
+                this._gearSystems.push(gearSystem);
+                return gearSystem.Id;
+            };
+            GearState.prototype.deleteGearSystem = function (gearSystem) {
+                var idx = this.getGearSystemIndexById(gearSystem.Id);
+                if (idx < 0) {
+                    return false;
+                }
+                this._gearSystems.splice(idx, 1);
+                // TODO: remove the system from the collections, and trip plans it belongs to
+                return true;
+            };
+            GearState.prototype.deleteAllGearSystems = function () {
+                this._gearSystems = [];
+            };
+            // TODO: this should be a read-only collection
+            GearState.prototype.getGearCollections = function () {
+                return this._gearCollections;
+            };
+            GearState.prototype.getGearCollectionIndexById = function (gearCollectionId) {
+                for (var i = 0; i < this._gearCollections.length; ++i) {
+                    var gearCollection = this._gearCollections[i];
+                    if (gearCollection.Id == gearCollectionId) {
+                        return i;
+                    }
+                }
+                return -1;
+            };
+            GearState.prototype.getGearCollectionById = function (gearCollectionId) {
+                var idx = this.getGearCollectionIndexById(gearCollectionId);
+                return idx < 0 ? null : this._gearCollections[idx];
+            };
+            GearState.prototype.getNextGearCollectionId = function () {
+                // TODO: write this
+                return -1;
+            };
+            GearState.prototype.addGearCollection = function (gearCollection) {
+                if (gearCollection.Id < 0) {
+                    gearCollection.Id = this.getNextGearCollectionId();
+                }
+                this._gearCollections.push(gearCollection);
+                return gearCollection.Id;
+            };
+            GearState.prototype.deleteGearCollection = function (gearCollection) {
+                var idx = this.getGearCollectionIndexById(gearCollection.Id);
+                if (idx < 0) {
+                    return false;
+                }
+                this._gearCollections.splice(idx, 1);
+                // TODO: remove the collection from the trip plans it belongs to
+                return true;
+            };
+            GearState.prototype.deleteAllGearCollections = function () {
+                this._gearCollections = [];
+            };
+            /* Load/Save */
+            GearState.prototype.loadGearItems = function (gearItemResources) {
+                if (this._gearItems) {
+                    throw new Error("Gear items already loaded!");
+                }
+                this._gearItems = [];
+                for (var i = 0; i < gearItemResources.length; ++i) {
+                    this._gearItems.push(new Mockup.Models.Gear.GearItem(gearItemResources[i]));
+                }
+            };
+            GearState.prototype.loadGearSystems = function (gearSystemResources) {
+                if (this._gearSystems) {
+                    throw new Error("Gear systems already loaded!");
+                }
+                this._gearSystems = [];
+                for (var i = 0; i < gearSystemResources.length; ++i) {
+                    this._gearSystems.push(new Mockup.Models.Gear.GearSystem(gearSystemResources[i]));
+                }
+            };
+            GearState.prototype.loadGearCollections = function (gearCollectionResources) {
+                if (this._gearCollections) {
+                    throw new Error("Gear collections already loaded!");
+                }
+                this._gearCollections = [];
+                for (var i = 0; i < gearCollectionResources.length; ++i) {
+                    this._gearCollections.push(new Mockup.Models.Gear.GearCollection(gearCollectionResources[i]));
+                }
+            };
+            GearState.prototype.loadFromDevice = function ($q, gearItemService, gearSystemService, gearCollectionService) {
+                var _this = this;
+                var promises = [];
+                promises.push(gearItemService.query().$promise.then(function (gearItemResources) {
+                    _this.loadGearItems(gearItemResources);
+                }));
+                promises.push(gearSystemService.query().$promise.then(function (gearSystemResources) {
+                    _this.loadGearSystems(gearSystemResources);
+                }));
+                promises.push(gearCollectionService.query().$promise.then(function (gearCollectionResources) {
+                    _this.loadGearCollections(gearCollectionResources);
+                }));
+                return $q.all(promises);
+            };
+            GearState.prototype.saveToDevice = function ($q) {
+                // mockup does nothing here
+                return $q.defer().promise;
+            };
+            return GearState;
+        })();
+        Mockup.GearState = GearState;
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="Models/Meals/Meal.ts" />
+///<reference path="Resources/Meals/MealResource.ts" />
+///<reference path="Services/Meals/MealService.ts"/>
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        "use strict";
+        var MealState = (function () {
+            function MealState() {
+            }
+            // TODO: this should be a read-only collection
+            MealState.prototype.getMeals = function () {
+                return this._meals;
+            };
+            MealState.prototype.getMealIndexById = function (mealId) {
+                for (var i = 0; i < this._meals.length; ++i) {
+                    var meal = this._meals[i];
+                    if (meal.Id == mealId) {
+                        return i;
+                    }
+                }
+                return -1;
+            };
+            MealState.prototype.getMealById = function (mealId) {
+                var idx = this.getMealIndexById(mealId);
+                return idx < 0 ? null : this._meals[idx];
+            };
+            MealState.prototype.getNextMealId = function () {
+                // TODO: write this
+                return -1;
+            };
+            MealState.prototype.addMeal = function (meal) {
+                if (meal.Id < 0) {
+                    meal.Id = this.getNextMealId();
+                }
+                this._meals.push(meal);
+                return meal.Id;
+            };
+            MealState.prototype.deleteMeal = function (meal) {
+                var idx = this.getMealIndexById(meal.Id);
+                if (idx < 0) {
+                    return false;
+                }
+                this._meals.splice(idx, 1);
+                // TODO: remove the meal from the trip plans it belongs to
+                return true;
+            };
+            MealState.prototype.deleteAllMeals = function () {
+                this._meals = [];
+            };
+            /* Load/Save */
+            MealState.prototype.loadMeals = function (mealResources) {
+                if (this._meals) {
+                    throw new Error("Meals already loaded!");
+                }
+                this._meals = [];
+                for (var i = 0; i < mealResources.length; ++i) {
+                    this._meals.push(new Mockup.Models.Meals.Meal(mealResources[i]));
+                }
+            };
+            MealState.prototype.loadFromDevice = function ($q, mealService) {
+                var _this = this;
+                var promises = [];
+                promises.push(mealService.query().$promise.then(function (mealResources) {
+                    _this.loadMeals(mealResources);
+                }));
+                return $q.all(promises);
+            };
+            MealState.prototype.saveToDevice = function ($q) {
+                // mockup does nothing here
+                return $q.defer().promise;
+            };
+            return MealState;
+        })();
+        Mockup.MealState = MealState;
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="Models/Trips/TripItinerary.ts" />
+///<reference path="Models/Trips/TripPlan.ts" />
+///<reference path="Resources/Trips/TripItineraryResource.ts" />
+///<reference path="Resources/Trips/TripPlanResource.ts" />
+///<reference path="Services/Trips/TripItineraryService.ts" />
+///<reference path="Services/Trips/TripPlanService.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        "use strict";
+        var TripState = (function () {
+            function TripState() {
+            }
+            // TODO: this should be a read-only collection
+            TripState.prototype.getTripItineraries = function () {
+                return this._tripItineraries;
+            };
+            TripState.prototype.getTripItineraryIndexById = function (tripItineraryId) {
+                for (var i = 0; i < this._tripItineraries.length; ++i) {
+                    var tripItinerary = this._tripItineraries[i];
+                    if (tripItinerary.Id == tripItineraryId) {
+                        return i;
+                    }
+                }
+                return -1;
+            };
+            TripState.prototype.getTripItineraryById = function (tripItineraryId) {
+                var idx = this.getTripItineraryIndexById(tripItineraryId);
+                return idx < 0 ? null : this._tripItineraries[idx];
+            };
+            TripState.prototype.getNextTripItineraryId = function () {
+                // TODO: write this
+                return -1;
+            };
+            TripState.prototype.addTripItinerary = function (tripItinerary) {
+                if (tripItinerary.Id < 0) {
+                    tripItinerary.Id = this.getNextTripItineraryId();
+                }
+                this._tripItineraries.push(tripItinerary);
+                return tripItinerary.Id;
+            };
+            TripState.prototype.deleteTripItinerary = function (tripItinerary) {
+                var idx = this.getTripItineraryIndexById(tripItinerary.Id);
+                if (idx < 0) {
+                    return false;
+                }
+                this._tripItineraries.splice(idx, 1);
+                // TODO: remove the itinerary from the trip plans it belongs to
+                return true;
+            };
+            TripState.prototype.deleteAllTripItineraries = function () {
+                this._tripItineraries = [];
+            };
+            // TODO: this should be a read-only collection
+            TripState.prototype.getTripPlans = function () {
+                return this._tripPlans;
+            };
+            TripState.prototype.getTripPlanIndexById = function (tripPlanId) {
+                for (var i = 0; i < this._tripPlans.length; ++i) {
+                    var tripPlan = this._tripPlans[i];
+                    if (tripPlan.Id == tripPlanId) {
+                        return i;
+                    }
+                }
+                return -1;
+            };
+            TripState.prototype.getTripPlanById = function (tripPlanId) {
+                var idx = this.getTripPlanIndexById(tripPlanId);
+                return idx < 0 ? null : this._tripPlans[idx];
+            };
+            TripState.prototype.getNextTripPlanId = function () {
+                // TODO: write this
+                return -1;
+            };
+            TripState.prototype.addTripPlan = function (tripPlan) {
+                if (tripPlan.Id < 0) {
+                    tripPlan.Id = this.getNextTripPlanId();
+                }
+                this._tripPlans.push(tripPlan);
+                return tripPlan.Id;
+            };
+            TripState.prototype.deleteTripPlan = function (tripPlan) {
+                var idx = this.getTripPlanIndexById(tripPlan.Id);
+                if (idx < 0) {
+                    return false;
+                }
+                this._tripPlans.splice(idx, 1);
+                return true;
+            };
+            TripState.prototype.deleteAllTripPlans = function () {
+                this._tripPlans = [];
+            };
+            /* Load/Save */
+            TripState.prototype.loadTripItineraries = function (tripItineraryResources) {
+                if (this._tripItineraries) {
+                    throw new Error("Trip itineraries already loaded!");
+                }
+                this._tripItineraries = [];
+                for (var i = 0; i < tripItineraryResources.length; ++i) {
+                }
+            };
+            TripState.prototype.loadTripPlans = function (tripPlanResources) {
+                if (this._tripPlans) {
+                    throw new Error("Trip plans already loaded!");
+                }
+                this._tripPlans = [];
+                for (var i = 0; i < tripPlanResources.length; ++i) {
+                }
+            };
+            TripState.prototype.loadFromDevice = function ($q, tripItineraryService, tripPlanService) {
+                var _this = this;
+                var promises = [];
+                promises.push(tripItineraryService.query().$promise.then(function (tripItineraryResources) {
+                    _this.loadTripItineraries(tripItineraryResources);
+                }));
+                promises.push(tripPlanService.query().$promise.then(function (tripPlanResources) {
+                    _this.loadTripPlans(tripPlanResources);
+                }));
+                return $q.all(promises);
+            };
+            TripState.prototype.saveToDevice = function ($q) {
+                // mockup does nothing here
+                return $q.defer().promise;
+            };
+            return TripState;
+        })();
+        Mockup.TripState = TripState;
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="Models/Personal/UserInformation.ts" />
+///<reference path="Models/AppSettings.ts" />
+///<reference path="Resources/Personal/UserInformationResource.ts" />
+///<reference path="Resources/AppSettingsResource.ts" />
+///<reference path="Services/Gear/GearCollectionService.ts"/>
+///<reference path="Services/Gear/GearItemService.ts"/>
+///<reference path="Services/Gear/GearSystemService.ts"/>
+///<reference path="Services/Meals/MealService.ts"/>
+///<reference path="Services/Trips/TripItineraryService.ts"/>
+///<reference path="Services/Trips/TripPlanService.ts"/>
+///<reference path="Services/Personal/UserInformationService.ts"/>
+///<reference path="Services/AppSettingsService.ts"/>
+///<reference path="GearState.ts" />
+///<reference path="MealState.ts" />
+///<reference path="TripState.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        "use strict";
+        var AppState = (function () {
+            function AppState() {
+                /* Gear State */
+                this._gearState = new Mockup.GearState();
+                /* Meal State */
+                this._mealState = new Mockup.MealState();
+                /* Trip State */
+                this._tripState = new Mockup.TripState();
+                if (AppState._instance) {
+                    throw new Error("Error: AppState already instantiated!");
+                }
+            }
+            AppState.getInstance = function () {
+                return AppState._instance;
+            };
+            AppState.prototype.getAppSettings = function () {
+                return this._appSettings;
+            };
+            AppState.prototype.getUserInformation = function () {
+                return this._userInformation;
+            };
+            AppState.prototype.getGearState = function () {
+                return this._gearState;
+            };
+            AppState.prototype.getMealState = function () {
+                return this._mealState;
+            };
+            AppState.prototype.getTripState = function () {
+                return this._tripState;
+            };
+            /* Load/Save */
+            AppState.prototype.loadAppSettings = function (appSettingsResource) {
+                if (this._appSettings) {
+                    throw new Error("Application settings already loaded!");
+                }
+                this._appSettings = new Mockup.Models.AppSettings(appSettingsResource);
+            };
+            AppState.prototype.loadUserInformation = function (userInfoResource) {
+                if (this._userInformation) {
+                    throw new Error("User information already loaded!");
+                }
+                this._userInformation = new Mockup.Models.Personal.UserInformation(userInfoResource);
+            };
+            AppState.prototype.loadFromDevice = function ($q, appSettingsService, userInformationService, gearItemService, gearSystemService, gearCollectionService, mealService, tripItineraryService, tripPlanService) {
+                var _this = this;
+                var promises = [];
+                // load the application settings
+                promises.push(appSettingsService.get().$promise.then(function (appSettingsResource) {
+                    _this.loadAppSettings(appSettingsResource);
+                }));
+                // load the user's personal information
+                promises.push(userInformationService.get().$promise.then(function (userInfoResource) {
+                    _this.loadUserInformation(userInfoResource);
+                }));
+                promises.push(this._gearState.loadFromDevice($q, gearItemService, gearSystemService, gearCollectionService));
+                promises.push(this._mealState.loadFromDevice($q, mealService));
+                promises.push(this._tripState.loadFromDevice($q, tripItineraryService, tripPlanService));
+                return $q.all(promises);
+            };
+            AppState.prototype.saveToDevice = function ($q) {
+                var promises = [];
+                promises.push(this._gearState.saveToDevice($q));
+                promises.push(this._mealState.saveToDevice($q));
+                promises.push(this._tripState.saveToDevice($q));
+                return $q.all(promises);
+            };
+            /* Import/Export */
+            AppState.prototype.importFromCloudStorage = function ($q, cloudStorage) {
+                // mockup does nothing here
+                return $q.defer().promise;
+            };
+            AppState.prototype.exportToCloudStorage = function ($q, cloudStorage) {
+                // mockup does nothing here
+                return $q.defer().promise;
+            };
+            /* Singleton */
+            AppState._instance = new AppState();
+            return AppState;
+        })();
+        Mockup.AppState = AppState;
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../Resources/Gear/GearItemResource.ts"/>
+///<reference path="../../AppState.ts"/>
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Models;
+        (function (Models) {
+            var Gear;
+            (function (Gear) {
+                "use strict";
+                var GearItem = (function () {
+                    function GearItem(gearItemResource) {
+                        this.Id = -1;
+                        this.Name = "";
+                        this.Url = "";
+                        this.Make = "";
+                        this.Model = "";
+                        this.Carried = "Carried";
+                        this.WeightInGrams = 0;
+                        this.CostInUSDP = 0;
+                        this.IsConsumable = false;
+                        this.ConsumedPerDay = 0;
+                        this.Note = "";
+                        if (gearItemResource) {
+                            this.Id = gearItemResource.Id;
+                            this.Name = gearItemResource.Name;
+                            this.Url = gearItemResource.Url;
+                            this.Make = gearItemResource.Make;
+                            this.Model = gearItemResource.Model;
+                            this.Carried = gearItemResource.Carried;
+                            this.WeightInGrams = gearItemResource.WeightInGrams;
+                            this.CostInUSDP = gearItemResource.CostInUSDP;
+                            this.IsConsumable = gearItemResource.IsConsumable;
+                            this.ConsumedPerDay = gearItemResource.ConsumedPerDay;
+                            this.Note = gearItemResource.Note;
+                        }
+                    }
+                    GearItem.prototype.getCostPerUnitInCurrency = function () {
+                        var costInCurrency = Mockup.convertUSDPToCurrency(this.CostInUSDP, Mockup.AppState.getInstance().getAppSettings().Currency);
+                        var weightInUnits = Mockup.convertGramsToUnits(this.WeightInGrams, Mockup.AppState.getInstance().getAppSettings().Units);
+                        return 0 == weightInUnits
+                            ? costInCurrency
+                            : costInCurrency / weightInUnits;
+                    };
+                    GearItem.prototype.weightInUnits = function (weight) {
+                        return arguments.length
+                            ? (this.WeightInGrams = Mockup.convertUnitsToGrams(weight, Mockup.AppState.getInstance().getAppSettings().Units))
+                            : parseFloat(Mockup.convertGramsToUnits(this.WeightInGrams, Mockup.AppState.getInstance().getAppSettings().Units).toFixed(2));
+                    };
+                    GearItem.prototype.costInCurrency = function (cost) {
+                        return arguments.length
+                            ? (this.CostInUSDP = Mockup.convertCurrencyToUSDP(cost, Mockup.AppState.getInstance().getAppSettings().Currency))
+                            : Mockup.convertUSDPToCurrency(this.CostInUSDP, Mockup.AppState.getInstance().getAppSettings().Currency);
+                    };
+                    return GearItem;
+                })();
+                Gear.GearItem = GearItem;
+                var GearItemEntry = (function () {
+                    function GearItemEntry(gearItemId, count, isPacked) {
+                        this.GearItemId = -1;
+                        this.Count = 1;
+                        this.IsPacked = false;
+                        this.GearItemId = gearItemId;
+                        if (count) {
+                            this.Count = count;
+                        }
+                        if (isPacked) {
+                            this.IsPacked = isPacked;
+                        }
+                    }
+                    GearItemEntry.prototype.getName = function () {
+                        var gearItem = Mockup.AppState.getInstance().getGearState().getGearItemById(this.GearItemId);
+                        if (!gearItem) {
+                            return "";
+                        }
+                        return gearItem.Name;
+                    };
+                    GearItemEntry.prototype.getWeightInGrams = function () {
+                        var gearItem = Mockup.AppState.getInstance().getGearState().getGearItemById(this.GearItemId);
+                        if (!gearItem) {
+                            return 0;
+                        }
+                        return this.Count * gearItem.WeightInGrams;
+                    };
+                    GearItemEntry.prototype.getWeightInUnits = function () {
+                        return parseFloat(Mockup.convertGramsToUnits(this.getWeightInGrams(), Mockup.AppState.getInstance().getAppSettings().Units).toFixed(2));
+                    };
+                    GearItemEntry.prototype.getCostInUSDP = function () {
+                        var gearItem = Mockup.AppState.getInstance().getGearState().getGearItemById(this.GearItemId);
+                        if (!gearItem) {
+                            return 0;
+                        }
+                        return this.Count * gearItem.CostInUSDP;
+                    };
+                    GearItemEntry.prototype.getCostInCurrency = function () {
+                        return Mockup.convertUSDPToCurrency(this.getCostInUSDP(), Mockup.AppState.getInstance().getAppSettings().Currency);
+                    };
+                    return GearItemEntry;
+                })();
+                Gear.GearItemEntry = GearItemEntry;
+            })(Gear = Models.Gear || (Models.Gear = {}));
+        })(Models = Mockup.Models || (Mockup.Models = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="Models/AppSettings.ts"/>
@@ -1326,6 +1644,9 @@ var BackpackPlanner;
 ///<reference path="../Services/Gear/GearCollectionService.ts"/>
 ///<reference path="../Services/Gear/GearItemService.ts"/>
 ///<reference path="../Services/Gear/GearSystemService.ts"/>
+///<reference path="../Services/Meals/MealService.ts"/>
+///<reference path="../Services/Trips/TripItineraryService.ts"/>
+///<reference path="../Services/Trips/TripPlanService.ts"/>
 ///<reference path="../Services/Personal/UserInformationService.ts"/>
 ///<reference path="../Services/AppSettingsService.ts"/>
 ///<reference path="../UnitConversion.ts"/>
@@ -1337,27 +1658,16 @@ var BackpackPlanner;
         (function (Controllers) {
             "use strict";
             var AppCtrl = (function () {
-                function AppCtrl($scope, $location, $mdSidenav, appSettingsService, userInformationService, gearItemService, gearSystemService, gearCollectionService) {
+                function AppCtrl($scope, $q, $location, $mdSidenav, appSettingsService, userInformationService, gearItemService, gearSystemService, gearCollectionService, mealService, tripItineraryService, tripPlanService) {
                     $scope.appStateLoading = true;
-                    Mockup.AppState.getInstance().loadFromDevice() /*.$promise.then(
+                    Mockup.AppState.getInstance().loadFromDevice($q, appSettingsService, userInformationService, gearItemService, gearSystemService, gearCollectionService, mealService, tripItineraryService, tripPlanService).then(function () {
                         $scope.appStateLoading = false;
-                    )*/;
-                    /* TODO: move all of this into the AppState.loadFromDevice() call */
-                    // load the application settings
-                    appSettingsService.get().$promise.then(function (appSettingsResource) {
-                        Mockup.AppState.getInstance().loadAppSettings(appSettingsResource);
                     });
-                    // load the user's personal information
-                    userInformationService.get().$promise.then(function (userInfoResource) {
-                        Mockup.AppState.getInstance().loadUserInformation(userInfoResource);
-                    });
+                    // user information
                     $scope.getUserInfo = function () {
                         return Mockup.AppState.getInstance().getUserInformation();
                     };
-                    // load the gear items
-                    gearItemService.query().$promise.then(function (gearItemsResource) {
-                        Mockup.AppState.getInstance().getGearState().loadGearItems(gearItemsResource);
-                    });
+                    // gear items
                     $scope.getGearItems = function () {
                         return Mockup.AppState.getInstance().getGearState().getGearItems();
                     };
@@ -1368,10 +1678,7 @@ var BackpackPlanner;
                         // TODO: md alert verify this!
                         Mockup.AppState.getInstance().getGearState().deleteAllGearItems();
                     };
-                    // load the gear systems
-                    gearSystemService.query().$promise.then(function (gearSystemsResource) {
-                        Mockup.AppState.getInstance().getGearState().loadGearSystems(gearSystemsResource);
-                    });
+                    // gear systems
                     $scope.getGearSystems = function () {
                         return Mockup.AppState.getInstance().getGearState().getGearSystems();
                     };
@@ -1382,10 +1689,7 @@ var BackpackPlanner;
                         // TODO: md alert verify this!
                         Mockup.AppState.getInstance().getGearState().deleteAllGearSystems();
                     };
-                    // load the gear collections
-                    gearCollectionService.query().$promise.then(function (gearCollectionsResource) {
-                        Mockup.AppState.getInstance().getGearState().loadGearCollections(gearCollectionsResource);
-                    });
+                    // gear collections
                     $scope.getGearCollections = function () {
                         return Mockup.AppState.getInstance().getGearState().getGearCollections();
                     };
@@ -1396,40 +1700,40 @@ var BackpackPlanner;
                         // TODO: md alert verify this!
                         Mockup.AppState.getInstance().getGearState().deleteAllGearCollections();
                     };
-                    // load the meals
+                    // meals
                     $scope.getMeals = function () {
-                        return [];
+                        return Mockup.AppState.getInstance().getMealState().getMeals();
                     };
                     $scope.getMealById = function (mealId) {
-                        return null;
+                        return Mockup.AppState.getInstance().getMealState().getMealById(mealId);
                     };
                     $scope.deleteAllMeals = function () {
                         // TODO: md alert verify this!
                         Mockup.AppState.getInstance().getMealState().deleteAllMeals();
                     };
-                    // load the trip itineraries
+                    // trip itineraries
                     $scope.getTripItineraries = function () {
-                        return [];
+                        return Mockup.AppState.getInstance().getTripState().getTripItineraries();
                     };
                     $scope.getTripItineraryById = function (tripItineraryId) {
-                        return null;
+                        return Mockup.AppState.getInstance().getTripState().getTripItineraryById(tripItineraryId);
                     };
                     $scope.deleteAllTripItineraries = function () {
                         // TODO: md alert verify this!
                         Mockup.AppState.getInstance().getTripState().deleteAllTripItineraries();
                     };
-                    // load the trip plans
+                    // trip plans
                     $scope.getTripPlans = function () {
-                        return [];
+                        return Mockup.AppState.getInstance().getTripState().getTripPlans();
                     };
                     $scope.getTripPlanById = function (tripPlanId) {
-                        return null;
+                        return Mockup.AppState.getInstance().getTripState().getTripPlanById(tripPlanId);
                     };
                     $scope.deleteAllTripPlans = function () {
                         // TODO: md alert verify this!
                         Mockup.AppState.getInstance().getTripState().deleteAllTripPlans();
                     };
-                    /* TODO: end move all of this into the AppState.loadFromDevice() call */
+                    // unit utilities
                     $scope.getUnitsWeightString = function () {
                         return Mockup.getUnitsWeightString(Mockup.AppState.getInstance().getAppSettings().Units);
                     };
@@ -1439,6 +1743,7 @@ var BackpackPlanner;
                     $scope.getCurrencyString = function () {
                         return Mockup.getCurrencyString(Mockup.AppState.getInstance().getAppSettings().Currency);
                     };
+                    // view utilities
                     $scope.isActive = function (viewLocation) {
                         // set the nav item as active when we're looking at its location
                         return $location.path() === viewLocation;
@@ -1450,12 +1755,10 @@ var BackpackPlanner;
                 return AppCtrl;
             })();
             Controllers.AppCtrl = AppCtrl;
-            AppCtrl.$inject = ["$scope", "$location", "$mdSidenav",
+            AppCtrl.$inject = ["$scope", "$q", "$location", "$mdSidenav",
                 "AppSettingsService", "UserInformationService",
-                "GearItemService", "GearSystemService", "GearCollectionService" /*
-                MealService,
-                TripItineraryService, TripPlanService*/
-            ];
+                "GearItemService", "GearSystemService", "GearCollectionService",
+                "MealService", "TripItineraryService", "TripPlanService"];
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
@@ -2318,8 +2621,14 @@ var BackpackPlanner;
 ///<reference path="Controllers/Gear/Systems/GearSystemCtrl.ts" />
 ///<reference path="Controllers/Gear/Systems/GearSystemsCtrl.ts" />
 ///<reference path="Controllers/Meals/MealsCtrl.ts" />
+/*///<reference path="Controllers/Meals/MealCtrl.ts" />
+///<reference path="Controllers/Meals/AddMealCtrl.ts" />*/
 ///<reference path="Controllers/Trips/Itineraries/TripItinerariesCtrl.ts" />
+/*///<reference path="Controllers/Trips/Itineraries/TripItineraryCtrl.ts" />
+///<reference path="Controllers/Trips/Itineraries/AddTripItineraryCtrl.ts" />*/
 ///<reference path="Controllers/Trips/Plans/TripPlansCtrl.ts" />
+/*///<reference path="Controllers/Trips/Plans/TripPlanCtrl.ts" />
+///<reference path="Controllers/Trips/Plans/AddTripPlanCtrl.ts" />*/
 ///<reference path="Controllers/Personal/UserInformationCtrl.ts" />
 ///<reference path="Controllers/AppCtrl.ts" />
 ///<reference path="Controllers/AppSettingsCtrl.ts" />
@@ -2355,6 +2664,9 @@ var BackpackPlanner;
         mockupApp.factory("GearItemService", ["$resource", Mockup.Services.Gear.gearItemServiceFactory]);
         mockupApp.factory("GearSystemService", ["$resource", Mockup.Services.Gear.gearSystemServiceFactory]);
         mockupApp.factory("GearCollectionService", ["$resource", Mockup.Services.Gear.gearCollectionServiceFactory]);
+        mockupApp.factory("MealService", ["$resource", Mockup.Services.Meals.mealServiceFactory]);
+        mockupApp.factory("TripItineraryService", ["$resource", Mockup.Services.Trips.tripItineraryServiceFactory]);
+        mockupApp.factory("TripPlanService", ["$resource", Mockup.Services.Trips.tripPlanServiceFactory]);
         // inject controllers
         mockupApp.controller("AppCtrl", Mockup.Controllers.AppCtrl);
         mockupApp.controller("AppSettingsCtrl", Mockup.Controllers.AppSettingsCtrl);
@@ -2369,7 +2681,11 @@ var BackpackPlanner;
         mockupApp.controller("GearSystemsCtrl", Mockup.Controllers.Gear.Systems.GearSystemsCtrl);
         mockupApp.controller("AddGearSystemCtrl", Mockup.Controllers.Gear.Systems.AddGearSystemCtrl);
         mockupApp.controller("MealsCtrl", Mockup.Controllers.Meals.MealsCtrl);
+        /*mockupApp.controller("MealCtrl", Controllers.Meals.MealCtrl);
+        mockupApp.controller("AddMealCtrl", Controllers.Meals.AddMealCtrl);*/
         mockupApp.controller("TripItinerariesCtrl", Mockup.Controllers.Trips.Itineraries.TripItinerariesCtrl);
+        /*mockupApp.controller("TripItineraryCtrl", Controllers.Trips.Itineraries.TripItineraryCtrl);
+        mockupApp.controller("AddTripItineraryCtrl", Controllers.Trips.Itineraries.AddTripItineraryCtrl);*/
         mockupApp.controller("TripPlansCtrl", Mockup.Controllers.Trips.Plans.TripPlansCtrl);
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
@@ -2398,15 +2714,14 @@ var BackpackPlanner;
                                 $mdDialog.hide();
                             };
                             $scope.isSelected = function (gearItem) {
-                                return $scope.gearCollection.getGearItemEntryIndexById(gearItem.Id) >= 0;
+                                return $scope.gearCollection.containsGearItem(gearItem);
                             };
                             $scope.toggle = function (gearItem) {
-                                var idx = $scope.gearCollection.getGearItemEntryIndexById(gearItem.Id);
-                                if (idx < 0) {
-                                    $scope.gearCollection.GearItems.push(new Mockup.Models.Gear.GearItemEntry(gearItem.Id));
+                                if (!$scope.gearCollection.containsGearItem(gearItem)) {
+                                    $scope.gearCollection.addGearItem(gearItem);
                                 }
                                 else {
-                                    $scope.gearCollection.GearItems.splice(idx, 1);
+                                    $scope.gearCollection.removeGearItem(gearItem);
                                 }
                             };
                         }
@@ -2443,15 +2758,14 @@ var BackpackPlanner;
                                 $mdDialog.hide();
                             };
                             $scope.isSelected = function (gearSystem) {
-                                return $scope.gearCollection.getGearSystemEntryIndexById(gearSystem.Id) >= 0;
+                                return $scope.gearCollection.containsGearSystem(gearSystem);
                             };
                             $scope.toggle = function (gearSystem) {
-                                var idx = $scope.gearCollection.getGearSystemEntryIndexById(gearSystem.Id);
-                                if (idx < 0) {
-                                    $scope.gearCollection.GearSystems.push(new Mockup.Models.Gear.GearSystemEntry(gearSystem.Id));
+                                if (!$scope.gearCollection.containsGearSystem(gearSystem)) {
+                                    $scope.gearCollection.addGearSystem(gearSystem);
                                 }
                                 else {
-                                    $scope.gearCollection.GearSystems.splice(idx, 1);
+                                    $scope.gearCollection.removeGearSystem(gearSystem);
                                 }
                             };
                         }
@@ -2542,15 +2856,14 @@ var BackpackPlanner;
                                 $mdDialog.hide();
                             };
                             $scope.isSelected = function (gearItem) {
-                                return $scope.gearSystem.getGearItemEntryIndexById(gearItem.Id) >= 0;
+                                return $scope.gearSystem.containsGearItem(gearItem);
                             };
                             $scope.toggle = function (gearItem) {
-                                var idx = $scope.gearSystem.getGearItemEntryIndexById(gearItem.Id);
-                                if (idx < 0) {
-                                    $scope.gearSystem.GearItems.push(new Mockup.Models.Gear.GearItemEntry(gearItem.Id));
+                                if (!$scope.gearSystem.containsGearItem(gearItem)) {
+                                    $scope.gearSystem.addGearItem(gearItem);
                                 }
                                 else {
-                                    $scope.gearSystem.GearItems.splice(idx, 1);
+                                    $scope.gearSystem.removeGearItem(gearItem);
                                 }
                             };
                         }

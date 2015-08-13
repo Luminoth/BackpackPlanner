@@ -1,8 +1,19 @@
-﻿///<reference path="Models/Personal/UserInformation.ts" />
+﻿///<reference path="../scripts/typings/angularjs/angular.d.ts" />
+
+///<reference path="Models/Personal/UserInformation.ts" />
 ///<reference path="Models/AppSettings.ts" />
 
 ///<reference path="Resources/Personal/UserInformationResource.ts" />
 ///<reference path="Resources/AppSettingsResource.ts" />
+
+///<reference path="Services/Gear/GearCollectionService.ts"/>
+///<reference path="Services/Gear/GearItemService.ts"/>
+///<reference path="Services/Gear/GearSystemService.ts"/>
+///<reference path="Services/Meals/MealService.ts"/>
+///<reference path="Services/Trips/TripItineraryService.ts"/>
+///<reference path="Services/Trips/TripPlanService.ts"/>
+///<reference path="Services/Personal/UserInformationService.ts"/>
+///<reference path="Services/AppSettingsService.ts"/>
 
 ///<reference path="GearState.ts" />
 ///<reference path="MealState.ts" />
@@ -34,26 +45,12 @@ module BackpackPlanner.Mockup {
             return this._appSettings;
         }
 
-        public loadAppSettings(appSettingsResource: Resources.IAppSettingsResource) {
-            if(this._appSettings) {
-                throw new Error("Application settings already loaded!");
-            }
-            this._appSettings = new Models.AppSettings(appSettingsResource);
-        }
-
         /* User Information */
 
         private _userInformation: Models.Personal.UserInformation;
 
         public getUserInformation() : Models.Personal.UserInformation {
             return this._userInformation;
-        }
-
-        public loadUserInformation(userInfoResource: Resources.Personal.IUserInformationResource) {
-            if(this._userInformation) {
-                throw new Error("User information already loaded!");
-            }
-            this._userInformation = new Models.Personal.UserInformation(userInfoResource);
         }
 
         /* Gear State */
@@ -82,30 +79,68 @@ module BackpackPlanner.Mockup {
 
         /* Load/Save */
 
-        public loadFromDevice() {
-            // TODO: load from the resources here and return a promise
-
-            this._gearState.loadFromDevice();
-            this._mealState.loadFromDevice();
-            this._tripState.loadFromDevice();
+        private loadAppSettings(appSettingsResource: Resources.IAppSettingsResource) {
+            if(this._appSettings) {
+                throw new Error("Application settings already loaded!");
+            }
+            this._appSettings = new Models.AppSettings(appSettingsResource);
         }
 
-        public saveToDevice() {
-            // TODO: don't do anything here, just return a promise
+        private loadUserInformation(userInfoResource: Resources.Personal.IUserInformationResource) {
+            if(this._userInformation) {
+                throw new Error("User information already loaded!");
+            }
+            this._userInformation = new Models.Personal.UserInformation(userInfoResource);
+        }
 
-            this._gearState.saveToDevice();
-            this._mealState.saveToDevice();
-            this._tripState.saveToDevice();
+        public loadFromDevice($q: ng.IQService,
+            appSettingsService: Services.IAppSettingsService, userInformationService: Services.Personal.IUserInformationService,
+            gearItemService: Services.Gear.IGearItemService, gearSystemService: Services.Gear.IGearSystemService, gearCollectionService: Services.Gear.IGearCollectionService,
+            mealService: Services.Meals.IMealService,
+            tripItineraryService: Services.Trips.ITripItineraryService, tripPlanService: Services.Trips.ITripPlanService) : ng.IPromise<any[]> {
+            const promises = <Array<ng.IPromise<any>>>[];
+
+            // load the application settings
+            promises.push(appSettingsService.get().$promise.then(
+                (appSettingsResource: Resources.IAppSettingsResource) => {
+                    this.loadAppSettings(appSettingsResource);
+                }
+            ));
+
+            // load the user's personal information
+            promises.push(userInformationService.get().$promise.then(
+                (userInfoResource: Resources.Personal.IUserInformationResource) => {
+                    this.loadUserInformation(userInfoResource);
+                }
+            ));
+
+            promises.push(this._gearState.loadFromDevice($q, gearItemService, gearSystemService, gearCollectionService));
+            promises.push(this._mealState.loadFromDevice($q, mealService));
+            promises.push(this._tripState.loadFromDevice($q, tripItineraryService, tripPlanService));
+
+            return $q.all(promises);
+        }
+
+        public saveToDevice($q: ng.IQService) : ng.IPromise<any> {
+            const promises = <Array<ng.IPromise<any>>>[];
+
+            promises.push(this._gearState.saveToDevice($q));
+            promises.push(this._mealState.saveToDevice($q));
+            promises.push(this._tripState.saveToDevice($q));
+
+            return $q.all(promises);
         }
 
         /* Import/Export */
 
-        public importFromCloudStorage(cloudStorage: string) {
-            // TODO: don't do anything here, just return a promise
+        public importFromCloudStorage($q: ng.IQService, cloudStorage: string) : ng.IPromise<any> {
+            // mockup does nothing here
+            return $q.defer().promise;
         }
 
-        public exportToCloudStorage(cloudStorage: string) {
-            // TODO: don't do anything here, just return a promise
+        public exportToCloudStorage($q: ng.IQService, cloudStorage: string) : ng.IPromise<any> {
+            // mockup does nothing here
+            return $q.defer().promise;
         }
     }
 }
