@@ -63,6 +63,12 @@ module BackpackPlanner.Mockup {
             this._meals = <Array<Models.Meals.Meal>>[];
         }
 
+        /* Utilities */
+
+        public deleteAllData() {
+            this.deleteAllMeals();
+        }
+
         /* Load/Save */
 
         private loadMeals($q: ng.IQService, mealResources: Resources.Meals.IMealResource[]) {
@@ -92,7 +98,7 @@ module BackpackPlanner.Mockup {
         }
 
         public saveToDevice($q: ng.IQService) : ng.IPromise<any> {
-            // mockup does nothing here
+            alert("MealState.saveToDevice");
             return $q.defer().promise;
         }
     }

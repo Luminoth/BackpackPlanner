@@ -175,6 +175,14 @@ module BackpackPlanner.Mockup {
             this._gearCollections = <Array<Models.Gear.GearCollection>>[];
         }
 
+        /* Utilities */
+
+        public deleteAllData() {
+            this.deleteAllGearCollections();
+            this.deleteAllGearSystems();
+            this.deleteAllGearItems();
+        }
+
         /* Load/Save */
 
         private loadGearItems($q: ng.IQService, gearItemResources: Resources.Gear.IGearItemResource[]) {
@@ -244,7 +252,7 @@ module BackpackPlanner.Mockup {
         }
 
         public saveToDevice($q: ng.IQService) : ng.IPromise<any> {
-            // mockup does nothing here
+            alert("GearState.saveToDevice");
             return $q.defer().promise;
         }
     }

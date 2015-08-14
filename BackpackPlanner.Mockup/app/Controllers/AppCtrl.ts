@@ -31,27 +31,21 @@ module BackpackPlanner.Mockup.Controllers {
 
         getGearItems: () => Models.Gear.GearItem[];
         getGearItemById: (gearItemId: number) => Models.Gear.GearItem;
-        deleteAllGearItems: () => void;
 
         getGearSystems: () => Models.Gear.GearSystem[];
         getGearSystemById: (gearSystemId: number) => Models.Gear.GearSystem;
-        deleteAllGearSystems: () => void;
 
         getGearCollections: () => Models.Gear.GearCollection[];
         getGearCollectionById: (gearCollectionId: number) => Models.Gear.GearCollection;
-        deleteAllGearCollections: () => void;
 
         getMeals: () => Models.Meals.Meal[];
         getMealById: (mealId: number) => Models.Meals.Meal;
-        deleteAllMeals: () => void;
 
         getTripItineraries: () => Models.Trips.TripItinerary[];
         getTripItineraryById: (tripItineraryId: number) => Models.Trips.TripItinerary;
-        deleteAllTripItineraries: () => void;
 
         getTripPlans: () => Models.Trips.TripPlan[];
         getTripPlanById: (tripPlanId: number) => Models.Trips.TripPlan;
-        deleteAllTripPlans: () => void;
 
         getUnitsWeightString: () => string;
         getUnitsLengthString: () => string;
@@ -59,10 +53,12 @@ module BackpackPlanner.Mockup.Controllers {
 
         isActive: (viewLocation: string) => boolean;
         toggleSidenav: () => void;
+
+        showDeleteAllConfirm: (event: MouseEvent) => void;
     }
 
     export class AppCtrl {
-        constructor($scope: IAppScope, $q: ng.IQService, $location: ng.ILocationService, $mdSidenav: ng.material.ISidenavService,
+        constructor($scope: IAppScope, $q: ng.IQService, $location: ng.ILocationService, $mdSidenav: ng.material.ISidenavService, $mdDialog: ng.material.IDialogService, $mdToast: ng.material.IToastService,
             appSettingsService: Services.IAppSettingsService, userInformationService: Services.Personal.IUserInformationService,
             gearItemService: Services.Gear.IGearItemService, gearSystemService: Services.Gear.IGearSystemService, gearCollectionService: Services.Gear.IGearCollectionService,
             mealService: Services.Meals.IMealService, tripItineraryService: Services.Trips.ITripItineraryService, tripPlanService: Services.Trips.ITripPlanService) {
@@ -90,11 +86,6 @@ module BackpackPlanner.Mockup.Controllers {
                 return AppState.getInstance().getGearState().getGearItemById(gearItemId);
             }
 
-            $scope.deleteAllGearItems = () => {
-                // TODO: md alert verify this!
-                AppState.getInstance().getGearState().deleteAllGearItems();
-            }
-
             // gear systems
             $scope.getGearSystems = () => {
                 return AppState.getInstance().getGearState().getGearSystems();
@@ -102,11 +93,6 @@ module BackpackPlanner.Mockup.Controllers {
 
             $scope.getGearSystemById = (gearSystemId: number) => {
                 return AppState.getInstance().getGearState().getGearSystemById(gearSystemId);
-            }
-
-            $scope.deleteAllGearSystems = () => {
-                // TODO: md alert verify this!
-                AppState.getInstance().getGearState().deleteAllGearSystems();
             }
 
             // gear collections
@@ -118,11 +104,6 @@ module BackpackPlanner.Mockup.Controllers {
                 return AppState.getInstance().getGearState().getGearCollectionById(gearCollectionId);
             }
 
-            $scope.deleteAllGearCollections = () => {
-                // TODO: md alert verify this!
-                AppState.getInstance().getGearState().deleteAllGearCollections();
-            }
-
             // meals
             $scope.getMeals = () => {
                 return AppState.getInstance().getMealState().getMeals();
@@ -130,11 +111,6 @@ module BackpackPlanner.Mockup.Controllers {
 
             $scope.getMealById = (mealId: number) => {
                 return AppState.getInstance().getMealState().getMealById(mealId);
-            }
-
-            $scope.deleteAllMeals = () => {
-                // TODO: md alert verify this!
-                AppState.getInstance().getMealState().deleteAllMeals();
             }
 
             // trip itineraries
@@ -146,11 +122,6 @@ module BackpackPlanner.Mockup.Controllers {
                 return AppState.getInstance().getTripState().getTripItineraryById(tripItineraryId);
             }
 
-            $scope.deleteAllTripItineraries = () => {
-                // TODO: md alert verify this!
-                AppState.getInstance().getTripState().deleteAllTripItineraries();
-            }
-
             // trip plans
             $scope.getTripPlans = () => {
                 return AppState.getInstance().getTripState().getTripPlans();
@@ -158,11 +129,6 @@ module BackpackPlanner.Mockup.Controllers {
 
             $scope.getTripPlanById = (tripPlanId: number) => {
                 return AppState.getInstance().getTripState().getTripPlanById(tripPlanId);
-            }
-
-            $scope.deleteAllTripPlans = () => {
-                // TODO: md alert verify this!
-                AppState.getInstance().getTripState().deleteAllTripPlans();
             }
 
             // unit utilities
@@ -187,10 +153,51 @@ module BackpackPlanner.Mockup.Controllers {
             $scope.toggleSidenav = () => {
                 $mdSidenav("left").toggle();
             }
+
+            $scope.showDeleteAllConfirm = (event) => {
+                var confirm = $mdDialog.confirm()
+                    .parent(angular.element(document.body))
+                    .title("Delete All Data")
+                    .content("Are you sure you wish to delete all data?")
+                    .ok("Yes")
+                    .cancel("No")
+                    .targetEvent(event);
+
+                var receipt = $mdDialog.alert()
+                    .parent(angular.element(document.body))
+                    .title("All data deleted!")
+                    .content("All data has been deleted.")
+                    .ok("OK")
+                    .targetEvent(event);
+
+                var deleteToast = $mdToast.simple()
+                    .content("Deleted all data")
+                    .action("Undo")
+                    .position("bottom left");
+
+                var undoDeleteToast = $mdToast.simple()
+                    .content("Restored all data")
+                    .action("OK")
+                    .position("bottom left");
+
+                $mdDialog.show(confirm).then(() => {
+                    $mdDialog.show(receipt).then(() => {
+                        AppState.getInstance().deleteAllData();
+
+                        $mdToast.show(deleteToast).then((response: string) => {
+                            if("ok" == response) {
+                                // TODO: this does *not* restore anything
+                                // and it should probably do so... but how?
+                                $mdToast.show(undoDeleteToast);
+                            }
+                        });
+                    });
+                });
+            }
         }
     }
 
-    AppCtrl.$inject = ["$scope", "$q", "$location", "$mdSidenav",
+    AppCtrl.$inject = ["$scope", "$q", "$location", "$mdSidenav", "$mdDialog", "$mdToast",
         "AppSettingsService", "UserInformationService",
         "GearItemService", "GearSystemService", "GearCollectionService",
         "MealService", "TripItineraryService", "TripPlanService"];

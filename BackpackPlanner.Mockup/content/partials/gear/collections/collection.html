@@ -1,4 +1,4 @@
-<form name="gearCollectionForm">
+<form novalidate name="gearCollectionForm">
 <div layout="column" layout-padding flex ng-cloak>
     <md-input-container>
         <label>Name</label>
@@ -31,9 +31,7 @@
     </div>
     <div layout="row">
         <span flex></span>
-        <md-button class="md-raised md-primary mockup-button" ng-click="showAddGearSystem($event)">
-            Add Gear Systems
-        </md-button>
+        <md-button class="md-raised md-primary md-hue-1 mockup-button" ng-click="showAddGearSystem($event)">Add Gear Systems</md-button>
         <span flex></span>
     </div>
     <label>Gear Items</label>
@@ -60,9 +58,7 @@
     </div>
     <div layout="row">
         <span flex></span>
-        <md-button class="md-raised md-primary mockup-button" ng-click="showAddGearItem($event)">
-            Add Gear Items
-        </md-button>
+        <md-button class="md-raised md-primary md-hue-1 mockup-button" ng-click="showAddGearItem($event)">Add Gear Items</md-button>
         <span flex></span>
     </div>
     <md-input-container>
@@ -72,9 +68,9 @@
     <div flex></div>
     <div layout="row">
         <span flex></span>
-        <md-button class="md-raised md-warn mockup-button" ng-click="showDeleteConfirm($event)">
-            Delete Collection
-        </md-button>
+        <md-button type="submit" class="md-raised md-primary mockup-button" ng-disabled="gearCollectionForm.$invalid">Save Collection</md-button>
+        <md-button class="md-raised md-primary md-hue-1 mockup-button">Reset</md-button>
+        <md-button class="md-raised md-warn mockup-button" ng-click="showDeleteConfirm($event)">Delete Collection</md-button>
         <span flex></span>
     </div>
 </div>

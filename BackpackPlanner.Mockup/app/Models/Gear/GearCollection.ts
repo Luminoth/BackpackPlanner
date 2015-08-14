@@ -4,6 +4,7 @@
 
 ///<reference path="../../AppState.ts"/>
 
+///<reference path="../Entry.ts"/>
 ///<reference path="GearItem.ts"/>
 ///<reference path="GearSystem.ts"/>
 
@@ -121,6 +122,37 @@ module BackpackPlanner.Mockup.Models.Gear {
             this.GearItems.splice(idx, 1);
         }
 
+        /* Pack List */
+
+        public getPackedGearItemCount() {
+            let count = 0;
+            for(let i=0; i<this.GearSystems.length; ++i) {
+                const gearSystem = AppState.getInstance().getGearState().getGearSystemById(this.GearSystems[i].GearSystemId);
+                count += gearSystem.getPackedGearItemCount();
+            }
+
+            for(let i=0; i<this.GearItems.length; ++i) {
+                const gearItemEntry = this.GearItems[i];
+                if(gearItemEntry.IsPacked) {
+                    ++count;
+                }
+            }
+            return count;
+        }
+
+        public getPackList() {
+            let entries = <Array<GearItemEntry>>[];
+            for(let i=0; i<this.GearSystems.length; ++i) {
+                const gearSystem = AppState.getInstance().getGearState().getGearSystemById(this.GearSystems[i].GearSystemId);
+                entries = entries.concat(gearSystem.getPackList());
+            }
+
+            for(let i=0; i<this.GearItems.length; ++i) {
+                entries.push(this.GearItems[i]);
+            }
+            return entries;
+        }
+
         /* Weight/Cost */
 
         public getWeightInGrams() {
@@ -189,15 +221,13 @@ module BackpackPlanner.Mockup.Models.Gear {
         }
 
         public saveToDevice($q: ng.IQService) : ng.IPromise<any> {
-            // mockup does nothing here
+            alert("GearCollection.saveToDevice");
             return $q.defer().promise;
         }
     }
 
-    export interface IGearCollectionEntry {
+    export interface IGearCollectionEntry extends IEntry {
         GearCollectionId: number;
-        Count: number;
-        IsPacked: boolean;
     }
 
     export class GearCollectionEntry implements IGearCollectionEntry {

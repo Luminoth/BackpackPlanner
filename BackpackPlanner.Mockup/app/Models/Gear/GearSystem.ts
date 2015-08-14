@@ -4,6 +4,7 @@
 
 ///<reference path="../../AppState.ts"/>
 
+///<reference path="../Entry.ts"/>
 ///<reference path="GearItem.ts"/>
 
 module BackpackPlanner.Mockup.Models.Gear {
@@ -64,6 +65,27 @@ module BackpackPlanner.Mockup.Models.Gear {
             this.GearItems.splice(idx, 1);
         }
 
+        /* Pack List */
+
+        public getPackedGearItemCount() {
+            let count = 0;
+            for(let i=0; i<this.GearItems.length; ++i) {
+                const gearItemEntry = this.GearItems[i];
+                if(gearItemEntry.IsPacked) {
+                    ++count;
+                }
+            }
+            return count;
+        }
+
+        public getPackList() {
+            const entries = <Array<GearItemEntry>>[];
+            for(let i=0; i<this.GearItems.length; ++i) {
+                entries.push(this.GearItems[i]);
+            }
+            return entries;
+        }
+
         /* Weight/Cost */
 
         public getWeightInGrams() {
@@ -117,15 +139,13 @@ module BackpackPlanner.Mockup.Models.Gear {
         }
 
         public saveToDevice($q: ng.IQService) : ng.IPromise<any> {
-            // mockup does nothing here
+            alert("GearSystem.saveToDevice");
             return $q.defer().promise;
         }
     }
 
-    export interface IGearSystemEntry {
+    export interface IGearSystemEntry extends IEntry {
         GearSystemId: number;
-        Count: number;
-        IsPacked: boolean;
     }
 
     export class GearSystemEntry implements IGearSystemEntry {

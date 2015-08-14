@@ -31,9 +31,11 @@ module BackpackPlanner.Mockup.Controllers.Trips.Itineraries {
                     .position("bottom left");
 
                 $location.path("/trips/itineraries");
-                $mdToast.show(addToast).then(() => {
-                    AppState.getInstance().getTripState().deleteTripItinerary($scope.tripItinerary);
-                    $mdToast.show(undoAddToast);
+                $mdToast.show(addToast).then((response: string) => {
+                    if("ok" == response) {
+                        AppState.getInstance().getTripState().deleteTripItinerary($scope.tripItinerary);
+                        $mdToast.show(undoAddToast);
+                    }
                 });
             }
         }

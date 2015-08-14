@@ -35,10 +35,10 @@
                 <md-card-content class="mockup-card-content">
                     <h2 class="md-title">{{ tripPlan.Name }}</h2>
                     <p layout-padding>
-                        {{ tripPlan.getMealCount() }} meal(s)<br />
+                        {{ tripPlan.getMealCount() }} meal(s) ({{ tripPlan.getPackedMealCount() }} packed)<br />
                         {{ tripPlan.getGearCollectionCount() }} collection(s)<br />
                         {{ tripPlan.getGearSystemCount() }} system(s)<br />
-                        {{ tripPlan.getGearItemCount() }} item(s) ({{ tripPlan.getTotalGearItemCount() }} total)<br />
+                        {{ tripPlan.getGearItemCount() }} item(s) ({{ tripPlan.getTotalGearItemCount() }} total, {{ tripPlan.getPackedGearItemCount() }} packed)<br />
                     </p>
                 </md-card-content>
                 <div layout="row" layout-sm="column">
@@ -49,9 +49,7 @@
         </md-button>
         <div layout="row">
             <span flex></span>
-            <md-button class="md-raised md-warn mockup-button" ng-click="">
-                Delete All Trip Plans
-            </md-button>
+            <md-button class="md-raised md-warn mockup-button" ng-click="showDeleteAllConfirm($event)">Delete All Trip Plans</md-button>
             <span flex></span>
         </div>
     </div>

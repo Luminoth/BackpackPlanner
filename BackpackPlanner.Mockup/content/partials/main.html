@@ -1,12 +1,15 @@
 ﻿<div layout="column" layout-padding flex ng-cloak>
     <p>Use the menu to do things!</p>
-    <label>TODO</label>
     <ul>
-        <li>Connect the "Delete All" buttons</li>
-        <li>Put some general usage information on this main page</li>
-        <li>Note "Slide to delete" on pages that have cards</li>
-        <li>Add buttons for duplicating objects (opens a dialog to set the name, then copies everything else)</li>
-        <li>Use a "command pattern" system to enable better undo/redo functionality</li>
-        <li>Deleting things by Id fails for newly added things because none of the getNext*Id methods are written</li>
+        <li><span style="color: red">BUG:</span> Gear Systems/Collections are *sharing* packed state, which is messing with packed items in Trip Plans</li>
+        <li><span style="color: blue">TODO:</span> Connect the "Delete All" buttons</li>
+        <li><span style="color: blue">TODO:</span> Put some general usage information on this main page</li>
+        <li><span style="color: blue">TODO:</span> Note "Slide to delete" on pages that have cards</li>
+        <li><span style="color: blue">TODO:</span> Add buttons for duplicating objects (opens a dialog to set the name, then copies everything else)</li>
+        <li><span style="color: red">TODO:</span> Use a "command pattern" system to enable better undo/redo functionality</li>
+        <li><span style="color: red">BUG:</span> Deleting things by Id fails for newly added things because none of the getNext*Id methods are written</li>
+        <li><span style="color: red">BUG:</span> Restore after deleting all doesn't do anything</li>
+        <li><span style="color: red">BUG:</span> Save/Reset buttons don't do anything</li>
+        <li><span style="color: red">TODO:</span> Hide the Delete buttons in some advanced settings</li>
     </ul>
 </div>

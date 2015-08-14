@@ -47,9 +47,11 @@ module BackpackPlanner.Mockup.Controllers.Gear.Systems {
                     .position("bottom left");
 
                 $location.path("/gear/systems");
-                $mdToast.show(addToast).then(() => {
-                    AppState.getInstance().getGearState().deleteGearSystem($scope.gearSystem);
-                    $mdToast.show(undoAddToast);
+                $mdToast.show(addToast).then((response: string) => {
+                    if("ok" == response) {
+                        AppState.getInstance().getGearState().deleteGearSystem($scope.gearSystem);
+                        $mdToast.show(undoAddToast);
+                    }
                 });
             }
         }

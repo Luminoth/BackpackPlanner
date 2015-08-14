@@ -31,9 +31,11 @@ module BackpackPlanner.Mockup.Controllers.Meals {
                     .position("bottom left");
 
                 $location.path("/meals");
-                $mdToast.show(addToast).then(() => {
-                    AppState.getInstance().getMealState().deleteMeal($scope.meal);
-                    $mdToast.show(undoAddToast);
+                $mdToast.show(addToast).then((response: string) => {
+                    if("ok" == response) {
+                        AppState.getInstance().getMealState().deleteMeal($scope.meal);
+                        $mdToast.show(undoAddToast);
+                    }
                 });
             }
         }

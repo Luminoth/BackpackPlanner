@@ -24,6 +24,7 @@ module BackpackPlanner.Mockup.Models {
         }
 
         public saveToDevice($q: ng.IQService) : ng.IPromise<any> {
+            alert("AppSettings.saveToDevice");
             return $q.defer().promise;
         }
     }

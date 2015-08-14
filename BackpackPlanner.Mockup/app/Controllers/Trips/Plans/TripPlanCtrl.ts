@@ -18,6 +18,9 @@ module BackpackPlanner.Mockup.Controllers.Trips.Plans {
         showAddGearSystem: (event: MouseEvent) => void;
         showAddGearItem: (event: MouseEvent) => void;
         showAddMeal: (event: MouseEvent) => void;
+
+        showPackList: (event: MouseEvent) => void;
+
         showDeleteConfirm: (event: MouseEvent) => void;
     }
 
@@ -88,6 +91,18 @@ module BackpackPlanner.Mockup.Controllers.Trips.Plans {
                 });
             }
 
+            $scope.showPackList = (event) => {
+                $mdDialog.show({
+                    controller: PackListDlgCtrl,
+                    templateUrl: "content/partials/trips/plans/packlist.html",
+                    parent: angular.element(document.body),
+                    targetEvent: event,
+                    locals: {
+                        tripPlan: $scope.tripPlan
+                    }
+                });
+            };
+
             $scope.showDeleteConfirm = (event) => {
                 var confirm = $mdDialog.confirm()
                     .parent(angular.element(document.body))
@@ -122,10 +137,12 @@ module BackpackPlanner.Mockup.Controllers.Trips.Plans {
                         }
 
                         $location.path("/trips/plans");
-                        $mdToast.show(deleteToast).then(() => {
-                            AppState.getInstance().getTripState().addTripPlan($scope.tripPlan);
-                            $mdToast.show(undoDeleteToast);
-                            $location.path(`/trips/plans/${$scope.tripPlan.Id}`);
+                        $mdToast.show(deleteToast).then((response: string) => {
+                            if("ok" == response) {
+                                AppState.getInstance().getTripState().addTripPlan($scope.tripPlan);
+                                $mdToast.show(undoDeleteToast);
+                                $location.path(`/trips/plans/${$scope.tripPlan.Id}`);
+                            }
                         });
                     });
                 });

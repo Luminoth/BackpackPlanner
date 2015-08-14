@@ -62,12 +62,14 @@ module BackpackPlanner.Mockup.Controllers.Gear.Items {
                         }
 
                         $location.path("/gear/items");
-                        $mdToast.show(deleteToast).then(() => {
-                            // TODO: this does *not* restore the item to its containers
-                            // and it should probably do so... but how?
-                            AppState.getInstance().getGearState().addGearItem($scope.gearItem);
-                            $mdToast.show(undoDeleteToast);
-                            $location.path(`/gear/items/${$scope.gearItem.Id}`);
+                        $mdToast.show(deleteToast).then((response: string) => {
+                            if("ok" == response) {
+                                // TODO: this does *not* restore the item to its containers
+                                // and it should probably do so... but how?
+                                AppState.getInstance().getGearState().addGearItem($scope.gearItem);
+                                $mdToast.show(undoDeleteToast);
+                                $location.path(`/gear/items/${$scope.gearItem.Id}`);
+                            }
                         });
                     });
                 });

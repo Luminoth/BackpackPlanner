@@ -4,6 +4,8 @@
 
 ///<reference path="../../AppState.ts"/>
 
+///<reference path="../Entry.ts"/>
+
 module BackpackPlanner.Mockup.Models.Gear {
     "use strict";
 
@@ -76,15 +78,13 @@ module BackpackPlanner.Mockup.Models.Gear {
         }
 
         public saveToDevice($q: ng.IQService) : ng.IPromise<any> {
-            // mockup does nothing here
+            alert("GearItem.saveToDevice");
             return $q.defer().promise;
         }
     }
 
-    export interface IGearItemEntry {
+    export interface IGearItemEntry extends IEntry {
         GearItemId: number;
-        Count: number;
-        IsPacked: boolean;
     }
 
     export class GearItemEntry implements IGearItemEntry {

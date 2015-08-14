@@ -455,6 +455,9 @@
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
+          <operation Id="2470edfa-9c22-4060-b32b-34ed23b5b35d" name="DeleteAllData" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="d37f4aa2-a4f5-4ce0-90bb-aba6f9872a66" />
+          </operation>
         </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
@@ -640,29 +643,59 @@
           <operation Id="8e12cbcc-93e3-4a5d-826c-96a5b5d9f2d0" name="LoadFromDevice" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="91d99873-dd13-4e7a-82ae-c9e85434626c" />
           </operation>
+          <operation Id="a5a5e6b1-44ea-44c9-85ba-57ad64d43ef4" name="GetPackList" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="9e50ecf2-725e-402d-a3fb-4cf58829a5d7" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="6e8c518b-6cea-4382-897e-4a25010c8f1b" direction="Return" isUnique="false">
+                  <lowerValueInternal>
+                    <literalString Id="3048868c-617f-4433-b017-da22ab89c1f1" name="Lower" value="*">
+                      <elementDefinition Id="4889389d-861e-4a9f-a471-cbfd51175e29" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="fb7cde4f-e373-4f67-bcf6-e8798c738252" name="Upper" value="*">
+                      <elementDefinition Id="832ef738-161b-4740-ab67-3d705f70caab" />
+                    </literalString>
+                  </upperValueInternal>
+                  <elementDefinition Id="05ee3640-9a27-4fbf-abb4-c60a0e457383" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="14b41725-c8a8-412a-93f8-249118c42aa2" LastKnownName="GearItemEntry" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="afc8800b-1d98-4ab2-8b46-0ac3df8837d2" name="GetPackedGearItemCount" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="262cc436-370b-4390-9eb5-d4d20774a23d" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="1e82e472-81ea-49a3-81a5-224016d67a89" direction="Return" isUnique="false">
+                  <elementDefinition Id="5cf378fc-a066-4e24-9b0f-b3cafebf5c91" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
         </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
       <class Id="9fe74801-cf87-477d-bcfb-dfbfd587f0ed" name="GearItemEntry" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="1ed0036e-3547-4c8f-a3d2-efc857ee465c" />
+        <suppliersInternal>
+          <interfaceRealization Id="cd593579-0408-405d-82e3-94880d21558f">
+            <interfaceMoniker Id="f1d1fb20-117f-4edf-a257-7051410341e9" LastKnownName="IEntry" />
+            <elementDefinition Id="1978d870-971d-487b-9942-4b02148812c2" />
+          </interfaceRealization>
+        </suppliersInternal>
         <ownedAttributesInternal>
           <property Id="9391729d-98bf-4115-9410-138eba565b10" name="GearItem" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="2edab7e5-3019-4f97-bd0c-c49699a742a4" />
             <type_NamedElement>
               <referencedTypeMoniker Id="cbd1a84d-eb03-4ab3-8b44-111821d29c5f" LastKnownName="GearItem" />
-            </type_NamedElement>
-          </property>
-          <property Id="61364bee-3cc4-47ce-aed8-4594ef716ada" name="Count" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="83fff8b1-ee21-49e7-82a5-74c594878fbc" />
-            <type_NamedElement>
-              <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
-            </type_NamedElement>
-          </property>
-          <property Id="5bbcd81e-9b16-4e99-8dee-29f6e304dfb8" name="IsPacked" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="f673c8d2-ed52-4dba-ae31-63e2676422b4" />
-            <type_NamedElement>
-              <referencedTypeMoniker Id="6b4d1192-6315-4e8d-ab99-bab8a497a541" LastKnownName="Boolean" />
             </type_NamedElement>
           </property>
         </ownedAttributesInternal>
@@ -709,6 +742,19 @@
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
+          <operation Id="3c5b6616-bb78-43fa-b4bd-74c8f456ebce" name="GetName" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="438b294a-c393-471b-894b-e8e231f08236" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="d9355d0b-ecf5-4af5-8474-68c0209cb501" direction="Return" isUnique="false">
+                  <elementDefinition Id="1a617140-9eca-451e-b432-006f7ed8d769" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="b27b34d9-7f50-48ea-98c5-cd9cc72f923c" LastKnownName="String" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
         </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
@@ -720,23 +766,17 @@
     <logicalClassDesignerModelHasTypes>
       <class Id="88f6e671-b0fc-4992-b60d-72394db7a554" name="GearSystemEntry" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="5cbeb83c-3e3a-4c1d-9b05-6d7b0a07aa62" />
+        <suppliersInternal>
+          <interfaceRealization Id="28f8b49e-6729-4c99-a254-565d4739c9eb">
+            <interfaceMoniker Id="f1d1fb20-117f-4edf-a257-7051410341e9" LastKnownName="IEntry" />
+            <elementDefinition Id="b99765d3-add5-4526-bbb0-950c10885656" />
+          </interfaceRealization>
+        </suppliersInternal>
         <ownedAttributesInternal>
           <property Id="f252ea2e-2914-4ea5-bf3c-c98e32fcaebc" name="GearSystem" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="61901d07-1d47-4481-a2a7-73234c3b4a2f" />
             <type_NamedElement>
               <referencedTypeMoniker Id="b13e6faa-62aa-4077-8915-365457f7c3c1" LastKnownName="GearSystem" />
-            </type_NamedElement>
-          </property>
-          <property Id="f78fc71e-fbc4-46e6-9177-44425c652b63" name="Count" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="e81aa9e0-3f86-43fc-81b1-4f9d23ddb44d" />
-            <type_NamedElement>
-              <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
-            </type_NamedElement>
-          </property>
-          <property Id="a3793116-f577-410c-af97-8b839ecb2e7a" name="IsPacked" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="9316b6dc-c518-4485-a660-ad8913f18565" />
-            <type_NamedElement>
-              <referencedTypeMoniker Id="ae1ab621-28bf-4bf3-90cd-14ab94bb7740" LastKnownName="Boolean" />
             </type_NamedElement>
           </property>
         </ownedAttributesInternal>
@@ -796,16 +836,24 @@
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
+          <operation Id="72f23a6e-b64a-41a5-b780-f454b32de163" name="GetName" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="9af9062d-7e00-4c4d-896e-74b3b2ca90de" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="a6bf3e5f-84a9-4010-9801-62f37524f48c" direction="Return" isUnique="false">
+                  <elementDefinition Id="4cc5dd91-e615-4b6b-b3d5-c90f96de671a" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="b27b34d9-7f50-48ea-98c5-cd9cc72f923c" LastKnownName="String" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
         </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
     <packageHasNamedElement>
       <referencedType Id="6b4d1192-6315-4e8d-ab99-bab8a497a541" name="Boolean" isAbstract="false" isLeaf="false" cachedFullName="Boolean">
-        <elementDefinition Id="8943dc84-709e-4f62-b15a-a3273aa6f165" />
-      </referencedType>
-    </packageHasNamedElement>
-    <packageHasNamedElement>
-      <referencedType Id="ae1ab621-28bf-4bf3-90cd-14ab94bb7740" name="Boolean" isAbstract="false" isLeaf="false" cachedFullName="Boolean">
         <elementDefinition Id="8943dc84-709e-4f62-b15a-a3273aa6f165" />
       </referencedType>
     </packageHasNamedElement>
@@ -1075,6 +1123,42 @@
           <operation Id="96af51e0-fbc7-490f-84d8-a8929441f718" name="SaveToDevice" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="49eff07d-38d8-4db4-b123-b5128bd6a191" />
           </operation>
+          <operation Id="231fa07d-8d30-4ff2-bced-8ab3716ec50b" name="GetPackList" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="0879e78a-5bf6-4077-b59c-947cc44bf942" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="2dbf11f3-2c96-4294-a9e5-3515898d98d0" direction="Return" isUnique="false">
+                  <lowerValueInternal>
+                    <literalString Id="0ef0a9d0-13a7-4f99-bc2d-3dc303c3de57" name="Lower" value="*">
+                      <elementDefinition Id="86c45942-2b33-4d0d-bf73-8f05450956ec" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="25858e76-b13a-4f5e-a632-5b8d95b8a089" name="Upper" value="*">
+                      <elementDefinition Id="941ade29-8a28-42aa-a085-067e6b1b6346" />
+                    </literalString>
+                  </upperValueInternal>
+                  <elementDefinition Id="51650a65-355f-4210-8033-1242e943dfc6" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="14b41725-c8a8-412a-93f8-249118c42aa2" LastKnownName="GearItemEntry" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="82b3f392-2fd7-4c91-b80a-80e39e05d6e3" name="GetPackedGearItemCount" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="9922a39a-f2d4-453f-b0d5-44d3f575ef7d" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="7de4b65f-3c65-4ca9-9bdd-c6f1964a2d58" direction="Return" isUnique="false">
+                  <elementDefinition Id="107b8d48-1ac5-4141-b1e4-475911899dfa" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
         </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
@@ -1101,23 +1185,17 @@
     <logicalClassDesignerModelHasTypes>
       <class Id="335a691f-9c16-44c9-9d83-de5cd1a6c062" name="GearCollectionEntry" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="847ea06c-efcd-4ef5-bbd9-e6a5d69cdf95" />
+        <suppliersInternal>
+          <interfaceRealization Id="b4a0f891-293d-4875-b1fe-93360cbb0511">
+            <interfaceMoniker Id="f1d1fb20-117f-4edf-a257-7051410341e9" LastKnownName="IEntry" />
+            <elementDefinition Id="2a57d615-d3e7-4c6b-8977-ab681cb13605" />
+          </interfaceRealization>
+        </suppliersInternal>
         <ownedAttributesInternal>
           <property Id="8385babc-4543-4afb-a476-fb53a08336b9" name="GearCollection" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="394f86dd-8056-4ca9-8b9a-06cddba9be3e" />
             <type_NamedElement>
               <referencedTypeMoniker Id="b58974db-5b07-466c-9762-a5b3de6b2676" LastKnownName="GearCollection" />
-            </type_NamedElement>
-          </property>
-          <property Id="2e8335f9-bc84-45ca-a59c-c762c9452daf" name="Count" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="6eb0d5b3-ee3e-47e3-8b61-3622af0ecc8c" />
-            <type_NamedElement>
-              <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
-            </type_NamedElement>
-          </property>
-          <property Id="581dc120-1a88-4b36-99fc-3cf04fa17706" name="IsPacked" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="5405be12-9b40-479e-8a12-9b0325f1eb3d" />
-            <type_NamedElement>
-              <referencedTypeMoniker Id="6b4d1192-6315-4e8d-ab99-bab8a497a541" LastKnownName="Boolean" />
             </type_NamedElement>
           </property>
         </ownedAttributesInternal>
@@ -1198,6 +1276,19 @@
                   <elementDefinition Id="3bf039d7-55d8-4404-a6ba-2a8d86acbe0b" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="e69473a8-04b0-4c5e-a9f0-197da37947e5" name="GetName" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="63925a0c-84df-4863-a811-2beb634d9562" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="21147695-3752-4fe0-aa6e-842b41aafaa5" direction="Return" isUnique="false">
+                  <elementDefinition Id="63a10ccb-3d52-4ca8-a39d-8e98e6c8c984" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="b27b34d9-7f50-48ea-98c5-cd9cc72f923c" LastKnownName="String" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -1426,23 +1517,17 @@
     <logicalClassDesignerModelHasTypes>
       <class Id="c68835a0-9a98-4a32-86b6-832d0b6fb6e8" name="MealEntry" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="07f1ea47-4afc-41a1-8624-039f12d2fc5c" />
+        <suppliersInternal>
+          <interfaceRealization Id="0251aac9-db2b-4c06-b45b-4c757379282e">
+            <interfaceMoniker Id="f1d1fb20-117f-4edf-a257-7051410341e9" LastKnownName="IEntry" />
+            <elementDefinition Id="88eb0416-aa00-4e6a-ac9a-d0f5ae75b7ed" />
+          </interfaceRealization>
+        </suppliersInternal>
         <ownedAttributesInternal>
           <property Id="935bdb0a-9d5f-40a2-9609-90bd6a33ec3b" name="Meal" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="f79f3218-3539-4101-8bd9-40c766cc9c05" />
             <type_NamedElement>
               <referencedTypeMoniker Id="655912ef-b01a-4848-866a-f4dae7843ba5" LastKnownName="Meal" />
-            </type_NamedElement>
-          </property>
-          <property Id="6a61ae23-14fc-453e-ab4e-374e83a32129" name="Count" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="34c00386-6077-4ccc-b004-31c07036f0e4" />
-            <type_NamedElement>
-              <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
-            </type_NamedElement>
-          </property>
-          <property Id="cff06f33-72ca-45a8-b44b-7192ace645a1" name="IsPacked" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="ca8623c6-6892-4fec-8a25-7290411810f0" />
-            <type_NamedElement>
-              <referencedTypeMoniker Id="6b4d1192-6315-4e8d-ab99-bab8a497a541" LastKnownName="Boolean" />
             </type_NamedElement>
           </property>
         </ownedAttributesInternal>
@@ -1484,6 +1569,19 @@
                   <elementDefinition Id="444ef997-adad-48c3-9f11-6c76b1767027" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="52b804c8-a753-4335-90c7-3665c87ed03a" name="GetName" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="e5b5ec55-fd65-47d1-8e61-2c6311a25fde" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="d7a70b66-1684-4afa-9497-95a799bc8c9e" direction="Return" isUnique="false">
+                  <elementDefinition Id="8bee3d22-2b57-4c47-ba13-91106e29ba97" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="b27b34d9-7f50-48ea-98c5-cd9cc72f923c" LastKnownName="String" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -1771,6 +1869,55 @@
           </operation>
           <operation Id="5069c8e5-be50-4d2a-bd05-ffc2aef81b38" name="SaveToDevice" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="10011c5a-6373-4e9d-be0c-096097c42179" />
+          </operation>
+          <operation Id="004dcc3b-9632-4aa6-8b25-21a0460089fd" name="GetPackList" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="b1e8b296-d0e5-418e-bfa7-9e641b3a2808" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="19681ec0-f431-46df-9f83-17d89755277b" direction="Return" isUnique="false">
+                  <lowerValueInternal>
+                    <literalString Id="137cb9cd-62cf-420d-95c1-0ef5f1759485" name="Lower" value="*">
+                      <elementDefinition Id="a7531849-cefa-439e-9cd0-3412e7720a46" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="43d782b5-b00d-4e50-bd47-4423572c3f22" name="Upper" value="*">
+                      <elementDefinition Id="cc824c74-8981-46f5-ab20-5ee85ca5228d" />
+                    </literalString>
+                  </upperValueInternal>
+                  <elementDefinition Id="af0a8810-d9cd-480a-a56a-c3a4f1b4a848" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="4b4b7c2f-de85-431c-b720-afc1d706d48a" LastKnownName="IEntry" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="027f63c0-a5e6-49ce-a04c-a69fd1e7b76c" name="GetPackedGearItemCount" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="eb60fb4f-fc44-44a8-9a85-d37b1a82beb3" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="1d54c538-d85e-45df-9e9b-518a8261f29d" direction="Return" isUnique="false">
+                  <elementDefinition Id="05fe428e-3d7d-46a2-8a5d-a7eb0689bbf2" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="bce5597b-be41-488a-9def-a80dc616c4bd" name="GetPackedMealCount" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="e3be99db-b345-40c8-aa02-b0e9ef39bcc1" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="0b2f06ca-be00-4f28-b04d-08b7a9d88d47" direction="Return" isUnique="false">
+                  <elementDefinition Id="aed9d810-7720-4f18-b3f1-a282089aef61" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
           </operation>
         </ownedOperationsInternal>
       </class>
@@ -2083,6 +2230,9 @@
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
+          <operation Id="818aea12-e978-4615-b214-d8d1ace648cb" name="DeleteAllData" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="985caabc-f94e-4c37-9a50-8b8fcd944971" />
+          </operation>
         </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
@@ -2153,6 +2303,9 @@
                 </parameter>
               </operationHasOwnedParameters>
             </ownedParameters>
+          </operation>
+          <operation Id="6e344370-1e13-40e9-befd-cf3cf8f693c4" name="DeleteAllData" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="84f364b7-1b03-4bb1-a96c-570a9432018f" />
           </operation>
         </ownedOperationsInternal>
       </class>
@@ -2301,6 +2454,9 @@
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
+          <operation Id="fd69793d-4d27-4469-a1f5-a6e2dad2b1ac" name="DeleteAllData" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="73c57130-e7d7-4dfc-b809-c9b5c3dad05e" />
+          </operation>
         </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
@@ -2417,6 +2573,84 @@
     <packageHasNamedElement>
       <referencedType Id="57788e72-0b48-4544-8f82-d37f569c68f5" name="WeightClass" isAbstract="false" isLeaf="false" cachedFullName="BackpackPlanner.Models::WeightClass">
         <elementDefinition Id="f119cce2-19fb-4597-9864-0100cb6db102" />
+      </referencedType>
+    </packageHasNamedElement>
+    <logicalClassDesignerModelHasTypes>
+      <Interface Id="f1d1fb20-117f-4edf-a257-7051410341e9" name="IEntry" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="b9618f3d-255e-4d5a-933a-d20d08a7fc5a" />
+        <ownedAttributes>
+          <property Id="8a125cd6-c984-4738-a363-22e35f258abb" name="Count" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="9a737af8-4931-4b36-b241-b951beef5e5e" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
+            </type_NamedElement>
+          </property>
+          <property Id="5650db5c-eaaa-4231-8a95-ae36278f34f5" name="IsPacked" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="a923f65f-768b-4f7d-8f8b-ac4bef069b94" />
+          </property>
+        </ownedAttributes>
+        <ownedOperations>
+          <operation Id="303a4c58-1fcd-4831-b1a9-d936b8288315" name="GetCostInCurrency" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="dfa97fd0-6c86-43d0-b69a-b9276c5443aa" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="b993f33b-a38c-467b-ab4b-6fff7431157f" name="currency" direction="In" isUnique="false">
+                  <elementDefinition Id="e93e5149-d6f9-4e42-a49c-b65e48e51786" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="b0eea992-bca7-4198-a4f4-52e85a566464" LastKnownName="Currency" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="3fb63a5b-1445-4aaf-abaf-93e990455a37" direction="Return" isUnique="false">
+                  <elementDefinition Id="4d94c8e9-8d5f-49be-88e5-83d9a2f8366c" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="aeb71427-59ac-4794-ba79-17e1a375023b" name="GetWeightInUnits" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="4265c26d-5969-4c61-a97c-0071362f742f" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="9395ef91-188a-4a45-8ad8-549758807210" name="units" direction="In" isUnique="false">
+                  <elementDefinition Id="fe92cb7c-43a4-4f47-9bf7-9790c4ea2edf" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="Units" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="f4f776da-c5ad-41f5-89a0-2470194b910e" direction="Return" isUnique="false">
+                  <elementDefinition Id="170d5548-fb22-4a24-9998-2790d399f7ac" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="1e59dd95-1066-4aa5-9696-e4cddf75ec0d" name="GetName" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="53d7ad6d-dee8-42d2-8a2b-896069d6d581" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="b45e6e7c-4fee-4698-adb8-e0a695a509a0" direction="Return" isUnique="false">
+                  <elementDefinition Id="bdb0773c-7645-43b0-9a43-43245bf7c654" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="b27b34d9-7f50-48ea-98c5-cd9cc72f923c" LastKnownName="String" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperations>
+      </Interface>
+    </logicalClassDesignerModelHasTypes>
+    <packageHasNamedElement>
+      <referencedType Id="4b4b7c2f-de85-431c-b720-afc1d706d48a" name="IEntry" isAbstract="false" isLeaf="false" cachedFullName="BackpackPlanner.Models::IEntry">
+        <elementDefinition Id="b9618f3d-255e-4d5a-933a-d20d08a7fc5a" />
       </referencedType>
     </packageHasNamedElement>
   </packagedElements>

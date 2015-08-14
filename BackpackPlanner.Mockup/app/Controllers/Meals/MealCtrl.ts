@@ -62,12 +62,14 @@ module BackpackPlanner.Mockup.Controllers.Meals {
                         }
 
                         $location.path("/meals");
-                        $mdToast.show(deleteToast).then(() => {
-                            // TODO: this does *not* restore the meal to its containers
-                            // and it should probably do so... but how?
-                            AppState.getInstance().getMealState().addMeal($scope.meal);
-                            $mdToast.show(undoDeleteToast);
-                            $location.path(`/meals/${$scope.meal.Id}`);
+                        $mdToast.show(deleteToast).then((response: string) => {
+                            if("ok" == response) {
+                                // TODO: this does *not* restore the meal to its containers
+                                // and it should probably do so... but how?
+                                AppState.getInstance().getMealState().addMeal($scope.meal);
+                                $mdToast.show(undoDeleteToast);
+                                $location.path(`/meals/${$scope.meal.Id}`);
+                            }
                         });
                     });
                 });

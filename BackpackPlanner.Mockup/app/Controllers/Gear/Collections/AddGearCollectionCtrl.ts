@@ -13,6 +13,7 @@ module BackpackPlanner.Mockup.Controllers.Gear.Collections {
 
         showAddGearItem: (event: MouseEvent) => void;
         showAddGearSystem: (event: MouseEvent) => void;
+
         addCollection: (gearCollection: Models.Gear.GearCollection) => void;
     }
 
@@ -62,9 +63,11 @@ module BackpackPlanner.Mockup.Controllers.Gear.Collections {
                     .position("bottom left");
 
                 $location.path("/gear/collections");
-                $mdToast.show(addToast).then(() => {
-                    AppState.getInstance().getGearState().deleteGearCollection($scope.gearCollection);
-                    $mdToast.show(undoAddToast);
+                $mdToast.show(addToast).then((response: string) => {
+                    if("ok" == response) {
+                        AppState.getInstance().getGearState().deleteGearCollection($scope.gearCollection);
+                        $mdToast.show(undoAddToast);
+                    }
                 });
             }
         }

@@ -52,7 +52,7 @@ module BackpackPlanner.Mockup.Models.Personal {
         }
 
         public saveToDevice($q: ng.IQService) : ng.IPromise<any> {
-            // mockup does nothing here
+            alert("UserInformation.saveToDevice");
             return $q.defer().promise;
         }
     }

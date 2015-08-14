@@ -31,9 +31,11 @@ module BackpackPlanner.Mockup.Controllers.Gear.Items {
                     .position("bottom left");
 
                 $location.path("/gear/items");
-                $mdToast.show(addToast).then(() => {
-                    AppState.getInstance().getGearState().deleteGearItem($scope.gearItem);
-                    $mdToast.show(undoAddToast);
+                $mdToast.show(addToast).then((response: string) => {
+                    if("ok" == response) {
+                        AppState.getInstance().getGearState().deleteGearItem($scope.gearItem);
+                        $mdToast.show(undoAddToast);
+                    }
                 });
             }
         }

@@ -77,7 +77,7 @@ module BackpackPlanner.Mockup.Models.Trips {
         }
 
         public saveToDevice($q: ng.IQService) : ng.IPromise<any> {
-            // mockup does nothing here
+            alert("TripItinerary.saveToDevice");
             return $q.defer().promise;
         }
     }

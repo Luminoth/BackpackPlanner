@@ -77,6 +77,13 @@ module BackpackPlanner.Mockup {
             return this._tripState;
         }
 
+        /* Utilities */
+        public deleteAllData() {
+            this._gearState.deleteAllData();
+            this._mealState.deleteAllData();
+            this._tripState.deleteAllData();
+        }
+
         /* Load/Save */
 
         public loadFromDevice($q: ng.IQService,

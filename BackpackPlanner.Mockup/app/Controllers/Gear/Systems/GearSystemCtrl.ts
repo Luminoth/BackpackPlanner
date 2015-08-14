@@ -77,12 +77,14 @@ module BackpackPlanner.Mockup.Controllers.Gear.Systems {
                         }
 
                         $location.path("/gear/systems");
-                        $mdToast.show(deleteToast).then(() => {
-                            // TODO: this does *not* restore the system to its containers
-                            // and it should probably do so... but how?
-                            AppState.getInstance().getGearState().addGearSystem($scope.gearSystem);
-                            $mdToast.show(undoDeleteToast);
-                            $location.path(`/gear/systems/${$scope.gearSystem.Id}`);
+                        $mdToast.show(deleteToast).then((response: string) => {
+                            if("ok" == response) {
+                                // TODO: this does *not* restore the system to its containers
+                                // and it should probably do so... but how?
+                                AppState.getInstance().getGearState().addGearSystem($scope.gearSystem);
+                                $mdToast.show(undoDeleteToast);
+                                $location.path(`/gear/systems/${$scope.gearSystem.Id}`);
+                            }
                         });
                     });
                 });

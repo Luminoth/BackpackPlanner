@@ -224,6 +224,62 @@ module BackpackPlanner.Mockup.Models.Trips {
             this.Meals.splice(idx, 1);
         }
 
+        /* Pack List */
+
+        public getPackedGearItemCount() {
+            let count = 0;
+            for(let i=0; i<this.GearCollections.length; ++i) {
+                const gearCollection = AppState.getInstance().getGearState().getGearCollectionById(this.GearCollections[i].GearCollectionId);
+                count += gearCollection.getPackedGearItemCount();
+            }
+
+            for(let i=0; i<this.GearSystems.length; ++i) {
+                const gearSystem = AppState.getInstance().getGearState().getGearSystemById(this.GearSystems[i].GearSystemId);
+                count += gearSystem.getPackedGearItemCount();
+            }
+
+            for(let i=0; i<this.GearItems.length; ++i) {
+                const gearItemEntry = this.GearItems[i];
+                if(gearItemEntry.IsPacked) {
+                    ++count;
+                }
+            }
+            return count;
+        }
+
+        public getPackedMealCount() {
+            let count = 0;
+            for(let i=0; i<this.Meals.length; ++i) {
+                const mealEntry = this.Meals[i];
+                if(mealEntry.IsPacked) {
+                    ++count;
+                }
+            }
+            return count;
+        }
+
+        public getPackList() {
+            let entries = <Array<IEntry>>[];
+            for(let i=0; i<this.GearCollections.length; ++i) {
+                const gearCollection = AppState.getInstance().getGearState().getGearCollectionById(this.GearCollections[i].GearCollectionId);
+                entries = entries.concat(gearCollection.getPackList());
+            }
+
+            for(let i=0; i<this.GearSystems.length; ++i) {
+                const gearSystem = AppState.getInstance().getGearState().getGearSystemById(this.GearSystems[i].GearSystemId);
+                entries = entries.concat(gearSystem.getPackList());
+            }
+
+            for(let i=0; i<this.GearItems.length; ++i) {
+                entries.push(this.GearItems[i]);
+            }
+
+            for(let i=0; i<this.Meals.length; ++i) {
+                entries.push(this.Meals[i]);
+            }
+            return entries;
+        }
+
         /* Weight/Cost */
 
         public getWeightInGrams() {
@@ -318,7 +374,7 @@ module BackpackPlanner.Mockup.Models.Trips {
         }
 
         public saveToDevice($q: ng.IQService) : ng.IPromise<any> {
-            // mockup does nothing here
+            alert("TripPlan.saveToDevice");
             return $q.defer().promise;
         }
     }

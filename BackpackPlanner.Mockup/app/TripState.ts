@@ -117,6 +117,13 @@ module BackpackPlanner.Mockup {
             this._tripPlans = <Array<Models.Trips.TripPlan>>[];
         }
 
+        /* Utilities */
+
+        public deleteAllData() {
+            this.deleteAllTripItineraries();
+            this.deleteAllTripPlans();
+        }
+
         /* Load/Save */
 
         private loadTripItineraries($q: ng.IQService, tripItineraryResources: Resources.Trips.ITripItineraryResource[]) {
@@ -166,7 +173,7 @@ module BackpackPlanner.Mockup {
         }
 
         public saveToDevice($q: ng.IQService) : ng.IPromise<any> {
-            // mockup does nothing here
+            alert("TripState.saveToDevice");
             return $q.defer().promise;
         }
     }

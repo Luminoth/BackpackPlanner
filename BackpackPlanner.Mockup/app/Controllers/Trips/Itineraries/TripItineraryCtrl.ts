@@ -62,12 +62,14 @@ module BackpackPlanner.Mockup.Controllers.Trips.Itineraries {
                         }
 
                         $location.path("/trips/itineraries");
-                        $mdToast.show(deleteToast).then(() => {
-                            // TODO: this does *not* restore the itinerary to its containers
-                            // and it should probably do so... but how?
-                            AppState.getInstance().getTripState().addTripItinerary($scope.tripItinerary);
-                            $mdToast.show(undoDeleteToast);
-                            $location.path(`/trips/itineraries/${$scope.tripItinerary.Id}`);
+                        $mdToast.show(deleteToast).then((response: string) => {
+                            if("ok" == response) {
+                                // TODO: this does *not* restore the itinerary to its containers
+                                // and it should probably do so... but how?
+                                AppState.getInstance().getTripState().addTripItinerary($scope.tripItinerary);
+                                $mdToast.show(undoDeleteToast);
+                                $location.path(`/trips/itineraries/${$scope.tripItinerary.Id}`);
+                            }
                         });
                     });
                 });

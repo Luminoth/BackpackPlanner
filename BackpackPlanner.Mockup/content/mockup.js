@@ -66,7 +66,7 @@ var BackpackPlanner;
                         return $q.defer().promise;
                     };
                     UserInformation.prototype.saveToDevice = function ($q) {
-                        // mockup does nothing here
+                        alert("UserInformation.saveToDevice");
                         return $q.defer().promise;
                     };
                     return UserInformation;
@@ -109,11 +109,22 @@ var BackpackPlanner;
                     return $q.defer().promise;
                 };
                 AppSettings.prototype.saveToDevice = function ($q) {
+                    alert("AppSettings.saveToDevice");
                     return $q.defer().promise;
                 };
                 return AppSettings;
             })();
             Models.AppSettings = AppSettings;
+        })(Models = Mockup.Models || (Mockup.Models = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Models;
+        (function (Models) {
+            "use strict";
         })(Models = Mockup.Models || (Mockup.Models = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
@@ -135,6 +146,7 @@ var BackpackPlanner;
 ///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
 ///<reference path="../../Resources/Gear/GearSystemResource.ts"/>
 ///<reference path="../../AppState.ts"/>
+///<reference path="../Entry.ts"/>
 ///<reference path="GearItem.ts"/>
 var BackpackPlanner;
 (function (BackpackPlanner) {
@@ -186,6 +198,24 @@ var BackpackPlanner;
                         }
                         this.GearItems.splice(idx, 1);
                     };
+                    /* Pack List */
+                    GearSystem.prototype.getPackedGearItemCount = function () {
+                        var count = 0;
+                        for (var i = 0; i < this.GearItems.length; ++i) {
+                            var gearItemEntry = this.GearItems[i];
+                            if (gearItemEntry.IsPacked) {
+                                ++count;
+                            }
+                        }
+                        return count;
+                    };
+                    GearSystem.prototype.getPackList = function () {
+                        var entries = [];
+                        for (var i = 0; i < this.GearItems.length; ++i) {
+                            entries.push(this.GearItems[i]);
+                        }
+                        return entries;
+                    };
                     /* Weight/Cost */
                     GearSystem.prototype.getWeightInGrams = function () {
                         var weightInGrams = 0;
@@ -228,7 +258,7 @@ var BackpackPlanner;
                         return $q.defer().promise;
                     };
                     GearSystem.prototype.saveToDevice = function ($q) {
-                        // mockup does nothing here
+                        alert("GearSystem.saveToDevice");
                         return $q.defer().promise;
                     };
                     return GearSystem;
@@ -291,6 +321,7 @@ var BackpackPlanner;
 ///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
 ///<reference path="../../Resources/Gear/GearCollectionResource.ts"/>
 ///<reference path="../../AppState.ts"/>
+///<reference path="../Entry.ts"/>
 ///<reference path="GearItem.ts"/>
 ///<reference path="GearSystem.ts"/>
 var BackpackPlanner;
@@ -390,6 +421,32 @@ var BackpackPlanner;
                         }
                         this.GearItems.splice(idx, 1);
                     };
+                    /* Pack List */
+                    GearCollection.prototype.getPackedGearItemCount = function () {
+                        var count = 0;
+                        for (var i = 0; i < this.GearSystems.length; ++i) {
+                            var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(this.GearSystems[i].GearSystemId);
+                            count += gearSystem.getPackedGearItemCount();
+                        }
+                        for (var i = 0; i < this.GearItems.length; ++i) {
+                            var gearItemEntry = this.GearItems[i];
+                            if (gearItemEntry.IsPacked) {
+                                ++count;
+                            }
+                        }
+                        return count;
+                    };
+                    GearCollection.prototype.getPackList = function () {
+                        var entries = [];
+                        for (var i = 0; i < this.GearSystems.length; ++i) {
+                            var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(this.GearSystems[i].GearSystemId);
+                            entries = entries.concat(gearSystem.getPackList());
+                        }
+                        for (var i = 0; i < this.GearItems.length; ++i) {
+                            entries.push(this.GearItems[i]);
+                        }
+                        return entries;
+                    };
                     /* Weight/Cost */
                     GearCollection.prototype.getWeightInGrams = function () {
                         var weightInGrams = 0;
@@ -444,7 +501,7 @@ var BackpackPlanner;
                         return $q.defer().promise;
                     };
                     GearCollection.prototype.saveToDevice = function ($q) {
-                        // mockup does nothing here
+                        alert("GearCollection.saveToDevice");
                         return $q.defer().promise;
                     };
                     return GearCollection;
@@ -599,6 +656,7 @@ var BackpackPlanner;
 ///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
 //<reference path="../../Resources/Meals/MealResource.ts"/>
 ///<reference path="../../AppState.ts"/>
+///<reference path="../Entry.ts"/>
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -656,7 +714,7 @@ var BackpackPlanner;
                         return $q.defer().promise;
                     };
                     Meal.prototype.saveToDevice = function ($q) {
-                        // mockup does nothing here
+                        alert("Meal.saveToDevice");
                         return $q.defer().promise;
                     };
                     return Meal;
@@ -802,7 +860,7 @@ var BackpackPlanner;
                         return $q.defer().promise;
                     };
                     TripItinerary.prototype.saveToDevice = function ($q) {
-                        // mockup does nothing here
+                        alert("TripItinerary.saveToDevice");
                         return $q.defer().promise;
                     };
                     return TripItinerary;
@@ -1031,6 +1089,53 @@ var BackpackPlanner;
                         }
                         this.Meals.splice(idx, 1);
                     };
+                    /* Pack List */
+                    TripPlan.prototype.getPackedGearItemCount = function () {
+                        var count = 0;
+                        for (var i = 0; i < this.GearCollections.length; ++i) {
+                            var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this.GearCollections[i].GearCollectionId);
+                            count += gearCollection.getPackedGearItemCount();
+                        }
+                        for (var i = 0; i < this.GearSystems.length; ++i) {
+                            var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(this.GearSystems[i].GearSystemId);
+                            count += gearSystem.getPackedGearItemCount();
+                        }
+                        for (var i = 0; i < this.GearItems.length; ++i) {
+                            var gearItemEntry = this.GearItems[i];
+                            if (gearItemEntry.IsPacked) {
+                                ++count;
+                            }
+                        }
+                        return count;
+                    };
+                    TripPlan.prototype.getPackedMealCount = function () {
+                        var count = 0;
+                        for (var i = 0; i < this.Meals.length; ++i) {
+                            var mealEntry = this.Meals[i];
+                            if (mealEntry.IsPacked) {
+                                ++count;
+                            }
+                        }
+                        return count;
+                    };
+                    TripPlan.prototype.getPackList = function () {
+                        var entries = [];
+                        for (var i = 0; i < this.GearCollections.length; ++i) {
+                            var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this.GearCollections[i].GearCollectionId);
+                            entries = entries.concat(gearCollection.getPackList());
+                        }
+                        for (var i = 0; i < this.GearSystems.length; ++i) {
+                            var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(this.GearSystems[i].GearSystemId);
+                            entries = entries.concat(gearSystem.getPackList());
+                        }
+                        for (var i = 0; i < this.GearItems.length; ++i) {
+                            entries.push(this.GearItems[i]);
+                        }
+                        for (var i = 0; i < this.Meals.length; ++i) {
+                            entries.push(this.Meals[i]);
+                        }
+                        return entries;
+                    };
                     /* Weight/Cost */
                     TripPlan.prototype.getWeightInGrams = function () {
                         var weightInGrams = 0;
@@ -1106,7 +1211,7 @@ var BackpackPlanner;
                         return $q.defer().promise;
                     };
                     TripPlan.prototype.saveToDevice = function ($q) {
-                        // mockup does nothing here
+                        alert("TripPlan.saveToDevice");
                         return $q.defer().promise;
                     };
                     return TripPlan;
@@ -1335,6 +1440,12 @@ var BackpackPlanner;
             GearState.prototype.deleteAllGearCollections = function () {
                 this._gearCollections = [];
             };
+            /* Utilities */
+            GearState.prototype.deleteAllData = function () {
+                this.deleteAllGearCollections();
+                this.deleteAllGearSystems();
+                this.deleteAllGearItems();
+            };
             /* Load/Save */
             GearState.prototype.loadGearItems = function ($q, gearItemResources) {
                 var promises = [];
@@ -1384,7 +1495,7 @@ var BackpackPlanner;
                 return $q.all(promises);
             };
             GearState.prototype.saveToDevice = function ($q) {
-                // mockup does nothing here
+                alert("GearState.saveToDevice");
                 return $q.defer().promise;
             };
             return GearState;
@@ -1446,6 +1557,10 @@ var BackpackPlanner;
             MealState.prototype.deleteAllMeals = function () {
                 this._meals = [];
             };
+            /* Utilities */
+            MealState.prototype.deleteAllData = function () {
+                this.deleteAllMeals();
+            };
             /* Load/Save */
             MealState.prototype.loadMeals = function ($q, mealResources) {
                 var promises = [];
@@ -1467,7 +1582,7 @@ var BackpackPlanner;
                 return $q.all(promises);
             };
             MealState.prototype.saveToDevice = function ($q) {
-                // mockup does nothing here
+                alert("MealState.saveToDevice");
                 return $q.defer().promise;
             };
             return MealState;
@@ -1573,6 +1688,11 @@ var BackpackPlanner;
             TripState.prototype.deleteAllTripPlans = function () {
                 this._tripPlans = [];
             };
+            /* Utilities */
+            TripState.prototype.deleteAllData = function () {
+                this.deleteAllTripItineraries();
+                this.deleteAllTripPlans();
+            };
             /* Load/Save */
             TripState.prototype.loadTripItineraries = function ($q, tripItineraryResources) {
                 var promises = [];
@@ -1608,7 +1728,7 @@ var BackpackPlanner;
                 return $q.all(promises);
             };
             TripState.prototype.saveToDevice = function ($q) {
-                // mockup does nothing here
+                alert("TripState.saveToDevice");
                 return $q.defer().promise;
             };
             return TripState;
@@ -1671,6 +1791,12 @@ var BackpackPlanner;
             AppState.prototype.getTripState = function () {
                 return this._tripState;
             };
+            /* Utilities */
+            AppState.prototype.deleteAllData = function () {
+                this._gearState.deleteAllData();
+                this._mealState.deleteAllData();
+                this._tripState.deleteAllData();
+            };
             /* Load/Save */
             AppState.prototype.loadFromDevice = function ($q, appSettingsService, userInformationService, gearItemService, gearSystemService, gearCollectionService, mealService, tripItineraryService, tripPlanService) {
                 var _this = this;
@@ -1709,6 +1835,7 @@ var BackpackPlanner;
 ///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
 ///<reference path="../../Resources/Gear/GearItemResource.ts"/>
 ///<reference path="../../AppState.ts"/>
+///<reference path="../Entry.ts"/>
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -1766,7 +1893,7 @@ var BackpackPlanner;
                         return $q.defer().promise;
                     };
                     GearItem.prototype.saveToDevice = function ($q) {
-                        // mockup does nothing here
+                        alert("GearItem.saveToDevice");
                         return $q.defer().promise;
                     };
                     return GearItem;
@@ -1977,7 +2104,7 @@ var BackpackPlanner;
         (function (Controllers) {
             "use strict";
             var AppCtrl = (function () {
-                function AppCtrl($scope, $q, $location, $mdSidenav, appSettingsService, userInformationService, gearItemService, gearSystemService, gearCollectionService, mealService, tripItineraryService, tripPlanService) {
+                function AppCtrl($scope, $q, $location, $mdSidenav, $mdDialog, $mdToast, appSettingsService, userInformationService, gearItemService, gearSystemService, gearCollectionService, mealService, tripItineraryService, tripPlanService) {
                     $scope.appStateLoading = true;
                     Mockup.AppState.getInstance().loadFromDevice($q, appSettingsService, userInformationService, gearItemService, gearSystemService, gearCollectionService, mealService, tripItineraryService, tripPlanService).then(function () {
                         $scope.appStateLoading = false;
@@ -1993,20 +2120,12 @@ var BackpackPlanner;
                     $scope.getGearItemById = function (gearItemId) {
                         return Mockup.AppState.getInstance().getGearState().getGearItemById(gearItemId);
                     };
-                    $scope.deleteAllGearItems = function () {
-                        // TODO: md alert verify this!
-                        Mockup.AppState.getInstance().getGearState().deleteAllGearItems();
-                    };
                     // gear systems
                     $scope.getGearSystems = function () {
                         return Mockup.AppState.getInstance().getGearState().getGearSystems();
                     };
                     $scope.getGearSystemById = function (gearSystemId) {
                         return Mockup.AppState.getInstance().getGearState().getGearSystemById(gearSystemId);
-                    };
-                    $scope.deleteAllGearSystems = function () {
-                        // TODO: md alert verify this!
-                        Mockup.AppState.getInstance().getGearState().deleteAllGearSystems();
                     };
                     // gear collections
                     $scope.getGearCollections = function () {
@@ -2015,20 +2134,12 @@ var BackpackPlanner;
                     $scope.getGearCollectionById = function (gearCollectionId) {
                         return Mockup.AppState.getInstance().getGearState().getGearCollectionById(gearCollectionId);
                     };
-                    $scope.deleteAllGearCollections = function () {
-                        // TODO: md alert verify this!
-                        Mockup.AppState.getInstance().getGearState().deleteAllGearCollections();
-                    };
                     // meals
                     $scope.getMeals = function () {
                         return Mockup.AppState.getInstance().getMealState().getMeals();
                     };
                     $scope.getMealById = function (mealId) {
                         return Mockup.AppState.getInstance().getMealState().getMealById(mealId);
-                    };
-                    $scope.deleteAllMeals = function () {
-                        // TODO: md alert verify this!
-                        Mockup.AppState.getInstance().getMealState().deleteAllMeals();
                     };
                     // trip itineraries
                     $scope.getTripItineraries = function () {
@@ -2037,20 +2148,12 @@ var BackpackPlanner;
                     $scope.getTripItineraryById = function (tripItineraryId) {
                         return Mockup.AppState.getInstance().getTripState().getTripItineraryById(tripItineraryId);
                     };
-                    $scope.deleteAllTripItineraries = function () {
-                        // TODO: md alert verify this!
-                        Mockup.AppState.getInstance().getTripState().deleteAllTripItineraries();
-                    };
                     // trip plans
                     $scope.getTripPlans = function () {
                         return Mockup.AppState.getInstance().getTripState().getTripPlans();
                     };
                     $scope.getTripPlanById = function (tripPlanId) {
                         return Mockup.AppState.getInstance().getTripState().getTripPlanById(tripPlanId);
-                    };
-                    $scope.deleteAllTripPlans = function () {
-                        // TODO: md alert verify this!
-                        Mockup.AppState.getInstance().getTripState().deleteAllTripPlans();
                     };
                     // unit utilities
                     $scope.getUnitsWeightString = function () {
@@ -2070,11 +2173,46 @@ var BackpackPlanner;
                     $scope.toggleSidenav = function () {
                         $mdSidenav("left").toggle();
                     };
+                    $scope.showDeleteAllConfirm = function (event) {
+                        var confirm = $mdDialog.confirm()
+                            .parent(angular.element(document.body))
+                            .title("Delete All Data")
+                            .content("Are you sure you wish to delete all data?")
+                            .ok("Yes")
+                            .cancel("No")
+                            .targetEvent(event);
+                        var receipt = $mdDialog.alert()
+                            .parent(angular.element(document.body))
+                            .title("All data deleted!")
+                            .content("All data has been deleted.")
+                            .ok("OK")
+                            .targetEvent(event);
+                        var deleteToast = $mdToast.simple()
+                            .content("Deleted all data")
+                            .action("Undo")
+                            .position("bottom left");
+                        var undoDeleteToast = $mdToast.simple()
+                            .content("Restored all data")
+                            .action("OK")
+                            .position("bottom left");
+                        $mdDialog.show(confirm).then(function () {
+                            $mdDialog.show(receipt).then(function () {
+                                Mockup.AppState.getInstance().deleteAllData();
+                                $mdToast.show(deleteToast).then(function (response) {
+                                    if ("ok" == response) {
+                                        // TODO: this does *not* restore anything
+                                        // and it should probably do so... but how?
+                                        $mdToast.show(undoDeleteToast);
+                                    }
+                                });
+                            });
+                        });
+                    };
                 }
                 return AppCtrl;
             })();
             Controllers.AppCtrl = AppCtrl;
-            AppCtrl.$inject = ["$scope", "$q", "$location", "$mdSidenav",
+            AppCtrl.$inject = ["$scope", "$q", "$location", "$mdSidenav", "$mdDialog", "$mdToast",
                 "AppSettingsService", "UserInformationService",
                 "GearItemService", "GearSystemService", "GearCollectionService",
                 "MealService", "TripItineraryService", "TripPlanService"];
@@ -2134,9 +2272,11 @@ var BackpackPlanner;
                                     .action("OK")
                                     .position("bottom left");
                                 $location.path("/gear/collections");
-                                $mdToast.show(addToast).then(function () {
-                                    Mockup.AppState.getInstance().getGearState().deleteGearCollection($scope.gearCollection);
-                                    $mdToast.show(undoAddToast);
+                                $mdToast.show(addToast).then(function (response) {
+                                    if ("ok" == response) {
+                                        Mockup.AppState.getInstance().getGearState().deleteGearCollection($scope.gearCollection);
+                                        $mdToast.show(undoAddToast);
+                                    }
                                 });
                             };
                         }
@@ -2225,12 +2365,14 @@ var BackpackPlanner;
                                             return;
                                         }
                                         $location.path("/gear/collections");
-                                        $mdToast.show(deleteToast).then(function () {
-                                            // TODO: this does *not* restore the collection to its containers
-                                            // and it should probably do so... but how?
-                                            Mockup.AppState.getInstance().getGearState().addGearCollection($scope.gearCollection);
-                                            $mdToast.show(undoDeleteToast);
-                                            $location.path("/gear/collections/" + $scope.gearCollection.Id);
+                                        $mdToast.show(deleteToast).then(function (response) {
+                                            if ("ok" == response) {
+                                                // TODO: this does *not* restore the collection to its containers
+                                                // and it should probably do so... but how?
+                                                Mockup.AppState.getInstance().getGearState().addGearCollection($scope.gearCollection);
+                                                $mdToast.show(undoDeleteToast);
+                                                $location.path("/gear/collections/" + $scope.gearCollection.Id);
+                                            }
                                         });
                                     });
                                 });
@@ -2260,7 +2402,7 @@ var BackpackPlanner;
                 (function (Collections) {
                     "use strict";
                     var GearCollectionsCtrl = (function () {
-                        function GearCollectionsCtrl($scope, $mdDialog) {
+                        function GearCollectionsCtrl($scope, $mdDialog, $mdToast) {
                             $scope.orderBy = "Name";
                             $scope.showWhatIsGearCollection = function (event) {
                                 $mdDialog.show({
@@ -2270,11 +2412,46 @@ var BackpackPlanner;
                                     targetEvent: event
                                 });
                             };
+                            $scope.showDeleteAllConfirm = function (event) {
+                                var confirm = $mdDialog.confirm()
+                                    .parent(angular.element(document.body))
+                                    .title("Delete All Gear Collections")
+                                    .content("Are you sure you wish to delete all gear collections?")
+                                    .ok("Yes")
+                                    .cancel("No")
+                                    .targetEvent(event);
+                                var receipt = $mdDialog.alert()
+                                    .parent(angular.element(document.body))
+                                    .title("All gear collections deleted!")
+                                    .content("All gear collections have been deleted.")
+                                    .ok("OK")
+                                    .targetEvent(event);
+                                var deleteToast = $mdToast.simple()
+                                    .content("Deleted all gear collections")
+                                    .action("Undo")
+                                    .position("bottom left");
+                                var undoDeleteToast = $mdToast.simple()
+                                    .content("Restored all gear collections")
+                                    .action("OK")
+                                    .position("bottom left");
+                                $mdDialog.show(confirm).then(function () {
+                                    $mdDialog.show(receipt).then(function () {
+                                        Mockup.AppState.getInstance().getGearState().deleteAllGearCollections();
+                                        $mdToast.show(deleteToast).then(function (response) {
+                                            if ("ok" == response) {
+                                                // TODO: this does *not* restore anything
+                                                // and it should probably do so... but how?
+                                                $mdToast.show(undoDeleteToast);
+                                            }
+                                        });
+                                    });
+                                });
+                            };
                         }
                         return GearCollectionsCtrl;
                     })();
                     Collections.GearCollectionsCtrl = GearCollectionsCtrl;
-                    GearCollectionsCtrl.$inject = ["$scope", "$mdDialog"];
+                    GearCollectionsCtrl.$inject = ["$scope", "$mdDialog", "$mdToast"];
                 })(Collections = Gear.Collections || (Gear.Collections = {}));
             })(Gear = Controllers.Gear || (Controllers.Gear = {}));
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
@@ -2309,9 +2486,11 @@ var BackpackPlanner;
                                     .action("OK")
                                     .position("bottom left");
                                 $location.path("/gear/items");
-                                $mdToast.show(addToast).then(function () {
-                                    Mockup.AppState.getInstance().getGearState().deleteGearItem($scope.gearItem);
-                                    $mdToast.show(undoAddToast);
+                                $mdToast.show(addToast).then(function (response) {
+                                    if ("ok" == response) {
+                                        Mockup.AppState.getInstance().getGearState().deleteGearItem($scope.gearItem);
+                                        $mdToast.show(undoAddToast);
+                                    }
                                 });
                             };
                         }
@@ -2376,12 +2555,14 @@ var BackpackPlanner;
                                             return;
                                         }
                                         $location.path("/gear/items");
-                                        $mdToast.show(deleteToast).then(function () {
-                                            // TODO: this does *not* restore the item to its containers
-                                            // and it should probably do so... but how?
-                                            Mockup.AppState.getInstance().getGearState().addGearItem($scope.gearItem);
-                                            $mdToast.show(undoDeleteToast);
-                                            $location.path("/gear/items/" + $scope.gearItem.Id);
+                                        $mdToast.show(deleteToast).then(function (response) {
+                                            if ("ok" == response) {
+                                                // TODO: this does *not* restore the item to its containers
+                                                // and it should probably do so... but how?
+                                                Mockup.AppState.getInstance().getGearState().addGearItem($scope.gearItem);
+                                                $mdToast.show(undoDeleteToast);
+                                                $location.path("/gear/items/" + $scope.gearItem.Id);
+                                            }
                                         });
                                     });
                                 });
@@ -2411,7 +2592,7 @@ var BackpackPlanner;
                 (function (Items) {
                     "use strict";
                     var GearItemsCtrl = (function () {
-                        function GearItemsCtrl($scope, $mdDialog) {
+                        function GearItemsCtrl($scope, $mdDialog, $mdToast) {
                             $scope.orderBy = "Name";
                             $scope.showWhatIsGearItem = function (event) {
                                 $mdDialog.show({
@@ -2421,11 +2602,46 @@ var BackpackPlanner;
                                     targetEvent: event
                                 });
                             };
+                            $scope.showDeleteAllConfirm = function (event) {
+                                var confirm = $mdDialog.confirm()
+                                    .parent(angular.element(document.body))
+                                    .title("Delete All Gear Items")
+                                    .content("Are you sure you wish to delete all gear items?")
+                                    .ok("Yes")
+                                    .cancel("No")
+                                    .targetEvent(event);
+                                var receipt = $mdDialog.alert()
+                                    .parent(angular.element(document.body))
+                                    .title("All gear items deleted!")
+                                    .content("All gear items have been deleted.")
+                                    .ok("OK")
+                                    .targetEvent(event);
+                                var deleteToast = $mdToast.simple()
+                                    .content("Deleted all gear items")
+                                    .action("Undo")
+                                    .position("bottom left");
+                                var undoDeleteToast = $mdToast.simple()
+                                    .content("Restored all gear items")
+                                    .action("OK")
+                                    .position("bottom left");
+                                $mdDialog.show(confirm).then(function () {
+                                    $mdDialog.show(receipt).then(function () {
+                                        Mockup.AppState.getInstance().getGearState().deleteAllGearItems();
+                                        $mdToast.show(deleteToast).then(function (response) {
+                                            if ("ok" == response) {
+                                                // TODO: this does *not* restore anything
+                                                // and it should probably do so... but how?
+                                                $mdToast.show(undoDeleteToast);
+                                            }
+                                        });
+                                    });
+                                });
+                            };
                         }
                         return GearItemsCtrl;
                     })();
                     Items.GearItemsCtrl = GearItemsCtrl;
-                    GearItemsCtrl.$inject = ["$scope", "$mdDialog"];
+                    GearItemsCtrl.$inject = ["$scope", "$mdDialog", "$mdToast"];
                 })(Items = Gear.Items || (Gear.Items = {}));
             })(Gear = Controllers.Gear || (Controllers.Gear = {}));
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
@@ -2472,9 +2688,11 @@ var BackpackPlanner;
                                     .action("OK")
                                     .position("bottom left");
                                 $location.path("/gear/systems");
-                                $mdToast.show(addToast).then(function () {
-                                    Mockup.AppState.getInstance().getGearState().deleteGearSystem($scope.gearSystem);
-                                    $mdToast.show(undoAddToast);
+                                $mdToast.show(addToast).then(function (response) {
+                                    if ("ok" == response) {
+                                        Mockup.AppState.getInstance().getGearState().deleteGearSystem($scope.gearSystem);
+                                        $mdToast.show(undoAddToast);
+                                    }
                                 });
                             };
                         }
@@ -2551,12 +2769,14 @@ var BackpackPlanner;
                                             return;
                                         }
                                         $location.path("/gear/systems");
-                                        $mdToast.show(deleteToast).then(function () {
-                                            // TODO: this does *not* restore the system to its containers
-                                            // and it should probably do so... but how?
-                                            Mockup.AppState.getInstance().getGearState().addGearSystem($scope.gearSystem);
-                                            $mdToast.show(undoDeleteToast);
-                                            $location.path("/gear/systems/" + $scope.gearSystem.Id);
+                                        $mdToast.show(deleteToast).then(function (response) {
+                                            if ("ok" == response) {
+                                                // TODO: this does *not* restore the system to its containers
+                                                // and it should probably do so... but how?
+                                                Mockup.AppState.getInstance().getGearState().addGearSystem($scope.gearSystem);
+                                                $mdToast.show(undoDeleteToast);
+                                                $location.path("/gear/systems/" + $scope.gearSystem.Id);
+                                            }
                                         });
                                     });
                                 });
@@ -2586,7 +2806,7 @@ var BackpackPlanner;
                 (function (Systems) {
                     "use strict";
                     var GearSystemsCtrl = (function () {
-                        function GearSystemsCtrl($scope, $mdDialog) {
+                        function GearSystemsCtrl($scope, $mdDialog, $mdToast) {
                             $scope.orderBy = "Name";
                             $scope.showWhatIsGearSystem = function (event) {
                                 $mdDialog.show({
@@ -2596,11 +2816,46 @@ var BackpackPlanner;
                                     targetEvent: event
                                 });
                             };
+                            $scope.showDeleteAllConfirm = function (event) {
+                                var confirm = $mdDialog.confirm()
+                                    .parent(angular.element(document.body))
+                                    .title("Delete All Gear Systems")
+                                    .content("Are you sure you wish to delete all gear systems?")
+                                    .ok("Yes")
+                                    .cancel("No")
+                                    .targetEvent(event);
+                                var receipt = $mdDialog.alert()
+                                    .parent(angular.element(document.body))
+                                    .title("All gear systems deleted!")
+                                    .content("All gear systems have been deleted.")
+                                    .ok("OK")
+                                    .targetEvent(event);
+                                var deleteToast = $mdToast.simple()
+                                    .content("Deleted all gear systems")
+                                    .action("Undo")
+                                    .position("bottom left");
+                                var undoDeleteToast = $mdToast.simple()
+                                    .content("Restored all gear systems")
+                                    .action("OK")
+                                    .position("bottom left");
+                                $mdDialog.show(confirm).then(function () {
+                                    $mdDialog.show(receipt).then(function () {
+                                        Mockup.AppState.getInstance().getGearState().deleteAllGearSystems();
+                                        $mdToast.show(deleteToast).then(function (response) {
+                                            if ("ok" == response) {
+                                                // TODO: this does *not* restore anything
+                                                // and it should probably do so... but how?
+                                                $mdToast.show(undoDeleteToast);
+                                            }
+                                        });
+                                    });
+                                });
+                            };
                         }
                         return GearSystemsCtrl;
                     })();
                     Systems.GearSystemsCtrl = GearSystemsCtrl;
-                    GearSystemsCtrl.$inject = ["$scope", "$mdDialog"];
+                    GearSystemsCtrl.$inject = ["$scope", "$mdDialog", "$mdToast"];
                 })(Systems = Gear.Systems || (Gear.Systems = {}));
             })(Gear = Controllers.Gear || (Controllers.Gear = {}));
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
@@ -2619,7 +2874,7 @@ var BackpackPlanner;
             (function (Meals) {
                 "use strict";
                 var MealsCtrl = (function () {
-                    function MealsCtrl($scope, $mdDialog) {
+                    function MealsCtrl($scope, $mdDialog, $mdToast) {
                         $scope.orderBy = "Name";
                         $scope.showWhatIsMeal = function (event) {
                             $mdDialog.show({
@@ -2629,11 +2884,46 @@ var BackpackPlanner;
                                 targetEvent: event
                             });
                         };
+                        $scope.showDeleteAllConfirm = function (event) {
+                            var confirm = $mdDialog.confirm()
+                                .parent(angular.element(document.body))
+                                .title("Delete All Meals")
+                                .content("Are you sure you wish to delete all meals?")
+                                .ok("Yes")
+                                .cancel("No")
+                                .targetEvent(event);
+                            var receipt = $mdDialog.alert()
+                                .parent(angular.element(document.body))
+                                .title("All meals deleted!")
+                                .content("All meals have been deleted.")
+                                .ok("OK")
+                                .targetEvent(event);
+                            var deleteToast = $mdToast.simple()
+                                .content("Deleted all meals")
+                                .action("Undo")
+                                .position("bottom left");
+                            var undoDeleteToast = $mdToast.simple()
+                                .content("Restored all meals")
+                                .action("OK")
+                                .position("bottom left");
+                            $mdDialog.show(confirm).then(function () {
+                                $mdDialog.show(receipt).then(function () {
+                                    Mockup.AppState.getInstance().getMealState().deleteAllMeals();
+                                    $mdToast.show(deleteToast).then(function (response) {
+                                        if ("ok" == response) {
+                                            // TODO: this does *not* restore anything
+                                            // and it should probably do so... but how?
+                                            $mdToast.show(undoDeleteToast);
+                                        }
+                                    });
+                                });
+                            });
+                        };
                     }
                     return MealsCtrl;
                 })();
                 Meals.MealsCtrl = MealsCtrl;
-                MealsCtrl.$inject = ["$scope", "$mdDialog"];
+                MealsCtrl.$inject = ["$scope", "$mdDialog", "$mdToast"];
             })(Meals = Controllers.Meals || (Controllers.Meals = {}));
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
@@ -2688,12 +2978,14 @@ var BackpackPlanner;
                                         return;
                                     }
                                     $location.path("/meals");
-                                    $mdToast.show(deleteToast).then(function () {
-                                        // TODO: this does *not* restore the meal to its containers
-                                        // and it should probably do so... but how?
-                                        Mockup.AppState.getInstance().getMealState().addMeal($scope.meal);
-                                        $mdToast.show(undoDeleteToast);
-                                        $location.path("/meals/" + $scope.meal.Id);
+                                    $mdToast.show(deleteToast).then(function (response) {
+                                        if ("ok" == response) {
+                                            // TODO: this does *not* restore the meal to its containers
+                                            // and it should probably do so... but how?
+                                            Mockup.AppState.getInstance().getMealState().addMeal($scope.meal);
+                                            $mdToast.show(undoDeleteToast);
+                                            $location.path("/meals/" + $scope.meal.Id);
+                                        }
                                     });
                                 });
                             });
@@ -2734,9 +3026,11 @@ var BackpackPlanner;
                                 .action("OK")
                                 .position("bottom left");
                             $location.path("/meals");
-                            $mdToast.show(addToast).then(function () {
-                                Mockup.AppState.getInstance().getMealState().deleteMeal($scope.meal);
-                                $mdToast.show(undoAddToast);
+                            $mdToast.show(addToast).then(function (response) {
+                                if ("ok" == response) {
+                                    Mockup.AppState.getInstance().getMealState().deleteMeal($scope.meal);
+                                    $mdToast.show(undoAddToast);
+                                }
                             });
                         };
                     }
@@ -2763,7 +3057,7 @@ var BackpackPlanner;
                 (function (Itineraries) {
                     "use strict";
                     var TripItinerariesCtrl = (function () {
-                        function TripItinerariesCtrl($scope, $mdDialog) {
+                        function TripItinerariesCtrl($scope, $mdDialog, $mdToast) {
                             $scope.orderBy = "Name";
                             $scope.showWhatIsTripItinerary = function (event) {
                                 $mdDialog.show({
@@ -2773,11 +3067,46 @@ var BackpackPlanner;
                                     targetEvent: event
                                 });
                             };
+                            $scope.showDeleteAllConfirm = function (event) {
+                                var confirm = $mdDialog.confirm()
+                                    .parent(angular.element(document.body))
+                                    .title("Delete All Trip Itineraries")
+                                    .content("Are you sure you wish to delete all trip itineraries?")
+                                    .ok("Yes")
+                                    .cancel("No")
+                                    .targetEvent(event);
+                                var receipt = $mdDialog.alert()
+                                    .parent(angular.element(document.body))
+                                    .title("All trip itineraries deleted!")
+                                    .content("All trip itineraries have been deleted.")
+                                    .ok("OK")
+                                    .targetEvent(event);
+                                var deleteToast = $mdToast.simple()
+                                    .content("Deleted all trip itineraries")
+                                    .action("Undo")
+                                    .position("bottom left");
+                                var undoDeleteToast = $mdToast.simple()
+                                    .content("Restored all trip itineraries")
+                                    .action("OK")
+                                    .position("bottom left");
+                                $mdDialog.show(confirm).then(function () {
+                                    $mdDialog.show(receipt).then(function () {
+                                        Mockup.AppState.getInstance().getTripState().deleteAllTripItineraries();
+                                        $mdToast.show(deleteToast).then(function (response) {
+                                            if ("ok" == response) {
+                                                // TODO: this does *not* restore anything
+                                                // and it should probably do so... but how?
+                                                $mdToast.show(undoDeleteToast);
+                                            }
+                                        });
+                                    });
+                                });
+                            };
                         }
                         return TripItinerariesCtrl;
                     })();
                     Itineraries.TripItinerariesCtrl = TripItinerariesCtrl;
-                    TripItinerariesCtrl.$inject = ["$scope", "$mdDialog"];
+                    TripItinerariesCtrl.$inject = ["$scope", "$mdDialog", "$mdToast"];
                 })(Itineraries = Trips.Itineraries || (Trips.Itineraries = {}));
             })(Trips = Controllers.Trips || (Controllers.Trips = {}));
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
@@ -2835,12 +3164,14 @@ var BackpackPlanner;
                                             return;
                                         }
                                         $location.path("/trips/itineraries");
-                                        $mdToast.show(deleteToast).then(function () {
-                                            // TODO: this does *not* restore the itinerary to its containers
-                                            // and it should probably do so... but how?
-                                            Mockup.AppState.getInstance().getTripState().addTripItinerary($scope.tripItinerary);
-                                            $mdToast.show(undoDeleteToast);
-                                            $location.path("/trips/itineraries/" + $scope.tripItinerary.Id);
+                                        $mdToast.show(deleteToast).then(function (response) {
+                                            if ("ok" == response) {
+                                                // TODO: this does *not* restore the itinerary to its containers
+                                                // and it should probably do so... but how?
+                                                Mockup.AppState.getInstance().getTripState().addTripItinerary($scope.tripItinerary);
+                                                $mdToast.show(undoDeleteToast);
+                                                $location.path("/trips/itineraries/" + $scope.tripItinerary.Id);
+                                            }
                                         });
                                     });
                                 });
@@ -2884,9 +3215,11 @@ var BackpackPlanner;
                                     .action("OK")
                                     .position("bottom left");
                                 $location.path("/trips/itineraries");
-                                $mdToast.show(addToast).then(function () {
-                                    Mockup.AppState.getInstance().getTripState().deleteTripItinerary($scope.tripItinerary);
-                                    $mdToast.show(undoAddToast);
+                                $mdToast.show(addToast).then(function (response) {
+                                    if ("ok" == response) {
+                                        Mockup.AppState.getInstance().getTripState().deleteTripItinerary($scope.tripItinerary);
+                                        $mdToast.show(undoAddToast);
+                                    }
                                 });
                             };
                         }
@@ -2914,7 +3247,7 @@ var BackpackPlanner;
                 (function (Plans) {
                     "use strict";
                     var TripPlansCtrl = (function () {
-                        function TripPlansCtrl($scope, $mdDialog) {
+                        function TripPlansCtrl($scope, $mdDialog, $mdToast) {
                             $scope.orderBy = "Name";
                             $scope.showWhatIsTripPlan = function (event) {
                                 $mdDialog.show({
@@ -2924,11 +3257,46 @@ var BackpackPlanner;
                                     targetEvent: event
                                 });
                             };
+                            $scope.showDeleteAllConfirm = function (event) {
+                                var confirm = $mdDialog.confirm()
+                                    .parent(angular.element(document.body))
+                                    .title("Delete All Trip Plans")
+                                    .content("Are you sure you wish to delete all trip plans?")
+                                    .ok("Yes")
+                                    .cancel("No")
+                                    .targetEvent(event);
+                                var receipt = $mdDialog.alert()
+                                    .parent(angular.element(document.body))
+                                    .title("All trip plans deleted!")
+                                    .content("All trip plans have been deleted.")
+                                    .ok("OK")
+                                    .targetEvent(event);
+                                var deleteToast = $mdToast.simple()
+                                    .content("Deleted all trip plans")
+                                    .action("Undo")
+                                    .position("bottom left");
+                                var undoDeleteToast = $mdToast.simple()
+                                    .content("Restored all trip plans")
+                                    .action("OK")
+                                    .position("bottom left");
+                                $mdDialog.show(confirm).then(function () {
+                                    $mdDialog.show(receipt).then(function () {
+                                        Mockup.AppState.getInstance().getTripState().deleteAllTripPlans();
+                                        $mdToast.show(deleteToast).then(function (response) {
+                                            if ("ok" == response) {
+                                                // TODO: this does *not* restore anything
+                                                // and it should probably do so... but how?
+                                                $mdToast.show(undoDeleteToast);
+                                            }
+                                        });
+                                    });
+                                });
+                            };
                         }
                         return TripPlansCtrl;
                     })();
                     Plans.TripPlansCtrl = TripPlansCtrl;
-                    TripPlansCtrl.$inject = ["$scope", "$mdDialog"];
+                    TripPlansCtrl.$inject = ["$scope", "$mdDialog", "$mdToast"];
                 })(Plans = Trips.Plans || (Trips.Plans = {}));
             })(Trips = Controllers.Trips || (Controllers.Trips = {}));
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
@@ -3005,6 +3373,17 @@ var BackpackPlanner;
                                     }
                                 });
                             };
+                            $scope.showPackList = function (event) {
+                                $mdDialog.show({
+                                    controller: Plans.PackListDlgCtrl,
+                                    templateUrl: "content/partials/trips/plans/packlist.html",
+                                    parent: angular.element(document.body),
+                                    targetEvent: event,
+                                    locals: {
+                                        tripPlan: $scope.tripPlan
+                                    }
+                                });
+                            };
                             $scope.showDeleteConfirm = function (event) {
                                 var confirm = $mdDialog.confirm()
                                     .parent(angular.element(document.body))
@@ -3034,10 +3413,12 @@ var BackpackPlanner;
                                             return;
                                         }
                                         $location.path("/trips/plans");
-                                        $mdToast.show(deleteToast).then(function () {
-                                            Mockup.AppState.getInstance().getTripState().addTripPlan($scope.tripPlan);
-                                            $mdToast.show(undoDeleteToast);
-                                            $location.path("/trips/plans/" + $scope.tripPlan.Id);
+                                        $mdToast.show(deleteToast).then(function (response) {
+                                            if ("ok" == response) {
+                                                Mockup.AppState.getInstance().getTripState().addTripPlan($scope.tripPlan);
+                                                $mdToast.show(undoDeleteToast);
+                                                $location.path("/trips/plans/" + $scope.tripPlan.Id);
+                                            }
                                         });
                                     });
                                 });
@@ -3067,8 +3448,56 @@ var BackpackPlanner;
                 (function (Plans) {
                     "use strict";
                     var AddTripPlanCtrl = (function () {
-                        function AddTripPlanCtrl($scope, $location, $mdToast) {
+                        function AddTripPlanCtrl($scope, $location, $mdDialog, $mdToast) {
+                            $scope.orderGearCollectionsBy = "getName()";
+                            $scope.orderGearSystemsBy = "getName()";
+                            $scope.orderGearItemsBy = "getName()";
+                            $scope.orderMealsBy = "getName()";
                             $scope.tripPlan = new Mockup.Models.Trips.TripPlan();
+                            $scope.showAddGearCollection = function (event) {
+                                $mdDialog.show({
+                                    controller: Plans.AddGearCollectionDlgCtrl,
+                                    templateUrl: "content/partials/trips/plans/add-collection.html",
+                                    parent: angular.element(document.body),
+                                    targetEvent: event,
+                                    locals: {
+                                        tripPlan: $scope.tripPlan
+                                    }
+                                });
+                            };
+                            $scope.showAddGearSystem = function (event) {
+                                $mdDialog.show({
+                                    controller: Plans.AddGearSystemDlgCtrl,
+                                    templateUrl: "content/partials/trips/plans/add-system.html",
+                                    parent: angular.element(document.body),
+                                    targetEvent: event,
+                                    locals: {
+                                        tripPlan: $scope.tripPlan
+                                    }
+                                });
+                            };
+                            $scope.showAddGearItem = function (event) {
+                                $mdDialog.show({
+                                    controller: Plans.AddGearItemDlgCtrl,
+                                    templateUrl: "content/partials/trips/plans/add-item.html",
+                                    parent: angular.element(document.body),
+                                    targetEvent: event,
+                                    locals: {
+                                        tripPlan: $scope.tripPlan
+                                    }
+                                });
+                            };
+                            $scope.showAddMeal = function (event) {
+                                $mdDialog.show({
+                                    controller: Plans.AddMealDlgCtrl,
+                                    templateUrl: "content/partials/trips/plans/add-meal.html",
+                                    parent: angular.element(document.body),
+                                    targetEvent: event,
+                                    locals: {
+                                        tripPlan: $scope.tripPlan
+                                    }
+                                });
+                            };
                             $scope.addTripPlan = function (tripPlan) {
                                 $scope.tripPlan = angular.copy(tripPlan);
                                 $scope.tripPlan.Id = Mockup.AppState.getInstance().getTripState().addTripPlan($scope.tripPlan);
@@ -3081,16 +3510,18 @@ var BackpackPlanner;
                                     .action("OK")
                                     .position("bottom left");
                                 $location.path("/trips/plans");
-                                $mdToast.show(addToast).then(function () {
-                                    Mockup.AppState.getInstance().getTripState().deleteTripPlan($scope.tripPlan);
-                                    $mdToast.show(undoAddToast);
+                                $mdToast.show(addToast).then(function (response) {
+                                    if ("ok" == response) {
+                                        Mockup.AppState.getInstance().getTripState().deleteTripPlan($scope.tripPlan);
+                                        $mdToast.show(undoAddToast);
+                                    }
                                 });
                             };
                         }
                         return AddTripPlanCtrl;
                     })();
                     Plans.AddTripPlanCtrl = AddTripPlanCtrl;
-                    AddTripPlanCtrl.$inject = ["$scope", "$location", "$mdToast"];
+                    AddTripPlanCtrl.$inject = ["$scope", "$location", "$mdDialog", "$mdToast"];
                 })(Plans = Trips.Plans || (Trips.Plans = {}));
             })(Trips = Controllers.Trips || (Controllers.Trips = {}));
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
@@ -3887,6 +4318,42 @@ var BackpackPlanner;
                         return AddMealDlgCtrl;
                     })();
                     Plans.AddMealDlgCtrl = AddMealDlgCtrl;
+                })(Plans = Trips.Plans || (Trips.Plans = {}));
+            })(Trips = Controllers.Trips || (Controllers.Trips = {}));
+        })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../AppState.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Controllers;
+        (function (Controllers) {
+            var Trips;
+            (function (Trips) {
+                var Plans;
+                (function (Plans) {
+                    "use strict";
+                    var PackListDlgCtrl = (function () {
+                        function PackListDlgCtrl($scope, $mdDialog, tripPlan) {
+                            $scope.tripPlan = tripPlan;
+                            $scope.orderBy = "getName()";
+                            $scope.getGearItems = function () {
+                                return Mockup.AppState.getInstance().getGearState().getGearItems();
+                            };
+                            $scope.getMeals = function () {
+                                return Mockup.AppState.getInstance().getMealState().getMeals();
+                            };
+                            $scope.close = function () {
+                                $mdDialog.hide();
+                            };
+                        }
+                        return PackListDlgCtrl;
+                    })();
+                    Plans.PackListDlgCtrl = PackListDlgCtrl;
                 })(Plans = Trips.Plans || (Trips.Plans = {}));
             })(Trips = Controllers.Trips || (Controllers.Trips = {}));
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));

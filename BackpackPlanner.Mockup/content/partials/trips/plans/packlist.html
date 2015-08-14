@@ -1,0 +1,29 @@
+<md-dialog ng-cloak>
+    <md-toolbar layout="row">
+        <div class="md-toolbar-tools" layout="row">
+            <h2>Pack List</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="close()">
+                <ng-md-icon icon="close"></ng-md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <form name="packListForm">
+    <div layout="column" layout-padding flex ng-cloak>
+        <md-input-container md-no-float flex>
+            <input type="text" ng-model="filter.Name" name="filter" placeholder="Filter" />
+        </md-input-container>
+        <md-input-container>
+            <md-radio-group ng-model="orderBy" layout="row">
+                <md-radio-button value="getName()">Name</md-radio-button>
+                <md-radio-button value="IsPacked">Packed</md-radio-button>
+            </md-radio-group>
+        </md-input-container>
+        <md-dialog-content layout="column">
+            <md-checkbox ng-repeat="entry in tripPlan.getPackList() | filter:filter | orderBy:orderBy" ng-model="entry.IsPacked" name="packed">
+                <span style="white-space: nowrap;">{{ entry.getName() }}</span>
+            </md-checkbox>
+        </md-dialog-content>
+    </div>
+    </form>
+</md-dialog>
