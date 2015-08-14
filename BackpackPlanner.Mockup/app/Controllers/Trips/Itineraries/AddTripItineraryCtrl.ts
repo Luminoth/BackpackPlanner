@@ -9,16 +9,16 @@ module BackpackPlanner.Mockup.Controllers.Trips.Itineraries {
     export interface IAddTripItineraryScope extends IAppScope {
         tripItinerary: Models.Trips.TripItinerary;
 
-        addTripItinerary: (tripItinerary: Models.Trips.TripItinerary) => void;
+        addTripItinerary: () => void;
+        resetTripItinerary: () => void;
     }
 
     export class AddTripItineraryCtrl {
         constructor($scope: IAddTripItineraryScope, $location: ng.ILocationService, $mdToast: ng.material.IToastService) {
             $scope.tripItinerary = new Models.Trips.TripItinerary();
 
-            $scope.addTripItinerary = (tripItinerary) => {
-                $scope.tripItinerary = angular.copy(tripItinerary);
-                $scope.tripItinerary.Id = AppState.getInstance().getTripState().addTripItinerary($scope.tripItinerary);
+            $scope.addTripItinerary = () => {
+                AppState.getInstance().getTripState().addTripItinerary($scope.tripItinerary);
 
                 var addToast = $mdToast.simple()
                     .content(`Added trip itinerary: ${$scope.tripItinerary.Name}`)
@@ -37,6 +37,10 @@ module BackpackPlanner.Mockup.Controllers.Trips.Itineraries {
                         $mdToast.show(undoAddToast);
                     }
                 });
+            }
+
+            $scope.resetTripItinerary = () => {
+                $scope.tripItinerary = new Models.Trips.TripItinerary();
             }
         }
     }

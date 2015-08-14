@@ -8,13 +8,15 @@ module BackpackPlanner.Mockup.Controllers.Gear.Collections {
 
     export interface IAddGearCollectionScope extends IAppScope {
         gearCollection: Models.Gear.GearCollection;
+
         orderGearItemsBy: string;
         orderGearSystemsBy: string;
 
-        showAddGearItem: (event: MouseEvent) => void;
-        showAddGearSystem: (event: MouseEvent) => void;
+        showAddGearItemDlg: (event: MouseEvent) => void;
+        showAddGearSystemDlg: (event: MouseEvent) => void;
 
-        addCollection: (gearCollection: Models.Gear.GearCollection) => void;
+        addGearCollection: () => void;
+        resetGearCollection: () => void;
     }
 
     export class AddGearCollectionCtrl {
@@ -24,7 +26,7 @@ module BackpackPlanner.Mockup.Controllers.Gear.Collections {
 
             $scope.gearCollection = new Models.Gear.GearCollection();
 
-            $scope.showAddGearItem = (event) => {
+            $scope.showAddGearItemDlg = (event) => {
                 $mdDialog.show({
                     controller: AddGearItemDlgCtrl,
                     templateUrl: "content/partials/gear/collections/add-item.html",
@@ -36,7 +38,7 @@ module BackpackPlanner.Mockup.Controllers.Gear.Collections {
                 });
             }
 
-            $scope.showAddGearSystem = (event) => {
+            $scope.showAddGearSystemDlg = (event) => {
                 $mdDialog.show({
                     controller: AddGearSystemDlgCtrl,
                     templateUrl: "content/partials/gear/collections/add-system.html",
@@ -48,9 +50,8 @@ module BackpackPlanner.Mockup.Controllers.Gear.Collections {
                 });
             }
 
-            $scope.addCollection = (gearCollection) => {
-                $scope.gearCollection = angular.copy(gearCollection);
-                $scope.gearCollection.Id = AppState.getInstance().getGearState().addGearCollection($scope.gearCollection);
+            $scope.addGearCollection = () => {
+                AppState.getInstance().getGearState().addGearCollection($scope.gearCollection);
 
                 var addToast = $mdToast.simple()
                     .content(`Added gear collection: ${$scope.gearCollection.Name}`)
@@ -69,6 +70,10 @@ module BackpackPlanner.Mockup.Controllers.Gear.Collections {
                         $mdToast.show(undoAddToast);
                     }
                 });
+            }
+
+            $scope.resetGearCollection = () => {
+                $scope.gearCollection = new Models.Gear.GearCollection();
             }
         }
     }

@@ -8,12 +8,14 @@ module BackpackPlanner.Mockup.Controllers.Gear.Collections {
 
     export interface IAddGearSystemDlgScope extends ng.IScope {
         gearCollection: Models.Gear.GearCollection;
+
         orderBy: string;
 
-        getGearSystems: () => Models.Gear.GearSystem[];
         close: () => void;
-        isSelected: (gearSystem: Models.Gear.GearSystem) => void;
-        toggle: (gearSystem: Models.Gear.GearSystem) => void;
+
+        getGearSystems: () => Models.Gear.GearSystem[];
+        isGearSystemSelected: (gearSystem: Models.Gear.GearSystem) => void;
+        toggleGearSystemSelected: (gearSystem: Models.Gear.GearSystem) => void;
     }
 
     export class AddGearSystemDlgCtrl {
@@ -29,11 +31,11 @@ module BackpackPlanner.Mockup.Controllers.Gear.Collections {
                 $mdDialog.hide();
             };
 
-            $scope.isSelected = (gearSystem) => {
+            $scope.isGearSystemSelected = (gearSystem) => {
                 return $scope.gearCollection.containsGearSystem(gearSystem);
             }
 
-            $scope.toggle = (gearSystem) => {
+            $scope.toggleGearSystemSelected = (gearSystem) => {
                 if(!$scope.gearCollection.containsGearSystem(gearSystem)) {
                     $scope.gearCollection.addGearSystem(gearSystem);
                 } else {

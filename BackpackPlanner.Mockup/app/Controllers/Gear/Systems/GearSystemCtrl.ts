@@ -9,10 +9,14 @@ module BackpackPlanner.Mockup.Controllers.Gear.Systems {
 
     export interface IGearSystemScope extends IAppScope {
         gearSystem: Models.Gear.GearSystem;
+
         orderGearItemsBy: string;
 
-        showAddGearItem: (event: MouseEvent) => void;
-        showDeleteConfirm: (event: MouseEvent) => void;
+        showAddGearItemDlg: (event: MouseEvent) => void;
+
+        saveGearSystem: () => void;
+        resetGearSystem: () => void;
+        deleteGearSystem: (event: MouseEvent) => void;
     }
 
     export interface IGearSystemRouteParams extends ng.route.IRouteParamsService {
@@ -24,14 +28,15 @@ module BackpackPlanner.Mockup.Controllers.Gear.Systems {
             $mdDialog: ng.material.IDialogService, $mdToast: ng.material.IToastService) {
             $scope.orderGearItemsBy = "getName()";
         
-            $scope.gearSystem = AppState.getInstance().getGearState().getGearSystemById($routeParams.gearSystemId);
-            if(null == $scope.gearSystem) {
+            const gearSystem = AppState.getInstance().getGearState().getGearSystemById($routeParams.gearSystemId);
+            if(null == gearSystem) {
                 alert("The gear system does not exist!");
                 $location.path("/gear/systems");
                 return;
             }
+            $scope.gearSystem = angular.copy(gearSystem);
 
-            $scope.showAddGearItem = (event) => {
+            $scope.showAddGearItemDlg = (event) => {
                 $mdDialog.show({
                     controller: AddGearItemDlgCtrl,
                     templateUrl: "content/partials/gear/systems/add-item.html",
@@ -43,7 +48,30 @@ module BackpackPlanner.Mockup.Controllers.Gear.Systems {
                 });
             }
 
-            $scope.showDeleteConfirm = (event) => {
+            $scope.saveGearSystem = () => {
+                var gearSystem = AppState.getInstance().getGearState().getGearSystemById($scope.gearSystem.Id);
+                if(null == gearSystem) {
+                    alert("The gear system no longer exists!");
+                    $location.path("/gear/systems");
+                    return;
+                }
+                gearSystem.update($scope.gearSystem);
+
+                $location.path("/gear/systems");
+                // TODO: toast!
+            }
+
+            $scope.resetGearSystem = () => {
+                var gearSystem = AppState.getInstance().getGearState().getGearSystemById($scope.gearSystem.Id);
+                if(null == gearSystem) {
+                    alert("The gear system no longer exists!");
+                    $location.path("/gear/systems");
+                    return;
+                }
+                $scope.gearSystem = angular.copy(gearSystem);
+            }
+
+            $scope.deleteGearSystem = (event) => {
                 var confirm = $mdDialog.confirm()
                     .parent(angular.element(document.body))
                     .title("Delete Gear System")

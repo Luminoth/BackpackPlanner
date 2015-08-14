@@ -61,6 +61,19 @@ module BackpackPlanner.Mockup.Models.Gear {
 
         /* Load/Save */
 
+        public update(gearItem: GearItem) {
+            this.Name = gearItem.Name;
+            this.Url = gearItem.Url;
+            this.Make = gearItem.Make;
+            this.Model = gearItem.Model;
+            this.Carried = gearItem.Carried;
+            this.WeightInGrams = gearItem.WeightInGrams;
+            this.CostInUSDP = gearItem.CostInUSDP;
+            this.IsConsumable = gearItem.IsConsumable;
+            this.ConsumedPerDay = gearItem.ConsumedPerDay;
+            this.Note = gearItem.Note;
+        }
+
         public loadFromDevice($q: ng.IQService, gearItemResource: Resources.Gear.IGearItemResource) : ng.IPromise<any> {
             this.Id = gearItemResource.Id;
             this.Name = gearItemResource.Name;

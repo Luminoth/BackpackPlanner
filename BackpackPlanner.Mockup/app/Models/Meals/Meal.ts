@@ -61,6 +61,19 @@ module BackpackPlanner.Mockup.Models.Meals {
 
         /* Load/Save */
 
+        public update(meal: Meal) {
+            this.Name = meal.Name;
+            this.Url = meal.Url;
+            this.Meal = meal.Meal;
+            this.ServingCount = meal.ServingCount;
+            this.WeightInGrams = meal.WeightInGrams;
+            this.CostInUSDP = meal.CostInUSDP;
+            this.Calories = meal.Calories;
+            this.ProteinInGrams = meal.ProteinInGrams;
+            this.FiberInGrams = meal.FiberInGrams;
+            this.Note = meal.Note;
+        }
+
         public loadFromDevice($q: ng.IQService, mealResource: Resources.Meals.IMealResource) : ng.IPromise<any> {
             this.Id = mealResource.Id;
             this.Name = mealResource.Name;

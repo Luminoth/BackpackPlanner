@@ -9,16 +9,16 @@ module BackpackPlanner.Mockup.Controllers.Gear.Items {
     export interface IAddGearItemScope extends IAppScope {
         gearItem: Models.Gear.GearItem;
 
-        addItem: (gearItem: Models.Gear.GearItem) => void;
+        addGearItem: () => void;
+        resetGearItem: () => void;
     }
 
     export class AddGearItemCtrl {
         constructor($scope: IAddGearItemScope, $location: ng.ILocationService, $mdToast: ng.material.IToastService) {
             $scope.gearItem = new Models.Gear.GearItem();
 
-            $scope.addItem = (gearItem) => {
-                $scope.gearItem = angular.copy(gearItem);
-                $scope.gearItem.Id = AppState.getInstance().getGearState().addGearItem($scope.gearItem);
+            $scope.addGearItem = () => {
+                AppState.getInstance().getGearState().addGearItem($scope.gearItem);
 
                 var addToast = $mdToast.simple()
                     .content(`Added gear item: ${$scope.gearItem.Name}`)
@@ -37,6 +37,10 @@ module BackpackPlanner.Mockup.Controllers.Gear.Items {
                         $mdToast.show(undoAddToast);
                     }
                 });
+            }
+
+            $scope.resetGearItem = () => {
+                $scope.gearItem = new Models.Gear.GearItem();
             }
         }
     }

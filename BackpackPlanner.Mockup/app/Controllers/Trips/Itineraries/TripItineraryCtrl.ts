@@ -10,7 +10,9 @@ module BackpackPlanner.Mockup.Controllers.Trips.Itineraries {
     export interface ITripItineraryScope extends IAppScope {
         tripItinerary: Models.Trips.TripItinerary;
 
-        showDeleteConfirm: (event: MouseEvent) => void;
+        saveTripItinerary: () => void;
+        resetTripItinerary: () => void;
+        deleteTripItinerary: (event: MouseEvent) => void;
     }
 
     export interface ITripItineraryParams extends ng.route.IRouteParamsService {
@@ -21,14 +23,38 @@ module BackpackPlanner.Mockup.Controllers.Trips.Itineraries {
         constructor($scope: ITripItineraryScope, $routeParams: ITripItineraryParams, $location: ng.ILocationService,
             $mdDialog: ng.material.IDialogService, $mdToast: ng.material.IToastService) {
         
-            $scope.tripItinerary = AppState.getInstance().getTripState().getTripItineraryById($routeParams.tripItineraryId);
-            if(null == $scope.tripItinerary) {
+            const tripItinerary = AppState.getInstance().getTripState().getTripItineraryById($routeParams.tripItineraryId);
+            if(null == tripItinerary) {
                 alert("The trip itinerary does not exist!");
                 $location.path("/trips/itineraries");
                 return;
             }
+            $scope.tripItinerary = angular.copy(tripItinerary);
 
-            $scope.showDeleteConfirm = (event) => {
+            $scope.saveTripItinerary = () => {
+                var tripItinerary = AppState.getInstance().getTripState().getTripItineraryById($scope.tripItinerary.Id);
+                if(null == tripItinerary) {
+                    alert("The trip itinerary no longer exists!");
+                    $location.path("/trips/itineraries");
+                    return;
+                }
+                tripItinerary.update($scope.tripItinerary);
+
+                $location.path("/trips/itineraries");
+                // TODO: toast!
+            }
+
+            $scope.resetTripItinerary = () => {
+                var tripItinerary = AppState.getInstance().getTripState().getTripItineraryById($scope.tripItinerary.Id);
+                if(null == tripItinerary) {
+                    alert("The trip itinerary no longer exists!");
+                    $location.path("/trips/itineraries");
+                    return;
+                }
+                $scope.tripItinerary = angular.copy(tripItinerary);
+            }
+
+            $scope.deleteTripItinerary = (event) => {
                 var confirm = $mdDialog.confirm()
                     .parent(angular.element(document.body))
                     .title("Delete Trip Itinerary")

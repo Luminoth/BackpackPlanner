@@ -8,12 +8,14 @@ module BackpackPlanner.Mockup.Controllers.Gear.Collections {
 
     export interface IAddGearItemDlgScope extends ng.IScope {
         gearCollection: Models.Gear.GearCollection;
+
         orderBy: string;
 
-        getGearItems: () => Models.Gear.GearItem[];
         close: () => void;
-        isSelected: (gearItem: Models.Gear.GearItem) => void;
-        toggle: (gearItem: Models.Gear.GearItem) => void;
+
+        getGearItems: () => Models.Gear.GearItem[];
+        isGearItemSelected: (gearItem: Models.Gear.GearItem) => void;
+        toggleGearItemSelected: (gearItem: Models.Gear.GearItem) => void;
     }
 
     export class AddGearItemDlgCtrl {
@@ -21,19 +23,19 @@ module BackpackPlanner.Mockup.Controllers.Gear.Collections {
             $scope.gearCollection = gearCollection;
             $scope.orderBy = "Name";
 
-            $scope.getGearItems = () => {
-                return AppState.getInstance().getGearState().getGearItems();
-            }
-
             $scope.close = () => {
                 $mdDialog.hide();
             };
 
-            $scope.isSelected = (gearItem) => {
+            $scope.getGearItems = () => {
+                return AppState.getInstance().getGearState().getGearItems();
+            }
+
+            $scope.isGearItemSelected = (gearItem) => {
                 return $scope.gearCollection.containsGearItem(gearItem);
             }
 
-            $scope.toggle = (gearItem) => {
+            $scope.toggleGearItemSelected = (gearItem) => {
                 if(!$scope.gearCollection.containsGearItem(gearItem)) {
                     $scope.gearCollection.addGearItem(gearItem);
                 } else {

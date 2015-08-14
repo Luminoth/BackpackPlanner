@@ -10,7 +10,9 @@ module BackpackPlanner.Mockup.Controllers.Gear.Items {
     export interface IGearItemScope extends IAppScope {
         gearItem: Models.Gear.GearItem;
 
-        showDeleteConfirm: (event: MouseEvent) => void;
+        saveGearItem: () => void;
+        resetGearItem: () => void;
+        deleteGearItem: (event: MouseEvent) => void;
     }
 
     export interface IGearItemRouteParams extends ng.route.IRouteParamsService {
@@ -21,14 +23,38 @@ module BackpackPlanner.Mockup.Controllers.Gear.Items {
         constructor($scope: IGearItemScope, $routeParams: IGearItemRouteParams, $location: ng.ILocationService,
             $mdDialog: ng.material.IDialogService, $mdToast: ng.material.IToastService) {
         
-            $scope.gearItem = AppState.getInstance().getGearState().getGearItemById($routeParams.gearItemId);
-            if(null == $scope.gearItem) {
+            const gearItem = AppState.getInstance().getGearState().getGearItemById($routeParams.gearItemId);
+            if(null == gearItem) {
                 alert("The gear item does not exist!");
                 $location.path("/gear/items");
                 return;
             }
+            $scope.gearItem = angular.copy(gearItem);
 
-            $scope.showDeleteConfirm = (event) => {
+            $scope.saveGearItem = () => {
+                var gearItem = AppState.getInstance().getGearState().getGearItemById($scope.gearItem.Id);
+                if(null == gearItem) {
+                    alert("The gear item no longer exists!");
+                    $location.path("/gear/items");
+                    return;
+                }
+                gearItem.update($scope.gearItem);
+
+                $location.path("/gear/items");
+                // TODO: toast!
+            }
+
+            $scope.resetGearItem = () => {
+                var gearItem = AppState.getInstance().getGearState().getGearItemById($scope.gearItem.Id);
+                if(null == gearItem) {
+                    alert("The gear item no longer exists!");
+                    $location.path("/gear/items");
+                    return;
+                }
+                $scope.gearItem = angular.copy(gearItem);
+            }
+
+            $scope.deleteGearItem = (event) => {
                 var confirm = $mdDialog.confirm()
                     .parent(angular.element(document.body))
                     .title("Delete Gear Item")

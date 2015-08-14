@@ -8,10 +8,13 @@ module BackpackPlanner.Mockup.Controllers.Gear.Systems {
 
     export interface IAddGearSystemScope extends IAppScope {
         gearSystem: Models.Gear.GearSystem;
+
         orderGearItemsBy: string;
 
-        showAddGearItem: (event: MouseEvent) => void;
-        addSystem: (gearSystem: Models.Gear.GearSystem) => void;
+        showAddGearItemDlg: (event: MouseEvent) => void;
+
+        addGearSystem: () => void;
+        resetGearSystem: () => void;
     }
 
     export class AddGearSystemCtrl {
@@ -20,7 +23,7 @@ module BackpackPlanner.Mockup.Controllers.Gear.Systems {
 
             $scope.gearSystem = new Models.Gear.GearSystem();
 
-            $scope.showAddGearItem = (event) => {
+            $scope.showAddGearItemDlg = (event) => {
                 $mdDialog.show({
                     controller: AddGearItemDlgCtrl,
                     templateUrl: "content/partials/gear/systems/add-item.html",
@@ -32,9 +35,8 @@ module BackpackPlanner.Mockup.Controllers.Gear.Systems {
                 });
             }
 
-            $scope.addSystem = (gearSystem) => {
-                $scope.gearSystem = angular.copy(gearSystem);
-                $scope.gearSystem.Id = AppState.getInstance().getGearState().addGearSystem($scope.gearSystem);
+            $scope.addGearSystem = () => {
+                AppState.getInstance().getGearState().addGearSystem($scope.gearSystem);
 
                 var addToast = $mdToast.simple()
                     .content(`Added gear system: ${$scope.gearSystem.Name}`)
@@ -53,6 +55,10 @@ module BackpackPlanner.Mockup.Controllers.Gear.Systems {
                         $mdToast.show(undoAddToast);
                     }
                 });
+            }
+
+            $scope.resetGearSystem = () => {
+                $scope.gearSystem = new Models.Gear.GearSystem();
             }
         }
     }

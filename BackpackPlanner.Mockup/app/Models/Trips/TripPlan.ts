@@ -103,6 +103,10 @@ module BackpackPlanner.Mockup.Models.Trips {
             }
             this.GearCollections.splice(idx, 1);
         }
+
+        public removeAllGearCollections() {
+            this.GearCollections = <Array<Models.Gear.GearCollectionEntry>>[];
+        }
         
         /* Gear Systems */
 
@@ -142,6 +146,10 @@ module BackpackPlanner.Mockup.Models.Trips {
                 return;
             }
             this.GearSystems.splice(idx, 1);
+        }
+
+        public removeAllGearSystems() {
+            this.GearSystems = <Array<Models.Gear.GearSystemEntry>>[];
         }
 
         /* Gear Items */
@@ -184,6 +192,10 @@ module BackpackPlanner.Mockup.Models.Trips {
             this.GearItems.splice(idx, 1);
         }
 
+        public removeAllGearItems() {
+            this.GearItems = <Array<Models.Gear.GearItemEntry>>[];
+        }
+
         /* Meals */
 
         public getMealCount() {
@@ -222,6 +234,10 @@ module BackpackPlanner.Mockup.Models.Trips {
                 return;
             }
             this.Meals.splice(idx, 1);
+        }
+
+        public removeAllMeals() {
+            this.Meals = <Array<Models.Meals.MealEntry>>[];
         }
 
         /* Pack List */
@@ -339,11 +355,47 @@ module BackpackPlanner.Mockup.Models.Trips {
 
         /* Load/Save */
 
+        public update(tripPlan: TripPlan) {
+            this.Name = tripPlan.Name;
+            this.StartDateAsDate = this.StartDateAsDate;
+            this.StartDate = tripPlan.StartDateAsDate.toString();
+            this.EndDateAsDate = this.EndDateAsDate;
+            this.EndDate = tripPlan.EndDateAsDate.toString();
+            this.TripItineraryId = tripPlan.TripItineraryId;
+            this.Note = tripPlan.Note;
+
+            this.GearCollections = <Array<Models.Gear.GearCollectionEntry>>[];
+            for(let i=0; i<tripPlan.GearCollections.length; ++i) {
+                const gearCollectionEntry = tripPlan.GearCollections[i];
+                this.GearCollections.push(new Models.Gear.GearCollectionEntry(gearCollectionEntry.GearCollectionId, gearCollectionEntry.Count, gearCollectionEntry.IsPacked));
+            }
+
+            this.GearSystems = <Array<Models.Gear.GearSystemEntry>>[];
+            for(let i=0; i<tripPlan.GearSystems.length; ++i) {
+                const gearSystemEntry = tripPlan.GearSystems[i];
+                this.GearSystems.push(new Models.Gear.GearSystemEntry(gearSystemEntry.GearSystemId, gearSystemEntry.Count, gearSystemEntry.IsPacked));
+            }
+
+            this.GearItems = <Array<Models.Gear.GearItemEntry>>[];
+            for(let i=0; i<tripPlan.GearItems.length; ++i) {
+                const gearItemEntry = tripPlan.GearItems[i];
+                this.GearItems.push(new Models.Gear.GearItemEntry(gearItemEntry.GearItemId, gearItemEntry.Count, gearItemEntry.IsPacked));
+            }
+
+            this.Meals = <Array<Models.Meals.MealEntry>>[];
+            for(let i=0; i<tripPlan.Meals.length; ++i) {
+                const mealEntry = tripPlan.Meals[i];
+                this.Meals.push(new Models.Meals.MealEntry(mealEntry.MealId, mealEntry.Count, mealEntry.IsPacked));
+            }
+        }
+
         public loadFromDevice($q: ng.IQService, tripPlanResource: Resources.Trips.ITripPlanResource) : ng.IPromise<any> {
             this.Id = tripPlanResource.Id;
             this.Name = tripPlanResource.Name;
             this.StartDate = tripPlanResource.StartDate;
+            this.StartDateAsDate = new Date(this.StartDate);
             this.EndDate = tripPlanResource.EndDate;
+            this.EndDateAsDate = new Date(this.EndDate);
             this.TripItineraryId = tripPlanResource.TripItineraryId;
             this.Note = tripPlanResource.Note;
 
@@ -366,9 +418,6 @@ module BackpackPlanner.Mockup.Models.Trips {
                 const mealEntry = tripPlanResource.Meals[i];
                 this.Meals.push(new Models.Meals.MealEntry(mealEntry.MealId, mealEntry.Count, mealEntry.IsPacked));
             }
-
-            this.StartDateAsDate = new Date(this.StartDate);
-            this.EndDateAsDate = new Date(this.EndDate);
 
             return $q.defer().promise;
         }

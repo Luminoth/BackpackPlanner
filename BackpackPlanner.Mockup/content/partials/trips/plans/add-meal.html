@@ -8,16 +8,14 @@
             </md-button>
         </div>
     </md-toolbar>
-    <form name="addMealForm">
     <div layout="column" layout-padding flex ng-cloak>
         <md-input-container md-no-float flex>
             <input type="text" ng-model="filter.Name" name="filter" placeholder="Filter" />
         </md-input-container>
         <md-dialog-content layout="column">
-            <md-checkbox ng-repeat="meal in getMeals() | filter:filter | orderBy:orderBy" ng-checked="isSelected(meal)" ng-click="toggle(meal)">
+            <md-checkbox ng-repeat="meal in getMeals() | filter:filter | orderBy:orderBy" ng-checked="isMealSelected(meal)" ng-click="toggleMealSelected(meal)">
                 <span style="white-space: nowrap;">{{ meal.Name }}</span>
             </md-checkbox>
         </md-dialog-content>
     </div>
-    </form>
 </md-dialog>

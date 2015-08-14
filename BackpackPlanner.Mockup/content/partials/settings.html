@@ -1,21 +1,61 @@
-﻿<form name="appSettingsForm">
+﻿<form novalidate name="appSettingsForm">
 <div layout="column" layout-padding flex ng-cloak>
     <label>Measurement Units</label>
     <md-input-container>
-        <md-radio-group ng-model="getAppSettings().Units" layout="row">
+        <md-radio-group ng-model="appSettings.Units" layout="row">
             <md-radio-button value="Metric">Metric Units</md-radio-button>
             <md-radio-button value="Imperial">Imperial Units</md-radio-button>
         </md-radio-group>
     </md-input-container>
     <!--<md-input-container>
         <label>Currency</label>
-        <md-select ng-model="getAppSettings().Currency">
+        <md-select ng-model="appSettings.Currency">
             <md-option value="USD">United States</md-option>
         </md-select>
     </md-input-container>-->
+    <div layout="column" flex>
+        <div layout="row" ng-if="!showAdvancedSettings" flex>
+            <md-button class="mockup-button" ng-click="toggleAdvancedSettings()">
+                <ng-md-icon icon="arrow_drop_down"></ng-md-icon> Show Advanced Settings
+            </md-button>
+            <span flex></span>
+        </div>
+        <div layout="row" ng-if="showAdvancedSettings" flex>
+            <md-button class="mockup-button" ng-click="toggleAdvancedSettings()">
+                <ng-md-icon icon="arrow_drop_up"></ng-md-icon> Hide Advanced Settings
+            </md-button>
+            <span flex></span>
+        </div>
+        <div layout="column" ng-if="showAdvancedSettings">
+            <div layout="row">
+                <span flex></span>
+                <md-button class="md-raised md-warn mockup-button" ng-click="deleteAllGearItems($event)">Delete All Gear Items</md-button>
+                <md-button class="md-raised md-warn mockup-button" ng-click="deleteAllGearSystems($event)">Delete All Gear Systems</md-button>
+                <md-button class="md-raised md-warn mockup-button" ng-click="deleteAllGearCollections($event)">Delete All Gear Collections</md-button>
+                <span flex></span>
+            </div>
+            <div layout="row">
+                <span flex></span>
+                <md-button class="md-raised md-warn mockup-button" ng-click="deleteAllMeals($event)">Delete All Meals</md-button>
+                <span flex></span>
+            </div>
+            <div layout="row">
+                <span flex></span>
+                <md-button class="md-raised md-warn mockup-button" ng-click="deleteAllTripItineraries($event)">Delete All Trip Itineraries</md-button>
+                <md-button class="md-raised md-warn mockup-button" ng-click="deleteAllTripPlans($event)">Delete All Trip Plans</md-button>
+                <span flex></span>
+            </div>
+            <div layout="row">
+                <span flex></span>
+                <md-button class="md-raised md-warn mockup-button" ng-click="deleteAllData($event)">Delete All Data</md-button>
+                <span flex></span>
+            </div>
+        </div>
+    </div>
     <div layout="row">
         <span flex></span>
-        <md-button class="md-raised md-warn mockup-button" ng-click="showDeleteAllConfirm($event)">Delete All Data</md-button>
+        <md-button type="submit" class="md-raised md-primary mockup-button" ng-click="saveAppSettings()" ng-disabled="appSettingsForm.$invalid">Save</md-button>
+        <md-button class="md-raised md-primary md-hue-1 mockup-button" ng-click="resetAppSettings()">Reset</md-button>
         <span flex></span>
     </div>
     <div flex></div>

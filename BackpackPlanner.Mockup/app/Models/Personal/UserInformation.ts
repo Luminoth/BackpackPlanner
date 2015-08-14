@@ -38,15 +38,24 @@ module BackpackPlanner.Mockup.Models.Personal {
 
         /* Load/Save */
 
+        public update(userInformation: UserInformation) {
+            this.FirstName = userInformation.FirstName;
+            this.LastName = userInformation.LastName;
+            this.BirthDateAsDate = userInformation.BirthDateAsDate;
+            this.BirthDate = this.BirthDateAsDate.toString();
+            this.Sex = userInformation.Sex;
+            this.HeightInCm = userInformation.HeightInCm;
+            this.WeightInGrams = userInformation.WeightInGrams;
+        }
+
         public loadFromDevice($q: ng.IQService, userInfoResource: Resources.Personal.IUserInformationResource) : ng.IPromise<any> {
             this.FirstName = userInfoResource.FirstName;
             this.LastName = userInfoResource.LastName;
             this.BirthDate = userInfoResource.BirthDate;
+            this.BirthDateAsDate = new Date(this.BirthDate);
             this.Sex = userInfoResource.Sex;
             this.HeightInCm = userInfoResource.HeightInCm;
             this.WeightInGrams = userInfoResource.WeightInGrams;
-
-            this.BirthDateAsDate = new Date(this.BirthDate);
 
             return $q.defer().promise;
         }

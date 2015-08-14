@@ -9,16 +9,16 @@ module BackpackPlanner.Mockup.Controllers.Meals {
     export interface IAddMealScope extends IAppScope {
         meal: Models.Meals.Meal;
 
-        addMeal: (meal: Models.Meals.Meal) => void;
+        addMeal: () => void;
+        resetMeal: () => void;
     }
 
     export class AddMealCtrl {
         constructor($scope: IAddMealScope, $location: ng.ILocationService, $mdToast: ng.material.IToastService) {
             $scope.meal = new Models.Meals.Meal();
 
-            $scope.addMeal = (meal) => {
-                $scope.meal = angular.copy(meal);
-                $scope.meal.Id = AppState.getInstance().getMealState().addMeal($scope.meal);
+            $scope.addMeal = () => {
+                AppState.getInstance().getMealState().addMeal($scope.meal);
 
                 var addToast = $mdToast.simple()
                     .content(`Added meal: ${$scope.meal.Name}`)
@@ -37,6 +37,10 @@ module BackpackPlanner.Mockup.Controllers.Meals {
                         $mdToast.show(undoAddToast);
                     }
                 });
+            }
+
+            $scope.resetMeal = () => {
+                $scope.meal = new Models.Meals.Meal();
             }
         }
     }

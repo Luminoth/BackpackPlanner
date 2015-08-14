@@ -39,7 +39,7 @@ module BackpackPlanner.Mockup {
 
         /* App Settings */
 
-        private _appSettings: Models.AppSettings = new Models.AppSettings();
+        private _appSettings = new Models.AppSettings();
 
         public getAppSettings() : Models.AppSettings {
             return this._appSettings;
@@ -47,7 +47,7 @@ module BackpackPlanner.Mockup {
 
         /* User Information */
 
-        private _userInformation: Models.Personal.UserInformation = new Models.Personal.UserInformation();
+        private _userInformation = new Models.Personal.UserInformation();
 
         public getUserInformation() : Models.Personal.UserInformation {
             return this._userInformation;

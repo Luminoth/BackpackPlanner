@@ -1,7 +1,7 @@
 ﻿<form novalidate name="userInfoForm">
 <div layout="column" layout-padding flex ng-cloak>
     <div flex>
-        <md-button class="mockup-button" ng-click="showWhatIsPersonal($event)">
+        <md-button class="mockup-button" ng-click="showWhatIsPersonalDlg($event)">
             <ng-md-icon icon="help"></ng-md-icon> What is my personal information used for?
         </md-button>
         <span flex></span>
@@ -9,22 +9,22 @@
     <div layout="row" layout-sm="column" flex>
         <md-input-container flex>
             <label>First Name</label>
-            <input type="text" ng-model="getUserInfo().FirstName" required name="firstName" />
+            <input type="text" ng-model="userInfo.FirstName" required name="firstName" />
             <div ng-messages="userInfoForm.firstName.$error">
                 <div ng-message="required">A first name is required</div>
             </div>
         </md-input-container>
         <md-input-container flex>
             <label>Last Name</label>
-            <input type="text" ng-model="getUserInfo().LastName" name="lastName" />
+            <input type="text" ng-model="userInfo.LastName" name="lastName" />
         </md-input-container>
         <md-input-container flex>
             <label>Date of Birth</label>
-            <input type="date" ng-model="getUserInfo().BirthDateAsDate" name="birthDate" />
+            <input type="date" ng-model="userInfo.BirthDateAsDate" name="birthDate" />
         </md-input-container>
     </div>
     <md-input-container>
-        <md-radio-group ng-model="getUserInfo().Sex" layout="row" name="sex">
+        <md-radio-group ng-model="userInfo.Sex" layout="row" name="sex">
             <md-radio-button value="Male">Male</md-radio-button>
             <md-radio-button value="Female">Female</md-radio-button>
             <md-radio-button value="NotSpecified">Not Specified</md-radio-button>
@@ -33,17 +33,17 @@
     <div layout="row" layout-sm="column" flex>
         <md-input-container flex>
             <label>Height ({{ getUnitsLengthString() }})</label>
-            <input type="number" ng-model="getUserInfo().heightInUnits" ng-model-options="{ getterSetter: true, debounce: 500 }" min="0" max="1000000" name="height" />
+            <input type="number" ng-model="userInfo.heightInUnits" ng-model-options="{ getterSetter: true, debounce: 500 }" min="0" max="1000000" name="height" />
         </md-input-container>
         <md-input-container flex>
             <label>Weight ({{ getUnitsWeightString() }}s)</label>
-            <input type="number" ng-model="getUserInfo().weightInUnits" ng-model-options="{ getterSetter: true, debounce: 500 }" min="0" max="1000000" name="weight" />
+            <input type="number" ng-model="userInfo.weightInUnits" ng-model-options="{ getterSetter: true, debounce: 500 }" min="0" max="1000000" name="weight" />
         </md-input-container>
     </div>
     <div layout="row">
         <span flex></span>
-        <md-button type="submit" class="md-raised md-primary mockup-button" ng-disabled="userInfoForm.$invalid">Save</md-button>
-        <md-button class="md-raised md-primary md-hue-1 mockup-button">Reset</md-button>
+        <md-button type="submit" class="md-raised md-primary mockup-button" ng-click="saveUserInformation()" ng-disabled="userInfoForm.$invalid">Save</md-button>
+        <md-button class="md-raised md-primary md-hue-1 mockup-button" ng-click="resetUserInformation()">Reset</md-button>
         <span flex></span>
     </div>
     <div flex></div>

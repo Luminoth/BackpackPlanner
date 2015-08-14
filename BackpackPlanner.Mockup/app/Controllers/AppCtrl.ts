@@ -53,8 +53,6 @@ module BackpackPlanner.Mockup.Controllers {
 
         isActive: (viewLocation: string) => boolean;
         toggleSidenav: () => void;
-
-        showDeleteAllConfirm: (event: MouseEvent) => void;
     }
 
     export class AppCtrl {
@@ -152,47 +150,6 @@ module BackpackPlanner.Mockup.Controllers {
 
             $scope.toggleSidenav = () => {
                 $mdSidenav("left").toggle();
-            }
-
-            $scope.showDeleteAllConfirm = (event) => {
-                var confirm = $mdDialog.confirm()
-                    .parent(angular.element(document.body))
-                    .title("Delete All Data")
-                    .content("Are you sure you wish to delete all data?")
-                    .ok("Yes")
-                    .cancel("No")
-                    .targetEvent(event);
-
-                var receipt = $mdDialog.alert()
-                    .parent(angular.element(document.body))
-                    .title("All data deleted!")
-                    .content("All data has been deleted.")
-                    .ok("OK")
-                    .targetEvent(event);
-
-                var deleteToast = $mdToast.simple()
-                    .content("Deleted all data")
-                    .action("Undo")
-                    .position("bottom left");
-
-                var undoDeleteToast = $mdToast.simple()
-                    .content("Restored all data")
-                    .action("OK")
-                    .position("bottom left");
-
-                $mdDialog.show(confirm).then(() => {
-                    $mdDialog.show(receipt).then(() => {
-                        AppState.getInstance().deleteAllData();
-
-                        $mdToast.show(deleteToast).then((response: string) => {
-                            if("ok" == response) {
-                                // TODO: this does *not* restore anything
-                                // and it should probably do so... but how?
-                                $mdToast.show(undoDeleteToast);
-                            }
-                        });
-                    });
-                });
             }
         }
     }

@@ -7,12 +7,19 @@ module BackpackPlanner.Mockup.Controllers.Personal {
     "use strict";
 
     export interface IUserInformationScope extends ng.IScope {
-        showWhatIsPersonal: (event: MouseEvent) => void;
+        userInfo: Models.Personal.UserInformation;
+
+        showWhatIsPersonalDlg: (event: MouseEvent) => void;
+
+        saveUserInformation: () => void;
+        resetUserInformation: () => void;
     }
 
     export class UserInformationCtrl {
-        constructor($scope: IUserInformationScope, $mdDialog: ng.material.IDialogService) {
-            $scope.showWhatIsPersonal = (event) => {
+        constructor($scope: IUserInformationScope, $location: ng.ILocationService, $mdDialog: ng.material.IDialogService, $mdToast: ng.material.IToastService) {
+            $scope.userInfo = angular.copy(AppState.getInstance().getUserInformation());
+
+            $scope.showWhatIsPersonalDlg = (event) => {
                 $mdDialog.show({
                     controller: WhatIsPersonalDlgCtrl,
                     templateUrl: "content/partials/personal/what.html",
@@ -20,8 +27,19 @@ module BackpackPlanner.Mockup.Controllers.Personal {
                     targetEvent: event
                 });
             }
+
+            $scope.saveUserInformation = () => {
+                AppState.getInstance().getUserInformation().update($scope.userInfo);
+
+                $location.path("/");
+                // TODO: toast!
+            }
+
+            $scope.resetUserInformation = () => {
+                $scope.userInfo = angular.copy(AppState.getInstance().getUserInformation());
+            }
         }
     }
 
-    UserInformationCtrl.$inject = ["$scope", "$mdDialog"];
+    UserInformationCtrl.$inject = ["$scope", "$location", "$mdDialog", "$mdToast"];
 }

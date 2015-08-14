@@ -33,41 +33,41 @@
     <md-sidenav class="md-sidenav-left md-whiteframe-z3" layout="column" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" ng-cloak>
         <md-toolbar layout="column">
             <div class="md-toolbar-tools" layout="column">
-                <md-button class="mockup-button" href="#/personal" ng-click="toggleSidenav()">{{ getUserInfo().FirstName }} {{ getUserInfo().LastName }}</md-button>
+                <md-button class="md-primary md-raised mockup-sidenav-button {{ isActive('/personal') ? 'md-hue-1' : '' }}" href="#/personal" ng-click="toggleSidenav()" flex>{{ getUserInfo().FirstName }} {{ getUserInfo().LastName }}</md-button>
             </div>
         </md-toolbar>
-        <md-content flex layout-padding>
+        <md-content flex>
             <md-list>
                 <md-list-item>
-                    <md-button class="md-primary mockup-sidenav-button" href="#/" ng-click="toggleSidenav()">Home</md-button>
+                    <md-button class="md-primary md-raised mockup-sidenav-button {{ isActive('/index') ? 'md-hue-1' : '' }}" href="#/" ng-click="toggleSidenav()" flex>Home</md-button>
                 </md-list-item>
                 <md-divider class="mockup-sidenav-divider"></md-divider>
                 <md-list-item>
-                    <md-button class="md-primary mockup-sidenav-button" href="#/gear/items" ng-click="toggleSidenav()">Gear Items ({{ getGearItems().length }})</md-button>
+                    <md-button class="md-primary md-raised mockup-sidenav-button {{ isActive('/gear/items') ? 'md-hue-1' : '' }}" href="#/gear/items" ng-click="toggleSidenav()" flex>Gear Items ({{ getGearItems().length }})</md-button>
                 </md-list-item>
                 <md-list-item>
-                    <md-button class="md-primary mockup-sidenav-button" href="#/gear/systems" ng-click="toggleSidenav()">Gear Systems ({{ getGearSystems().length }})</md-button>
+                    <md-button class="md-primary md-raised mockup-sidenav-button {{ isActive('/gear/systems') ? 'md-hue-1' : '' }}" href="#/gear/systems" ng-click="toggleSidenav()" flex>Gear Systems ({{ getGearSystems().length }})</md-button>
                 </md-list-item>
                 <md-list-item>
-                    <md-button class="md-primary mockup-sidenav-button" href="#/gear/collections" ng-click="toggleSidenav()">Gear Collections ({{ getGearCollections().length }})</md-button>
-                </md-list-item>
-                <md-divider class="mockup-sidenav-divider"></md-divider>
-                <md-list-item>
-                    <md-button class="md-primary mockup-sidenav-button" href="#/meals" ng-click="toggleSidenav()">Meals ({{ getMeals().length }})</md-button>
+                    <md-button class="md-primary md-raised mockup-sidenav-button {{ isActive('/gear/collections') ? 'md-hue-1' : '' }}" href="#/gear/collections" ng-click="toggleSidenav()" flex>Gear Collections ({{ getGearCollections().length }})</md-button>
                 </md-list-item>
                 <md-divider class="mockup-sidenav-divider"></md-divider>
                 <md-list-item>
-                    <md-button class="md-primary mockup-sidenav-button" href="#/trips/itineraries" ng-click="toggleSidenav()">Trip Itineraries ({{ getTripItineraries().length }})</md-button>
-                </md-list-item>
-                <md-list-item>
-                    <md-button class="md-primary mockup-sidenav-button" href="#/trips/plans" ng-click="toggleSidenav()">Trip Plans ({{ getTripPlans().length }})</md-button>
+                    <md-button class="md-primary md-raised mockup-sidenav-button {{ isActive('/meals') ? 'md-hue-1' : '' }}" href="#/meals" ng-click="toggleSidenav()" flex>Meals ({{ getMeals().length }})</md-button>
                 </md-list-item>
                 <md-divider class="mockup-sidenav-divider"></md-divider>
                 <md-list-item>
-                    <md-button class="md-primary mockup-sidenav-button" href="#/settings" ng-click="toggleSidenav()">Settings</md-button>
+                    <md-button class="md-primary md-raised mockup-sidenav-button {{ isActive('/trips/itineraries') ? 'md-hue-1' : '' }}" href="#/trips/itineraries" ng-click="toggleSidenav()" flex>Trip Itineraries ({{ getTripItineraries().length }})</md-button>
                 </md-list-item>
                 <md-list-item>
-                    <md-button class="md-primary mockup-sidenav-button" href="#/help" ng-click="toggleSidenav()">Help</md-button>
+                    <md-button class="md-primary md-raised mockup-sidenav-button {{ isActive('/trips/plans') ? 'md-hue-1' : '' }}" href="#/trips/plans" ng-click="toggleSidenav()" flex>Trip Plans ({{ getTripPlans().length }})</md-button>
+                </md-list-item>
+                <md-divider class="mockup-sidenav-divider"></md-divider>
+                <md-list-item>
+                    <md-button class="md-primary md-raised mockup-sidenav-button {{ isActive('/settings') ? 'md-hue-1' : '' }}" href="#/settings" ng-click="toggleSidenav()" flex>Settings</md-button>
+                </md-list-item>
+                <md-list-item>
+                    <md-button class="md-primary md-raised mockup-sidenav-button {{ isActive('/help') ? 'md-hue-1' : '' }}" href="#/help" ng-click="toggleSidenav()" flex>Help</md-button>
                 </md-list-item>
                 <div flex></div>
             </md-list>

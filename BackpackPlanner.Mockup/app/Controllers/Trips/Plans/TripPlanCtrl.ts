@@ -9,19 +9,22 @@ module BackpackPlanner.Mockup.Controllers.Trips.Plans {
 
     export interface ITripPlanScope extends IAppScope {
         tripPlan: Models.Trips.TripPlan;
+
         orderGearCollectionsBy: string;
         orderGearSystemsBy: string;
         orderGearItemsBy: string;
         orderMealsBy: string;
 
-        showAddGearCollection: (event: MouseEvent) => void;
-        showAddGearSystem: (event: MouseEvent) => void;
-        showAddGearItem: (event: MouseEvent) => void;
-        showAddMeal: (event: MouseEvent) => void;
+        showAddGearCollectionDlg: (event: MouseEvent) => void;
+        showAddGearSystemDlg: (event: MouseEvent) => void;
+        showAddGearItemDlg: (event: MouseEvent) => void;
+        showAddMealDlg: (event: MouseEvent) => void;
 
-        showPackList: (event: MouseEvent) => void;
+        showPackListDlg: (event: MouseEvent) => void;
 
-        showDeleteConfirm: (event: MouseEvent) => void;
+        saveTripPlan: () => void;
+        resetTripPlan: () => void;
+        deleteTripPlan: (event: MouseEvent) => void;
     }
 
     export interface ITripPlanParams extends ng.route.IRouteParamsService {
@@ -36,14 +39,15 @@ module BackpackPlanner.Mockup.Controllers.Trips.Plans {
             $scope.orderGearItemsBy = "getName()";
             $scope.orderMealsBy = "getName()";
         
-            $scope.tripPlan = AppState.getInstance().getTripState().getTripPlanById($routeParams.tripPlanId);
-            if(null == $scope.tripPlan) {
+            const tripPlan = AppState.getInstance().getTripState().getTripPlanById($routeParams.tripPlanId);
+            if(null == tripPlan) {
                 alert("The trip plan does not exist!");
                 $location.path("/trips/plans");
                 return;
             }
+            $scope.tripPlan = angular.copy(tripPlan);
 
-            $scope.showAddGearCollection = (event) => {
+            $scope.showAddGearCollectionDlg = (event) => {
                 $mdDialog.show({
                     controller: AddGearCollectionDlgCtrl,
                     templateUrl: "content/partials/trips/plans/add-collection.html",
@@ -55,7 +59,7 @@ module BackpackPlanner.Mockup.Controllers.Trips.Plans {
                 });
             }
 
-            $scope.showAddGearSystem = (event) => {
+            $scope.showAddGearSystemDlg = (event) => {
                 $mdDialog.show({
                     controller: AddGearSystemDlgCtrl,
                     templateUrl: "content/partials/trips/plans/add-system.html",
@@ -67,7 +71,7 @@ module BackpackPlanner.Mockup.Controllers.Trips.Plans {
                 });
             }
 
-            $scope.showAddGearItem = (event) => {
+            $scope.showAddGearItemDlg = (event) => {
                 $mdDialog.show({
                     controller: AddGearItemDlgCtrl,
                     templateUrl: "content/partials/trips/plans/add-item.html",
@@ -79,7 +83,7 @@ module BackpackPlanner.Mockup.Controllers.Trips.Plans {
                 });
             }
 
-            $scope.showAddMeal = (event) => {
+            $scope.showAddMealDlg = (event) => {
                 $mdDialog.show({
                     controller: AddMealDlgCtrl,
                     templateUrl: "content/partials/trips/plans/add-meal.html",
@@ -91,7 +95,7 @@ module BackpackPlanner.Mockup.Controllers.Trips.Plans {
                 });
             }
 
-            $scope.showPackList = (event) => {
+            $scope.showPackListDlg = (event) => {
                 $mdDialog.show({
                     controller: PackListDlgCtrl,
                     templateUrl: "content/partials/trips/plans/packlist.html",
@@ -103,7 +107,30 @@ module BackpackPlanner.Mockup.Controllers.Trips.Plans {
                 });
             };
 
-            $scope.showDeleteConfirm = (event) => {
+            $scope.saveTripPlan = () => {
+                var tripPlan = AppState.getInstance().getTripState().getTripPlanById($scope.tripPlan.Id);
+                if(null == tripPlan) {
+                    alert("The trip plan no longer exists!");
+                    $location.path("/trips/plans");
+                    return;
+                }
+                tripPlan.update($scope.tripPlan);
+
+                $location.path("/trips/plans");
+                // TODO: toast!
+            }
+
+            $scope.resetTripPlan = () => {
+                var tripPlan = AppState.getInstance().getTripState().getTripPlanById($scope.tripPlan.Id);
+                if(null == tripPlan) {
+                    alert("The trip plan no longer exists!");
+                    $location.path("/trips/plans");
+                    return;
+                }
+                $scope.tripPlan = angular.copy(tripPlan);
+            }
+
+            $scope.deleteTripPlan = (event) => {
                 var confirm = $mdDialog.confirm()
                     .parent(angular.element(document.body))
                     .title("Delete Trip Plan")

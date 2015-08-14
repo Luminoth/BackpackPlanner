@@ -9,12 +9,16 @@ module BackpackPlanner.Mockup.Controllers.Gear.Collections {
 
     export interface IGearCollectionScope extends IAppScope {
         gearCollection: Models.Gear.GearCollection;
+
         orderGearSystemsBy: string;
         orderGearItemsBy: string;
 
-        showAddGearSystem: (event: MouseEvent) => void;
-        showAddGearItem: (event: MouseEvent) => void;
-        showDeleteConfirm: (event: MouseEvent) => void;
+        showAddGearSystemDlg: (event: MouseEvent) => void;
+        showAddGearItemDlg: (event: MouseEvent) => void;
+
+        saveGearCollection: () => void;
+        resetGearCollection: () => void;
+        deleteGearCollection: (event: MouseEvent) => void;
     }
 
     export interface IGearCollectionRouteParams extends ng.route.IRouteParamsService {
@@ -27,14 +31,15 @@ module BackpackPlanner.Mockup.Controllers.Gear.Collections {
             $scope.orderGearSystemsBy = "getName()";
             $scope.orderGearItemsBy = "getName()";
         
-            $scope.gearCollection = AppState.getInstance().getGearState().getGearCollectionById($routeParams.gearCollectionId);
-            if(null == $scope.gearCollection) {
+            const gearCollection = AppState.getInstance().getGearState().getGearCollectionById($routeParams.gearCollectionId);
+            if(null == gearCollection) {
                 alert("The gear collection does not exist!");
                 $location.path("/gear/collections");
                 return;
             }
+            $scope.gearCollection = angular.copy(gearCollection);
 
-            $scope.showAddGearSystem = (event) => {
+            $scope.showAddGearSystemDlg = (event) => {
                 $mdDialog.show({
                     controller: AddGearSystemDlgCtrl,
                     templateUrl: "content/partials/gear/collections/add-system.html",
@@ -46,7 +51,7 @@ module BackpackPlanner.Mockup.Controllers.Gear.Collections {
                 });
             }
 
-            $scope.showAddGearItem = (event) => {
+            $scope.showAddGearItemDlg = (event) => {
                 $mdDialog.show({
                     controller: AddGearItemDlgCtrl,
                     templateUrl: "content/partials/gear/collections/add-item.html",
@@ -58,7 +63,30 @@ module BackpackPlanner.Mockup.Controllers.Gear.Collections {
                 });
             }
 
-            $scope.showDeleteConfirm = (event) => {
+            $scope.saveGearCollection = () => {
+                var gearCollection = AppState.getInstance().getGearState().getGearCollectionById($scope.gearCollection.Id);
+                if(null == gearCollection) {
+                    alert("The gear collection no longer exists!");
+                    $location.path("/gear/collections");
+                    return;
+                }
+                gearCollection.update($scope.gearCollection);
+
+                $location.path("/gear/collections");
+                // TODO: toast!
+            }
+
+            $scope.resetGearCollection = () => {
+                var gearCollection = AppState.getInstance().getGearState().getGearCollectionById($scope.gearCollection.Id);
+                if(null == gearCollection) {
+                    alert("The gear collection no longer exists!");
+                    $location.path("/gear/collections");
+                    return;
+                }
+                $scope.gearCollection = angular.copy(gearCollection);
+            }
+
+            $scope.deleteGearCollection = (event) => {
                 var confirm = $mdDialog.confirm()
                     .parent(angular.element(document.body))
                     .title("Delete Gear Collection")

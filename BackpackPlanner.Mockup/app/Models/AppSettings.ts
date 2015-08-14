@@ -16,6 +16,11 @@ module BackpackPlanner.Mockup.Models {
 
         /* Load/Save */
 
+        public update(appSettings: AppSettings) {
+            this.Units = appSettings.Units;
+            this.Currency = appSettings.Currency;
+        }
+
         public loadFromDevice($q: ng.IQService, appSettingsResource: Resources.IAppSettingsResource) : ng.IPromise<any> {
             this.Units = appSettingsResource.Units;
             this.Currency = appSettingsResource.Currency;

@@ -8,17 +8,19 @@ module BackpackPlanner.Mockup.Controllers.Trips.Plans {
 
     export interface IAddTripPlanScope extends IAppScope {
         tripPlan: Models.Trips.TripPlan;
+
         orderGearCollectionsBy: string;
         orderGearSystemsBy: string;
         orderGearItemsBy: string;
         orderMealsBy: string;
 
-        showAddGearCollection: (event: MouseEvent) => void;
-        showAddGearSystem: (event: MouseEvent) => void;
-        showAddGearItem: (event: MouseEvent) => void;
-        showAddMeal: (event: MouseEvent) => void;
+        showAddGearCollectionDlg: (event: MouseEvent) => void;
+        showAddGearSystemDlg: (event: MouseEvent) => void;
+        showAddGearItemDlg: (event: MouseEvent) => void;
+        showAddMealDlg: (event: MouseEvent) => void;
 
-        addTripPlan: (tripPlan: Models.Trips.TripPlan) => void;
+        addTripPlan: () => void;
+        resetTripPlan: () => void;
     }
 
     export class AddTripPlanCtrl {
@@ -30,7 +32,7 @@ module BackpackPlanner.Mockup.Controllers.Trips.Plans {
 
             $scope.tripPlan = new Models.Trips.TripPlan();
 
-            $scope.showAddGearCollection = (event) => {
+            $scope.showAddGearCollectionDlg = (event) => {
                 $mdDialog.show({
                     controller: AddGearCollectionDlgCtrl,
                     templateUrl: "content/partials/trips/plans/add-collection.html",
@@ -42,7 +44,7 @@ module BackpackPlanner.Mockup.Controllers.Trips.Plans {
                 });
             }
 
-            $scope.showAddGearSystem = (event) => {
+            $scope.showAddGearSystemDlg = (event) => {
                 $mdDialog.show({
                     controller: AddGearSystemDlgCtrl,
                     templateUrl: "content/partials/trips/plans/add-system.html",
@@ -54,7 +56,7 @@ module BackpackPlanner.Mockup.Controllers.Trips.Plans {
                 });
             }
 
-            $scope.showAddGearItem = (event) => {
+            $scope.showAddGearItemDlg = (event) => {
                 $mdDialog.show({
                     controller: AddGearItemDlgCtrl,
                     templateUrl: "content/partials/trips/plans/add-item.html",
@@ -66,7 +68,7 @@ module BackpackPlanner.Mockup.Controllers.Trips.Plans {
                 });
             }
 
-            $scope.showAddMeal = (event) => {
+            $scope.showAddMealDlg = (event) => {
                 $mdDialog.show({
                     controller: AddMealDlgCtrl,
                     templateUrl: "content/partials/trips/plans/add-meal.html",
@@ -78,9 +80,8 @@ module BackpackPlanner.Mockup.Controllers.Trips.Plans {
                 });
             }
 
-            $scope.addTripPlan = (tripPlan) => {
-                $scope.tripPlan = angular.copy(tripPlan);
-                $scope.tripPlan.Id = AppState.getInstance().getTripState().addTripPlan($scope.tripPlan);
+            $scope.addTripPlan = () => {
+                AppState.getInstance().getTripState().addTripPlan($scope.tripPlan);
 
                 var addToast = $mdToast.simple()
                     .content(`Added trip plan: ${$scope.tripPlan.Name}`)
@@ -99,6 +100,10 @@ module BackpackPlanner.Mockup.Controllers.Trips.Plans {
                         $mdToast.show(undoAddToast);
                     }
                 });
+            }
+
+            $scope.resetTripPlan = () => {
+                $scope.tripPlan = new Models.Trips.TripPlan();
             }
         }
     }

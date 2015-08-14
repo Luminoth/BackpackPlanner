@@ -10,7 +10,9 @@ module BackpackPlanner.Mockup.Controllers.Meals {
     export interface IMealScope extends IAppScope {
         meal: Models.Meals.Meal;
 
-        showDeleteConfirm: (event: MouseEvent) => void;
+        saveMeal: () => void;
+        resetMeal: () => void;
+        deleteMeal: (event: MouseEvent) => void;
     }
 
     export interface IMealRouteParams extends ng.route.IRouteParamsService {
@@ -21,14 +23,38 @@ module BackpackPlanner.Mockup.Controllers.Meals {
         constructor($scope: IMealScope, $routeParams: IMealRouteParams, $location: ng.ILocationService,
             $mdDialog: ng.material.IDialogService, $mdToast: ng.material.IToastService) {
         
-            $scope.meal = AppState.getInstance().getMealState().getMealById($routeParams.mealId);
-            if(null == $scope.meal) {
+            const meal = AppState.getInstance().getMealState().getMealById($routeParams.mealId);
+            if(null == meal) {
                 alert("The meal does not exist!");
                 $location.path("/meals");
                 return;
             }
+            $scope.meal = angular.copy(meal);
 
-            $scope.showDeleteConfirm = (event) => {
+            $scope.saveMeal = () => {
+                var meal = AppState.getInstance().getMealState().getMealById($scope.meal.Id);
+                if(null == meal) {
+                    alert("The meal no longer exists!");
+                    $location.path("/meals");
+                    return;
+                }
+                meal.update($scope.meal);
+
+                $location.path("/meals");
+                // TODO: toast!
+            }
+
+            $scope.resetMeal = () => {
+                var meal = AppState.getInstance().getMealState().getMealById($scope.meal.Id);
+                if(null == meal) {
+                    alert("The meal no longer exists!");
+                    $location.path("/meals");
+                    return;
+                }
+                $scope.meal = angular.copy(meal);
+            }
+
+            $scope.deleteMeal = (event) => {
                 var confirm = $mdDialog.confirm()
                     .parent(angular.element(document.body))
                     .title("Delete Meal")

@@ -11,7 +11,12 @@
                 "Count": 1
             }
         ],
-        "GearSystems": [],
+        "GearSystems": [
+            {
+                "GearSystemId": 4,
+                "Count": 1
+            }
+        ],
         "GearItems": [
             {
                 "GearItemId": 9,

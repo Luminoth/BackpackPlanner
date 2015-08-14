@@ -65,6 +65,10 @@ module BackpackPlanner.Mockup.Models.Gear {
             this.GearItems.splice(idx, 1);
         }
 
+        public removeAllGearItems() {
+            this.GearItems = <Array<GearItemEntry>>[];
+        }
+
         /* Pack List */
 
         public getPackedGearItemCount() {
@@ -124,6 +128,17 @@ module BackpackPlanner.Mockup.Models.Gear {
         }
 
         /* Load/Save */
+
+        public update(gearSystem: GearSystem) {
+            this.Name = gearSystem.Name;
+            this.Note = gearSystem.Note;
+
+            this.GearItems = <Array<GearItemEntry>>[];
+            for(let i=0; i<gearSystem.GearItems.length; ++i) {
+                const gearItemEntry = gearSystem.GearItems[i];
+                this.GearItems.push(new GearItemEntry(gearItemEntry.GearItemId, gearItemEntry.Count, gearItemEntry.IsPacked));
+            }
+        }
 
         public loadFromDevice($q: ng.IQService, gearSystemResource: Resources.Gear.IGearSystemResource) : ng.IPromise<any> {
             this.Id = gearSystemResource.Id;

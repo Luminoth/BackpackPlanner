@@ -31,7 +31,8 @@
     </div>
     <div layout="row">
         <span flex></span>
-        <md-button class="md-raised md-primary md-hue-1 mockup-button" ng-click="showAddGearItem($event)">Add Gear Items</md-button>
+        <md-button class="md-raised md-primary md-hue-1 mockup-button" ng-click="showAddGearItemDlg($event)">Add Gear Items</md-button>
+        <md-button class="md-raised md-primary md-hue-1 mockup-button" ng-click="gearSystem.removeAllGearItems()">Remove All Gear Items</md-button>
         <span flex></span>
     </div>
     <md-input-container>
@@ -41,8 +42,8 @@
     <div flex></div>
     <div layout="row">
         <span flex></span>
-        <md-button type="submit" class="md-raised md-primary mockup-button" ng-click="addSystem(gearSystem)" ng-disabled="addGearSystemForm.$invalid">Add System</md-button>
-        <md-button class="md-raised md-primary md-hue-1 mockup-button">Reset</md-button>
+        <md-button type="submit" class="md-raised md-primary mockup-button" ng-click="addGearSystem()" ng-disabled="addGearSystemForm.$invalid">Add System</md-button>
+        <md-button class="md-raised md-primary md-hue-1 mockup-button" ng-click="resetGearSystem()">Reset</md-button>
         <span flex></span>
     </div>
 </div>

@@ -8,12 +8,14 @@ module BackpackPlanner.Mockup.Controllers.Trips.Plans {
 
     export interface IAddMealDlgScope extends ng.IScope {
         tripPlan: Models.Trips.TripPlan;
+
         orderBy: string;
 
-        getMeals: () => Models.Meals.Meal[];
         close: () => void;
-        isSelected: (gearItem: Models.Meals.Meal) => void;
-        toggle: (gearItem: Models.Meals.Meal) => void;
+
+        getMeals: () => Models.Meals.Meal[];
+        isMealSelected: (gearItem: Models.Meals.Meal) => void;
+        toggleMealSelected: (gearItem: Models.Meals.Meal) => void;
     }
 
     export class AddMealDlgCtrl {
@@ -21,19 +23,19 @@ module BackpackPlanner.Mockup.Controllers.Trips.Plans {
             $scope.tripPlan = tripPlan;
             $scope.orderBy = "Name";
 
-            $scope.getMeals = () => {
-                return AppState.getInstance().getMealState().getMeals();
-            }
-
             $scope.close = () => {
                 $mdDialog.hide();
             };
 
-            $scope.isSelected = (meal) => {
+            $scope.getMeals = () => {
+                return AppState.getInstance().getMealState().getMeals();
+            }
+
+            $scope.isMealSelected = (meal) => {
                 return $scope.tripPlan.containsMeal(meal);
             }
 
-            $scope.toggle = (meal) => {
+            $scope.toggleMealSelected = (meal) => {
                 if(!$scope.tripPlan.containsMeal(meal)) {
                     $scope.tripPlan.addMeal(meal);
                 } else {

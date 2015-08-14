@@ -58,6 +58,23 @@ module BackpackPlanner.Mockup.Models.Trips {
 
         /* Load/Save */
 
+        public update(tripItinerary: TripItinerary) {
+            this.Name = tripItinerary.Name;
+            this.Note = tripItinerary.Note;
+
+            this.RouteDescriptions = <Array<RouteDescription>>[];
+            for(let i=0; i<tripItinerary.RouteDescriptions.length; ++i) {
+                const routeDescription = tripItinerary.RouteDescriptions[i];
+                this.RouteDescriptions.push(new RouteDescription(routeDescription.Id, routeDescription.Description));
+            }
+
+            this.PointsOfInterest = <Array<PointOfInterest>>[];
+            for(let i=0; i<tripItinerary.PointsOfInterest.length; ++i) {
+                const pointOfInterest = tripItinerary.PointsOfInterest[i];
+                this.PointsOfInterest.push(new PointOfInterest(pointOfInterest.Id, pointOfInterest.Name, pointOfInterest.GpsCoordinate));
+            }
+        }
+
         public loadFromDevice($q: ng.IQService, tripItineraryResource: Resources.Trips.ITripItineraryResource) : ng.IPromise<any> {
             this.Id = tripItineraryResource.Id;
             this.Name = tripItineraryResource.Name;
