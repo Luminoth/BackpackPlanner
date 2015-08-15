@@ -298,6 +298,25 @@ module BackpackPlanner.Mockup.Models.Trips {
 
         /* Weight/Cost */
 
+        public getTotalCalories() {
+            let calories = 0;
+            for(let i=0; i<this.Meals.length; ++i) {
+                const mealEntry = this.Meals[i];
+                calories += mealEntry.getCalories();
+            }
+            return calories;
+        }
+
+        public getWeightClass() {
+            const weightInGrams = this.getWeightInGrams();
+            if(weightInGrams < 4500) {
+                return "Ultralight";
+            } else if(weightInGrams < 9000) {
+                return "Lightweight";
+            }
+            return "Traditional";
+        }
+
         public getWeightInGrams() {
             let weightInGrams = 0;
             for(let i=0; i<this.GearCollections.length; ++i) {
@@ -313,6 +332,11 @@ module BackpackPlanner.Mockup.Models.Trips {
             for(let i=0; i<this.GearItems.length; ++i) {
                 const gearItemEntry = this.GearItems[i];
                 weightInGrams += gearItemEntry.getWeightInGrams();
+            }
+
+            for(let i=0; i<this.Meals.length; ++i) {
+                const mealEntry = this.Meals[i];
+                weightInGrams += mealEntry.getWeightInGrams();
             }
             return weightInGrams;
         }
@@ -336,6 +360,11 @@ module BackpackPlanner.Mockup.Models.Trips {
             for(let i=0; i<this.GearItems.length; ++i) {
                 const gearItemEntry = this.GearItems[i];
                 costInUSDP += gearItemEntry.getCostInUSDP();
+            }
+
+            for(let i=0; i<this.Meals.length; ++i) {
+                const mealEntry = this.Meals[i];
+                costInUSDP += mealEntry.getCostInUSDP();
             }
             return costInUSDP;
         }

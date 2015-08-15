@@ -38,13 +38,13 @@ module BackpackPlanner.Mockup.Models.Gear {
 
         /* Weight/Cost */
 
-        public weightInUnits(weight: number) : number {
+        public weightInUnits(weight?: number) : number {
             return arguments.length
                 ? (this.WeightInGrams = convertUnitsToGrams(weight, AppState.getInstance().getAppSettings().Units))
                 : parseFloat(convertGramsToUnits(this.WeightInGrams, AppState.getInstance().getAppSettings().Units).toFixed(2));
         }
 
-        public costInCurrency(cost: number) : number {
+        public costInCurrency(cost?: number) : number {
             return arguments.length
                 ? (this.CostInUSDP = convertCurrencyToUSDP(cost, AppState.getInstance().getAppSettings().Currency))
                 : convertUSDPToCurrency(this.CostInUSDP, AppState.getInstance().getAppSettings().Currency);

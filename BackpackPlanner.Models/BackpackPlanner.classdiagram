@@ -1575,6 +1575,27 @@
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
+          <operation Id="384668b6-cb32-4b57-b341-44b4beefe85a" name="GetCaloriesPerUnit" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="a79fc487-449f-46c1-a98d-3754faa46d9f" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="8087a63f-2b68-4b09-a57f-27cb07143a44" name="units" direction="In" isUnique="false">
+                  <elementDefinition Id="6c69fcf7-c193-4f0c-97f4-4c029e10d925" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="3fa85c56-19e7-44af-b970-4e89aecad803" LastKnownName="Unit" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="b9512c0f-2d81-4486-b0f6-cbb4c02d5f9c" direction="Return" isUnique="false">
+                  <elementDefinition Id="c137f6b4-e8a0-4d68-a94a-c5d3c17b1a9e" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="bcda2ec7-8e17-4fc6-99ad-828d802362dc" LastKnownName="UnlimitedNatural" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
         </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
@@ -1656,6 +1677,19 @@
                   <elementDefinition Id="8bee3d22-2b57-4c47-ba13-91106e29ba97" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="b27b34d9-7f50-48ea-98c5-cd9cc72f923c" LastKnownName="String" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="75d5af29-379d-4306-b2b8-453fd96b84f9" name="GetCalories" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="fcf1be00-6728-49e4-a1df-8836033611bb" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="40ef43c3-ee0c-4d9f-9f8f-d8edd29a2a47" direction="Return" isUnique="false">
+                  <elementDefinition Id="5c0c0962-c7fb-4b0e-8af7-00a16e5fbae5" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -2350,6 +2384,19 @@
                   <elementDefinition Id="16e577e9-39f2-443a-98af-9698a3033823" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="655912ef-b01a-4848-866a-f4dae7843ba5" LastKnownName="Meal" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="be63c44a-2af8-4f31-a6c2-b5b02fc40500" name="GetTotalCalories" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="730863b0-6685-4470-9c2c-03198c8bf154" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="088b36d5-9e7f-4d2e-bfe2-70b577ef19d4" direction="Return" isUnique="false">
+                  <elementDefinition Id="64abcd15-349e-4e5a-a5d2-ce63a2aeeb4a" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -3100,6 +3147,11 @@
     <packageHasNamedElement>
       <referencedType Id="4b4b7c2f-de85-431c-b720-afc1d706d48a" name="IEntry" isAbstract="false" isLeaf="false" cachedFullName="BackpackPlanner.Models::IEntry">
         <elementDefinition Id="b9618f3d-255e-4d5a-933a-d20d08a7fc5a" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="3fa85c56-19e7-44af-b970-4e89aecad803" name="Unit" isAbstract="false" isLeaf="false" cachedFullName="Unit">
+        <elementDefinition Id="ea6e17d1-83fa-408d-9dac-e1440ad05c70" />
       </referencedType>
     </packageHasNamedElement>
   </packagedElements>

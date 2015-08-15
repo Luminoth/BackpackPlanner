@@ -38,7 +38,7 @@
                     <h2 class="md-title">{{ meal.Name }}</h2>
                     <p layout-padding>
                         {{ meal.ServingCount }} serving(s) of {{ meal.Meal }}<br />
-                        {{ meal.Calories }} calories<br />
+                        {{ meal.Calories }} calories ({{ meal.getCaloriesPerUnit() | number:2 }} per {{ getUnitsWeightString() }})<br />
                         {{ meal.ProteinInGrams }}g protein<br />
                         {{ meal.FiberInGrams }}g fiber
                     </p>

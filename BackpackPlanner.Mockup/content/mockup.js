@@ -726,6 +726,9 @@ var BackpackPlanner;
                         this.Note = "";
                     }
                     /* Weight/Cost */
+                    Meal.prototype.getCaloriesPerUnit = function () {
+                        return 0 == this.Calories ? 0 : this.Calories / this.weightInUnits();
+                    };
                     Meal.prototype.weightInUnits = function (weight) {
                         return arguments.length
                             ? (this.WeightInGrams = Mockup.convertUnitsToGrams(weight, Mockup.AppState.getInstance().getAppSettings().Units))
@@ -796,6 +799,13 @@ var BackpackPlanner;
                             return "";
                         }
                         return meal.Name;
+                    };
+                    MealEntry.prototype.getCalories = function () {
+                        var meal = Mockup.AppState.getInstance().getMealState().getMealById(this.MealId);
+                        if (!meal) {
+                            return 0;
+                        }
+                        return this.Count * meal.Calories;
                     };
                     MealEntry.prototype.getWeightInGrams = function () {
                         var meal = Mockup.AppState.getInstance().getMealState().getMealById(this.MealId);
@@ -1220,6 +1230,24 @@ var BackpackPlanner;
                         return entries;
                     };
                     /* Weight/Cost */
+                    TripPlan.prototype.getTotalCalories = function () {
+                        var calories = 0;
+                        for (var i = 0; i < this.Meals.length; ++i) {
+                            var mealEntry = this.Meals[i];
+                            calories += mealEntry.getCalories();
+                        }
+                        return calories;
+                    };
+                    TripPlan.prototype.getWeightClass = function () {
+                        var weightInGrams = this.getWeightInGrams();
+                        if (weightInGrams < 4500) {
+                            return "Ultralight";
+                        }
+                        else if (weightInGrams < 9000) {
+                            return "Lightweight";
+                        }
+                        return "Traditional";
+                    };
                     TripPlan.prototype.getWeightInGrams = function () {
                         var weightInGrams = 0;
                         for (var i = 0; i < this.GearCollections.length; ++i) {
@@ -1233,6 +1261,10 @@ var BackpackPlanner;
                         for (var i = 0; i < this.GearItems.length; ++i) {
                             var gearItemEntry = this.GearItems[i];
                             weightInGrams += gearItemEntry.getWeightInGrams();
+                        }
+                        for (var i = 0; i < this.Meals.length; ++i) {
+                            var mealEntry = this.Meals[i];
+                            weightInGrams += mealEntry.getWeightInGrams();
                         }
                         return weightInGrams;
                     };
@@ -1252,6 +1284,10 @@ var BackpackPlanner;
                         for (var i = 0; i < this.GearItems.length; ++i) {
                             var gearItemEntry = this.GearItems[i];
                             costInUSDP += gearItemEntry.getCostInUSDP();
+                        }
+                        for (var i = 0; i < this.Meals.length; ++i) {
+                            var mealEntry = this.Meals[i];
+                            costInUSDP += mealEntry.getCostInUSDP();
                         }
                         return costInUSDP;
                     };
