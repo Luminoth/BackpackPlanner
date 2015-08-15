@@ -31,8 +31,12 @@
     </div>
     <div layout="row">
         <span flex></span>
-        <md-button class="md-raised md-primary md-hue-1 mockup-button" ng-click="showAddGearSystemDlg($event)">Add Gear Systems</md-button>
-        <md-button class="md-raised md-primary md-hue-1 mockup-button" ng-click="gearCollection.removeAllGearSystems()">Remove All Gear Systems</md-button>
+        <md-button class="md-raised md-primary md-hue-1 md-icon-button" ng-click="showAddGearSystemDlg($event)">
+            <ng-md-icon icon="add" style="fill: white"></ng-md-icon>
+        </md-button>
+        <md-button class="md-raised md-warn md-icon-button" ng-click="gearCollection.removeAllGearSystems()">
+            <ng-md-icon icon="clear" style="fill: white"></ng-md-icon>
+        </md-button>
         <span flex></span>
     </div>
     <label>Gear Items</label>
@@ -59,8 +63,12 @@
     </div>
     <div layout="row">
         <span flex></span>
-        <md-button class="md-raised md-primary md-hue-1 mockup-button" ng-click="showAddGearItemDlg($event)">Add Gear Items</md-button>
-        <md-button class="md-raised md-primary md-hue-1 mockup-button" ng-click="gearCollection.removeAllGearItems()">Remove All Gear Items</md-button>
+        <md-button class="md-raised md-primary md-hue-1 md-icon-button" ng-click="showAddGearItemDlg($event)">
+            <ng-md-icon icon="add" style="fill: white"></ng-md-icon>
+        </md-button>
+        <md-button class="md-raised md-warn md-icon-button" ng-click="gearCollection.removeAllGearItems()">
+            <ng-md-icon icon="clear" style="fill: white"></ng-md-icon>
+        </md-button>
         <span flex></span>
     </div>
     <md-input-container>
@@ -70,8 +78,12 @@
     <div flex></div>
     <div layout="row">
         <span flex></span>
-        <md-button type="submit" class="md-raised md-primary mockup-button" ng-click="addGearCollection()" ng-disabled="addGearCollectionForm.$invalid">Add Collection</md-button>
-        <md-button class="md-raised md-primary md-hue-1 mockup-button" ng-click="resetGearCollection()">Reset</md-button>
+        <md-button type="submit" class="md-raised md-primary md-icon-button" ng-click="addGearCollection()" ng-disabled="addGearCollectionForm.$invalid">
+            <ng-md-icon icon="add" style="fill: white"></ng-md-icon>
+        </md-button>
+        <md-button class="md-raised md-primary md-hue-1 md-icon-button" ng-click="resetGearCollection()">
+            <ng-md-icon icon="undo" style="fill: white"></ng-md-icon>
+        </md-button>
         <span flex></span>
     </div>
 </div>

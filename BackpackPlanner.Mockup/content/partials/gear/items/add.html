@@ -52,8 +52,12 @@
     <div flex></div>
     <div layout="row">
         <span flex></span>
-        <md-button type="submit" class="md-raised md-primary mockup-button" ng-click="addGearItem()" ng-disabled="addGearItemForm.$invalid">Add Item</md-button>
-        <md-button class="md-raised md-primary md-hue-1 mockup-button" ng-click="resetGearItem()">Reset</md-button>
+        <md-button type="submit" class="md-raised md-primary md-icon-button" ng-click="addGearItem()" ng-disabled="addGearItemForm.$invalid">
+            <ng-md-icon icon="add" style="fill: white"></ng-md-icon>
+        </md-button>
+        <md-button class="md-raised md-primary md-hue-1 md-icon-button" ng-click="resetGearItem()">
+            <ng-md-icon icon="undo" style="fill: white"></ng-md-icon>
+        </md-button>
         <span flex></span>
     </div>
 </div>

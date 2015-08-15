@@ -9,7 +9,7 @@
     </md-input-container>
     <div layout="row">
         <span flex></span>
-        <md-button class="md-raised md-primary md-hue-1 mockup-button" ng-click="showPackListDlg($event)">Show Pack List</md-button>
+        <md-button class="md-raised md-primary md-hue-1 mockup-button" ng-click="showPackListDlg($event)">Pack List</md-button>
         <span flex></span>
     </div>
     <label>Gear Collections</label>
@@ -38,8 +38,12 @@
     </div>
     <div layout="row">
         <span flex></span>
-        <md-button class="md-raised md-primary md-hue-1 mockup-button" ng-click="showAddGearCollectionDlg($event)">Add Gear Collections</md-button>
-        <md-button class="md-raised md-primary md-hue-1 mockup-button" ng-click="tripPlan.removeAllGearCollections()">Remove All Gear Collections</md-button>
+        <md-button class="md-raised md-primary md-hue-1 md-icon-button" ng-click="showAddGearCollectionDlg($event)">
+            <ng-md-icon icon="add" style="fill: white"></ng-md-icon>
+        </md-button>
+        <md-button class="md-raised md-warn md-icon-button" ng-click="tripPlan.removeAllGearCollections()">
+            <ng-md-icon icon="clear" style="fill: white"></ng-md-icon>
+        </md-button>
         <span flex></span>
     </div>
     <label>Gear Systems</label>
@@ -68,8 +72,12 @@
     </div>
     <div layout="row">
         <span flex></span>
-        <md-button class="md-raised md-primary md-hue-1 mockup-button" ng-click="showAddGearSystemDlg($event)">Add Gear Systems</md-button>
-        <md-button class="md-raised md-primary md-hue-1 mockup-button" ng-click="tripPlan.removeAllGearSystems()">Remove All Gear Systems</md-button>
+        <md-button class="md-raised md-primary md-hue-1 md-icon-button" ng-click="showAddGearSystemDlg($event)">
+            <ng-md-icon icon="add" style="fill: white"></ng-md-icon>
+        </md-button>
+        <md-button class="md-raised md-warn md-icon-button" ng-click="tripPlan.removeAllGearSystems()">
+            <ng-md-icon icon="clear" style="fill: white"></ng-md-icon>
+        </md-button>
         <span flex></span>
     </div>
     <label>Gear Items</label>
@@ -98,8 +106,12 @@
     </div>
     <div layout="row">
         <span flex></span>
-        <md-button class="md-raised md-primary md-hue-1 mockup-button" ng-click="showAddGearItemDlg($event)">Add Gear Items</md-button>
-        <md-button class="md-raised md-primary md-hue-1 mockup-button" ng-click="tripPlan.removeAllGearItems()">Remove All Gear Items</md-button>
+        <md-button class="md-raised md-primary md-hue-1 md-icon-button" ng-click="showAddGearItemDlg($event)">
+            <ng-md-icon icon="add" style="fill: white"></ng-md-icon>
+        </md-button>
+        <md-button class="md-raised md-warn md-icon-button" ng-click="tripPlan.removeAllGearItems()">
+            <ng-md-icon icon="clear" style="fill: white"></ng-md-icon>
+        </md-button>
         <span flex></span>
     </div>
     <label>Meals</label>
@@ -128,8 +140,12 @@
     </div>
     <div layout="row">
         <span flex></span>
-        <md-button class="md-raised md-primary md-hue-1 mockup-button" ng-click="showAddMealDlg($event)">Add Meals</md-button>
-        <md-button class="md-raised md-primary md-hue-1 mockup-button" ng-click="tripPlan.removeAllMeals()">Remove All Meals</md-button>
+        <md-button class="md-raised md-primary md-hue-1 md-icon-button" ng-click="showAddMealDlg($event)">
+            <ng-md-icon icon="add" style="fill: white"></ng-md-icon>
+        </md-button>
+        <md-button class="md-raised md-warn md-icon-button" ng-click="tripPlan.removeAllMeals()">
+            <ng-md-icon icon="clear" style="fill: white"></ng-md-icon>
+        </md-button>
         <span flex></span>
     </div>
     <md-input-container>
@@ -139,13 +155,15 @@
     <div flex></div>
     <div layout="row">
         <span flex></span>
-        <md-button type="submit" class="md-raised md-primary mockup-button" ng-click="saveTripPlan()" ng-disabled="tripPlanForm.$invalid">Save Trip Plan</md-button>
-        <md-button class="md-raised md-primary md-hue-1 mockup-button" ng-click="resetTripPlan()">Reset</md-button>
-        <span flex></span>
-    </div>
-    <div layout="row">
-        <span flex></span>
-        <md-button class="md-raised md-warn mockup-button" ng-click="deleteTripPlan($event)">Delete Trip Plan</md-button>
+        <md-button type="submit" class="md-raised md-primary md-icon-button" ng-click="saveTripPlan()" ng-disabled="tripPlanForm.$invalid">
+            <ng-md-icon icon="save" style="fill: white"></ng-md-icon>
+        </md-button>
+        <md-button class="md-raised md-primary md-hue-1 md-icon-button" ng-click="resetTripPlan()">
+            <ng-md-icon icon="undo" style="fill: white"></ng-md-icon>
+        </md-button>
+        <md-button class="md-raised md-warn md-icon-button" ng-click="deleteTripPlan($event)">
+            <ng-md-icon icon="remove" style="fill: white"></ng-md-icon>
+        </md-button>
         <span flex></span>
     </div>
 </div>

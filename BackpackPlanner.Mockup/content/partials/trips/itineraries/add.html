@@ -14,8 +14,12 @@
     <div flex></div>
     <div layout="row">
         <span flex></span>
-        <md-button type="submit" class="md-raised md-primary mockup-button" ng-click="addTripItinerary()" ng-disabled="addTripItineraryForm.$invalid">Add Trip Itinerary</md-button>
-        <md-button class="md-raised md-primary md-hue-1 mockup-button" ng-click="resetTripItinerary()">Reset</md-button>
+        <md-button type="submit" class="md-raised md-primary md-icon-button" ng-click="addTripItinerary()" ng-disabled="addTripItineraryForm.$invalid">
+            <ng-md-icon icon="add" style="fill: white"></ng-md-icon>
+        </md-button>
+        <md-button class="md-raised md-primary md-hue-1 md-icon-button" ng-click="resetTripItinerary()">
+            <ng-md-icon icon="undo" style="fill: white"></ng-md-icon>
+        </md-button>
         <span flex></span>
     </div>
 </div>

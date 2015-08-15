@@ -52,13 +52,15 @@
     <div flex></div>
     <div layout="row">
         <span flex></span>
-        <md-button type="submit" class="md-raised md-primary mockup-button" ng-click="saveGearItem()" ng-disabled="gearItemForm.$invalid">Save Item</md-button>
-        <md-button class="md-raised md-primary md-hue-1 mockup-button" ng-click="resetGearItem()">Reset</md-button>
-        <span flex></span>
-    </div>
-    <div layout="row">
-        <span flex></span>
-        <md-button class="md-raised md-warn mockup-button" ng-click="deleteGearItem($event)">Delete Item</md-button>
+        <md-button type="submit" class="md-raised md-primary md-icon-button" ng-click="saveGearItem()" ng-disabled="gearItemForm.$invalid">
+            <ng-md-icon icon="save" style="fill: white"></ng-md-icon>
+        </md-button>
+        <md-button class="md-raised md-primary md-hue-1 md-icon-button" ng-click="resetGearItem()">
+            <ng-md-icon icon="undo" style="fill: white"></ng-md-icon>
+        </md-button>
+        <md-button class="md-raised md-warn md-icon-button" ng-click="deleteGearItem($event)">
+            <ng-md-icon icon="remove" style="fill: white"></ng-md-icon>
+        </md-button>
         <span flex></span>
     </div>
 </div>

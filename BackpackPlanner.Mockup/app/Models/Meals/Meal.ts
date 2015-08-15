@@ -28,7 +28,7 @@ module BackpackPlanner.Mockup.Models.Meals {
         public Name = "";
         public Url = "";
         public Meal = "Other";
-        public ServingCount = 0;
+        public ServingCount = 1;
         public WeightInGrams = 0;
         public CostInUSDP = 0;
         public Calories = 0;

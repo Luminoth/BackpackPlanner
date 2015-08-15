@@ -717,7 +717,7 @@ var BackpackPlanner;
                         this.Name = "";
                         this.Url = "";
                         this.Meal = "Other";
-                        this.ServingCount = 0;
+                        this.ServingCount = 1;
                         this.WeightInGrams = 0;
                         this.CostInUSDP = 0;
                         this.Calories = 0;
