@@ -2325,6 +2325,13 @@ var BackpackPlanner;
                     $scope.getCurrencyString = function () {
                         return Mockup.getCurrencyString(Mockup.AppState.getInstance().getAppSettings().Currency);
                     };
+                    $scope.getDaysBetween = function (startDate, endDate) {
+                        var oneDayInMs = 86400000;
+                        var startDateInMs = startDate.getTime();
+                        var endDateInMs = endDate.getTime();
+                        var daysBetweenInMs = endDateInMs - startDateInMs;
+                        return Math.round(daysBetweenInMs / oneDayInMs);
+                    };
                     // view utilities
                     $scope.isActive = function (viewLocation) {
                         // set the nav item as active when we're looking at its location

@@ -35,6 +35,7 @@
                 <md-card-content class="mockup-card-content">
                     <h2 class="md-title">{{ tripPlan.Name }}</h2>
                     <p layout-padding>
+                        {{ getDaysBetween(tripPlan.StartDateAsDate, tripPlan.EndDateAsDate) }} day(s)<br />
                         {{ tripPlan.getMealCount() }} meal(s) ({{ tripPlan.getTotalCalories() }} total calories, {{ tripPlan.getPackedMealCount() }} packed)<br />
                         {{ tripPlan.getGearCollectionCount() }} collection(s)<br />
                         {{ tripPlan.getGearSystemCount() }} system(s)<br />

@@ -12,6 +12,23 @@
         <md-button class="md-raised md-primary md-hue-1 mockup-button" ng-click="showPackListDlg($event)">Pack List</md-button>
         <span flex></span>
     </div>
+    <div layout="row">
+        <md-input-container flex>
+            <label>Start Date</label>
+            <input type="date" ng-model="tripPlan.StartDateAsDate" name="startDate" />
+        </md-input-container>
+        <md-input-container flex>
+            <label>End Date</label>
+            <input type="date" ng-model="tripPlan.EndDateAsDate" name="endDate" />
+        </md-input-container>
+    </div>
+    <md-input-container>
+        <label>Itinerary</label>
+        <md-select ng-model="tripPlan.TripItineraryId" name="itinerary">
+            <md-option value="0">No Itinerary</md-option>
+            <md-option ng-repeat="tripItinerary in getTripItineraries()" value="{{ tripItinerary.Id }}">{{ tripItinerary.Name }}</md-option>
+        </md-select>
+    </md-input-container>
     <label>Gear Collections</label>
     <p ng-show="tripPlan.GearCollections.length < 1">You have no gear collections in this plan! Try adding one!</p>
     <div layout="column" ng-show="tripPlan.GearCollections.length > 0">

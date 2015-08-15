@@ -51,6 +51,8 @@ module BackpackPlanner.Mockup.Controllers {
         getUnitsLengthString: () => string;
         getCurrencyString: () => string;
 
+        getDaysBetween: (startDate: Date, endDate: Date) => number;
+
         isActive: (viewLocation: string) => boolean;
         toggleSidenav: () => void;
     }
@@ -140,6 +142,15 @@ module BackpackPlanner.Mockup.Controllers {
 
             $scope.getCurrencyString = () => {
                 return getCurrencyString(AppState.getInstance().getAppSettings().Currency);
+            }
+
+            $scope.getDaysBetween = (startDate: Date, endDate: Date) => {
+                const oneDayInMs = 86400000;
+                const startDateInMs = startDate.getTime();
+                const endDateInMs = endDate.getTime();
+                const daysBetweenInMs = endDateInMs - startDateInMs;
+
+                return Math.round(daysBetweenInMs / oneDayInMs);
             }
 
             // view utilities
