@@ -22,10 +22,13 @@ module BackpackPlanner.Mockup.Models {
         }
 
         public loadFromDevice($q: ng.IQService, appSettingsResource: Resources.IAppSettingsResource) : ng.IPromise<any> {
+            const deferred = $q.defer();
+
             this.Units = appSettingsResource.Units;
             this.Currency = appSettingsResource.Currency;
 
-            return $q.defer().promise;
+            deferred.resolve(this);
+            return deferred.promise;
         }
 
         public saveToDevice($q: ng.IQService) : ng.IPromise<any> {

@@ -79,6 +79,8 @@ module BackpackPlanner.Mockup.Models.Meals {
         }
 
         public loadFromDevice($q: ng.IQService, mealResource: Resources.Meals.IMealResource) : ng.IPromise<any> {
+            const deferred = $q.defer();
+
             this.Id = mealResource.Id;
             this.Name = mealResource.Name;
             this.Url = mealResource.Url;
@@ -91,7 +93,8 @@ module BackpackPlanner.Mockup.Models.Meals {
             this.FiberInGrams = mealResource.FiberInGrams;
             this.Note = mealResource.Note;
 
-            return $q.defer().promise;
+            deferred.resolve(this);
+            return deferred.promise;
         }
 
         public saveToDevice($q: ng.IQService) : ng.IPromise<any> {

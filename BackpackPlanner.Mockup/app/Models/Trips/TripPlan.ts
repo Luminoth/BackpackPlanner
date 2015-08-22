@@ -307,6 +307,8 @@ module BackpackPlanner.Mockup.Models.Trips {
             return calories;
         }
 
+        //// TODO: MOVE THIS INTO A UTILITY CLASS OR SOMETHING
+        //// AND MAKE THE CLASSES CONFIGURABLE
         public getWeightClass() {
             const weightInGrams = this.getWeightInGrams();
             if(weightInGrams < 4500) {
@@ -419,6 +421,8 @@ module BackpackPlanner.Mockup.Models.Trips {
         }
 
         public loadFromDevice($q: ng.IQService, tripPlanResource: Resources.Trips.ITripPlanResource) : ng.IPromise<any> {
+            const deferred = $q.defer();
+
             this.Id = tripPlanResource.Id;
             this.Name = tripPlanResource.Name;
             this.StartDate = tripPlanResource.StartDate;
@@ -448,7 +452,8 @@ module BackpackPlanner.Mockup.Models.Trips {
                 this.Meals.push(new Models.Meals.MealEntry(mealEntry.MealId, mealEntry.Count, mealEntry.IsPacked));
             }
 
-            return $q.defer().promise;
+            deferred.resolve(this);
+            return deferred.promise;
         }
 
         public saveToDevice($q: ng.IQService) : ng.IPromise<any> {

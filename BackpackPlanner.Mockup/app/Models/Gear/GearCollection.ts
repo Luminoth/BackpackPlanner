@@ -228,6 +228,8 @@ module BackpackPlanner.Mockup.Models.Gear {
         }
 
         public loadFromDevice($q: ng.IQService, gearCollectionResource: Resources.Gear.IGearCollectionResource) : ng.IPromise<any> {
+            const deferred = $q.defer();
+
             this.Id = gearCollectionResource.Id;
             this.Name = gearCollectionResource.Name;
             this.Note = gearCollectionResource.Note;
@@ -242,7 +244,8 @@ module BackpackPlanner.Mockup.Models.Gear {
                 this.GearItems.push(new GearItemEntry(gearItemEntry.GearItemId, gearItemEntry.Count, gearItemEntry.IsPacked));
             }
 
-            return $q.defer().promise;
+            deferred.resolve(this);
+            return deferred.promise;
         }
 
         public saveToDevice($q: ng.IQService) : ng.IPromise<any> {

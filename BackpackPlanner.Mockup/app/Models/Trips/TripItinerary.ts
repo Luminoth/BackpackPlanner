@@ -76,6 +76,8 @@ module BackpackPlanner.Mockup.Models.Trips {
         }
 
         public loadFromDevice($q: ng.IQService, tripItineraryResource: Resources.Trips.ITripItineraryResource) : ng.IPromise<any> {
+            const deferred = $q.defer();
+
             this.Id = tripItineraryResource.Id;
             this.Name = tripItineraryResource.Name;
             this.Note = tripItineraryResource.Note;
@@ -90,7 +92,8 @@ module BackpackPlanner.Mockup.Models.Trips {
                 this.PointsOfInterest.push(new PointOfInterest(pointOfInterest.Id, pointOfInterest.Name, pointOfInterest.GpsCoordinate));
             }
 
-            return $q.defer().promise;
+            deferred.resolve(this);
+            return deferred.promise;
         }
 
         public saveToDevice($q: ng.IQService) : ng.IPromise<any> {

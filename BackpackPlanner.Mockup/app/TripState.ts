@@ -37,15 +37,19 @@ module BackpackPlanner.Mockup {
             return idx < 0 ? null : this._tripItineraries[idx];
         }
 
+        private static _lastTripItineraryId = 0;
+
         private getNextTripItineraryId() : number {
-            // TODO: write this
-            return -1;
+            return ++TripState._lastTripItineraryId;
         }
 
         public addTripItinerary(tripItinerary: Models.Trips.TripItinerary) : number {
             if(tripItinerary.Id < 0) {
                 tripItinerary.Id = this.getNextTripItineraryId();
+            } else if(tripItinerary.Id > TripState._lastTripItineraryId) {
+                TripState._lastTripItineraryId = tripItinerary.Id;
             }
+
             this._tripItineraries.push(tripItinerary);
             return tripItinerary.Id;
         }
@@ -90,15 +94,19 @@ module BackpackPlanner.Mockup {
             return idx < 0 ? null : this._tripPlans[idx];
         }
 
+        private static _lastTripPlanId = 0;
+
         private getNextTripPlanId() : number {
-            // TODO: write this
-            return -1;
+            return ++TripState._lastTripPlanId;
         }
 
         public addTripPlan(tripPlan: Models.Trips.TripPlan) : number {
             if(tripPlan.Id < 0) {
                 tripPlan.Id = this.getNextTripPlanId();
+            } else if(tripPlan.Id > TripState._lastTripPlanId) {
+                TripState._lastTripPlanId = tripPlan.Id;
             }
+
             this._tripPlans.push(tripPlan);
             return tripPlan.Id;
         }
@@ -131,8 +139,11 @@ module BackpackPlanner.Mockup {
             this._tripItineraries = <Array<Models.Trips.TripItinerary>>[];
             for(let i=0; i<tripItineraryResources.length; ++i) {
                 const tripItinerary = new Models.Trips.TripItinerary();
-                promises.push(tripItinerary.loadFromDevice($q, tripItineraryResources[i]));
-                this._tripItineraries.push(tripItinerary);
+                promises.push(tripItinerary.loadFromDevice($q, tripItineraryResources[i]).then(
+                    (loadedTripItinerary) => {
+                        this.addTripItinerary(loadedTripItinerary);
+                    }
+                ));
             }
             return $q.all(promises);
         }
@@ -142,8 +153,11 @@ module BackpackPlanner.Mockup {
             this._tripPlans = <Array<Models.Trips.TripPlan>>[];
             for(let i=0; i<tripPlanResources.length; ++i) {
                 const tripPlan = new Models.Trips.TripPlan();
-                promises.push(tripPlan.loadFromDevice($q, tripPlanResources[i]));
-                this._tripPlans.push(tripPlan);
+                promises.push(tripPlan.loadFromDevice($q, tripPlanResources[i]).then(
+                    (loadedTripPlan) => {
+                        this.addTripPlan(loadedTripPlan);
+                    }
+                ));
             }
             return $q.all(promises);
         }

@@ -49,6 +49,8 @@ module BackpackPlanner.Mockup.Models.Personal {
         }
 
         public loadFromDevice($q: ng.IQService, userInfoResource: Resources.Personal.IUserInformationResource) : ng.IPromise<any> {
+            const deferred = $q.defer();
+
             this.FirstName = userInfoResource.FirstName;
             this.LastName = userInfoResource.LastName;
             this.BirthDate = userInfoResource.BirthDate;
@@ -57,7 +59,8 @@ module BackpackPlanner.Mockup.Models.Personal {
             this.HeightInCm = userInfoResource.HeightInCm;
             this.WeightInGrams = userInfoResource.WeightInGrams;
 
-            return $q.defer().promise;
+            deferred.resolve(this);
+            return deferred.promise;
         }
 
         public saveToDevice($q: ng.IQService) : ng.IPromise<any> {

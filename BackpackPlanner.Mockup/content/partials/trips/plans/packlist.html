@@ -19,7 +19,7 @@
             </md-radio-group>
         </md-input-container>
         <md-dialog-content layout="column">
-            <md-checkbox ng-repeat="entry in tripPlan.getPackList() | filter:filter | orderBy:orderBy" ng-model="entry.IsPacked" name="packed">
+            <md-checkbox ng-repeat="entry in tripPlan.getPackList() | filter:filter | orderBy:orderBy track by $index" ng-model="entry.IsPacked" name="packed">
                 <span style="white-space: nowrap;">{{ entry.getName() }}</span>
             </md-checkbox>
         </md-dialog-content>

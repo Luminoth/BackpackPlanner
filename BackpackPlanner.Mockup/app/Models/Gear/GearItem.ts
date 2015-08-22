@@ -75,6 +75,8 @@ module BackpackPlanner.Mockup.Models.Gear {
         }
 
         public loadFromDevice($q: ng.IQService, gearItemResource: Resources.Gear.IGearItemResource) : ng.IPromise<any> {
+            const deferred = $q.defer();
+
             this.Id = gearItemResource.Id;
             this.Name = gearItemResource.Name;
             this.Url = gearItemResource.Url;
@@ -87,7 +89,8 @@ module BackpackPlanner.Mockup.Models.Gear {
             this.ConsumedPerDay = gearItemResource.ConsumedPerDay;
             this.Note = gearItemResource.Note;
 
-            return $q.defer().promise;
+            deferred.resolve(this);
+            return deferred.promise;
         }
 
         public saveToDevice($q: ng.IQService) : ng.IPromise<any> {

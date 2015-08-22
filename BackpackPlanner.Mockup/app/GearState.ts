@@ -40,15 +40,19 @@ module BackpackPlanner.Mockup {
             return idx < 0 ? null : this._gearItems[idx];
         }
 
+        private static _lastGearItemId = 0;
+
         private getNextGearItemId() : number {
-            // TODO: write this
-            return -1;
+            return ++GearState._lastGearItemId;
         }
 
         public addGearItem(gearItem: Models.Gear.GearItem) : number {
             if(gearItem.Id < 0) {
                 gearItem.Id = this.getNextGearItemId();
+            } else if(gearItem.Id > GearState._lastGearItemId) {
+                GearState._lastGearItemId = gearItem.Id;
             }
+
             this._gearItems.push(gearItem);
             return gearItem.Id;
         }
@@ -93,15 +97,19 @@ module BackpackPlanner.Mockup {
             return idx < 0 ? null : this._gearSystems[idx];
         }
 
+        private static _lastGearSystemId = 0;
+
         private getNextGearSystemId() : number {
-            // TODO: write this
-            return -1;
+            return ++GearState._lastGearSystemId;
         }
 
         public addGearSystem(gearSystem: Models.Gear.GearSystem) : number {
             if(gearSystem.Id < 0) {
                 gearSystem.Id = this.getNextGearSystemId();
+            } else if(gearSystem.Id > GearState._lastGearSystemId) {
+                GearState._lastGearSystemId = gearSystem.Id;
             }
+
             this._gearSystems.push(gearSystem);
             return gearSystem.Id;
         }
@@ -146,15 +154,19 @@ module BackpackPlanner.Mockup {
             return idx < 0 ? null : this._gearCollections[idx];
         }
 
+        private static _lastGearCollectionId = 0;
+
         private getNextGearCollectionId() : number {
-            // TODO: write this
-            return -1;
+            return ++GearState._lastGearCollectionId;
         }
 
         public addGearCollection(gearCollection: Models.Gear.GearCollection) : number {
             if(gearCollection.Id < 0) {
                 gearCollection.Id = this.getNextGearCollectionId();
+            } else if(gearCollection.Id > GearState._lastGearCollectionId) {
+                GearState._lastGearCollectionId = gearCollection.Id;
             }
+
             this._gearCollections.push(gearCollection);
             return gearCollection.Id;
         }
@@ -190,8 +202,11 @@ module BackpackPlanner.Mockup {
             this._gearItems = <Array<Models.Gear.GearItem>>[];
             for(let i=0; i<gearItemResources.length; ++i) {
                 const gearItem = new Models.Gear.GearItem();
-                promises.push(gearItem.loadFromDevice($q, gearItemResources[i]));
-                this._gearItems.push(gearItem);
+                promises.push(gearItem.loadFromDevice($q, gearItemResources[i]).then(
+                    (loadedGearItem) => {
+                        this.addGearItem(loadedGearItem);
+                    }
+                ));
             }
             return $q.all(promises);
         }
@@ -201,8 +216,11 @@ module BackpackPlanner.Mockup {
             this._gearSystems = <Array<Models.Gear.GearSystem>>[];
             for(let i=0; i<gearSystemResources.length; ++i) {
                 const gearSystem = new Models.Gear.GearSystem();
-                promises.push(gearSystem.loadFromDevice($q, gearSystemResources[i]));
-                this._gearSystems.push(gearSystem);
+                promises.push(gearSystem.loadFromDevice($q, gearSystemResources[i]).then(
+                    (loadedGearSystem) => {
+                        this.addGearSystem(loadedGearSystem);
+                    }
+                ));
             }
             return $q.all(promises);
         }
@@ -212,8 +230,11 @@ module BackpackPlanner.Mockup {
             this._gearCollections = <Array<Models.Gear.GearCollection>>[];
             for(let i=0; i<gearCollectionResources.length; ++i) {
                 const gearCollection = new Models.Gear.GearCollection();
-                promises.push(gearCollection.loadFromDevice($q, gearCollectionResources[i]));
-                this._gearCollections.push(gearCollection);
+                promises.push(gearCollection.loadFromDevice($q, gearCollectionResources[i]).then(
+                    (loadedGearCollection) => {
+                        this.addGearCollection(loadedGearCollection);
+                    }
+                ));
             }
             return $q.all(promises);
         }

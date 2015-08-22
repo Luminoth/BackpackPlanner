@@ -34,15 +34,19 @@ module BackpackPlanner.Mockup {
             return idx < 0 ? null : this._meals[idx];
         }
 
+        private static _lastMealId = 0;
+
         private getNextMealId() : number {
-            // TODO: write this
-            return -1;
+            return ++MealState._lastMealId;
         }
 
         public addMeal(meal: Models.Meals.Meal) : number {
             if(meal.Id < 0) {
                 meal.Id = this.getNextMealId();
+            } else if(meal.Id > MealState._lastMealId) {
+                MealState._lastMealId = meal.Id;
             }
+
             this._meals.push(meal);
             return meal.Id;
         }
@@ -76,8 +80,11 @@ module BackpackPlanner.Mockup {
             this._meals = <Array<Models.Meals.Meal>>[];
             for(let i=0; i<mealResources.length; ++i) {
                 const meal = new Models.Meals.Meal();
-                promises.push(meal.loadFromDevice($q, mealResources[i]));
-                this._meals.push(meal);
+                promises.push(meal.loadFromDevice($q, mealResources[i]).then(
+                    (loadedMeal) => {
+                        this.addMeal(loadedMeal);
+                    }
+                ));
             }
             return $q.all(promises);
         }
