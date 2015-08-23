@@ -38,6 +38,13 @@ module BackpackPlanner.Mockup.Models.Gear {
 
         /* Weight/Cost */
 
+        public getWeightCategory() {
+            if("NotCarried" == this.Carried) {
+                return "None";
+            }
+            return AppState.getInstance().getAppSettings().getWeightCategory(this.WeightInGrams);
+        }
+
         public weightInUnits(weight?: number) : number {
             return arguments.length
                 ? (this.WeightInGrams = convertUnitsToGrams(weight, AppState.getInstance().getAppSettings().Units))

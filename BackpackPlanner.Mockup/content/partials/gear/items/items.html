@@ -37,7 +37,28 @@
                     </p>
                 </md-card-content>
                 <div layout="row" layout-sm="column">
-                    <p layout-padding ng-if="'NotCarried' != gearItem.Carried">Weight: {{ gearItem.weightInUnits() | number:2 }} {{ getUnitsWeightString() }}s</p>
+                    <p layout-padding>
+                        <ng-md-icon ng-if="'None' == gearItem.getWeightCategory()" icon="help" style="fill: black">
+                            <md-tooltip>None</md-tooltip>
+                        </ng-md-icon>
+                        <ng-md-icon ng-if="'Ultralight' == gearItem.getWeightCategory()" icon="help" style="fill: grey">
+                            <md-tooltip>Ultralight</md-tooltip>
+                        </ng-md-icon>
+                        <ng-md-icon ng-if="'Light' == gearItem.getWeightCategory()" icon="help" style="fill: aqua">
+                            <md-tooltip>Light</md-tooltip>
+                        </ng-md-icon>
+                        <ng-md-icon ng-if="'Medium' == gearItem.getWeightCategory()" icon="help" style="fill: green">
+                            <md-tooltip>Medium</md-tooltip>
+                        </ng-md-icon>
+                        <ng-md-icon ng-if="'Heavy' == gearItem.getWeightCategory()" icon="help" style="fill: yellow">
+                            <md-tooltip>Heavy</md-tooltip>
+                        </ng-md-icon>
+                        <ng-md-icon ng-if="'ExtraHeavy' == gearItem.getWeightCategory()" icon="help" style="fill: red">
+                            <md-tooltip>Extra Heavy</md-tooltip>
+                        </ng-md-icon>
+                        <span ng-if="'NotCarried' == gearItem.Carried">Not Carried</span>
+                        <span ng-if="'NotCarried' != gearItem.Carried">Weight: {{ gearItem.weightInUnits() | number:2 }} {{ getUnitsWeightString() }}s</span>
+                    </p>
                     <p layout-padding>Cost: {{ gearItem.costInCurrency() | currency }} ({{ gearItem.getCostPerUnitInCurrency() | currency }} per {{ getUnitsWeightString() }})</p>
                     <p layout-padding ng-if="gearItem.IsConsumable">Consumed per day: {{ gearItem.ConsumedPerDay }}</p>
                 </div>

@@ -112,16 +112,65 @@ var BackpackPlanner;
                 function AppSettings() {
                     this.Units = "Metric";
                     this.Currency = "USD";
+                    this.UltralightMaxWeightInGrams = 4500;
+                    this.LightweightMaxWeightInGrams = 9000;
                 }
+                AppSettings.prototype.resetToDefaults = function () {
+                    this.Units = "Metric";
+                    this.Currency = "USD";
+                    this.UltralightMaxWeightInGrams = 4500;
+                    this.LightweightMaxWeightInGrams = 9000;
+                };
+                AppSettings.prototype.getWeightClass = function (weightInGrams) {
+                    if (weightInGrams < this.UltralightMaxWeightInGrams) {
+                        return "Ultralight";
+                    }
+                    else if (weightInGrams < this.LightweightMaxWeightInGrams) {
+                        return "Lightweight";
+                    }
+                    return "Traditional";
+                };
+                AppSettings.prototype.getWeightCategory = function (weightInGrams) {
+                    if (weightInGrams <= 0) {
+                        return "None";
+                    }
+                    else if (weightInGrams < 225) {
+                        return "Ultralight";
+                    }
+                    else if (weightInGrams < 450) {
+                        return "Light";
+                    }
+                    else if (weightInGrams < 1360) {
+                        return "Medium";
+                    }
+                    else if (weightInGrams < 2270) {
+                        return "Heavy";
+                    }
+                    return "ExtraHeavy";
+                };
+                AppSettings.prototype.ultralightMaxWeightInUnits = function (weight) {
+                    return arguments.length
+                        ? (this.UltralightMaxWeightInGrams = Mockup.convertUnitsToGrams(weight, Mockup.AppState.getInstance().getAppSettings().Units))
+                        : parseFloat(Mockup.convertGramsToUnits(this.UltralightMaxWeightInGrams, Mockup.AppState.getInstance().getAppSettings().Units).toFixed(2));
+                };
+                AppSettings.prototype.lightweightMaxWeightInUnits = function (weight) {
+                    return arguments.length
+                        ? (this.LightweightMaxWeightInGrams = Mockup.convertUnitsToGrams(weight, Mockup.AppState.getInstance().getAppSettings().Units))
+                        : parseFloat(Mockup.convertGramsToUnits(this.LightweightMaxWeightInGrams, Mockup.AppState.getInstance().getAppSettings().Units).toFixed(2));
+                };
                 /* Load/Save */
                 AppSettings.prototype.update = function (appSettings) {
                     this.Units = appSettings.Units;
                     this.Currency = appSettings.Currency;
+                    this.UltralightMaxWeightInGrams = appSettings.UltralightMaxWeightInGrams;
+                    this.LightweightMaxWeightInGrams = appSettings.LightweightMaxWeightInGrams;
                 };
                 AppSettings.prototype.loadFromDevice = function ($q, appSettingsResource) {
                     var deferred = $q.defer();
                     this.Units = appSettingsResource.Units;
                     this.Currency = appSettingsResource.Currency;
+                    this.UltralightMaxWeightInGrams = appSettingsResource.UltralightMaxWeightInGrams;
+                    this.LightweightMaxWeightInGrams = appSettingsResource.LightweightMaxWeightInGrams;
                     deferred.resolve(this);
                     return deferred.promise;
                 };
@@ -1250,17 +1299,8 @@ var BackpackPlanner;
                         }
                         return calories;
                     };
-                    //// TODO: MOVE THIS INTO A UTILITY CLASS OR SOMETHING
-                    //// AND MAKE THE CLASSES CONFIGURABLE
                     TripPlan.prototype.getWeightClass = function () {
-                        var weightInGrams = this.getWeightInGrams();
-                        if (weightInGrams < 4500) {
-                            return "Ultralight";
-                        }
-                        else if (weightInGrams < 9000) {
-                            return "Lightweight";
-                        }
-                        return "Traditional";
+                        return Mockup.AppState.getInstance().getAppSettings().getWeightClass(this.getWeightInGrams());
                     };
                     TripPlan.prototype.getWeightInGrams = function () {
                         var weightInGrams = 0;
@@ -2054,6 +2094,12 @@ var BackpackPlanner;
                         this.Note = "";
                     }
                     /* Weight/Cost */
+                    GearItem.prototype.getWeightCategory = function () {
+                        if ("NotCarried" == this.Carried) {
+                            return "None";
+                        }
+                        return Mockup.AppState.getInstance().getAppSettings().getWeightCategory(this.WeightInGrams);
+                    };
                     GearItem.prototype.weightInUnits = function (weight) {
                         return arguments.length
                             ? (this.WeightInGrams = Mockup.convertUnitsToGrams(weight, Mockup.AppState.getInstance().getAppSettings().Units))
@@ -3699,6 +3745,11 @@ var BackpackPlanner;
                     };
                     $scope.resetAppSettings = function () {
                         $scope.appSettings = angular.copy(Mockup.AppState.getInstance().getAppSettings());
+                        // TODO: toast!
+                    };
+                    $scope.defaultAppSettings = function () {
+                        $scope.appSettings.resetToDefaults();
+                        // TODO: toast!
                     };
                     $scope.deleteAllGearItems = function (event) {
                         var confirm = $mdDialog.confirm()

@@ -307,16 +307,8 @@ module BackpackPlanner.Mockup.Models.Trips {
             return calories;
         }
 
-        //// TODO: MOVE THIS INTO A UTILITY CLASS OR SOMETHING
-        //// AND MAKE THE CLASSES CONFIGURABLE
         public getWeightClass() {
-            const weightInGrams = this.getWeightInGrams();
-            if(weightInGrams < 4500) {
-                return "Ultralight";
-            } else if(weightInGrams < 9000) {
-                return "Lightweight";
-            }
-            return "Traditional";
+            return AppState.getInstance().getAppSettings().getWeightClass(this.getWeightInGrams());
         }
 
         public getWeightInGrams() {

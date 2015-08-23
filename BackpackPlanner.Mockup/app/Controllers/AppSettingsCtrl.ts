@@ -15,6 +15,7 @@ module BackpackPlanner.Mockup.Controllers {
 
         saveAppSettings: () => void;
         resetAppSettings: () => void;
+        defaultAppSettings: () => void;
 
         deleteAllGearItems: (event: MouseEvent) => void;
         deleteAllGearSystems: (event: MouseEvent) => void;
@@ -47,6 +48,14 @@ module BackpackPlanner.Mockup.Controllers {
 
             $scope.resetAppSettings = () => {
                 $scope.appSettings = angular.copy(AppState.getInstance().getAppSettings());
+
+                // TODO: toast!
+            }
+
+            $scope.defaultAppSettings = () => {
+                $scope.appSettings.resetToDefaults();
+
+                // TODO: toast!
             }
 
             $scope.deleteAllGearItems = (event) => {

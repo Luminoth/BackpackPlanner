@@ -1,4 +1,6 @@
 ﻿{
     "Units": "Imperial",
-    "Currency": "USD"
+    "Currency": "USD",
+    "UltralightMaxWeightInGrams": 4500,
+    "LightweightMaxWeightInGrams": 9000
 }
