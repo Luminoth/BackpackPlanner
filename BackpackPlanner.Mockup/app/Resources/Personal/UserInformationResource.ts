@@ -5,6 +5,15 @@
 module BackpackPlanner.Mockup.Resources.Personal {
     "use strict";
 
-    export interface IUserInformationResource extends Models.Personal.IUserInformation, ng.resource.IResource<Models.Personal.IUserInformation> {
+    export interface IUserInformation {
+        FirstName: string;
+        LastName: string;
+        BirthDate: string;
+        Sex: string;
+        HeightInCm: number;
+        WeightInGrams: number;
+    }
+
+    export interface IUserInformationResource extends IUserInformation, ng.resource.IResource<IUserInformation> {
     }
 }

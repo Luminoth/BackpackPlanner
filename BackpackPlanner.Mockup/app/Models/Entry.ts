@@ -2,11 +2,10 @@ module BackpackPlanner.Mockup.Models {
     "use strict";
 
     export interface IEntry {
-        Count: number;
-        IsPacked: boolean;
+        count: (count?: number) => number;
 
         getName: () => string;
-        getCostInCurrency: () => number;
-        getWeightInUnits: () => number;
+        getWeightInUnits: (/*units: string*/) => number;
+        getCostInCurrency: (/*currency: string*/) => number;
     }
 }

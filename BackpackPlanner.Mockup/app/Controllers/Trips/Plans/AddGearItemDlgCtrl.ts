@@ -9,10 +9,12 @@ module BackpackPlanner.Mockup.Controllers.Trips.Plans {
     export interface IAddGearItemDlgScope extends ng.IScope {
         tripPlan: Models.Trips.TripPlan;
 
+        filterName: string;
         orderBy: string;
 
         close: () => void;
 
+        filterGearItem: (gearItem: Models.Gear.GearItem) => boolean;
         getGearItems: () => Models.Gear.GearItem[];
         isGearItemSelected: (gearItem: Models.Gear.GearItem) => void;
         toggleGearItemSelected: (gearItem: Models.Gear.GearItem) => void;
@@ -21,25 +23,32 @@ module BackpackPlanner.Mockup.Controllers.Trips.Plans {
     export class AddGearItemDlgCtrl {
         constructor($scope: IAddGearItemDlgScope, $mdDialog: ng.material.IDialogService, tripPlan: Models.Trips.TripPlan) {
             $scope.tripPlan = tripPlan;
-            $scope.orderBy = "Name";
+            $scope.orderBy = "name()";
 
             $scope.close = () => {
                 $mdDialog.hide();
             };
+
+            $scope.filterGearItem = (gearItem) => {
+                if($scope.filterName) {
+                    return gearItem.name().toLowerCase().indexOf($scope.filterName.toLowerCase()) >= 0;
+                }
+                return true;
+            }
 
             $scope.getGearItems = () => {
                 return AppState.getInstance().getGearState().getGearItems();
             }
 
             $scope.isGearItemSelected = (gearItem) => {
-                return $scope.tripPlan.containsGearItem(gearItem);
+                return $scope.tripPlan.containsGearItemById(gearItem.Id);
             }
 
             $scope.toggleGearItemSelected = (gearItem) => {
-                if(!$scope.tripPlan.containsGearItem(gearItem)) {
+                if(!$scope.tripPlan.containsGearItemById(gearItem.Id)) {
                     $scope.tripPlan.addGearItem(gearItem);
                 } else {
-                    $scope.tripPlan.removeGearItem(gearItem);
+                    $scope.tripPlan.removeGearItemById(gearItem.Id);
                 } 
             };
         }

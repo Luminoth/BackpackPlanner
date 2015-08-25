@@ -9,7 +9,7 @@ module BackpackPlanner.Mockup.Services {
         get(): Resources.IAppSettingsResource;
     }
 
-    export function appSettingsServiceFactory($resource: ng.resource.IResourceService) : IAppSettingsService {
+    export function appSettingsServiceFactory($resource: ng.resource.IResourceService) {
         return <IAppSettingsService> $resource("data/settings.json", {}, {
             get: { method: "GET", isArray: false }
         });

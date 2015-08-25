@@ -3,61 +3,72 @@
 module BackpackPlanner.Mockup.Models.Personal {
     "use strict";
 
-    export interface IUserInformation {
-        FirstName: string;
-        LastName: string;
-        BirthDate: string;
-        Sex: string;
-        HeightInCm: number;
-        WeightInGrams: number;
-    }
+    export class UserInformation {
+        private _firstName = "";
+        private _lastName = "";
+        private _birthDate = new Date();
+        private _sex = "NotSpecified";
+        private _heightInCm = 0;
+        private _weightInGrams = 0;
 
-    export class UserInformation implements IUserInformation {
-        public FirstName = "";
-        public LastName = "";
-        public BirthDate = "";
-        public Sex = "NotSpecified";
-        public HeightInCm = 0;
-        public WeightInGrams = 0;
+        public firstName(firstName?: string) {
+            return arguments.length
+                ? (this._firstName = firstName)
+                : this._firstName;
+        }
 
-        public BirthDateAsDate = new Date();
+        public lastName(lastName?: string) {
+            return arguments.length
+                ? (this._lastName = lastName)
+                : this._lastName;
+        }
+
+        public birthDate(birthDate?: Date) {
+            return arguments.length
+                ? (this._birthDate = birthDate)
+                : this._birthDate;
+        }
+
+        public sex(sex?: string) {
+            return arguments.length
+                ? (this._sex = sex)
+                : this._sex;
+        }
 
         /* Height/Weight */
 
-        public heightInUnits(height?: number) : number {
+        public heightInUnits(height?: number) {
             return arguments.length
-                ? (this.HeightInCm = convertUnitsToCentimeters(height, AppState.getInstance().getAppSettings().Units))
-                : parseFloat(convertCentimetersToUnits(this.HeightInCm, AppState.getInstance().getAppSettings().Units).toFixed(2));
+                ? (this._heightInCm = convertUnitsToCentimeters(height, AppState.getInstance().getAppSettings().units()))
+                : parseFloat(convertCentimetersToUnits(this._heightInCm, AppState.getInstance().getAppSettings().units()).toFixed(2));
         }
 
-        public weightInUnits(weight?: number) : number {
+        public weightInUnits(weight?: number) {
             return arguments.length
-                ? (this.WeightInGrams = convertUnitsToGrams(weight, AppState.getInstance().getAppSettings().Units))
-                : parseFloat(convertGramsToUnits(this.WeightInGrams, AppState.getInstance().getAppSettings().Units).toFixed(2));
+                ? (this._weightInGrams = convertUnitsToGrams(weight, AppState.getInstance().getAppSettings().units()))
+                : parseFloat(convertGramsToUnits(this._weightInGrams, AppState.getInstance().getAppSettings().units()).toFixed(2));
         }
 
         /* Load/Save */
 
         public update(userInformation: UserInformation) {
-            this.FirstName = userInformation.FirstName;
-            this.LastName = userInformation.LastName;
-            this.BirthDateAsDate = userInformation.BirthDateAsDate;
-            this.BirthDate = this.BirthDateAsDate.toString();
-            this.Sex = userInformation.Sex;
-            this.HeightInCm = userInformation.HeightInCm;
-            this.WeightInGrams = userInformation.WeightInGrams;
+            this._firstName = userInformation._firstName;
+            this._lastName = userInformation._lastName;
+            this._birthDate = userInformation._birthDate;
+            this._sex = userInformation._sex;
+            this._heightInCm = userInformation._heightInCm;
+            this._weightInGrams = userInformation._weightInGrams;
         }
 
         public loadFromDevice($q: ng.IQService, userInfoResource: Resources.Personal.IUserInformationResource) : ng.IPromise<any> {
             const deferred = $q.defer();
 
-            this.FirstName = userInfoResource.FirstName;
-            this.LastName = userInfoResource.LastName;
-            this.BirthDate = userInfoResource.BirthDate;
-            this.BirthDateAsDate = new Date(this.BirthDate);
-            this.Sex = userInfoResource.Sex;
-            this.HeightInCm = userInfoResource.HeightInCm;
-            this.WeightInGrams = userInfoResource.WeightInGrams;
+            this._firstName = userInfoResource.FirstName;
+            this._lastName = userInfoResource.LastName;
+            this._birthDate = new Date(userInfoResource.BirthDate);
+            this._sex = userInfoResource.Sex;
+            this._heightInCm = userInfoResource.HeightInCm;
+            this._weightInGrams = userInfoResource.WeightInGrams;
 
             deferred.resolve(this);
             return deferred.promise;

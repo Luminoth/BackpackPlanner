@@ -9,7 +9,7 @@ module BackpackPlanner.Mockup.Services.Gear {
         query(): Resources.Gear.IGearSystemResource[];
     }
 
-    export function gearSystemServiceFactory($resource: ng.resource.IResourceService) : IGearSystemService {
+    export function gearSystemServiceFactory($resource: ng.resource.IResourceService) {
         return <IGearSystemService> $resource("data/gear/systems.json", {}, {
             query: { method: "GET", isArray: true }
         });

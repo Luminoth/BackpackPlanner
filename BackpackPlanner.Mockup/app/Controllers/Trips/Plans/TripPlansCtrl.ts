@@ -7,14 +7,24 @@ module BackpackPlanner.Mockup.Controllers.Trips.Plans {
     "use strict";
 
     export interface ITripPlansScope extends IAppScope {
+        filterName: string;
         orderBy: string;
 
+        filterTripPlan: (tripPlan: Models.Trips.TripPlan) => boolean;
         showWhatIsTripPlan: (event: MouseEvent) => void;
     }
 
     export class TripPlansCtrl {
         constructor($scope: ITripPlansScope, $mdDialog: ng.material.IDialogService) {
-            $scope.orderBy = "Name";
+            $scope.filterName = "";
+            $scope.orderBy = "name()";
+
+            $scope.filterTripPlan = (tripPlan) => {
+                if($scope.filterName) {
+                    return tripPlan.name().toLowerCase().indexOf($scope.filterName.toLowerCase()) >= 0;
+                }
+                return true;
+            }
 
             $scope.showWhatIsTripPlan = (event) => {
                 $mdDialog.show({

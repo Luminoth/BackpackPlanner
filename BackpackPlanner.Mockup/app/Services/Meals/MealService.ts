@@ -9,7 +9,7 @@ module BackpackPlanner.Mockup.Services.Meals {
         query(): Resources.Meals.IMealResource[];
     }
 
-    export function mealServiceFactory($resource: ng.resource.IResourceService) : IMealService {
+    export function mealServiceFactory($resource: ng.resource.IResourceService) {
         return <IMealService> $resource("data/meals/meals.json", {}, {
             query: { method: "GET", isArray: true }
         });

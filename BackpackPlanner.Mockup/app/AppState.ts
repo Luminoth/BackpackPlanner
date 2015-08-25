@@ -27,7 +27,7 @@ module BackpackPlanner.Mockup {
 
         private static _instance = new AppState();
 
-        public static getInstance() : AppState {
+        public static getInstance() {
             return AppState._instance;
         }
 
@@ -41,7 +41,7 @@ module BackpackPlanner.Mockup {
 
         private _appSettings = new Models.AppSettings();
 
-        public getAppSettings() : Models.AppSettings {
+        public getAppSettings() {
             return this._appSettings;
         }
 
@@ -49,7 +49,7 @@ module BackpackPlanner.Mockup {
 
         private _userInformation = new Models.Personal.UserInformation();
 
-        public getUserInformation() : Models.Personal.UserInformation {
+        public getUserInformation() {
             return this._userInformation;
         }
 
@@ -57,7 +57,7 @@ module BackpackPlanner.Mockup {
 
         private _gearState = new GearState();
 
-        public getGearState() : GearState {
+        public getGearState() {
             return this._gearState;
         }
 
@@ -65,7 +65,7 @@ module BackpackPlanner.Mockup {
 
         private _mealState = new MealState();
 
-        public getMealState() : MealState {
+        public getMealState() {
             return this._mealState;
         }
 
@@ -73,7 +73,7 @@ module BackpackPlanner.Mockup {
 
         private _tripState = new TripState();
 
-        public getTripState() : TripState {
+        public getTripState() {
             return this._tripState;
         }
 
@@ -119,6 +119,11 @@ module BackpackPlanner.Mockup {
             promises.push(this._tripState.loadFromDevice($q, tripItineraryService, tripPlanService));
 
             return $q.all(promises);
+        }
+
+        public saveToDevice($q: ng.IQService) : ng.IPromise<any[]> {
+            alert("AppState.saveToDevice");
+            return $q.defer().promise;
         }
 
         /* Import/Export */

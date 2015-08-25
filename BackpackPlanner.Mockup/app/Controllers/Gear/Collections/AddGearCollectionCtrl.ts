@@ -54,12 +54,12 @@ module BackpackPlanner.Mockup.Controllers.Gear.Collections {
                 AppState.getInstance().getGearState().addGearCollection($scope.gearCollection);
 
                 var addToast = $mdToast.simple()
-                    .content(`Added gear collection: ${$scope.gearCollection.Name}`)
+                    .content(`Added gear collection: ${$scope.gearCollection.name()}`)
                     .action("Undo")
                     .position("bottom left");
 
                 var undoAddToast = $mdToast.simple()
-                    .content(`Removed gear collection: ${$scope.gearCollection.Name}`)
+                    .content(`Removed gear collection: ${$scope.gearCollection.name()}`)
                     .action("OK")
                     .position("bottom left");
 

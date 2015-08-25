@@ -15,11 +15,11 @@ module BackpackPlanner.Mockup {
         private _meals = <Array<Models.Meals.Meal>>[];
 
         // TODO: this should be a read-only collection
-        public getMeals() : Models.Meals.Meal[] {
+        public getMeals() {
             return this._meals;
         }
 
-        public getMealIndexById(mealId: number) : number {
+        public getMealIndexById(mealId: number) {
             for(let i=0; i<this._meals.length; ++i) {
                 const meal = this._meals[i];
                 if(meal.Id == mealId) {
@@ -29,18 +29,18 @@ module BackpackPlanner.Mockup {
             return -1;
         }
 
-        public getMealById(mealId: number) : Models.Meals.Meal {
+        public getMealById(mealId: number) {
             const idx = this.getMealIndexById(mealId);
             return idx < 0 ? null : this._meals[idx];
         }
 
         private static _lastMealId = 0;
 
-        private getNextMealId() : number {
+        private getNextMealId() {
             return ++MealState._lastMealId;
         }
 
-        public addMeal(meal: Models.Meals.Meal) : number {
+        public addMeal(meal: Models.Meals.Meal) {
             if(meal.Id < 0) {
                 meal.Id = this.getNextMealId();
             } else if(meal.Id > MealState._lastMealId) {
@@ -51,7 +51,7 @@ module BackpackPlanner.Mockup {
             return meal.Id;
         }
 
-        public deleteMeal(meal: Models.Meals.Meal) : boolean {
+        public deleteMeal(meal: Models.Meals.Meal) {
             const idx = this.getMealIndexById(meal.Id);
             if(idx < 0) {
                 return false;
@@ -63,7 +63,7 @@ module BackpackPlanner.Mockup {
             return true;
         }
 
-        public deleteAllMeals() : void {
+        public deleteAllMeals() {
             this._meals = <Array<Models.Meals.Meal>>[];
         }
 
@@ -104,7 +104,7 @@ module BackpackPlanner.Mockup {
             return $q.all(promises);
         }
 
-        public saveToDevice($q: ng.IQService) : ng.IPromise<any> {
+        public saveToDevice($q: ng.IQService) : ng.IPromise<any[]> {
             alert("MealState.saveToDevice");
             return $q.defer().promise;
         }

@@ -7,14 +7,24 @@ module BackpackPlanner.Mockup.Controllers.Gear.Items {
     "use strict";
 
     export interface IGearItemsScope extends IAppScope {
+        filterName: string;
         orderBy: string;
 
+        filterGearItem: (gearItem: Models.Gear.GearItem) => boolean;
         showWhatIsGearItemDlg: (event: MouseEvent) => void;
     }
 
     export class GearItemsCtrl {
         constructor($scope: IGearItemsScope, $mdDialog: ng.material.IDialogService) {
-            $scope.orderBy = "Name";
+            $scope.filterName = "";
+            $scope.orderBy = "name()";
+
+            $scope.filterGearItem = (gearItem) => {
+                if($scope.filterName) {
+                    return gearItem.name().toLowerCase().indexOf($scope.filterName.toLowerCase()) >= 0;
+                }
+                return true;
+            }
 
             $scope.showWhatIsGearItemDlg = (event) => {
                 $mdDialog.show({

@@ -64,7 +64,6 @@
     <Content Include="content\partials\trips\plans\add-meal.html" />
     <Content Include="content\partials\trips\plans\add-system.html" />
     <Content Include="content\partials\trips\plans\add.html" />
-    <Content Include="content\partials\trips\plans\packlist.html" />
     <Content Include="content\partials\trips\plans\plan.html" />
     <Content Include="content\partials\trips\plans\plans.html" />
     <Content Include="content\partials\trips\plans\what.html" />
@@ -123,7 +122,6 @@
     <TypeScriptCompile Include="app\Controllers\Trips\Plans\AddGearSystemDlgCtrl.ts" />
     <TypeScriptCompile Include="app\Controllers\Trips\Plans\AddMealDlgCtrl.ts" />
     <TypeScriptCompile Include="app\Controllers\Trips\Plans\AddTripPlanCtrl.ts" />
-    <TypeScriptCompile Include="app\Controllers\Trips\Plans\PackListDlgCtrl.ts" />
     <TypeScriptCompile Include="app\Controllers\Trips\Plans\TripPlanCtrl.ts" />
     <TypeScriptCompile Include="app\Controllers\Trips\Plans\TripPlansCtrl.ts" />
     <TypeScriptCompile Include="app\Controllers\Trips\Plans\WhatIsTripPlanDlgCtrl.ts" />
@@ -171,6 +169,7 @@
     <TypeScriptCompile Include="scripts\typings\angularjs\angular-sanitize.d.ts" />
     <TypeScriptCompile Include="scripts\typings\angularjs\angular.d.ts" />
     <TypeScriptCompile Include="scripts\typings\jquery\jquery.d.ts" />
+    <TypeScriptCompile Include="scripts\typings\underscore\underscore.d.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>

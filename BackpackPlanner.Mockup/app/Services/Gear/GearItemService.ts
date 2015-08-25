@@ -9,7 +9,7 @@ module BackpackPlanner.Mockup.Services.Gear {
         query(): Resources.Gear.IGearItemResource[];
     }
 
-    export function gearItemServiceFactory($resource: ng.resource.IResourceService) : IGearItemService {
+    export function gearItemServiceFactory($resource: ng.resource.IResourceService) {
         return <IGearItemService> $resource("data/gear/items.json", {}, {
             query: { method: "GET", isArray: true }
         });

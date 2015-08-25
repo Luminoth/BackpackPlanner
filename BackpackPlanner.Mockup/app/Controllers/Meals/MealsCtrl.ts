@@ -7,14 +7,24 @@ module BackpackPlanner.Mockup.Controllers.Meals {
     "use strict";
 
     export interface IMealsScope extends IAppScope {
+        filterName: string;
         orderBy: string;
-
+        
+        filterMeal: (meal: Models.Meals.Meal) => boolean;
         showWhatIsMealDlg: (event: MouseEvent) => void;
     }
 
     export class MealsCtrl {
         constructor($scope: IMealsScope, $mdDialog: ng.material.IDialogService) {
-            $scope.orderBy = "Name";
+            $scope.filterName = "";
+            $scope.orderBy = "name()";
+
+            $scope.filterMeal = (meal) => {
+                if($scope.filterName) {
+                    return meal.name().toLowerCase().indexOf($scope.filterName.toLowerCase()) >= 0;
+                }
+                return true;
+            }
 
             $scope.showWhatIsMealDlg = (event) => {
                 $mdDialog.show({

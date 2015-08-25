@@ -133,15 +133,15 @@ module BackpackPlanner.Mockup.Controllers {
 
             // unit utilities
             $scope.getUnitsWeightString = () => {
-                return getUnitsWeightString(AppState.getInstance().getAppSettings().Units);
+                return getUnitsWeightString(AppState.getInstance().getAppSettings().units());
             }
 
             $scope.getUnitsLengthString = () => {
-                return getUnitsLengthString(AppState.getInstance().getAppSettings().Units);
+                return getUnitsLengthString(AppState.getInstance().getAppSettings().units());
             }
 
             $scope.getCurrencyString = () => {
-                return getCurrencyString(AppState.getInstance().getAppSettings().Currency);
+                return getCurrencyString(AppState.getInstance().getAppSettings().currency());
             }
 
             $scope.getDaysBetween = (startDate: Date, endDate: Date) => {

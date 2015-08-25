@@ -5,6 +5,12 @@
 module BackpackPlanner.Mockup.Resources.Trips {
     "use strict";
 
-    export interface ITripItineraryResource extends Models.Trips.ITripItinerary, ng.resource.IResource<Models.Trips.ITripItinerary> {
+    export interface ITripItinerary {
+        Id: number;
+        Name: string;
+        Note: string;
+    }
+
+    export interface ITripItineraryResource extends ITripItinerary, ng.resource.IResource<ITripItinerary> {
     }
 }

@@ -21,12 +21,12 @@ module BackpackPlanner.Mockup.Controllers.Trips.Itineraries {
                 AppState.getInstance().getTripState().addTripItinerary($scope.tripItinerary);
 
                 var addToast = $mdToast.simple()
-                    .content(`Added trip itinerary: ${$scope.tripItinerary.Name}`)
+                    .content(`Added trip itinerary: ${$scope.tripItinerary.name()}`)
                     .action("Undo")
                     .position("bottom left");
 
                 var undoAddToast = $mdToast.simple()
-                    .content(`Removed trip itinerary: ${$scope.tripItinerary.Name}`)
+                    .content(`Removed trip itinerary: ${$scope.tripItinerary.name()}`)
                     .action("OK")
                     .position("bottom left");
 

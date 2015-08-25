@@ -9,10 +9,12 @@ module BackpackPlanner.Mockup.Controllers.Gear.Collections {
     export interface IAddGearItemDlgScope extends ng.IScope {
         gearCollection: Models.Gear.GearCollection;
 
+        filterName: string;
         orderBy: string;
 
         close: () => void;
 
+        filterGearItem: (gearItem: Models.Gear.GearItem) => boolean;
         getGearItems: () => Models.Gear.GearItem[];
         isGearItemSelected: (gearItem: Models.Gear.GearItem) => void;
         toggleGearItemSelected: (gearItem: Models.Gear.GearItem) => void;
@@ -21,25 +23,33 @@ module BackpackPlanner.Mockup.Controllers.Gear.Collections {
     export class AddGearItemDlgCtrl {
         constructor($scope: IAddGearItemDlgScope, $mdDialog: ng.material.IDialogService, gearCollection: Models.Gear.GearCollection) {
             $scope.gearCollection = gearCollection;
-            $scope.orderBy = "Name";
+            $scope.filterName = "";
+            $scope.orderBy = "name()";
 
             $scope.close = () => {
                 $mdDialog.hide();
             };
+
+            $scope.filterGearItem = (gearItem) => {
+                if($scope.filterName) {
+                    return gearItem.name().toLowerCase().indexOf($scope.filterName.toLowerCase()) >= 0;
+                }
+                return true;
+            }
 
             $scope.getGearItems = () => {
                 return AppState.getInstance().getGearState().getGearItems();
             }
 
             $scope.isGearItemSelected = (gearItem) => {
-                return $scope.gearCollection.containsGearItem(gearItem);
+                return $scope.gearCollection.containsGearItemById(gearItem.Id);
             }
 
             $scope.toggleGearItemSelected = (gearItem) => {
-                if(!$scope.gearCollection.containsGearItem(gearItem)) {
+                if(!$scope.gearCollection.containsGearItemById(gearItem.Id)) {
                     $scope.gearCollection.addGearItem(gearItem);
                 } else {
-                    $scope.gearCollection.removeGearItem(gearItem);
+                    $scope.gearCollection.removeGearItemById(gearItem.Id);
                 } 
             };
         }

@@ -8,30 +8,26 @@
     <div ng-show="getTripItineraries().length < 1">You have no trip itineraries! Try adding one!</div>
     <div layout="column" flex ng-show="getTripItineraries().length > 0">
         <md-input-container md-no-float flex>
-            <input type="text" ng-model="filter.Name" name="filter" placeholder="Filter" />
+            <input type="text" ng-model="filterName" name="filterName" placeholder="Filter" />
         </md-input-container>
         <label hide-sm>Sort by</label>
         <md-input-container hide-sm>
             <md-radio-group ng-model="orderBy" layout="row">
-                <md-radio-button value="Name">Name</md-radio-button>
-                <md-radio-button value="-RouteDescriptions.length">Routes</md-radio-button>
-                <md-radio-button value="-PointsOfInterest.length">Points of Interest</md-radio-button>
+                <md-radio-button value="name()">Name</md-radio-button>
             </md-radio-group>
         </md-input-container>
         <md-input-container hide-gt-sm>
             <label>Sort by</label>
             <md-select ng-model="orderBy">
-                <md-option value="Name">Name</md-option>
+                <md-option value="name()">Name</md-option>
             </md-select>
         </md-input-container>
-        <md-button class="mockup-card-button" layout-fill ng-repeat="tripItinerary in getTripItineraries() | filter:filter | orderBy:orderBy" href="#/trips/itineraries/{{ tripItinerary.Id }}">
+        <md-button class="mockup-card-button" layout-fill ng-repeat="tripItinerary in getTripItineraries() | filter:filterTripItinerary | orderBy:orderBy" href="#/trips/itineraries/{{ tripItinerary.Id }}">
             <md-card class="mockup-card" flex>
                 <md-card-content class="mockup-card-content">
-                    <h2 class="md-title">{{ tripItinerary.Name }}</h2>
+                    <h2 class="md-title">{{ tripItinerary.name() }}</h2>
                 </md-card-content>
                 <div layout="row" layout-sm="column">
-                    <p layout-padding>Routes: {{ tripItinerary.RouteDescriptions.length }}</p>
-                    <p layout-padding>Points of Interest: {{ tripItinerary.PointsOfInterest.length }}</p>
                 </div>
             </md-card>
         </md-button>

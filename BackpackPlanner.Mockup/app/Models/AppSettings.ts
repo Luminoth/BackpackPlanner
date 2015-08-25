@@ -5,36 +5,61 @@
 module BackpackPlanner.Mockup.Models {
     "use strict";
 
-    export interface IAppSettings {
-        Units: string;
-        Currency: string;
+    export class AppSettings {
+        private _units = "Metric";
+        private _currency = "USD";
+        private _ultralightMaxWeightInGrams = 4500;
+        private _lightweightMaxWeightInGrams = 9000;
 
-        UltralightMaxWeightInGrams: number;
-        LightweightMaxWeightInGrams: number;
-    }
+        public units(units?: string) {
+            return arguments.length
+                ? (this._units = units)
+                : this._units;
+        }
 
-    export class AppSettings implements IAppSettings {
-        public Units = "Metric";
-        public Currency = "USD";
-        public UltralightMaxWeightInGrams = 4500;
-        public LightweightMaxWeightInGrams = 9000;
+        public currency(currency?: string) {
+            return arguments.length
+                ? (this._currency = currency)
+                : this._currency;
+        }
+
+        public getUltralightMaxWeightInGrams() {
+            return this._ultralightMaxWeightInGrams;
+        }
+
+        public ultralightMaxWeightInUnits(weight?: number) {
+            return arguments.length
+                ? (this._ultralightMaxWeightInGrams = convertUnitsToGrams(weight, AppState.getInstance().getAppSettings().units()))
+                : parseFloat(convertGramsToUnits(this._ultralightMaxWeightInGrams, AppState.getInstance().getAppSettings().units()).toFixed(2));
+        }
+
+        public getLightweightMaxWeightInGrams() {
+            return this._lightweightMaxWeightInGrams;
+        }
+
+        public lightweightMaxWeightInUnits(weight?: number) {
+            return arguments.length
+                ? (this._lightweightMaxWeightInGrams = convertUnitsToGrams(weight, AppState.getInstance().getAppSettings().units()))
+                : parseFloat(convertGramsToUnits(this._lightweightMaxWeightInGrams, AppState.getInstance().getAppSettings().units()).toFixed(2));
+        }
 
         public resetToDefaults() {
-            this.Units = "Metric";
-            this.Currency = "USD";
-            this.UltralightMaxWeightInGrams = 4500;
-            this.LightweightMaxWeightInGrams = 9000;
+            this._units = "Metric";
+            this._currency = "USD";
+            this._ultralightMaxWeightInGrams = 4500;
+            this._lightweightMaxWeightInGrams = 9000;
         }
 
         public getWeightClass(weightInGrams: number) {
-            if(weightInGrams < this.UltralightMaxWeightInGrams) {
+            if(weightInGrams < this._ultralightMaxWeightInGrams) {
                 return "Ultralight";
-            } else if(weightInGrams < this.LightweightMaxWeightInGrams) {
+            } else if(weightInGrams < this._lightweightMaxWeightInGrams) {
                 return "Lightweight";
             }
             return "Traditional";
         }
 
+        // TODO: make these values configurable
         public getWeightCategory(weightInGrams: number) {
             if(weightInGrams <= 0) {
                 return "None";
@@ -50,34 +75,22 @@ module BackpackPlanner.Mockup.Models {
             return "ExtraHeavy";
         }
 
-        public ultralightMaxWeightInUnits(weight?: number) : number {
-            return arguments.length
-                ? (this.UltralightMaxWeightInGrams = convertUnitsToGrams(weight, AppState.getInstance().getAppSettings().Units))
-                : parseFloat(convertGramsToUnits(this.UltralightMaxWeightInGrams, AppState.getInstance().getAppSettings().Units).toFixed(2));
-        }
-
-        public lightweightMaxWeightInUnits(weight?: number) : number {
-            return arguments.length
-                ? (this.LightweightMaxWeightInGrams = convertUnitsToGrams(weight, AppState.getInstance().getAppSettings().Units))
-                : parseFloat(convertGramsToUnits(this.LightweightMaxWeightInGrams, AppState.getInstance().getAppSettings().Units).toFixed(2));
-        }
-
         /* Load/Save */
 
         public update(appSettings: AppSettings) {
-            this.Units = appSettings.Units;
-            this.Currency = appSettings.Currency;
-            this.UltralightMaxWeightInGrams = appSettings.UltralightMaxWeightInGrams;
-            this.LightweightMaxWeightInGrams = appSettings.LightweightMaxWeightInGrams;
+            this._units = appSettings._units;
+            this._currency = appSettings._currency;
+            this._ultralightMaxWeightInGrams = appSettings._ultralightMaxWeightInGrams;
+            this._lightweightMaxWeightInGrams = appSettings._lightweightMaxWeightInGrams;
         }
 
         public loadFromDevice($q: ng.IQService, appSettingsResource: Resources.IAppSettingsResource) : ng.IPromise<any> {
             const deferred = $q.defer();
 
-            this.Units = appSettingsResource.Units;
-            this.Currency = appSettingsResource.Currency;
-            this.UltralightMaxWeightInGrams = appSettingsResource.UltralightMaxWeightInGrams;
-            this.LightweightMaxWeightInGrams = appSettingsResource.LightweightMaxWeightInGrams;
+            this._units = appSettingsResource.Units;
+            this._currency = appSettingsResource.Currency;
+            this._ultralightMaxWeightInGrams = appSettingsResource.UltralightMaxWeightInGrams;
+            this._lightweightMaxWeightInGrams = appSettingsResource.LightweightMaxWeightInGrams;
 
             deferred.resolve(this);
             return deferred.promise;

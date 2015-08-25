@@ -21,11 +21,11 @@ module BackpackPlanner.Mockup {
         private _gearItems = <Array<Models.Gear.GearItem>>[];
 
         // TODO: this should be a read-only collection
-        public getGearItems() : Models.Gear.GearItem[] {
+        public getGearItems() {
             return this._gearItems;
         }
 
-        public getGearItemIndexById(gearItemId: number) : number {
+        public getGearItemIndexById(gearItemId: number) {
             for(let i=0; i<this._gearItems.length; ++i) {
                 const gearItem = this._gearItems[i];
                 if(gearItem.Id == gearItemId) {
@@ -35,18 +35,18 @@ module BackpackPlanner.Mockup {
             return -1;
         }
 
-        public getGearItemById(gearItemId: number) : Models.Gear.GearItem {
+        public getGearItemById(gearItemId: number) {
             const idx = this.getGearItemIndexById(gearItemId);
             return idx < 0 ? null : this._gearItems[idx];
         }
 
         private static _lastGearItemId = 0;
 
-        private getNextGearItemId() : number {
+        private getNextGearItemId() {
             return ++GearState._lastGearItemId;
         }
 
-        public addGearItem(gearItem: Models.Gear.GearItem) : number {
+        public addGearItem(gearItem: Models.Gear.GearItem) {
             if(gearItem.Id < 0) {
                 gearItem.Id = this.getNextGearItemId();
             } else if(gearItem.Id > GearState._lastGearItemId) {
@@ -57,7 +57,7 @@ module BackpackPlanner.Mockup {
             return gearItem.Id;
         }
 
-        public deleteGearItem(gearItem: Models.Gear.GearItem) : boolean {
+        public deleteGearItem(gearItem: Models.Gear.GearItem) {
             const idx = this.getGearItemIndexById(gearItem.Id);
             if(idx < 0) {
                 return false;
@@ -69,7 +69,7 @@ module BackpackPlanner.Mockup {
             return true;
         }
 
-        public deleteAllGearItems() : void {
+        public deleteAllGearItems() {
             this._gearItems = <Array<Models.Gear.GearItem>>[];
         }
 
@@ -78,11 +78,11 @@ module BackpackPlanner.Mockup {
         private _gearSystems = <Array<Models.Gear.GearSystem>>[];
 
         // TODO: this should be a read-only collection
-        public getGearSystems() : Models.Gear.GearSystem[] {
+        public getGearSystems() {
             return this._gearSystems;
         }
 
-        public getGearSystemIndexById(gearSystemId: number) : number {
+        public getGearSystemIndexById(gearSystemId: number) {
             for(let i=0; i<this._gearSystems.length; ++i) {
                 const gearSystem = this._gearSystems[i];
                 if(gearSystem.Id == gearSystemId) {
@@ -92,18 +92,18 @@ module BackpackPlanner.Mockup {
             return -1;
         }
 
-        public getGearSystemById(gearSystemId: number) : Models.Gear.GearSystem {
+        public getGearSystemById(gearSystemId: number) {
             const idx = this.getGearSystemIndexById(gearSystemId);
             return idx < 0 ? null : this._gearSystems[idx];
         }
 
         private static _lastGearSystemId = 0;
 
-        private getNextGearSystemId() : number {
+        private getNextGearSystemId() {
             return ++GearState._lastGearSystemId;
         }
 
-        public addGearSystem(gearSystem: Models.Gear.GearSystem) : number {
+        public addGearSystem(gearSystem: Models.Gear.GearSystem) {
             if(gearSystem.Id < 0) {
                 gearSystem.Id = this.getNextGearSystemId();
             } else if(gearSystem.Id > GearState._lastGearSystemId) {
@@ -114,7 +114,7 @@ module BackpackPlanner.Mockup {
             return gearSystem.Id;
         }
 
-        public deleteGearSystem(gearSystem: Models.Gear.GearSystem) : boolean {
+        public deleteGearSystem(gearSystem: Models.Gear.GearSystem) {
             const idx = this.getGearSystemIndexById(gearSystem.Id);
             if(idx < 0) {
                 return false;
@@ -126,7 +126,7 @@ module BackpackPlanner.Mockup {
             return true;
         }
 
-        public deleteAllGearSystems() : void {
+        public deleteAllGearSystems() {
             this._gearSystems = <Array<Models.Gear.GearSystem>>[];
         }
 
@@ -135,11 +135,11 @@ module BackpackPlanner.Mockup {
         private _gearCollections = <Array<Models.Gear.GearCollection>>[];
 
         // TODO: this should be a read-only collection
-        public getGearCollections() : Models.Gear.GearCollection[] {
+        public getGearCollections() {
             return this._gearCollections;
         }
 
-        public getGearCollectionIndexById(gearCollectionId: number) : number {
+        public getGearCollectionIndexById(gearCollectionId: number) {
             for(let i=0; i<this._gearCollections.length; ++i) {
                 const gearCollection = this._gearCollections[i];
                 if(gearCollection.Id == gearCollectionId) {
@@ -149,18 +149,18 @@ module BackpackPlanner.Mockup {
             return -1;
         }
 
-        public getGearCollectionById(gearCollectionId: number) : Models.Gear.GearCollection {
+        public getGearCollectionById(gearCollectionId: number) {
             const idx = this.getGearCollectionIndexById(gearCollectionId);
             return idx < 0 ? null : this._gearCollections[idx];
         }
 
         private static _lastGearCollectionId = 0;
 
-        private getNextGearCollectionId() : number {
+        private getNextGearCollectionId() {
             return ++GearState._lastGearCollectionId;
         }
 
-        public addGearCollection(gearCollection: Models.Gear.GearCollection) : number {
+        public addGearCollection(gearCollection: Models.Gear.GearCollection) {
             if(gearCollection.Id < 0) {
                 gearCollection.Id = this.getNextGearCollectionId();
             } else if(gearCollection.Id > GearState._lastGearCollectionId) {
@@ -171,7 +171,7 @@ module BackpackPlanner.Mockup {
             return gearCollection.Id;
         }
 
-        public deleteGearCollection(gearCollection: Models.Gear.GearCollection) : boolean {
+        public deleteGearCollection(gearCollection: Models.Gear.GearCollection) {
             const idx = this.getGearCollectionIndexById(gearCollection.Id);
             if(idx < 0) {
                 return false;
@@ -183,7 +183,7 @@ module BackpackPlanner.Mockup {
             return true;
         }
 
-        public deleteAllGearCollections() : void {
+        public deleteAllGearCollections() {
             this._gearCollections = <Array<Models.Gear.GearCollection>>[];
         }
 
@@ -272,7 +272,7 @@ module BackpackPlanner.Mockup {
             return $q.all(promises);
         }
 
-        public saveToDevice($q: ng.IQService) : ng.IPromise<any> {
+        public saveToDevice($q: ng.IQService) : ng.IPromise<any[]> {
             alert("GearState.saveToDevice");
             return $q.defer().promise;
         }

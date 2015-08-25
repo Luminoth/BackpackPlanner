@@ -39,12 +39,12 @@ module BackpackPlanner.Mockup.Controllers.Gear.Systems {
                 AppState.getInstance().getGearState().addGearSystem($scope.gearSystem);
 
                 var addToast = $mdToast.simple()
-                    .content(`Added gear system: ${$scope.gearSystem.Name}`)
+                    .content(`Added gear system: ${$scope.gearSystem.name()}`)
                     .action("Undo")
                     .position("bottom left");
 
                 var undoAddToast = $mdToast.simple()
-                    .content(`Removed gear system: ${$scope.gearSystem.Name}`)
+                    .content(`Removed gear system: ${$scope.gearSystem.name()}`)
                     .action("OK")
                     .position("bottom left");
 

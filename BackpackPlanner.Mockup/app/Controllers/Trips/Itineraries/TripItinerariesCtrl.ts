@@ -7,14 +7,24 @@ module BackpackPlanner.Mockup.Controllers.Trips.Itineraries {
     "use strict";
 
     export interface ITripItinerariesScope extends IAppScope {
+        filterName: string;
         orderBy: string;
 
+        filterTripItinerary: (tripItinerary: Models.Trips.TripItinerary) => boolean;
         showWhatIsTripItineraryDlg: (event: MouseEvent) => void;
     }
 
     export class TripItinerariesCtrl {
         constructor($scope: ITripItinerariesScope, $mdDialog: ng.material.IDialogService) {
-            $scope.orderBy = "Name";
+            $scope.filterName = "";
+            $scope.orderBy = "name()";
+
+            $scope.filterTripItinerary = (tripItinerary) => {
+                if($scope.filterName) {
+                    return tripItinerary.name().toLowerCase().indexOf($scope.filterName.toLowerCase()) >= 0;
+                }
+                return true;
+            }
 
             $scope.showWhatIsTripItineraryDlg = (event) => {
                 $mdDialog.show({

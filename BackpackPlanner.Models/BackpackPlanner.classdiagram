@@ -50,7 +50,7 @@
                 <parameter Id="a9b1f88d-a61d-4f5f-8c7c-ddb91b343cf6" name="units" direction="In" isUnique="false">
                   <elementDefinition Id="db422033-ce60-4409-8269-a39dfe139664" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="Units" />
+                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="UnitSystem" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -71,7 +71,7 @@
                 <parameter Id="c53c9b0d-8efa-4a1a-a6e2-58140ccca3fa" name="units" direction="In" isUnique="false">
                   <elementDefinition Id="e5cbe5d2-3bb5-4ac2-b51d-4fb29515f612" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="Units" />
+                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="UnitSystem" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -100,7 +100,7 @@
                 <parameter Id="6e6eae3f-3474-456b-9e9f-653d6a1a0d5a" name="units" direction="In" isUnique="false">
                   <elementDefinition Id="d283a7ad-c7e0-4ed4-bd2f-aebbca34ab6b" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="Units" />
+                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="UnitSystem" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -121,7 +121,7 @@
                 <parameter Id="a13e7df5-fd05-4dd3-84b8-bfe258f03208" name="units" direction="In" isUnique="false">
                   <elementDefinition Id="cf20d810-54fd-4118-870a-2a33596ac021" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="Units" />
+                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="UnitSystem" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -318,7 +318,7 @@
                 <parameter Id="71cdd0c3-407f-481a-b77d-ec6d07708c46" name="units" direction="In" isUnique="false">
                   <elementDefinition Id="b6fe4a7e-96e0-47a0-a940-6da3bbc778d0" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="Units" />
+                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="UnitSystem" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -339,7 +339,7 @@
                 <parameter Id="f7c2d1ee-70ba-4519-a214-e1d6a4d48069" name="units" direction="In" isUnique="false">
                   <elementDefinition Id="35ec1530-62af-4a35-b355-9fc4f3bd7bb5" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="Units" />
+                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="UnitSystem" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -401,6 +401,19 @@
                   <elementDefinition Id="f2ad6d0a-edc7-4520-9776-5f35ed7fb34d" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="5fbc533a-a6fb-40bb-b312-71fb7cfcb516" LastKnownName="WeightCategory" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="696d5672-ebc0-47c7-a9c5-d11092faf644" name="GetIsCarried" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="48b3eb79-03f0-433a-9b0a-5eec589c2360" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="1da3a528-c975-42a3-ad56-497db15380e6" direction="Return" isUnique="false">
+                  <elementDefinition Id="2e19bd3b-4b1a-4804-9b6e-90373433caa8" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="6b4d1192-6315-4e8d-ab99-bab8a497a541" LastKnownName="Boolean" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -599,7 +612,7 @@
                 <parameter Id="5f5b11df-9329-456c-aff5-7b630221f5db" name="units" direction="In" isUnique="false">
                   <elementDefinition Id="bdf13db6-5f54-49d6-8ef3-ee5801a1fd51" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="Units" />
+                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="UnitSystem" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -654,7 +667,7 @@
                 <parameter Id="3b150253-2fca-48fd-a4e0-e1fc4ce09620" name="units" direction="In" isUnique="false">
                   <elementDefinition Id="378a7359-ea7c-44dc-a051-23b3cc402a0c" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="Units" />
+                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="UnitSystem" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -770,7 +783,7 @@
                 <parameter Id="1f640a28-fa2e-4b0e-8e9c-4ba37b71492b" name="units" direction="In" isUnique="false">
                   <elementDefinition Id="10b456cf-7231-477f-b114-46d25b48f538" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="Units" />
+                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="UnitSystem" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -851,7 +864,7 @@
                 <parameter Id="acc64bcb-27b2-489a-b0c1-06e1058af276" name="units" direction="In" isUnique="false">
                   <elementDefinition Id="65f3bf29-4e33-45d2-8847-e82c77101d3b" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="Units" />
+                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="UnitSystem" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -1022,7 +1035,7 @@
                 <parameter Id="0246307a-e256-4ce0-9dec-da55e30cd312" name="units" direction="In" isUnique="false">
                   <elementDefinition Id="b6cac9b2-5c80-4e90-ab28-e8a329f53c53" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="Units" />
+                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="UnitSystem" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -1150,7 +1163,7 @@
                 <parameter Id="17b08216-a304-4258-a562-7a7388f788ea" name="units" direction="In" isUnique="false">
                   <elementDefinition Id="f3050402-765b-48e6-9c76-50bf6a29c9fb" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="Units" />
+                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="UnitSystem" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -1177,42 +1190,6 @@
           </operation>
           <operation Id="96af51e0-fbc7-490f-84d8-a8929441f718" name="SaveToDevice" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="49eff07d-38d8-4db4-b123-b5128bd6a191" />
-          </operation>
-          <operation Id="231fa07d-8d30-4ff2-bced-8ab3716ec50b" name="GetPackList" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="0879e78a-5bf6-4077-b59c-947cc44bf942" />
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="2dbf11f3-2c96-4294-a9e5-3515898d98d0" direction="Return" isUnique="false">
-                  <lowerValueInternal>
-                    <literalString Id="0ef0a9d0-13a7-4f99-bc2d-3dc303c3de57" name="Lower" value="*">
-                      <elementDefinition Id="86c45942-2b33-4d0d-bf73-8f05450956ec" />
-                    </literalString>
-                  </lowerValueInternal>
-                  <upperValueInternal>
-                    <literalString Id="25858e76-b13a-4f5e-a632-5b8d95b8a089" name="Upper" value="*">
-                      <elementDefinition Id="941ade29-8a28-42aa-a085-067e6b1b6346" />
-                    </literalString>
-                  </upperValueInternal>
-                  <elementDefinition Id="51650a65-355f-4210-8033-1242e943dfc6" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="14b41725-c8a8-412a-93f8-249118c42aa2" LastKnownName="GearItemEntry" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation Id="82b3f392-2fd7-4c91-b80a-80e39e05d6e3" name="GetPackedGearItemCount" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="9922a39a-f2d4-453f-b0d5-44d3f575ef7d" />
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="7de4b65f-3c65-4ca9-9bdd-c6f1964a2d58" direction="Return" isUnique="false">
-                  <elementDefinition Id="107b8d48-1ac5-4141-b1e4-475911899dfa" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
           </operation>
           <operation Id="78d7b00f-603a-48ae-886e-797bce0dacb4" name="Update" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="94997394-bed4-4520-b108-04c7887799fa" />
@@ -1289,7 +1266,7 @@
                 <parameter Id="ca56e743-6843-4926-b753-872244ab39fd" name="units" direction="In" isUnique="false">
                   <elementDefinition Id="541abe53-9f36-406c-959c-5e8f7b130182" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="Units" />
+                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="UnitSystem" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -1505,7 +1482,7 @@
                 <parameter Id="c40ff95b-4d54-415b-bd7f-7319accca18d" name="units" direction="In" isUnique="false">
                   <elementDefinition Id="6c68cc16-4a1a-441e-8832-52c956153384" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="Units" />
+                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="UnitSystem" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -1555,7 +1532,7 @@
                 <parameter Id="0084ca5b-9790-4fcf-b457-d88e3d3db902" name="units" direction="In" isUnique="false">
                   <elementDefinition Id="6f9cbb4b-6e10-4d6e-82a1-00b25af86dd5" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="Units" />
+                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="UnitSystem" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -1668,7 +1645,7 @@
                 <parameter Id="1c1427b6-af95-464e-b103-6fd30e54c5bd" name="units" direction="In" isUnique="false">
                   <elementDefinition Id="60208731-6cc7-4ff0-9eb4-c5aca8ca916b" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="Units" />
+                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="UnitSystem" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -2242,7 +2219,7 @@
                 <parameter Id="0c27fe9b-9dff-4612-a57a-09d1b82454bd" name="units" direction="In" isUnique="false">
                   <elementDefinition Id="f3a117d8-7eb9-4827-b0f6-1fdaadc609d6" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="Units" />
+                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="UnitSystem" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -2336,7 +2313,7 @@
                 <parameter Id="d9459388-8caf-4ace-8627-a436d61324d6" name="units" direction="In" isUnique="false">
                   <elementDefinition Id="d16cd791-7b49-4a92-9e50-37b3c932fb05" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="Units" />
+                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="UnitSystem" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -2462,7 +2439,7 @@
       </referencedType>
     </packageHasNamedElement>
     <logicalClassDesignerModelHasTypes>
-      <enumeration Id="171bfb23-4923-4ea9-ba64-519b8c23f2ce" name="Units" isAbstract="false" isLeaf="false">
+      <enumeration Id="171bfb23-4923-4ea9-ba64-519b8c23f2ce" name="UnitSystem" isAbstract="false" isLeaf="false">
         <elementDefinition Id="52512ebf-0444-4e53-b157-c9624d525813" />
         <ownedLiterals>
           <enumerationLiteral Id="237c488a-083f-4234-ac3f-b305dbc2b037" name="Imperial">
@@ -2491,7 +2468,7 @@
           <property Id="7d4b512d-8482-408a-9f3d-b6e82a102b56" name="Units" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="07d31b1c-73a1-4389-944b-9214c2463270" />
             <type_NamedElement>
-              <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="Units" />
+              <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="UnitSystem" />
             </type_NamedElement>
           </property>
           <property Id="2705fc34-a857-4926-ac7c-4cb16136eaeb" name="Currency" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
@@ -2571,7 +2548,7 @@
                 <parameter Id="661d607b-d1b5-4fd7-b4b4-4b4cb18adba9" name="units" direction="In" isUnique="false">
                   <elementDefinition Id="ac5e8a47-3433-4b6b-9c85-6a46e82cc9ae" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="Units" />
+                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="UnitSystem" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -2592,7 +2569,7 @@
                 <parameter Id="64f7a677-5f5f-436d-a0cf-4712257becf3" name="units" direction="In" isUnique="false">
                   <elementDefinition Id="35b5eeed-ed01-41ba-974c-aaae21a85d92" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="Units" />
+                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="UnitSystem" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -2634,7 +2611,7 @@
       </class>
     </logicalClassDesignerModelHasTypes>
     <packageHasNamedElement>
-      <referencedType Id="c448b291-87b8-4469-a987-6dd410ce81c9" name="Units" isAbstract="false" isLeaf="false" cachedFullName="BackpackPlanner.Models::Units">
+      <referencedType Id="c448b291-87b8-4469-a987-6dd410ce81c9" name="UnitSystem" isAbstract="false" isLeaf="false" cachedFullName="BackpackPlanner.Models::UnitSystem">
         <elementDefinition Id="52512ebf-0444-4e53-b157-c9624d525813" />
       </referencedType>
     </packageHasNamedElement>
@@ -3197,14 +3174,11 @@
       <Interface Id="f1d1fb20-117f-4edf-a257-7051410341e9" name="IEntry" isAbstract="false" isLeaf="false">
         <elementDefinition Id="b9618f3d-255e-4d5a-933a-d20d08a7fc5a" />
         <ownedAttributes>
-          <property Id="8a125cd6-c984-4738-a363-22e35f258abb" name="Count" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="9a737af8-4931-4b36-b241-b951beef5e5e" />
+          <property Id="0c9cd4e8-b40b-4af0-b4d4-7cbbf0c30816" name="Count" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="de76546f-30dc-4d73-baf9-fd94b0777af5" />
             <type_NamedElement>
               <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
             </type_NamedElement>
-          </property>
-          <property Id="5650db5c-eaaa-4231-8a95-ae36278f34f5" name="IsPacked" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="a923f65f-768b-4f7d-8f8b-ac4bef069b94" />
           </property>
         </ownedAttributes>
         <ownedOperations>
@@ -3236,7 +3210,7 @@
                 <parameter Id="9395ef91-188a-4a45-8ad8-549758807210" name="units" direction="In" isUnique="false">
                   <elementDefinition Id="fe92cb7c-43a4-4f47-9bf7-9790c4ea2edf" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="Units" />
+                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="UnitSystem" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>

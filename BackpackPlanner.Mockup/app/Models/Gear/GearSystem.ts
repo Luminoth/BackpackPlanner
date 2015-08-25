@@ -1,4 +1,5 @@
 ﻿///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="../../../scripts/typings/underscore/underscore.d.ts" />
 
 ///<reference path="../../Resources/Gear/GearSystemResource.ts"/>
 
@@ -10,117 +11,152 @@
 module BackpackPlanner.Mockup.Models.Gear {
     "use strict";
 
-    export interface IGearSystem {
-        Id: number;
-        Name: string;
-        Note: string;
+    export class GearSystem {
+        private _id = -1;
+        private _name = "";
+        private _note = "";
 
-        GearItems: IGearItemEntry[];
-    }
+        private _gearItems = <Array<GearItemEntry>>[];
 
-    export class GearSystem implements IGearSystem {
-        public Id = -1;
-        public Name = "";
-        public Note = "";
+        public get Id() {
+            return this._id;
+        }
 
-        public GearItems = <Array<GearItemEntry>>[];
+        public set Id(id: number) {
+            this._id = id;
+        }
+
+        public name(name?: string) {
+            return arguments.length
+                ? (this._name = name)
+                : this._name;
+        }
+
+        public note(note?: string) {
+            return arguments.length
+                ? (this._note = note)
+                : this._note;
+        }
 
         /* Gear Items */
 
-        public getGearItemCount() {
+        public getGearItems() {
+            return this._gearItems;
+        }
+
+        public getGearItemCount(visitedGearItems: number[]) {
+            if(!visitedGearItems) {
+                visitedGearItems = <Array<number>>[];
+            }
+
             let count = 0;
-            for(let i=0; i<this.GearItems.length; ++i) {
-                const gearItemEntry = this.GearItems[i];
-                count += gearItemEntry.Count;
+            for(let i=0; i<this._gearItems.length; ++i) {
+                const gearItemEntry = this._gearItems[i];
+                if(_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
+                    continue;
+                }
+
+                visitedGearItems.push(gearItemEntry.getGearItemId());
+                count += gearItemEntry.count();
             }
             return count;
         }
 
-        private getGearItemEntryIndexById(gearItemId: number) : number {
-            for(let i=0; i<this.GearItems.length; ++i) {
-                const gearItemEntry = this.GearItems[i];
-                if(gearItemEntry.GearItemId == gearItemId) {
-                    return i;
+        private getGearItemEntryIndexById(gearItemId: number) {
+            return _.findIndex(this._gearItems, (gearItemEntry) => {
+                    return gearItemEntry.getGearItemId() == gearItemId;
                 }
-            }
-            return -1;
+            );
         }
 
-        public containsGearItem(gearItem: GearItem) {
-            return this.getGearItemEntryIndexById(gearItem.Id) >= 0;
+        public containsGearItemById(gearItemId: number) {
+            return undefined != _.find(this._gearItems, (gearSystemEntry) => {
+                    return gearSystemEntry.getGearItemId() == gearItemId;
+                }
+            );
         }
 
         public addGearItem(gearItem: GearItem) {
-            if(this.containsGearItem(gearItem)) {
-                return;
+            if(this.containsGearItemById(gearItem.Id)) {
+                return false;
             }
-            this.GearItems.push(new GearItemEntry(gearItem.Id));
+
+            this._gearItems.push(new GearItemEntry(gearItem.Id));
+            return true;
         }
 
-        public removeGearItem(gearItem: GearItem) {
-            const idx = this.getGearItemEntryIndexById(gearItem.Id);
-            if(idx < 0) {
-                return;
+        private addGearItemEntry(gearItemId: number, count: number) {
+            if(this.containsGearItemById(gearItemId)) {
+                return false;
             }
-            this.GearItems.splice(idx, 1);
+
+            this._gearItems.push(new GearItemEntry(gearItemId, count));
+            return true;
+        }
+
+        public removeGearItemById(gearItemId: number) {
+            const idx = this.getGearItemEntryIndexById(gearItemId);
+            if(idx < 0) {
+                return false;
+            }
+
+            this._gearItems.splice(idx, 1);
+            return true;
         }
 
         public removeAllGearItems() {
-            this.GearItems = <Array<GearItemEntry>>[];
-        }
-
-        /* Pack List */
-
-        public getPackedGearItemCount() {
-            let count = 0;
-            for(let i=0; i<this.GearItems.length; ++i) {
-                const gearItemEntry = this.GearItems[i];
-                if(gearItemEntry.IsPacked) {
-                    ++count;
-                }
-            }
-            return count;
-        }
-
-        public getPackList() {
-            const entries = <Array<GearItemEntry>>[];
-            for(let i=0; i<this.GearItems.length; ++i) {
-                entries.push(this.GearItems[i]);
-            }
-            return entries;
+            this._gearItems = <Array<GearItemEntry>>[];
         }
 
         /* Weight/Cost */
 
-        public getWeightInGrams() {
+        public getWeightInGrams(visitedGearItems: number[]) {
+            if(!visitedGearItems) {
+                visitedGearItems = <Array<number>>[];
+            }
+
             let weightInGrams = 0;
-            for(let i=0; i<this.GearItems.length; ++i) {
-                const gearItemEntry = this.GearItems[i];
+            for(let i=0; i<this._gearItems.length; ++i) {
+                const gearItemEntry = this._gearItems[i];
+                if(_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
+                    continue;
+                }
+
+                visitedGearItems.push(gearItemEntry.getGearItemId());
                 weightInGrams += gearItemEntry.getWeightInGrams();
             }
             return weightInGrams;
         }
 
-        public getWeightInUnits() {
-            return parseFloat(convertGramsToUnits(this.getWeightInGrams(), AppState.getInstance().getAppSettings().Units).toFixed(2));
+        public getWeightInUnits(/*units: string*/) {
+            return parseFloat(convertGramsToUnits(this.getWeightInGrams([]), /*units*/AppState.getInstance().getAppSettings().units()).toFixed(2));
         }
 
-        public getCostInUSDP() {
+        public getCostInUSDP(visitedGearItems: number[]) {
+            if(!visitedGearItems) {
+                visitedGearItems = <Array<number>>[];
+            }
+
             let costInUSDP = 0;
-            for(let i=0; i<this.GearItems.length; ++i) {
-                const gearItemEntry = this.GearItems[i];
+            for(let i=0; i<this._gearItems.length; ++i) {
+                const gearItemEntry = this._gearItems[i];
+                if(_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
+                    continue;
+                }
+
+                visitedGearItems.push(gearItemEntry.getGearItemId());
                 costInUSDP += gearItemEntry.getCostInUSDP();
             }
             return costInUSDP;
         }
 
-        public getCostInCurrency() {
-            return convertUSDPToCurrency(this.getCostInUSDP(), AppState.getInstance().getAppSettings().Currency);
+        public getCostInCurrency(/*currency: string*/) {
+            return convertUSDPToCurrency(this.getCostInUSDP([]), /*currency*/AppState.getInstance().getAppSettings().currency());
         }
 
-        public getCostPerUnitInCurrency() {
-            const costInCurrency = convertUSDPToCurrency(this.getCostInUSDP(), AppState.getInstance().getAppSettings().Currency);
-            const weightInUnits = convertGramsToUnits(this.getWeightInGrams(), AppState.getInstance().getAppSettings().Units);
+        public getCostPerUnitInCurrency(/*units: string, currency: string*/) {
+            const weightInUnits = convertGramsToUnits(this.getWeightInGrams([]), /*units*/AppState.getInstance().getAppSettings().units());
+            const costInCurrency = convertUSDPToCurrency(this.getCostInUSDP([]), /*currency*/AppState.getInstance().getAppSettings().currency());
 
             return 0 == weightInUnits
                 ? costInCurrency
@@ -130,26 +166,26 @@ module BackpackPlanner.Mockup.Models.Gear {
         /* Load/Save */
 
         public update(gearSystem: GearSystem) {
-            this.Name = gearSystem.Name;
-            this.Note = gearSystem.Note;
+            this._name = gearSystem._name;
+            this._note = gearSystem._note;
 
-            this.GearItems = <Array<GearItemEntry>>[];
-            for(let i=0; i<gearSystem.GearItems.length; ++i) {
-                const gearItemEntry = gearSystem.GearItems[i];
-                this.GearItems.push(new GearItemEntry(gearItemEntry.GearItemId, gearItemEntry.Count, gearItemEntry.IsPacked));
+            this._gearItems = <Array<GearItemEntry>>[];
+            for(let i=0; i<gearSystem._gearItems.length; ++i) {
+                const gearItemEntry = gearSystem._gearItems[i];
+                this.addGearItemEntry(gearItemEntry.getGearItemId(), gearItemEntry.count());
             }
         }
 
         public loadFromDevice($q: ng.IQService, gearSystemResource: Resources.Gear.IGearSystemResource) : ng.IPromise<any> {
             const deferred = $q.defer();
 
-            this.Id = gearSystemResource.Id;
-            this.Name = gearSystemResource.Name;
-            this.Note = gearSystemResource.Note;
+            this._id = gearSystemResource.Id;
+            this._name = gearSystemResource.Name;
+            this._note = gearSystemResource.Note;
 
             for(let i=0; i<gearSystemResource.GearItems.length; ++i) {
                 const gearItemEntry = gearSystemResource.GearItems[i];
-                this.GearItems.push(new GearItemEntry(gearItemEntry.GearItemId, gearItemEntry.Count, gearItemEntry.IsPacked));
+                this.addGearItemEntry(gearItemEntry.GearItemId, gearItemEntry.Count);
             }
 
             deferred.resolve(this);
@@ -162,65 +198,66 @@ module BackpackPlanner.Mockup.Models.Gear {
         }
     }
 
-    export interface IGearSystemEntry extends IEntry {
-        GearSystemId: number;
-    }
+    export class GearSystemEntry implements IEntry {
+        private _gearSystemId = -1;
+        private _count = 1;
 
-    export class GearSystemEntry implements IGearSystemEntry {
-        public GearSystemId = -1;
-        public Count = 1;
-        public IsPacked = false;
-
-        constructor(gearSystemId: number, count?: number, isPacked?: boolean) {
-            this.GearSystemId = gearSystemId;
+        constructor(gearSystemId: number, count?: number) {
+            this._gearSystemId = gearSystemId;
             
             if(count) {
-                this.Count = count;
-            }
-
-            if(isPacked) {
-                this.IsPacked = isPacked;
+                this._count = count;
             }
         }
 
-        public getName() : string {
-            const gearSystem = AppState.getInstance().getGearState().getGearSystemById(this.GearSystemId);
+        public getGearSystemId() {
+            return this._gearSystemId;
+        }
+
+        public count(count?: number) {
+            return arguments.length
+                ? (this._count = count)
+                : this._count;
+        }
+
+        public getName() {
+            const gearSystem = AppState.getInstance().getGearState().getGearSystemById(this._gearSystemId);
             if(!gearSystem) {
                 return "";
             }
-            return gearSystem.Name;
+            return gearSystem.name();
         }
 
-        public getGearItemCount() : number {
-            const gearSystem = AppState.getInstance().getGearState().getGearSystemById(this.GearSystemId);
+        public getGearItemCount(visitedGearItems: number[]) {
+            const gearSystem = AppState.getInstance().getGearState().getGearSystemById(this._gearSystemId);
             if(!gearSystem) {
                 return 0;
             }
-            return this.Count * gearSystem.getGearItemCount();
+            return this._count * gearSystem.getGearItemCount(visitedGearItems);
         }
 
-        public getWeightInGrams() : number {
-            const gearSystem = AppState.getInstance().getGearState().getGearSystemById(this.GearSystemId);
+        public getWeightInGrams(visitedGearItems: number[]) {
+            const gearSystem = AppState.getInstance().getGearState().getGearSystemById(this._gearSystemId);
             if(!gearSystem) {
                 return 0;
             }
-            return this.Count * gearSystem.getWeightInGrams();
+            return this._count * gearSystem.getWeightInGrams(visitedGearItems);
         }
 
-        public getWeightInUnits() : number {
-            return parseFloat(convertGramsToUnits(this.getWeightInGrams(), AppState.getInstance().getAppSettings().Units).toFixed(2));
+        public getWeightInUnits(/*units: string*/) {
+            return parseFloat(convertGramsToUnits(this.getWeightInGrams([]), /*units*/AppState.getInstance().getAppSettings().units()).toFixed(2));
         }
 
-        public getCostInUSDP() {
-            const gearSystem = AppState.getInstance().getGearState().getGearSystemById(this.GearSystemId);
+        public getCostInUSDP(visitedGearItems: number[]) {
+            const gearSystem = AppState.getInstance().getGearState().getGearSystemById(this._gearSystemId);
             if(!gearSystem) {
                 return 0;
             }
-            return this.Count * gearSystem.getCostInUSDP();
+            return this._count * gearSystem.getCostInUSDP(visitedGearItems);
         }
 
-        public getCostInCurrency() {
-            return convertUSDPToCurrency(this.getCostInUSDP(), AppState.getInstance().getAppSettings().Currency);
+        public getCostInCurrency(/*currency: string*/) {
+            return convertUSDPToCurrency(this.getCostInUSDP([]), /*currency*/AppState.getInstance().getAppSettings().currency());
         }
     }
 }

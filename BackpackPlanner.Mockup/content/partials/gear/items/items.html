@@ -8,32 +8,32 @@
     <div ng-show="getGearItems().length < 1">You have no gear items! Try adding one!</div>
     <div layout="column" flex ng-show="getGearItems().length > 0">
         <md-input-container md-no-float flex>
-            <input type="text" ng-model="filter.Name" name="filter" placeholder="Filter" />
+            <input type="text" ng-model="filterName" name="filterName" placeholder="Filter" />
         </md-input-container>
         <label hide-sm>Sort by</label>
         <md-input-container hide-sm>
             <md-radio-group ng-model="orderBy" layout="row">
-                <md-radio-button value="Name">Name</md-radio-button>
-                <md-radio-button value="-WeightInGrams">Weight</md-radio-button>
-                <md-radio-button value="-CostInUSDP">Cost</md-radio-button>
+                <md-radio-button value="name()">Name</md-radio-button>
+                <md-radio-button value="-getWeightInGrams()">Weight</md-radio-button>
+                <md-radio-button value="-getCostInUSDP()">Cost</md-radio-button>
                 <md-radio-button value="-getCostPerUnitInCurrency()">Cost / Weight</md-radio-button>
             </md-radio-group>
         </md-input-container>
         <md-input-container hide-gt-sm>
             <label>Sort by</label>
             <md-select ng-model="orderBy">
-                <md-option value="Name">Name</md-option>
-                <md-option value="-WeightInGrams">Weight</md-option>
-                <md-option value="-CostInUSDP">Cost</md-option>
+                <md-option value="name()">Name</md-option>
+                <md-option value="-getWeightInGrams()">Weight</md-option>
+                <md-option value="-getCostInUSDP()">Cost</md-option>
                 <md-option value="-getCostPerUnitInCurrency()">Cost / Weight</md-option>
             </md-select>
         </md-input-container>
-        <md-button class="mockup-card-button" layout-fill ng-repeat="gearItem in getGearItems() | filter:filter | orderBy:orderBy" href="#/gear/items/{{ gearItem.Id }}">
+        <md-button class="mockup-card-button" layout-fill ng-repeat="gearItem in getGearItems() | filter:filterGearItem | orderBy:orderBy" href="#/gear/items/{{ gearItem.Id }}">
             <md-card class="mockup-card" flex>
                 <md-card-content class="mockup-card-content">
-                    <h2 class="md-title">{{ gearItem.Name }}</h2>
+                    <h2 class="md-title">{{ gearItem.name() }}</h2>
                     <p style="white-space: normal;" layout-padding>
-                        {{ gearItem.Make }} {{ gearItem.Model }}<br />
+                        {{ gearItem.make() }} {{ gearItem.model() }}<br />
                     </p>
                 </md-card-content>
                 <div layout="row" layout-sm="column">
@@ -56,11 +56,11 @@
                         <ng-md-icon ng-if="'ExtraHeavy' == gearItem.getWeightCategory()" icon="help" style="fill: red">
                             <md-tooltip>Extra Heavy</md-tooltip>
                         </ng-md-icon>
-                        <span ng-if="'NotCarried' == gearItem.Carried">Not Carried</span>
-                        <span ng-if="'NotCarried' != gearItem.Carried">Weight: {{ gearItem.weightInUnits() | number:2 }} {{ getUnitsWeightString() }}s</span>
+                        <span ng-if="!gearItem.isCarried()">Not Carried</span>
+                        <span ng-if="gearItem.isCarried()">Weight: {{ gearItem.weightInUnits() | number:2 }} {{ getUnitsWeightString() }}s</span>
                     </p>
                     <p layout-padding>Cost: {{ gearItem.costInCurrency() | currency }} ({{ gearItem.getCostPerUnitInCurrency() | currency }} per {{ getUnitsWeightString() }})</p>
-                    <p layout-padding ng-if="gearItem.IsConsumable">Consumed per day: {{ gearItem.ConsumedPerDay }}</p>
+                    <p layout-padding ng-if="gearItem.isConsumable()">Consumed per day: {{ gearItem.consumedPerDay() }}</p>
                 </div>
             </md-card>
         </md-button>

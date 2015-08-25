@@ -8,39 +8,39 @@
     <div ng-show="getMeals().length < 1">You have no meals! Try adding one!</div>
     <div layout="column" flex ng-show="getMeals().length > 0">
         <md-input-container md-no-float flex>
-            <input type="text" ng-model="filter.Name" name="filter" placeholder="Filter" />
+            <input type="text" ng-model="filterName" name="filterName" placeholder="Filter" />
         </md-input-container>
         <label hide-sm>Sort by</label>
         <md-input-container hide-sm>
             <md-radio-group ng-model="orderBy" layout="row">
-                <md-radio-button value="Name">Name</md-radio-button>
-                <md-radio-button value="Meal">Meal</md-radio-button>
-                <md-radio-button value="-WeightInGrams">Weight</md-radio-button>
-                <md-radio-button value="-CostInUSDP">Cost</md-radio-button>
+                <md-radio-button value="name()">Name</md-radio-button>
+                <md-radio-button value="meal()">Meal</md-radio-button>
+                <md-radio-button value="-getWeightInGrams()">Weight</md-radio-button>
+                <md-radio-button value="-getCostInUSDP()">Cost</md-radio-button>
                 <md-radio-button value="-getCostPerUnitInCurrency()">Cost / Weight</md-radio-button>
-                <md-radio-button value="-Calories">Calories</md-radio-button>
+                <md-radio-button value="-calories()">Calories</md-radio-button>
             </md-radio-group>
         </md-input-container>
         <md-input-container hide-gt-sm>
             <label>Sort by</label>
             <md-select ng-model="orderBy">
-                <md-option value="Name">Name</md-option>
-                <md-option value="Meal">Meal</md-option>
-                <md-option value="-WeightInGrams">Weight</md-option>
-                <md-option value="-CostInUSDP">Cost</md-option>
+                <md-option value="name()">Name</md-option>
+                <md-option value="meal()">Meal</md-option>
+                <md-option value="-getWeightInGrams()">Weight</md-option>
+                <md-option value="-getCostInUSDP()">Cost</md-option>
                 <md-option value="-getCostPerUnitInCurrency()">Cost / Weight</md-option>
-                <md-option value="-Calories">Calories</md-option>
+                <md-option value="-calories()">Calories</md-option>
             </md-select>
         </md-input-container>
-        <md-button class="mockup-card-button" layout-fill ng-repeat="meal in getMeals() | filter:filter | orderBy:orderBy" href="#/meals/{{ meal.Id }}">
+        <md-button class="mockup-card-button" layout-fill ng-repeat="meal in getMeals() | filter:filterMeal | orderBy:orderBy" href="#/meals/{{ meal.Id }}">
             <md-card class="mockup-card" flex>
                 <md-card-content class="mockup-card-content">
-                    <h2 class="md-title">{{ meal.Name }}</h2>
+                    <h2 class="md-title">{{ meal.name() }}</h2>
                     <p layout-padding>
-                        {{ meal.ServingCount }} serving(s) of {{ meal.Meal }}<br />
-                        {{ meal.Calories }} calories ({{ meal.getCaloriesPerUnit() | number:2 }} per {{ getUnitsWeightString() }})<br />
-                        {{ meal.ProteinInGrams }}g protein<br />
-                        {{ meal.FiberInGrams }}g fiber
+                        {{ meal.servingCount() }} serving(s) of {{ meal.meal() }}<br />
+                        {{ meal.calories() }} calories ({{ meal.getCaloriesPerUnit() | number:2 }} per {{ getUnitsWeightString() }})<br />
+                        {{ meal.proteinInGrams() }}g protein<br />
+                        {{ meal.fiberInGrams() }}g fiber
                     </p>
                 </md-card-content>
                 <div layout="row" layout-sm="column">

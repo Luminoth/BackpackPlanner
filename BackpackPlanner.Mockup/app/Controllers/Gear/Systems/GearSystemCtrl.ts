@@ -88,12 +88,12 @@ module BackpackPlanner.Mockup.Controllers.Gear.Systems {
                     .targetEvent(event);
 
                 var deleteToast = $mdToast.simple()
-                    .content(`Deleted gear system: ${$scope.gearSystem.Name}`)
+                    .content(`Deleted gear system: ${$scope.gearSystem.name()}`)
                     .action("Undo")
                     .position("bottom left");
 
                 var undoDeleteToast = $mdToast.simple()
-                    .content(`Restored gear system: ${$scope.gearSystem.Name}`)
+                    .content(`Restored gear system: ${$scope.gearSystem.name()}`)
                     .action("OK")
                     .position("bottom left");
 

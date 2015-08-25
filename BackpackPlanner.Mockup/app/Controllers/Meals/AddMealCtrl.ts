@@ -21,12 +21,12 @@ module BackpackPlanner.Mockup.Controllers.Meals {
                 AppState.getInstance().getMealState().addMeal($scope.meal);
 
                 var addToast = $mdToast.simple()
-                    .content(`Added meal: ${$scope.meal.Name}`)
+                    .content(`Added meal: ${$scope.meal.name()}`)
                     .action("Undo")
                     .position("bottom left");
 
                 var undoAddToast = $mdToast.simple()
-                    .content(`Removed meal: ${$scope.meal.Name}`)
+                    .content(`Removed meal: ${$scope.meal.name()}`)
                     .action("OK")
                     .position("bottom left");
 

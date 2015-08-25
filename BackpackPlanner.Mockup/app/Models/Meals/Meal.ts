@@ -9,54 +9,104 @@
 module BackpackPlanner.Mockup.Models.Meals {
     "use strict";
 
-    export interface IMeal {
-        Id: number;
-        Name: string;
-        Url: string;
-        Meal: string;
-        ServingCount: number;
-        WeightInGrams: number;
-        CostInUSDP: number;
-        Calories: number;
-        ProteinInGrams: number;
-        FiberInGrams: number;
-        Note: string;
-    }
+    export class Meal {
+        private _id = -1;
+        private _name = "";
+        private _url = "";
+        private _meal = "Other";
+        private _servingCount = 1;
+        private _weightInGrams = 0;
+        private _costInUSDP = 0;
+        private _calories = 0;
+        private _proteinInGrams = 0;
+        private _fiberInGrams = 0;
+        private _note = "";
 
-    export class Meal implements IMeal {
-        public Id = -1;
-        public Name = "";
-        public Url = "";
-        public Meal = "Other";
-        public ServingCount = 1;
-        public WeightInGrams = 0;
-        public CostInUSDP = 0;
-        public Calories = 0;
-        public ProteinInGrams = 0;
-        public FiberInGrams = 0;
-        public Note = "";
+        public get Id() {
+            return this._id;
+        }
+
+        public set Id(id: number) {
+            this._id = id;
+        }
+
+        public name(name?: string) {
+            return arguments.length
+                ? (this._name = name)
+                : this._name;
+        }
+        
+        public url(url?: string) {
+            return arguments.length
+                ? (this._url = url)
+                : this._url;
+        }
+
+        public meal(meal?: string) {
+            return arguments.length
+                ? (this._meal = meal)
+                : this._meal;
+        }
+
+        public servingCount(servingCount?: number) {
+            return arguments.length
+                ? (this._servingCount = servingCount)
+                : this._servingCount;
+        }
+
+        public calories(calories?: number) {
+            return arguments.length
+                ? (this._calories = calories)
+                : this._calories;
+        }
+
+        public getCaloriesPerUnit() {
+            return 0 == this._calories ? 0 : this._calories / this.weightInUnits();
+        }
+
+        public proteinInGrams(proteinInGrams?: number) {
+            return arguments.length
+                ? (this._proteinInGrams = proteinInGrams)
+                : this._proteinInGrams;
+        }
+
+        public fiberInGrams(fiberInGrams?: number) {
+            return arguments.length
+                ? (this._fiberInGrams = fiberInGrams)
+                : this._fiberInGrams;
+        }
+
+        public note(note?: string) {
+            return arguments.length
+                ? (this._note = note)
+                : this._note;
+        }
 
         /* Weight/Cost */
 
-        public getCaloriesPerUnit() {
-            return 0 == this.Calories ? 0 : this.Calories / this.weightInUnits();
+        public getWeightInGrams() {
+            return this._weightInGrams;
         }
 
-        public weightInUnits(weight?: number) : number {
+        public weightInUnits(weight?: number) {
             return arguments.length
-                ? (this.WeightInGrams = convertUnitsToGrams(weight, AppState.getInstance().getAppSettings().Units))
-                : parseFloat(convertGramsToUnits(this.WeightInGrams, AppState.getInstance().getAppSettings().Units).toFixed(2));
+                ? (this._weightInGrams = convertUnitsToGrams(weight, AppState.getInstance().getAppSettings().units()))
+                : parseFloat(convertGramsToUnits(this._weightInGrams, AppState.getInstance().getAppSettings().units()).toFixed(2));
         }
 
-        public costInCurrency(cost?: number) : number {
+        public getCostInUSDP() {
+            return this._costInUSDP;
+        }
+
+        public costInCurrency(cost?: number) {
             return arguments.length
-                ? (this.CostInUSDP = convertCurrencyToUSDP(cost, AppState.getInstance().getAppSettings().Currency))
-                : convertUSDPToCurrency(this.CostInUSDP, AppState.getInstance().getAppSettings().Currency);
+                ? (this._costInUSDP = convertCurrencyToUSDP(cost, AppState.getInstance().getAppSettings().currency()))
+                : convertUSDPToCurrency(this._costInUSDP, AppState.getInstance().getAppSettings().currency());
         }
 
-        public getCostPerUnitInCurrency() {
-            const costInCurrency = convertUSDPToCurrency(this.CostInUSDP, AppState.getInstance().getAppSettings().Currency);
-            const weightInUnits = convertGramsToUnits(this.WeightInGrams, AppState.getInstance().getAppSettings().Units);
+        public getCostPerUnitInCurrency(/*units: string, currency: string*/) {
+            const weightInUnits = convertGramsToUnits(this._weightInGrams, /*units*/AppState.getInstance().getAppSettings().units());
+            const costInCurrency = convertUSDPToCurrency(this._costInUSDP, /*currency*/AppState.getInstance().getAppSettings().currency());
 
             return 0 == weightInUnits
                 ? costInCurrency
@@ -66,32 +116,32 @@ module BackpackPlanner.Mockup.Models.Meals {
         /* Load/Save */
 
         public update(meal: Meal) {
-            this.Name = meal.Name;
-            this.Url = meal.Url;
-            this.Meal = meal.Meal;
-            this.ServingCount = meal.ServingCount;
-            this.WeightInGrams = meal.WeightInGrams;
-            this.CostInUSDP = meal.CostInUSDP;
-            this.Calories = meal.Calories;
-            this.ProteinInGrams = meal.ProteinInGrams;
-            this.FiberInGrams = meal.FiberInGrams;
-            this.Note = meal.Note;
+            this._name = meal._name;
+            this._url = meal._url;
+            this._meal = meal._meal;
+            this._servingCount = meal._servingCount;
+            this._weightInGrams = meal._weightInGrams;
+            this._costInUSDP = meal._costInUSDP;
+            this._calories = meal._calories;
+            this._proteinInGrams = meal._proteinInGrams;
+            this._fiberInGrams = meal._fiberInGrams;
+            this._note = meal._note;
         }
 
         public loadFromDevice($q: ng.IQService, mealResource: Resources.Meals.IMealResource) : ng.IPromise<any> {
             const deferred = $q.defer();
 
-            this.Id = mealResource.Id;
-            this.Name = mealResource.Name;
-            this.Url = mealResource.Url;
-            this.Meal = mealResource.Meal;
-            this.ServingCount = mealResource.ServingCount;
-            this.WeightInGrams = mealResource.WeightInGrams;
-            this.CostInUSDP = mealResource.CostInUSDP;
-            this.Calories = mealResource.Calories;
-            this.ProteinInGrams = mealResource.ProteinInGrams;
-            this.FiberInGrams = mealResource.FiberInGrams;
-            this.Note = mealResource.Note;
+            this._id = mealResource.Id;
+            this._name = mealResource.Name;
+            this._url = mealResource.Url;
+            this._meal = mealResource.Meal;
+            this._servingCount = mealResource.ServingCount;
+            this._weightInGrams = mealResource.WeightInGrams;
+            this._costInUSDP = mealResource.CostInUSDP;
+            this._calories = mealResource.Calories;
+            this._proteinInGrams = mealResource.ProteinInGrams;
+            this._fiberInGrams = mealResource.FiberInGrams;
+            this._note = mealResource.Note;
 
             deferred.resolve(this);
             return deferred.promise;
@@ -103,65 +153,66 @@ module BackpackPlanner.Mockup.Models.Meals {
         }
     }
 
-    export interface IMealEntry extends IEntry {
-        MealId: number;
-    }
+    export class MealEntry implements IEntry {
+        private _mealId = -1;
+        private _count = 1;
 
-    export class MealEntry implements IMealEntry {
-        public MealId = -1;
-        public Count = 1;
-        public IsPacked = false;
-
-        constructor(mealId: number, count?: number, isPacked?: boolean) {
-            this.MealId = mealId;
+        constructor(mealId: number, count?: number) {
+            this._mealId = mealId;
 
             if(count) {
-                this.Count = count;
-            }
-
-            if(isPacked) {
-                this.IsPacked = isPacked;
+                this._count = count;
             }
         }
 
-        public getName() : string {
-            const meal = AppState.getInstance().getMealState().getMealById(this.MealId);
+        public getMealId() {
+            return this._mealId;
+        }
+
+        public count(count?: number) {
+            return arguments.length
+                ? (this._count = count)
+                : this._count;
+        }
+
+        public getName() {
+            const meal = AppState.getInstance().getMealState().getMealById(this._mealId);
             if(!meal) {
                 return "";
             }
-            return meal.Name;
+            return meal.name();
         }
 
-        public getCalories() : number {
-            const meal = AppState.getInstance().getMealState().getMealById(this.MealId);
+        public getCalories() {
+            const meal = AppState.getInstance().getMealState().getMealById(this._mealId);
             if(!meal) {
                 return 0;
             }
-            return this.Count * meal.Calories;
+            return this._count * meal.calories();
         }
 
-        public getWeightInGrams() : number {
-            const meal = AppState.getInstance().getMealState().getMealById(this.MealId);
+        public getWeightInGrams() {
+            const meal = AppState.getInstance().getMealState().getMealById(this._mealId);
             if(!meal) {
                 return 0;
             }
-            return this.Count * meal.WeightInGrams;
+            return this._count * meal.getWeightInGrams();
         }
 
-        public getWeightInUnits() : number {
-            return parseFloat(convertGramsToUnits(this.getWeightInGrams(), AppState.getInstance().getAppSettings().Units).toFixed(2));
+        public getWeightInUnits(/*units: string*/) {
+            return parseFloat(convertGramsToUnits(this.getWeightInGrams(), /*units*/AppState.getInstance().getAppSettings().units()).toFixed(2));
         }
 
         public getCostInUSDP() {
-            const meal = AppState.getInstance().getMealState().getMealById(this.MealId);
+            const meal = AppState.getInstance().getMealState().getMealById(this._mealId);
             if(!meal) {
                 return 0;
             }
-            return this.Count * meal.CostInUSDP;
+            return this._count * meal.getCostInUSDP();
         }
 
-        public getCostInCurrency() {
-            return convertUSDPToCurrency(this.getCostInUSDP(), AppState.getInstance().getAppSettings().Currency);
+        public getCostInCurrency(/*currency: string*/) {
+            return convertUSDPToCurrency(this.getCostInUSDP(), /*currency*/AppState.getInstance().getAppSettings().currency());
         }
     }
 }

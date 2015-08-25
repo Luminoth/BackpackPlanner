@@ -18,11 +18,11 @@ module BackpackPlanner.Mockup {
         private _tripItineraries = <Array<Models.Trips.TripItinerary>>[];
 
         // TODO: this should be a read-only collection
-        public getTripItineraries() : Models.Trips.TripItinerary[] {
+        public getTripItineraries() {
             return this._tripItineraries;
         }
 
-        public getTripItineraryIndexById(tripItineraryId: number) : number {
+        public getTripItineraryIndexById(tripItineraryId: number) {
             for(let i=0; i<this._tripItineraries.length; ++i) {
                 const tripItinerary = this._tripItineraries[i];
                 if(tripItinerary.Id == tripItineraryId) {
@@ -32,18 +32,18 @@ module BackpackPlanner.Mockup {
             return -1;
         }
 
-        public getTripItineraryById(tripItineraryId: number) : Models.Trips.TripItinerary {
+        public getTripItineraryById(tripItineraryId: number) {
             const idx = this.getTripItineraryIndexById(tripItineraryId);
             return idx < 0 ? null : this._tripItineraries[idx];
         }
 
         private static _lastTripItineraryId = 0;
 
-        private getNextTripItineraryId() : number {
+        private getNextTripItineraryId() {
             return ++TripState._lastTripItineraryId;
         }
 
-        public addTripItinerary(tripItinerary: Models.Trips.TripItinerary) : number {
+        public addTripItinerary(tripItinerary: Models.Trips.TripItinerary) {
             if(tripItinerary.Id < 0) {
                 tripItinerary.Id = this.getNextTripItineraryId();
             } else if(tripItinerary.Id > TripState._lastTripItineraryId) {
@@ -54,7 +54,7 @@ module BackpackPlanner.Mockup {
             return tripItinerary.Id;
         }
 
-        public deleteTripItinerary(tripItinerary: Models.Trips.TripItinerary) : boolean {
+        public deleteTripItinerary(tripItinerary: Models.Trips.TripItinerary) {
             const idx = this.getTripItineraryIndexById(tripItinerary.Id);
             if(idx < 0) {
                 return false;
@@ -66,7 +66,7 @@ module BackpackPlanner.Mockup {
             return true;
         }
 
-        public deleteAllTripItineraries() : void {
+        public deleteAllTripItineraries() {
             this._tripItineraries = <Array<Models.Trips.TripItinerary>>[];
         }
 
@@ -75,11 +75,11 @@ module BackpackPlanner.Mockup {
         private _tripPlans = <Array<Models.Trips.TripPlan>>[];
 
         // TODO: this should be a read-only collection
-        public getTripPlans() : Models.Trips.TripPlan[] {
+        public getTripPlans() {
             return this._tripPlans;
         }
 
-        public getTripPlanIndexById(tripPlanId: number) : number {
+        public getTripPlanIndexById(tripPlanId: number) {
             for(let i=0; i<this._tripPlans.length; ++i) {
                 const tripPlan = this._tripPlans[i];
                 if(tripPlan.Id == tripPlanId) {
@@ -89,18 +89,18 @@ module BackpackPlanner.Mockup {
             return -1;
         }
 
-        public getTripPlanById(tripPlanId: number) : Models.Trips.TripPlan {
+        public getTripPlanById(tripPlanId: number) {
             const idx = this.getTripPlanIndexById(tripPlanId);
             return idx < 0 ? null : this._tripPlans[idx];
         }
 
         private static _lastTripPlanId = 0;
 
-        private getNextTripPlanId() : number {
+        private getNextTripPlanId() {
             return ++TripState._lastTripPlanId;
         }
 
-        public addTripPlan(tripPlan: Models.Trips.TripPlan) : number {
+        public addTripPlan(tripPlan: Models.Trips.TripPlan) {
             if(tripPlan.Id < 0) {
                 tripPlan.Id = this.getNextTripPlanId();
             } else if(tripPlan.Id > TripState._lastTripPlanId) {
@@ -111,7 +111,7 @@ module BackpackPlanner.Mockup {
             return tripPlan.Id;
         }
 
-        public deleteTripPlan(tripPlan: Models.Trips.TripPlan) : boolean {
+        public deleteTripPlan(tripPlan: Models.Trips.TripPlan) {
             const idx = this.getTripPlanIndexById(tripPlan.Id);
             if(idx < 0) {
                 return false;
@@ -121,7 +121,7 @@ module BackpackPlanner.Mockup {
             return true;
         }
 
-        public deleteAllTripPlans() : void {
+        public deleteAllTripPlans() {
             this._tripPlans = <Array<Models.Trips.TripPlan>>[];
         }
 
@@ -186,7 +186,7 @@ module BackpackPlanner.Mockup {
             return $q.all(promises);
         }
 
-        public saveToDevice($q: ng.IQService) : ng.IPromise<any> {
+        public saveToDevice($q: ng.IQService) : ng.IPromise<any[]> {
             alert("TripState.saveToDevice");
             return $q.defer().promise;
         }

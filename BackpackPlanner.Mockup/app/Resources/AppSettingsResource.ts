@@ -5,6 +5,14 @@
 module BackpackPlanner.Mockup.Resources {
     "use strict";
 
-    export interface IAppSettingsResource extends Models.IAppSettings, ng.resource.IResource<Models.IAppSettings> {
+    export interface IAppSettings {
+        Units: string;
+        Currency: string;
+
+        UltralightMaxWeightInGrams: number;
+        LightweightMaxWeightInGrams: number;
+    }
+
+    export interface IAppSettingsResource extends IAppSettings, ng.resource.IResource<IAppSettings> {
     }
 }

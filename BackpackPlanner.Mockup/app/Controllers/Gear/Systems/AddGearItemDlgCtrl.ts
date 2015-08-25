@@ -9,10 +9,12 @@ module BackpackPlanner.Mockup.Controllers.Gear.Systems {
     export interface IAddGearItemDlgScope extends ng.IScope {
         gearSystem: Models.Gear.GearSystem;
 
+        filterName: string;
         orderBy: string;
 
         close: () => void;
 
+        filterGearItem: (gearItem: Models.Gear.GearItem) => boolean;
         getGearItems: () => Models.Gear.GearItem[];
         isGearItemSelected: (gearItem: Models.Gear.GearItem) => void;
         toggleGearItemSelected: (gearItem: Models.Gear.GearItem) => void;
@@ -21,25 +23,33 @@ module BackpackPlanner.Mockup.Controllers.Gear.Systems {
     export class AddGearItemDlgCtrl {
         constructor($scope: IAddGearItemDlgScope, $mdDialog: ng.material.IDialogService, gearSystem: Models.Gear.GearSystem) {
             $scope.gearSystem = gearSystem;
-            $scope.orderBy = "Name";
+            $scope.filterName = "";
+            $scope.orderBy = "name()";
 
             $scope.close = () => {
                 $mdDialog.hide();
             };
+
+            $scope.filterGearItem = (gearItem) => {
+                if($scope.filterName) {
+                    return gearItem.name().toLowerCase().indexOf($scope.filterName.toLowerCase()) >= 0;
+                }
+                return true;
+            }
 
             $scope.getGearItems = () => {
                 return AppState.getInstance().getGearState().getGearItems();
             }
 
             $scope.isGearItemSelected = (gearItem) => {
-                return $scope.gearSystem.containsGearItem(gearItem);
+                return $scope.gearSystem.containsGearItemById(gearItem.Id);
             }
 
             $scope.toggleGearItemSelected = (gearItem) => {
-                if(!$scope.gearSystem.containsGearItem(gearItem)) {
+                if(!$scope.gearSystem.containsGearItemById(gearItem.Id)) {
                     $scope.gearSystem.addGearItem(gearItem);
                 } else {
-                    $scope.gearSystem.removeGearItem(gearItem);
+                    $scope.gearSystem.removeGearItemById(gearItem.Id);
                 } 
             };
         }

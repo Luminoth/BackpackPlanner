@@ -20,8 +20,6 @@ module BackpackPlanner.Mockup.Controllers.Trips.Plans {
         showAddGearItemDlg: (event: MouseEvent) => void;
         showAddMealDlg: (event: MouseEvent) => void;
 
-        showPackListDlg: (event: MouseEvent) => void;
-
         saveTripPlan: () => void;
         resetTripPlan: () => void;
         deleteTripPlan: (event: MouseEvent) => void;
@@ -95,18 +93,6 @@ module BackpackPlanner.Mockup.Controllers.Trips.Plans {
                 });
             }
 
-            $scope.showPackListDlg = (event) => {
-                $mdDialog.show({
-                    controller: PackListDlgCtrl,
-                    templateUrl: "content/partials/trips/plans/packlist.html",
-                    parent: angular.element(document.body),
-                    targetEvent: event,
-                    locals: {
-                        tripPlan: $scope.tripPlan
-                    }
-                });
-            };
-
             $scope.saveTripPlan = () => {
                 var tripPlan = AppState.getInstance().getTripState().getTripPlanById($scope.tripPlan.Id);
                 if(null == tripPlan) {
@@ -147,12 +133,12 @@ module BackpackPlanner.Mockup.Controllers.Trips.Plans {
                     .targetEvent(event);
 
                 var deleteToast = $mdToast.simple()
-                    .content(`Deleted trip plan: ${$scope.tripPlan.Name}`)
+                    .content(`Deleted trip plan: ${$scope.tripPlan.name()}`)
                     .action("Undo")
                     .position("bottom left");
 
                 var undoDeleteToast = $mdToast.simple()
-                    .content(`Restored trip plan: ${$scope.tripPlan.Name}`)
+                    .content(`Restored trip plan: ${$scope.tripPlan.name()}`)
                     .action("OK")
                     .position("bottom left");
 

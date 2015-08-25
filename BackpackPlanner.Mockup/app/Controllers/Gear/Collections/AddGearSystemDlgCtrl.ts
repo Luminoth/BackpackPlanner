@@ -9,10 +9,12 @@ module BackpackPlanner.Mockup.Controllers.Gear.Collections {
     export interface IAddGearSystemDlgScope extends ng.IScope {
         gearCollection: Models.Gear.GearCollection;
 
+        filterName: string;
         orderBy: string;
 
         close: () => void;
 
+        filterGearSystem: (gearSystem: Models.Gear.GearSystem) => boolean;
         getGearSystems: () => Models.Gear.GearSystem[];
         isGearSystemSelected: (gearSystem: Models.Gear.GearSystem) => void;
         toggleGearSystemSelected: (gearSystem: Models.Gear.GearSystem) => void;
@@ -21,25 +23,33 @@ module BackpackPlanner.Mockup.Controllers.Gear.Collections {
     export class AddGearSystemDlgCtrl {
         constructor($scope: IAddGearSystemDlgScope, $mdDialog: ng.material.IDialogService, gearCollection: Models.Gear.GearCollection) {
             $scope.gearCollection = gearCollection;
-            $scope.orderBy = "Name";
-
-            $scope.getGearSystems = () => {
-                return AppState.getInstance().getGearState().getGearSystems();
-            }
+            $scope.filterName = "";
+            $scope.orderBy = "name()";
 
             $scope.close = () => {
                 $mdDialog.hide();
             };
 
+            $scope.filterGearSystem = (gearSystem) => {
+                if($scope.filterName) {
+                    return gearSystem.name().toLowerCase().indexOf($scope.filterName.toLowerCase()) >= 0;
+                }
+                return true;
+            }
+
+            $scope.getGearSystems = () => {
+                return AppState.getInstance().getGearState().getGearSystems();
+            }
+
             $scope.isGearSystemSelected = (gearSystem) => {
-                return $scope.gearCollection.containsGearSystem(gearSystem);
+                return $scope.gearCollection.containsGearSystemById(gearSystem.Id);
             }
 
             $scope.toggleGearSystemSelected = (gearSystem) => {
-                if(!$scope.gearCollection.containsGearSystem(gearSystem)) {
+                if(!$scope.gearCollection.containsGearSystemById(gearSystem.Id)) {
                     $scope.gearCollection.addGearSystem(gearSystem);
                 } else {
-                    $scope.gearCollection.removeGearSystem(gearSystem);
+                    $scope.gearCollection.removeGearSystemById(gearSystem.Id);
                 } 
             };
         }

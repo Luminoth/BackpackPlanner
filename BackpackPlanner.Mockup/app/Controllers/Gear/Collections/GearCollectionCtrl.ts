@@ -103,12 +103,12 @@ module BackpackPlanner.Mockup.Controllers.Gear.Collections {
                     .targetEvent(event);
 
                 var deleteToast = $mdToast.simple()
-                    .content(`Deleted gear collection: ${$scope.gearCollection.Name}`)
+                    .content(`Deleted gear collection: ${$scope.gearCollection.name()}`)
                     .action("Undo")
                     .position("bottom left");
 
                 var undoDeleteToast = $mdToast.simple()
-                    .content(`Restored gear collection: ${$scope.gearCollection.Name}`)
+                    .content(`Restored gear collection: ${$scope.gearCollection.name()}`)
                     .action("OK")
                     .position("bottom left");
 

@@ -9,7 +9,7 @@ module BackpackPlanner.Mockup.Services.Personal {
         get(): Resources.Personal.IUserInformationResource;
     }
 
-    export function userInformationServiceFactory($resource: ng.resource.IResourceService) : IUserInformationService {
+    export function userInformationServiceFactory($resource: ng.resource.IResourceService) {
         return <IUserInformationService> $resource("data/user.json", {}, {
             get: { method: "GET", isArray: false }
         });

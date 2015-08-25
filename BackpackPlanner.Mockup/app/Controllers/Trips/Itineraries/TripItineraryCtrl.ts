@@ -71,12 +71,12 @@ module BackpackPlanner.Mockup.Controllers.Trips.Itineraries {
                     .targetEvent(event);
 
                 var deleteToast = $mdToast.simple()
-                    .content(`Deleted trip itinerary: ${$scope.tripItinerary.Name}`)
+                    .content(`Deleted trip itinerary: ${$scope.tripItinerary.name()}`)
                     .action("Undo")
                     .position("bottom left");
 
                 var undoDeleteToast = $mdToast.simple()
-                    .content(`Restored trip itinerary: ${$scope.tripItinerary.Name}`)
+                    .content(`Restored trip itinerary: ${$scope.tripItinerary.name()}`)
                     .action("OK")
                     .position("bottom left");
 

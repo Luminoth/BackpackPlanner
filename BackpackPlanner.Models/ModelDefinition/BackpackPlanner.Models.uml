@@ -154,7 +154,7 @@
                   <type_NamedElement>
                     <enumerationMoniker
                       Id="52512ebf-0444-4e53-b157-c9624d525813"
-                      LastKnownName="Units"
+                      LastKnownName="UnitSystem"
                       LastKnownLocation="BackpackPlanner.Models.uml" />
                   </type_NamedElement>
                 </parameter>
@@ -192,7 +192,7 @@
                   <type_NamedElement>
                     <enumerationMoniker
                       Id="52512ebf-0444-4e53-b157-c9624d525813"
-                      LastKnownName="Units"
+                      LastKnownName="UnitSystem"
                       LastKnownLocation="BackpackPlanner.Models.uml" />
                   </type_NamedElement>
                 </parameter>
@@ -244,7 +244,7 @@
                   <type_NamedElement>
                     <enumerationMoniker
                       Id="52512ebf-0444-4e53-b157-c9624d525813"
-                      LastKnownName="Units"
+                      LastKnownName="UnitSystem"
                       LastKnownLocation="BackpackPlanner.Models.uml" />
                   </type_NamedElement>
                 </parameter>
@@ -283,7 +283,7 @@
                   <type_NamedElement>
                     <enumerationMoniker
                       Id="52512ebf-0444-4e53-b157-c9624d525813"
-                      LastKnownName="Units"
+                      LastKnownName="UnitSystem"
                       LastKnownLocation="BackpackPlanner.Models.uml" />
                   </type_NamedElement>
                 </parameter>
@@ -668,7 +668,7 @@
                   <type_NamedElement>
                     <enumerationMoniker
                       Id="52512ebf-0444-4e53-b157-c9624d525813"
-                      LastKnownName="Units"
+                      LastKnownName="UnitSystem"
                       LastKnownLocation="BackpackPlanner.Models.uml" />
                   </type_NamedElement>
                 </parameter>
@@ -707,7 +707,7 @@
                   <type_NamedElement>
                     <enumerationMoniker
                       Id="52512ebf-0444-4e53-b157-c9624d525813"
-                      LastKnownName="Units"
+                      LastKnownName="UnitSystem"
                       LastKnownLocation="BackpackPlanner.Models.uml" />
                   </type_NamedElement>
                 </parameter>
@@ -824,6 +824,30 @@
                     <enumerationMoniker
                       Id="61a3fbb3-2358-4299-a158-4ff3c2b25883"
                       LastKnownName="WeightCategory"
+                      LastKnownLocation="BackpackPlanner.Models.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="48b3eb79-03f0-433a-9b0a-5eec589c2360"
+            name="GetIsCarried"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="2e19bd3b-4b1a-4804-9b6e-90373433caa8"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="8943dc84-709e-4f62-b15a-a3273aa6f165"
+                      LastKnownName="Boolean"
                       LastKnownLocation="BackpackPlanner.Models.uml" />
                   </type_NamedElement>
                 </parameter>
@@ -1226,7 +1250,7 @@
                   <type_NamedElement>
                     <enumerationMoniker
                       Id="52512ebf-0444-4e53-b157-c9624d525813"
-                      LastKnownName="Units"
+                      LastKnownName="UnitSystem"
                       LastKnownLocation="BackpackPlanner.Models.uml" />
                   </type_NamedElement>
                 </parameter>
@@ -1327,7 +1351,7 @@
                   <type_NamedElement>
                     <enumerationMoniker
                       Id="52512ebf-0444-4e53-b157-c9624d525813"
-                      LastKnownName="Units"
+                      LastKnownName="UnitSystem"
                       LastKnownLocation="BackpackPlanner.Models.uml" />
                   </type_NamedElement>
                 </parameter>
@@ -1541,7 +1565,7 @@
                   <type_NamedElement>
                     <enumerationMoniker
                       Id="52512ebf-0444-4e53-b157-c9624d525813"
-                      LastKnownName="Units"
+                      LastKnownName="UnitSystem"
                       LastKnownLocation="BackpackPlanner.Models.uml" />
                   </type_NamedElement>
                 </parameter>
@@ -1681,7 +1705,7 @@
                   <type_NamedElement>
                     <enumerationMoniker
                       Id="52512ebf-0444-4e53-b157-c9624d525813"
-                      LastKnownName="Units"
+                      LastKnownName="UnitSystem"
                       LastKnownLocation="BackpackPlanner.Models.uml" />
                   </type_NamedElement>
                 </parameter>
@@ -2004,7 +2028,7 @@
                   <type_NamedElement>
                     <enumerationMoniker
                       Id="52512ebf-0444-4e53-b157-c9624d525813"
-                      LastKnownName="Units"
+                      LastKnownName="UnitSystem"
                       LastKnownLocation="BackpackPlanner.Models.uml" />
                   </type_NamedElement>
                 </parameter>
@@ -2243,7 +2267,7 @@
                   <type_NamedElement>
                     <enumerationMoniker
                       Id="52512ebf-0444-4e53-b157-c9624d525813"
-                      LastKnownName="Units"
+                      LastKnownName="UnitSystem"
                       LastKnownLocation="BackpackPlanner.Models.uml" />
                   </type_NamedElement>
                 </parameter>
@@ -2293,66 +2317,6 @@
             isAbstract="false"
             concurrency="Sequential"
             isQuery="false" />
-          <operation
-            Id="0879e78a-5bf6-4077-b59c-947cc44bf942"
-            name="GetPackList"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false">
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter
-                  Id="51650a65-355f-4210-8033-1242e943dfc6"
-                  direction="Return"
-                  isUnique="false">
-                  <lowerValueInternal>
-                    <literalString
-                      Id="86c45942-2b33-4d0d-bf73-8f05450956ec"
-                      name="Lower"
-                      value="*" />
-                  </lowerValueInternal>
-                  <upperValueInternal>
-                    <literalString
-                      Id="941ade29-8a28-42aa-a085-067e6b1b6346"
-                      name="Upper"
-                      value="*" />
-                  </upperValueInternal>
-                  <type_NamedElement>
-                    <classMoniker
-                      Id="1ed0036e-3547-4c8f-a3d2-efc857ee465c"
-                      LastKnownName="GearItemEntry"
-                      LastKnownLocation="BackpackPlanner.Models.uml" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation
-            Id="9922a39a-f2d4-453f-b0d5-44d3f575ef7d"
-            name="GetPackedGearItemCount"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false">
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter
-                  Id="107b8d48-1ac5-4141-b1e4-475911899dfa"
-                  direction="Return"
-                  isUnique="false">
-                  <type_NamedElement>
-                    <primitiveTypeMoniker
-                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
-                      LastKnownName="Integer"
-                      LastKnownLocation="BackpackPlanner.Models.uml" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
           <operation
             Id="94997394-bed4-4520-b108-04c7887799fa"
             name="Update"
@@ -2470,7 +2434,7 @@
                   <type_NamedElement>
                     <enumerationMoniker
                       Id="52512ebf-0444-4e53-b157-c9624d525813"
-                      LastKnownName="Units"
+                      LastKnownName="UnitSystem"
                       LastKnownLocation="BackpackPlanner.Models.uml" />
                   </type_NamedElement>
                 </parameter>
@@ -2910,7 +2874,7 @@
                   <type_NamedElement>
                     <enumerationMoniker
                       Id="52512ebf-0444-4e53-b157-c9624d525813"
-                      LastKnownName="Units"
+                      LastKnownName="UnitSystem"
                       LastKnownLocation="BackpackPlanner.Models.uml" />
                   </type_NamedElement>
                 </parameter>
@@ -2999,7 +2963,7 @@
                   <type_NamedElement>
                     <enumerationMoniker
                       Id="52512ebf-0444-4e53-b157-c9624d525813"
-                      LastKnownName="Units"
+                      LastKnownName="UnitSystem"
                       LastKnownLocation="BackpackPlanner.Models.uml" />
                   </type_NamedElement>
                 </parameter>
@@ -3194,7 +3158,7 @@
                   <type_NamedElement>
                     <enumerationMoniker
                       Id="52512ebf-0444-4e53-b157-c9624d525813"
-                      LastKnownName="Units"
+                      LastKnownName="UnitSystem"
                       LastKnownLocation="BackpackPlanner.Models.uml" />
                   </type_NamedElement>
                 </parameter>
@@ -4312,7 +4276,7 @@
                   <type_NamedElement>
                     <enumerationMoniker
                       Id="52512ebf-0444-4e53-b157-c9624d525813"
-                      LastKnownName="Units"
+                      LastKnownName="UnitSystem"
                       LastKnownLocation="BackpackPlanner.Models.uml" />
                   </type_NamedElement>
                 </parameter>
@@ -4484,7 +4448,7 @@
                   <type_NamedElement>
                     <enumerationMoniker
                       Id="52512ebf-0444-4e53-b157-c9624d525813"
-                      LastKnownName="Units"
+                      LastKnownName="UnitSystem"
                       LastKnownLocation="BackpackPlanner.Models.uml" />
                   </type_NamedElement>
                 </parameter>
@@ -4664,7 +4628,7 @@
     <packageHasNamedElement>
       <enumeration
         Id="52512ebf-0444-4e53-b157-c9624d525813"
-        name="Units"
+        name="UnitSystem"
         isAbstract="false"
         isLeaf="false">
         <ownedLiterals>
@@ -4713,7 +4677,7 @@
             <type_NamedElement>
               <enumerationMoniker
                 Id="52512ebf-0444-4e53-b157-c9624d525813"
-                LastKnownName="Units"
+                LastKnownName="UnitSystem"
                 LastKnownLocation="BackpackPlanner.Models.uml" />
             </type_NamedElement>
           </property>
@@ -4882,7 +4846,7 @@
                   <type_NamedElement>
                     <enumerationMoniker
                       Id="52512ebf-0444-4e53-b157-c9624d525813"
-                      LastKnownName="Units"
+                      LastKnownName="UnitSystem"
                       LastKnownLocation="BackpackPlanner.Models.uml" />
                   </type_NamedElement>
                 </parameter>
@@ -4920,7 +4884,7 @@
                   <type_NamedElement>
                     <enumerationMoniker
                       Id="52512ebf-0444-4e53-b157-c9624d525813"
-                      LastKnownName="Units"
+                      LastKnownName="UnitSystem"
                       LastKnownLocation="BackpackPlanner.Models.uml" />
                   </type_NamedElement>
                 </parameter>
@@ -5877,7 +5841,7 @@
         isLeaf="false">
         <ownedAttributes>
           <property
-            Id="9a737af8-4931-4b36-b241-b951beef5e5e"
+            Id="de76546f-30dc-4d73-baf9-fd94b0777af5"
             name="Count"
             isLeaf="false"
             isStatic="false"
@@ -5894,17 +5858,6 @@
                 LastKnownLocation="BackpackPlanner.Models.uml" />
             </type_NamedElement>
           </property>
-          <property
-            Id="a923f65f-768b-4f7d-8f8b-ac4bef069b94"
-            name="IsPacked"
-            isLeaf="false"
-            isStatic="false"
-            isReadOnly="false"
-            isUnique="false"
-            isDerived="false"
-            isDerivedUnion="false"
-            aggregation="None"
-            isComposite="false" />
         </ownedAttributes>
         <ownedOperations>
           <operation
@@ -5963,7 +5916,7 @@
                   <type_NamedElement>
                     <enumerationMoniker
                       Id="52512ebf-0444-4e53-b157-c9624d525813"
-                      LastKnownName="Units"
+                      LastKnownName="UnitSystem"
                       LastKnownLocation="BackpackPlanner.Models.uml" />
                   </type_NamedElement>
                 </parameter>
@@ -6134,7 +6087,7 @@
                   <type_NamedElement>
                     <enumerationMoniker
                       Id="52512ebf-0444-4e53-b157-c9624d525813"
-                      LastKnownName="Units"
+                      LastKnownName="UnitSystem"
                       LastKnownLocation="BackpackPlanner.Models.uml" />
                   </type_NamedElement>
                 </parameter>

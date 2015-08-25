@@ -9,7 +9,7 @@ module BackpackPlanner.Mockup.Services.Trips {
         query(): Resources.Trips.ITripItineraryResource[];
     }
 
-    export function tripItineraryServiceFactory($resource: ng.resource.IResourceService) : ITripItineraryService {
+    export function tripItineraryServiceFactory($resource: ng.resource.IResourceService) {
         return <ITripItineraryService> $resource("data/trips/itineraries.json", {}, {
             query: { method: "GET", isArray: true }
         });

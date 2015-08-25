@@ -2,14 +2,14 @@
 <div layout="column" layout-padding flex ng-cloak>
     <label>Measurement Units</label>
     <md-input-container>
-        <md-radio-group ng-model="appSettings.Units" layout="row">
+        <md-radio-group ng-model="appSettings.units" ng-model-options="{ getterSetter: true }" layout="row">
             <md-radio-button value="Metric">Metric Units</md-radio-button>
             <md-radio-button value="Imperial">Imperial Units</md-radio-button>
         </md-radio-group>
     </md-input-container>
     <!--<md-input-container>
         <label>Currency</label>
-        <md-select ng-model="appSettings.Currency">
+        <md-select ng-model="appSettings.currency" ng-model-options="{ getterSetter: true }">
             <md-option value="USD">United States</md-option>
         </md-select>
     </md-input-container>-->

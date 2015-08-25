@@ -9,22 +9,22 @@
     <div layout="row" layout-sm="column" flex>
         <md-input-container flex>
             <label>First Name</label>
-            <input type="text" ng-model="userInfo.FirstName" required name="firstName" />
+            <input type="text" ng-model="userInfo.firstName" ng-model-options="{ getterSetter: true }" required name="firstName" />
             <div ng-messages="userInfoForm.firstName.$error">
                 <div ng-message="required">A first name is required</div>
             </div>
         </md-input-container>
         <md-input-container flex>
             <label>Last Name</label>
-            <input type="text" ng-model="userInfo.LastName" name="lastName" />
+            <input type="text" ng-model="userInfo.lastName" ng-model-options="{ getterSetter: true }" name="lastName" />
         </md-input-container>
         <md-input-container flex>
             <label>Date of Birth</label>
-            <input type="date" ng-model="userInfo.BirthDateAsDate" name="birthDate" />
+            <input type="date" ng-model="userInfo.birthDate" ng-model-options="{ getterSetter: true }" name="birthDate" />
         </md-input-container>
     </div>
     <md-input-container>
-        <md-radio-group ng-model="userInfo.Sex" layout="row" name="sex">
+        <md-radio-group ng-model="userInfo.sex" ng-model-options="{ getterSetter: true }" layout="row" name="sex">
             <md-radio-button value="Male">Male</md-radio-button>
             <md-radio-button value="Female">Female</md-radio-button>
             <md-radio-button value="NotSpecified">Not Specified</md-radio-button>

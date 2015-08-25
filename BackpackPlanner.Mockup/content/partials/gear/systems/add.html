@@ -2,29 +2,29 @@
 <div layout="column" layout-padding flex ng-cloak>
     <md-input-container>
         <label>Name</label>
-        <input type="text" ng-model="gearSystem.Name" required name="name" />
+        <input type="text" ng-model="gearSystem.name" ng-model-options="{ getterSetter: true }" required name="name" />
         <div ng-messages="addGearSystemForm.name.$error">
             <div ng-message="required">The gear system name is required</div>
         </div>
     </md-input-container>
     <label>Gear Items</label>
-    <p ng-show="gearSystem.GearItems.length < 1">You have no gear items in this system! Try adding one!</p>
-    <div layout="column" ng-show="gearSystem.GearItems.length > 0">
+    <p ng-show="gearSystem.getGearItems().length < 1">You have no gear items in this system! Try adding one!</p>
+    <div layout="column" ng-show="gearSystem.getGearItems().length > 0">
         <md-input-container>
             <md-radio-group ng-model="orderGearItemsBy" layout="row">
                 <md-radio-button value="getName()">Name</md-radio-button>
-                <md-radio-button value="-Count">Count</md-radio-button>
+                <md-radio-button value="-count()">Count</md-radio-button>
                 <md-radio-button value="-getWeightInUnits()">Total Weight</md-radio-button>
             </md-radio-group>
         </md-input-container>
         <md-list>
-            <md-list-item ng-repeat="gearItemEntry in gearSystem.GearItems | orderBy:orderGearItemsBy" ng-init="gearItem = getGearItemById(gearItemEntry.GearItemId)">
+            <md-list-item ng-repeat="gearItemEntry in gearSystem.getGearItems() | orderBy:orderGearItemsBy" ng-init="gearItem = getGearItemById(gearItemEntry.getGearItemId())">
                 <md-input-container flex>
                     <label>
                         {{ gearItemEntry.getName() }}<br />
                         {{ gearItemEntry.getWeightInUnits() | number:2 }} total {{ getUnitsWeightString() }}s<br />
                     </label>
-                    <input type="number" ng-model="gearItemEntry.Count" min="1" max="1000000" name="count" />
+                    <input type="number" ng-model="gearItemEntry.count" ng-model-options="{ getterSetter: true }" min="1" max="1000000" name="count" />
                 </md-input-container>
             </md-list-item>
         </md-list>
@@ -41,7 +41,7 @@
     </div>
     <md-input-container>
         <label>Note</label>
-        <textarea ng-model="gearSystem.Note" name="note"></textarea>
+        <textarea ng-model="gearSystem.note" ng-model-options="{ getterSetter: true }" name="note"></textarea>
     </md-input-container>
     <div flex></div>
     <div layout="row">

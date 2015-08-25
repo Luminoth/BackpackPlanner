@@ -71,12 +71,12 @@ module BackpackPlanner.Mockup.Controllers.Meals {
                     .targetEvent(event);
 
                 var deleteToast = $mdToast.simple()
-                    .content(`Deleted meal: ${$scope.meal.Name}`)
+                    .content(`Deleted meal: ${$scope.meal.name()}`)
                     .action("Undo")
                     .position("bottom left");
 
                 var undoDeleteToast = $mdToast.simple()
-                    .content(`Restored meal: ${$scope.meal.Name}`)
+                    .content(`Restored meal: ${$scope.meal.name()}`)
                     .action("OK")
                     .position("bottom left");
 

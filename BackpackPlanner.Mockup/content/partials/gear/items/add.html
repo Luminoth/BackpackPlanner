@@ -2,7 +2,7 @@
 <div layout="column" layout-padding flex ng-cloak>
     <md-input-container>
         <label>Name</label>
-        <input type="text" ng-model="gearItem.Name" required name="name" />
+        <input type="text" ng-model="gearItem.name" ng-model-options="{ getterSetter: true }" required name="name" />
         <div ng-messages="addGearItemForm.name.$error">
             <div ng-message="required">The gear item name is required</div>
         </div>
@@ -10,33 +10,33 @@
     <div layout="row" layout-sm="column" flex>
         <md-input-container flex>
             <label>Make</label>
-            <input type="text" ng-model="gearItem.Make" name="make" />
+            <input type="text" ng-model="gearItem.make" ng-model-options="{ getterSetter: true }" name="make" />
         </md-input-container>
         <md-input-container flex>
             <label>Model</label>
-            <input type="text" ng-model="gearItem.Model" name="model" />
+            <input type="text" ng-model="gearItem.model" ng-model-options="{ getterSetter: true }" name="model" />
         </md-input-container>
     </div>
     <md-input-container>
         <label>Website</label>
-        <input type="url" ng-model="gearItem.Url" name="url" />
+        <input type="url" ng-model="gearItem.url" ng-model-options="{ getterSetter: true }" name="url" />
     </md-input-container>
     <md-input-container>
-        <md-radio-group ng-model="gearItem.Carried" layout="row">
+        <md-radio-group ng-model="gearItem.carried" ng-model-options="{ getterSetter: true }" layout="row">
             <md-radio-button value="Carried">Carried</md-radio-button>
             <md-radio-button value="Worn">Worn</md-radio-button>
             <md-radio-button value="NotCarried">Not Carried</md-radio-button>
         </md-radio-group>
     </md-input-container>
-    <div layout="row" layout-sm="column" flex ng-show="'NotCarried' != gearItem.Carried">
-        <md-switch ng-model="gearItem.IsConsumable" name="consumable">Consumable</md-switch>
-        <md-input-container ng-show="true == gearItem.IsConsumable">
+    <div layout="row" layout-sm="column" flex ng-show="gearItem.isCarried()">
+        <md-switch ng-model="gearItem.isConsumable" ng-model-options="{ getterSetter: true }" name="consumable">Consumable</md-switch>
+        <md-input-container ng-show="gearItem.isConsumable()">
             <label>Consumed per Day</label>
-            <input type="number" ng-model="gearItem.ConsumedPerDay" min="1" max="1000" name="consumedPerDay" />
+            <input type="number" ng-model="gearItem.consumedPerDay" ng-model-options="{ getterSetter: true }" min="1" max="1000" name="consumedPerDay" />
         </md-input-container>
     </div>
     <div layout="row" layout-sm="column" flex>
-        <md-input-container flex ng-show="'NotCarried' != gearItem.Carried">
+        <md-input-container flex ng-show="gearItem.isCarried()">
             <label>Weight ({{ getUnitsWeightString() }}s)</label>
             <input type="number" ng-model="gearItem.weightInUnits" ng-model-options="{ getterSetter: true, debounce: 500 }" min="0" max="1000000" name="weight" />
         </md-input-container>
@@ -47,7 +47,7 @@
     </div>
     <md-input-container>
         <label>Note</label>
-        <textarea ng-model="gearItem.Note" name="note"></textarea>
+        <textarea ng-model="gearItem.note" ng-model-options="{ getterSetter: true }" name="note"></textarea>
     </md-input-container>
     <div flex></div>
     <div layout="row">
