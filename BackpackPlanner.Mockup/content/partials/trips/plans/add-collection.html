@@ -8,14 +8,12 @@
             </md-button>
         </div>
     </md-toolbar>
-    <div layout="column" layout-padding flex ng-cloak>
-        <md-input-container md-no-float flex>
-            <input type="text" ng-model="filterName" name="filterName" placeholder="Filter" />
-        </md-input-container>
-        <md-dialog-content layout="column">
-            <md-checkbox ng-repeat="gearCollection in getGearCollections() | filter:filterGearCollection | orderBy:orderBy" ng-checked="isGearCollectionSelected(gearCollection)" ng-click="toggleGearCollectionSelected(gearCollection)">
-                <span style="white-space: nowrap;">{{ gearCollection.name() }}</span>
-            </md-checkbox>
-        </md-dialog-content>
-    </div>
+    <md-input-container md-no-float flex>
+        <input type="text" ng-model="filterName" name="filterName" placeholder="Filter" />
+    </md-input-container>
+    <md-dialog-content layout="column" layout-padding flex ng-cloak>
+        <md-checkbox ng-repeat="gearCollection in getGearCollections() | filter:filterGearCollection | orderBy:orderBy" ng-checked="isGearCollectionSelected(gearCollection)" ng-click="toggleGearCollectionSelected(gearCollection)">
+            <span style="white-space: nowrap;">{{ gearCollection.name() }}</span>
+        </md-checkbox>
+    </md-dialog-content>
 </md-dialog>
