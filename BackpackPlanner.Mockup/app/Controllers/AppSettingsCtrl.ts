@@ -58,6 +58,10 @@ module BackpackPlanner.Mockup.Controllers {
                 // TODO: toast!
             }
 
+            // TODO: these delete actions *cannot* be undone
+            // and that needs to be reflected in the messaging
+            // and the toast notifications
+
             $scope.deleteAllGearItems = (event) => {
                 var confirm = $mdDialog.confirm()
                     .parent(angular.element(document.body))

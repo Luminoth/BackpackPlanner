@@ -82,17 +82,14 @@ module BackpackPlanner.Mockup.Controllers.Gear.Items {
 
                 $mdDialog.show(confirm).then(() => {
                     $mdDialog.show(receipt).then(() => {
-                        if(!AppState.getInstance().getGearState().deleteGearItem($scope.gearItem)) {
-                            alert("Couldn't find the gear item to delete!");
-                            return;
-                        }
+                        const action = new Actions.Gear.Items.DeleteGearItemAction();
+                        action.GearItem = $scope.gearItem;
+                        AppState.getInstance().executeAction(action);
 
                         $location.path("/gear/items");
                         $mdToast.show(deleteToast).then((response: string) => {
                             if("ok" == response) {
-                                // TODO: this does *not* restore the item to its containers
-                                // and it should probably do so... but how?
-                                AppState.getInstance().getGearState().addGearItem($scope.gearItem);
+                                AppState.getInstance().undoAction();
                                 $mdToast.show(undoDeleteToast);
                                 $location.path(`/gear/items/${$scope.gearItem.Id}`);
                             }

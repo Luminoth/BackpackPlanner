@@ -82,17 +82,14 @@ module BackpackPlanner.Mockup.Controllers.Trips.Itineraries {
 
                 $mdDialog.show(confirm).then(() => {
                     $mdDialog.show(receipt).then(() => {
-                        if(!AppState.getInstance().getTripState().deleteTripItinerary($scope.tripItinerary)) {
-                            alert("Couldn't find the trip itinerary to delete!");
-                            return;
-                        }
+                        const action = new Actions.Trips.Itineraries.DeleteTripItineraryAction();
+                        action.TripItinerary = $scope.tripItinerary;
+                        AppState.getInstance().executeAction(action);
 
                         $location.path("/trips/itineraries");
                         $mdToast.show(deleteToast).then((response: string) => {
                             if("ok" == response) {
-                                // TODO: this does *not* restore the itinerary to its containers
-                                // and it should probably do so... but how?
-                                AppState.getInstance().getTripState().addTripItinerary($scope.tripItinerary);
+                                AppState.getInstance().undoAction();
                                 $mdToast.show(undoDeleteToast);
                                 $location.path(`/trips/itineraries/${$scope.tripItinerary.Id}`);
                             }

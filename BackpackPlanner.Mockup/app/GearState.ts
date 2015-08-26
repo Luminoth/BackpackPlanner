@@ -63,9 +63,6 @@ module BackpackPlanner.Mockup {
                 return false;
             }
             this._gearItems.splice(idx, 1);
-
-            // TODO: remove the item from the systems, collections, and trip plans it belongs to
-
             return true;
         }
 
@@ -114,15 +111,24 @@ module BackpackPlanner.Mockup {
             return gearSystem.Id;
         }
 
+        public removeGearItemFromSystems(gearItem: Models.Gear.GearItem) {
+            const gearSystems = <Array<Models.Gear.GearSystem>>[];
+            for(let i=0; i<this._gearSystems.length; ++i ) {
+                const gearSystem = this._gearSystems[i];
+                if(gearSystem.containsGearItemById(gearItem.Id)) {
+                    gearSystem.removeGearItemById(gearItem.Id);
+                    gearSystems.push(gearSystem);
+                }
+            }
+            return gearSystems;
+        }
+
         public deleteGearSystem(gearSystem: Models.Gear.GearSystem) {
             const idx = this.getGearSystemIndexById(gearSystem.Id);
             if(idx < 0) {
                 return false;
             }
             this._gearSystems.splice(idx, 1);
-
-            // TODO: remove the system from the collections, and trip plans it belongs to
-
             return true;
         }
 
@@ -169,6 +175,30 @@ module BackpackPlanner.Mockup {
 
             this._gearCollections.push(gearCollection);
             return gearCollection.Id;
+        }
+
+        public removeGearSystemFromCollections(gearSystem: Models.Gear.GearSystem) {
+            const gearCollections = <Array<Models.Gear.GearCollection>>[];
+            for(let i=0; i<this._gearCollections.length; ++i ) {
+                const gearCollection = this._gearCollections[i];
+                if(gearCollection.containsGearSystemById(gearSystem.Id)) {
+                    gearCollection.removeGearSystemById(gearSystem.Id);
+                    gearCollections.push(gearCollection);
+                }
+            }
+            return gearCollections;
+        }
+
+        public removeGearItemFromCollections(gearItem: Models.Gear.GearItem) {
+            const gearCollections = <Array<Models.Gear.GearCollection>>[];
+            for(let i=0; i<this._gearCollections.length; ++i ) {
+                const gearCollection = this._gearCollections[i];
+                if(gearCollection.containsGearItemById(gearItem.Id)) {
+                    gearCollection.removeGearItemById(gearItem.Id);
+                    gearCollections.push(gearCollection);
+                }
+            }
+            return gearCollections;
         }
 
         public deleteGearCollection(gearCollection: Models.Gear.GearCollection) {

@@ -99,17 +99,14 @@ module BackpackPlanner.Mockup.Controllers.Gear.Systems {
 
                 $mdDialog.show(confirm).then(() => {
                     $mdDialog.show(receipt).then(() => {
-                        if(!AppState.getInstance().getGearState().deleteGearSystem($scope.gearSystem)) {
-                            alert("Couldn't find the gear system to delete!");
-                            return;
-                        }
+                        const action = new Actions.Gear.Systems.DeleteGearSystemAction();
+                        action.GearSystem = $scope.gearSystem;
+                        AppState.getInstance().executeAction(action);
 
                         $location.path("/gear/systems");
                         $mdToast.show(deleteToast).then((response: string) => {
                             if("ok" == response) {
-                                // TODO: this does *not* restore the system to its containers
-                                // and it should probably do so... but how?
-                                AppState.getInstance().getGearState().addGearSystem($scope.gearSystem);
+                                AppState.getInstance().undoAction();
                                 $mdToast.show(undoDeleteToast);
                                 $location.path(`/gear/systems/${$scope.gearSystem.Id}`);
                             }

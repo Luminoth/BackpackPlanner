@@ -22,6 +22,37 @@ var BackpackPlanner;
         })(Resources = Mockup.Resources || (Mockup.Resources = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
+///<reference path="GearItemResource.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Resources;
+        (function (Resources) {
+            var Gear;
+            (function (Gear) {
+                "use strict";
+            })(Gear = Resources.Gear || (Resources.Gear = {}));
+        })(Resources = Mockup.Resources || (Mockup.Resources = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
+///<reference path="GearSystemResource.ts" />
+///<reference path="GearItemResource.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Resources;
+        (function (Resources) {
+            var Gear;
+            (function (Gear) {
+                "use strict";
+            })(Gear = Resources.Gear || (Resources.Gear = {}));
+        })(Resources = Mockup.Resources || (Mockup.Resources = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../Resources/Personal/UserInformationResource.ts"/>
 var BackpackPlanner;
 (function (BackpackPlanner) {
@@ -229,37 +260,6 @@ var BackpackPlanner;
         var Resources;
         (function (Resources) {
             "use strict";
-        })(Resources = Mockup.Resources || (Mockup.Resources = {}));
-    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
-})(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
-///<reference path="GearItemResource.ts" />
-var BackpackPlanner;
-(function (BackpackPlanner) {
-    var Mockup;
-    (function (Mockup) {
-        var Resources;
-        (function (Resources) {
-            var Gear;
-            (function (Gear) {
-                "use strict";
-            })(Gear = Resources.Gear || (Resources.Gear = {}));
-        })(Resources = Mockup.Resources || (Mockup.Resources = {}));
-    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
-})(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
-///<reference path="GearSystemResource.ts" />
-///<reference path="GearItemResource.ts" />
-var BackpackPlanner;
-(function (BackpackPlanner) {
-    var Mockup;
-    (function (Mockup) {
-        var Resources;
-        (function (Resources) {
-            var Gear;
-            (function (Gear) {
-                "use strict";
-            })(Gear = Resources.Gear || (Resources.Gear = {}));
         })(Resources = Mockup.Resources || (Mockup.Resources = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
@@ -1982,7 +1982,6 @@ var BackpackPlanner;
                     return false;
                 }
                 this._gearItems.splice(idx, 1);
-                // TODO: remove the item from the systems, collections, and trip plans it belongs to
                 return true;
             };
             GearState.prototype.deleteAllGearItems = function () {
@@ -2018,13 +2017,23 @@ var BackpackPlanner;
                 this._gearSystems.push(gearSystem);
                 return gearSystem.Id;
             };
+            GearState.prototype.removeGearItemFromSystems = function (gearItem) {
+                var gearSystems = [];
+                for (var i = 0; i < this._gearSystems.length; ++i) {
+                    var gearSystem = this._gearSystems[i];
+                    if (gearSystem.containsGearItemById(gearItem.Id)) {
+                        gearSystem.removeGearItemById(gearItem.Id);
+                        gearSystems.push(gearSystem);
+                    }
+                }
+                return gearSystems;
+            };
             GearState.prototype.deleteGearSystem = function (gearSystem) {
                 var idx = this.getGearSystemIndexById(gearSystem.Id);
                 if (idx < 0) {
                     return false;
                 }
                 this._gearSystems.splice(idx, 1);
-                // TODO: remove the system from the collections, and trip plans it belongs to
                 return true;
             };
             GearState.prototype.deleteAllGearSystems = function () {
@@ -2059,6 +2068,28 @@ var BackpackPlanner;
                 }
                 this._gearCollections.push(gearCollection);
                 return gearCollection.Id;
+            };
+            GearState.prototype.removeGearSystemFromCollections = function (gearSystem) {
+                var gearCollections = [];
+                for (var i = 0; i < this._gearCollections.length; ++i) {
+                    var gearCollection = this._gearCollections[i];
+                    if (gearCollection.containsGearSystemById(gearSystem.Id)) {
+                        gearCollection.removeGearSystemById(gearSystem.Id);
+                        gearCollections.push(gearCollection);
+                    }
+                }
+                return gearCollections;
+            };
+            GearState.prototype.removeGearItemFromCollections = function (gearItem) {
+                var gearCollections = [];
+                for (var i = 0; i < this._gearCollections.length; ++i) {
+                    var gearCollection = this._gearCollections[i];
+                    if (gearCollection.containsGearItemById(gearItem.Id)) {
+                        gearCollection.removeGearItemById(gearItem.Id);
+                        gearCollections.push(gearCollection);
+                    }
+                }
+                return gearCollections;
             };
             GearState.prototype.deleteGearCollection = function (gearCollection) {
                 var idx = this.getGearCollectionIndexById(gearCollection.Id);
@@ -2194,7 +2225,6 @@ var BackpackPlanner;
                     return false;
                 }
                 this._meals.splice(idx, 1);
-                // TODO: remove the meal from the trip plans it belongs to
                 return true;
             };
             MealState.prototype.deleteAllMeals = function () {
@@ -2291,7 +2321,6 @@ var BackpackPlanner;
                     return false;
                 }
                 this._tripItineraries.splice(idx, 1);
-                // TODO: remove the itinerary from the trip plans it belongs to
                 return true;
             };
             TripState.prototype.deleteAllTripItineraries = function () {
@@ -2326,6 +2355,61 @@ var BackpackPlanner;
                 }
                 this._tripPlans.push(tripPlan);
                 return tripPlan.Id;
+            };
+            TripState.prototype.removeGearCollectionFromPlans = function (gearCollection) {
+                var tripPlans = [];
+                for (var i = 0; i < this._tripPlans.length; ++i) {
+                    var tripPlan = this._tripPlans[i];
+                    if (tripPlan.containsGearCollectionById(tripPlan.Id)) {
+                        tripPlan.removeGearCollectionById(tripPlan.Id);
+                        tripPlans.push(tripPlan);
+                    }
+                }
+                return tripPlans;
+            };
+            TripState.prototype.removeGearSystemFromPlans = function (gearSystem) {
+                var tripPlans = [];
+                for (var i = 0; i < this._tripPlans.length; ++i) {
+                    var tripPlan = this._tripPlans[i];
+                    if (tripPlan.containsGearSystemById(gearSystem.Id)) {
+                        tripPlan.removeGearSystemById(gearSystem.Id);
+                        tripPlans.push(tripPlan);
+                    }
+                }
+                return tripPlans;
+            };
+            TripState.prototype.removeGearItemFromPlans = function (gearItem) {
+                var tripPlans = [];
+                for (var i = 0; i < this._tripPlans.length; ++i) {
+                    var tripPlan = this._tripPlans[i];
+                    if (tripPlan.containsGearItemById(gearItem.Id)) {
+                        tripPlan.removeGearItemById(gearItem.Id);
+                        tripPlans.push(tripPlan);
+                    }
+                }
+                return tripPlans;
+            };
+            TripState.prototype.removeMealFromPlans = function (meal) {
+                var tripPlans = [];
+                for (var i = 0; i < this._tripPlans.length; ++i) {
+                    var tripPlan = this._tripPlans[i];
+                    if (tripPlan.containsMealById(tripPlan.Id)) {
+                        tripPlan.removeMealById(tripPlan.Id);
+                        tripPlans.push(tripPlan);
+                    }
+                }
+                return tripPlans;
+            };
+            TripState.prototype.removeTripItineraryFromPlans = function (tripItinerary) {
+                var tripPlans = [];
+                for (var i = 0; i < this._tripPlans.length; ++i) {
+                    var tripPlan = this._tripPlans[i];
+                    if (tripPlan.tripItineraryId() == tripItinerary.Id) {
+                        tripPlan.tripItineraryId(-1);
+                        tripPlans.push(tripPlan);
+                    }
+                }
+                return tripPlans;
             };
             TripState.prototype.deleteTripPlan = function (tripPlan) {
                 var idx = this.getTripPlanIndexById(tripPlan.Id);
@@ -2393,6 +2477,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../scripts/typings/angularjs/angular.d.ts" />
+///<reference path="Actions/Command.ts"/>
 ///<reference path="Models/Personal/UserInformation.ts" />
 ///<reference path="Models/AppSettings.ts" />
 ///<reference path="Resources/Personal/UserInformationResource.ts" />
@@ -2431,6 +2516,17 @@ var BackpackPlanner;
             }
             AppState.getInstance = function () {
                 return AppState._instance;
+            };
+            AppState.prototype.executeAction = function (action) {
+                this._lastAction = action;
+                this._lastAction.doAction();
+            };
+            AppState.prototype.undoAction = function () {
+                if (!this._lastAction) {
+                    return;
+                }
+                this._lastAction.undoAction();
+                this._lastAction = undefined;
             };
             AppState.prototype.getAppSettings = function () {
                 return this._appSettings;
@@ -2688,6 +2784,237 @@ var BackpackPlanner;
                 Meals.MealEntry = MealEntry;
             })(Meals = Models.Meals || (Models.Meals = {}));
         })(Models = Mockup.Models || (Mockup.Models = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../Models/Gear/GearCollection.ts"/>
+///<reference path="../../Command.ts"/>
+///<reference path="../../../AppState.ts"/>
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Actions;
+        (function (Actions) {
+            var Gear;
+            (function (Gear) {
+                var Collections;
+                (function (Collections) {
+                    "use strict";
+                    var DeleteGearCollectionAction = (function () {
+                        function DeleteGearCollectionAction() {
+                            this._tripPlans = [];
+                        }
+                        DeleteGearCollectionAction.prototype.doAction = function () {
+                            this._tripPlans = Mockup.AppState.getInstance().getTripState().removeGearCollectionFromPlans(this.GearCollection);
+                            Mockup.AppState.getInstance().getGearState().deleteGearCollection(this.GearCollection);
+                        };
+                        DeleteGearCollectionAction.prototype.undoAction = function () {
+                            Mockup.AppState.getInstance().getGearState().addGearCollection(this.GearCollection);
+                            for (var i = 0; i < this._tripPlans.length; ++i) {
+                                var tripPlan = this._tripPlans[i];
+                                tripPlan.addGearCollection(this.GearCollection);
+                            }
+                        };
+                        return DeleteGearCollectionAction;
+                    })();
+                    Collections.DeleteGearCollectionAction = DeleteGearCollectionAction;
+                })(Collections = Gear.Collections || (Gear.Collections = {}));
+            })(Gear = Actions.Gear || (Actions.Gear = {}));
+        })(Actions = Mockup.Actions || (Mockup.Actions = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../Models/Gear/GearItem.ts"/>
+///<reference path="../../Command.ts"/>
+///<reference path="../../../AppState.ts"/>
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Actions;
+        (function (Actions) {
+            var Gear;
+            (function (Gear) {
+                var Items;
+                (function (Items) {
+                    "use strict";
+                    var DeleteGearItemAction = (function () {
+                        function DeleteGearItemAction() {
+                            this._gearSystems = [];
+                            this._gearCollections = [];
+                            this._tripPlans = [];
+                        }
+                        DeleteGearItemAction.prototype.doAction = function () {
+                            this._tripPlans = Mockup.AppState.getInstance().getTripState().removeGearItemFromPlans(this.GearItem);
+                            this._gearCollections = Mockup.AppState.getInstance().getGearState().removeGearItemFromCollections(this.GearItem);
+                            this._gearSystems = Mockup.AppState.getInstance().getGearState().removeGearItemFromSystems(this.GearItem);
+                            Mockup.AppState.getInstance().getGearState().deleteGearItem(this.GearItem);
+                        };
+                        DeleteGearItemAction.prototype.undoAction = function () {
+                            Mockup.AppState.getInstance().getGearState().addGearItem(this.GearItem);
+                            for (var i = 0; i < this._gearSystems.length; ++i) {
+                                var gearSystem = this._gearSystems[i];
+                                gearSystem.addGearItem(this.GearItem);
+                            }
+                            for (var i = 0; i < this._gearCollections.length; ++i) {
+                                var gearCollection = this._gearCollections[i];
+                                gearCollection.addGearItem(this.GearItem);
+                            }
+                            for (var i = 0; i < this._tripPlans.length; ++i) {
+                                var tripPlan = this._tripPlans[i];
+                                tripPlan.addGearItem(this.GearItem);
+                            }
+                        };
+                        return DeleteGearItemAction;
+                    })();
+                    Items.DeleteGearItemAction = DeleteGearItemAction;
+                })(Items = Gear.Items || (Gear.Items = {}));
+            })(Gear = Actions.Gear || (Actions.Gear = {}));
+        })(Actions = Mockup.Actions || (Mockup.Actions = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../Models/Gear/GearSystem.ts"/>
+///<reference path="../../Command.ts"/>
+///<reference path="../../../AppState.ts"/>
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Actions;
+        (function (Actions) {
+            var Gear;
+            (function (Gear) {
+                var Systems;
+                (function (Systems) {
+                    "use strict";
+                    var DeleteGearSystemAction = (function () {
+                        function DeleteGearSystemAction() {
+                            this._gearCollections = [];
+                            this._tripPlans = [];
+                        }
+                        DeleteGearSystemAction.prototype.doAction = function () {
+                            this._tripPlans = Mockup.AppState.getInstance().getTripState().removeGearSystemFromPlans(this.GearSystem);
+                            this._gearCollections = Mockup.AppState.getInstance().getGearState().removeGearSystemFromCollections(this.GearSystem);
+                            Mockup.AppState.getInstance().getGearState().deleteGearSystem(this.GearSystem);
+                        };
+                        DeleteGearSystemAction.prototype.undoAction = function () {
+                            Mockup.AppState.getInstance().getGearState().addGearSystem(this.GearSystem);
+                            for (var i = 0; i < this._gearCollections.length; ++i) {
+                                var gearCollection = this._gearCollections[i];
+                                gearCollection.addGearSystem(this.GearSystem);
+                            }
+                            for (var i = 0; i < this._tripPlans.length; ++i) {
+                                var tripPlan = this._tripPlans[i];
+                                tripPlan.addGearSystem(this.GearSystem);
+                            }
+                        };
+                        return DeleteGearSystemAction;
+                    })();
+                    Systems.DeleteGearSystemAction = DeleteGearSystemAction;
+                })(Systems = Gear.Systems || (Gear.Systems = {}));
+            })(Gear = Actions.Gear || (Actions.Gear = {}));
+        })(Actions = Mockup.Actions || (Mockup.Actions = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../Models/Meals/Meal.ts"/>
+///<reference path="../Command.ts"/>
+///<reference path="../../AppState.ts"/>
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Actions;
+        (function (Actions) {
+            var Meals;
+            (function (Meals) {
+                "use strict";
+                var DeleteMealAction = (function () {
+                    function DeleteMealAction() {
+                        this._tripPlans = [];
+                    }
+                    DeleteMealAction.prototype.doAction = function () {
+                        this._tripPlans = Mockup.AppState.getInstance().getTripState().removeMealFromPlans(this.Meal);
+                        Mockup.AppState.getInstance().getMealState().deleteMeal(this.Meal);
+                    };
+                    DeleteMealAction.prototype.undoAction = function () {
+                        Mockup.AppState.getInstance().getMealState().addMeal(this.Meal);
+                        for (var i = 0; i < this._tripPlans.length; ++i) {
+                            var tripPlan = this._tripPlans[i];
+                            tripPlan.addMeal(this.Meal);
+                        }
+                    };
+                    return DeleteMealAction;
+                })();
+                Meals.DeleteMealAction = DeleteMealAction;
+            })(Meals = Actions.Meals || (Actions.Meals = {}));
+        })(Actions = Mockup.Actions || (Mockup.Actions = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../Models/Trips/TripItinerary.ts"/>
+///<reference path="../../Command.ts"/>
+///<reference path="../../../AppState.ts"/>
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Actions;
+        (function (Actions) {
+            var Trips;
+            (function (Trips) {
+                var Itineraries;
+                (function (Itineraries) {
+                    "use strict";
+                    var DeleteTripItineraryAction = (function () {
+                        function DeleteTripItineraryAction() {
+                            this._tripPlans = [];
+                        }
+                        DeleteTripItineraryAction.prototype.doAction = function () {
+                            this._tripPlans = Mockup.AppState.getInstance().getTripState().removeTripItineraryFromPlans(this.TripItinerary);
+                            Mockup.AppState.getInstance().getTripState().deleteTripItinerary(this.TripItinerary);
+                        };
+                        DeleteTripItineraryAction.prototype.undoAction = function () {
+                            Mockup.AppState.getInstance().getTripState().addTripItinerary(this.TripItinerary);
+                            for (var i = 0; i < this._tripPlans.length; ++i) {
+                                var tripPlan = this._tripPlans[i];
+                                tripPlan.tripItineraryId(this.TripItinerary.Id);
+                            }
+                        };
+                        return DeleteTripItineraryAction;
+                    })();
+                    Itineraries.DeleteTripItineraryAction = DeleteTripItineraryAction;
+                })(Itineraries = Trips.Itineraries || (Trips.Itineraries = {}));
+            })(Trips = Actions.Trips || (Actions.Trips = {}));
+        })(Actions = Mockup.Actions || (Mockup.Actions = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../Models/Trips/TripPlan.ts"/>
+///<reference path="../../Command.ts"/>
+///<reference path="../../../AppState.ts"/>
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Actions;
+        (function (Actions) {
+            var Trips;
+            (function (Trips) {
+                var Plans;
+                (function (Plans) {
+                    "use strict";
+                    var DeleteTripPlanAction = (function () {
+                        function DeleteTripPlanAction() {
+                        }
+                        DeleteTripPlanAction.prototype.doAction = function () {
+                            Mockup.AppState.getInstance().getTripState().deleteTripPlan(this.TripPlan);
+                        };
+                        DeleteTripPlanAction.prototype.undoAction = function () {
+                            Mockup.AppState.getInstance().getTripState().addTripPlan(this.TripPlan);
+                        };
+                        return DeleteTripPlanAction;
+                    })();
+                    Plans.DeleteTripPlanAction = DeleteTripPlanAction;
+                })(Plans = Trips.Plans || (Trips.Plans = {}));
+            })(Trips = Actions.Trips || (Actions.Trips = {}));
+        })(Actions = Mockup.Actions || (Mockup.Actions = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="Models/AppSettings.ts"/>
@@ -3084,16 +3411,13 @@ var BackpackPlanner;
                                     .position("bottom left");
                                 $mdDialog.show(confirm).then(function () {
                                     $mdDialog.show(receipt).then(function () {
-                                        if (!Mockup.AppState.getInstance().getGearState().deleteGearCollection($scope.gearCollection)) {
-                                            alert("Couldn't find the gear collection to delete!");
-                                            return;
-                                        }
+                                        var action = new Mockup.Actions.Gear.Collections.DeleteGearCollectionAction();
+                                        action.GearCollection = $scope.gearCollection;
+                                        Mockup.AppState.getInstance().executeAction(action);
                                         $location.path("/gear/collections");
                                         $mdToast.show(deleteToast).then(function (response) {
                                             if ("ok" == response) {
-                                                // TODO: this does *not* restore the collection to its containers
-                                                // and it should probably do so... but how?
-                                                Mockup.AppState.getInstance().getGearState().addGearCollection($scope.gearCollection);
+                                                Mockup.AppState.getInstance().undoAction();
                                                 $mdToast.show(undoDeleteToast);
                                                 $location.path("/gear/collections/" + $scope.gearCollection.Id);
                                             }
@@ -3269,16 +3593,13 @@ var BackpackPlanner;
                                     .position("bottom left");
                                 $mdDialog.show(confirm).then(function () {
                                     $mdDialog.show(receipt).then(function () {
-                                        if (!Mockup.AppState.getInstance().getGearState().deleteGearItem($scope.gearItem)) {
-                                            alert("Couldn't find the gear item to delete!");
-                                            return;
-                                        }
+                                        var action = new Mockup.Actions.Gear.Items.DeleteGearItemAction();
+                                        action.GearItem = $scope.gearItem;
+                                        Mockup.AppState.getInstance().executeAction(action);
                                         $location.path("/gear/items");
                                         $mdToast.show(deleteToast).then(function (response) {
                                             if ("ok" == response) {
-                                                // TODO: this does *not* restore the item to its containers
-                                                // and it should probably do so... but how?
-                                                Mockup.AppState.getInstance().getGearState().addGearItem($scope.gearItem);
+                                                Mockup.AppState.getInstance().undoAction();
                                                 $mdToast.show(undoDeleteToast);
                                                 $location.path("/gear/items/" + $scope.gearItem.Id);
                                             }
@@ -3478,16 +3799,13 @@ var BackpackPlanner;
                                     .position("bottom left");
                                 $mdDialog.show(confirm).then(function () {
                                     $mdDialog.show(receipt).then(function () {
-                                        if (!Mockup.AppState.getInstance().getGearState().deleteGearSystem($scope.gearSystem)) {
-                                            alert("Couldn't find the gear system to delete!");
-                                            return;
-                                        }
+                                        var action = new Mockup.Actions.Gear.Systems.DeleteGearSystemAction();
+                                        action.GearSystem = $scope.gearSystem;
+                                        Mockup.AppState.getInstance().executeAction(action);
                                         $location.path("/gear/systems");
                                         $mdToast.show(deleteToast).then(function (response) {
                                             if ("ok" == response) {
-                                                // TODO: this does *not* restore the system to its containers
-                                                // and it should probably do so... but how?
-                                                Mockup.AppState.getInstance().getGearState().addGearSystem($scope.gearSystem);
+                                                Mockup.AppState.getInstance().undoAction();
                                                 $mdToast.show(undoDeleteToast);
                                                 $location.path("/gear/systems/" + $scope.gearSystem.Id);
                                             }
@@ -3652,16 +3970,13 @@ var BackpackPlanner;
                                 .position("bottom left");
                             $mdDialog.show(confirm).then(function () {
                                 $mdDialog.show(receipt).then(function () {
-                                    if (!Mockup.AppState.getInstance().getMealState().deleteMeal($scope.meal)) {
-                                        alert("Couldn't find the meal to delete!");
-                                        return;
-                                    }
+                                    var action = new Mockup.Actions.Meals.DeleteMealAction();
+                                    action.Meal = $scope.meal;
+                                    Mockup.AppState.getInstance().executeAction(action);
                                     $location.path("/meals");
                                     $mdToast.show(deleteToast).then(function (response) {
                                         if ("ok" == response) {
-                                            // TODO: this does *not* restore the meal to its containers
-                                            // and it should probably do so... but how?
-                                            Mockup.AppState.getInstance().getMealState().addMeal($scope.meal);
+                                            Mockup.AppState.getInstance().undoAction();
                                             $mdToast.show(undoDeleteToast);
                                             $location.path("/meals/" + $scope.meal.Id);
                                         }
@@ -3833,16 +4148,13 @@ var BackpackPlanner;
                                     .position("bottom left");
                                 $mdDialog.show(confirm).then(function () {
                                     $mdDialog.show(receipt).then(function () {
-                                        if (!Mockup.AppState.getInstance().getTripState().deleteTripItinerary($scope.tripItinerary)) {
-                                            alert("Couldn't find the trip itinerary to delete!");
-                                            return;
-                                        }
+                                        var action = new Mockup.Actions.Trips.Itineraries.DeleteTripItineraryAction();
+                                        action.TripItinerary = $scope.tripItinerary;
+                                        Mockup.AppState.getInstance().executeAction(action);
                                         $location.path("/trips/itineraries");
                                         $mdToast.show(deleteToast).then(function (response) {
                                             if ("ok" == response) {
-                                                // TODO: this does *not* restore the itinerary to its containers
-                                                // and it should probably do so... but how?
-                                                Mockup.AppState.getInstance().getTripState().addTripItinerary($scope.tripItinerary);
+                                                Mockup.AppState.getInstance().undoAction();
                                                 $mdToast.show(undoDeleteToast);
                                                 $location.path("/trips/itineraries/" + $scope.tripItinerary.Id);
                                             }
@@ -4066,14 +4378,13 @@ var BackpackPlanner;
                                     .position("bottom left");
                                 $mdDialog.show(confirm).then(function () {
                                     $mdDialog.show(receipt).then(function () {
-                                        if (!Mockup.AppState.getInstance().getTripState().deleteTripPlan($scope.tripPlan)) {
-                                            alert("Couldn't find the trip plan to delete!");
-                                            return;
-                                        }
+                                        var action = new Mockup.Actions.Trips.Plans.DeleteTripPlanAction();
+                                        action.TripPlan = $scope.tripPlan;
+                                        Mockup.AppState.getInstance().executeAction(action);
                                         $location.path("/trips/plans");
                                         $mdToast.show(deleteToast).then(function (response) {
                                             if ("ok" == response) {
-                                                Mockup.AppState.getInstance().getTripState().addTripPlan($scope.tripPlan);
+                                                Mockup.AppState.getInstance().undoAction();
                                                 $mdToast.show(undoDeleteToast);
                                                 $location.path("/trips/plans/" + $scope.tripPlan.Id);
                                             }
@@ -4257,6 +4568,9 @@ var BackpackPlanner;
                         $scope.appSettings.resetToDefaults();
                         // TODO: toast!
                     };
+                    // TODO: these delete actions *cannot* be undone
+                    // and that needs to be reflected in the messaging
+                    // and the toast notifications
                     $scope.deleteAllGearItems = function (event) {
                         var confirm = $mdDialog.confirm()
                             .parent(angular.element(document.body))

@@ -144,15 +144,14 @@ module BackpackPlanner.Mockup.Controllers.Trips.Plans {
 
                 $mdDialog.show(confirm).then(() => {
                     $mdDialog.show(receipt).then(() => {
-                        if(!AppState.getInstance().getTripState().deleteTripPlan($scope.tripPlan)) {
-                            alert("Couldn't find the trip plan to delete!");
-                            return;
-                        }
+                        const action = new Actions.Trips.Plans.DeleteTripPlanAction();
+                        action.TripPlan = $scope.tripPlan;
+                        AppState.getInstance().executeAction(action);
 
                         $location.path("/trips/plans");
                         $mdToast.show(deleteToast).then((response: string) => {
                             if("ok" == response) {
-                                AppState.getInstance().getTripState().addTripPlan($scope.tripPlan);
+                                AppState.getInstance().undoAction();
                                 $mdToast.show(undoDeleteToast);
                                 $location.path(`/trips/plans/${$scope.tripPlan.Id}`);
                             }

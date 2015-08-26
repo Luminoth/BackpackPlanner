@@ -57,9 +57,6 @@ module BackpackPlanner.Mockup {
                 return false;
             }
             this._meals.splice(idx, 1);
-
-            // TODO: remove the meal from the trip plans it belongs to
-
             return true;
         }
 

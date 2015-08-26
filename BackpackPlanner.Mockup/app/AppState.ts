@@ -1,5 +1,7 @@
 ﻿///<reference path="../scripts/typings/angularjs/angular.d.ts" />
 
+///<reference path="Actions/Command.ts"/>
+
 ///<reference path="Models/Personal/UserInformation.ts" />
 ///<reference path="Models/AppSettings.ts" />
 
@@ -35,6 +37,24 @@ module BackpackPlanner.Mockup {
             if(AppState._instance) {
                 throw new Error("Error: AppState already instantiated!");
             }
+        }
+
+        /* Actions */
+
+        private _lastAction: Actions.ICommand;
+
+        public executeAction(action: Actions.ICommand) {
+            this._lastAction = action;
+            this._lastAction.doAction();
+        }
+
+        public undoAction() {
+            if(!this._lastAction) {
+                return;
+            }
+
+            this._lastAction.undoAction();
+            this._lastAction = undefined;
         }
 
         /* App Settings */

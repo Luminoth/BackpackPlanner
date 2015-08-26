@@ -114,17 +114,14 @@ module BackpackPlanner.Mockup.Controllers.Gear.Collections {
 
                 $mdDialog.show(confirm).then(() => {
                     $mdDialog.show(receipt).then(() => {
-                        if(!AppState.getInstance().getGearState().deleteGearCollection($scope.gearCollection)) {
-                            alert("Couldn't find the gear collection to delete!");
-                            return;
-                        }
+                        const action = new Actions.Gear.Collections.DeleteGearCollectionAction();
+                        action.GearCollection = $scope.gearCollection;
+                        AppState.getInstance().executeAction(action);
 
                         $location.path("/gear/collections");
                         $mdToast.show(deleteToast).then((response: string) => {
                             if("ok" == response) {
-                                // TODO: this does *not* restore the collection to its containers
-                                // and it should probably do so... but how?
-                                AppState.getInstance().getGearState().addGearCollection($scope.gearCollection);
+                                AppState.getInstance().undoAction();
                                 $mdToast.show(undoDeleteToast);
                                 $location.path(`/gear/collections/${$scope.gearCollection.Id}`);
                             }

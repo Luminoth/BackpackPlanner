@@ -82,17 +82,14 @@ module BackpackPlanner.Mockup.Controllers.Meals {
 
                 $mdDialog.show(confirm).then(() => {
                     $mdDialog.show(receipt).then(() => {
-                        if(!AppState.getInstance().getMealState().deleteMeal($scope.meal)) {
-                            alert("Couldn't find the meal to delete!");
-                            return;
-                        }
+                        const action = new Actions.Meals.DeleteMealAction();
+                        action.Meal = $scope.meal;
+                        AppState.getInstance().executeAction(action);
 
                         $location.path("/meals");
                         $mdToast.show(deleteToast).then((response: string) => {
                             if("ok" == response) {
-                                // TODO: this does *not* restore the meal to its containers
-                                // and it should probably do so... but how?
-                                AppState.getInstance().getMealState().addMeal($scope.meal);
+                                AppState.getInstance().undoAction();
                                 $mdToast.show(undoDeleteToast);
                                 $location.path(`/meals/${$scope.meal.Id}`);
                             }

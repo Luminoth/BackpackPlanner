@@ -60,9 +60,6 @@ module BackpackPlanner.Mockup {
                 return false;
             }
             this._tripItineraries.splice(idx, 1);
-
-            // TODO: remove the itinerary from the trip plans it belongs to
-
             return true;
         }
 
@@ -109,6 +106,66 @@ module BackpackPlanner.Mockup {
 
             this._tripPlans.push(tripPlan);
             return tripPlan.Id;
+        }
+
+        public removeGearCollectionFromPlans(gearCollection: Models.Gear.GearCollection) {
+            const tripPlans = <Array<Models.Trips.TripPlan>>[];
+            for(let i=0; i<this._tripPlans.length; ++i ) {
+                const tripPlan = this._tripPlans[i];
+                if(tripPlan.containsGearCollectionById(tripPlan.Id)) {
+                    tripPlan.removeGearCollectionById(tripPlan.Id);
+                    tripPlans.push(tripPlan);
+                }
+            }
+            return tripPlans;
+        }
+
+        public removeGearSystemFromPlans(gearSystem: Models.Gear.GearSystem) {
+            const tripPlans = <Array<Models.Trips.TripPlan>>[];
+            for(let i=0; i<this._tripPlans.length; ++i ) {
+                const tripPlan = this._tripPlans[i];
+                if(tripPlan.containsGearSystemById(gearSystem.Id)) {
+                    tripPlan.removeGearSystemById(gearSystem.Id);
+                    tripPlans.push(tripPlan);
+                }
+            }
+            return tripPlans;
+        }
+
+        public removeGearItemFromPlans(gearItem: Models.Gear.GearItem) {
+            const tripPlans = <Array<Models.Trips.TripPlan>>[];
+            for(let i=0; i<this._tripPlans.length; ++i ) {
+                const tripPlan = this._tripPlans[i];
+                if(tripPlan.containsGearItemById(gearItem.Id)) {
+                    tripPlan.removeGearItemById(gearItem.Id);
+                    tripPlans.push(tripPlan);
+                }
+            }
+            return tripPlans;
+        }
+
+        public removeMealFromPlans(meal: Models.Meals.Meal) {
+            const tripPlans = <Array<Models.Trips.TripPlan>>[];
+            for(let i=0; i<this._tripPlans.length; ++i ) {
+                const tripPlan = this._tripPlans[i];
+                if(tripPlan.containsMealById(tripPlan.Id)) {
+                    tripPlan.removeMealById(tripPlan.Id);
+                    tripPlans.push(tripPlan);
+                }
+            }
+            return tripPlans;
+        }
+
+        public removeTripItineraryFromPlans(tripItinerary: Models.Trips.TripItinerary) {
+            const tripPlans = <Array<Models.Trips.TripPlan>>[];
+            for(let i=0; i<this._tripPlans.length; ++i ) {
+                const tripPlan = this._tripPlans[i];
+                if(tripPlan.tripItineraryId() == tripItinerary.Id) {
+                    tripPlan.tripItineraryId(-1);
+                    tripPlans.push(tripPlan);
+                }
+            }
+            return tripPlans;
         }
 
         public deleteTripPlan(tripPlan: Models.Trips.TripPlan) {

@@ -89,6 +89,12 @@
   <ItemGroup />
   <ItemGroup>
     <TypeScriptCompile Include="app\Actions\Command.ts" />
+    <TypeScriptCompile Include="app\Actions\Gear\Collections\DeleteGearCollectionAction.ts" />
+    <TypeScriptCompile Include="app\Actions\Gear\Items\DeleteGearItemAction.ts" />
+    <TypeScriptCompile Include="app\Actions\Gear\Systems\DeleteGearSystemAction.ts" />
+    <TypeScriptCompile Include="app\Actions\Meals\DeleteMealAction.ts" />
+    <TypeScriptCompile Include="app\Actions\Trips\Itineraries\DeleteTripItineraryAction.ts" />
+    <TypeScriptCompile Include="app\Actions\Trips\Plans\DeleteTripPlanAction.ts" />
     <TypeScriptCompile Include="app\App.ts" />
     <TypeScriptCompile Include="app\AppState.ts" />
     <TypeScriptCompile Include="app\Controllers\AppCtrl.ts" />
