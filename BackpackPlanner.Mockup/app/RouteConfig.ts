@@ -78,7 +78,7 @@ module BackpackPlanner.Mockup {
             })
 
             // trip itineraries
-            .when("/trips/itineraries", {
+            /*.when("/trips/itineraries", {
                 templateUrl: "content/partials/trips/itineraries/itineraries.html",
                 controller: "TripItinerariesCtrl",
                 title: "Trip Itineraries"
@@ -92,7 +92,7 @@ module BackpackPlanner.Mockup {
                 templateUrl: "content/partials/trips/itineraries/itinerary.html",
                 controller: "TripItineraryCtrl",
                 title: "Trip Itinerary"
-            })
+            })*/
 
             // trip plans
             .when("/trips/plans", {

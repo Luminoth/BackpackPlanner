@@ -1921,7 +1921,6 @@ var BackpackPlanner;
                         this._meals = [];
                     };
                     /* Weight/Cost */
-                    // TODO: this is based on base-weight only!
                     TripPlan.prototype.getWeightClass = function () {
                         return Mockup.AppState.getInstance().getAppSettings().getWeightClass(this.getBaseWeightInGrams([]));
                     };
@@ -2460,7 +2459,6 @@ var BackpackPlanner;
                     return false;
                 }
                 this._gearCollections.splice(idx, 1);
-                // TODO: remove the collection from the trip plans it belongs to
                 return true;
             };
             GearState.prototype.deleteAllGearCollections = function () {
@@ -5186,21 +5184,6 @@ var BackpackPlanner;
                     templateUrl: "content/partials/meals/meal.html",
                     controller: "MealCtrl",
                     title: "Meal"
-                })
-                    .when("/trips/itineraries", {
-                    templateUrl: "content/partials/trips/itineraries/itineraries.html",
-                    controller: "TripItinerariesCtrl",
-                    title: "Trip Itineraries"
-                })
-                    .when("/trips/itineraries/add", {
-                    templateUrl: "content/partials/trips/itineraries/add.html",
-                    controller: "AddTripItineraryCtrl",
-                    title: "Add a Trip Itinerary"
-                })
-                    .when("/trips/itineraries/:tripItineraryId", {
-                    templateUrl: "content/partials/trips/itineraries/itinerary.html",
-                    controller: "TripItineraryCtrl",
-                    title: "Trip Itinerary"
                 })
                     .when("/trips/plans", {
                     templateUrl: "content/partials/trips/plans/plans.html",

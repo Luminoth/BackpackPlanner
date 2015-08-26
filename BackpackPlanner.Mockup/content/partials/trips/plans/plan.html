@@ -18,13 +18,13 @@
             <input type="date" ng-model="tripPlan.endDate" ng-model-options="{ getterSetter: true }" name="endDate" />
         </md-input-container>
     </div>
-    <md-input-container>
+    <!--<md-input-container>
         <label>Itinerary</label>
         <md-select ng-model="tripPlan.tripItineraryId" ng-model-options="{ getterSetter: true }" name="itinerary">
             <md-option value="0">No Itinerary</md-option>
             <md-option ng-repeat="tripItinerary in getTripItineraries()" value="{{ tripItinerary.Id }}">{{ tripItinerary.name() }}</md-option>
         </md-select>
-    </md-input-container>
+    </md-input-container>-->
     <label>Gear Collections</label>
     <p ng-show="tripPlan.getGearCollections().length < 1">You have no gear collections in this plan! Try adding one!</p>
     <div layout="column" ng-show="tripPlan.getGearCollections().length > 0">

@@ -207,9 +207,6 @@ module BackpackPlanner.Mockup {
                 return false;
             }
             this._gearCollections.splice(idx, 1);
-
-            // TODO: remove the collection from the trip plans it belongs to
-
             return true;
         }
 

@@ -500,7 +500,6 @@ module BackpackPlanner.Mockup.Models.Trips {
 
         /* Weight/Cost */
 
-        // TODO: this is based on base-weight only!
         public getWeightClass() {
             return AppState.getInstance().getAppSettings().getWeightClass(this.getBaseWeightInGrams([]));
         }
