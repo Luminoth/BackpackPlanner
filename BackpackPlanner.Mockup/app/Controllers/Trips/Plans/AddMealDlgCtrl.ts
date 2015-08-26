@@ -46,9 +46,15 @@ module BackpackPlanner.Mockup.Controllers.Trips.Plans {
 
             $scope.toggleMealSelected = (meal) => {
                 if(!$scope.tripPlan.containsMealById(meal.Id)) {
-                    $scope.tripPlan.addMeal(meal);
+                    try {
+                        $scope.tripPlan.addMeal(meal);
+                    } catch(error) {
+                        alert(error);
+                    }
                 } else {
-                    $scope.tripPlan.removeMealById(meal.Id);
+                    if(!$scope.tripPlan.removeMealById(meal.Id)) {
+                        alert("Cannot remove the meal, it may no longer exist.");
+                    }
                 } 
             };
         }

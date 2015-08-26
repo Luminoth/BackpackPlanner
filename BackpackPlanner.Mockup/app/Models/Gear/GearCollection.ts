@@ -112,33 +112,32 @@ module BackpackPlanner.Mockup.Models.Gear {
 
         public addGearSystem(gearSystem: GearSystem) {
             if(this.containsGearSystemById(gearSystem.Id)) {
-                return false;
+                throw "The collection already contains this system!";
             }
 
             if(this.containsGearSystemItems(gearSystem)) {
-                return false;
+                throw "The collection already contains items from this system!";
             }
 
             this._gearSystems.push(new GearSystemEntry(gearSystem.Id));
-            return true;
         }
 
         private addGearSystemEntry(gearSystemId: number, count: number) {
             if(this.containsGearSystemById(gearSystemId)) {
-                return false;
+                throw "The collection already contains this system!";
             }
 
+            // TODO: prevent duplicates here
             /*const gearSystem = AppState.getInstance().getGearState().getGearSystemById(gearSystemId);
             if(!gearSystem) {
-                return false;
+                throw "The system does not exist!";
             }
 
             if(this.containsGearSystemItems(gearSystem)) {
-                return false;
+                throw "The collection already contains items from this system!";
             }*/
             
             this._gearSystems.push(new GearSystemEntry(gearSystemId, count));
-            return true;
         }
 
         public removeGearSystemById(gearSystemId: number) {
@@ -206,20 +205,18 @@ module BackpackPlanner.Mockup.Models.Gear {
 
         public addGearItem(gearItem: GearItem) {
             if(this.containsGearItemById(gearItem.Id)) {
-                return false;
+                throw "The collection already contains this item!";
             }
 
             this._gearItems.push(new GearItemEntry(gearItem.Id));
-            return true;
         }
 
         private addGearItemEntry(gearItemId: number, count: number) {
             if(this.containsGearItemById(gearItemId)) {
-                return false;
+                throw "The collection already contains this item!";
             }
 
             this._gearItems.push(new GearItemEntry(gearItemId, count));
-            return true;
         }
 
         public removeGearItemById(gearItemId: number) {
@@ -310,13 +307,19 @@ module BackpackPlanner.Mockup.Models.Gear {
             this._gearSystems = <Array<GearSystemEntry>>[];
             for(let i=0; i<gearCollection._gearSystems.length; ++i) {
                 const gearSystemEntry = gearCollection._gearSystems[i];
-                this.addGearSystemEntry(gearSystemEntry.getGearSystemId(), gearSystemEntry.count());
+                try {
+                    this.addGearSystemEntry(gearSystemEntry.getGearSystemId(), gearSystemEntry.count());
+                } catch(error) {
+                }
             }
 
             this._gearItems = <Array<GearItemEntry>>[];
             for(let i=0; i<gearCollection._gearItems.length; ++i) {
                 const gearItemEntry = gearCollection._gearItems[i];
-                this.addGearItemEntry(gearItemEntry.getGearItemId(), gearItemEntry.count());
+                try {
+                    this.addGearItemEntry(gearItemEntry.getGearItemId(), gearItemEntry.count());
+                } catch(error) {
+                }
             }
         }
 
@@ -329,12 +332,18 @@ module BackpackPlanner.Mockup.Models.Gear {
 
             for(let i=0; i<gearCollectionResource.GearSystems.length; ++i) {
                 const gearSystemEntry = gearCollectionResource.GearSystems[i];
-                this.addGearSystemEntry(gearSystemEntry.GearSystemId, gearSystemEntry.Count);
+                try {
+                    this.addGearSystemEntry(gearSystemEntry.GearSystemId, gearSystemEntry.Count);
+                } catch(error) {
+                }
             }
 
             for(let i=0; i<gearCollectionResource.GearItems.length; ++i) {
                 const gearItemEntry = gearCollectionResource.GearItems[i];
-                this.addGearItemEntry(gearItemEntry.GearItemId, gearItemEntry.Count);
+                try {
+                    this.addGearItemEntry(gearItemEntry.GearItemId, gearItemEntry.Count);
+                } catch(error) {
+                }
             }
 
             deferred.resolve(this);

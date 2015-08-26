@@ -739,17 +739,15 @@ var BackpackPlanner;
                     };
                     GearSystem.prototype.addGearItem = function (gearItem) {
                         if (this.containsGearItemById(gearItem.Id)) {
-                            return false;
+                            throw "The system already contains this item!";
                         }
                         this._gearItems.push(new Gear.GearItemEntry(gearItem.Id));
-                        return true;
                     };
                     GearSystem.prototype.addGearItemEntry = function (gearItemId, count) {
                         if (this.containsGearItemById(gearItemId)) {
-                            return false;
+                            throw "The system already contains this item!";
                         }
                         this._gearItems.push(new Gear.GearItemEntry(gearItemId, count));
-                        return true;
                     };
                     GearSystem.prototype.removeGearItemById = function (gearItemId) {
                         var idx = this.getGearItemEntryIndexById(gearItemId);
@@ -813,7 +811,11 @@ var BackpackPlanner;
                         this._gearItems = [];
                         for (var i = 0; i < gearSystem._gearItems.length; ++i) {
                             var gearItemEntry = gearSystem._gearItems[i];
-                            this.addGearItemEntry(gearItemEntry.getGearItemId(), gearItemEntry.count());
+                            try {
+                                this.addGearItemEntry(gearItemEntry.getGearItemId(), gearItemEntry.count());
+                            }
+                            catch (error) {
+                            }
                         }
                     };
                     GearSystem.prototype.loadFromDevice = function ($q, gearSystemResource) {
@@ -823,7 +825,11 @@ var BackpackPlanner;
                         this._note = gearSystemResource.Note;
                         for (var i = 0; i < gearSystemResource.GearItems.length; ++i) {
                             var gearItemEntry = gearSystemResource.GearItems[i];
-                            this.addGearItemEntry(gearItemEntry.GearItemId, gearItemEntry.Count);
+                            try {
+                                this.addGearItemEntry(gearItemEntry.GearItemId, gearItemEntry.Count);
+                            }
+                            catch (error) {
+                            }
                         }
                         deferred.resolve(this);
                         return deferred.promise;
@@ -995,28 +1001,27 @@ var BackpackPlanner;
                     };
                     GearCollection.prototype.addGearSystem = function (gearSystem) {
                         if (this.containsGearSystemById(gearSystem.Id)) {
-                            return false;
+                            throw "The collection already contains this system!";
                         }
                         if (this.containsGearSystemItems(gearSystem)) {
-                            return false;
+                            throw "The collection already contains items from this system!";
                         }
                         this._gearSystems.push(new Gear.GearSystemEntry(gearSystem.Id));
-                        return true;
                     };
                     GearCollection.prototype.addGearSystemEntry = function (gearSystemId, count) {
                         if (this.containsGearSystemById(gearSystemId)) {
-                            return false;
+                            throw "The collection already contains this system!";
                         }
+                        // TODO: prevent duplicates here
                         /*const gearSystem = AppState.getInstance().getGearState().getGearSystemById(gearSystemId);
                         if(!gearSystem) {
-                            return false;
+                            throw "The system does not exist!";
                         }
             
                         if(this.containsGearSystemItems(gearSystem)) {
-                            return false;
+                            throw "The collection already contains items from this system!";
                         }*/
                         this._gearSystems.push(new Gear.GearSystemEntry(gearSystemId, count));
-                        return true;
                     };
                     GearCollection.prototype.removeGearSystemById = function (gearSystemId) {
                         var idx = this.getGearSystemEntryIndexById(gearSystemId);
@@ -1069,17 +1074,15 @@ var BackpackPlanner;
                     };
                     GearCollection.prototype.addGearItem = function (gearItem) {
                         if (this.containsGearItemById(gearItem.Id)) {
-                            return false;
+                            throw "The collection already contains this item!";
                         }
                         this._gearItems.push(new Gear.GearItemEntry(gearItem.Id));
-                        return true;
                     };
                     GearCollection.prototype.addGearItemEntry = function (gearItemId, count) {
                         if (this.containsGearItemById(gearItemId)) {
-                            return false;
+                            throw "The collection already contains this item!";
                         }
                         this._gearItems.push(new Gear.GearItemEntry(gearItemId, count));
-                        return true;
                     };
                     GearCollection.prototype.removeGearItemById = function (gearItemId) {
                         var idx = this.getGearItemEntryIndexById(gearItemId);
@@ -1151,12 +1154,20 @@ var BackpackPlanner;
                         this._gearSystems = [];
                         for (var i = 0; i < gearCollection._gearSystems.length; ++i) {
                             var gearSystemEntry = gearCollection._gearSystems[i];
-                            this.addGearSystemEntry(gearSystemEntry.getGearSystemId(), gearSystemEntry.count());
+                            try {
+                                this.addGearSystemEntry(gearSystemEntry.getGearSystemId(), gearSystemEntry.count());
+                            }
+                            catch (error) {
+                            }
                         }
                         this._gearItems = [];
                         for (var i = 0; i < gearCollection._gearItems.length; ++i) {
                             var gearItemEntry = gearCollection._gearItems[i];
-                            this.addGearItemEntry(gearItemEntry.getGearItemId(), gearItemEntry.count());
+                            try {
+                                this.addGearItemEntry(gearItemEntry.getGearItemId(), gearItemEntry.count());
+                            }
+                            catch (error) {
+                            }
                         }
                     };
                     GearCollection.prototype.loadFromDevice = function ($q, gearCollectionResource) {
@@ -1166,11 +1177,19 @@ var BackpackPlanner;
                         this._note = gearCollectionResource.Note;
                         for (var i = 0; i < gearCollectionResource.GearSystems.length; ++i) {
                             var gearSystemEntry = gearCollectionResource.GearSystems[i];
-                            this.addGearSystemEntry(gearSystemEntry.GearSystemId, gearSystemEntry.Count);
+                            try {
+                                this.addGearSystemEntry(gearSystemEntry.GearSystemId, gearSystemEntry.Count);
+                            }
+                            catch (error) {
+                            }
                         }
                         for (var i = 0; i < gearCollectionResource.GearItems.length; ++i) {
                             var gearItemEntry = gearCollectionResource.GearItems[i];
-                            this.addGearItemEntry(gearItemEntry.GearItemId, gearItemEntry.Count);
+                            try {
+                                this.addGearItemEntry(gearItemEntry.GearItemId, gearItemEntry.Count);
+                            }
+                            catch (error) {
+                            }
                         }
                         deferred.resolve(this);
                         return deferred.promise;
@@ -1409,31 +1428,34 @@ var BackpackPlanner;
                     };
                     TripPlan.prototype.addGearCollection = function (gearCollection) {
                         if (this.containsGearCollectionById(gearCollection.Id)) {
-                            return false;
+                            throw "The plan already contains this collection!";
                         }
                         if (this.containsGearCollectionSystems(gearCollection)) {
-                            return false;
+                            throw "The plan already contains systems from this collection!";
                         }
                         if (this.containsGearCollectionItems(gearCollection)) {
-                            return false;
+                            throw "The plan already contains items from this collection!";
                         }
                         this._gearCollections.push(new Models.Gear.GearCollectionEntry(gearCollection.Id));
-                        return true;
                     };
                     TripPlan.prototype.addGearCollectionEntry = function (gearCollectionId, count) {
                         if (this.containsGearCollectionById(gearCollectionId)) {
-                            return false;
+                            throw "The plan already contains this collection!";
                         }
+                        // TODO: prevent duplicates here
                         /*const gearCollection = AppState.getInstance().getGearState().getGearCollectionById(gearCollectionId);
                         if(!gearCollection) {
-                            return false;
+                            throw "The collection does not exist!";
+                        }
+            
+                        if(this.containsGearCollectionSystems(gearCollection)) {
+                            throw "The plan already contains systems from this collection!";
                         }
             
                         if(this.containsGearCollectionItems(gearCollection)) {
-                            return false;
+                            throw "The plan already contains items from this collection!";
                         }*/
                         this._gearCollections.push(new Models.Gear.GearCollectionEntry(gearCollectionId, count));
-                        return true;
                     };
                     TripPlan.prototype.removeGearCollectionById = function (gearCollectionId) {
                         var idx = this.getGearCollectionEntryIndexById(gearCollectionId);
@@ -1496,28 +1518,26 @@ var BackpackPlanner;
                     };
                     TripPlan.prototype.addGearSystem = function (gearSystem) {
                         if (this.containsGearSystemById(gearSystem.Id)) {
-                            return false;
+                            throw "The plan already contains this system!";
                         }
                         if (this.containsGearSystemItems(gearSystem)) {
-                            return false;
+                            throw "The plan already contains items from this system!";
                         }
                         this._gearSystems.push(new Models.Gear.GearSystemEntry(gearSystem.Id));
-                        return true;
                     };
                     TripPlan.prototype.addGearSystemEntry = function (gearSystemId, count) {
                         if (this.containsGearSystemById(gearSystemId)) {
-                            return false;
+                            throw "The plan already contains this system!";
                         }
                         /*const gearSystem = AppState.getInstance().getGearState().getGearSystemById(gearSystemId);
                         if(!gearSystem) {
-                            return false;
+                            throw "The system does not exist!";
                         }
             
                         if(this.containsGearSystemItems(gearSystem)) {
-                            return false;
+                            throw "The plan already contains items from this system!";
                         }*/
                         this._gearSystems.push(new Models.Gear.GearSystemEntry(gearSystemId, count));
-                        return true;
                     };
                     TripPlan.prototype.removeGearSystemById = function (gearSystemId) {
                         var idx = this.getGearSystemEntryIndexById(gearSystemId);
@@ -1579,17 +1599,15 @@ var BackpackPlanner;
                     };
                     TripPlan.prototype.addGearItem = function (gearItem) {
                         if (this.containsGearItemById(gearItem.Id)) {
-                            return false;
+                            throw "The plan already contains this item!";
                         }
                         this._gearItems.push(new Models.Gear.GearItemEntry(gearItem.Id));
-                        return true;
                     };
                     TripPlan.prototype.addGearItemEntry = function (gearItemId, count) {
                         if (this.containsGearItemById(gearItemId)) {
-                            return false;
+                            throw "The plan already contains this item!";
                         }
                         this._gearItems.push(new Models.Gear.GearItemEntry(gearItemId, count));
-                        return true;
                     };
                     TripPlan.prototype.removeGearItemById = function (gearItemId) {
                         var idx = this.getGearItemEntryIndexById(gearItemId);
@@ -1638,18 +1656,16 @@ var BackpackPlanner;
                     };
                     TripPlan.prototype.addMealEntry = function (mealId, count) {
                         if (this.containsMealById(mealId)) {
-                            return false;
+                            throw "The plan already contains this meal!";
                         }
                         this._meals.push(new Models.Meals.MealEntry(mealId, count));
-                        return true;
                     };
                     TripPlan.prototype.removeMealById = function (mealId) {
                         var idx = this.getMealEntryIndexById(mealId);
                         if (idx < 0) {
-                            return false;
+                            throw "The plan already contains this meal!";
                         }
                         this._meals.splice(idx, 1);
-                        return true;
                     };
                     TripPlan.prototype.removeAllMeals = function () {
                         this._meals = [];
@@ -1743,22 +1759,38 @@ var BackpackPlanner;
                         this._gearCollections = [];
                         for (var i = 0; i < tripPlan._gearCollections.length; ++i) {
                             var gearCollectionEntry = tripPlan._gearCollections[i];
-                            this.addGearCollectionEntry(gearCollectionEntry.getGearCollectionId(), gearCollectionEntry.count());
+                            try {
+                                this.addGearCollectionEntry(gearCollectionEntry.getGearCollectionId(), gearCollectionEntry.count());
+                            }
+                            catch (error) {
+                            }
                         }
                         this._gearSystems = [];
                         for (var i = 0; i < tripPlan._gearSystems.length; ++i) {
                             var gearSystemEntry = tripPlan._gearSystems[i];
-                            this.addGearSystemEntry(gearSystemEntry.getGearSystemId(), gearSystemEntry.count());
+                            try {
+                                this.addGearSystemEntry(gearSystemEntry.getGearSystemId(), gearSystemEntry.count());
+                            }
+                            catch (error) {
+                            }
                         }
                         this._gearItems = [];
                         for (var i = 0; i < tripPlan._gearItems.length; ++i) {
                             var gearItemEntry = tripPlan._gearItems[i];
-                            this.addGearItemEntry(gearItemEntry.getGearItemId(), gearItemEntry.count());
+                            try {
+                                this.addGearItemEntry(gearItemEntry.getGearItemId(), gearItemEntry.count());
+                            }
+                            catch (error) {
+                            }
                         }
                         this._meals = [];
                         for (var i = 0; i < tripPlan._meals.length; ++i) {
                             var mealEntry = tripPlan._meals[i];
-                            this.addMealEntry(mealEntry.getMealId(), mealEntry.count());
+                            try {
+                                this.addMealEntry(mealEntry.getMealId(), mealEntry.count());
+                            }
+                            catch (error) {
+                            }
                         }
                     };
                     TripPlan.prototype.loadFromDevice = function ($q, tripPlanResource) {
@@ -1771,19 +1803,35 @@ var BackpackPlanner;
                         this._note = tripPlanResource.Note;
                         for (var i = 0; i < tripPlanResource.GearCollections.length; ++i) {
                             var gearCollectionEntry = tripPlanResource.GearCollections[i];
-                            this.addGearCollectionEntry(gearCollectionEntry.GearCollectionId, gearCollectionEntry.Count);
+                            try {
+                                this.addGearCollectionEntry(gearCollectionEntry.GearCollectionId, gearCollectionEntry.Count);
+                            }
+                            catch (error) {
+                            }
                         }
                         for (var i = 0; i < tripPlanResource.GearSystems.length; ++i) {
                             var gearSystemEntry = tripPlanResource.GearSystems[i];
-                            this.addGearSystemEntry(gearSystemEntry.GearSystemId, gearSystemEntry.Count);
+                            try {
+                                this.addGearSystemEntry(gearSystemEntry.GearSystemId, gearSystemEntry.Count);
+                            }
+                            catch (error) {
+                            }
                         }
                         for (var i = 0; i < tripPlanResource.GearItems.length; ++i) {
                             var gearItemEntry = tripPlanResource.GearItems[i];
-                            this.addGearItemEntry(gearItemEntry.GearItemId, gearItemEntry.Count);
+                            try {
+                                this.addGearItemEntry(gearItemEntry.GearItemId, gearItemEntry.Count);
+                            }
+                            catch (error) {
+                            }
                         }
                         for (var i = 0; i < tripPlanResource.Meals.length; ++i) {
                             var mealEntry = tripPlanResource.Meals[i];
-                            this.addMealEntry(mealEntry.MealId, mealEntry.Count);
+                            try {
+                                this.addMealEntry(mealEntry.MealId, mealEntry.Count);
+                            }
+                            catch (error) {
+                            }
                         }
                         deferred.resolve(this);
                         return deferred.promise;
@@ -4776,10 +4824,17 @@ var BackpackPlanner;
                             };
                             $scope.toggleGearItemSelected = function (gearItem) {
                                 if (!$scope.gearCollection.containsGearItemById(gearItem.Id)) {
-                                    $scope.gearCollection.addGearItem(gearItem);
+                                    try {
+                                        $scope.gearCollection.addGearItem(gearItem);
+                                    }
+                                    catch (error) {
+                                        alert(error);
+                                    }
                                 }
                                 else {
-                                    $scope.gearCollection.removeGearItemById(gearItem.Id);
+                                    if (!$scope.gearCollection.removeGearItemById(gearItem.Id)) {
+                                        alert("Cannot remove the item, it may be included by a system or no longer exists.");
+                                    }
                                 }
                             };
                         }
@@ -4827,10 +4882,17 @@ var BackpackPlanner;
                             };
                             $scope.toggleGearSystemSelected = function (gearSystem) {
                                 if (!$scope.gearCollection.containsGearSystemById(gearSystem.Id)) {
-                                    $scope.gearCollection.addGearSystem(gearSystem);
+                                    try {
+                                        $scope.gearCollection.addGearSystem(gearSystem);
+                                    }
+                                    catch (error) {
+                                        alert(error);
+                                    }
                                 }
                                 else {
-                                    $scope.gearCollection.removeGearSystemById(gearSystem.Id);
+                                    if (!$scope.gearCollection.removeGearSystemById(gearSystem.Id)) {
+                                        alert("Cannot remove the system, it may no longer exist.");
+                                    }
                                 }
                             };
                         }
@@ -4932,10 +4994,17 @@ var BackpackPlanner;
                             };
                             $scope.toggleGearItemSelected = function (gearItem) {
                                 if (!$scope.gearSystem.containsGearItemById(gearItem.Id)) {
-                                    $scope.gearSystem.addGearItem(gearItem);
+                                    try {
+                                        $scope.gearSystem.addGearItem(gearItem);
+                                    }
+                                    catch (error) {
+                                        alert(error);
+                                    }
                                 }
                                 else {
-                                    $scope.gearSystem.removeGearItemById(gearItem.Id);
+                                    if (!$scope.gearSystem.removeGearItemById(gearItem.Id)) {
+                                        alert("Cannot remove the item, it may no longer exist.");
+                                    }
                                 }
                             };
                         }
@@ -5085,10 +5154,17 @@ var BackpackPlanner;
                             };
                             $scope.toggleGearCollectionSelected = function (gearCollection) {
                                 if (!$scope.tripPlan.containsGearCollectionById(gearCollection.Id)) {
-                                    $scope.tripPlan.addGearCollection(gearCollection);
+                                    try {
+                                        $scope.tripPlan.addGearCollection(gearCollection);
+                                    }
+                                    catch (error) {
+                                        alert(error);
+                                    }
                                 }
                                 else {
-                                    $scope.tripPlan.removeGearCollectionById(gearCollection.Id);
+                                    if (!$scope.tripPlan.removeGearCollectionById(gearCollection.Id)) {
+                                        alert("Cannot remove the collection, it may no longer exist.");
+                                    }
                                 }
                             };
                         }
@@ -5135,10 +5211,17 @@ var BackpackPlanner;
                             };
                             $scope.toggleGearItemSelected = function (gearItem) {
                                 if (!$scope.tripPlan.containsGearItemById(gearItem.Id)) {
-                                    $scope.tripPlan.addGearItem(gearItem);
+                                    try {
+                                        $scope.tripPlan.addGearItem(gearItem);
+                                    }
+                                    catch (error) {
+                                        alert(error);
+                                    }
                                 }
                                 else {
-                                    $scope.tripPlan.removeGearItemById(gearItem.Id);
+                                    if (!$scope.tripPlan.removeGearItemById(gearItem.Id)) {
+                                        alert("Cannot remove the item, it may be included by a collection or system or no longer exists.");
+                                    }
                                 }
                             };
                         }
@@ -5186,10 +5269,17 @@ var BackpackPlanner;
                             };
                             $scope.toggleGearSystemSelected = function (gearSystem) {
                                 if (!$scope.tripPlan.containsGearSystemById(gearSystem.Id)) {
-                                    $scope.tripPlan.addGearSystem(gearSystem);
+                                    try {
+                                        $scope.tripPlan.addGearSystem(gearSystem);
+                                    }
+                                    catch (error) {
+                                        alert(error);
+                                    }
                                 }
                                 else {
-                                    $scope.tripPlan.removeGearSystemById(gearSystem.Id);
+                                    if (!$scope.tripPlan.removeGearSystemById(gearSystem.Id)) {
+                                        alert("Cannot remove the system, it may be included by a collection or no longer exists.");
+                                    }
                                 }
                             };
                         }
@@ -5236,10 +5326,17 @@ var BackpackPlanner;
                             };
                             $scope.toggleMealSelected = function (meal) {
                                 if (!$scope.tripPlan.containsMealById(meal.Id)) {
-                                    $scope.tripPlan.addMeal(meal);
+                                    try {
+                                        $scope.tripPlan.addMeal(meal);
+                                    }
+                                    catch (error) {
+                                        alert(error);
+                                    }
                                 }
                                 else {
-                                    $scope.tripPlan.removeMealById(meal.Id);
+                                    if (!$scope.tripPlan.removeMealById(meal.Id)) {
+                                        alert("Cannot remove the meal, it may no longer exist.");
+                                    }
                                 }
                             };
                         }

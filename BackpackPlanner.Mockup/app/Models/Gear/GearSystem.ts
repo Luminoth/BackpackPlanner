@@ -78,20 +78,18 @@ module BackpackPlanner.Mockup.Models.Gear {
 
         public addGearItem(gearItem: GearItem) {
             if(this.containsGearItemById(gearItem.Id)) {
-                return false;
+                throw "The system already contains this item!";
             }
 
             this._gearItems.push(new GearItemEntry(gearItem.Id));
-            return true;
         }
 
         private addGearItemEntry(gearItemId: number, count: number) {
             if(this.containsGearItemById(gearItemId)) {
-                return false;
+                throw "The system already contains this item!";
             }
 
             this._gearItems.push(new GearItemEntry(gearItemId, count));
-            return true;
         }
 
         public removeGearItemById(gearItemId: number) {
@@ -172,7 +170,10 @@ module BackpackPlanner.Mockup.Models.Gear {
             this._gearItems = <Array<GearItemEntry>>[];
             for(let i=0; i<gearSystem._gearItems.length; ++i) {
                 const gearItemEntry = gearSystem._gearItems[i];
-                this.addGearItemEntry(gearItemEntry.getGearItemId(), gearItemEntry.count());
+                try {
+                    this.addGearItemEntry(gearItemEntry.getGearItemId(), gearItemEntry.count());
+                } catch(error) {
+                }
             }
         }
 
@@ -185,7 +186,10 @@ module BackpackPlanner.Mockup.Models.Gear {
 
             for(let i=0; i<gearSystemResource.GearItems.length; ++i) {
                 const gearItemEntry = gearSystemResource.GearItems[i];
-                this.addGearItemEntry(gearItemEntry.GearItemId, gearItemEntry.Count);
+                try {
+                    this.addGearItemEntry(gearItemEntry.GearItemId, gearItemEntry.Count);
+                } catch(error) {
+                }
             }
 
             deferred.resolve(this);

@@ -47,9 +47,15 @@ module BackpackPlanner.Mockup.Controllers.Trips.Plans {
 
             $scope.toggleGearSystemSelected = (gearSystem) => {
                 if(!$scope.tripPlan.containsGearSystemById(gearSystem.Id)) {
-                    $scope.tripPlan.addGearSystem(gearSystem);
+                    try {
+                        $scope.tripPlan.addGearSystem(gearSystem);
+                    } catch(error) {
+                        alert(error);
+                    }
                 } else {
-                    $scope.tripPlan.removeGearSystemById(gearSystem.Id);
+                    if(!$scope.tripPlan.removeGearSystemById(gearSystem.Id)) {
+                        alert("Cannot remove the system, it may be included by a collection or no longer exists.");
+                    }
                 } 
             };
         }

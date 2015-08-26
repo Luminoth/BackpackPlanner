@@ -177,37 +177,40 @@ module BackpackPlanner.Mockup.Models.Trips {
 
         public addGearCollection(gearCollection: Models.Gear.GearCollection) {
             if(this.containsGearCollectionById(gearCollection.Id)) {
-                return false;
+                throw "The plan already contains this collection!";
             }
 
             if(this.containsGearCollectionSystems(gearCollection)) {
-                return false;
+                throw "The plan already contains systems from this collection!";
             }
 
             if(this.containsGearCollectionItems(gearCollection)) {
-                return false;
+                throw "The plan already contains items from this collection!";
             }
 
             this._gearCollections.push(new Models.Gear.GearCollectionEntry(gearCollection.Id));
-            return true;
         }
 
         private addGearCollectionEntry(gearCollectionId: number, count: number) {
             if(this.containsGearCollectionById(gearCollectionId)) {
-                return false;
+                throw "The plan already contains this collection!";
             }
 
+            // TODO: prevent duplicates here
             /*const gearCollection = AppState.getInstance().getGearState().getGearCollectionById(gearCollectionId);
             if(!gearCollection) {
-                return false;
+                throw "The collection does not exist!";
+            }
+
+            if(this.containsGearCollectionSystems(gearCollection)) {
+                throw "The plan already contains systems from this collection!";
             }
 
             if(this.containsGearCollectionItems(gearCollection)) {
-                return false;
+                throw "The plan already contains items from this collection!";
             }*/
             
             this._gearCollections.push(new Models.Gear.GearCollectionEntry(gearCollectionId, count));
-            return true;
         }
 
         public removeGearCollectionById(gearCollectionId: number) {
@@ -286,33 +289,31 @@ module BackpackPlanner.Mockup.Models.Trips {
 
         public addGearSystem(gearSystem: Models.Gear.GearSystem) {
             if(this.containsGearSystemById(gearSystem.Id)) {
-                return false;
+                throw "The plan already contains this system!";
             }
 
             if(this.containsGearSystemItems(gearSystem)) {
-                return false;
+                throw "The plan already contains items from this system!";
             }
 
             this._gearSystems.push(new Models.Gear.GearSystemEntry(gearSystem.Id));
-            return true;
         }
 
         private addGearSystemEntry(gearSystemId: number, count: number) {
             if(this.containsGearSystemById(gearSystemId)) {
-                return false;
+                throw "The plan already contains this system!";
             }
 
             /*const gearSystem = AppState.getInstance().getGearState().getGearSystemById(gearSystemId);
             if(!gearSystem) {
-                return false;
+                throw "The system does not exist!";
             }
 
             if(this.containsGearSystemItems(gearSystem)) {
-                return false;
+                throw "The plan already contains items from this system!";
             }*/
             
             this._gearSystems.push(new Models.Gear.GearSystemEntry(gearSystemId, count));
-            return true;
         }
 
         public removeGearSystemById(gearSystemId: number) {
@@ -391,20 +392,18 @@ module BackpackPlanner.Mockup.Models.Trips {
 
         public addGearItem(gearItem: Models.Gear.GearItem) {
             if(this.containsGearItemById(gearItem.Id)) {
-                return false;
+                throw "The plan already contains this item!";
             }
 
             this._gearItems.push(new Models.Gear.GearItemEntry(gearItem.Id));
-            return true;
         }
 
         private addGearItemEntry(gearItemId: number, count: number) {
             if(this.containsGearItemById(gearItemId)) {
-                return false;
+                throw "The plan already contains this item!";
             }
 
             this._gearItems.push(new Models.Gear.GearItemEntry(gearItemId, count));
-            return true;
         }
 
         public removeGearItemById(gearItemId: number) {
@@ -468,21 +467,19 @@ module BackpackPlanner.Mockup.Models.Trips {
 
         private addMealEntry(mealId: number, count: number) {
             if(this.containsMealById(mealId)) {
-                return false;
+                throw "The plan already contains this meal!";
             }
 
             this._meals.push(new Models.Meals.MealEntry(mealId, count));
-            return true;
         }
 
         public removeMealById(mealId: number) {
             const idx = this.getMealEntryIndexById(mealId);
             if(idx < 0) {
-                return false;
+                throw "The plan already contains this meal!";
             }
 
             this._meals.splice(idx, 1);
-            return true;
         }
 
         public removeAllMeals() {
@@ -600,25 +597,37 @@ module BackpackPlanner.Mockup.Models.Trips {
             this._gearCollections = <Array<Models.Gear.GearCollectionEntry>>[];
             for(let i=0; i<tripPlan._gearCollections.length; ++i) {
                 const gearCollectionEntry = tripPlan._gearCollections[i];
-                this.addGearCollectionEntry(gearCollectionEntry.getGearCollectionId(), gearCollectionEntry.count());
+                try {
+                    this.addGearCollectionEntry(gearCollectionEntry.getGearCollectionId(), gearCollectionEntry.count());
+                } catch(error) {
+                }
             }
 
             this._gearSystems = <Array<Models.Gear.GearSystemEntry>>[];
             for(let i=0; i<tripPlan._gearSystems.length; ++i) {
                 const gearSystemEntry = tripPlan._gearSystems[i];
-                this.addGearSystemEntry(gearSystemEntry.getGearSystemId(), gearSystemEntry.count());
+                try {
+                    this.addGearSystemEntry(gearSystemEntry.getGearSystemId(), gearSystemEntry.count());
+                } catch(error) {
+                }
             }
 
             this._gearItems = <Array<Models.Gear.GearItemEntry>>[];
             for(let i=0; i<tripPlan._gearItems.length; ++i) {
                 const gearItemEntry = tripPlan._gearItems[i];
-                this.addGearItemEntry(gearItemEntry.getGearItemId(), gearItemEntry.count());
+                try {
+                    this.addGearItemEntry(gearItemEntry.getGearItemId(), gearItemEntry.count());
+                } catch(error) {
+                }
             }
 
             this._meals = <Array<Models.Meals.MealEntry>>[];
             for(let i=0; i<tripPlan._meals.length; ++i) {
                 const mealEntry = tripPlan._meals[i];
-                this.addMealEntry(mealEntry.getMealId(), mealEntry.count());
+                try {
+                    this.addMealEntry(mealEntry.getMealId(), mealEntry.count());
+                } catch(error) {
+                }
             }
         }
 
@@ -634,22 +643,34 @@ module BackpackPlanner.Mockup.Models.Trips {
 
             for(let i=0; i<tripPlanResource.GearCollections.length; ++i) {
                 const gearCollectionEntry = tripPlanResource.GearCollections[i];
-                this.addGearCollectionEntry(gearCollectionEntry.GearCollectionId, gearCollectionEntry.Count);
+                try {
+                    this.addGearCollectionEntry(gearCollectionEntry.GearCollectionId, gearCollectionEntry.Count);
+                } catch(error) {
+                }
             }
 
             for(let i=0; i<tripPlanResource.GearSystems.length; ++i) {
                 const gearSystemEntry = tripPlanResource.GearSystems[i];
-                this.addGearSystemEntry(gearSystemEntry.GearSystemId, gearSystemEntry.Count);
+                try {
+                    this.addGearSystemEntry(gearSystemEntry.GearSystemId, gearSystemEntry.Count);
+                } catch(error) {
+                }
             }
 
             for(let i=0; i<tripPlanResource.GearItems.length; ++i) {
                 const gearItemEntry = tripPlanResource.GearItems[i];
-                this.addGearItemEntry(gearItemEntry.GearItemId, gearItemEntry.Count);
+                try {
+                    this.addGearItemEntry(gearItemEntry.GearItemId, gearItemEntry.Count);
+                } catch(error) {
+                }
             }
 
             for(let i=0; i<tripPlanResource.Meals.length; ++i) {
                 const mealEntry = tripPlanResource.Meals[i];
-                this.addMealEntry(mealEntry.MealId, mealEntry.Count);
+                try {
+                    this.addMealEntry(mealEntry.MealId, mealEntry.Count);
+                } catch(error) {
+                }
             }
 
             deferred.resolve(this);
