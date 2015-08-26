@@ -56,6 +56,18 @@ module BackpackPlanner.Mockup.Models.Trips {
                 : this._endDate;
         }
 
+        public getTripItineraryName() {
+            if(this._tripItineraryId < 1) {
+                return "No trip itinerary";
+            }
+
+            const tripItinerary = AppState.getInstance().getTripState().getTripItineraryById(this._tripItineraryId);
+            if(!tripItinerary) {
+                return "Could not find trip itinerary";
+            }
+            return tripItinerary.name();
+        }
+
         public tripItineraryId(tripItineraryId?: number) {
             return arguments.length
                 ? (this._tripItineraryId = tripItineraryId)
@@ -488,24 +500,29 @@ module BackpackPlanner.Mockup.Models.Trips {
 
         /* Weight/Cost */
 
+        // TODO: this is based on base-weight only!
         public getWeightClass() {
-            return AppState.getInstance().getAppSettings().getWeightClass(this.getWeightInGrams([], []));
+            return AppState.getInstance().getAppSettings().getWeightClass(this.getBaseWeightInGrams([]));
         }
 
-        public getWeightInGrams(visitedGearItems: number[], visitedMeals: number[]) {
+        public getTotalWeightInGrams(visitedGearItems: number[], visitedMeals: number[]) {
             if(!visitedGearItems) {
                 visitedGearItems = <Array<number>>[];
+            }
+
+            if(!visitedMeals) {
+                visitedMeals = <Array<number>>[];
             }
 
             let weightInGrams = 0;
             for(let i=0; i<this._gearCollections.length; ++i) {
                 const gearCollectionEntry = this._gearCollections[i];
-                weightInGrams += gearCollectionEntry.getWeightInGrams(visitedGearItems);
+                weightInGrams += gearCollectionEntry.getTotalWeightInGrams(visitedGearItems);
             }
 
             for(let i=0; i<this._gearSystems.length; ++i) {
                 const gearSystemEntry = this._gearSystems[i];
-                weightInGrams += gearSystemEntry.getWeightInGrams(visitedGearItems);
+                weightInGrams += gearSystemEntry.getTotalWeightInGrams(visitedGearItems);
             }
 
             for(let i=0; i<this._gearItems.length; ++i) {
@@ -515,7 +532,7 @@ module BackpackPlanner.Mockup.Models.Trips {
                 }
 
                 visitedGearItems.push(gearItemEntry.getGearItemId());
-                weightInGrams += gearItemEntry.getWeightInGrams();
+                weightInGrams += gearItemEntry.getTotalWeightInGrams();
             }
 
             for(let i=0; i<this._meals.length; ++i) {
@@ -525,13 +542,146 @@ module BackpackPlanner.Mockup.Models.Trips {
                 }
 
                 visitedMeals.push(mealEntry.getMealId());
-                weightInGrams += mealEntry.getWeightInGrams();
+                weightInGrams += mealEntry.getTotalWeightInGrams();
             }
             return weightInGrams;
         }
 
-        public getWeightInUnits(/*units: string*/) {
-            return convertGramsToUnits(this.getWeightInGrams([], []), /*units*/AppState.getInstance().getAppSettings().units());
+        public getTotalWeightInUnits(/*units: string*/) {
+            return convertGramsToUnits(this.getTotalWeightInGrams([], []), /*units*/AppState.getInstance().getAppSettings().units());
+        }
+
+        public getBaseWeightInGrams(visitedGearItems: number[]) {
+            if(!visitedGearItems) {
+                visitedGearItems = <Array<number>>[];
+            }
+
+            let weightInGrams = 0;
+            for(let i=0; i<this._gearCollections.length; ++i) {
+                const gearCollectionEntry = this._gearCollections[i];
+                weightInGrams += gearCollectionEntry.getBaseWeightInGrams(visitedGearItems);
+            }
+
+            for(let i=0; i<this._gearSystems.length; ++i) {
+                const gearSystemEntry = this._gearSystems[i];
+                weightInGrams += gearSystemEntry.getBaseWeightInGrams(visitedGearItems);
+            }
+
+            for(let i=0; i<this._gearItems.length; ++i) {
+                const gearItemEntry = this._gearItems[i];
+                if(_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
+                    continue;
+                }
+
+                // carried but not worn or consumable
+                if(gearItemEntry.isCarried() && !gearItemEntry.isWorn() && !gearItemEntry.isConsumable()) {
+                    visitedGearItems.push(gearItemEntry.getGearItemId());
+                    weightInGrams += gearItemEntry.getTotalWeightInGrams();
+                }
+            }
+            return weightInGrams;
+        }
+
+        public getBaseWeightInUnits(/*units: string*/) {
+            return convertGramsToUnits(this.getBaseWeightInGrams([]), /*units*/AppState.getInstance().getAppSettings().units());
+        }
+
+        public getPackWeightInGrams(visitedGearItems: number[], visitedMeals: number[]) {
+            if(!visitedGearItems) {
+                visitedGearItems = <Array<number>>[];
+            }
+
+            if(!visitedMeals) {
+                visitedMeals = <Array<number>>[];
+            }
+
+            let weightInGrams = 0;
+            for(let i=0; i<this._gearCollections.length; ++i) {
+                const gearCollectionEntry = this._gearCollections[i];
+                weightInGrams += gearCollectionEntry.getPackWeightInGrams(visitedGearItems);
+            }
+
+            for(let i=0; i<this._gearSystems.length; ++i) {
+                const gearSystemEntry = this._gearSystems[i];
+                weightInGrams += gearSystemEntry.getPackWeightInGrams(visitedGearItems);
+            }
+
+            for(let i=0; i<this._gearItems.length; ++i) {
+                const gearItemEntry = this._gearItems[i];
+                if(_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
+                    continue;
+                }
+
+                // carried or consumable but not worn
+                if(gearItemEntry.isCarried() && !gearItemEntry.isWorn() || gearItemEntry.isConsumable()) {
+                    visitedGearItems.push(gearItemEntry.getGearItemId());
+                    weightInGrams += gearItemEntry.getTotalWeightInGrams();
+                }
+            }
+
+            for(let i=0; i<this._meals.length; ++i) {
+                const mealEntry = this._meals[i];
+                if(_.contains(visitedMeals, mealEntry.getMealId())) {
+                    continue;
+                }
+
+                visitedMeals.push(mealEntry.getMealId());
+                weightInGrams += mealEntry.getTotalWeightInGrams();
+            }
+            return weightInGrams;
+        }
+
+        public getPackWeightInUnits(/*units: string*/) {
+            return convertGramsToUnits(this.getPackWeightInGrams([], []), /*units*/AppState.getInstance().getAppSettings().units());
+        }
+
+        public getSkinOutWeightInGrams(visitedGearItems: number[], visitedMeals: number[]) {
+            if(!visitedGearItems) {
+                visitedGearItems = <Array<number>>[];
+            }
+
+            if(!visitedMeals) {
+                visitedMeals = <Array<number>>[];
+            }
+
+            let weightInGrams = 0;
+            for(let i=0; i<this._gearCollections.length; ++i) {
+                const gearCollectionEntry = this._gearCollections[i];
+                weightInGrams += gearCollectionEntry.getSkinOutWeightInGrams(visitedGearItems);
+            }
+
+            for(let i=0; i<this._gearSystems.length; ++i) {
+                const gearSystemEntry = this._gearSystems[i];
+                weightInGrams += gearSystemEntry.getSkinOutWeightInGrams(visitedGearItems);
+            }
+
+            for(let i=0; i<this._gearItems.length; ++i) {
+                const gearItemEntry = this._gearItems[i];
+                if(_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
+                    continue;
+                }
+
+                // carried, worn, and consumable gear items
+                if(gearItemEntry.isCarried()) {
+                    visitedGearItems.push(gearItemEntry.getGearItemId());
+                    weightInGrams += gearItemEntry.getTotalWeightInGrams();
+                }
+            }
+
+            for(let i=0; i<this._meals.length; ++i) {
+                const mealEntry = this._meals[i];
+                if(_.contains(visitedMeals, mealEntry.getMealId())) {
+                    continue;
+                }
+
+                visitedMeals.push(mealEntry.getMealId());
+                weightInGrams += mealEntry.getTotalWeightInGrams();
+            }
+            return weightInGrams;
+        }
+
+        public getSkinOutWeightInUnits(/*units: string*/) {
+            return convertGramsToUnits(this.getSkinOutWeightInGrams([], []), /*units*/AppState.getInstance().getAppSettings().units());
         }
 
         public getCostInUSDP(visitedGearItems: number[], visitedMeals: number[]) {
@@ -577,7 +727,7 @@ module BackpackPlanner.Mockup.Models.Trips {
         }
 
         public getCostPerUnitInCurrency() {
-            const weightInUnits = convertGramsToUnits(this.getWeightInGrams([], []), AppState.getInstance().getAppSettings().units());
+            const weightInUnits = convertGramsToUnits(this.getTotalWeightInGrams([], []), AppState.getInstance().getAppSettings().units());
             const costInCurrency = convertUSDPToCurrency(this.getCostInUSDP([], []), AppState.getInstance().getAppSettings().currency());
 
             return 0 == weightInUnits

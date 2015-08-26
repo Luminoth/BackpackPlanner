@@ -60,7 +60,7 @@ module BackpackPlanner.Mockup.Models.Meals {
                 : this._calories;
         }
 
-        public getCaloriesPerUnit() {
+        public getCaloriesPerWeightUnit() {
             return 0 == this._calories ? 0 : this._calories / this.weightInUnits();
         }
 
@@ -191,7 +191,7 @@ module BackpackPlanner.Mockup.Models.Meals {
             return this._count * meal.calories();
         }
 
-        public getWeightInGrams() {
+        public getTotalWeightInGrams() {
             const meal = AppState.getInstance().getMealState().getMealById(this._mealId);
             if(!meal) {
                 return 0;
@@ -199,8 +199,8 @@ module BackpackPlanner.Mockup.Models.Meals {
             return this._count * meal.getWeightInGrams();
         }
 
-        public getWeightInUnits(/*units: string*/) {
-            return parseFloat(convertGramsToUnits(this.getWeightInGrams(), /*units*/AppState.getInstance().getAppSettings().units()).toFixed(2));
+        public getTotalWeightInUnits(/*units: string*/) {
+            return parseFloat(convertGramsToUnits(this.getTotalWeightInGrams(), /*units*/AppState.getInstance().getAppSettings().units()).toFixed(2));
         }
 
         public getCostInUSDP() {

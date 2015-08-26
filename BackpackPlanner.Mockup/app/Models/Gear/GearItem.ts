@@ -64,6 +64,10 @@ module BackpackPlanner.Mockup.Models.Gear {
             return "NotCarried" != this._carried;
         }
 
+        public isWorn() {
+            return "Worn" == this._carried;
+        }
+
         public isConsumable(isConsumable?: boolean) {
             return arguments.length
                 ? (this._isConsumable = isConsumable)
@@ -190,7 +194,31 @@ module BackpackPlanner.Mockup.Models.Gear {
             return gearItem.name();
         }
 
-        public getWeightInGrams() {
+        public isCarried() {
+            const gearItem = AppState.getInstance().getGearState().getGearItemById(this._gearItemId);
+            if(!gearItem) {
+                return false;
+            }
+            return gearItem.isCarried();
+        }
+
+        public isWorn() {
+            const gearItem = AppState.getInstance().getGearState().getGearItemById(this._gearItemId);
+            if(!gearItem) {
+                return false;
+            }
+            return gearItem.isWorn();
+        }
+
+        public isConsumable() {
+            const gearItem = AppState.getInstance().getGearState().getGearItemById(this._gearItemId);
+            if(!gearItem) {
+                return false;
+            }
+            return gearItem.isConsumable();
+        }
+
+        public getTotalWeightInGrams() {
             const gearItem = AppState.getInstance().getGearState().getGearItemById(this._gearItemId);
             if(!gearItem) {
                 return 0;
@@ -198,8 +226,8 @@ module BackpackPlanner.Mockup.Models.Gear {
             return this._count * gearItem.getWeightInGrams();
         }
 
-        public getWeightInUnits(/*units: string*/) {
-            return parseFloat(convertGramsToUnits(this.getWeightInGrams(), /*units*/AppState.getInstance().getAppSettings().units()).toFixed(2));
+        public getTotalWeightInUnits(/*units: string*/) {
+            return parseFloat(convertGramsToUnits(this.getTotalWeightInGrams(), /*units*/AppState.getInstance().getAppSettings().units()).toFixed(2));
         }
 
         public getCostInUSDP() {

@@ -1,4 +1,5 @@
 ﻿<div layout="column" layout-padding flex ng-cloak>
+    <a id="top"></a>
     <div flex>
         <md-button class="mockup-button" ng-click="showWhatIsGearSystemDlg($event)">
             <ng-md-icon icon="help" style="fill: black"></ng-md-icon> What is a gear system?
@@ -15,7 +16,7 @@
             <md-radio-group ng-model="orderBy" layout="row">
                 <md-radio-button value="name()">Name</md-radio-button>
                 <md-radio-button value="-getGearItemCount()">Items</md-radio-button>
-                <md-radio-button value="-getWeightInUnits()">Weight</md-radio-button>
+                <md-radio-button value="-getTotalWeightInUnits()">Weight</md-radio-button>
                 <md-radio-button value="-getCostInCurrency()">Cost</md-radio-button>
                 <md-radio-button value="-getCostPerUnitInCurrency()">Cost / Weight</md-radio-button>
             </md-radio-group>
@@ -25,7 +26,7 @@
             <md-select ng-model="orderBy">
                 <md-option value="name()">Name</md-option>
                 <md-option value="-getGearItemCount()">Items</md-option>
-                <md-option value="-getWeightInUnits()">Weight</md-option>
+                <md-option value="-getTotalWeightInUnits()">Weight</md-option>
                 <md-option value="-getCostInCurrency()">Cost</md-option>
                 <md-option value="-getCostPerUnitInCurrency()">Cost / Weight</md-option>
             </md-select>
@@ -39,8 +40,8 @@
                     </p>
                 </md-card-content>
                 <div layout="row" layout-sm="column">
-                    <p layout-padding>Weight: {{ gearSystem.getWeightInUnits() | number:2 }} {{ getUnitsWeightString() }}s</p>
-                    <p layout-padding>Cost: {{ gearSystem.getCostInCurrency() | currency }} ({{ gearSystem.getCostPerUnitInCurrency() | currency }} per {{ getUnitsWeightString() }})</p>
+                    <p layout-padding>{{ gearSystem.getTotalWeightInUnits() | number:2 }} {{ getUnitsWeightString() }}s</p>
+                    <p layout-padding>{{ gearSystem.getCostInCurrency() | currency }} ({{ gearSystem.getCostPerUnitInCurrency() | currency }} per {{ getUnitsWeightString() }})</p>
                 </div>
             </md-card>
         </md-button>

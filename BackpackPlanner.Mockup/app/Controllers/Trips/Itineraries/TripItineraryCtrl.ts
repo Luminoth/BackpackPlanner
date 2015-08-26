@@ -40,8 +40,13 @@ module BackpackPlanner.Mockup.Controllers.Trips.Itineraries {
                 }
                 tripItinerary.update($scope.tripItinerary);
 
+                var updateToast = $mdToast.simple()
+                    .content(`Updated gear collection: ${$scope.tripItinerary.name()}`)
+                    .action("OK")
+                    .position("bottom left");
+
                 $location.path("/trips/itineraries");
-                // TODO: toast!
+                $mdToast.show(updateToast);
             }
 
             $scope.resetTripItinerary = () => {

@@ -9,8 +9,13 @@ module BackpackPlanner.Mockup.Resources {
         Units: string;
         Currency: string;
 
-        UltralightMaxWeightInGrams: number;
-        LightweightMaxWeightInGrams: number;
+        UltralightClassMaxWeightInGrams: number;
+        LightweightClassMaxWeightInGrams: number;
+
+        UltralightCategoryMaxWeightInGrams: number;
+        LightCategoryMaxWeightInGrams: number;
+        MediumCategoryMaxWeightInGrams: number;
+        HeavyCategoryMaxWeightInGrams: number;
     }
 
     export interface IAppSettingsResource extends IAppSettings, ng.resource.IResource<IAppSettings> {

@@ -57,8 +57,13 @@ module BackpackPlanner.Mockup.Controllers.Gear.Systems {
                 }
                 gearSystem.update($scope.gearSystem);
 
+                var updateToast = $mdToast.simple()
+                    .content(`Updated gear system: ${$scope.gearSystem.name()}`)
+                    .action("OK")
+                    .position("bottom left");
+
                 $location.path("/gear/systems");
-                // TODO: toast!
+                $mdToast.show(updateToast);
             }
 
             $scope.resetGearSystem = () => {

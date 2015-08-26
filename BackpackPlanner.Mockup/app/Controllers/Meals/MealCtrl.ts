@@ -40,8 +40,13 @@ module BackpackPlanner.Mockup.Controllers.Meals {
                 }
                 meal.update($scope.meal);
 
+                var updateToast = $mdToast.simple()
+                    .content(`Updated meal: ${$scope.meal.name()}`)
+                    .action("OK")
+                    .position("bottom left");
+
                 $location.path("/meals");
-                // TODO: toast!
+                $mdToast.show(updateToast);
             }
 
             $scope.resetMeal = () => {

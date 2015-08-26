@@ -42,31 +42,28 @@ module BackpackPlanner.Mockup.Controllers {
             $scope.saveAppSettings = () => {
                 AppState.getInstance().getAppSettings().update($scope.appSettings);
 
-                $location.path("/");
-                // TODO: toast!
+                var updateToast = $mdToast.simple()
+                    .content("Updated application settings!")
+                    .action("OK")
+                    .position("bottom left");
+
+                $location.path("/settings");
+                $mdToast.show(updateToast);
             }
 
             $scope.resetAppSettings = () => {
                 $scope.appSettings = angular.copy(AppState.getInstance().getAppSettings());
-
-                // TODO: toast!
             }
 
             $scope.defaultAppSettings = () => {
                 $scope.appSettings.resetToDefaults();
-
-                // TODO: toast!
             }
-
-            // TODO: these delete actions *cannot* be undone
-            // and that needs to be reflected in the messaging
-            // and the toast notifications
 
             $scope.deleteAllGearItems = (event) => {
                 var confirm = $mdDialog.confirm()
                     .parent(angular.element(document.body))
                     .title("Delete All Gear Items")
-                    .content("Are you sure you wish to delete all gear items?")
+                    .content("Are you sure you wish to delete all gear items? This action cannot be undone.")
                     .ok("Yes")
                     .cancel("No")
                     .targetEvent(event);
@@ -80,11 +77,6 @@ module BackpackPlanner.Mockup.Controllers {
 
                 var deleteToast = $mdToast.simple()
                     .content("Deleted all gear items")
-                    .action("Undo")
-                    .position("bottom left");
-
-                var undoDeleteToast = $mdToast.simple()
-                    .content("Restored all gear items")
                     .action("OK")
                     .position("bottom left");
 
@@ -92,13 +84,7 @@ module BackpackPlanner.Mockup.Controllers {
                     $mdDialog.show(receipt).then(() => {
                         AppState.getInstance().getGearState().deleteAllGearItems();
 
-                        $mdToast.show(deleteToast).then((response: string) => {
-                            if("ok" == response) {
-                                // TODO: this does *not* restore anything
-                                // and it should probably do so... but how?
-                                $mdToast.show(undoDeleteToast);
-                            }
-                        });
+                        $mdToast.show(deleteToast);
                     });
                 });
             }
@@ -107,7 +93,7 @@ module BackpackPlanner.Mockup.Controllers {
                 var confirm = $mdDialog.confirm()
                     .parent(angular.element(document.body))
                     .title("Delete All Gear Systems")
-                    .content("Are you sure you wish to delete all gear systems?")
+                    .content("Are you sure you wish to delete all gear systems? This action cannot be undone.")
                     .ok("Yes")
                     .cancel("No")
                     .targetEvent(event);
@@ -121,11 +107,6 @@ module BackpackPlanner.Mockup.Controllers {
 
                 var deleteToast = $mdToast.simple()
                     .content("Deleted all gear systems")
-                    .action("Undo")
-                    .position("bottom left");
-
-                var undoDeleteToast = $mdToast.simple()
-                    .content("Restored all gear systems")
                     .action("OK")
                     .position("bottom left");
 
@@ -133,13 +114,7 @@ module BackpackPlanner.Mockup.Controllers {
                     $mdDialog.show(receipt).then(() => {
                         AppState.getInstance().getGearState().deleteAllGearSystems();
 
-                        $mdToast.show(deleteToast).then((response: string) => {
-                            if("ok" == response) {
-                                // TODO: this does *not* restore anything
-                                // and it should probably do so... but how?
-                                $mdToast.show(undoDeleteToast);
-                            }
-                        });
+                        $mdToast.show(deleteToast);
                     });
                 });
             }
@@ -148,7 +123,7 @@ module BackpackPlanner.Mockup.Controllers {
                 var confirm = $mdDialog.confirm()
                     .parent(angular.element(document.body))
                     .title("Delete All Gear Collections")
-                    .content("Are you sure you wish to delete all gear collections?")
+                    .content("Are you sure you wish to delete all gear collections? This action cannot be undone.")
                     .ok("Yes")
                     .cancel("No")
                     .targetEvent(event);
@@ -162,11 +137,6 @@ module BackpackPlanner.Mockup.Controllers {
 
                 var deleteToast = $mdToast.simple()
                     .content("Deleted all gear collections")
-                    .action("Undo")
-                    .position("bottom left");
-
-                var undoDeleteToast = $mdToast.simple()
-                    .content("Restored all gear collections")
                     .action("OK")
                     .position("bottom left");
 
@@ -174,13 +144,7 @@ module BackpackPlanner.Mockup.Controllers {
                     $mdDialog.show(receipt).then(() => {
                         AppState.getInstance().getGearState().deleteAllGearCollections();
 
-                        $mdToast.show(deleteToast).then((response: string) => {
-                            if("ok" == response) {
-                                // TODO: this does *not* restore anything
-                                // and it should probably do so... but how?
-                                $mdToast.show(undoDeleteToast);
-                            }
-                        });
+                        $mdToast.show(deleteToast);
                     });
                 });
             }
@@ -189,7 +153,7 @@ module BackpackPlanner.Mockup.Controllers {
                 var confirm = $mdDialog.confirm()
                     .parent(angular.element(document.body))
                     .title("Delete All Meals")
-                    .content("Are you sure you wish to delete all meals?")
+                    .content("Are you sure you wish to delete all meals? This action cannot be undone.")
                     .ok("Yes")
                     .cancel("No")
                     .targetEvent(event);
@@ -203,11 +167,6 @@ module BackpackPlanner.Mockup.Controllers {
 
                 var deleteToast = $mdToast.simple()
                     .content("Deleted all meals")
-                    .action("Undo")
-                    .position("bottom left");
-
-                var undoDeleteToast = $mdToast.simple()
-                    .content("Restored all meals")
                     .action("OK")
                     .position("bottom left");
 
@@ -215,13 +174,7 @@ module BackpackPlanner.Mockup.Controllers {
                     $mdDialog.show(receipt).then(() => {
                         AppState.getInstance().getMealState().deleteAllMeals();
 
-                        $mdToast.show(deleteToast).then((response: string) => {
-                            if("ok" == response) {
-                                // TODO: this does *not* restore anything
-                                // and it should probably do so... but how?
-                                $mdToast.show(undoDeleteToast);
-                            }
-                        });
+                        $mdToast.show(deleteToast);
                     });
                 });
             }
@@ -230,7 +183,7 @@ module BackpackPlanner.Mockup.Controllers {
                 var confirm = $mdDialog.confirm()
                     .parent(angular.element(document.body))
                     .title("Delete All Trip Itineraries")
-                    .content("Are you sure you wish to delete all trip itineraries?")
+                    .content("Are you sure you wish to delete all trip itineraries? This action cannot be undone.")
                     .ok("Yes")
                     .cancel("No")
                     .targetEvent(event);
@@ -244,11 +197,6 @@ module BackpackPlanner.Mockup.Controllers {
 
                 var deleteToast = $mdToast.simple()
                     .content("Deleted all trip itineraries")
-                    .action("Undo")
-                    .position("bottom left");
-
-                var undoDeleteToast = $mdToast.simple()
-                    .content("Restored all trip itineraries")
                     .action("OK")
                     .position("bottom left");
 
@@ -256,13 +204,7 @@ module BackpackPlanner.Mockup.Controllers {
                     $mdDialog.show(receipt).then(() => {
                         AppState.getInstance().getTripState().deleteAllTripItineraries();
 
-                        $mdToast.show(deleteToast).then((response: string) => {
-                            if("ok" == response) {
-                                // TODO: this does *not* restore anything
-                                // and it should probably do so... but how?
-                                $mdToast.show(undoDeleteToast);
-                            }
-                        });
+                        $mdToast.show(deleteToast);
                     });
                 });
             }
@@ -271,7 +213,7 @@ module BackpackPlanner.Mockup.Controllers {
                 var confirm = $mdDialog.confirm()
                     .parent(angular.element(document.body))
                     .title("Delete All Trip Plans")
-                    .content("Are you sure you wish to delete all trip plans?")
+                    .content("Are you sure you wish to delete all trip plans? This action cannot be undone.")
                     .ok("Yes")
                     .cancel("No")
                     .targetEvent(event);
@@ -285,11 +227,6 @@ module BackpackPlanner.Mockup.Controllers {
 
                 var deleteToast = $mdToast.simple()
                     .content("Deleted all trip plans")
-                    .action("Undo")
-                    .position("bottom left");
-
-                var undoDeleteToast = $mdToast.simple()
-                    .content("Restored all trip plans")
                     .action("OK")
                     .position("bottom left");
 
@@ -297,13 +234,7 @@ module BackpackPlanner.Mockup.Controllers {
                     $mdDialog.show(receipt).then(() => {
                         AppState.getInstance().getTripState().deleteAllTripPlans();
 
-                        $mdToast.show(deleteToast).then((response: string) => {
-                            if("ok" == response) {
-                                // TODO: this does *not* restore anything
-                                // and it should probably do so... but how?
-                                $mdToast.show(undoDeleteToast);
-                            }
-                        });
+                        $mdToast.show(deleteToast);
                     });
                 });
             }
@@ -312,7 +243,7 @@ module BackpackPlanner.Mockup.Controllers {
                 var confirm = $mdDialog.confirm()
                     .parent(angular.element(document.body))
                     .title("Delete All Data")
-                    .content("Are you sure you wish to delete all data?")
+                    .content("Are you sure you wish to delete all data? This action cannot be undone.")
                     .ok("Yes")
                     .cancel("No")
                     .targetEvent(event);
@@ -326,11 +257,6 @@ module BackpackPlanner.Mockup.Controllers {
 
                 var deleteToast = $mdToast.simple()
                     .content("Deleted all data")
-                    .action("Undo")
-                    .position("bottom left");
-
-                var undoDeleteToast = $mdToast.simple()
-                    .content("Restored all data")
                     .action("OK")
                     .position("bottom left");
 
@@ -338,13 +264,7 @@ module BackpackPlanner.Mockup.Controllers {
                     $mdDialog.show(receipt).then(() => {
                         AppState.getInstance().deleteAllData();
 
-                        $mdToast.show(deleteToast).then((response: string) => {
-                            if("ok" == response) {
-                                // TODO: this does *not* restore anything
-                                // and it should probably do so... but how?
-                                $mdToast.show(undoDeleteToast);
-                            }
-                        });
+                        $mdToast.show(deleteToast);
                     });
                 });
             }

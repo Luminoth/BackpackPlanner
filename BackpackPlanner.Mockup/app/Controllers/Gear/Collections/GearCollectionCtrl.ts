@@ -72,8 +72,13 @@ module BackpackPlanner.Mockup.Controllers.Gear.Collections {
                 }
                 gearCollection.update($scope.gearCollection);
 
+                var updateToast = $mdToast.simple()
+                    .content(`Updated gear collection: ${$scope.gearCollection.name()}`)
+                    .action("OK")
+                    .position("bottom left");
+
                 $location.path("/gear/collections");
-                // TODO: toast!
+                $mdToast.show(updateToast);
             }
 
             $scope.resetGearCollection = () => {

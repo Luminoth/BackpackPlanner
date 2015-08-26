@@ -85,21 +85,11 @@ module BackpackPlanner.Mockup.Controllers.Trips.Plans {
 
                 var addToast = $mdToast.simple()
                     .content(`Added trip plan: ${$scope.tripPlan.name()}`)
-                    .action("Undo")
-                    .position("bottom left");
-
-                var undoAddToast = $mdToast.simple()
-                    .content(`Removed trip plan: ${$scope.tripPlan.name()}`)
                     .action("OK")
                     .position("bottom left");
 
                 $location.path("/trips/plans");
-                $mdToast.show(addToast).then((response: string) => {
-                    if("ok" == response) {
-                        AppState.getInstance().getTripState().deleteTripPlan($scope.tripPlan);
-                        $mdToast.show(undoAddToast);
-                    }
-                });
+                $mdToast.show(addToast);
             }
 
             $scope.resetTripPlan = () => {

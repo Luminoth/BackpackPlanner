@@ -22,21 +22,11 @@ module BackpackPlanner.Mockup.Controllers.Gear.Items {
 
                 var addToast = $mdToast.simple()
                     .content(`Added gear item: ${$scope.gearItem.name()}`)
-                    .action("Undo")
-                    .position("bottom left");
-
-                var undoAddToast = $mdToast.simple()
-                    .content(`Removed gear item: ${$scope.gearItem.name()}`)
                     .action("OK")
                     .position("bottom left");
 
                 $location.path("/gear/items");
-                $mdToast.show(addToast).then((response: string) => {
-                    if("ok" == response) {
-                        AppState.getInstance().getGearState().deleteGearItem($scope.gearItem);
-                        $mdToast.show(undoAddToast);
-                    }
-                });
+                $mdToast.show(addToast);
             }
 
             $scope.resetGearItem = () => {

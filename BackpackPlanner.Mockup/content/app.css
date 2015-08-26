@@ -51,6 +51,14 @@ ng-md-icon {
 .mockup-card-content {
   background-color: #668000; }
 
+.mockup-weight-category {
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  color: white;
+  text-align: center;
+  line-height: 30px; }
+
 /* TODO: this doesn't work... */
 md-radio-button {
   white-space: nowrap; }

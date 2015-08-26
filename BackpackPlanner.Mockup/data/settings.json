@@ -1,6 +1,10 @@
 ﻿{
     "Units": "Imperial",
     "Currency": "USD",
-    "UltralightMaxWeightInGrams": 4500,
-    "LightweightMaxWeightInGrams": 9000
+    "UltralightClassMaxWeightInGrams": 4500,
+    "LightweightClassMaxWeightInGrams": 9000,
+    "UltralightCategoryMaxWeightInGrams": 225,
+    "LightCategoryMaxWeightInGrams": 450,
+    "MediumCategoryMaxWeightInGrams": 1360,
+    "HeavyCategoryMaxWeightInGrams": 2270
 }

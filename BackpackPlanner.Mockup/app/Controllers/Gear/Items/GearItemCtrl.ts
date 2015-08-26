@@ -40,8 +40,13 @@ module BackpackPlanner.Mockup.Controllers.Gear.Items {
                 }
                 gearItem.update($scope.gearItem);
 
+                var updateToast = $mdToast.simple()
+                    .content(`Updated gear item: ${$scope.gearItem.name()}`)
+                    .action("OK")
+                    .position("bottom left");
+
                 $location.path("/gear/items");
-                // TODO: toast!
+                $mdToast.show(updateToast);
             }
 
             $scope.resetGearItem = () => {

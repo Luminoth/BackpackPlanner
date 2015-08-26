@@ -6,11 +6,7 @@ module BackpackPlanner.Mockup {
     export class RouteConfig {
         constructor($routeProvider: ng.route.IRouteProvider) {
             $routeProvider.when("/", {
-                redirectTo: "/index"
-            })
-            .when("/index", {
-                templateUrl: "content/partials/main.html",
-                title: "Backpacking Planner"
+                redirectTo: "/gear/items"
             })
 
             // gear items

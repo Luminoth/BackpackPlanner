@@ -31,8 +31,13 @@ module BackpackPlanner.Mockup.Controllers.Personal {
             $scope.saveUserInformation = () => {
                 AppState.getInstance().getUserInformation().update($scope.userInfo);
 
-                $location.path("/");
-                // TODO: toast!
+                var updateToast = $mdToast.simple()
+                    .content("Updated personal information!")
+                    .action("OK")
+                    .position("bottom left");
+
+                $location.path("/personal");
+                $mdToast.show(updateToast);
             }
 
             $scope.resetUserInformation = () => {

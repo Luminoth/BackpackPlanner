@@ -162,8 +162,14 @@ var BackpackPlanner;
                 function AppSettings() {
                     this._units = "Metric";
                     this._currency = "USD";
-                    this._ultralightMaxWeightInGrams = 4500;
-                    this._lightweightMaxWeightInGrams = 9000;
+                    // weight classes
+                    this._ultralightClassMaxWeightInGrams = 4500;
+                    this._lightweightClassMaxWeightInGrams = 9000;
+                    // weight categories
+                    this._ultralightCategoryMaxWeightInGrams = 225;
+                    this._lightCategoryMaxWeightInGrams = 450;
+                    this._mediumCategoryMaxWeightInGrams = 1360;
+                    this._heavyCategoryMaxWeightInGrams = 2270;
                 }
                 AppSettings.prototype.units = function (units) {
                     return arguments.length
@@ -176,51 +182,54 @@ var BackpackPlanner;
                         : this._currency;
                 };
                 AppSettings.prototype.getUltralightMaxWeightInGrams = function () {
-                    return this._ultralightMaxWeightInGrams;
+                    return this._ultralightClassMaxWeightInGrams;
                 };
                 AppSettings.prototype.ultralightMaxWeightInUnits = function (weight) {
                     return arguments.length
-                        ? (this._ultralightMaxWeightInGrams = Mockup.convertUnitsToGrams(weight, Mockup.AppState.getInstance().getAppSettings().units()))
-                        : parseFloat(Mockup.convertGramsToUnits(this._ultralightMaxWeightInGrams, Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
+                        ? (this._ultralightClassMaxWeightInGrams = Mockup.convertUnitsToGrams(weight, Mockup.AppState.getInstance().getAppSettings().units()))
+                        : parseFloat(Mockup.convertGramsToUnits(this._ultralightClassMaxWeightInGrams, Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
                 };
                 AppSettings.prototype.getLightweightMaxWeightInGrams = function () {
-                    return this._lightweightMaxWeightInGrams;
+                    return this._lightweightClassMaxWeightInGrams;
                 };
                 AppSettings.prototype.lightweightMaxWeightInUnits = function (weight) {
                     return arguments.length
-                        ? (this._lightweightMaxWeightInGrams = Mockup.convertUnitsToGrams(weight, Mockup.AppState.getInstance().getAppSettings().units()))
-                        : parseFloat(Mockup.convertGramsToUnits(this._lightweightMaxWeightInGrams, Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
+                        ? (this._lightweightClassMaxWeightInGrams = Mockup.convertUnitsToGrams(weight, Mockup.AppState.getInstance().getAppSettings().units()))
+                        : parseFloat(Mockup.convertGramsToUnits(this._lightweightClassMaxWeightInGrams, Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
                 };
                 AppSettings.prototype.resetToDefaults = function () {
                     this._units = "Metric";
                     this._currency = "USD";
-                    this._ultralightMaxWeightInGrams = 4500;
-                    this._lightweightMaxWeightInGrams = 9000;
+                    this._ultralightClassMaxWeightInGrams = 4500;
+                    this._lightweightClassMaxWeightInGrams = 9000;
+                    this._ultralightCategoryMaxWeightInGrams = 225;
+                    this._lightCategoryMaxWeightInGrams = 450;
+                    this._mediumCategoryMaxWeightInGrams = 1360;
+                    this._heavyCategoryMaxWeightInGrams = 2270;
                 };
                 AppSettings.prototype.getWeightClass = function (weightInGrams) {
-                    if (weightInGrams < this._ultralightMaxWeightInGrams) {
+                    if (weightInGrams < this._ultralightClassMaxWeightInGrams) {
                         return "Ultralight";
                     }
-                    else if (weightInGrams < this._lightweightMaxWeightInGrams) {
+                    else if (weightInGrams < this._lightweightClassMaxWeightInGrams) {
                         return "Lightweight";
                     }
                     return "Traditional";
                 };
-                // TODO: make these values configurable
                 AppSettings.prototype.getWeightCategory = function (weightInGrams) {
                     if (weightInGrams <= 0) {
                         return "None";
                     }
-                    else if (weightInGrams < 225) {
+                    else if (weightInGrams < this._ultralightCategoryMaxWeightInGrams) {
                         return "Ultralight";
                     }
-                    else if (weightInGrams < 450) {
+                    else if (weightInGrams < this._lightCategoryMaxWeightInGrams) {
                         return "Light";
                     }
-                    else if (weightInGrams < 1360) {
+                    else if (weightInGrams < this._mediumCategoryMaxWeightInGrams) {
                         return "Medium";
                     }
-                    else if (weightInGrams < 2270) {
+                    else if (weightInGrams < this._heavyCategoryMaxWeightInGrams) {
                         return "Heavy";
                     }
                     return "ExtraHeavy";
@@ -229,15 +238,23 @@ var BackpackPlanner;
                 AppSettings.prototype.update = function (appSettings) {
                     this._units = appSettings._units;
                     this._currency = appSettings._currency;
-                    this._ultralightMaxWeightInGrams = appSettings._ultralightMaxWeightInGrams;
-                    this._lightweightMaxWeightInGrams = appSettings._lightweightMaxWeightInGrams;
+                    this._ultralightClassMaxWeightInGrams = appSettings._ultralightClassMaxWeightInGrams;
+                    this._lightweightClassMaxWeightInGrams = appSettings._lightweightClassMaxWeightInGrams;
+                    this._ultralightCategoryMaxWeightInGrams = appSettings._ultralightCategoryMaxWeightInGrams;
+                    this._lightCategoryMaxWeightInGrams = appSettings._lightCategoryMaxWeightInGrams;
+                    this._mediumCategoryMaxWeightInGrams = appSettings._mediumCategoryMaxWeightInGrams;
+                    this._heavyCategoryMaxWeightInGrams = appSettings._heavyCategoryMaxWeightInGrams;
                 };
                 AppSettings.prototype.loadFromDevice = function ($q, appSettingsResource) {
                     var deferred = $q.defer();
                     this._units = appSettingsResource.Units;
                     this._currency = appSettingsResource.Currency;
-                    this._ultralightMaxWeightInGrams = appSettingsResource.UltralightMaxWeightInGrams;
-                    this._lightweightMaxWeightInGrams = appSettingsResource.LightweightMaxWeightInGrams;
+                    this._ultralightClassMaxWeightInGrams = appSettingsResource.UltralightClassMaxWeightInGrams;
+                    this._lightweightClassMaxWeightInGrams = appSettingsResource.LightweightClassMaxWeightInGrams;
+                    this._ultralightCategoryMaxWeightInGrams = appSettingsResource.UltralightCategoryMaxWeightInGrams;
+                    this._lightCategoryMaxWeightInGrams = appSettingsResource.LightCategoryMaxWeightInGrams;
+                    this._mediumCategoryMaxWeightInGrams = appSettingsResource.MediumCategoryMaxWeightInGrams;
+                    this._heavyCategoryMaxWeightInGrams = appSettingsResource.HeavyCategoryMaxWeightInGrams;
                     deferred.resolve(this);
                     return deferred.promise;
                 };
@@ -534,6 +551,9 @@ var BackpackPlanner;
                     GearItem.prototype.isCarried = function () {
                         return "NotCarried" != this._carried;
                     };
+                    GearItem.prototype.isWorn = function () {
+                        return "Worn" == this._carried;
+                    };
                     GearItem.prototype.isConsumable = function (isConsumable) {
                         return arguments.length
                             ? (this._isConsumable = isConsumable)
@@ -639,15 +659,36 @@ var BackpackPlanner;
                         }
                         return gearItem.name();
                     };
-                    GearItemEntry.prototype.getWeightInGrams = function () {
+                    GearItemEntry.prototype.isCarried = function () {
+                        var gearItem = Mockup.AppState.getInstance().getGearState().getGearItemById(this._gearItemId);
+                        if (!gearItem) {
+                            return false;
+                        }
+                        return gearItem.isCarried();
+                    };
+                    GearItemEntry.prototype.isWorn = function () {
+                        var gearItem = Mockup.AppState.getInstance().getGearState().getGearItemById(this._gearItemId);
+                        if (!gearItem) {
+                            return false;
+                        }
+                        return gearItem.isWorn();
+                    };
+                    GearItemEntry.prototype.isConsumable = function () {
+                        var gearItem = Mockup.AppState.getInstance().getGearState().getGearItemById(this._gearItemId);
+                        if (!gearItem) {
+                            return false;
+                        }
+                        return gearItem.isConsumable();
+                    };
+                    GearItemEntry.prototype.getTotalWeightInGrams = function () {
                         var gearItem = Mockup.AppState.getInstance().getGearState().getGearItemById(this._gearItemId);
                         if (!gearItem) {
                             return 0;
                         }
                         return this._count * gearItem.getWeightInGrams();
                     };
-                    GearItemEntry.prototype.getWeightInUnits = function () {
-                        return parseFloat(Mockup.convertGramsToUnits(this.getWeightInGrams(), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
+                    GearItemEntry.prototype.getTotalWeightInUnits = function () {
+                        return parseFloat(Mockup.convertGramsToUnits(this.getTotalWeightInGrams(), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
                     };
                     GearItemEntry.prototype.getCostInUSDP = function () {
                         var gearItem = Mockup.AppState.getInstance().getGearState().getGearItemById(this._gearItemId);
@@ -761,7 +802,7 @@ var BackpackPlanner;
                         this._gearItems = [];
                     };
                     /* Weight/Cost */
-                    GearSystem.prototype.getWeightInGrams = function (visitedGearItems) {
+                    GearSystem.prototype.getTotalWeightInGrams = function (visitedGearItems) {
                         if (!visitedGearItems) {
                             visitedGearItems = [];
                         }
@@ -772,12 +813,76 @@ var BackpackPlanner;
                                 continue;
                             }
                             visitedGearItems.push(gearItemEntry.getGearItemId());
-                            weightInGrams += gearItemEntry.getWeightInGrams();
+                            weightInGrams += gearItemEntry.getTotalWeightInGrams();
                         }
                         return weightInGrams;
                     };
-                    GearSystem.prototype.getWeightInUnits = function () {
-                        return parseFloat(Mockup.convertGramsToUnits(this.getWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
+                    GearSystem.prototype.getTotalWeightInUnits = function () {
+                        return parseFloat(Mockup.convertGramsToUnits(this.getTotalWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
+                    };
+                    GearSystem.prototype.getBaseWeightInGrams = function (visitedGearItems) {
+                        if (!visitedGearItems) {
+                            visitedGearItems = [];
+                        }
+                        var weightInGrams = 0;
+                        for (var i = 0; i < this._gearItems.length; ++i) {
+                            var gearItemEntry = this._gearItems[i];
+                            if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
+                                continue;
+                            }
+                            // carried but not worn or consumable
+                            if (gearItemEntry.isCarried() && !gearItemEntry.isWorn() && !gearItemEntry.isConsumable()) {
+                                visitedGearItems.push(gearItemEntry.getGearItemId());
+                                weightInGrams += gearItemEntry.getTotalWeightInGrams();
+                            }
+                        }
+                        return weightInGrams;
+                    };
+                    GearSystem.prototype.getBaseWeightInUnits = function () {
+                        return parseFloat(Mockup.convertGramsToUnits(this.getBaseWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
+                    };
+                    GearSystem.prototype.getPackWeightInGrams = function (visitedGearItems) {
+                        if (!visitedGearItems) {
+                            visitedGearItems = [];
+                        }
+                        var weightInGrams = 0;
+                        for (var i = 0; i < this._gearItems.length; ++i) {
+                            var gearItemEntry = this._gearItems[i];
+                            if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
+                                continue;
+                            }
+                            // carried or consumable but not worn
+                            if (gearItemEntry.isCarried() && !gearItemEntry.isWorn() || gearItemEntry.isConsumable()) {
+                                visitedGearItems.push(gearItemEntry.getGearItemId());
+                                weightInGrams += gearItemEntry.getTotalWeightInGrams();
+                            }
+                        }
+                        return weightInGrams;
+                    };
+                    GearSystem.prototype.getPackWeightInUnits = function () {
+                        return parseFloat(Mockup.convertGramsToUnits(this.getPackWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
+                    };
+                    GearSystem.prototype.getSkinOutWeightInGrams = function (visitedGearItems) {
+                        if (!visitedGearItems) {
+                            visitedGearItems = [];
+                        }
+                        var packWeightInGrams = this.getPackWeightInGrams(visitedGearItems);
+                        var weightInGrams = 0;
+                        for (var i = 0; i < this._gearItems.length; ++i) {
+                            var gearItemEntry = this._gearItems[i];
+                            if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
+                                continue;
+                            }
+                            // carried, worn, and consumable gear items
+                            if (gearItemEntry.isCarried()) {
+                                visitedGearItems.push(gearItemEntry.getGearItemId());
+                                weightInGrams += gearItemEntry.getTotalWeightInGrams();
+                            }
+                        }
+                        return packWeightInGrams + weightInGrams;
+                    };
+                    GearSystem.prototype.getSkinOutWeightInUnits = function () {
+                        return parseFloat(Mockup.convertGramsToUnits(this.getSkinOutWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
                     };
                     GearSystem.prototype.getCostInUSDP = function (visitedGearItems) {
                         if (!visitedGearItems) {
@@ -798,7 +903,7 @@ var BackpackPlanner;
                         return Mockup.convertUSDPToCurrency(this.getCostInUSDP([]), Mockup.AppState.getInstance().getAppSettings().currency());
                     };
                     GearSystem.prototype.getCostPerUnitInCurrency = function () {
-                        var weightInUnits = Mockup.convertGramsToUnits(this.getWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units());
+                        var weightInUnits = Mockup.convertGramsToUnits(this.getTotalWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units());
                         var costInCurrency = Mockup.convertUSDPToCurrency(this.getCostInUSDP([]), Mockup.AppState.getInstance().getAppSettings().currency());
                         return 0 == weightInUnits
                             ? costInCurrency
@@ -872,15 +977,45 @@ var BackpackPlanner;
                         }
                         return this._count * gearSystem.getGearItemCount(visitedGearItems);
                     };
-                    GearSystemEntry.prototype.getWeightInGrams = function (visitedGearItems) {
+                    GearSystemEntry.prototype.getTotalWeightInGrams = function (visitedGearItems) {
                         var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(this._gearSystemId);
                         if (!gearSystem) {
                             return 0;
                         }
-                        return this._count * gearSystem.getWeightInGrams(visitedGearItems);
+                        return this._count * gearSystem.getTotalWeightInGrams(visitedGearItems);
                     };
-                    GearSystemEntry.prototype.getWeightInUnits = function () {
-                        return parseFloat(Mockup.convertGramsToUnits(this.getWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
+                    GearSystemEntry.prototype.getTotalWeightInUnits = function () {
+                        return parseFloat(Mockup.convertGramsToUnits(this.getTotalWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
+                    };
+                    GearSystemEntry.prototype.getBaseWeightInGrams = function (visitedGearItems) {
+                        var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(this._gearSystemId);
+                        if (!gearSystem) {
+                            return 0;
+                        }
+                        return this._count * gearSystem.getBaseWeightInGrams(visitedGearItems);
+                    };
+                    GearSystemEntry.prototype.getBaseWeightInUnits = function () {
+                        return parseFloat(Mockup.convertGramsToUnits(this.getBaseWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
+                    };
+                    GearSystemEntry.prototype.getPackWeightInGrams = function (visitedGearItems) {
+                        var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(this._gearSystemId);
+                        if (!gearSystem) {
+                            return 0;
+                        }
+                        return this._count * gearSystem.getPackWeightInGrams(visitedGearItems);
+                    };
+                    GearSystemEntry.prototype.getPackWeightInUnits = function () {
+                        return parseFloat(Mockup.convertGramsToUnits(this.getPackWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
+                    };
+                    GearSystemEntry.prototype.getSkinOutWeightInGrams = function (visitedGearItems) {
+                        var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(this._gearSystemId);
+                        if (!gearSystem) {
+                            return 0;
+                        }
+                        return this._count * gearSystem.getSkinOutWeightInGrams(visitedGearItems);
+                    };
+                    GearSystemEntry.prototype.getSkinOutWeightInUnits = function () {
+                        return parseFloat(Mockup.convertGramsToUnits(this.getSkinOutWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
                     };
                     GearSystemEntry.prototype.getCostInUSDP = function (visitedGearItems) {
                         var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(this._gearSystemId);
@@ -1096,14 +1231,14 @@ var BackpackPlanner;
                         this._gearItems = [];
                     };
                     /* Weight/Cost */
-                    GearCollection.prototype.getWeightInGrams = function (visitedGearItems) {
+                    GearCollection.prototype.getTotalWeightInGrams = function (visitedGearItems) {
                         if (!visitedGearItems) {
                             visitedGearItems = [];
                         }
                         var weightInGrams = 0;
                         for (var i = 0; i < this._gearSystems.length; ++i) {
                             var gearSystemEntry = this._gearSystems[i];
-                            weightInGrams += gearSystemEntry.getWeightInGrams(visitedGearItems);
+                            weightInGrams += gearSystemEntry.getTotalWeightInGrams(visitedGearItems);
                         }
                         for (var i = 0; i < this._gearItems.length; ++i) {
                             var gearItemEntry = this._gearItems[i];
@@ -1111,12 +1246,87 @@ var BackpackPlanner;
                                 continue;
                             }
                             visitedGearItems.push(gearItemEntry.getGearItemId());
-                            weightInGrams += gearItemEntry.getWeightInGrams();
+                            weightInGrams += gearItemEntry.getTotalWeightInGrams();
                         }
                         return weightInGrams;
                     };
-                    GearCollection.prototype.getWeightInUnits = function () {
-                        return Mockup.convertGramsToUnits(this.getWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units());
+                    GearCollection.prototype.getTotalWeightInUnits = function () {
+                        return Mockup.convertGramsToUnits(this.getTotalWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units());
+                    };
+                    GearCollection.prototype.getBaseWeightInGrams = function (visitedGearItems) {
+                        if (!visitedGearItems) {
+                            visitedGearItems = [];
+                        }
+                        var weightInGrams = 0;
+                        for (var i = 0; i < this._gearSystems.length; ++i) {
+                            var gearSystemEntry = this._gearSystems[i];
+                            weightInGrams += gearSystemEntry.getBaseWeightInGrams(visitedGearItems);
+                        }
+                        for (var i = 0; i < this._gearItems.length; ++i) {
+                            var gearItemEntry = this._gearItems[i];
+                            if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
+                                continue;
+                            }
+                            // carried but not worn or consumable
+                            if (gearItemEntry.isCarried() && !gearItemEntry.isWorn() && !gearItemEntry.isConsumable()) {
+                                visitedGearItems.push(gearItemEntry.getGearItemId());
+                                weightInGrams += gearItemEntry.getTotalWeightInGrams();
+                            }
+                        }
+                        return weightInGrams;
+                    };
+                    GearCollection.prototype.getBaseWeightInUnits = function () {
+                        return Mockup.convertGramsToUnits(this.getBaseWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units());
+                    };
+                    GearCollection.prototype.getPackWeightInGrams = function (visitedGearItems) {
+                        if (!visitedGearItems) {
+                            visitedGearItems = [];
+                        }
+                        var weightInGrams = 0;
+                        for (var i = 0; i < this._gearSystems.length; ++i) {
+                            var gearSystemEntry = this._gearSystems[i];
+                            weightInGrams += gearSystemEntry.getPackWeightInGrams(visitedGearItems);
+                        }
+                        for (var i = 0; i < this._gearItems.length; ++i) {
+                            var gearItemEntry = this._gearItems[i];
+                            if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
+                                continue;
+                            }
+                            // carried or consumable but not worn
+                            if (gearItemEntry.isCarried() && !gearItemEntry.isWorn() || gearItemEntry.isConsumable()) {
+                                visitedGearItems.push(gearItemEntry.getGearItemId());
+                                weightInGrams += gearItemEntry.getTotalWeightInGrams();
+                            }
+                        }
+                        return weightInGrams;
+                    };
+                    GearCollection.prototype.getPackWeightInUnits = function () {
+                        return Mockup.convertGramsToUnits(this.getPackWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units());
+                    };
+                    GearCollection.prototype.getSkinOutWeightInGrams = function (visitedGearItems) {
+                        if (!visitedGearItems) {
+                            visitedGearItems = [];
+                        }
+                        var weightInGrams = 0;
+                        for (var i = 0; i < this._gearSystems.length; ++i) {
+                            var gearSystemEntry = this._gearSystems[i];
+                            weightInGrams += gearSystemEntry.getSkinOutWeightInGrams(visitedGearItems);
+                        }
+                        for (var i = 0; i < this._gearItems.length; ++i) {
+                            var gearItemEntry = this._gearItems[i];
+                            if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
+                                continue;
+                            }
+                            // carried, worn, and consumable gear items
+                            if (gearItemEntry.isCarried()) {
+                                visitedGearItems.push(gearItemEntry.getGearItemId());
+                                weightInGrams += gearItemEntry.getTotalWeightInGrams();
+                            }
+                        }
+                        return weightInGrams;
+                    };
+                    GearCollection.prototype.getSkinOutWeightInUnits = function () {
+                        return Mockup.convertGramsToUnits(this.getSkinOutWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units());
                     };
                     GearCollection.prototype.getCostInUSDP = function (visitedGearItems) {
                         if (!visitedGearItems) {
@@ -1141,7 +1351,7 @@ var BackpackPlanner;
                         return Mockup.convertUSDPToCurrency(this.getCostInUSDP([]), Mockup.AppState.getInstance().getAppSettings().currency());
                     };
                     GearCollection.prototype.getCostPerUnitInCurrency = function () {
-                        var weightInUnits = Mockup.convertGramsToUnits(this.getWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units());
+                        var weightInUnits = Mockup.convertGramsToUnits(this.getTotalWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units());
                         var costInCurrency = Mockup.convertUSDPToCurrency(this.getCostInUSDP([]), Mockup.AppState.getInstance().getAppSettings().currency());
                         return 0 == weightInUnits
                             ? costInCurrency
@@ -1246,15 +1456,45 @@ var BackpackPlanner;
                         }
                         return this._count * gearCollection.getGearItemCount(visitedGearItems);
                     };
-                    GearCollectionEntry.prototype.getWeightInGrams = function (visitedGearItems) {
+                    GearCollectionEntry.prototype.getTotalWeightInGrams = function (visitedGearItems) {
                         var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
                         if (!gearCollection) {
                             return 0;
                         }
-                        return this._count * gearCollection.getWeightInGrams(visitedGearItems);
+                        return this._count * gearCollection.getTotalWeightInGrams(visitedGearItems);
                     };
-                    GearCollectionEntry.prototype.getWeightInUnits = function () {
-                        return parseFloat(Mockup.convertGramsToUnits(this.getWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
+                    GearCollectionEntry.prototype.getTotalWeightInUnits = function () {
+                        return parseFloat(Mockup.convertGramsToUnits(this.getTotalWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
+                    };
+                    GearCollectionEntry.prototype.getBaseWeightInGrams = function (visitedGearItems) {
+                        var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
+                        if (!gearCollection) {
+                            return 0;
+                        }
+                        return this._count * gearCollection.getBaseWeightInGrams(visitedGearItems);
+                    };
+                    GearCollectionEntry.prototype.getBaseWeightInUnits = function () {
+                        return parseFloat(Mockup.convertGramsToUnits(this.getBaseWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
+                    };
+                    GearCollectionEntry.prototype.getPackWeightInGrams = function (visitedGearItems) {
+                        var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
+                        if (!gearCollection) {
+                            return 0;
+                        }
+                        return this._count * gearCollection.getPackWeightInGrams(visitedGearItems);
+                    };
+                    GearCollectionEntry.prototype.getPackWeightInUnits = function () {
+                        return parseFloat(Mockup.convertGramsToUnits(this.getPackWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
+                    };
+                    GearCollectionEntry.prototype.getSkinOutWeightInGrams = function (visitedGearItems) {
+                        var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
+                        if (!gearCollection) {
+                            return 0;
+                        }
+                        return this._count * gearCollection.getSkinOutWeightInGrams(visitedGearItems);
+                    };
+                    GearCollectionEntry.prototype.getSkinOutWeightInUnits = function () {
+                        return parseFloat(Mockup.convertGramsToUnits(this.getSkinOutWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
                     };
                     GearCollectionEntry.prototype.getCostInUSDP = function (visitedGearItems) {
                         var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
@@ -1328,6 +1568,16 @@ var BackpackPlanner;
                         return arguments.length
                             ? (this._endDate = endDate)
                             : this._endDate;
+                    };
+                    TripPlan.prototype.getTripItineraryName = function () {
+                        if (this._tripItineraryId < 1) {
+                            return "No trip itinerary";
+                        }
+                        var tripItinerary = Mockup.AppState.getInstance().getTripState().getTripItineraryById(this._tripItineraryId);
+                        if (!tripItinerary) {
+                            return "Could not find trip itinerary";
+                        }
+                        return tripItinerary.name();
                     };
                     TripPlan.prototype.tripItineraryId = function (tripItineraryId) {
                         return arguments.length
@@ -1671,21 +1921,25 @@ var BackpackPlanner;
                         this._meals = [];
                     };
                     /* Weight/Cost */
+                    // TODO: this is based on base-weight only!
                     TripPlan.prototype.getWeightClass = function () {
-                        return Mockup.AppState.getInstance().getAppSettings().getWeightClass(this.getWeightInGrams([], []));
+                        return Mockup.AppState.getInstance().getAppSettings().getWeightClass(this.getBaseWeightInGrams([]));
                     };
-                    TripPlan.prototype.getWeightInGrams = function (visitedGearItems, visitedMeals) {
+                    TripPlan.prototype.getTotalWeightInGrams = function (visitedGearItems, visitedMeals) {
                         if (!visitedGearItems) {
                             visitedGearItems = [];
+                        }
+                        if (!visitedMeals) {
+                            visitedMeals = [];
                         }
                         var weightInGrams = 0;
                         for (var i = 0; i < this._gearCollections.length; ++i) {
                             var gearCollectionEntry = this._gearCollections[i];
-                            weightInGrams += gearCollectionEntry.getWeightInGrams(visitedGearItems);
+                            weightInGrams += gearCollectionEntry.getTotalWeightInGrams(visitedGearItems);
                         }
                         for (var i = 0; i < this._gearSystems.length; ++i) {
                             var gearSystemEntry = this._gearSystems[i];
-                            weightInGrams += gearSystemEntry.getWeightInGrams(visitedGearItems);
+                            weightInGrams += gearSystemEntry.getTotalWeightInGrams(visitedGearItems);
                         }
                         for (var i = 0; i < this._gearItems.length; ++i) {
                             var gearItemEntry = this._gearItems[i];
@@ -1693,7 +1947,7 @@ var BackpackPlanner;
                                 continue;
                             }
                             visitedGearItems.push(gearItemEntry.getGearItemId());
-                            weightInGrams += gearItemEntry.getWeightInGrams();
+                            weightInGrams += gearItemEntry.getTotalWeightInGrams();
                         }
                         for (var i = 0; i < this._meals.length; ++i) {
                             var mealEntry = this._meals[i];
@@ -1701,12 +1955,121 @@ var BackpackPlanner;
                                 continue;
                             }
                             visitedMeals.push(mealEntry.getMealId());
-                            weightInGrams += mealEntry.getWeightInGrams();
+                            weightInGrams += mealEntry.getTotalWeightInGrams();
                         }
                         return weightInGrams;
                     };
-                    TripPlan.prototype.getWeightInUnits = function () {
-                        return Mockup.convertGramsToUnits(this.getWeightInGrams([], []), Mockup.AppState.getInstance().getAppSettings().units());
+                    TripPlan.prototype.getTotalWeightInUnits = function () {
+                        return Mockup.convertGramsToUnits(this.getTotalWeightInGrams([], []), Mockup.AppState.getInstance().getAppSettings().units());
+                    };
+                    TripPlan.prototype.getBaseWeightInGrams = function (visitedGearItems) {
+                        if (!visitedGearItems) {
+                            visitedGearItems = [];
+                        }
+                        var weightInGrams = 0;
+                        for (var i = 0; i < this._gearCollections.length; ++i) {
+                            var gearCollectionEntry = this._gearCollections[i];
+                            weightInGrams += gearCollectionEntry.getBaseWeightInGrams(visitedGearItems);
+                        }
+                        for (var i = 0; i < this._gearSystems.length; ++i) {
+                            var gearSystemEntry = this._gearSystems[i];
+                            weightInGrams += gearSystemEntry.getBaseWeightInGrams(visitedGearItems);
+                        }
+                        for (var i = 0; i < this._gearItems.length; ++i) {
+                            var gearItemEntry = this._gearItems[i];
+                            if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
+                                continue;
+                            }
+                            // carried but not worn or consumable
+                            if (gearItemEntry.isCarried() && !gearItemEntry.isWorn() && !gearItemEntry.isConsumable()) {
+                                visitedGearItems.push(gearItemEntry.getGearItemId());
+                                weightInGrams += gearItemEntry.getTotalWeightInGrams();
+                            }
+                        }
+                        return weightInGrams;
+                    };
+                    TripPlan.prototype.getBaseWeightInUnits = function () {
+                        return Mockup.convertGramsToUnits(this.getBaseWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units());
+                    };
+                    TripPlan.prototype.getPackWeightInGrams = function (visitedGearItems, visitedMeals) {
+                        if (!visitedGearItems) {
+                            visitedGearItems = [];
+                        }
+                        if (!visitedMeals) {
+                            visitedMeals = [];
+                        }
+                        var weightInGrams = 0;
+                        for (var i = 0; i < this._gearCollections.length; ++i) {
+                            var gearCollectionEntry = this._gearCollections[i];
+                            weightInGrams += gearCollectionEntry.getPackWeightInGrams(visitedGearItems);
+                        }
+                        for (var i = 0; i < this._gearSystems.length; ++i) {
+                            var gearSystemEntry = this._gearSystems[i];
+                            weightInGrams += gearSystemEntry.getPackWeightInGrams(visitedGearItems);
+                        }
+                        for (var i = 0; i < this._gearItems.length; ++i) {
+                            var gearItemEntry = this._gearItems[i];
+                            if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
+                                continue;
+                            }
+                            // carried or consumable but not worn
+                            if (gearItemEntry.isCarried() && !gearItemEntry.isWorn() || gearItemEntry.isConsumable()) {
+                                visitedGearItems.push(gearItemEntry.getGearItemId());
+                                weightInGrams += gearItemEntry.getTotalWeightInGrams();
+                            }
+                        }
+                        for (var i = 0; i < this._meals.length; ++i) {
+                            var mealEntry = this._meals[i];
+                            if (_.contains(visitedMeals, mealEntry.getMealId())) {
+                                continue;
+                            }
+                            visitedMeals.push(mealEntry.getMealId());
+                            weightInGrams += mealEntry.getTotalWeightInGrams();
+                        }
+                        return weightInGrams;
+                    };
+                    TripPlan.prototype.getPackWeightInUnits = function () {
+                        return Mockup.convertGramsToUnits(this.getPackWeightInGrams([], []), Mockup.AppState.getInstance().getAppSettings().units());
+                    };
+                    TripPlan.prototype.getSkinOutWeightInGrams = function (visitedGearItems, visitedMeals) {
+                        if (!visitedGearItems) {
+                            visitedGearItems = [];
+                        }
+                        if (!visitedMeals) {
+                            visitedMeals = [];
+                        }
+                        var weightInGrams = 0;
+                        for (var i = 0; i < this._gearCollections.length; ++i) {
+                            var gearCollectionEntry = this._gearCollections[i];
+                            weightInGrams += gearCollectionEntry.getSkinOutWeightInGrams(visitedGearItems);
+                        }
+                        for (var i = 0; i < this._gearSystems.length; ++i) {
+                            var gearSystemEntry = this._gearSystems[i];
+                            weightInGrams += gearSystemEntry.getSkinOutWeightInGrams(visitedGearItems);
+                        }
+                        for (var i = 0; i < this._gearItems.length; ++i) {
+                            var gearItemEntry = this._gearItems[i];
+                            if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
+                                continue;
+                            }
+                            // carried, worn, and consumable gear items
+                            if (gearItemEntry.isCarried()) {
+                                visitedGearItems.push(gearItemEntry.getGearItemId());
+                                weightInGrams += gearItemEntry.getTotalWeightInGrams();
+                            }
+                        }
+                        for (var i = 0; i < this._meals.length; ++i) {
+                            var mealEntry = this._meals[i];
+                            if (_.contains(visitedMeals, mealEntry.getMealId())) {
+                                continue;
+                            }
+                            visitedMeals.push(mealEntry.getMealId());
+                            weightInGrams += mealEntry.getTotalWeightInGrams();
+                        }
+                        return weightInGrams;
+                    };
+                    TripPlan.prototype.getSkinOutWeightInUnits = function () {
+                        return Mockup.convertGramsToUnits(this.getSkinOutWeightInGrams([], []), Mockup.AppState.getInstance().getAppSettings().units());
                     };
                     TripPlan.prototype.getCostInUSDP = function (visitedGearItems, visitedMeals) {
                         if (!visitedGearItems) {
@@ -1743,7 +2106,7 @@ var BackpackPlanner;
                         return Mockup.convertUSDPToCurrency(this.getCostInUSDP([], []), Mockup.AppState.getInstance().getAppSettings().currency());
                     };
                     TripPlan.prototype.getCostPerUnitInCurrency = function () {
-                        var weightInUnits = Mockup.convertGramsToUnits(this.getWeightInGrams([], []), Mockup.AppState.getInstance().getAppSettings().units());
+                        var weightInUnits = Mockup.convertGramsToUnits(this.getTotalWeightInGrams([], []), Mockup.AppState.getInstance().getAppSettings().units());
                         var costInCurrency = Mockup.convertUSDPToCurrency(this.getCostInUSDP([], []), Mockup.AppState.getInstance().getAppSettings().currency());
                         return 0 == weightInUnits
                             ? costInCurrency
@@ -2650,7 +3013,7 @@ var BackpackPlanner;
                             ? (this._calories = calories)
                             : this._calories;
                     };
-                    Meal.prototype.getCaloriesPerUnit = function () {
+                    Meal.prototype.getCaloriesPerWeightUnit = function () {
                         return 0 == this._calories ? 0 : this._calories / this.weightInUnits();
                     };
                     Meal.prototype.proteinInGrams = function (proteinInGrams) {
@@ -2759,15 +3122,15 @@ var BackpackPlanner;
                         }
                         return this._count * meal.calories();
                     };
-                    MealEntry.prototype.getWeightInGrams = function () {
+                    MealEntry.prototype.getTotalWeightInGrams = function () {
                         var meal = Mockup.AppState.getInstance().getMealState().getMealById(this._mealId);
                         if (!meal) {
                             return 0;
                         }
                         return this._count * meal.getWeightInGrams();
                     };
-                    MealEntry.prototype.getWeightInUnits = function () {
-                        return parseFloat(Mockup.convertGramsToUnits(this.getWeightInGrams(), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
+                    MealEntry.prototype.getTotalWeightInUnits = function () {
+                        return parseFloat(Mockup.convertGramsToUnits(this.getTotalWeightInGrams(), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
                     };
                     MealEntry.prototype.getCostInUSDP = function () {
                         var meal = Mockup.AppState.getInstance().getMealState().getMealById(this._mealId);
@@ -3160,7 +3523,7 @@ var BackpackPlanner;
         (function (Controllers) {
             "use strict";
             var AppCtrl = (function () {
-                function AppCtrl($scope, $q, $location, $mdSidenav, $mdDialog, $mdToast, appSettingsService, userInformationService, gearItemService, gearSystemService, gearCollectionService, mealService, tripItineraryService, tripPlanService) {
+                function AppCtrl($scope, $q, $location, $anchorScroll, $mdSidenav, $mdDialog, $mdToast, appSettingsService, userInformationService, gearItemService, gearSystemService, gearCollectionService, mealService, tripItineraryService, tripPlanService) {
                     $scope.appStateLoading = true;
                     Mockup.AppState.getInstance().loadFromDevice($q, appSettingsService, userInformationService, gearItemService, gearSystemService, gearCollectionService, mealService, tripItineraryService, tripPlanService).then(function () {
                         $scope.appStateLoading = false;
@@ -3229,6 +3592,10 @@ var BackpackPlanner;
                         return Math.round(daysBetweenInMs / oneDayInMs);
                     };
                     // view utilities
+                    $scope.scrollToTop = function () {
+                        $location.hash("top");
+                        $anchorScroll();
+                    };
                     $scope.isActive = function (viewLocation) {
                         // set the nav item as active when we're looking at its location
                         return $location.path() === viewLocation;
@@ -3240,7 +3607,8 @@ var BackpackPlanner;
                 return AppCtrl;
             })();
             Controllers.AppCtrl = AppCtrl;
-            AppCtrl.$inject = ["$scope", "$q", "$location", "$mdSidenav", "$mdDialog", "$mdToast",
+            AppCtrl.$inject = ["$scope", "$q", "$location", "$anchorScroll",
+                "$mdSidenav", "$mdDialog", "$mdToast",
                 "AppSettingsService", "UserInformationService",
                 "GearItemService", "GearSystemService", "GearCollectionService",
                 "MealService", "TripItineraryService", "TripPlanService"];
@@ -3292,19 +3660,10 @@ var BackpackPlanner;
                                 Mockup.AppState.getInstance().getGearState().addGearCollection($scope.gearCollection);
                                 var addToast = $mdToast.simple()
                                     .content("Added gear collection: " + $scope.gearCollection.name())
-                                    .action("Undo")
-                                    .position("bottom left");
-                                var undoAddToast = $mdToast.simple()
-                                    .content("Removed gear collection: " + $scope.gearCollection.name())
                                     .action("OK")
                                     .position("bottom left");
                                 $location.path("/gear/collections");
-                                $mdToast.show(addToast).then(function (response) {
-                                    if ("ok" == response) {
-                                        Mockup.AppState.getInstance().getGearState().deleteGearCollection($scope.gearCollection);
-                                        $mdToast.show(undoAddToast);
-                                    }
-                                });
+                                $mdToast.show(addToast);
                             };
                             $scope.resetGearCollection = function () {
                                 $scope.gearCollection = new Mockup.Models.Gear.GearCollection();
@@ -3375,8 +3734,12 @@ var BackpackPlanner;
                                     return;
                                 }
                                 gearCollection.update($scope.gearCollection);
+                                var updateToast = $mdToast.simple()
+                                    .content("Updated gear collection: " + $scope.gearCollection.name())
+                                    .action("OK")
+                                    .position("bottom left");
                                 $location.path("/gear/collections");
-                                // TODO: toast!
+                                $mdToast.show(updateToast);
                             };
                             $scope.resetGearCollection = function () {
                                 var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById($scope.gearCollection.Id);
@@ -3498,19 +3861,10 @@ var BackpackPlanner;
                                 Mockup.AppState.getInstance().getGearState().addGearItem($scope.gearItem);
                                 var addToast = $mdToast.simple()
                                     .content("Added gear item: " + $scope.gearItem.name())
-                                    .action("Undo")
-                                    .position("bottom left");
-                                var undoAddToast = $mdToast.simple()
-                                    .content("Removed gear item: " + $scope.gearItem.name())
                                     .action("OK")
                                     .position("bottom left");
                                 $location.path("/gear/items");
-                                $mdToast.show(addToast).then(function (response) {
-                                    if ("ok" == response) {
-                                        Mockup.AppState.getInstance().getGearState().deleteGearItem($scope.gearItem);
-                                        $mdToast.show(undoAddToast);
-                                    }
-                                });
+                                $mdToast.show(addToast);
                             };
                             $scope.resetGearItem = function () {
                                 $scope.gearItem = new Mockup.Models.Gear.GearItem();
@@ -3557,8 +3911,12 @@ var BackpackPlanner;
                                     return;
                                 }
                                 gearItem.update($scope.gearItem);
+                                var updateToast = $mdToast.simple()
+                                    .content("Updated gear item: " + $scope.gearItem.name())
+                                    .action("OK")
+                                    .position("bottom left");
                                 $location.path("/gear/items");
-                                // TODO: toast!
+                                $mdToast.show(updateToast);
                             };
                             $scope.resetGearItem = function () {
                                 var gearItem = Mockup.AppState.getInstance().getGearState().getGearItemById($scope.gearItem.Id);
@@ -3692,19 +4050,10 @@ var BackpackPlanner;
                                 Mockup.AppState.getInstance().getGearState().addGearSystem($scope.gearSystem);
                                 var addToast = $mdToast.simple()
                                     .content("Added gear system: " + $scope.gearSystem.name())
-                                    .action("Undo")
-                                    .position("bottom left");
-                                var undoAddToast = $mdToast.simple()
-                                    .content("Removed gear system: " + $scope.gearSystem.name())
                                     .action("OK")
                                     .position("bottom left");
                                 $location.path("/gear/systems");
-                                $mdToast.show(addToast).then(function (response) {
-                                    if ("ok" == response) {
-                                        Mockup.AppState.getInstance().getGearState().deleteGearSystem($scope.gearSystem);
-                                        $mdToast.show(undoAddToast);
-                                    }
-                                });
+                                $mdToast.show(addToast);
                             };
                             $scope.resetGearSystem = function () {
                                 $scope.gearSystem = new Mockup.Models.Gear.GearSystem();
@@ -3763,8 +4112,12 @@ var BackpackPlanner;
                                     return;
                                 }
                                 gearSystem.update($scope.gearSystem);
+                                var updateToast = $mdToast.simple()
+                                    .content("Updated gear system: " + $scope.gearSystem.name())
+                                    .action("OK")
+                                    .position("bottom left");
                                 $location.path("/gear/systems");
-                                // TODO: toast!
+                                $mdToast.show(updateToast);
                             };
                             $scope.resetGearSystem = function () {
                                 var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById($scope.gearSystem.Id);
@@ -3934,8 +4287,12 @@ var BackpackPlanner;
                                 return;
                             }
                             meal.update($scope.meal);
+                            var updateToast = $mdToast.simple()
+                                .content("Updated meal: " + $scope.meal.name())
+                                .action("OK")
+                                .position("bottom left");
                             $location.path("/meals");
-                            // TODO: toast!
+                            $mdToast.show(updateToast);
                         };
                         $scope.resetMeal = function () {
                             var meal = Mockup.AppState.getInstance().getMealState().getMealById($scope.meal.Id);
@@ -4012,19 +4369,10 @@ var BackpackPlanner;
                             Mockup.AppState.getInstance().getMealState().addMeal($scope.meal);
                             var addToast = $mdToast.simple()
                                 .content("Added meal: " + $scope.meal.name())
-                                .action("Undo")
-                                .position("bottom left");
-                            var undoAddToast = $mdToast.simple()
-                                .content("Removed meal: " + $scope.meal.name())
                                 .action("OK")
                                 .position("bottom left");
                             $location.path("/meals");
-                            $mdToast.show(addToast).then(function (response) {
-                                if ("ok" == response) {
-                                    Mockup.AppState.getInstance().getMealState().deleteMeal($scope.meal);
-                                    $mdToast.show(undoAddToast);
-                                }
-                            });
+                            $mdToast.show(addToast);
                         };
                         $scope.resetMeal = function () {
                             $scope.meal = new Mockup.Models.Meals.Meal();
@@ -4112,8 +4460,12 @@ var BackpackPlanner;
                                     return;
                                 }
                                 tripItinerary.update($scope.tripItinerary);
+                                var updateToast = $mdToast.simple()
+                                    .content("Updated gear collection: " + $scope.tripItinerary.name())
+                                    .action("OK")
+                                    .position("bottom left");
                                 $location.path("/trips/itineraries");
-                                // TODO: toast!
+                                $mdToast.show(updateToast);
                             };
                             $scope.resetTripItinerary = function () {
                                 var tripItinerary = Mockup.AppState.getInstance().getTripState().getTripItineraryById($scope.tripItinerary.Id);
@@ -4193,19 +4545,10 @@ var BackpackPlanner;
                                 Mockup.AppState.getInstance().getTripState().addTripItinerary($scope.tripItinerary);
                                 var addToast = $mdToast.simple()
                                     .content("Added trip itinerary: " + $scope.tripItinerary.name())
-                                    .action("Undo")
-                                    .position("bottom left");
-                                var undoAddToast = $mdToast.simple()
-                                    .content("Removed trip itinerary: " + $scope.tripItinerary.name())
                                     .action("OK")
                                     .position("bottom left");
                                 $location.path("/trips/itineraries");
-                                $mdToast.show(addToast).then(function (response) {
-                                    if ("ok" == response) {
-                                        Mockup.AppState.getInstance().getTripState().deleteTripItinerary($scope.tripItinerary);
-                                        $mdToast.show(undoAddToast);
-                                    }
-                                });
+                                $mdToast.show(addToast);
                             };
                             $scope.resetTripItinerary = function () {
                                 $scope.tripItinerary = new Mockup.Models.Trips.TripItinerary();
@@ -4342,8 +4685,12 @@ var BackpackPlanner;
                                     return;
                                 }
                                 tripPlan.update($scope.tripPlan);
+                                var updateToast = $mdToast.simple()
+                                    .content("Updated trip plan: " + $scope.tripPlan.name())
+                                    .action("OK")
+                                    .position("bottom left");
                                 $location.path("/trips/plans");
-                                // TODO: toast!
+                                $mdToast.show(updateToast);
                             };
                             $scope.resetTripPlan = function () {
                                 var tripPlan = Mockup.AppState.getInstance().getTripState().getTripPlanById($scope.tripPlan.Id);
@@ -4471,19 +4818,10 @@ var BackpackPlanner;
                                 Mockup.AppState.getInstance().getTripState().addTripPlan($scope.tripPlan);
                                 var addToast = $mdToast.simple()
                                     .content("Added trip plan: " + $scope.tripPlan.name())
-                                    .action("Undo")
-                                    .position("bottom left");
-                                var undoAddToast = $mdToast.simple()
-                                    .content("Removed trip plan: " + $scope.tripPlan.name())
                                     .action("OK")
                                     .position("bottom left");
                                 $location.path("/trips/plans");
-                                $mdToast.show(addToast).then(function (response) {
-                                    if ("ok" == response) {
-                                        Mockup.AppState.getInstance().getTripState().deleteTripPlan($scope.tripPlan);
-                                        $mdToast.show(undoAddToast);
-                                    }
-                                });
+                                $mdToast.show(addToast);
                             };
                             $scope.resetTripPlan = function () {
                                 $scope.tripPlan = new Mockup.Models.Trips.TripPlan();
@@ -4523,8 +4861,12 @@ var BackpackPlanner;
                         };
                         $scope.saveUserInformation = function () {
                             Mockup.AppState.getInstance().getUserInformation().update($scope.userInfo);
-                            $location.path("/");
-                            // TODO: toast!
+                            var updateToast = $mdToast.simple()
+                                .content("Updated personal information!")
+                                .action("OK")
+                                .position("bottom left");
+                            $location.path("/personal");
+                            $mdToast.show(updateToast);
                         };
                         $scope.resetUserInformation = function () {
                             $scope.userInfo = angular.copy(Mockup.AppState.getInstance().getUserInformation());
@@ -4557,25 +4899,24 @@ var BackpackPlanner;
                     };
                     $scope.saveAppSettings = function () {
                         Mockup.AppState.getInstance().getAppSettings().update($scope.appSettings);
-                        $location.path("/");
-                        // TODO: toast!
+                        var updateToast = $mdToast.simple()
+                            .content("Updated application settings!")
+                            .action("OK")
+                            .position("bottom left");
+                        $location.path("/settings");
+                        $mdToast.show(updateToast);
                     };
                     $scope.resetAppSettings = function () {
                         $scope.appSettings = angular.copy(Mockup.AppState.getInstance().getAppSettings());
-                        // TODO: toast!
                     };
                     $scope.defaultAppSettings = function () {
                         $scope.appSettings.resetToDefaults();
-                        // TODO: toast!
                     };
-                    // TODO: these delete actions *cannot* be undone
-                    // and that needs to be reflected in the messaging
-                    // and the toast notifications
                     $scope.deleteAllGearItems = function (event) {
                         var confirm = $mdDialog.confirm()
                             .parent(angular.element(document.body))
                             .title("Delete All Gear Items")
-                            .content("Are you sure you wish to delete all gear items?")
+                            .content("Are you sure you wish to delete all gear items? This action cannot be undone.")
                             .ok("Yes")
                             .cancel("No")
                             .targetEvent(event);
@@ -4587,22 +4928,12 @@ var BackpackPlanner;
                             .targetEvent(event);
                         var deleteToast = $mdToast.simple()
                             .content("Deleted all gear items")
-                            .action("Undo")
-                            .position("bottom left");
-                        var undoDeleteToast = $mdToast.simple()
-                            .content("Restored all gear items")
                             .action("OK")
                             .position("bottom left");
                         $mdDialog.show(confirm).then(function () {
                             $mdDialog.show(receipt).then(function () {
                                 Mockup.AppState.getInstance().getGearState().deleteAllGearItems();
-                                $mdToast.show(deleteToast).then(function (response) {
-                                    if ("ok" == response) {
-                                        // TODO: this does *not* restore anything
-                                        // and it should probably do so... but how?
-                                        $mdToast.show(undoDeleteToast);
-                                    }
-                                });
+                                $mdToast.show(deleteToast);
                             });
                         });
                     };
@@ -4610,7 +4941,7 @@ var BackpackPlanner;
                         var confirm = $mdDialog.confirm()
                             .parent(angular.element(document.body))
                             .title("Delete All Gear Systems")
-                            .content("Are you sure you wish to delete all gear systems?")
+                            .content("Are you sure you wish to delete all gear systems? This action cannot be undone.")
                             .ok("Yes")
                             .cancel("No")
                             .targetEvent(event);
@@ -4622,22 +4953,12 @@ var BackpackPlanner;
                             .targetEvent(event);
                         var deleteToast = $mdToast.simple()
                             .content("Deleted all gear systems")
-                            .action("Undo")
-                            .position("bottom left");
-                        var undoDeleteToast = $mdToast.simple()
-                            .content("Restored all gear systems")
                             .action("OK")
                             .position("bottom left");
                         $mdDialog.show(confirm).then(function () {
                             $mdDialog.show(receipt).then(function () {
                                 Mockup.AppState.getInstance().getGearState().deleteAllGearSystems();
-                                $mdToast.show(deleteToast).then(function (response) {
-                                    if ("ok" == response) {
-                                        // TODO: this does *not* restore anything
-                                        // and it should probably do so... but how?
-                                        $mdToast.show(undoDeleteToast);
-                                    }
-                                });
+                                $mdToast.show(deleteToast);
                             });
                         });
                     };
@@ -4645,7 +4966,7 @@ var BackpackPlanner;
                         var confirm = $mdDialog.confirm()
                             .parent(angular.element(document.body))
                             .title("Delete All Gear Collections")
-                            .content("Are you sure you wish to delete all gear collections?")
+                            .content("Are you sure you wish to delete all gear collections? This action cannot be undone.")
                             .ok("Yes")
                             .cancel("No")
                             .targetEvent(event);
@@ -4657,22 +4978,12 @@ var BackpackPlanner;
                             .targetEvent(event);
                         var deleteToast = $mdToast.simple()
                             .content("Deleted all gear collections")
-                            .action("Undo")
-                            .position("bottom left");
-                        var undoDeleteToast = $mdToast.simple()
-                            .content("Restored all gear collections")
                             .action("OK")
                             .position("bottom left");
                         $mdDialog.show(confirm).then(function () {
                             $mdDialog.show(receipt).then(function () {
                                 Mockup.AppState.getInstance().getGearState().deleteAllGearCollections();
-                                $mdToast.show(deleteToast).then(function (response) {
-                                    if ("ok" == response) {
-                                        // TODO: this does *not* restore anything
-                                        // and it should probably do so... but how?
-                                        $mdToast.show(undoDeleteToast);
-                                    }
-                                });
+                                $mdToast.show(deleteToast);
                             });
                         });
                     };
@@ -4680,7 +4991,7 @@ var BackpackPlanner;
                         var confirm = $mdDialog.confirm()
                             .parent(angular.element(document.body))
                             .title("Delete All Meals")
-                            .content("Are you sure you wish to delete all meals?")
+                            .content("Are you sure you wish to delete all meals? This action cannot be undone.")
                             .ok("Yes")
                             .cancel("No")
                             .targetEvent(event);
@@ -4692,22 +5003,12 @@ var BackpackPlanner;
                             .targetEvent(event);
                         var deleteToast = $mdToast.simple()
                             .content("Deleted all meals")
-                            .action("Undo")
-                            .position("bottom left");
-                        var undoDeleteToast = $mdToast.simple()
-                            .content("Restored all meals")
                             .action("OK")
                             .position("bottom left");
                         $mdDialog.show(confirm).then(function () {
                             $mdDialog.show(receipt).then(function () {
                                 Mockup.AppState.getInstance().getMealState().deleteAllMeals();
-                                $mdToast.show(deleteToast).then(function (response) {
-                                    if ("ok" == response) {
-                                        // TODO: this does *not* restore anything
-                                        // and it should probably do so... but how?
-                                        $mdToast.show(undoDeleteToast);
-                                    }
-                                });
+                                $mdToast.show(deleteToast);
                             });
                         });
                     };
@@ -4715,7 +5016,7 @@ var BackpackPlanner;
                         var confirm = $mdDialog.confirm()
                             .parent(angular.element(document.body))
                             .title("Delete All Trip Itineraries")
-                            .content("Are you sure you wish to delete all trip itineraries?")
+                            .content("Are you sure you wish to delete all trip itineraries? This action cannot be undone.")
                             .ok("Yes")
                             .cancel("No")
                             .targetEvent(event);
@@ -4727,22 +5028,12 @@ var BackpackPlanner;
                             .targetEvent(event);
                         var deleteToast = $mdToast.simple()
                             .content("Deleted all trip itineraries")
-                            .action("Undo")
-                            .position("bottom left");
-                        var undoDeleteToast = $mdToast.simple()
-                            .content("Restored all trip itineraries")
                             .action("OK")
                             .position("bottom left");
                         $mdDialog.show(confirm).then(function () {
                             $mdDialog.show(receipt).then(function () {
                                 Mockup.AppState.getInstance().getTripState().deleteAllTripItineraries();
-                                $mdToast.show(deleteToast).then(function (response) {
-                                    if ("ok" == response) {
-                                        // TODO: this does *not* restore anything
-                                        // and it should probably do so... but how?
-                                        $mdToast.show(undoDeleteToast);
-                                    }
-                                });
+                                $mdToast.show(deleteToast);
                             });
                         });
                     };
@@ -4750,7 +5041,7 @@ var BackpackPlanner;
                         var confirm = $mdDialog.confirm()
                             .parent(angular.element(document.body))
                             .title("Delete All Trip Plans")
-                            .content("Are you sure you wish to delete all trip plans?")
+                            .content("Are you sure you wish to delete all trip plans? This action cannot be undone.")
                             .ok("Yes")
                             .cancel("No")
                             .targetEvent(event);
@@ -4762,22 +5053,12 @@ var BackpackPlanner;
                             .targetEvent(event);
                         var deleteToast = $mdToast.simple()
                             .content("Deleted all trip plans")
-                            .action("Undo")
-                            .position("bottom left");
-                        var undoDeleteToast = $mdToast.simple()
-                            .content("Restored all trip plans")
                             .action("OK")
                             .position("bottom left");
                         $mdDialog.show(confirm).then(function () {
                             $mdDialog.show(receipt).then(function () {
                                 Mockup.AppState.getInstance().getTripState().deleteAllTripPlans();
-                                $mdToast.show(deleteToast).then(function (response) {
-                                    if ("ok" == response) {
-                                        // TODO: this does *not* restore anything
-                                        // and it should probably do so... but how?
-                                        $mdToast.show(undoDeleteToast);
-                                    }
-                                });
+                                $mdToast.show(deleteToast);
                             });
                         });
                     };
@@ -4785,7 +5066,7 @@ var BackpackPlanner;
                         var confirm = $mdDialog.confirm()
                             .parent(angular.element(document.body))
                             .title("Delete All Data")
-                            .content("Are you sure you wish to delete all data?")
+                            .content("Are you sure you wish to delete all data? This action cannot be undone.")
                             .ok("Yes")
                             .cancel("No")
                             .targetEvent(event);
@@ -4797,22 +5078,12 @@ var BackpackPlanner;
                             .targetEvent(event);
                         var deleteToast = $mdToast.simple()
                             .content("Deleted all data")
-                            .action("Undo")
-                            .position("bottom left");
-                        var undoDeleteToast = $mdToast.simple()
-                            .content("Restored all data")
                             .action("OK")
                             .position("bottom left");
                         $mdDialog.show(confirm).then(function () {
                             $mdDialog.show(receipt).then(function () {
                                 Mockup.AppState.getInstance().deleteAllData();
-                                $mdToast.show(deleteToast).then(function (response) {
-                                    if ("ok" == response) {
-                                        // TODO: this does *not* restore anything
-                                        // and it should probably do so... but how?
-                                        $mdToast.show(undoDeleteToast);
-                                    }
-                                });
+                                $mdToast.show(deleteToast);
                             });
                         });
                     };
@@ -4854,11 +5125,7 @@ var BackpackPlanner;
         var RouteConfig = (function () {
             function RouteConfig($routeProvider) {
                 $routeProvider.when("/", {
-                    redirectTo: "/index"
-                })
-                    .when("/index", {
-                    templateUrl: "content/partials/main.html",
-                    title: "Backpacking Planner"
+                    redirectTo: "/gear/items"
                 })
                     .when("/gear/items", {
                     templateUrl: "content/partials/gear/items/items.html",

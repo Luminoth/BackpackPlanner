@@ -419,6 +419,19 @@
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
+          <operation Id="30b216c5-80c9-4850-a20e-33b8aa2e5fda" name="GetIsWorn" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="160a4657-afcb-417e-aeb9-e4ed8ceadde5" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="a345b103-95ca-4e03-bad8-1fd816ac9ff7" direction="Return" isUnique="false">
+                  <elementDefinition Id="a50c643d-b8e5-4557-9a36-5a8074b66b48" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="6b4d1192-6315-4e8d-ab99-bab8a497a541" LastKnownName="Boolean" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
         </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
@@ -597,7 +610,7 @@
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
-          <operation Id="aae93998-7f5c-4f0e-aa5e-8f21da2f886b" name="GetWeightInUnits" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+          <operation Id="aae93998-7f5c-4f0e-aa5e-8f21da2f886b" name="GetBaseWeightInUnits" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="12a93648-6d02-4914-a846-93468625a7e0" />
             <ownedParameters>
               <operationHasOwnedParameters>
@@ -609,8 +622,8 @@
                 </parameter>
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="5f5b11df-9329-456c-aff5-7b630221f5db" name="units" direction="In" isUnique="false">
-                  <elementDefinition Id="bdf13db6-5f54-49d6-8ef3-ee5801a1fd51" />
+                <parameter Id="c663a424-1e4f-4ead-9e87-80e876c928dc" name="units" direction="In" isUnique="false">
+                  <elementDefinition Id="12c13fdd-c031-4be3-bf5e-a4ef99d849d1" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="UnitSystem" />
                   </type_NamedElement>
@@ -695,42 +708,6 @@
           <operation Id="8e12cbcc-93e3-4a5d-826c-96a5b5d9f2d0" name="LoadFromDevice" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="91d99873-dd13-4e7a-82ae-c9e85434626c" />
           </operation>
-          <operation Id="a5a5e6b1-44ea-44c9-85ba-57ad64d43ef4" name="GetPackList" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="9e50ecf2-725e-402d-a3fb-4cf58829a5d7" />
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="6e8c518b-6cea-4382-897e-4a25010c8f1b" direction="Return" isUnique="false">
-                  <lowerValueInternal>
-                    <literalString Id="3048868c-617f-4433-b017-da22ab89c1f1" name="Lower" value="*">
-                      <elementDefinition Id="4889389d-861e-4a9f-a471-cbfd51175e29" />
-                    </literalString>
-                  </lowerValueInternal>
-                  <upperValueInternal>
-                    <literalString Id="fb7cde4f-e373-4f67-bcf6-e8798c738252" name="Upper" value="*">
-                      <elementDefinition Id="832ef738-161b-4740-ab67-3d705f70caab" />
-                    </literalString>
-                  </upperValueInternal>
-                  <elementDefinition Id="05ee3640-9a27-4fbf-abb4-c60a0e457383" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="14b41725-c8a8-412a-93f8-249118c42aa2" LastKnownName="GearItemEntry" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation Id="afc8800b-1d98-4ab2-8b46-0ac3df8837d2" name="GetPackedGearItemCount" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="262cc436-370b-4390-9eb5-d4d20774a23d" />
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="1e82e472-81ea-49a3-81a5-224016d67a89" direction="Return" isUnique="false">
-                  <elementDefinition Id="5cf378fc-a066-4e24-9b0f-b3cafebf5c91" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
           <operation Id="a6a7893c-8ced-4290-872d-75c286dd2fe7" name="Update" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="5b78974e-d136-47af-9fcf-475bf01521c8" />
             <ownedParameters>
@@ -746,6 +723,69 @@
           </operation>
           <operation Id="f68cd908-879d-404c-8cf7-be3f9f9695d9" name="RemoveAllGearItems" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="a594b26b-63d6-4b51-9a42-3cfe0e3306f7" />
+          </operation>
+          <operation Id="513ea392-d65b-4378-83d8-1af1f208a19c" name="GetPackWeightInUnits" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="8820a9c2-3d95-4e4a-89c6-6484fa6d5e05" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="69ae6b64-1dda-4f30-ba6f-5cb5e39610bf" name="units" direction="In" isUnique="false">
+                  <elementDefinition Id="af96f1bb-5df6-453b-83ba-5f08d97a8263" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="UnitSystem" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="35cd0ebd-fbb6-415d-b537-9afbfac994e9" direction="Return" isUnique="false">
+                  <elementDefinition Id="956d1f4c-ce1d-4c1a-824e-325195e720fa" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="b7c5ea3b-1ae0-4883-8b60-c65e41eac97a" name="GetSkinOutWeightInUnits" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="34eba26f-fa1d-4dbe-accf-7384eab5d11b" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="48073c08-f4a4-4180-8b01-ef861867aba1" name="units" direction="In" isUnique="false">
+                  <elementDefinition Id="e2a8dcde-fa7f-4278-a6ec-abf50b50c484" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="UnitSystem" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="77098df8-db7e-4834-9ce1-a7dbfa22147a" direction="Return" isUnique="false">
+                  <elementDefinition Id="59a26303-3b44-494f-a218-59b7cce5c3cd" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="7c741d69-853f-496c-b448-b5085258a9a5" name="GetTotalWeightInUnits" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="ee1f805d-0f53-41ee-97e8-0ee8dabee70b" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="7188644a-6233-45c5-8b1a-716891a809f2" name="units" direction="In" isUnique="false">
+                  <elementDefinition Id="82f54c6f-758b-493c-a27c-6b910f27bb29" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="UnitSystem" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="d473fee2-8636-4cc3-8caf-6a29a74bb74a" direction="Return" isUnique="false">
+                  <elementDefinition Id="52388c0c-4e0e-4b71-a953-cdf4aba77e90" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
           </operation>
         </ownedOperationsInternal>
       </class>
@@ -768,7 +808,7 @@
           </property>
         </ownedAttributesInternal>
         <ownedOperationsInternal>
-          <operation Id="b5f23775-fb9e-4282-a230-d54284911b9f" name="GetWeightInUnits" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+          <operation Id="b5f23775-fb9e-4282-a230-d54284911b9f" name="GetTotalWeightInUnits" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="48689da5-2bbe-457b-9cc9-c2428d0e15c2" />
             <ownedParameters>
               <operationHasOwnedParameters>
@@ -849,7 +889,7 @@
           </property>
         </ownedAttributesInternal>
         <ownedOperationsInternal>
-          <operation Id="a7d8c845-78af-4637-9204-fd5f68184977" name="GetWeightInUnits" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+          <operation Id="a7d8c845-78af-4637-9204-fd5f68184977" name="GetTotalWeightInUnits" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="8d264dd0-573e-428f-bc04-fafb95b9880d" />
             <ownedParameters>
               <operationHasOwnedParameters>
@@ -1210,6 +1250,69 @@
           <operation Id="2af53983-3347-46a4-9bcd-3a71f5700bad" name="RemoveAllGearItems" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="d143153c-8bba-4bda-bd01-d269ed0e587e" />
           </operation>
+          <operation Id="b9390c3f-c196-4837-a0a5-eaeeb2b72672" name="GetPackWeightInUnits" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="e4cc08e5-ffaf-475c-a1f4-57911456f8df" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="976be23e-0291-42f4-85c7-cfdb04f946ad" name="units" direction="In" isUnique="false">
+                  <elementDefinition Id="f1d674cd-7154-4d4d-b615-66b97fcdd1f3" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="UnitSystem" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="33daa784-b5ad-47cb-8742-13b732bd824d" direction="Return" isUnique="false">
+                  <elementDefinition Id="55c8b4f0-6387-42c7-9c98-3b08e9af845d" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="068aed22-0aee-46c0-9087-267c3f0e31f8" name="GetBaseWeightInUnits" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="7254843a-9f86-4d44-b933-ff2900bee9bf" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="4d51a268-558c-401c-9fe7-cb82b07fe073" name="units" direction="In" isUnique="false">
+                  <elementDefinition Id="e811d341-7b15-4fc2-b9c8-4c4021d6e435" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="UnitSystem" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="e5fb8b39-bbfe-4a89-b9a6-9143ec8e15cd" direction="Return" isUnique="false">
+                  <elementDefinition Id="74cf9730-2d87-4239-9434-de1d76db89f6" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="0005f6ff-2f22-412f-8d34-fa068c55b853" name="GetSkinOutWeightInUnits" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="c0e7b1ae-40cb-46d4-8ea4-f89f0c328a74" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="f50574f6-d17e-4edd-ac51-de5a745f1461" direction="Return" isUnique="false">
+                  <elementDefinition Id="01306259-1323-4c97-aac5-e9b8856e44aa" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="ad8bd468-dc23-4076-be4a-50d9132e78aa" name="units" direction="In" isUnique="false">
+                  <elementDefinition Id="a624ce44-4bc8-4c02-bfbb-904deb76cf80" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="UnitSystem" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
         </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
@@ -1251,7 +1354,7 @@
           </property>
         </ownedAttributesInternal>
         <ownedOperationsInternal>
-          <operation Id="30249f4e-5a98-4b0f-9604-b648f87f27de" name="GetWeightInUnits" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+          <operation Id="30249f4e-5a98-4b0f-9604-b648f87f27de" name="GetTotalWeightInUnits" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="3fcb08aa-777e-415e-9e09-1edec4abb722" />
             <ownedParameters>
               <operationHasOwnedParameters>
@@ -1638,7 +1741,7 @@
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
-          <operation Id="064f9fbf-3613-4ecd-84cf-28b14615a204" name="GetWeightInUnits" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+          <operation Id="064f9fbf-3613-4ecd-84cf-28b14615a204" name="GetTotalWeightInUnits" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="c1e0aa8a-1fea-43d9-bcbd-e5d400980763" />
             <ownedParameters>
               <operationHasOwnedParameters>
@@ -1689,50 +1792,6 @@
       </class>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
-      <class Id="9989988c-377a-48bc-ad4a-9b6032c91c1b" name="RouteDescription" isAbstract="false" isLeaf="false" isActiveClass="false">
-        <elementDefinition Id="45b2c4c0-74fb-4515-ba5a-465513e1149b" />
-        <ownedAttributesInternal>
-          <property Id="5d2382e8-4704-404e-95bd-f21118fed922" name="Description" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="2cfe403d-bf02-4ff2-8447-436aca09ca4e" />
-            <type_NamedElement>
-              <referencedTypeMoniker Id="b27b34d9-7f50-48ea-98c5-cd9cc72f923c" LastKnownName="String" />
-            </type_NamedElement>
-          </property>
-          <property Id="b5b5c09d-6ed5-48b8-ab68-9b01b462c77b" name="Id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="5e35c37e-065d-46b3-9c2c-93ee4cdfa020" />
-            <type_NamedElement>
-              <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
-            </type_NamedElement>
-          </property>
-        </ownedAttributesInternal>
-      </class>
-    </logicalClassDesignerModelHasTypes>
-    <logicalClassDesignerModelHasTypes>
-      <class Id="a9aea6d4-95f7-4a2a-8798-1e179faa564d" name="PointOfInterest" isAbstract="false" isLeaf="false" isActiveClass="false">
-        <elementDefinition Id="69593ec0-3ed1-4a60-959f-aa826ddf03ea" />
-        <ownedAttributesInternal>
-          <property Id="f0ed13bb-32cb-4f5d-9bbb-c8d4969dfdb3" name="GpsCoordinate" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="297f1a4a-be04-497a-a54c-3f82e5073051" />
-            <type_NamedElement>
-              <referencedTypeMoniker Id="b27b34d9-7f50-48ea-98c5-cd9cc72f923c" LastKnownName="String" />
-            </type_NamedElement>
-          </property>
-          <property Id="07b4bc63-356d-4389-bf82-d5478051214f" name="Id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="dd939a3c-f698-4a52-ae5b-3ede5bac8b0d" />
-            <type_NamedElement>
-              <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
-            </type_NamedElement>
-          </property>
-          <property Id="a30c4092-505e-4b12-8d7f-49424677300d" name="Name" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="962b5806-5cf9-498d-a0b4-bfa9e0359f8f" />
-            <type_NamedElement>
-              <referencedTypeMoniker Id="ea805081-6a81-4b63-a00c-e75459fc9dd9" LastKnownName="String" />
-            </type_NamedElement>
-          </property>
-        </ownedAttributesInternal>
-      </class>
-    </logicalClassDesignerModelHasTypes>
-    <logicalClassDesignerModelHasTypes>
       <class Id="5be3c7a2-e11e-4fb0-addc-3eb8bfa7103b" name="TripItinerary" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="517c8c88-fcf7-4e6b-9508-76e880fabaae" />
         <ownedAttributesInternal>
@@ -1740,38 +1799,6 @@
             <elementDefinition Id="3d74486d-4581-46a1-ac39-3b633cdcd3a3" />
             <type_NamedElement>
               <referencedTypeMoniker Id="b27b34d9-7f50-48ea-98c5-cd9cc72f923c" LastKnownName="String" />
-            </type_NamedElement>
-          </property>
-          <property Id="c05b69e0-98af-4e91-bfd0-c443003a82c4" name="RouteDescriptions" isLeaf="false" isStatic="false" isReadOnly="true" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <lowerValueInternal>
-              <literalString Id="419d0cb4-d0a6-4b18-9d84-55b81ce5ca41" name="Lower" value="*">
-                <elementDefinition Id="b98dd9db-2bb0-4ebe-861d-3105c3c4ffab" />
-              </literalString>
-            </lowerValueInternal>
-            <upperValueInternal>
-              <literalString Id="93a893ee-e18b-4f1a-8b08-dd980961cc6b" name="Upper" value="*">
-                <elementDefinition Id="d92b54bc-3660-42c9-8aac-52fa994c83b8" />
-              </literalString>
-            </upperValueInternal>
-            <elementDefinition Id="3efb25c1-a447-4e0d-b5e9-ba4061414319" />
-            <type_NamedElement>
-              <referencedTypeMoniker Id="057f6b4c-7940-488e-be46-e992a6b8d8b5" LastKnownName="RouteDescription" />
-            </type_NamedElement>
-          </property>
-          <property Id="037c6614-2136-4bd7-97f2-4816af5e8f51" name="PointsOfInterest" isLeaf="false" isStatic="false" isReadOnly="true" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <lowerValueInternal>
-              <literalString Id="c7e6758d-87d3-42c2-bae3-c162fc8d6287" name="Lower" value="*">
-                <elementDefinition Id="7d611428-ad04-433d-9bc3-71492eadf05f" />
-              </literalString>
-            </lowerValueInternal>
-            <upperValueInternal>
-              <literalString Id="859c73c0-6eef-4714-9fc9-fb2fc51c7a47" name="Upper" value="*">
-                <elementDefinition Id="bd098f74-cff0-4a3d-a2a6-078eb5c5694a" />
-              </literalString>
-            </upperValueInternal>
-            <elementDefinition Id="9c2b3c18-79f8-482a-9d9f-48c506148102" />
-            <type_NamedElement>
-              <referencedTypeMoniker Id="f4dfbea0-415b-4521-9d5e-1133aa26a0a3" LastKnownName="PointOfInterest" />
             </type_NamedElement>
           </property>
           <property Id="33aed2b9-a9c6-4a48-af19-a33be53f0c09" name="Note" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
@@ -1810,16 +1837,6 @@
         </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
-    <packageHasNamedElement>
-      <referencedType Id="057f6b4c-7940-488e-be46-e992a6b8d8b5" name="RouteDescription" isAbstract="false" isLeaf="false" cachedFullName="BackpackPlanner.Models::RouteDescription">
-        <elementDefinition Id="45b2c4c0-74fb-4515-ba5a-465513e1149b" />
-      </referencedType>
-    </packageHasNamedElement>
-    <packageHasNamedElement>
-      <referencedType Id="f4dfbea0-415b-4521-9d5e-1133aa26a0a3" name="PointOfInterest" isAbstract="false" isLeaf="false" cachedFullName="BackpackPlanner.Models::PointOfInterest">
-        <elementDefinition Id="69593ec0-3ed1-4a60-959f-aa826ddf03ea" />
-      </referencedType>
-    </packageHasNamedElement>
     <packageHasNamedElement>
       <referencedType Id="5a83d6b1-927d-4eea-8bfc-00599aef9f93" name="TripItinerary" isAbstract="false" isLeaf="false" cachedFullName="BackpackPlanner.Models::TripItinerary">
         <elementDefinition Id="517c8c88-fcf7-4e6b-9508-76e880fabaae" />
@@ -1980,55 +1997,6 @@
           </operation>
           <operation Id="5069c8e5-be50-4d2a-bd05-ffc2aef81b38" name="SaveToDevice" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="10011c5a-6373-4e9d-be0c-096097c42179" />
-          </operation>
-          <operation Id="004dcc3b-9632-4aa6-8b25-21a0460089fd" name="GetPackList" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="b1e8b296-d0e5-418e-bfa7-9e641b3a2808" />
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="19681ec0-f431-46df-9f83-17d89755277b" direction="Return" isUnique="false">
-                  <lowerValueInternal>
-                    <literalString Id="137cb9cd-62cf-420d-95c1-0ef5f1759485" name="Lower" value="*">
-                      <elementDefinition Id="a7531849-cefa-439e-9cd0-3412e7720a46" />
-                    </literalString>
-                  </lowerValueInternal>
-                  <upperValueInternal>
-                    <literalString Id="43d782b5-b00d-4e50-bd47-4423572c3f22" name="Upper" value="*">
-                      <elementDefinition Id="cc824c74-8981-46f5-ab20-5ee85ca5228d" />
-                    </literalString>
-                  </upperValueInternal>
-                  <elementDefinition Id="af0a8810-d9cd-480a-a56a-c3a4f1b4a848" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="4b4b7c2f-de85-431c-b720-afc1d706d48a" LastKnownName="IEntry" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation Id="027f63c0-a5e6-49ce-a04c-a69fd1e7b76c" name="GetPackedGearItemCount" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="eb60fb4f-fc44-44a8-9a85-d37b1a82beb3" />
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="1d54c538-d85e-45df-9e9b-518a8261f29d" direction="Return" isUnique="false">
-                  <elementDefinition Id="05fe428e-3d7d-46a2-8a5d-a7eb0689bbf2" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation Id="bce5597b-be41-488a-9def-a80dc616c4bd" name="GetPackedMealCount" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="e3be99db-b345-40c8-aa02-b0e9ef39bcc1" />
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="0b2f06ca-be00-4f28-b04d-08b7a9d88d47" direction="Return" isUnique="false">
-                  <elementDefinition Id="aed9d810-7720-4f18-b3f1-a282089aef61" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
           </operation>
           <operation Id="b9c9426f-6d5f-49eb-8b8d-571766198058" name="Update" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="a6d14db2-9f9c-43a6-a027-fc50e544faa7" />
@@ -2306,22 +2274,22 @@
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
-          <operation Id="69b3ebb7-bca7-4c61-95d9-7e8df728977c" name="GetWeightInUnits" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+          <operation Id="69b3ebb7-bca7-4c61-95d9-7e8df728977c" name="GetTotalWeightInUnits" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="f0ff9cc0-4e5a-451e-bbfc-b3c20fd216d3" />
             <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="d9459388-8caf-4ace-8627-a436d61324d6" name="units" direction="In" isUnique="false">
-                  <elementDefinition Id="d16cd791-7b49-4a92-9e50-37b3c932fb05" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="UnitSystem" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
               <operationHasOwnedParameters>
                 <parameter Id="5d3cb56e-e9ef-4b52-a22e-d9409c984ad4" direction="Return" isUnique="false">
                   <elementDefinition Id="5300af81-249f-4891-af31-2b155bcca216" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="1149dff0-9371-41c6-9204-968961dff8dd" name="units" direction="In" isUnique="false">
+                  <elementDefinition Id="ff630315-c5b8-4625-92b5-730aecb789a6" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="UnitSystem" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -2385,6 +2353,69 @@
               <operationHasOwnedParameters>
                 <parameter Id="088b36d5-9e7f-4d2e-bfe2-70b577ef19d4" direction="Return" isUnique="false">
                   <elementDefinition Id="64abcd15-349e-4e5a-a5d2-ce63a2aeeb4a" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="4cb3d8fd-8b1f-4c89-8101-017835510380" name="GetBaseWeightInUnits" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="45fdeb9b-f563-42d7-b478-be20e73fd44e" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="8851fac5-abd0-47a4-9386-2b609da5a775" name="units" direction="In" isUnique="false">
+                  <elementDefinition Id="17a77088-e4d4-445f-b2d6-c0034904a999" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="UnitSystem" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="a726ee07-b82b-4057-a883-c39f2491342d" direction="Return" isUnique="false">
+                  <elementDefinition Id="38f49fa9-6ad8-4ede-9af3-e77a962bf8d2" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="f2e8df45-ae3c-45d0-b513-cbed2087b33a" name="GetPackWeightInUnits" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="6a735f44-c5bc-4ab9-9e33-445949350809" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="0d52c808-3d39-44d0-9ae6-da63e09bc645" name="units" direction="In" isUnique="false">
+                  <elementDefinition Id="04a6c2d5-fe81-4395-beb5-a478f849e21d" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="UnitSystem" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="371a5441-7e7b-4dd6-8463-7cde71773b50" direction="Return" isUnique="false">
+                  <elementDefinition Id="c40bce31-c6d1-4e8f-9150-338141aef691" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="ecf0d33e-54b9-4f74-ba55-05cb2558ebe7" name="GetSkinOutWeightInUnits" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="0dee52ad-454e-4dd0-a1c2-f58af46341df" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="264639a4-7f72-4066-9cd6-bf4f8739da94" name="units" direction="In" isUnique="false">
+                  <elementDefinition Id="2f7d3de7-e6b6-4f67-af84-c75bc304296e" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="UnitSystem" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="55c7cea4-a80a-405c-818c-8f12a65cc8fe" direction="Return" isUnique="false">
+                  <elementDefinition Id="4b49b681-a86e-4a34-a45a-5e2295fbd13a" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
                   </type_NamedElement>
@@ -3161,11 +3192,6 @@
       </referencedType>
     </packageHasNamedElement>
     <packageHasNamedElement>
-      <referencedType Id="ea805081-6a81-4b63-a00c-e75459fc9dd9" name="String" isAbstract="false" isLeaf="false" cachedFullName="String">
-        <elementDefinition Id="59259974-6d55-42c6-b7bd-763d77ac8ef9" />
-      </referencedType>
-    </packageHasNamedElement>
-    <packageHasNamedElement>
       <referencedType Id="57788e72-0b48-4544-8f82-d37f569c68f5" name="WeightClass" isAbstract="false" isLeaf="false" cachedFullName="BackpackPlanner.Models::WeightClass">
         <elementDefinition Id="f119cce2-19fb-4597-9864-0100cb6db102" />
       </referencedType>
@@ -3203,22 +3229,22 @@
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
-          <operation Id="aeb71427-59ac-4794-ba79-17e1a375023b" name="GetWeightInUnits" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+          <operation Id="aeb71427-59ac-4794-ba79-17e1a375023b" name="GetTotalWeightInUnits" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="4265c26d-5969-4c61-a97c-0071362f742f" />
             <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="9395ef91-188a-4a45-8ad8-549758807210" name="units" direction="In" isUnique="false">
-                  <elementDefinition Id="fe92cb7c-43a4-4f47-9bf7-9790c4ea2edf" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="UnitSystem" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
               <operationHasOwnedParameters>
                 <parameter Id="f4f776da-c5ad-41f5-89a0-2470194b910e" direction="Return" isUnique="false">
                   <elementDefinition Id="170d5548-fb22-4a24-9998-2790d399f7ac" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="caed887a-4a57-476f-afb1-020ba6923505" LastKnownName="Integer" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="ba4debb1-0676-4070-a841-4d955203520b" name="units" direction="In" isUnique="false">
+                  <elementDefinition Id="1670d346-6f13-47f7-90d4-d3c665a560ac" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="c448b291-87b8-4469-a987-6dd410ce81c9" LastKnownName="UnitSystem" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -3240,11 +3266,6 @@
         </ownedOperations>
       </Interface>
     </logicalClassDesignerModelHasTypes>
-    <packageHasNamedElement>
-      <referencedType Id="4b4b7c2f-de85-431c-b720-afc1d706d48a" name="IEntry" isAbstract="false" isLeaf="false" cachedFullName="BackpackPlanner.Models::IEntry">
-        <elementDefinition Id="b9618f3d-255e-4d5a-933a-d20d08a7fc5a" />
-      </referencedType>
-    </packageHasNamedElement>
     <packageHasNamedElement>
       <referencedType Id="3fa85c56-19e7-44af-b970-4e89aecad803" name="Unit" isAbstract="false" isLeaf="false" cachedFullName="Unit">
         <elementDefinition Id="ea6e17d1-83fa-408d-9dac-e1440ad05c70" />

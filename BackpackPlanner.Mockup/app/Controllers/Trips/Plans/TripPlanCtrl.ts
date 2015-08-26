@@ -102,8 +102,13 @@ module BackpackPlanner.Mockup.Controllers.Trips.Plans {
                 }
                 tripPlan.update($scope.tripPlan);
 
+                var updateToast = $mdToast.simple()
+                    .content(`Updated trip plan: ${$scope.tripPlan.name()}`)
+                    .action("OK")
+                    .position("bottom left");
+
                 $location.path("/trips/plans");
-                // TODO: toast!
+                $mdToast.show(updateToast);
             }
 
             $scope.resetTripPlan = () => {

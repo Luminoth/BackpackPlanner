@@ -1,5 +1,6 @@
 <form novalidate name="tripPlanForm">
 <div layout="column" layout-padding flex ng-cloak>
+    <a id="top"></a>
     <md-input-container>
         <label>Name</label>
         <input type="text" ng-model="tripPlan.name" ng-model-options="{ getterSetter: true }" required name="name" />
@@ -31,7 +32,7 @@
             <md-radio-group ng-model="orderGearCollectionsBy" layout="row">
                 <md-radio-button value="getName()">Name</md-radio-button>
                 <md-radio-button value="-count()">Count</md-radio-button>
-                <md-radio-button value="-getWeightInUnits()">Total Weight</md-radio-button>
+                <md-radio-button value="-getTotalWeightInUnits()">Total Weight</md-radio-button>
             </md-radio-group>
         </md-input-container>
         <md-list>
@@ -40,7 +41,7 @@
                     <md-input-container flex>
                         <label>
                             {{ gearCollectionEntry.getName() }}<br />
-                            {{ gearCollectionEntry.getWeightInUnits() | number:2 }} total {{ getUnitsWeightString() }}s<br />
+                            {{ gearCollectionEntry.getTotalWeightInUnits() | number:2 }} total {{ getUnitsWeightString() }}s<br />
                         </label>
                         <input type="number" ng-model="gearCollectionEntry.count" ng-model-options="{ getterSetter: true }" min="1" max="1000000" name="count" />
                     </md-input-container>
@@ -65,7 +66,7 @@
             <md-radio-group ng-model="orderGearSystemsBy" layout="row">
                 <md-radio-button value="getName()">Name</md-radio-button>
                 <md-radio-button value="-count()">Count</md-radio-button>
-                <md-radio-button value="-getWeightInUnits()">Total Weight</md-radio-button>
+                <md-radio-button value="-getTotalWeightInUnits()">Total Weight</md-radio-button>
             </md-radio-group>
         </md-input-container>
         <md-list>
@@ -74,7 +75,7 @@
                     <md-input-container flex>
                         <label>
                             {{ gearSystemEntry.getName() }}<br />
-                            {{ gearSystemEntry.getWeightInUnits() | number:2 }} total {{ getUnitsWeightString() }}s<br />
+                            {{ gearSystemEntry.getTotalWeightInUnits() | number:2 }} total {{ getUnitsWeightString() }}s<br />
                         </label>
                         <input type="number" ng-model="gearSystemEntry.count" ng-model-options="{ getterSetter: true }" min="1" max="1000000" name="count" />
                     </md-input-container>         
@@ -99,7 +100,7 @@
             <md-radio-group ng-model="orderGearItemsBy" layout="row">
                 <md-radio-button value="getName()">Name</md-radio-button>
                 <md-radio-button value="-count()">Count</md-radio-button>
-                <md-radio-button value="-getWeightInUnits()">Total Weight</md-radio-button>
+                <md-radio-button value="-getTotalWeightInUnits()">Total Weight</md-radio-button>
             </md-radio-group>
         </md-input-container>
         <md-list>
@@ -108,7 +109,7 @@
                     <md-input-container flex>
                         <label>
                             {{ gearItemEntry.getName() }}<br />
-                            {{ gearItemEntry.getWeightInUnits() | number:2 }} total {{ getUnitsWeightString() }}s<br />
+                            {{ gearItemEntry.getTotalWeightInUnits() | number:2 }} total {{ getUnitsWeightString() }}s<br />
                         </label>
                         <input type="number" ng-model="gearItemEntry.count" ng-model-options="{ getterSetter: true }" min="1" max="1000000" name="count" />
                     </md-input-container>
@@ -133,7 +134,7 @@
             <md-radio-group ng-model="orderMealsBy" layout="row">
                 <md-radio-button value="getName()">Name</md-radio-button>
                 <md-radio-button value="-count()">Count</md-radio-button>
-                <md-radio-button value="-getWeightInUnits()">Total Weight</md-radio-button>
+                <md-radio-button value="-getTotalWeightInUnits()">Total Weight</md-radio-button>
             </md-radio-group>
         </md-input-container>
         <md-list>
@@ -142,7 +143,7 @@
                     <md-input-container flex>
                         <label>
                             {{ mealEntry.getName() }}<br />
-                            {{ mealEntry.getWeightInUnits() | number:2 }} total {{ getUnitsWeightString() }}s<br />
+                            {{ mealEntry.getTotalWeightInUnits() | number:2 }} total {{ getUnitsWeightString() }}s<br />
                         </label>
                         <input type="number" ng-model="mealEntry.count" ng-model-options="{ getterSetter: true }" min="1" max="1000000" name="count" />
                     </md-input-container>

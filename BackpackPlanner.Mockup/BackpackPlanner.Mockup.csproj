@@ -47,7 +47,6 @@
     <Content Include="content\partials\gear\collections\collections.html" />
     <Content Include="content\partials\gear\items\items.html" />
     <Content Include="content\partials\gear\systems\systems.html" />
-    <Content Include="content\partials\main.html" />
     <Content Include="content\partials\meals\add.html" />
     <Content Include="content\partials\meals\meal.html" />
     <Content Include="content\partials\meals\meals.html" />

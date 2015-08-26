@@ -5,7 +5,7 @@ module BackpackPlanner.Mockup.Models {
         count: (count?: number) => number;
 
         getName: () => string;
-        getWeightInUnits: (/*units: string*/) => number;
+        getTotalWeightInUnits: (/*units: string*/) => number;
         getCostInCurrency: (/*currency: string*/) => number;
     }
 }

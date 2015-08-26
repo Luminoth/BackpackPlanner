@@ -53,12 +53,14 @@ module BackpackPlanner.Mockup.Controllers {
 
         getDaysBetween: (startDate: Date, endDate: Date) => number;
 
+        scrollToTop: () => void;
         isActive: (viewLocation: string) => boolean;
         toggleSidenav: () => void;
     }
 
     export class AppCtrl {
-        constructor($scope: IAppScope, $q: ng.IQService, $location: ng.ILocationService, $mdSidenav: ng.material.ISidenavService, $mdDialog: ng.material.IDialogService, $mdToast: ng.material.IToastService,
+        constructor($scope: IAppScope, $q: ng.IQService, $location: ng.ILocationService, $anchorScroll: ng.IAnchorScrollService,
+            $mdSidenav: ng.material.ISidenavService, $mdDialog: ng.material.IDialogService, $mdToast: ng.material.IToastService,
             appSettingsService: Services.IAppSettingsService, userInformationService: Services.Personal.IUserInformationService,
             gearItemService: Services.Gear.IGearItemService, gearSystemService: Services.Gear.IGearSystemService, gearCollectionService: Services.Gear.IGearCollectionService,
             mealService: Services.Meals.IMealService, tripItineraryService: Services.Trips.ITripItineraryService, tripPlanService: Services.Trips.ITripPlanService) {
@@ -154,6 +156,11 @@ module BackpackPlanner.Mockup.Controllers {
             }
 
             // view utilities
+            $scope.scrollToTop = () => {
+                $location.hash("top");
+                $anchorScroll();
+            }
+
             $scope.isActive = (viewLocation: string) => {
                 // set the nav item as active when we're looking at its location
                 return $location.path() === viewLocation;
@@ -165,7 +172,8 @@ module BackpackPlanner.Mockup.Controllers {
         }
     }
 
-    AppCtrl.$inject = ["$scope", "$q", "$location", "$mdSidenav", "$mdDialog", "$mdToast",
+    AppCtrl.$inject = ["$scope", "$q", "$location", "$anchorScroll",
+        "$mdSidenav", "$mdDialog", "$mdToast",
         "AppSettingsService", "UserInformationService",
         "GearItemService", "GearSystemService", "GearCollectionService",
         "MealService", "TripItineraryService", "TripPlanService"];
