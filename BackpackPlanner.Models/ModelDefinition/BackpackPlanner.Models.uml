@@ -21,7 +21,7 @@
     <packageHasNamedElement>
       <class
         Id="aa7d10b7-f515-4882-b729-918865015197"
-        name="UserInformation"
+        name="PersonalInformation"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
@@ -64,7 +64,7 @@
           </property>
           <property
             Id="56296aee-23e0-4838-b92a-a6d853dd0aad"
-            name="BirthDate"
+            name="DateOfBirth"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -324,7 +324,7 @@
                   <type_NamedElement>
                     <classMoniker
                       Id="aa7d10b7-f515-4882-b729-918865015197"
-                      LastKnownName="UserInformation"
+                      LastKnownName="PersonalInformation"
                       LastKnownLocation="BackpackPlanner.Models.uml" />
                   </type_NamedElement>
                 </parameter>
@@ -369,6 +369,16 @@
                 Id="16d8e1a5-3b18-4025-aa79-b85f763ba12d"
                 name="Integer"
                 value="0" />
+            </specification>
+          </enumerationLiteral>
+          <enumerationLiteral
+            Id="d0c63868-d367-4a5a-83e4-d80cbbbd41f2"
+            name="Other">
+            <specification>
+              <literalInteger
+                Id="b61c50b6-383a-4dc5-bf3a-4fcb3e9b3cd3"
+                name="Integer"
+                value="3" />
             </specification>
           </enumerationLiteral>
         </ownedLiterals>
@@ -980,7 +990,7 @@
             <type_NamedElement>
               <classMoniker
                 Id="aa7d10b7-f515-4882-b729-918865015197"
-                LastKnownName="UserInformation"
+                LastKnownName="PersonalInformation"
                 LastKnownLocation="BackpackPlanner.Models.uml" />
             </type_NamedElement>
           </property>

@@ -53,6 +53,21 @@ var BackpackPlanner;
         })(Resources = Mockup.Resources || (Mockup.Resources = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
+///<reference path="../../Models/Personal/UserInformation.ts" />
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Resources;
+        (function (Resources) {
+            var Personal;
+            (function (Personal) {
+                "use strict";
+            })(Personal = Resources.Personal || (Resources.Personal = {}));
+        })(Resources = Mockup.Resources || (Mockup.Resources = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../Resources/Personal/UserInformationResource.ts"/>
 var BackpackPlanner;
 (function (BackpackPlanner) {
@@ -134,18 +149,15 @@ var BackpackPlanner;
         })(Models = Mockup.Models || (Mockup.Models = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
-///<reference path="../../Models/Personal/UserInformation.ts" />
+///<reference path="../../scripts/typings/angularjs/angular-resource.d.ts" />
+///<reference path="../Models/AppSettings.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
     (function (Mockup) {
         var Resources;
         (function (Resources) {
-            var Personal;
-            (function (Personal) {
-                "use strict";
-            })(Personal = Resources.Personal || (Resources.Personal = {}));
+            "use strict";
         })(Resources = Mockup.Resources || (Mockup.Resources = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
@@ -268,18 +280,6 @@ var BackpackPlanner;
         })(Models = Mockup.Models || (Mockup.Models = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../scripts/typings/angularjs/angular-resource.d.ts" />
-///<reference path="../Models/AppSettings.ts" />
-var BackpackPlanner;
-(function (BackpackPlanner) {
-    var Mockup;
-    (function (Mockup) {
-        var Resources;
-        (function (Resources) {
-            "use strict";
-        })(Resources = Mockup.Resources || (Mockup.Resources = {}));
-    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
-})(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
 ///<reference path="../../Resources/Gear/GearCollectionResource.ts" />
 var BackpackPlanner;
@@ -350,6 +350,204 @@ var BackpackPlanner;
         var Models;
         (function (Models) {
             "use strict";
+        })(Models = Mockup.Models || (Mockup.Models = {}));
+    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
+})(BackpackPlanner || (BackpackPlanner = {}));
+///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
+//<reference path="../../Resources/Meals/MealResource.ts"/>
+///<reference path="../../AppState.ts"/>
+///<reference path="../Entry.ts"/>
+var BackpackPlanner;
+(function (BackpackPlanner) {
+    var Mockup;
+    (function (Mockup) {
+        var Models;
+        (function (Models) {
+            var Meals;
+            (function (Meals) {
+                "use strict";
+                var Meal = (function () {
+                    function Meal() {
+                        this._id = -1;
+                        this._name = "";
+                        this._url = "";
+                        this._meal = "Other";
+                        this._servingCount = 1;
+                        this._weightInGrams = 0;
+                        this._costInUSDP = 0;
+                        this._calories = 0;
+                        this._proteinInGrams = 0;
+                        this._fiberInGrams = 0;
+                        this._note = "";
+                    }
+                    Object.defineProperty(Meal.prototype, "Id", {
+                        get: function () {
+                            return this._id;
+                        },
+                        set: function (id) {
+                            this._id = id;
+                        },
+                        enumerable: true,
+                        configurable: true
+                    });
+                    Meal.prototype.name = function (name) {
+                        return arguments.length
+                            ? (this._name = name)
+                            : this._name;
+                    };
+                    Meal.prototype.url = function (url) {
+                        return arguments.length
+                            ? (this._url = url)
+                            : this._url;
+                    };
+                    Meal.prototype.meal = function (meal) {
+                        return arguments.length
+                            ? (this._meal = meal)
+                            : this._meal;
+                    };
+                    Meal.prototype.servingCount = function (servingCount) {
+                        return arguments.length
+                            ? (this._servingCount = servingCount)
+                            : this._servingCount;
+                    };
+                    Meal.prototype.calories = function (calories) {
+                        return arguments.length
+                            ? (this._calories = calories)
+                            : this._calories;
+                    };
+                    Meal.prototype.getCaloriesPerWeightUnit = function () {
+                        return 0 == this._calories ? 0 : this._calories / this.weightInUnits();
+                    };
+                    Meal.prototype.proteinInGrams = function (proteinInGrams) {
+                        return arguments.length
+                            ? (this._proteinInGrams = proteinInGrams)
+                            : this._proteinInGrams;
+                    };
+                    Meal.prototype.fiberInGrams = function (fiberInGrams) {
+                        return arguments.length
+                            ? (this._fiberInGrams = fiberInGrams)
+                            : this._fiberInGrams;
+                    };
+                    Meal.prototype.note = function (note) {
+                        return arguments.length
+                            ? (this._note = note)
+                            : this._note;
+                    };
+                    /* Weight/Cost */
+                    Meal.prototype.getWeightInGrams = function () {
+                        return this._weightInGrams;
+                    };
+                    Meal.prototype.weightInUnits = function (weight) {
+                        return arguments.length
+                            ? (this._weightInGrams = Mockup.convertUnitsToGrams(weight, Mockup.AppState.getInstance().getAppSettings().units()))
+                            : parseFloat(Mockup.convertGramsToUnits(this._weightInGrams, Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
+                    };
+                    Meal.prototype.getCostInUSDP = function () {
+                        return this._costInUSDP;
+                    };
+                    Meal.prototype.costInCurrency = function (cost) {
+                        return arguments.length
+                            ? (this._costInUSDP = Mockup.convertCurrencyToUSDP(cost, Mockup.AppState.getInstance().getAppSettings().currency()))
+                            : Mockup.convertUSDPToCurrency(this._costInUSDP, Mockup.AppState.getInstance().getAppSettings().currency());
+                    };
+                    Meal.prototype.getCostPerUnitInCurrency = function () {
+                        var weightInUnits = Mockup.convertGramsToUnits(this._weightInGrams, Mockup.AppState.getInstance().getAppSettings().units());
+                        var costInCurrency = Mockup.convertUSDPToCurrency(this._costInUSDP, Mockup.AppState.getInstance().getAppSettings().currency());
+                        return 0 == weightInUnits
+                            ? costInCurrency
+                            : costInCurrency / weightInUnits;
+                    };
+                    /* Load/Save */
+                    Meal.prototype.update = function (meal) {
+                        this._name = meal._name;
+                        this._url = meal._url;
+                        this._meal = meal._meal;
+                        this._servingCount = meal._servingCount;
+                        this._weightInGrams = meal._weightInGrams;
+                        this._costInUSDP = meal._costInUSDP;
+                        this._calories = meal._calories;
+                        this._proteinInGrams = meal._proteinInGrams;
+                        this._fiberInGrams = meal._fiberInGrams;
+                        this._note = meal._note;
+                    };
+                    Meal.prototype.loadFromDevice = function ($q, mealResource) {
+                        var deferred = $q.defer();
+                        this._id = mealResource.Id;
+                        this._name = mealResource.Name;
+                        this._url = mealResource.Url;
+                        this._meal = mealResource.Meal;
+                        this._servingCount = mealResource.ServingCount;
+                        this._weightInGrams = mealResource.WeightInGrams;
+                        this._costInUSDP = mealResource.CostInUSDP;
+                        this._calories = mealResource.Calories;
+                        this._proteinInGrams = mealResource.ProteinInGrams;
+                        this._fiberInGrams = mealResource.FiberInGrams;
+                        this._note = mealResource.Note;
+                        deferred.resolve(this);
+                        return deferred.promise;
+                    };
+                    Meal.prototype.saveToDevice = function ($q) {
+                        alert("Meal.saveToDevice");
+                        return $q.defer().promise;
+                    };
+                    return Meal;
+                })();
+                Meals.Meal = Meal;
+                var MealEntry = (function () {
+                    function MealEntry(mealId, count) {
+                        this._mealId = -1;
+                        this._count = 1;
+                        this._mealId = mealId;
+                        if (count) {
+                            this._count = count;
+                        }
+                    }
+                    MealEntry.prototype.getMealId = function () {
+                        return this._mealId;
+                    };
+                    MealEntry.prototype.count = function (count) {
+                        return arguments.length
+                            ? (this._count = count)
+                            : this._count;
+                    };
+                    MealEntry.prototype.getName = function () {
+                        var meal = Mockup.AppState.getInstance().getMealState().getMealById(this._mealId);
+                        if (!meal) {
+                            return "";
+                        }
+                        return meal.name();
+                    };
+                    MealEntry.prototype.getCalories = function () {
+                        var meal = Mockup.AppState.getInstance().getMealState().getMealById(this._mealId);
+                        if (!meal) {
+                            return 0;
+                        }
+                        return this._count * meal.calories();
+                    };
+                    MealEntry.prototype.getTotalWeightInGrams = function () {
+                        var meal = Mockup.AppState.getInstance().getMealState().getMealById(this._mealId);
+                        if (!meal) {
+                            return 0;
+                        }
+                        return this._count * meal.getWeightInGrams();
+                    };
+                    MealEntry.prototype.getTotalWeightInUnits = function () {
+                        return parseFloat(Mockup.convertGramsToUnits(this.getTotalWeightInGrams(), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
+                    };
+                    MealEntry.prototype.getCostInUSDP = function () {
+                        var meal = Mockup.AppState.getInstance().getMealState().getMealById(this._mealId);
+                        if (!meal) {
+                            return 0;
+                        }
+                        return this._count * meal.getCostInUSDP();
+                    };
+                    MealEntry.prototype.getCostInCurrency = function () {
+                        return Mockup.convertUSDPToCurrency(this.getCostInUSDP(), Mockup.AppState.getInstance().getAppSettings().currency());
+                    };
+                    return MealEntry;
+                })();
+                Meals.MealEntry = MealEntry;
+            })(Meals = Models.Meals || (Models.Meals = {}));
         })(Models = Mockup.Models || (Mockup.Models = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
@@ -1030,485 +1228,6 @@ var BackpackPlanner;
                     return GearSystemEntry;
                 })();
                 Gear.GearSystemEntry = GearSystemEntry;
-            })(Gear = Models.Gear || (Models.Gear = {}));
-        })(Models = Mockup.Models || (Mockup.Models = {}));
-    })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
-})(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../scripts/typings/underscore/underscore.d.ts" />
-///<reference path="../../Resources/Gear/GearCollectionResource.ts"/>
-///<reference path="../../AppState.ts"/>
-///<reference path="../Entry.ts"/>
-///<reference path="GearItem.ts"/>
-///<reference path="GearSystem.ts"/>
-var BackpackPlanner;
-(function (BackpackPlanner) {
-    var Mockup;
-    (function (Mockup) {
-        var Models;
-        (function (Models) {
-            var Gear;
-            (function (Gear) {
-                "use strict";
-                var GearCollection = (function () {
-                    function GearCollection() {
-                        this._id = -1;
-                        this._name = "";
-                        this._note = "";
-                        this._gearSystems = [];
-                        this._gearItems = [];
-                    }
-                    Object.defineProperty(GearCollection.prototype, "Id", {
-                        get: function () {
-                            return this._id;
-                        },
-                        set: function (id) {
-                            this._id = id;
-                        },
-                        enumerable: true,
-                        configurable: true
-                    });
-                    GearCollection.prototype.name = function (name) {
-                        return arguments.length
-                            ? (this._name = name)
-                            : this._name;
-                    };
-                    GearCollection.prototype.note = function (note) {
-                        return arguments.length
-                            ? (this._note = note)
-                            : this._note;
-                    };
-                    GearCollection.prototype.getTotalGearItemCount = function () {
-                        var visitedGearItems = [];
-                        var count = 0;
-                        for (var i = 0; i < this._gearSystems.length; ++i) {
-                            var gearSystemEntry = this._gearSystems[i];
-                            count += gearSystemEntry.getGearItemCount(visitedGearItems);
-                        }
-                        for (var i = 0; i < this._gearItems.length; ++i) {
-                            var gearItemEntry = this._gearItems[i];
-                            if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
-                                continue;
-                            }
-                            visitedGearItems.push(gearItemEntry.getGearItemId());
-                            count += gearItemEntry.count();
-                        }
-                        return count;
-                    };
-                    /* Gear Systems */
-                    GearCollection.prototype.getGearSystems = function () {
-                        return this._gearSystems;
-                    };
-                    GearCollection.prototype.getGearSystemCount = function (visitedGearSystems) {
-                        if (!visitedGearSystems) {
-                            visitedGearSystems = [];
-                        }
-                        var count = 0;
-                        for (var i = 0; i < this._gearSystems.length; ++i) {
-                            var gearSystemEntry = this._gearSystems[i];
-                            if (_.contains(visitedGearSystems, gearSystemEntry.getGearSystemId())) {
-                                continue;
-                            }
-                            visitedGearSystems.push(gearSystemEntry.getGearSystemId());
-                            count += gearSystemEntry.count();
-                        }
-                        return count;
-                    };
-                    GearCollection.prototype.getGearSystemEntryIndexById = function (gearSystemId) {
-                        return _.findIndex(this._gearSystems, function (gearSystemEntry) {
-                            return gearSystemEntry.getGearSystemId() == gearSystemId;
-                        });
-                    };
-                    GearCollection.prototype.containsGearSystemById = function (gearSystemId) {
-                        return undefined != _.find(this._gearSystems, function (gearSystemEntry) {
-                            return gearSystemEntry.getGearSystemId() == gearSystemId;
-                        });
-                    };
-                    GearCollection.prototype.containsGearSystemItems = function (gearSystem) {
-                        var gearItems = gearSystem.getGearItems();
-                        for (var i = 0; i < gearItems.length; ++i) {
-                            var gearItemEntry = gearItems[i];
-                            if (this.containsGearItemById(gearItemEntry.getGearItemId())) {
-                                return true;
-                            }
-                        }
-                        return false;
-                    };
-                    GearCollection.prototype.addGearSystem = function (gearSystem) {
-                        if (this.containsGearSystemById(gearSystem.Id)) {
-                            throw "The collection already contains this system!";
-                        }
-                        if (this.containsGearSystemItems(gearSystem)) {
-                            throw "The collection already contains items from this system!";
-                        }
-                        this._gearSystems.push(new Gear.GearSystemEntry(gearSystem.Id));
-                    };
-                    GearCollection.prototype.addGearSystemEntry = function (gearSystemId, count) {
-                        if (this.containsGearSystemById(gearSystemId)) {
-                            throw "The collection already contains this system!";
-                        }
-                        // TODO: prevent duplicates here
-                        /*const gearSystem = AppState.getInstance().getGearState().getGearSystemById(gearSystemId);
-                        if(!gearSystem) {
-                            throw "The system does not exist!";
-                        }
-            
-                        if(this.containsGearSystemItems(gearSystem)) {
-                            throw "The collection already contains items from this system!";
-                        }*/
-                        this._gearSystems.push(new Gear.GearSystemEntry(gearSystemId, count));
-                    };
-                    GearCollection.prototype.removeGearSystemById = function (gearSystemId) {
-                        var idx = this.getGearSystemEntryIndexById(gearSystemId);
-                        if (idx < 0) {
-                            return false;
-                        }
-                        this._gearSystems.splice(idx, 1);
-                        return true;
-                    };
-                    GearCollection.prototype.removeAllGearSystems = function () {
-                        this._gearSystems = [];
-                    };
-                    /* Gear Items */
-                    GearCollection.prototype.getGearItems = function () {
-                        return this._gearItems;
-                    };
-                    GearCollection.prototype.getGearItemCount = function (visitedGearItems) {
-                        if (!visitedGearItems) {
-                            visitedGearItems = [];
-                        }
-                        var count = 0;
-                        for (var i = 0; i < this._gearItems.length; ++i) {
-                            var gearItemEntry = this._gearItems[i];
-                            if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
-                                continue;
-                            }
-                            visitedGearItems.push(gearItemEntry.getGearItemId());
-                            count += gearItemEntry.count();
-                        }
-                        return count;
-                    };
-                    GearCollection.prototype.getGearItemEntryIndexById = function (gearItemId) {
-                        return _.findIndex(this._gearItems, function (gearItemEntry) {
-                            return gearItemEntry.getGearItemId() == gearItemId;
-                        });
-                    };
-                    GearCollection.prototype.containsGearItemById = function (gearItemId) {
-                        if (_.find(this._gearSystems, function (gearSystemEntry) {
-                            var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(gearSystemEntry.getGearSystemId());
-                            if (!gearSystem) {
-                                return false;
-                            }
-                            return gearSystem.containsGearItemById(gearItemId);
-                        })) {
-                            return true;
-                        }
-                        return undefined != _.find(this._gearItems, function (gearItemEntry) {
-                            return gearItemEntry.getGearItemId() == gearItemId;
-                        });
-                    };
-                    GearCollection.prototype.addGearItem = function (gearItem) {
-                        if (this.containsGearItemById(gearItem.Id)) {
-                            throw "The collection already contains this item!";
-                        }
-                        this._gearItems.push(new Gear.GearItemEntry(gearItem.Id));
-                    };
-                    GearCollection.prototype.addGearItemEntry = function (gearItemId, count) {
-                        if (this.containsGearItemById(gearItemId)) {
-                            throw "The collection already contains this item!";
-                        }
-                        this._gearItems.push(new Gear.GearItemEntry(gearItemId, count));
-                    };
-                    GearCollection.prototype.removeGearItemById = function (gearItemId) {
-                        var idx = this.getGearItemEntryIndexById(gearItemId);
-                        if (idx < 0) {
-                            return false;
-                        }
-                        this._gearItems.splice(idx, 1);
-                        return true;
-                    };
-                    GearCollection.prototype.removeAllGearItems = function () {
-                        this._gearItems = [];
-                    };
-                    /* Weight/Cost */
-                    GearCollection.prototype.getTotalWeightInGrams = function (visitedGearItems) {
-                        if (!visitedGearItems) {
-                            visitedGearItems = [];
-                        }
-                        var weightInGrams = 0;
-                        for (var i = 0; i < this._gearSystems.length; ++i) {
-                            var gearSystemEntry = this._gearSystems[i];
-                            weightInGrams += gearSystemEntry.getTotalWeightInGrams(visitedGearItems);
-                        }
-                        for (var i = 0; i < this._gearItems.length; ++i) {
-                            var gearItemEntry = this._gearItems[i];
-                            if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
-                                continue;
-                            }
-                            visitedGearItems.push(gearItemEntry.getGearItemId());
-                            weightInGrams += gearItemEntry.getTotalWeightInGrams();
-                        }
-                        return weightInGrams;
-                    };
-                    GearCollection.prototype.getTotalWeightInUnits = function () {
-                        return Mockup.convertGramsToUnits(this.getTotalWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units());
-                    };
-                    GearCollection.prototype.getBaseWeightInGrams = function (visitedGearItems) {
-                        if (!visitedGearItems) {
-                            visitedGearItems = [];
-                        }
-                        var weightInGrams = 0;
-                        for (var i = 0; i < this._gearSystems.length; ++i) {
-                            var gearSystemEntry = this._gearSystems[i];
-                            weightInGrams += gearSystemEntry.getBaseWeightInGrams(visitedGearItems);
-                        }
-                        for (var i = 0; i < this._gearItems.length; ++i) {
-                            var gearItemEntry = this._gearItems[i];
-                            if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
-                                continue;
-                            }
-                            // carried but not worn or consumable
-                            if (gearItemEntry.isCarried() && !gearItemEntry.isWorn() && !gearItemEntry.isConsumable()) {
-                                visitedGearItems.push(gearItemEntry.getGearItemId());
-                                weightInGrams += gearItemEntry.getTotalWeightInGrams();
-                            }
-                        }
-                        return weightInGrams;
-                    };
-                    GearCollection.prototype.getBaseWeightInUnits = function () {
-                        return Mockup.convertGramsToUnits(this.getBaseWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units());
-                    };
-                    GearCollection.prototype.getPackWeightInGrams = function (visitedGearItems) {
-                        if (!visitedGearItems) {
-                            visitedGearItems = [];
-                        }
-                        var weightInGrams = 0;
-                        for (var i = 0; i < this._gearSystems.length; ++i) {
-                            var gearSystemEntry = this._gearSystems[i];
-                            weightInGrams += gearSystemEntry.getPackWeightInGrams(visitedGearItems);
-                        }
-                        for (var i = 0; i < this._gearItems.length; ++i) {
-                            var gearItemEntry = this._gearItems[i];
-                            if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
-                                continue;
-                            }
-                            // carried or consumable but not worn
-                            if (gearItemEntry.isCarried() && !gearItemEntry.isWorn() || gearItemEntry.isConsumable()) {
-                                visitedGearItems.push(gearItemEntry.getGearItemId());
-                                weightInGrams += gearItemEntry.getTotalWeightInGrams();
-                            }
-                        }
-                        return weightInGrams;
-                    };
-                    GearCollection.prototype.getPackWeightInUnits = function () {
-                        return Mockup.convertGramsToUnits(this.getPackWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units());
-                    };
-                    GearCollection.prototype.getSkinOutWeightInGrams = function (visitedGearItems) {
-                        if (!visitedGearItems) {
-                            visitedGearItems = [];
-                        }
-                        var weightInGrams = 0;
-                        for (var i = 0; i < this._gearSystems.length; ++i) {
-                            var gearSystemEntry = this._gearSystems[i];
-                            weightInGrams += gearSystemEntry.getSkinOutWeightInGrams(visitedGearItems);
-                        }
-                        for (var i = 0; i < this._gearItems.length; ++i) {
-                            var gearItemEntry = this._gearItems[i];
-                            if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
-                                continue;
-                            }
-                            // carried, worn, and consumable gear items
-                            if (gearItemEntry.isCarried()) {
-                                visitedGearItems.push(gearItemEntry.getGearItemId());
-                                weightInGrams += gearItemEntry.getTotalWeightInGrams();
-                            }
-                        }
-                        return weightInGrams;
-                    };
-                    GearCollection.prototype.getSkinOutWeightInUnits = function () {
-                        return Mockup.convertGramsToUnits(this.getSkinOutWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units());
-                    };
-                    GearCollection.prototype.getCostInUSDP = function (visitedGearItems) {
-                        if (!visitedGearItems) {
-                            visitedGearItems = [];
-                        }
-                        var costInUSDP = 0;
-                        for (var i = 0; i < this._gearSystems.length; ++i) {
-                            var gearSystemEntry = this._gearSystems[i];
-                            costInUSDP += gearSystemEntry.getCostInUSDP(visitedGearItems);
-                        }
-                        for (var i = 0; i < this._gearItems.length; ++i) {
-                            var gearItemEntry = this._gearItems[i];
-                            if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
-                                continue;
-                            }
-                            visitedGearItems.push(gearItemEntry.getGearItemId());
-                            costInUSDP += gearItemEntry.getCostInUSDP();
-                        }
-                        return costInUSDP;
-                    };
-                    GearCollection.prototype.getCostInCurrency = function () {
-                        return Mockup.convertUSDPToCurrency(this.getCostInUSDP([]), Mockup.AppState.getInstance().getAppSettings().currency());
-                    };
-                    GearCollection.prototype.getCostPerUnitInCurrency = function () {
-                        var weightInUnits = Mockup.convertGramsToUnits(this.getTotalWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units());
-                        var costInCurrency = Mockup.convertUSDPToCurrency(this.getCostInUSDP([]), Mockup.AppState.getInstance().getAppSettings().currency());
-                        return 0 == weightInUnits
-                            ? costInCurrency
-                            : costInCurrency / weightInUnits;
-                    };
-                    /* Load/Save */
-                    GearCollection.prototype.update = function (gearCollection) {
-                        this._name = gearCollection._name;
-                        this._note = gearCollection._note;
-                        this._gearSystems = [];
-                        for (var i = 0; i < gearCollection._gearSystems.length; ++i) {
-                            var gearSystemEntry = gearCollection._gearSystems[i];
-                            try {
-                                this.addGearSystemEntry(gearSystemEntry.getGearSystemId(), gearSystemEntry.count());
-                            }
-                            catch (error) {
-                            }
-                        }
-                        this._gearItems = [];
-                        for (var i = 0; i < gearCollection._gearItems.length; ++i) {
-                            var gearItemEntry = gearCollection._gearItems[i];
-                            try {
-                                this.addGearItemEntry(gearItemEntry.getGearItemId(), gearItemEntry.count());
-                            }
-                            catch (error) {
-                            }
-                        }
-                    };
-                    GearCollection.prototype.loadFromDevice = function ($q, gearCollectionResource) {
-                        var deferred = $q.defer();
-                        this._id = gearCollectionResource.Id;
-                        this._name = gearCollectionResource.Name;
-                        this._note = gearCollectionResource.Note;
-                        for (var i = 0; i < gearCollectionResource.GearSystems.length; ++i) {
-                            var gearSystemEntry = gearCollectionResource.GearSystems[i];
-                            try {
-                                this.addGearSystemEntry(gearSystemEntry.GearSystemId, gearSystemEntry.Count);
-                            }
-                            catch (error) {
-                            }
-                        }
-                        for (var i = 0; i < gearCollectionResource.GearItems.length; ++i) {
-                            var gearItemEntry = gearCollectionResource.GearItems[i];
-                            try {
-                                this.addGearItemEntry(gearItemEntry.GearItemId, gearItemEntry.Count);
-                            }
-                            catch (error) {
-                            }
-                        }
-                        deferred.resolve(this);
-                        return deferred.promise;
-                    };
-                    GearCollection.prototype.saveToDevice = function ($q) {
-                        alert("GearCollection.saveToDevice");
-                        return $q.defer().promise;
-                    };
-                    return GearCollection;
-                })();
-                Gear.GearCollection = GearCollection;
-                var GearCollectionEntry = (function () {
-                    function GearCollectionEntry(gearCollectionId, count) {
-                        this._gearCollectionId = -1;
-                        this._count = 1;
-                        this._gearCollectionId = gearCollectionId;
-                        if (count) {
-                            this._count = count;
-                        }
-                    }
-                    GearCollectionEntry.prototype.getGearCollectionId = function () {
-                        return this._gearCollectionId;
-                    };
-                    GearCollectionEntry.prototype.count = function (count) {
-                        return arguments.length
-                            ? (this._count = count)
-                            : this._count;
-                    };
-                    GearCollectionEntry.prototype.getName = function () {
-                        var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
-                        if (!gearCollection) {
-                            return "";
-                        }
-                        return gearCollection.name();
-                    };
-                    GearCollectionEntry.prototype.getTotalGearItemCount = function () {
-                        var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
-                        if (!gearCollection) {
-                            return 0;
-                        }
-                        return this._count * gearCollection.getTotalGearItemCount();
-                    };
-                    GearCollectionEntry.prototype.getGearSystemCount = function (visitedGearSystems) {
-                        var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
-                        if (!gearCollection) {
-                            return 0;
-                        }
-                        return this._count * gearCollection.getGearSystemCount(visitedGearSystems);
-                    };
-                    GearCollectionEntry.prototype.getGearItemCount = function (visitedGearItems) {
-                        var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
-                        if (!gearCollection) {
-                            return 0;
-                        }
-                        return this._count * gearCollection.getGearItemCount(visitedGearItems);
-                    };
-                    GearCollectionEntry.prototype.getTotalWeightInGrams = function (visitedGearItems) {
-                        var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
-                        if (!gearCollection) {
-                            return 0;
-                        }
-                        return this._count * gearCollection.getTotalWeightInGrams(visitedGearItems);
-                    };
-                    GearCollectionEntry.prototype.getTotalWeightInUnits = function () {
-                        return parseFloat(Mockup.convertGramsToUnits(this.getTotalWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
-                    };
-                    GearCollectionEntry.prototype.getBaseWeightInGrams = function (visitedGearItems) {
-                        var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
-                        if (!gearCollection) {
-                            return 0;
-                        }
-                        return this._count * gearCollection.getBaseWeightInGrams(visitedGearItems);
-                    };
-                    GearCollectionEntry.prototype.getBaseWeightInUnits = function () {
-                        return parseFloat(Mockup.convertGramsToUnits(this.getBaseWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
-                    };
-                    GearCollectionEntry.prototype.getPackWeightInGrams = function (visitedGearItems) {
-                        var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
-                        if (!gearCollection) {
-                            return 0;
-                        }
-                        return this._count * gearCollection.getPackWeightInGrams(visitedGearItems);
-                    };
-                    GearCollectionEntry.prototype.getPackWeightInUnits = function () {
-                        return parseFloat(Mockup.convertGramsToUnits(this.getPackWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
-                    };
-                    GearCollectionEntry.prototype.getSkinOutWeightInGrams = function (visitedGearItems) {
-                        var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
-                        if (!gearCollection) {
-                            return 0;
-                        }
-                        return this._count * gearCollection.getSkinOutWeightInGrams(visitedGearItems);
-                    };
-                    GearCollectionEntry.prototype.getSkinOutWeightInUnits = function () {
-                        return parseFloat(Mockup.convertGramsToUnits(this.getSkinOutWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
-                    };
-                    GearCollectionEntry.prototype.getCostInUSDP = function (visitedGearItems) {
-                        var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
-                        if (!gearCollection) {
-                            return 0;
-                        }
-                        return this._count * gearCollection.getCostInUSDP(visitedGearItems);
-                    };
-                    GearCollectionEntry.prototype.getCostInCurrency = function () {
-                        return Mockup.convertUSDPToCurrency(this.getCostInUSDP([]), Mockup.AppState.getInstance().getAppSettings().currency());
-                    };
-                    return GearCollectionEntry;
-                })();
-                Gear.GearCollectionEntry = GearCollectionEntry;
             })(Gear = Models.Gear || (Models.Gear = {}));
         })(Models = Mockup.Models || (Mockup.Models = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
@@ -2950,33 +2669,30 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
-//<reference path="../../Resources/Meals/MealResource.ts"/>
+///<reference path="../../../scripts/typings/underscore/underscore.d.ts" />
+///<reference path="../../Resources/Gear/GearCollectionResource.ts"/>
 ///<reference path="../../AppState.ts"/>
 ///<reference path="../Entry.ts"/>
+///<reference path="GearItem.ts"/>
+///<reference path="GearSystem.ts"/>
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
     (function (Mockup) {
         var Models;
         (function (Models) {
-            var Meals;
-            (function (Meals) {
+            var Gear;
+            (function (Gear) {
                 "use strict";
-                var Meal = (function () {
-                    function Meal() {
+                var GearCollection = (function () {
+                    function GearCollection() {
                         this._id = -1;
                         this._name = "";
-                        this._url = "";
-                        this._meal = "Other";
-                        this._servingCount = 1;
-                        this._weightInGrams = 0;
-                        this._costInUSDP = 0;
-                        this._calories = 0;
-                        this._proteinInGrams = 0;
-                        this._fiberInGrams = 0;
                         this._note = "";
+                        this._gearSystems = [];
+                        this._gearItems = [];
                     }
-                    Object.defineProperty(Meal.prototype, "Id", {
+                    Object.defineProperty(GearCollection.prototype, "Id", {
                         get: function () {
                             return this._id;
                         },
@@ -2986,164 +2702,448 @@ var BackpackPlanner;
                         enumerable: true,
                         configurable: true
                     });
-                    Meal.prototype.name = function (name) {
+                    GearCollection.prototype.name = function (name) {
                         return arguments.length
                             ? (this._name = name)
                             : this._name;
                     };
-                    Meal.prototype.url = function (url) {
-                        return arguments.length
-                            ? (this._url = url)
-                            : this._url;
-                    };
-                    Meal.prototype.meal = function (meal) {
-                        return arguments.length
-                            ? (this._meal = meal)
-                            : this._meal;
-                    };
-                    Meal.prototype.servingCount = function (servingCount) {
-                        return arguments.length
-                            ? (this._servingCount = servingCount)
-                            : this._servingCount;
-                    };
-                    Meal.prototype.calories = function (calories) {
-                        return arguments.length
-                            ? (this._calories = calories)
-                            : this._calories;
-                    };
-                    Meal.prototype.getCaloriesPerWeightUnit = function () {
-                        return 0 == this._calories ? 0 : this._calories / this.weightInUnits();
-                    };
-                    Meal.prototype.proteinInGrams = function (proteinInGrams) {
-                        return arguments.length
-                            ? (this._proteinInGrams = proteinInGrams)
-                            : this._proteinInGrams;
-                    };
-                    Meal.prototype.fiberInGrams = function (fiberInGrams) {
-                        return arguments.length
-                            ? (this._fiberInGrams = fiberInGrams)
-                            : this._fiberInGrams;
-                    };
-                    Meal.prototype.note = function (note) {
+                    GearCollection.prototype.note = function (note) {
                         return arguments.length
                             ? (this._note = note)
                             : this._note;
                     };
+                    GearCollection.prototype.getTotalGearItemCount = function () {
+                        var visitedGearItems = [];
+                        var count = 0;
+                        for (var i = 0; i < this._gearSystems.length; ++i) {
+                            var gearSystemEntry = this._gearSystems[i];
+                            count += gearSystemEntry.getGearItemCount(visitedGearItems);
+                        }
+                        for (var i = 0; i < this._gearItems.length; ++i) {
+                            var gearItemEntry = this._gearItems[i];
+                            if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
+                                continue;
+                            }
+                            visitedGearItems.push(gearItemEntry.getGearItemId());
+                            count += gearItemEntry.count();
+                        }
+                        return count;
+                    };
+                    /* Gear Systems */
+                    GearCollection.prototype.getGearSystems = function () {
+                        return this._gearSystems;
+                    };
+                    GearCollection.prototype.getGearSystemCount = function (visitedGearSystems) {
+                        if (!visitedGearSystems) {
+                            visitedGearSystems = [];
+                        }
+                        var count = 0;
+                        for (var i = 0; i < this._gearSystems.length; ++i) {
+                            var gearSystemEntry = this._gearSystems[i];
+                            if (_.contains(visitedGearSystems, gearSystemEntry.getGearSystemId())) {
+                                continue;
+                            }
+                            visitedGearSystems.push(gearSystemEntry.getGearSystemId());
+                            count += gearSystemEntry.count();
+                        }
+                        return count;
+                    };
+                    GearCollection.prototype.getGearSystemEntryIndexById = function (gearSystemId) {
+                        return _.findIndex(this._gearSystems, function (gearSystemEntry) {
+                            return gearSystemEntry.getGearSystemId() == gearSystemId;
+                        });
+                    };
+                    GearCollection.prototype.containsGearSystemById = function (gearSystemId) {
+                        return undefined != _.find(this._gearSystems, function (gearSystemEntry) {
+                            return gearSystemEntry.getGearSystemId() == gearSystemId;
+                        });
+                    };
+                    GearCollection.prototype.containsGearSystemItems = function (gearSystem) {
+                        var gearItems = gearSystem.getGearItems();
+                        for (var i = 0; i < gearItems.length; ++i) {
+                            var gearItemEntry = gearItems[i];
+                            if (this.containsGearItemById(gearItemEntry.getGearItemId())) {
+                                return true;
+                            }
+                        }
+                        return false;
+                    };
+                    GearCollection.prototype.addGearSystem = function (gearSystem) {
+                        if (this.containsGearSystemById(gearSystem.Id)) {
+                            throw "The collection already contains this system!";
+                        }
+                        if (this.containsGearSystemItems(gearSystem)) {
+                            throw "The collection already contains items from this system!";
+                        }
+                        this._gearSystems.push(new Gear.GearSystemEntry(gearSystem.Id));
+                    };
+                    GearCollection.prototype.addGearSystemEntry = function (gearSystemId, count) {
+                        if (this.containsGearSystemById(gearSystemId)) {
+                            throw "The collection already contains this system!";
+                        }
+                        // TODO: prevent duplicates here
+                        /*const gearSystem = AppState.getInstance().getGearState().getGearSystemById(gearSystemId);
+                        if(!gearSystem) {
+                            throw "The system does not exist!";
+                        }
+            
+                        if(this.containsGearSystemItems(gearSystem)) {
+                            throw "The collection already contains items from this system!";
+                        }*/
+                        this._gearSystems.push(new Gear.GearSystemEntry(gearSystemId, count));
+                    };
+                    GearCollection.prototype.removeGearSystemById = function (gearSystemId) {
+                        var idx = this.getGearSystemEntryIndexById(gearSystemId);
+                        if (idx < 0) {
+                            return false;
+                        }
+                        this._gearSystems.splice(idx, 1);
+                        return true;
+                    };
+                    GearCollection.prototype.removeAllGearSystems = function () {
+                        this._gearSystems = [];
+                    };
+                    /* Gear Items */
+                    GearCollection.prototype.getGearItems = function () {
+                        return this._gearItems;
+                    };
+                    GearCollection.prototype.getGearItemCount = function (visitedGearItems) {
+                        if (!visitedGearItems) {
+                            visitedGearItems = [];
+                        }
+                        var count = 0;
+                        for (var i = 0; i < this._gearItems.length; ++i) {
+                            var gearItemEntry = this._gearItems[i];
+                            if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
+                                continue;
+                            }
+                            visitedGearItems.push(gearItemEntry.getGearItemId());
+                            count += gearItemEntry.count();
+                        }
+                        return count;
+                    };
+                    GearCollection.prototype.getGearItemEntryIndexById = function (gearItemId) {
+                        return _.findIndex(this._gearItems, function (gearItemEntry) {
+                            return gearItemEntry.getGearItemId() == gearItemId;
+                        });
+                    };
+                    GearCollection.prototype.containsGearItemById = function (gearItemId) {
+                        if (_.find(this._gearSystems, function (gearSystemEntry) {
+                            var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(gearSystemEntry.getGearSystemId());
+                            if (!gearSystem) {
+                                return false;
+                            }
+                            return gearSystem.containsGearItemById(gearItemId);
+                        })) {
+                            return true;
+                        }
+                        return undefined != _.find(this._gearItems, function (gearItemEntry) {
+                            return gearItemEntry.getGearItemId() == gearItemId;
+                        });
+                    };
+                    GearCollection.prototype.addGearItem = function (gearItem) {
+                        if (this.containsGearItemById(gearItem.Id)) {
+                            throw "The collection already contains this item!";
+                        }
+                        this._gearItems.push(new Gear.GearItemEntry(gearItem.Id));
+                    };
+                    GearCollection.prototype.addGearItemEntry = function (gearItemId, count) {
+                        if (this.containsGearItemById(gearItemId)) {
+                            throw "The collection already contains this item!";
+                        }
+                        this._gearItems.push(new Gear.GearItemEntry(gearItemId, count));
+                    };
+                    GearCollection.prototype.removeGearItemById = function (gearItemId) {
+                        var idx = this.getGearItemEntryIndexById(gearItemId);
+                        if (idx < 0) {
+                            return false;
+                        }
+                        this._gearItems.splice(idx, 1);
+                        return true;
+                    };
+                    GearCollection.prototype.removeAllGearItems = function () {
+                        this._gearItems = [];
+                    };
                     /* Weight/Cost */
-                    Meal.prototype.getWeightInGrams = function () {
-                        return this._weightInGrams;
+                    GearCollection.prototype.getTotalWeightInGrams = function (visitedGearItems) {
+                        if (!visitedGearItems) {
+                            visitedGearItems = [];
+                        }
+                        var weightInGrams = 0;
+                        for (var i = 0; i < this._gearSystems.length; ++i) {
+                            var gearSystemEntry = this._gearSystems[i];
+                            weightInGrams += gearSystemEntry.getTotalWeightInGrams(visitedGearItems);
+                        }
+                        for (var i = 0; i < this._gearItems.length; ++i) {
+                            var gearItemEntry = this._gearItems[i];
+                            if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
+                                continue;
+                            }
+                            visitedGearItems.push(gearItemEntry.getGearItemId());
+                            weightInGrams += gearItemEntry.getTotalWeightInGrams();
+                        }
+                        return weightInGrams;
                     };
-                    Meal.prototype.weightInUnits = function (weight) {
-                        return arguments.length
-                            ? (this._weightInGrams = Mockup.convertUnitsToGrams(weight, Mockup.AppState.getInstance().getAppSettings().units()))
-                            : parseFloat(Mockup.convertGramsToUnits(this._weightInGrams, Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
+                    GearCollection.prototype.getTotalWeightInUnits = function () {
+                        return Mockup.convertGramsToUnits(this.getTotalWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units());
                     };
-                    Meal.prototype.getCostInUSDP = function () {
-                        return this._costInUSDP;
+                    GearCollection.prototype.getBaseWeightInGrams = function (visitedGearItems) {
+                        if (!visitedGearItems) {
+                            visitedGearItems = [];
+                        }
+                        var weightInGrams = 0;
+                        for (var i = 0; i < this._gearSystems.length; ++i) {
+                            var gearSystemEntry = this._gearSystems[i];
+                            weightInGrams += gearSystemEntry.getBaseWeightInGrams(visitedGearItems);
+                        }
+                        for (var i = 0; i < this._gearItems.length; ++i) {
+                            var gearItemEntry = this._gearItems[i];
+                            if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
+                                continue;
+                            }
+                            // carried but not worn or consumable
+                            if (gearItemEntry.isCarried() && !gearItemEntry.isWorn() && !gearItemEntry.isConsumable()) {
+                                visitedGearItems.push(gearItemEntry.getGearItemId());
+                                weightInGrams += gearItemEntry.getTotalWeightInGrams();
+                            }
+                        }
+                        return weightInGrams;
                     };
-                    Meal.prototype.costInCurrency = function (cost) {
-                        return arguments.length
-                            ? (this._costInUSDP = Mockup.convertCurrencyToUSDP(cost, Mockup.AppState.getInstance().getAppSettings().currency()))
-                            : Mockup.convertUSDPToCurrency(this._costInUSDP, Mockup.AppState.getInstance().getAppSettings().currency());
+                    GearCollection.prototype.getBaseWeightInUnits = function () {
+                        return Mockup.convertGramsToUnits(this.getBaseWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units());
                     };
-                    Meal.prototype.getCostPerUnitInCurrency = function () {
-                        var weightInUnits = Mockup.convertGramsToUnits(this._weightInGrams, Mockup.AppState.getInstance().getAppSettings().units());
-                        var costInCurrency = Mockup.convertUSDPToCurrency(this._costInUSDP, Mockup.AppState.getInstance().getAppSettings().currency());
+                    GearCollection.prototype.getPackWeightInGrams = function (visitedGearItems) {
+                        if (!visitedGearItems) {
+                            visitedGearItems = [];
+                        }
+                        var weightInGrams = 0;
+                        for (var i = 0; i < this._gearSystems.length; ++i) {
+                            var gearSystemEntry = this._gearSystems[i];
+                            weightInGrams += gearSystemEntry.getPackWeightInGrams(visitedGearItems);
+                        }
+                        for (var i = 0; i < this._gearItems.length; ++i) {
+                            var gearItemEntry = this._gearItems[i];
+                            if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
+                                continue;
+                            }
+                            // carried or consumable but not worn
+                            if (gearItemEntry.isCarried() && !gearItemEntry.isWorn() || gearItemEntry.isConsumable()) {
+                                visitedGearItems.push(gearItemEntry.getGearItemId());
+                                weightInGrams += gearItemEntry.getTotalWeightInGrams();
+                            }
+                        }
+                        return weightInGrams;
+                    };
+                    GearCollection.prototype.getPackWeightInUnits = function () {
+                        return Mockup.convertGramsToUnits(this.getPackWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units());
+                    };
+                    GearCollection.prototype.getSkinOutWeightInGrams = function (visitedGearItems) {
+                        if (!visitedGearItems) {
+                            visitedGearItems = [];
+                        }
+                        var weightInGrams = 0;
+                        for (var i = 0; i < this._gearSystems.length; ++i) {
+                            var gearSystemEntry = this._gearSystems[i];
+                            weightInGrams += gearSystemEntry.getSkinOutWeightInGrams(visitedGearItems);
+                        }
+                        for (var i = 0; i < this._gearItems.length; ++i) {
+                            var gearItemEntry = this._gearItems[i];
+                            if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
+                                continue;
+                            }
+                            // carried, worn, and consumable gear items
+                            if (gearItemEntry.isCarried()) {
+                                visitedGearItems.push(gearItemEntry.getGearItemId());
+                                weightInGrams += gearItemEntry.getTotalWeightInGrams();
+                            }
+                        }
+                        return weightInGrams;
+                    };
+                    GearCollection.prototype.getSkinOutWeightInUnits = function () {
+                        return Mockup.convertGramsToUnits(this.getSkinOutWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units());
+                    };
+                    GearCollection.prototype.getCostInUSDP = function (visitedGearItems) {
+                        if (!visitedGearItems) {
+                            visitedGearItems = [];
+                        }
+                        var costInUSDP = 0;
+                        for (var i = 0; i < this._gearSystems.length; ++i) {
+                            var gearSystemEntry = this._gearSystems[i];
+                            costInUSDP += gearSystemEntry.getCostInUSDP(visitedGearItems);
+                        }
+                        for (var i = 0; i < this._gearItems.length; ++i) {
+                            var gearItemEntry = this._gearItems[i];
+                            if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
+                                continue;
+                            }
+                            visitedGearItems.push(gearItemEntry.getGearItemId());
+                            costInUSDP += gearItemEntry.getCostInUSDP();
+                        }
+                        return costInUSDP;
+                    };
+                    GearCollection.prototype.getCostInCurrency = function () {
+                        return Mockup.convertUSDPToCurrency(this.getCostInUSDP([]), Mockup.AppState.getInstance().getAppSettings().currency());
+                    };
+                    GearCollection.prototype.getCostPerUnitInCurrency = function () {
+                        var weightInUnits = Mockup.convertGramsToUnits(this.getTotalWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units());
+                        var costInCurrency = Mockup.convertUSDPToCurrency(this.getCostInUSDP([]), Mockup.AppState.getInstance().getAppSettings().currency());
                         return 0 == weightInUnits
                             ? costInCurrency
                             : costInCurrency / weightInUnits;
                     };
                     /* Load/Save */
-                    Meal.prototype.update = function (meal) {
-                        this._name = meal._name;
-                        this._url = meal._url;
-                        this._meal = meal._meal;
-                        this._servingCount = meal._servingCount;
-                        this._weightInGrams = meal._weightInGrams;
-                        this._costInUSDP = meal._costInUSDP;
-                        this._calories = meal._calories;
-                        this._proteinInGrams = meal._proteinInGrams;
-                        this._fiberInGrams = meal._fiberInGrams;
-                        this._note = meal._note;
+                    GearCollection.prototype.update = function (gearCollection) {
+                        this._name = gearCollection._name;
+                        this._note = gearCollection._note;
+                        this._gearSystems = [];
+                        for (var i = 0; i < gearCollection._gearSystems.length; ++i) {
+                            var gearSystemEntry = gearCollection._gearSystems[i];
+                            try {
+                                this.addGearSystemEntry(gearSystemEntry.getGearSystemId(), gearSystemEntry.count());
+                            }
+                            catch (error) {
+                            }
+                        }
+                        this._gearItems = [];
+                        for (var i = 0; i < gearCollection._gearItems.length; ++i) {
+                            var gearItemEntry = gearCollection._gearItems[i];
+                            try {
+                                this.addGearItemEntry(gearItemEntry.getGearItemId(), gearItemEntry.count());
+                            }
+                            catch (error) {
+                            }
+                        }
                     };
-                    Meal.prototype.loadFromDevice = function ($q, mealResource) {
+                    GearCollection.prototype.loadFromDevice = function ($q, gearCollectionResource) {
                         var deferred = $q.defer();
-                        this._id = mealResource.Id;
-                        this._name = mealResource.Name;
-                        this._url = mealResource.Url;
-                        this._meal = mealResource.Meal;
-                        this._servingCount = mealResource.ServingCount;
-                        this._weightInGrams = mealResource.WeightInGrams;
-                        this._costInUSDP = mealResource.CostInUSDP;
-                        this._calories = mealResource.Calories;
-                        this._proteinInGrams = mealResource.ProteinInGrams;
-                        this._fiberInGrams = mealResource.FiberInGrams;
-                        this._note = mealResource.Note;
+                        this._id = gearCollectionResource.Id;
+                        this._name = gearCollectionResource.Name;
+                        this._note = gearCollectionResource.Note;
+                        for (var i = 0; i < gearCollectionResource.GearSystems.length; ++i) {
+                            var gearSystemEntry = gearCollectionResource.GearSystems[i];
+                            try {
+                                this.addGearSystemEntry(gearSystemEntry.GearSystemId, gearSystemEntry.Count);
+                            }
+                            catch (error) {
+                            }
+                        }
+                        for (var i = 0; i < gearCollectionResource.GearItems.length; ++i) {
+                            var gearItemEntry = gearCollectionResource.GearItems[i];
+                            try {
+                                this.addGearItemEntry(gearItemEntry.GearItemId, gearItemEntry.Count);
+                            }
+                            catch (error) {
+                            }
+                        }
                         deferred.resolve(this);
                         return deferred.promise;
                     };
-                    Meal.prototype.saveToDevice = function ($q) {
-                        alert("Meal.saveToDevice");
+                    GearCollection.prototype.saveToDevice = function ($q) {
+                        alert("GearCollection.saveToDevice");
                         return $q.defer().promise;
                     };
-                    return Meal;
+                    return GearCollection;
                 })();
-                Meals.Meal = Meal;
-                var MealEntry = (function () {
-                    function MealEntry(mealId, count) {
-                        this._mealId = -1;
+                Gear.GearCollection = GearCollection;
+                var GearCollectionEntry = (function () {
+                    function GearCollectionEntry(gearCollectionId, count) {
+                        this._gearCollectionId = -1;
                         this._count = 1;
-                        this._mealId = mealId;
+                        this._gearCollectionId = gearCollectionId;
                         if (count) {
                             this._count = count;
                         }
                     }
-                    MealEntry.prototype.getMealId = function () {
-                        return this._mealId;
+                    GearCollectionEntry.prototype.getGearCollectionId = function () {
+                        return this._gearCollectionId;
                     };
-                    MealEntry.prototype.count = function (count) {
+                    GearCollectionEntry.prototype.count = function (count) {
                         return arguments.length
                             ? (this._count = count)
                             : this._count;
                     };
-                    MealEntry.prototype.getName = function () {
-                        var meal = Mockup.AppState.getInstance().getMealState().getMealById(this._mealId);
-                        if (!meal) {
+                    GearCollectionEntry.prototype.getName = function () {
+                        var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
+                        if (!gearCollection) {
                             return "";
                         }
-                        return meal.name();
+                        return gearCollection.name();
                     };
-                    MealEntry.prototype.getCalories = function () {
-                        var meal = Mockup.AppState.getInstance().getMealState().getMealById(this._mealId);
-                        if (!meal) {
+                    GearCollectionEntry.prototype.getTotalGearItemCount = function () {
+                        var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
+                        if (!gearCollection) {
                             return 0;
                         }
-                        return this._count * meal.calories();
+                        return this._count * gearCollection.getTotalGearItemCount();
                     };
-                    MealEntry.prototype.getTotalWeightInGrams = function () {
-                        var meal = Mockup.AppState.getInstance().getMealState().getMealById(this._mealId);
-                        if (!meal) {
+                    GearCollectionEntry.prototype.getGearSystemCount = function (visitedGearSystems) {
+                        var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
+                        if (!gearCollection) {
                             return 0;
                         }
-                        return this._count * meal.getWeightInGrams();
+                        return this._count * gearCollection.getGearSystemCount(visitedGearSystems);
                     };
-                    MealEntry.prototype.getTotalWeightInUnits = function () {
-                        return parseFloat(Mockup.convertGramsToUnits(this.getTotalWeightInGrams(), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
-                    };
-                    MealEntry.prototype.getCostInUSDP = function () {
-                        var meal = Mockup.AppState.getInstance().getMealState().getMealById(this._mealId);
-                        if (!meal) {
+                    GearCollectionEntry.prototype.getGearItemCount = function (visitedGearItems) {
+                        var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
+                        if (!gearCollection) {
                             return 0;
                         }
-                        return this._count * meal.getCostInUSDP();
+                        return this._count * gearCollection.getGearItemCount(visitedGearItems);
                     };
-                    MealEntry.prototype.getCostInCurrency = function () {
-                        return Mockup.convertUSDPToCurrency(this.getCostInUSDP(), Mockup.AppState.getInstance().getAppSettings().currency());
+                    GearCollectionEntry.prototype.getTotalWeightInGrams = function (visitedGearItems) {
+                        var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
+                        if (!gearCollection) {
+                            return 0;
+                        }
+                        return this._count * gearCollection.getTotalWeightInGrams(visitedGearItems);
                     };
-                    return MealEntry;
+                    GearCollectionEntry.prototype.getTotalWeightInUnits = function () {
+                        return parseFloat(Mockup.convertGramsToUnits(this.getTotalWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
+                    };
+                    GearCollectionEntry.prototype.getBaseWeightInGrams = function (visitedGearItems) {
+                        var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
+                        if (!gearCollection) {
+                            return 0;
+                        }
+                        return this._count * gearCollection.getBaseWeightInGrams(visitedGearItems);
+                    };
+                    GearCollectionEntry.prototype.getBaseWeightInUnits = function () {
+                        return parseFloat(Mockup.convertGramsToUnits(this.getBaseWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
+                    };
+                    GearCollectionEntry.prototype.getPackWeightInGrams = function (visitedGearItems) {
+                        var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
+                        if (!gearCollection) {
+                            return 0;
+                        }
+                        return this._count * gearCollection.getPackWeightInGrams(visitedGearItems);
+                    };
+                    GearCollectionEntry.prototype.getPackWeightInUnits = function () {
+                        return parseFloat(Mockup.convertGramsToUnits(this.getPackWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
+                    };
+                    GearCollectionEntry.prototype.getSkinOutWeightInGrams = function (visitedGearItems) {
+                        var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
+                        if (!gearCollection) {
+                            return 0;
+                        }
+                        return this._count * gearCollection.getSkinOutWeightInGrams(visitedGearItems);
+                    };
+                    GearCollectionEntry.prototype.getSkinOutWeightInUnits = function () {
+                        return parseFloat(Mockup.convertGramsToUnits(this.getSkinOutWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
+                    };
+                    GearCollectionEntry.prototype.getCostInUSDP = function (visitedGearItems) {
+                        var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
+                        if (!gearCollection) {
+                            return 0;
+                        }
+                        return this._count * gearCollection.getCostInUSDP(visitedGearItems);
+                    };
+                    GearCollectionEntry.prototype.getCostInCurrency = function () {
+                        return Mockup.convertUSDPToCurrency(this.getCostInUSDP([]), Mockup.AppState.getInstance().getAppSettings().currency());
+                    };
+                    return GearCollectionEntry;
                 })();
-                Meals.MealEntry = MealEntry;
-            })(Meals = Models.Meals || (Models.Meals = {}));
+                Gear.GearCollectionEntry = GearCollectionEntry;
+            })(Gear = Models.Gear || (Models.Gear = {}));
         })(Models = Mockup.Models || (Mockup.Models = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));

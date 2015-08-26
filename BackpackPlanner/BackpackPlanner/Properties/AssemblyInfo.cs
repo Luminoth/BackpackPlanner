@@ -1,5 +1,7 @@
-﻿using System.Resources;
+﻿using System;
+using System.Resources;
 using System.Reflection;
+using System.Runtime.InteropServices;
 
 // Information about this assembly is defined by the following attributes.
 // Change them to the values specific to your project.
@@ -26,3 +28,5 @@ using System.Reflection;
 
 //[assembly: AssemblyDelaySign(false)]
 //[assembly: AssemblyKeyFile("")]
+[assembly: CLSCompliant(false)]
+[assembly: ComVisible(false)]

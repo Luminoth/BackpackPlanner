@@ -52,6 +52,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="GearStateTests.cs" />
+    <Compile Include="Models\Gear\GearItemTests.cs" />
+    <Compile Include="Models\PersonalInformationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
