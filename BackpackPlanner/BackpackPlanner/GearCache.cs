@@ -23,6 +23,8 @@ using EnergonSoftware.BackpackPlanner.Models.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
 
+using SQLite.Net.Async;
+
 namespace EnergonSoftware.BackpackPlanner
 {
     /// <summary>
@@ -37,159 +39,155 @@ namespace EnergonSoftware.BackpackPlanner
         /// <summary>
         /// Initializes the gear state tables in the database.
         /// </summary>
+        /// <param name="asyncDbConnection">The asynchronous database connection.</param>
         /// <param name="oldVersion">The old version. If this is less than 1, this is a new database.</param>
         /// <param name="newVersion">The new version.</param>
-        /// <returns></returns>
-        public static async Task InitDatabaseAsync(int oldVersion, int newVersion)
+        public static async Task InitDatabaseAsync(SQLiteAsyncConnection asyncDbConnection, int oldVersion, int newVersion)
         {
             if(oldVersion >= newVersion) {
                 return;
             }
 
-            if(null != BackpackPlannerState.Instance.DbConnection) {
-                if(oldVersion < 1) {
-                    await BackpackPlannerState.Instance.DbConnection.CreateTableAsync<GearItem>();
-
-                    await BackpackPlannerState.Instance.DbConnection.CreateTableAsync<GearSystem>();
-                    await BackpackPlannerState.Instance.DbConnection.CreateTableAsync<GearSystemGearItem>();
-
-                    await BackpackPlannerState.Instance.DbConnection.CreateTableAsync<GearCollection>();
-                    await BackpackPlannerState.Instance.DbConnection.CreateTableAsync<GearCollectionGearSystem>();
-                    await BackpackPlannerState.Instance.DbConnection.CreateTableAsync<GearCollectionGearItem>();
-                }
+            if(oldVersion < 1) {
+                await GearItem.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
+                await GearSystem.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
+                await GearCollection.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
             }
         }
 
+// TODO: move these
 #region Gear Item Queries
         private static async Task<List<GearItem>>  GetGearItemsAsync()
         {
-            if(null != BackpackPlannerState.Instance.DbConnection) {
-                return await BackpackPlannerState.Instance.DbConnection.Table<GearItem>().ToListAsync().ConfigureAwait(false);
+            if(null != BackpackPlannerState.Instance.AsyncDbConnection) {
+                return await BackpackPlannerState.Instance.AsyncDbConnection.Table<GearItem>().ToListAsync().ConfigureAwait(false);
             }
             return new List<GearItem>();
         }
 
         private static async Task<GearItem> GetGearItemAsync(int gearItemId)
         {
-            if(null != BackpackPlannerState.Instance.DbConnection) {
-                return await BackpackPlannerState.Instance.DbConnection.GetAsync<GearItem>(gearItemId).ConfigureAwait(false);
+            if(null != BackpackPlannerState.Instance.AsyncDbConnection) {
+                return await BackpackPlannerState.Instance.AsyncDbConnection.GetAsync<GearItem>(gearItemId).ConfigureAwait(false);
             }
             return null;
         }
 
         private static async Task<int> SaveGearItemAsync(GearItem gearItem)
         {
-            if(null != BackpackPlannerState.Instance.DbConnection) {
+            if(null != BackpackPlannerState.Instance.AsyncDbConnection) {
                 if(gearItem.GearItemId <= 0) {
-                    return await BackpackPlannerState.Instance.DbConnection.InsertAsync(gearItem).ConfigureAwait(false);
+                    return await BackpackPlannerState.Instance.AsyncDbConnection.InsertAsync(gearItem).ConfigureAwait(false);
                 }
-                return await BackpackPlannerState.Instance.DbConnection.UpdateAsync(gearItem).ConfigureAwait(false);
+                return await BackpackPlannerState.Instance.AsyncDbConnection.UpdateAsync(gearItem).ConfigureAwait(false);
             }
             return -1;
         }
 
         private static async Task<int> DeleteGearItemAsync(GearItem gearItem)
         {
-            if(null != BackpackPlannerState.Instance.DbConnection) {
-                return await BackpackPlannerState.Instance.DbConnection.DeleteAsync(gearItem).ConfigureAwait(false);
+            if(null != BackpackPlannerState.Instance.AsyncDbConnection) {
+                return await BackpackPlannerState.Instance.AsyncDbConnection.DeleteAsync(gearItem).ConfigureAwait(false);
             }
             return 0;
         }
 
         private static async Task<int> DeleteAllGearItemsAsync()
         {
-            if(null != BackpackPlannerState.Instance.DbConnection) {
-                return await BackpackPlannerState.Instance.DbConnection.DeleteAllAsync<GearItem>().ConfigureAwait(false);
+            if(null != BackpackPlannerState.Instance.AsyncDbConnection) {
+                return await BackpackPlannerState.Instance.AsyncDbConnection.DeleteAllAsync<GearItem>().ConfigureAwait(false);
             }
             return 0;
         }
 #endregion
 
+// TODO: move these
 #region Gear System Queries
         private static async Task<List<GearSystem>>  GetGearSystemsAsync()
         {
-            if(null != BackpackPlannerState.Instance.DbConnection) {
-                return await BackpackPlannerState.Instance.DbConnection.Table<GearSystem>().ToListAsync().ConfigureAwait(false);
+            if(null != BackpackPlannerState.Instance.AsyncDbConnection) {
+                return await BackpackPlannerState.Instance.AsyncDbConnection.Table<GearSystem>().ToListAsync().ConfigureAwait(false);
             }
             return new List<GearSystem>();
         }
 
         private static async Task<GearSystem> GetGearSystemAsync(int gearSystemId)
         {
-            if(null != BackpackPlannerState.Instance.DbConnection) {
-                return await BackpackPlannerState.Instance.DbConnection.GetAsync<GearSystem>(gearSystemId).ConfigureAwait(false);
+            if(null != BackpackPlannerState.Instance.AsyncDbConnection) {
+                return await BackpackPlannerState.Instance.AsyncDbConnection.GetAsync<GearSystem>(gearSystemId).ConfigureAwait(false);
             }
             return null;
         }
 
         private static async Task<int> SaveGearSystemAsync(GearSystem gearSystem)
         {
-            if(null != BackpackPlannerState.Instance.DbConnection) {
+            if(null != BackpackPlannerState.Instance.AsyncDbConnection) {
                 if(gearSystem.GearSystemId <= 0) {
-                    return await BackpackPlannerState.Instance.DbConnection.InsertAsync(gearSystem).ConfigureAwait(false);
+                    return await BackpackPlannerState.Instance.AsyncDbConnection.InsertAsync(gearSystem).ConfigureAwait(false);
                 }
-                return await BackpackPlannerState.Instance.DbConnection.UpdateAsync(gearSystem).ConfigureAwait(false);
+                return await BackpackPlannerState.Instance.AsyncDbConnection.UpdateAsync(gearSystem).ConfigureAwait(false);
             }
             return -1;
         }
 
         private static async Task<int> DeleteGearSystemAsync(GearSystem gearSystem)
         {
-            if(null != BackpackPlannerState.Instance.DbConnection) {
-                return await BackpackPlannerState.Instance.DbConnection.DeleteAsync(gearSystem).ConfigureAwait(false);
+            if(null != BackpackPlannerState.Instance.AsyncDbConnection) {
+                return await BackpackPlannerState.Instance.AsyncDbConnection.DeleteAsync(gearSystem).ConfigureAwait(false);
             }
             return 0;
         }
 
         private static async Task<int> DeleteAllGearSystemsAsync()
         {
-            if(null != BackpackPlannerState.Instance.DbConnection) {
-                return await BackpackPlannerState.Instance.DbConnection.DeleteAllAsync<GearSystem>().ConfigureAwait(false);
+            if(null != BackpackPlannerState.Instance.AsyncDbConnection) {
+                return await BackpackPlannerState.Instance.AsyncDbConnection.DeleteAllAsync<GearSystem>().ConfigureAwait(false);
             }
             return 0;
         }
 #endregion
 
+// TODO: move these
 #region Gear Collection Queries
         private static async Task<List<GearCollection>>  GetGearCollectionsAsync()
         {
-            if(null != BackpackPlannerState.Instance.DbConnection) {
-                return await BackpackPlannerState.Instance.DbConnection.Table<GearCollection>().ToListAsync().ConfigureAwait(false);
+            if(null != BackpackPlannerState.Instance.AsyncDbConnection) {
+                return await BackpackPlannerState.Instance.AsyncDbConnection.Table<GearCollection>().ToListAsync().ConfigureAwait(false);
             }
             return new List<GearCollection>();
         }
 
         private static async Task<GearCollection> GetGearCollectionAsync(int gearCollectionId)
         {
-            if(null != BackpackPlannerState.Instance.DbConnection) {
-                return await BackpackPlannerState.Instance.DbConnection.GetAsync<GearCollection>(gearCollectionId).ConfigureAwait(false);
+            if(null != BackpackPlannerState.Instance.AsyncDbConnection) {
+                return await BackpackPlannerState.Instance.AsyncDbConnection.GetAsync<GearCollection>(gearCollectionId).ConfigureAwait(false);
             }
             return null;
         }
 
         private static async Task<int> SaveGearCollectionAsync(GearCollection gearCollection)
         {
-            if(null != BackpackPlannerState.Instance.DbConnection) {
+            if(null != BackpackPlannerState.Instance.AsyncDbConnection) {
                 if(gearCollection.GearCollectionId <= 0) {
-                    return await BackpackPlannerState.Instance.DbConnection.InsertAsync(gearCollection).ConfigureAwait(false);
+                    return await BackpackPlannerState.Instance.AsyncDbConnection.InsertAsync(gearCollection).ConfigureAwait(false);
                 }
-                return await BackpackPlannerState.Instance.DbConnection.UpdateAsync(gearCollection).ConfigureAwait(false);
+                return await BackpackPlannerState.Instance.AsyncDbConnection.UpdateAsync(gearCollection).ConfigureAwait(false);
             }
             return -1;
         }
 
         private static async Task<int> DeleteGearCollectionAsync(GearCollection gearCollection)
         {
-            if(null != BackpackPlannerState.Instance.DbConnection) {
-                return await BackpackPlannerState.Instance.DbConnection.DeleteAsync(gearCollection).ConfigureAwait(false);
+            if(null != BackpackPlannerState.Instance.AsyncDbConnection) {
+                return await BackpackPlannerState.Instance.AsyncDbConnection.DeleteAsync(gearCollection).ConfigureAwait(false);
             }
             return 0;
         }
 
         private static async Task<int> DeleteAllGearCollectionsAsync()
         {
-            if(null != BackpackPlannerState.Instance.DbConnection) {
-                return await BackpackPlannerState.Instance.DbConnection.DeleteAllAsync<GearCollection>().ConfigureAwait(false);
+            if(null != BackpackPlannerState.Instance.AsyncDbConnection) {
+                return await BackpackPlannerState.Instance.AsyncDbConnection.DeleteAllAsync<GearCollection>().ConfigureAwait(false);
             }
             return 0;
         }

@@ -15,7 +15,9 @@
 */
 
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
+using SQLite.Net.Async;
 using SQLite.Net.Attributes;
 using SQLiteNetExtensions.Attributes;
 
@@ -26,6 +28,19 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Collections
     /// </summary>
     public class GearCollection
     {
+        /// <summary>
+        /// Creates the database tables.
+        /// </summary>
+        /// <param name="asyncDbConnection">The asynchronous database connection.</param>
+        public static async Task CreateTablesAsync(SQLiteAsyncConnection asyncDbConnection)
+        {
+            await asyncDbConnection.CreateTableAsync<GearCollection>().ConfigureAwait(false);
+
+            // TODO: move these
+            await asyncDbConnection.CreateTableAsync<GearCollectionGearSystem>().ConfigureAwait(false);
+            await asyncDbConnection.CreateTableAsync<GearCollectionGearItem>().ConfigureAwait(false);
+        }
+
         /// <summary>
         /// Gets or sets the gear collection identifier.
         /// </summary>

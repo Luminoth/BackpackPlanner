@@ -1,23 +1,24 @@
-﻿using HockeyApp;
+﻿using System;
 
-using System;
+using HockeyApp;
+
+using SQLite.Net.Platform.WinRT;
 
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-
-// The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=391641
 
 namespace EnergonSoftware.BackpackPlanner.Windows
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
-    sealed partial class App : Application
+    sealed partial class App
     {
-        private const string HockeyAppAppId = "YOUR-HOCKEYAPP-APPID";
+        private const string HockeyAppAppId = "555fd9c1dfd5151312f39bf6c704827b";
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -29,8 +30,8 @@ namespace EnergonSoftware.BackpackPlanner.Windows
                 Microsoft.ApplicationInsights.WindowsCollectors.Metadata |
                 Microsoft.ApplicationInsights.WindowsCollectors.Session);
 
-            this.InitializeComponent();
-            this.Suspending += OnSuspending;
+            InitializeComponent();
+            Suspending += OnSuspending;
 
             HockeyClient.Current.Configure(HockeyAppAppId);
         }
@@ -44,7 +45,7 @@ namespace EnergonSoftware.BackpackPlanner.Windows
         {
 #if DEBUG
             if(System.Diagnostics.Debugger.IsAttached) {
-                this.DebugSettings.EnableFrameRateCounter = true;
+                DebugSettings.EnableFrameRateCounter = true;
             }
 #endif
 
@@ -81,6 +82,9 @@ namespace EnergonSoftware.BackpackPlanner.Windows
 #if WINDOWS_PHONE_APP
             await HockeyClient.Current.CheckForAppUpdateAsync();
 #endif
+
+            await BackpackPlannerState.Instance.InitDatabaseAsync(new SQLitePlatformWinRT(), 
+                ApplicationData.Current.LocalFolder.Path, BackpackPlannerState.DatabaseName);
         }
 
         /// <summary>

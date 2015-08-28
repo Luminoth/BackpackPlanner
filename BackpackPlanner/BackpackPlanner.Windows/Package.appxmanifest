@@ -7,11 +7,11 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="0bef371a-c6b4-4166-ad50-86a2602ac6ee"
+    Name="30208EnergonSoftware.BackpackingPlanner"
     Publisher="CN=66AD4632-999F-43D9-8C92-A01BCF8DDE64"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="0bef371a-c6b4-4166-ad50-86a2602ac6ee" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="0bef371a-c6b4-4166-ad50-86a2602ac6ee" PhonePublisherId="8bb6bbcb-9b0a-4b33-8456-70ec120f8d2c"/>
 
   <Properties>
     <DisplayName>EnergonSoftware.BackpackPlanner.Windows</DisplayName>

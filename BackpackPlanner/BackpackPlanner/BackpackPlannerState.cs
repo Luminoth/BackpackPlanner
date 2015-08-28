@@ -14,9 +14,17 @@
    limitations under the License.
 */
 
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
+using EnergonSoftware.BackpackPlanner.Models;
+
+using SQLite.Net;
 using SQLite.Net.Async;
+using SQLite.Net.Interop;
 
 namespace EnergonSoftware.BackpackPlanner
 {
@@ -26,9 +34,14 @@ namespace EnergonSoftware.BackpackPlanner
     public class BackpackPlannerState
     {
         /// <summary>
+        /// The database name
+        /// </summary>
+        public const string DatabaseName = "BackpackPlanner.db";
+
+        /// <summary>
         /// The database version
         /// </summary>
-        public const int DatabaseVersion = 1;
+        public const int CurrentDatabaseVersion = 1;
 
         /// <summary>
         /// Gets the singleton instance.
@@ -52,18 +65,50 @@ namespace EnergonSoftware.BackpackPlanner
         /// <value>
         /// The database connection.
         /// </value>
-        public SQLiteAsyncConnection DbConnection { get; set; }
+        public SQLiteConnectionWithLock DbConnection { get; set; }
+
+        /// <summary>
+        /// Gets or sets the async database connection.
+        /// </summary>
+        /// <value>
+        /// The async database connection.
+        /// </value>
+        public SQLiteAsyncConnection AsyncDbConnection { get; set; }
 
 #region Caches
         private readonly GearCache _gearCache = new GearCache();
-#endregion
+        #endregion
 
         /// <summary>
         /// Initializes the library database.
         /// </summary>
-        public async Task InitDatabaseAsync()
+        /// <param name="sqlitePlatform">The sqlite platform.</param>
+        /// <param name="dbPath">The database path.</param>
+        /// <param name="dbName">Name of the database.</param>
+        public async Task InitDatabaseAsync(ISQLitePlatform sqlitePlatform, string dbPath, string dbName)
         {
-            await GearCache.InitDatabaseAsync(-1, DatabaseVersion).ConfigureAwait(false);
+            if(null != AsyncDbConnection) {
+                throw new InvalidOperationException("Database already initialized!");
+            }
+
+            string combinedPath = Path.Combine(dbPath, dbName);
+            Debug.WriteLine($"Using database at {combinedPath}");
+            SQLiteConnectionString connectionString = new SQLiteConnectionString(combinedPath, true);
+
+            DbConnection = new SQLiteConnectionWithLock(sqlitePlatform, connectionString);
+            AsyncDbConnection = new SQLiteAsyncConnection(() => DbConnection);
+
+            DatabaseVersion oldVersion = new DatabaseVersion();
+            var databaseVersionTableInfo = DbConnection.GetTableInfo("DatabaseVersion");
+            if(!databaseVersionTableInfo.Any()) {
+                Debug.WriteLine("Empty database!");
+                await DatabaseVersion.CreateTablesAsync(AsyncDbConnection).ConfigureAwait(false);
+            } else {
+                oldVersion = await DatabaseVersion.GetAsync(AsyncDbConnection).ConfigureAwait(false);
+                Debug.WriteLine($"Old database version: {oldVersion.Version}, current database version: {CurrentDatabaseVersion}");
+            }
+
+            //await GearCache.InitDatabaseAsync(oldVersion.Version, CurrentDatabaseVersion).ConfigureAwait(false);
         }
 
         /// <summary>

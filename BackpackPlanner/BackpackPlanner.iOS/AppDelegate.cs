@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 
 using Foundation;
 using HockeyApp;
+using SQLite.Net.Platform.XamarinIOS;
 using UIKit;
 
 namespace EnergonSoftware.BackpackPlanner.iOS
@@ -21,6 +22,9 @@ namespace EnergonSoftware.BackpackPlanner.iOS
 		public override bool FinishedLaunching (UIApplication application, NSDictionary launchOptions)
 		{
             InitHockeyApp();
+
+            BackpackPlannerState.Instance.InitDatabaseAsync(new SQLitePlatformIOS(),
+                Environment.GetFolderPath(Environment.SpecialFolder.Personal), BackpackPlannerState.DatabaseName).Wait();
 
 			// Override point for customization after application launch.
 			// If not required for your application you can safely delete this method

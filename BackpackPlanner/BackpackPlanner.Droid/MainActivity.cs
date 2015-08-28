@@ -6,6 +6,8 @@ using Android.OS;
 using Android.Runtime;
 using Android.Widget;
 
+using SQLite.Net.Platform.XamarinAndroid;
+
 namespace EnergonSoftware.BackpackPlanner.Droid
 {
 	[Activity(Label = "Backpacking Planner", MainLauncher = true, Icon = "@drawable/icon")]
@@ -13,23 +15,24 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 	{
         private const string HockeyAppAppId = "32a2c37622529305ec763b7e2c224deb";
 
-		private int _count = 1;
-
-		protected override void OnCreate(Bundle bundle)
+		protected async override void OnCreate(Bundle bundle)
 		{
 			base.OnCreate(bundle);
 
-            InitHockeyApp();
-
 			// Set our view from the "main" layout resource
 			SetContentView(Resource.Layout.Main);
+
+            InitHockeyApp();
+
+            await BackpackPlannerState.Instance.InitDatabaseAsync(new SQLitePlatformAndroid(),
+                System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), BackpackPlannerState.DatabaseName);
 
 			// Get our button from the layout resource,
 			// and attach an event to it
 			Button button = FindViewById<Button>(Resource.Id.myButton);
 			
 			button.Click += (sender, args) => {
-				button.Text = $"{_count++} clicks!";
+				button.Text = "clicked!";
 			};
 		}
 
