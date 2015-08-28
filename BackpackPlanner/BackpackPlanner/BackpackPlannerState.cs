@@ -25,9 +25,26 @@ namespace EnergonSoftware.BackpackPlanner
     /// </summary>
     public class BackpackPlannerState
     {
+        /// <summary>
+        /// The database version
+        /// </summary>
+        public const int DatabaseVersion = 1;
+
+        /// <summary>
+        /// Gets the singleton instance.
+        /// </summary>
+        /// <value>
+        /// The singleton instance.
+        /// </value>
         public static BackpackPlannerState Instance => new BackpackPlannerState();
 
-        private readonly GearState _gearState = new GearState();
+        /// <summary>
+        /// Gets the library settings.
+        /// </summary>
+        /// <value>
+        /// The library settings.
+        /// </value>
+        public BackpackPlannerSettings Settings => new BackpackPlannerSettings();
 
         /// <summary>
         /// Gets or sets the database connection.
@@ -37,12 +54,24 @@ namespace EnergonSoftware.BackpackPlanner
         /// </value>
         public SQLiteAsyncConnection DbConnection { get; set; }
 
+#region Caches
+        private readonly GearCache _gearCache = new GearCache();
+#endregion
+
+        /// <summary>
+        /// Initializes the library database.
+        /// </summary>
+        public async Task InitDatabaseAsync()
+        {
+            await GearCache.InitDatabaseAsync(-1, DatabaseVersion).ConfigureAwait(false);
+        }
+
         /// <summary>
         /// Loads the library state from the device.
         /// </summary>
         public async Task LoadFromDeviceAsync()
         {
-            await _gearState.LoadFromDeviceAsync().ConfigureAwait(false);
+            await _gearCache.LoadFromDeviceAsync().ConfigureAwait(false);
         }
 
         private BackpackPlannerState()

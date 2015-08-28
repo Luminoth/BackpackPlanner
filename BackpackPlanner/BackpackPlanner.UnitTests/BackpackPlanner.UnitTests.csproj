@@ -52,9 +52,16 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="GearStateTests.cs" />
-    <Compile Include="Models\Gear\GearItemTests.cs" />
-    <Compile Include="Models\PersonalInformationTests.cs" />
+    <Compile Include="BackpackPlannerSettingsTests.cs" />
+    <Compile Include="BackpackPlannerStateTests.cs" />
+    <Compile Include="GearCacheTests.cs" />
+    <Compile Include="Models\Gear\Collections\GearCollectionGearItemTests.cs" />
+    <Compile Include="Models\Gear\Collections\GearCollectionGearSystemTests.cs" />
+    <Compile Include="Models\Gear\Collections\GearCollectionTests.cs" />
+    <Compile Include="Models\Gear\Items\GearItemTests.cs" />
+    <Compile Include="Models\Gear\Systems\GearSystemGearItemTests.cs" />
+    <Compile Include="Models\Gear\Systems\GearSystemTests.cs" />
+    <Compile Include="Models\Personal\PersonalInformationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

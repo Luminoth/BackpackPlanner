@@ -11,7 +11,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 	[Activity(Label = "Backpacking Planner", MainLauncher = true, Icon = "@drawable/icon")]
 	public class MainActivity : Activity
 	{
-        private const string HockeyAppAppId = "YOUR-HOCKEYAPP-APPID";
+        private const string HockeyAppAppId = "32a2c37622529305ec763b7e2c224deb";
 
 		private int _count = 1;
 

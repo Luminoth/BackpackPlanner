@@ -899,14 +899,14 @@
     <packageHasNamedElement>
       <class
         Id="baeeda19-7dbe-4e13-8029-565d4d121ed9"
-        name="AppState"
+        name="BackpackPlannerState"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
         <ownedAttributesInternal>
           <property
             Id="3733980a-fe5f-4840-b355-078ccea26d80"
-            name="GearState"
+            name="GearCache"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -918,7 +918,7 @@
             <type_NamedElement>
               <classMoniker
                 Id="6cba91d8-cff8-4c3f-878b-477cb8197394"
-                LastKnownName="GearState"
+                LastKnownName="GearCache"
                 LastKnownLocation="BackpackPlanner.Models.uml" />
             </type_NamedElement>
           </property>
@@ -1063,7 +1063,7 @@
                   <type_NamedElement>
                     <classMoniker
                       Id="baeeda19-7dbe-4e13-8029-565d4d121ed9"
-                      LastKnownName="AppState"
+                      LastKnownName="BackpackPlannerState"
                       LastKnownLocation="BackpackPlanner.Models.uml" />
                   </type_NamedElement>
                 </parameter>
@@ -4806,7 +4806,7 @@
         <ownedLiterals>
           <enumerationLiteral
             Id="8d30997e-5b94-4c9d-8335-4815e673fb04"
-            name="Imperial">
+            name="UnitedStates">
             <specification>
               <literalInteger
                 Id="647b9d9e-cb73-41a5-b95b-afd6f31714df"
@@ -4873,7 +4873,7 @@
           </property>
           <property
             Id="ed417808-43a9-4d66-ba87-466f57eecf18"
-            name="UltralightMaxWeightInGrams"
+            name="UltralightClassMaxWeightInGrams"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -4890,14 +4890,14 @@
             </type_NamedElement>
             <defaultValue>
               <literalString
-                Id="4adfc603-44b6-4c51-99f2-faa6bb654943"
+                Id="e914228d-8d57-49ec-9baf-b6fa5bcdc9bb"
                 name="DefaultValue"
                 value="4500" />
             </defaultValue>
           </property>
           <property
             Id="8fcb8883-ef43-4313-a88c-36ebc252bd82"
-            name="LightweightMaxWeightInGrams"
+            name="LightweightClassMaxWeightInGrams"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -4914,9 +4914,105 @@
             </type_NamedElement>
             <defaultValue>
               <literalString
-                Id="5f4d4714-577d-4fa0-8ea3-13edb6144c50"
+                Id="f611543a-aa4e-4b56-856b-8f5778e6db1b"
                 name="DefaultValue"
                 value="9000" />
+            </defaultValue>
+          </property>
+          <property
+            Id="ba6e07de-8a64-432d-9b16-2465915b8d01"
+            name="UltralightCategoryMaxWeightInGrams"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <primitiveTypeMoniker
+                Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                LastKnownName="Integer"
+                LastKnownLocation="BackpackPlanner.Models.uml" />
+            </type_NamedElement>
+            <defaultValue>
+              <literalString
+                Id="75360cf1-03e6-4204-a9a4-e1c5c5301ba3"
+                name="DefaultValue"
+                value="225" />
+            </defaultValue>
+          </property>
+          <property
+            Id="fcbbf0f5-4363-4119-88b9-47b31a5e53fd"
+            name="LightCategoryMaxWeightInGrams"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <primitiveTypeMoniker
+                Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                LastKnownName="Integer"
+                LastKnownLocation="BackpackPlanner.Models.uml" />
+            </type_NamedElement>
+            <defaultValue>
+              <literalString
+                Id="b6dcd1ef-757f-426a-99c5-5f884194e82b"
+                name="DefaultValue"
+                value="450" />
+            </defaultValue>
+          </property>
+          <property
+            Id="16c8b515-edf9-4e0e-a70f-6ad6ac72af23"
+            name="MediumCategoryMaxWeightInGrams"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <primitiveTypeMoniker
+                Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                LastKnownName="Integer"
+                LastKnownLocation="BackpackPlanner.Models.uml" />
+            </type_NamedElement>
+            <defaultValue>
+              <literalString
+                Id="65cd3748-6adb-40b2-b31c-262f0ffe5779"
+                name="DefaultValue"
+                value="1360" />
+            </defaultValue>
+          </property>
+          <property
+            Id="c963e730-9b98-412d-b860-9944854ff489"
+            name="HeavyCategoryMaxWeightInGrams"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <primitiveTypeMoniker
+                Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                LastKnownName="Integer"
+                LastKnownLocation="BackpackPlanner.Models.uml" />
+            </type_NamedElement>
+            <defaultValue>
+              <literalString
+                Id="4c553a6c-0965-4eda-9013-df0f307780f7"
+                name="DefaultValue"
+                value="2270" />
             </defaultValue>
           </property>
         </ownedAttributesInternal>
@@ -5128,7 +5224,7 @@
     <packageHasNamedElement>
       <class
         Id="6cba91d8-cff8-4c3f-878b-477cb8197394"
-        name="GearState"
+        name="GearCache"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
@@ -5984,7 +6080,7 @@
         <ownedLiterals>
           <enumerationLiteral
             Id="207ec27e-d4d7-4afc-a79b-d1f1e3889e78"
-            name="USD">
+            name="UnitedStatesDollar">
             <specification>
               <literalInteger
                 Id="f04d5bc4-72a1-4d05-be14-da528178192c"
@@ -6014,7 +6110,7 @@
         <ownedAttributes>
           <property
             Id="de76546f-30dc-4d73-baf9-fd94b0777af5"
-            name="Count"
+            name="Amount"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
