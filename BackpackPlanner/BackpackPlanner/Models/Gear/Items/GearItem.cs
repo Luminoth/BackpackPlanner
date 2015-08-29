@@ -14,6 +14,7 @@
    limitations under the License.
 */
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using SQLite.Net.Async;
@@ -33,6 +34,33 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Items
         public static async Task CreateTablesAsync(SQLiteAsyncConnection asyncDbConnection)
         {
             await asyncDbConnection.CreateTableAsync<GearItem>().ConfigureAwait(false);
+        }
+
+        public static async Task<List<GearItem>>  GetGearItemsAsync(SQLiteAsyncConnection asyncDbConnection)
+        {
+            return await asyncDbConnection.Table<GearItem>().ToListAsync().ConfigureAwait(false);
+        }
+
+        public static async Task<GearItem> GetGearItemAsync(SQLiteAsyncConnection asyncDbConnection, int gearItemId)
+        {
+            return await asyncDbConnection.GetAsync<GearItem>(gearItemId).ConfigureAwait(false);
+        }
+
+        public static async Task<int> SaveGearItemAsync(SQLiteAsyncConnection asyncDbConnection, GearItem gearItem)
+        {
+            return gearItem.GearItemId <= 0
+                ? await asyncDbConnection.InsertAsync(gearItem).ConfigureAwait(false)
+                : await asyncDbConnection.UpdateAsync(gearItem).ConfigureAwait(false);
+        }
+
+        public static async Task<int> DeleteGearItemAsync(SQLiteAsyncConnection asyncDbConnection, GearItem gearItem)
+        {
+            return await asyncDbConnection.DeleteAsync(gearItem).ConfigureAwait(false);
+        }
+
+        public static async Task<int> DeleteAllGearItemsAsync(SQLiteAsyncConnection asyncDbConnection)
+        {
+            return await asyncDbConnection.DeleteAllAsync<GearItem>().ConfigureAwait(false);
         }
 
         /// <summary>

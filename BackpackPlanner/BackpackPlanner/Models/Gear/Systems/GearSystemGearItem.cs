@@ -14,8 +14,11 @@
    limitations under the License.
 */
 
+using System.Threading.Tasks;
+
 using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
 
+using SQLite.Net.Async;
 using SQLite.Net.Attributes;
 using SQLiteNetExtensions.Attributes;
 
@@ -26,6 +29,15 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Systems
     /// </summary>
     public class GearSystemGearItem
     {
+        /// <summary>
+        /// Creates the database tables.
+        /// </summary>
+        /// <param name="asyncDbConnection">The asynchronous database connection.</param>
+        public static async Task CreateTablesAsync(SQLiteAsyncConnection asyncDbConnection)
+        {
+            await asyncDbConnection.CreateTableAsync<GearSystemGearItem>().ConfigureAwait(false);
+        }
+
         /// <summary>
         /// Gets or sets the gear system identifier.
         /// </summary>

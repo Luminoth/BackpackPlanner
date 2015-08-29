@@ -49,7 +49,7 @@ namespace EnergonSoftware.BackpackPlanner
         /// <value>
         /// The singleton instance.
         /// </value>
-        public static BackpackPlannerState Instance => new BackpackPlannerState();
+        public static readonly BackpackPlannerState Instance = new BackpackPlannerState();
 
         /// <summary>
         /// Gets the library settings.
@@ -57,7 +57,7 @@ namespace EnergonSoftware.BackpackPlanner
         /// <value>
         /// The library settings.
         /// </value>
-        public BackpackPlannerSettings Settings => new BackpackPlannerSettings();
+        public BackpackPlannerSettings Settings { get; } = new BackpackPlannerSettings();
 
         /// <summary>
         /// Gets or sets the database connection.
@@ -75,9 +75,7 @@ namespace EnergonSoftware.BackpackPlanner
         /// </value>
         public SQLiteAsyncConnection AsyncDbConnection { get; set; }
 
-#region Caches
         private readonly GearCache _gearCache = new GearCache();
-        #endregion
 
         /// <summary>
         /// Initializes the library database.
@@ -87,7 +85,7 @@ namespace EnergonSoftware.BackpackPlanner
         /// <param name="dbName">Name of the database.</param>
         public async Task InitDatabaseAsync(ISQLitePlatform sqlitePlatform, string dbPath, string dbName)
         {
-            if(null != AsyncDbConnection) {
+            if(null != DbConnection || null != AsyncDbConnection) {
                 throw new InvalidOperationException("Database already initialized!");
             }
 
@@ -108,7 +106,7 @@ namespace EnergonSoftware.BackpackPlanner
                 Debug.WriteLine($"Old database version: {oldVersion.Version}, current database version: {CurrentDatabaseVersion}");
             }
 
-            //await GearCache.InitDatabaseAsync(oldVersion.Version, CurrentDatabaseVersion).ConfigureAwait(false);
+            await GearCache.InitDatabaseAsync(oldVersion.Version, CurrentDatabaseVersion).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -116,6 +114,7 @@ namespace EnergonSoftware.BackpackPlanner
         /// </summary>
         public async Task LoadFromDeviceAsync()
         {
+            Debug.WriteLine("Loading data from device...");
             await _gearCache.LoadFromDeviceAsync().ConfigureAwait(false);
         }
 

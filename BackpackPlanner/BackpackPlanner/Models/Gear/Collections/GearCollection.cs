@@ -36,9 +36,35 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Collections
         {
             await asyncDbConnection.CreateTableAsync<GearCollection>().ConfigureAwait(false);
 
-            // TODO: move these
-            await asyncDbConnection.CreateTableAsync<GearCollectionGearSystem>().ConfigureAwait(false);
-            await asyncDbConnection.CreateTableAsync<GearCollectionGearItem>().ConfigureAwait(false);
+            await GearCollectionGearSystem.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
+            await GearCollectionGearItem.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
+        }
+
+        public static async Task<List<GearCollection>>  GetGearCollectionsAsync(SQLiteAsyncConnection asyncDbConnection)
+        {
+            return await asyncDbConnection.Table<GearCollection>().ToListAsync().ConfigureAwait(false);
+        }
+
+        public static async Task<GearCollection> GetGearCollectionAsync(SQLiteAsyncConnection asyncDbConnection, int gearCollectionId)
+        {
+            return await asyncDbConnection.GetAsync<GearCollection>(gearCollectionId).ConfigureAwait(false);
+        }
+
+        public static async Task<int> SaveGearCollectionAsync(SQLiteAsyncConnection asyncDbConnection, GearCollection gearCollection)
+        {
+            return gearCollection.GearCollectionId <= 0
+                ? await asyncDbConnection.InsertAsync(gearCollection).ConfigureAwait(false)
+                : await asyncDbConnection.UpdateAsync(gearCollection).ConfigureAwait(false);
+        }
+
+        public static async Task<int> DeleteGearCollectionAsync(SQLiteAsyncConnection asyncDbConnection, GearCollection gearCollection)
+        {
+            return await asyncDbConnection.DeleteAsync(gearCollection).ConfigureAwait(false);
+        }
+
+        public static async Task<int> DeleteAllGearCollectionsAsync(SQLiteAsyncConnection asyncDbConnection)
+        {
+            return await asyncDbConnection.DeleteAllAsync<GearCollection>().ConfigureAwait(false);
         }
 
         /// <summary>

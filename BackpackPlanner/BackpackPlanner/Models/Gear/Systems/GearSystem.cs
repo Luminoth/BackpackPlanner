@@ -36,8 +36,34 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Systems
         {
             await asyncDbConnection.CreateTableAsync<GearSystem>().ConfigureAwait(false);
 
-            // TODO: move these
-            await asyncDbConnection.CreateTableAsync<GearSystemGearItem>().ConfigureAwait(false);
+            await GearSystemGearItem.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
+        }
+
+        public static async Task<List<GearSystem>>  GetGearSystemsAsync(SQLiteAsyncConnection asyncDbConnection)
+        {
+            return await asyncDbConnection.Table<GearSystem>().ToListAsync().ConfigureAwait(false);
+        }
+
+        public static async Task<GearSystem> GetGearSystemAsync(SQLiteAsyncConnection asyncDbConnection, int gearSystemId)
+        {
+            return await asyncDbConnection.GetAsync<GearSystem>(gearSystemId).ConfigureAwait(false);
+        }
+
+        public static async Task<int> SaveGearSystemAsync(SQLiteAsyncConnection asyncDbConnection, GearSystem gearSystem)
+        {
+            return gearSystem.GearSystemId <= 0
+                ? await asyncDbConnection.InsertAsync(gearSystem).ConfigureAwait(false)
+                : await asyncDbConnection.UpdateAsync(gearSystem).ConfigureAwait(false);
+        }
+
+        public static async Task<int> DeleteGearSystemAsync(SQLiteAsyncConnection asyncDbConnection, GearSystem gearSystem)
+        {
+            return await asyncDbConnection.DeleteAsync(gearSystem).ConfigureAwait(false);
+        }
+
+        public static async Task<int> DeleteAllGearSystemsAsync(SQLiteAsyncConnection asyncDbConnection)
+        {
+            return await asyncDbConnection.DeleteAllAsync<GearSystem>().ConfigureAwait(false);
         }
 
         /// <summary>

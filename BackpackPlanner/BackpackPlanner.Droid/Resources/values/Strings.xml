@@ -1,5 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="hello">Hello World, Click Me!</string>
-	<string name="app_name">BackpackPlanner.Droid</string>
+	<string name="app_name">Backpacking Planner</string>
+    <string name="open_drawer">Open Drawer</string>
+    <string name="close_drawer">Close Drawer</string>
+
+    <string name="title_gear_items">Gear Items</string>
+
+    <string-array name="titles">
+        <item>Gear Items</item>
+    </string-array>
 </resources>
