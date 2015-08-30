@@ -23,7 +23,7 @@ namespace EnergonSoftware.BackpackPlanner.Models
     /// <summary>
     /// 
     /// </summary>
-    public class DatabaseVersion
+    public sealed class DatabaseVersion
     {
         /// <summary>
         /// Creates the database tables.
@@ -43,6 +43,16 @@ namespace EnergonSoftware.BackpackPlanner.Models
         public static async Task<DatabaseVersion> GetAsync(SQLiteAsyncConnection asyncDbConnection)
         {
             return await asyncDbConnection.Table<DatabaseVersion>().FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Updates the database version.
+        /// </summary>
+        /// <param name="asyncDbConnection">The asynchronous database connection.</param>
+        /// <param name="databaseVersion">The current database version.</param>
+        public static async Task<int> UpdateAsync(SQLiteAsyncConnection asyncDbConnection, DatabaseVersion databaseVersion)
+        {
+            return await asyncDbConnection.UpdateAsync(databaseVersion).ConfigureAwait(false);
         }
 
         /// <summary>

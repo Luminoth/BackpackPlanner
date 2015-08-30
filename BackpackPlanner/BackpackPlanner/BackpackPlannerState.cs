@@ -20,8 +20,10 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
+using EnergonSoftware.BackpackPlanner.Cache;
 using EnergonSoftware.BackpackPlanner.Models;
 using EnergonSoftware.BackpackPlanner.Models.Personal;
+
 using SQLite.Net;
 using SQLite.Net.Async;
 using SQLite.Net.Interop;
@@ -31,7 +33,7 @@ namespace EnergonSoftware.BackpackPlanner
     /// <summary>
     /// Collects the general library state
     /// </summary>
-    public class BackpackPlannerState
+    public sealed class BackpackPlannerState
     {
         /// <summary>
         /// The database name
@@ -41,7 +43,7 @@ namespace EnergonSoftware.BackpackPlanner
         /// <summary>
         /// The database version
         /// </summary>
-        public const int CurrentDatabaseVersion = 1;
+        public const int CurrentDatabaseVersion = 2;
 
         /// <summary>
         /// Gets the singleton instance.
@@ -71,6 +73,8 @@ namespace EnergonSoftware.BackpackPlanner
         private SQLiteConnectionPool _connectionPool;
 
         private readonly GearCache _gearCache = new GearCache();
+        private readonly MealCache _mealCache = new MealCache();
+        private readonly TripCache _tripCache = new TripCache();
 
         /// <summary>
         /// Gets a connection to the database.
@@ -113,6 +117,10 @@ namespace EnergonSoftware.BackpackPlanner
             using(SQLiteConnectionWithLock dbConnection = GetDatabaseConnection()) {
                 SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
 
+                DatabaseVersion newVersion = new DatabaseVersion
+                {
+                    Version = CurrentDatabaseVersion
+                };
                 DatabaseVersion oldVersion = new DatabaseVersion();
 
                 var databaseVersionTableInfo = dbConnection.GetTableInfo("DatabaseVersion");
@@ -124,7 +132,13 @@ namespace EnergonSoftware.BackpackPlanner
                     Debug.WriteLine($"Old database version: {oldVersion.Version}, current database version: {CurrentDatabaseVersion}");
                 }
 
-                await GearCache.InitDatabaseAsync(oldVersion.Version, CurrentDatabaseVersion).ConfigureAwait(false);
+                // TODO: find a way to make this transactional
+                // so that we can roll it back on error and avoid updating the db version
+                /*await GearCache.InitDatabaseAsync(oldVersion.Version, newVersion.Version).ConfigureAwait(false);
+                await MealCache.InitDatabaseAsync(oldVersion.Version, newVersion.Version).ConfigureAwait(false);
+                await TripCache.InitDatabaseAsync(oldVersion.Version, newVersion.Version).ConfigureAwait(false);
+
+                await DatabaseVersion.UpdateAsync(asyncDbConnection, newVersion).ConfigureAwait(false);*/
             }
         }
 
@@ -135,6 +149,8 @@ namespace EnergonSoftware.BackpackPlanner
         {
             Debug.WriteLine("Loading data from device...");
             await _gearCache.LoadFromDeviceAsync().ConfigureAwait(false);
+            await _mealCache.LoadFromDeviceAsync().ConfigureAwait(false);
+            await _tripCache.LoadFromDeviceAsync().ConfigureAwait(false);
         }
 
         private BackpackPlannerState()

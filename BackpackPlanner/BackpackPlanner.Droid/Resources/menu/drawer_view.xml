@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/group_gear"
+        android:checkableBehavior="single">
+        <item android:title="Gear">
+            <menu>
+                <item
+                    android:id="@+id/nav_gear_items_fragment"
+                    android:title="@string/title_gear_items"
+                    android:checked="true" />
+                <item
+                    android:id="@+id/nav_gear_systems_fragment"
+                    android:title="@string/title_gear_systems" />
+                <item
+                    android:id="@+id/nav_gear_collections_fragment"
+                    android:title="@string/title_gear_collections" />
+            </menu>
+        </item>
+    </group>
+    <group
+        android:id="@+id/group_meals"
+        android:checkableBehavior="single">
+            <item
+                android:id="@+id/nav_meals_fragment"
+                android:title="@string/title_meals"
+                android:checked="true" />
+    </group>
+    <group
+        android:id="@+id/group_trips"
+        android:checkableBehavior="single">
+        <item android:title="Trips">
+            <menu>
+                <item
+                    android:id="@+id/nav_trip_itineraries_fragment"
+                    android:title="@string/title_trip_itineraries"
+                    android:checked="true" />
+                <item
+                    android:id="@+id/nav_trip_plans_fragment"
+                    android:title="@string/title_trip_plans" />
+            </menu>
+        </item>
+    </group>
+</menu>

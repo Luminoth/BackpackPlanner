@@ -27,7 +27,7 @@ using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
 using SQLite.Net;
 using SQLite.Net.Async;
 
-namespace EnergonSoftware.BackpackPlanner
+namespace EnergonSoftware.BackpackPlanner.Cache
 {
     /// <summary>
     /// Caches gear items, systems, and collections
@@ -36,13 +36,13 @@ namespace EnergonSoftware.BackpackPlanner
     /// Fow now this is an all or nothing cache. Later on, to conserve resources,
     /// it might start allowing cached items to decay
     /// </remarks>
-    public class GearCache
+    public sealed class GearCache
     {
         /// <summary>
         /// Initializes the gear state tables in the database.
         /// </summary>
-        /// <param name="oldVersion">The old version. If this is less than 1, this is a new database.</param>
-        /// <param name="newVersion">The new version.</param>
+        /// <param name="oldVersion">The old database version.</param>
+        /// <param name="newVersion">The new database version.</param>
         public static async Task InitDatabaseAsync(int oldVersion, int newVersion)
         {
             if(oldVersion >= newVersion) {
@@ -50,8 +50,8 @@ namespace EnergonSoftware.BackpackPlanner
                 return;
             }
 
-            if(oldVersion < 1) {
-                Debug.WriteLine("New database, creating gear cache tables...");
+            if(oldVersion < 1 && newVersion >= 1) {
+                Debug.WriteLine("Creating gear cache tables...");
                 using(SQLiteConnectionWithLock dbConnection = BackpackPlannerState.Instance.GetDatabaseConnection()) {
                     SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
 

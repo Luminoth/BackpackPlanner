@@ -6,7 +6,7 @@ using TypeMock.ArrangeActAssert;
 
 namespace BackpackPlanner.UnitTests
 {
-    public class MockUtil
+    public static class MockUtil
     {
         /// <summary>
         /// Fakes database connections.

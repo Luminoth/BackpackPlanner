@@ -17,6 +17,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+using EnergonSoftware.BackpackPlanner.Models.Gear.Collections;
+using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
+using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
+
 using SQLite.Net.Async;
 using SQLite.Net.Attributes;
 using SQLiteNetExtensions.Attributes;
@@ -26,7 +30,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Systems
     /// <summary>
     /// 
     /// </summary>
-    public class GearSystem
+    public sealed class GearSystem
     {
         /// <summary>
         /// Creates the database tables.
@@ -85,13 +89,13 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Systems
         public string Name { get; set; } = string.Empty;
 
         /// <summary>
-        /// Gets or sets the gear items included in this system.
+        /// Gets or sets the gear items contained in this system.
         /// </summary>
         /// <value>
-        /// The gear items included in this system.
+        /// The gear items contained in this system.
         /// </value>
-        [OneToMany(CascadeOperations = CascadeOperation.CascadeDelete)]
-        public IReadOnlyCollection<GearSystemGearItem> GearItems { get; set; }
+        [ManyToMany(typeof(GearSystemGearItem))]
+        public List<GearItem> GearItems { get; set; }
 
         /// <summary>
         /// Gets or sets the gear system note.
@@ -101,6 +105,12 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Systems
         /// </value>
         [MaxLength(1024)]
         public string Note { get; set; } = string.Empty;
+
+        [ManyToMany(typeof(GearCollectionGearSystem))]
+        public List<GearCollection> GearCollections { get; set; }
+
+        [ManyToMany(typeof(TripPlanGearSystem))]
+        public List<TripPlan> TripPlans { get; set; }
 
         public override bool Equals(object obj)
         {

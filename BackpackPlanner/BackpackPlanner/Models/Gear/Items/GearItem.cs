@@ -17,15 +17,20 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+using EnergonSoftware.BackpackPlanner.Models.Gear.Collections;
+using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
+using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
+
 using SQLite.Net.Async;
 using SQLite.Net.Attributes;
+using SQLiteNetExtensions.Attributes;
 
 namespace EnergonSoftware.BackpackPlanner.Models.Gear.Items
 {
     /// <summary>
     /// 
     /// </summary>
-    public class GearItem
+    public sealed class GearItem
     {
         /// <summary>
         /// Creates the database tables.
@@ -182,6 +187,15 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Items
         /// </value>
         [MaxLength(1024)]
         public string Note { get; set; } = string.Empty;
+
+        [ManyToMany(typeof(GearSystemGearItem))]
+        public List<GearSystem> GearSystems { get; set; }
+
+        [ManyToMany(typeof(GearCollectionGearItem))]
+        public List<GearCollection> GearCollections { get; set; }
+
+        [ManyToMany(typeof(TripPlanGearItem))]
+        public List<TripPlan> TripPlans { get; set; }
 
         public override bool Equals(object obj)
         {

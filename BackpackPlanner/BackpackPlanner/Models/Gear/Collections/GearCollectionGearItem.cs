@@ -27,7 +27,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Collections
     /// <summary>
     /// 
     /// </summary>
-    public class GearCollectionGearItem
+    public sealed class GearCollectionGearItem
     {
         /// <summary>
         /// Creates the database tables.
@@ -48,15 +48,6 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Collections
         public int GearCollectionId { get; set; } = -1;
 
         /// <summary>
-        /// Gets or sets the gear collection.
-        /// </summary>
-        /// <value>
-        /// The gear collection.
-        /// </value>
-        [ManyToOne]
-        public GearCollection GearCollection { get; set; }
-
-        /// <summary>
         /// Gets or sets the gear item identifier.
         /// </summary>
         /// <value>
@@ -64,15 +55,6 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Collections
         /// </value>
         [ForeignKey(typeof(GearItem))]
         public int GearItemId { get; set; } = -1;
-
-        /// <summary>
-        /// Gets or sets the gear item.
-        /// </summary>
-        /// <value>
-        /// The gear item.
-        /// </value>
-        [ManyToOne]
-        public GearItem GearItem { get; set; }
 
         private int _amount = 1;
 

@@ -38,8 +38,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BackpackPlannerState.cs" />
+    <Compile Include="Cache\MealCache.cs" />
+    <Compile Include="Cache\TripCache.cs" />
     <Compile Include="Currency.cs" />
-    <Compile Include="GearCache.cs" />
+    <Compile Include="Cache\GearCache.cs" />
     <Compile Include="BackpackPlannerSettings.cs" />
     <Compile Include="Models\DatabaseVersion.cs" />
     <Compile Include="Models\Gear\Collections\GearCollectionGearItem.cs" />
@@ -49,8 +51,16 @@
     <Compile Include="Models\Gear\Items\GearItem.cs" />
     <Compile Include="Models\Gear\Systems\GearSystem.cs" />
     <Compile Include="Models\Gear\Systems\GearSystemGearItem.cs" />
+    <Compile Include="Models\Meals\Meal.cs" />
+    <Compile Include="Models\Meals\MealTime.cs" />
     <Compile Include="Models\Personal\PersonalInformation.cs" />
     <Compile Include="Models\Personal\UserSex.cs" />
+    <Compile Include="Models\Trips\Itineraries\TripItinerary.cs" />
+    <Compile Include="Models\Trips\Plans\TripPlan.cs" />
+    <Compile Include="Models\Trips\Plans\TripPlanGearCollection.cs" />
+    <Compile Include="Models\Trips\Plans\TripPlanGearItem.cs" />
+    <Compile Include="Models\Trips\Plans\TripPlanGearSystem.cs" />
+    <Compile Include="Models\Trips\Plans\TripPlanMeal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitSystem.cs" />
     <Compile Include="WeightCategory.cs" />

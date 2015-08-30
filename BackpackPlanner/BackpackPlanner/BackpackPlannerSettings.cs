@@ -19,7 +19,7 @@ namespace EnergonSoftware.BackpackPlanner
     /// <summary>
     /// 
     /// </summary>
-    public class BackpackPlannerSettings
+    public sealed class BackpackPlannerSettings
     {
         /// <summary>
         /// Gets or sets the unit system to use.

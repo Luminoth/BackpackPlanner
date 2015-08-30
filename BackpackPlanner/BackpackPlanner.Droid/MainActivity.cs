@@ -9,7 +9,6 @@ using Android.Support.V4.Widget;
 using Android.Support.V7.App;
 using Android.Util;
 using Android.Views;
-using Android.Widget;
 
 using EnergonSoftware.BackpackPlanner.Droid.Util;
 
@@ -24,10 +23,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
         private const string HockeyAppAppId = "32a2c37622529305ec763b7e2c224deb";
 
-        private string[] _titles;
         private DrawerLayout _drawerLayout;
         private Android.Support.V7.Widget.Toolbar _toolbar;
-        private ListView _drawerListView;
         private DrawerToggle _drawerToggle;
 
 		protected async override void OnCreate(Bundle savedInstanceState)
@@ -46,18 +43,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             SetSupportActionBar(_toolbar);
             SupportActionBar.Title = "Backpacking Planner";
 
-            _titles = Resources.GetStringArray(Resource.Array.titles);
-            _drawerListView = FindViewById<ListView>(Resource.Id.drawer);
-            _drawerListView.Adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItemActivated1, _titles);
-
             _drawerLayout = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
-            _drawerToggle = new DrawerToggle(this, _drawerLayout, Resource.String.open_drawer, Resource.String.close_drawer);
-            _drawerToggle.DrawerClosedEvent += (sender, args) => {
-                InvalidateOptionsMenu();
-            };
-            _drawerToggle.DrawerOpenedEvent += (sender, args) => {
-                InvalidateOptionsMenu();
-            };
+
+            _drawerToggle = new DrawerToggle(this, _drawerLayout, Resource.String.drawer_open, Resource.String.drawer_close);
             _drawerLayout.SetDrawerListener(_drawerToggle);
 
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
@@ -82,8 +70,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
                 return true;
             }
 
-            // TODO: whatever else here? I dunno
-            return false;
+            return base.OnOptionsItemSelected(item);
 	    }
 
 	    private void InitHockeyApp()
@@ -114,5 +101,3 @@ namespace EnergonSoftware.BackpackPlanner.Droid
         }
 	}
 }
-
-

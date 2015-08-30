@@ -16,18 +16,16 @@
 
 using System.Threading.Tasks;
 
-using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
-
 using SQLite.Net.Async;
 using SQLite.Net.Attributes;
-using SQLiteNetExtensions.Attributes;
 
-namespace EnergonSoftware.BackpackPlanner.Models.Gear.Systems
+
+namespace EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries
 {
     /// <summary>
     /// 
     /// </summary>
-    public sealed class GearSystemGearItem
+    public sealed class TripItinerary
     {
         /// <summary>
         /// Creates the database tables.
@@ -35,40 +33,49 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Systems
         /// <param name="asyncDbConnection">The asynchronous database connection.</param>
         public static async Task CreateTablesAsync(SQLiteAsyncConnection asyncDbConnection)
         {
-            await asyncDbConnection.CreateTableAsync<GearSystemGearItem>().ConfigureAwait(false);
+            await asyncDbConnection.CreateTableAsync<TripItinerary>().ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets or sets the gear system identifier.
+        /// Gets or sets the trip itinerary identifier.
         /// </summary>
         /// <value>
-        /// The gear system identifier.
+        /// The trip itinerary identifier.
         /// </value>
-        [ForeignKey(typeof(GearSystem))]
-        public int GearSystemId { get; set; } = -1;
+        [PrimaryKey, AutoIncrement]
+        public int TripItineraryId { get; set; } = -1;
 
         /// <summary>
-        /// Gets or sets the gear item identifier.
+        /// Gets or sets the trip itinerary name.
         /// </summary>
         /// <value>
-        /// The gear item identifier.
+        /// The trip itinerary name.
         /// </value>
-        [ForeignKey(typeof(GearItem))]
-        public int GearItemId { get; set; } = -1;
-
-        private int _amount = 1;
+        [MaxLength(64), NotNull]
+        public string Name { get; set; } = string.Empty;
 
         /// <summary>
-        /// Gets or sets the amount of the gear item in the gear system.
+        /// Gets or sets the trip itinerary note.
         /// </summary>
         /// <value>
-        /// The amount of the gear item in the gear system.
+        /// The trip itinerary note.
         /// </value>
-        [NotNull]
-        public int Amount
+        [MaxLength(1024)]
+        public string Note { get; set; } = string.Empty;
+
+        public override bool Equals(object obj)
         {
-            get { return _amount; }
-            set { _amount = value < 1 ? 1 : value; }
+            if(TripItineraryId < 1) {
+                return false;
+            }
+
+            TripItinerary tripItinerary = obj as TripItinerary;
+            return TripItineraryId == tripItinerary?.TripItineraryId;
+        }
+
+        public override int GetHashCode()
+        {
+            return TripItineraryId.GetHashCode();
         }
     }
 }

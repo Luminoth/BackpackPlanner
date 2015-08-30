@@ -22,12 +22,12 @@ using SQLite.Net.Async;
 using SQLite.Net.Attributes;
 using SQLiteNetExtensions.Attributes;
 
-namespace EnergonSoftware.BackpackPlanner.Models.Gear.Systems
+namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
 {
     /// <summary>
     /// 
     /// </summary>
-    public sealed class GearSystemGearItem
+    public sealed class TripPlanGearItem
     {
         /// <summary>
         /// Creates the database tables.
@@ -35,17 +35,17 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Systems
         /// <param name="asyncDbConnection">The asynchronous database connection.</param>
         public static async Task CreateTablesAsync(SQLiteAsyncConnection asyncDbConnection)
         {
-            await asyncDbConnection.CreateTableAsync<GearSystemGearItem>().ConfigureAwait(false);
+            await asyncDbConnection.CreateTableAsync<TripPlanGearItem>().ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets or sets the gear system identifier.
+        /// Gets or sets the trip plan identifier.
         /// </summary>
         /// <value>
-        /// The gear system identifier.
+        /// The trip plan identifier.
         /// </value>
-        [ForeignKey(typeof(GearSystem))]
-        public int GearSystemId { get; set; } = -1;
+        [ForeignKey(typeof(TripPlan))]
+        public int TripPlanId { get; set; } = -1;
 
         /// <summary>
         /// Gets or sets the gear item identifier.
@@ -59,10 +59,10 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Systems
         private int _amount = 1;
 
         /// <summary>
-        /// Gets or sets the amount of the gear item in the gear system.
+        /// Gets or sets the amount of the gear item in the trip plan.
         /// </summary>
         /// <value>
-        /// The amount of the gear item in the gear system.
+        /// The amount of the gear item in the trip plan.
         /// </value>
         [NotNull]
         public int Amount

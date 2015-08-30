@@ -16,18 +16,18 @@
 
 using System.Threading.Tasks;
 
-using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
+using EnergonSoftware.BackpackPlanner.Models.Meals;
 
 using SQLite.Net.Async;
 using SQLite.Net.Attributes;
 using SQLiteNetExtensions.Attributes;
 
-namespace EnergonSoftware.BackpackPlanner.Models.Gear.Systems
+namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
 {
     /// <summary>
     /// 
     /// </summary>
-    public sealed class GearSystemGearItem
+    public sealed class TripPlanMeal
     {
         /// <summary>
         /// Creates the database tables.
@@ -35,34 +35,34 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Systems
         /// <param name="asyncDbConnection">The asynchronous database connection.</param>
         public static async Task CreateTablesAsync(SQLiteAsyncConnection asyncDbConnection)
         {
-            await asyncDbConnection.CreateTableAsync<GearSystemGearItem>().ConfigureAwait(false);
+            await asyncDbConnection.CreateTableAsync<TripPlanMeal>().ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets or sets the gear system identifier.
+        /// Gets or sets the trip plan identifier.
         /// </summary>
         /// <value>
-        /// The gear system identifier.
+        /// The trip plan identifier.
         /// </value>
-        [ForeignKey(typeof(GearSystem))]
-        public int GearSystemId { get; set; } = -1;
+        [ForeignKey(typeof(TripPlan))]
+        public int TripPlanId { get; set; } = -1;
 
         /// <summary>
-        /// Gets or sets the gear item identifier.
+        /// Gets or sets the meal identifier.
         /// </summary>
         /// <value>
-        /// The gear item identifier.
+        /// The meal identifier.
         /// </value>
-        [ForeignKey(typeof(GearItem))]
-        public int GearItemId { get; set; } = -1;
+        [ForeignKey(typeof(Meal))]
+        public int MealId { get; set; } = -1;
 
         private int _amount = 1;
 
         /// <summary>
-        /// Gets or sets the amount of the gear item in the gear system.
+        /// Gets or sets the amount of the meal in the trip plan.
         /// </summary>
         /// <value>
-        /// The amount of the gear item in the gear system.
+        /// The amount of the meal in the trip plan.
         /// </value>
         [NotNull]
         public int Amount

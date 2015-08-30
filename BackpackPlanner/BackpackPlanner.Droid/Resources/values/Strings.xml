@@ -1,12 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="app_name">Backpacking Planner</string>
-    <string name="open_drawer">Open Drawer</string>
-    <string name="close_drawer">Close Drawer</string>
+
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 
     <string name="title_gear_items">Gear Items</string>
+    <string name="title_gear_systems">Gear Systems</string>
+    <string name="title_gear_collections">Gear Collections</string>
 
-    <string-array name="titles">
-        <item>Gear Items</item>
-    </string-array>
+    <string name="title_meals">Meals</string>
+
+    <string name="title_trip_itineraries">Trip Itineraries</string>
+    <string name="title_trip_plans">Trip Plans</string>
 </resources>

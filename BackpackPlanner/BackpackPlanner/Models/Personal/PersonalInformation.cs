@@ -21,7 +21,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Personal
     /// <summary>
     /// 
     /// </summary>
-    public class PersonalInformation
+    public sealed class PersonalInformation
     {
         /// <summary>
         /// Gets or sets the user's first name.
