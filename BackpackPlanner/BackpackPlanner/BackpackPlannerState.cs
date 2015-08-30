@@ -21,7 +21,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Models;
-
+using EnergonSoftware.BackpackPlanner.Models.Personal;
 using SQLite.Net;
 using SQLite.Net.Async;
 using SQLite.Net.Interop;
@@ -60,22 +60,38 @@ namespace EnergonSoftware.BackpackPlanner
         public BackpackPlannerSettings Settings { get; } = new BackpackPlannerSettings();
 
         /// <summary>
-        /// Gets or sets the database connection.
+        /// Gets or sets the user's personal information.
         /// </summary>
         /// <value>
-        /// The database connection.
+        /// The user's personal information.
         /// </value>
-        public SQLiteConnectionWithLock DbConnection { get; set; }
+        public PersonalInformation PersonalInformation { get; set; } = new PersonalInformation();
 
-        /// <summary>
-        /// Gets or sets the async database connection.
-        /// </summary>
-        /// <value>
-        /// The async database connection.
-        /// </value>
-        public SQLiteAsyncConnection AsyncDbConnection { get; set; }
+        private SQLiteConnectionString _connectionString;
+        private SQLiteConnectionPool _connectionPool;
 
         private readonly GearCache _gearCache = new GearCache();
+
+        /// <summary>
+        /// Gets a connection to the database.
+        /// </summary>
+        /// <returns>A connection to the database.</returns>
+        /// <remarks>
+        /// TODO: this needs to use a pool
+        /// </remarks>
+        public SQLiteConnectionWithLock GetDatabaseConnection()
+        {
+            if(null == _connectionPool) {
+                throw new InvalidOperationException("SQLite connection pool not initialized!");
+            }
+
+            if(null == _connectionString) {
+                throw new InvalidOperationException("SQLite connection string is null!");
+            }
+
+            Debug.WriteLine("Getting a new database connection...");
+            return _connectionPool.GetConnection(_connectionString);
+        }
 
         /// <summary>
         /// Initializes the library database.
@@ -85,28 +101,31 @@ namespace EnergonSoftware.BackpackPlanner
         /// <param name="dbName">Name of the database.</param>
         public async Task InitDatabaseAsync(ISQLitePlatform sqlitePlatform, string dbPath, string dbName)
         {
-            if(null != DbConnection || null != AsyncDbConnection) {
-                throw new InvalidOperationException("Database already initialized!");
+            if(null != _connectionPool) {
+                Debug.WriteLine("Connection pool already initialized!");
+                return;
             }
 
-            string combinedPath = Path.Combine(dbPath, dbName);
-            Debug.WriteLine($"Using database at {combinedPath}");
-            SQLiteConnectionString connectionString = new SQLiteConnectionString(combinedPath, true);
+            _connectionString = new SQLiteConnectionString(Path.Combine(dbPath, dbName), true);
+            _connectionPool = new SQLiteConnectionPool(sqlitePlatform);
 
-            DbConnection = new SQLiteConnectionWithLock(sqlitePlatform, connectionString);
-            AsyncDbConnection = new SQLiteAsyncConnection(() => DbConnection);
+            Debug.WriteLine($"Initializing database at {_connectionString.ConnectionString}...");
+            using(SQLiteConnectionWithLock dbConnection = GetDatabaseConnection()) {
+                SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
 
-            DatabaseVersion oldVersion = new DatabaseVersion();
-            var databaseVersionTableInfo = DbConnection.GetTableInfo("DatabaseVersion");
-            if(!databaseVersionTableInfo.Any()) {
-                Debug.WriteLine("Empty database!");
-                await DatabaseVersion.CreateTablesAsync(AsyncDbConnection).ConfigureAwait(false);
-            } else {
-                oldVersion = await DatabaseVersion.GetAsync(AsyncDbConnection).ConfigureAwait(false);
-                Debug.WriteLine($"Old database version: {oldVersion.Version}, current database version: {CurrentDatabaseVersion}");
+                DatabaseVersion oldVersion = new DatabaseVersion();
+
+                var databaseVersionTableInfo = dbConnection.GetTableInfo("DatabaseVersion");
+                if(!databaseVersionTableInfo.Any()) {
+                    Debug.WriteLine("Empty database!");
+                    await DatabaseVersion.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
+                } else {
+                    oldVersion = await DatabaseVersion.GetAsync(asyncDbConnection).ConfigureAwait(false);
+                    Debug.WriteLine($"Old database version: {oldVersion.Version}, current database version: {CurrentDatabaseVersion}");
+                }
+
+                await GearCache.InitDatabaseAsync(oldVersion.Version, CurrentDatabaseVersion).ConfigureAwait(false);
             }
-
-            await GearCache.InitDatabaseAsync(oldVersion.Version, CurrentDatabaseVersion).ConfigureAwait(false);
         }
 
         /// <summary>

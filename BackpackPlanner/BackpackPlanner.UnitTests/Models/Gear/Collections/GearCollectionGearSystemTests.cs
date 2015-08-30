@@ -14,15 +14,36 @@
    limitations under the License.
 */
 
+using System.Threading.Tasks;
+
 using EnergonSoftware.BackpackPlanner.Models.Gear.Collections;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using SQLite.Net.Async;
+
+using TypeMock.ArrangeActAssert;
+
 namespace BackpackPlanner.UnitTests.Models.Gear.Collections
 {
-    [TestClass]
+    [TestClass, Isolated]
     public class GearCollectionGearSystemTests
     {
+        [TestMethod]
+        public async Task GearCollectionGearSystem_CreateTablesAsync()
+        {
+            // Isolate
+            SQLiteAsyncConnection fakeAsyncDbConnection = Isolate.Fake.Instance<SQLiteAsyncConnection>(Members.ReturnRecursiveFakes);
+
+            // Arrange
+
+            // Act
+            await GearCollectionGearSystem.CreateTablesAsync(fakeAsyncDbConnection).ConfigureAwait(false);
+
+            // Assert
+            Isolate.Verify.WasCalledWithAnyArguments(() => fakeAsyncDbConnection.CreateTableAsync<GearCollectionGearSystem>());
+        }
+
         [TestMethod]
         public void GearCollectionGearSystem_GearCollectionId_Default()
         {

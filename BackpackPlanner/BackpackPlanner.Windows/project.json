@@ -2,9 +2,9 @@
   "dependencies": {
     "HockeySDK.Core": "2.2.2",
     "HockeySDK.WINRT": "2.2.2",
-    "Microsoft.ApplicationInsights": "1.0.0",
-    "Microsoft.ApplicationInsights.PersistenceChannel": "1.0.0",
-    "Microsoft.ApplicationInsights.WindowsApps": "1.0.0",
+    "Microsoft.ApplicationInsights": "1.2.0",
+    "Microsoft.ApplicationInsights.PersistenceChannel": "1.2.0",
+    "Microsoft.ApplicationInsights.WindowsApps": "1.1.0",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0",
     "SQLite.Net.Async-PCL": "3.0.5"
   },
