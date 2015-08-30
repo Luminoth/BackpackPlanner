@@ -17,6 +17,7 @@
 using System.Threading.Tasks;
 
 using SQLite.Net.Async;
+using SQLite.Net.Attributes;
 
 namespace EnergonSoftware.BackpackPlanner.Models
 {
@@ -54,6 +55,15 @@ namespace EnergonSoftware.BackpackPlanner.Models
         {
             return await asyncDbConnection.UpdateAsync(databaseVersion).ConfigureAwait(false);
         }
+
+        /// <summary>
+        /// Gets or sets the database version identifier.
+        /// </summary>
+        /// <value>
+        /// The database version identifier.
+        /// </value>
+        [PrimaryKey, AutoIncrement]
+        public int DatabaseVersionId { get; set; } = -1;
 
         /// <summary>
         /// Gets or sets the database version.

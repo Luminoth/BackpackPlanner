@@ -41,9 +41,10 @@ namespace EnergonSoftware.BackpackPlanner.Cache
         /// <summary>
         /// Initializes the gear state tables in the database.
         /// </summary>
+        /// <param name="asyncDbConnection">The asynchronous database connection.</param>
         /// <param name="oldVersion">The old database version.</param>
         /// <param name="newVersion">The new database version.</param>
-        public static async Task InitDatabaseAsync(int oldVersion, int newVersion)
+        public static async Task InitDatabaseAsync(SQLiteAsyncConnection asyncDbConnection, int oldVersion, int newVersion)
         {
             if(oldVersion >= newVersion) {
                 Debug.WriteLine("Database versions match, nothing to do for gear cache update...");
@@ -52,13 +53,9 @@ namespace EnergonSoftware.BackpackPlanner.Cache
 
             if(oldVersion < 1 && newVersion >= 1) {
                 Debug.WriteLine("Creating gear cache tables...");
-                using(SQLiteConnectionWithLock dbConnection = BackpackPlannerState.Instance.GetDatabaseConnection()) {
-                    SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
-
-                    await GearItem.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
-                    await GearSystem.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
-                    await GearCollection.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
-                }
+                await GearItem.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
+                await GearSystem.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
+                await GearCollection.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
             }
         }
 
@@ -94,17 +91,13 @@ namespace EnergonSoftware.BackpackPlanner.Cache
         /// <summary>
         /// Loads the gear state from the database.
         /// </summary>
-        public async Task LoadFromDeviceAsync()
+        /// <param name="asyncDbConnection">The asynchronous database connection.</param>
+        public async Task LoadFromDeviceAsync(SQLiteAsyncConnection asyncDbConnection)
         {
             Debug.WriteLine("Loading gear cache from device...");
-
-            using(SQLiteConnectionWithLock dbConnection = BackpackPlannerState.Instance.GetDatabaseConnection()) {
-                SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
-
-                await LoadGearItemsFromDeviceAsync(asyncDbConnection).ConfigureAwait(false);
-                await LoadGearSystemsFromDeviceAsync(asyncDbConnection).ConfigureAwait(false);
-                await LoadGearCollectionsFromDeviceAsync(asyncDbConnection).ConfigureAwait(false);
-            }
+            await LoadGearItemsFromDeviceAsync(asyncDbConnection).ConfigureAwait(false);
+            await LoadGearSystemsFromDeviceAsync(asyncDbConnection).ConfigureAwait(false);
+            await LoadGearCollectionsFromDeviceAsync(asyncDbConnection).ConfigureAwait(false);
         }
 
         private async Task LoadGearItemsFromDeviceAsync(SQLiteAsyncConnection asyncDbConnection)

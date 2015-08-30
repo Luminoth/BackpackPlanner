@@ -125,7 +125,7 @@ namespace EnergonSoftware.BackpackPlanner
 
                 var databaseVersionTableInfo = dbConnection.GetTableInfo("DatabaseVersion");
                 if(!databaseVersionTableInfo.Any()) {
-                    Debug.WriteLine("Empty database!");
+                    Debug.WriteLine("New database!");
                     await DatabaseVersion.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
                 } else {
                     oldVersion = await DatabaseVersion.GetAsync(asyncDbConnection).ConfigureAwait(false);
@@ -134,11 +134,11 @@ namespace EnergonSoftware.BackpackPlanner
 
                 // TODO: find a way to make this transactional
                 // so that we can roll it back on error and avoid updating the db version
-                /*await GearCache.InitDatabaseAsync(oldVersion.Version, newVersion.Version).ConfigureAwait(false);
-                await MealCache.InitDatabaseAsync(oldVersion.Version, newVersion.Version).ConfigureAwait(false);
-                await TripCache.InitDatabaseAsync(oldVersion.Version, newVersion.Version).ConfigureAwait(false);
+                await GearCache.InitDatabaseAsync(asyncDbConnection, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
+                await MealCache.InitDatabaseAsync(asyncDbConnection, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
+                await TripCache.InitDatabaseAsync(asyncDbConnection, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
 
-                await DatabaseVersion.UpdateAsync(asyncDbConnection, newVersion).ConfigureAwait(false);*/
+                await DatabaseVersion.UpdateAsync(asyncDbConnection, newVersion).ConfigureAwait(false);
             }
         }
 
@@ -148,9 +148,13 @@ namespace EnergonSoftware.BackpackPlanner
         public async Task LoadFromDeviceAsync()
         {
             Debug.WriteLine("Loading data from device...");
-            await _gearCache.LoadFromDeviceAsync().ConfigureAwait(false);
-            await _mealCache.LoadFromDeviceAsync().ConfigureAwait(false);
-            await _tripCache.LoadFromDeviceAsync().ConfigureAwait(false);
+            using(SQLiteConnectionWithLock dbConnection = GetDatabaseConnection()) {
+                SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
+
+                await _gearCache.LoadFromDeviceAsync(asyncDbConnection).ConfigureAwait(false);
+                await _mealCache.LoadFromDeviceAsync(asyncDbConnection).ConfigureAwait(false);
+                await _tripCache.LoadFromDeviceAsync(asyncDbConnection).ConfigureAwait(false);
+            }
         }
 
         private BackpackPlannerState()

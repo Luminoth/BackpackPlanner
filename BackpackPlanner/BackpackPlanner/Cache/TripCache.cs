@@ -37,9 +37,10 @@ namespace EnergonSoftware.BackpackPlanner.Cache
         /// <summary>
         /// Initializes the trip tables in the database.
         /// </summary>
+        /// <param name="asyncDbConnection">The asynchronous database connection.</param>
         /// <param name="oldVersion">The old database version.</param>
         /// <param name="newVersion">The new database version.</param>
-        public static async Task InitDatabaseAsync(int oldVersion, int newVersion)
+        public static async Task InitDatabaseAsync(SQLiteAsyncConnection asyncDbConnection, int oldVersion, int newVersion)
         {
             if(oldVersion >= newVersion) {
                 Debug.WriteLine("Database versions match, nothing to do for trip cache update...");
@@ -48,12 +49,8 @@ namespace EnergonSoftware.BackpackPlanner.Cache
 
             if(oldVersion < 2 && newVersion >= 2) {
                 Debug.WriteLine("Creating trip cache tables...");
-                using(SQLiteConnectionWithLock dbConnection = BackpackPlannerState.Instance.GetDatabaseConnection()) {
-                    SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
-
-                    await TripItinerary.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
-                    await TripPlan.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
-                }
+                await TripItinerary.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
+                await TripPlan.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
             }
         }
 
@@ -61,13 +58,10 @@ namespace EnergonSoftware.BackpackPlanner.Cache
         /// <summary>
         /// Loads the trip state from the database.
         /// </summary>
-        public async Task LoadFromDeviceAsync()
+        /// <param name="asyncDbConnection">The asynchronous database connection.</param>
+        public async Task LoadFromDeviceAsync(SQLiteAsyncConnection asyncDbConnection)
         {
             Debug.WriteLine("Loading trip cache from device...");
-
-            using(SQLiteConnectionWithLock dbConnection = BackpackPlannerState.Instance.GetDatabaseConnection()) {
-                SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
-            }
         }
 #endregion
     }

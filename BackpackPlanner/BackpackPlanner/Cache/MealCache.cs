@@ -36,9 +36,10 @@ namespace EnergonSoftware.BackpackPlanner.Cache
         /// <summary>
         /// Initializes the meal tables in the database.
         /// </summary>
+        /// <param name="asyncDbConnection">The asynchronous database connection.</param>
         /// <param name="oldVersion">The old database version.</param>
         /// <param name="newVersion">The new database version.</param>
-        public static async Task InitDatabaseAsync(int oldVersion, int newVersion)
+        public static async Task InitDatabaseAsync(SQLiteAsyncConnection asyncDbConnection, int oldVersion, int newVersion)
         {
             if(oldVersion >= newVersion) {
                 Debug.WriteLine("Database versions match, nothing to do for meal cache update...");
@@ -47,11 +48,7 @@ namespace EnergonSoftware.BackpackPlanner.Cache
 
             if(oldVersion < 2 && newVersion >= 2) {
                 Debug.WriteLine("Creating meal cache tables...");
-                using(SQLiteConnectionWithLock dbConnection = BackpackPlannerState.Instance.GetDatabaseConnection()) {
-                    SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
-
-                    await Meal.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
-                }
+                await Meal.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
             }
         }
 
@@ -59,13 +56,10 @@ namespace EnergonSoftware.BackpackPlanner.Cache
         /// <summary>
         /// Loads the meal state from the database.
         /// </summary>
-        public async Task LoadFromDeviceAsync()
+        /// <param name="asyncDbConnection">The asynchronous database connection.</param>
+        public async Task LoadFromDeviceAsync(SQLiteAsyncConnection asyncDbConnection)
         {
             Debug.WriteLine("Loading meal cache from device...");
-
-            using(SQLiteConnectionWithLock dbConnection = BackpackPlannerState.Instance.GetDatabaseConnection()) {
-                SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
-            }
         }
 #endregion
     }

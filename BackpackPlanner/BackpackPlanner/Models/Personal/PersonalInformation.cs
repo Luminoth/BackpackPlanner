@@ -40,6 +40,14 @@ namespace EnergonSoftware.BackpackPlanner.Models.Personal
         public string LastName { get; set; } = string.Empty;
 
         /// <summary>
+        /// Gets the user's full name.
+        /// </summary>
+        /// <value>
+        /// The user's full name.
+        /// </value>
+        public string FullName => "John Doe";//FirstName + " " + LastName;
+
+        /// <summary>
         /// Gets or sets the user's date of birth.
         /// </summary>
         /// <value>

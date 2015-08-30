@@ -3,42 +3,32 @@
     <group
         android:id="@+id/group_gear"
         android:checkableBehavior="single">
-        <item android:title="Gear">
-            <menu>
-                <item
-                    android:id="@+id/nav_gear_items_fragment"
-                    android:title="@string/title_gear_items"
-                    android:checked="true" />
-                <item
-                    android:id="@+id/nav_gear_systems_fragment"
-                    android:title="@string/title_gear_systems" />
-                <item
-                    android:id="@+id/nav_gear_collections_fragment"
-                    android:title="@string/title_gear_collections" />
-            </menu>
-        </item>
+            <item
+                android:id="@+id/nav_gear_items_fragment"
+                android:title="@string/title_gear_items"
+                android:checked="true" />
+            <item
+                android:id="@+id/nav_gear_systems_fragment"
+                android:title="@string/title_gear_systems" />
+            <item
+                android:id="@+id/nav_gear_collections_fragment"
+                android:title="@string/title_gear_collections" />
     </group>
     <group
         android:id="@+id/group_meals"
         android:checkableBehavior="single">
             <item
                 android:id="@+id/nav_meals_fragment"
-                android:title="@string/title_meals"
-                android:checked="true" />
+                android:title="@string/title_meals" />
     </group>
     <group
         android:id="@+id/group_trips"
         android:checkableBehavior="single">
-        <item android:title="Trips">
-            <menu>
-                <item
-                    android:id="@+id/nav_trip_itineraries_fragment"
-                    android:title="@string/title_trip_itineraries"
-                    android:checked="true" />
-                <item
-                    android:id="@+id/nav_trip_plans_fragment"
-                    android:title="@string/title_trip_plans" />
-            </menu>
-        </item>
+            <!--<item
+                android:id="@+id/nav_trip_itineraries_fragment"
+                android:title="@string/title_trip_itineraries" />-->
+            <item
+                android:id="@+id/nav_trip_plans_fragment"
+                android:title="@string/title_trip_plans" />
     </group>
 </menu>
