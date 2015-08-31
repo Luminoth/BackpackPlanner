@@ -19,7 +19,6 @@ using System.Threading.Tasks;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
 
 using SQLite.Net.Async;
-using SQLite.Net.Attributes;
 using SQLiteNetExtensions.Attributes;
 
 namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
@@ -55,20 +54,5 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
         /// </value>
         [ForeignKey(typeof(GearItem))]
         public int GearItemId { get; set; } = -1;
-
-        private int _amount = 1;
-
-        /// <summary>
-        /// Gets or sets the amount of the gear item in the trip plan.
-        /// </summary>
-        /// <value>
-        /// The amount of the gear item in the trip plan.
-        /// </value>
-        [NotNull]
-        public int Amount
-        {
-            get { return _amount; }
-            set { _amount = value < 1 ? 1 : value; }
-        }
     }
 }

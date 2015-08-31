@@ -87,51 +87,22 @@ namespace EnergonSoftware.BackpackPlanner.Cache
         /// </value>
         public int GearCollectionCount => _gearCollectionCache.Count;
 
-#region LoadFromDevice
-        /// <summary>
-        /// Loads the gear state from the database.
-        /// </summary>
-        /// <param name="asyncDbConnection">The asynchronous database connection.</param>
-        public async Task LoadFromDeviceAsync(SQLiteAsyncConnection asyncDbConnection)
-        {
-            Debug.WriteLine("Loading gear cache from device...");
-            await LoadGearItemsFromDeviceAsync(asyncDbConnection).ConfigureAwait(false);
-            await LoadGearSystemsFromDeviceAsync(asyncDbConnection).ConfigureAwait(false);
-            await LoadGearCollectionsFromDeviceAsync(asyncDbConnection).ConfigureAwait(false);
-        }
-
-        private async Task LoadGearItemsFromDeviceAsync(SQLiteAsyncConnection asyncDbConnection)
+#region Gear Items
+        public async Task LoadGearItemsAsync()
         {
             _gearItemCache.Clear();
 
-            var gearItems = await GearItem.GetGearItemsAsync(asyncDbConnection).ConfigureAwait(false);
-            foreach(GearItem gearItem in gearItems) {
-                await AddGearItemAsync(gearItem).ConfigureAwait(false);
+            Debug.WriteLine("Loading gear item cache...");
+            using(SQLiteConnectionWithLock dbConnection = BackpackPlannerState.Instance.GetDatabaseConnection()) {
+                SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
+
+                var gearItems = await GearItem.GetGearItemsAsync(asyncDbConnection).ConfigureAwait(false);
+                foreach(GearItem gearItem in gearItems) {
+                    await AddGearItemAsync(gearItem).ConfigureAwait(false);
+                }
             }
         }
 
-        private async Task LoadGearSystemsFromDeviceAsync(SQLiteAsyncConnection asyncDbConnection)
-        {
-            _gearSystemCache.Clear();
-
-            var gearSystems = await GearSystem.GetGearSystemsAsync(asyncDbConnection).ConfigureAwait(false);
-            foreach(GearSystem gearSystem in gearSystems) {
-                await AddGearSystemAsync(gearSystem).ConfigureAwait(false);
-            }
-        }
-
-        private async Task LoadGearCollectionsFromDeviceAsync(SQLiteAsyncConnection asyncDbConnection)
-        {
-            _gearCollectionCache.Clear();
-
-            var gearCollections = await GearCollection.GetGearCollectionsAsync(asyncDbConnection).ConfigureAwait(false);
-            foreach(GearCollection gearCollection in gearCollections) {
-                await AddGearCollectionAsync(gearCollection).ConfigureAwait(false);
-            }
-        }
-#endregion
-
-#region Gear Items
         /// <summary>
         /// Gets a gear item by identifier.
         /// </summary>
@@ -220,6 +191,21 @@ namespace EnergonSoftware.BackpackPlanner.Cache
 #endregion
 
 #region Gear Systems
+        public async Task LoadGearSystemsAsync()
+        {
+            _gearSystemCache.Clear();
+
+            Debug.WriteLine("Loading gear system cache...");
+            using(SQLiteConnectionWithLock dbConnection = BackpackPlannerState.Instance.GetDatabaseConnection()) {
+                SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
+
+                var gearSystems = await GearSystem.GetGearSystemsAsync(asyncDbConnection).ConfigureAwait(false);
+                foreach(GearSystem gearSystem in gearSystems) {
+                    await AddGearSystemAsync(gearSystem).ConfigureAwait(false);
+                }
+            }
+        }
+
         /// <summary>
         /// Gets a gear system by identifier.
         /// </summary>
@@ -308,6 +294,21 @@ namespace EnergonSoftware.BackpackPlanner.Cache
 #endregion
 
 #region Gear Collections
+        public async Task LoadGearCollectionsAsync()
+        {
+            _gearCollectionCache.Clear();
+
+            Debug.WriteLine("Loading gear collection cache...");
+            using(SQLiteConnectionWithLock dbConnection = BackpackPlannerState.Instance.GetDatabaseConnection()) {
+                SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
+
+                var gearCollections = await GearCollection.GetGearCollectionsAsync(asyncDbConnection).ConfigureAwait(false);
+                foreach(GearCollection gearCollection in gearCollections) {
+                    await AddGearCollectionAsync(gearCollection).ConfigureAwait(false);
+                }
+            }
+        }
+
         /// <summary>
         /// Gets a gear collection by identifier.
         /// </summary>

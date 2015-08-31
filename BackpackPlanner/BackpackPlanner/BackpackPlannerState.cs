@@ -43,7 +43,7 @@ namespace EnergonSoftware.BackpackPlanner
         /// <summary>
         /// The database version
         /// </summary>
-        public const int CurrentDatabaseVersion = 2;
+        public const int CurrentDatabaseVersion = 3;
 
         /// <summary>
         /// Gets the singleton instance.
@@ -72,17 +72,10 @@ namespace EnergonSoftware.BackpackPlanner
         private SQLiteConnectionString _connectionString;
         private SQLiteConnectionPool _connectionPool;
 
-        private readonly GearCache _gearCache = new GearCache();
-        private readonly MealCache _mealCache = new MealCache();
-        private readonly TripCache _tripCache = new TripCache();
-
         /// <summary>
         /// Gets a connection to the database.
         /// </summary>
         /// <returns>A connection to the database.</returns>
-        /// <remarks>
-        /// TODO: this needs to use a pool
-        /// </remarks>
         public SQLiteConnectionWithLock GetDatabaseConnection()
         {
             if(null == _connectionPool) {
@@ -139,21 +132,6 @@ namespace EnergonSoftware.BackpackPlanner
                 await TripCache.InitDatabaseAsync(asyncDbConnection, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
 
                 await DatabaseVersion.UpdateAsync(asyncDbConnection, newVersion).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary>
-        /// Loads the library state from the device.
-        /// </summary>
-        public async Task LoadFromDeviceAsync()
-        {
-            Debug.WriteLine("Loading data from device...");
-            using(SQLiteConnectionWithLock dbConnection = GetDatabaseConnection()) {
-                SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
-
-                await _gearCache.LoadFromDeviceAsync(asyncDbConnection).ConfigureAwait(false);
-                await _mealCache.LoadFromDeviceAsync(asyncDbConnection).ConfigureAwait(false);
-                await _tripCache.LoadFromDeviceAsync(asyncDbConnection).ConfigureAwait(false);
             }
         }
 

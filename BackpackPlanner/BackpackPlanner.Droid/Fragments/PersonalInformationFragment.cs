@@ -1,8 +1,8 @@
-﻿using Android.OS;
+using Android.OS;
 
-namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
+namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 {
-    public class GearItemsFragment : Android.Support.V4.App.Fragment
+    public class PersonalInformationFragment : Android.Support.V4.App.Fragment
     {
         public override void OnCreate(Bundle savedInstanceState)
         {

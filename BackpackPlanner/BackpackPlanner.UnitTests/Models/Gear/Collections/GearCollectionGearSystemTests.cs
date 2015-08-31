@@ -67,45 +67,5 @@ namespace BackpackPlanner.UnitTests.Models.Gear.Collections
             // Assert
             Assert.IsTrue(gearCollectionGearSystem.GearSystemId < 1);
         }
-
-#region Amount
-        [TestMethod]
-        public void GearCollectionGearSystem_Amount_Default()
-        {
-            // Arrange
-            GearCollectionGearSystem gearCollectionGearSystem = new GearCollectionGearSystem();
-
-            // Act
-
-            // Assert
-            Assert.AreEqual(1, gearCollectionGearSystem.Amount);
-        }
-
-        [TestMethod]
-        public void GearCollectionGearSystem_Amount_Negative()
-        {
-            // Arrange
-            GearCollectionGearSystem gearCollectionGearSystem = new GearCollectionGearSystem();
-
-            // Act
-            gearCollectionGearSystem.Amount = -1;
-
-            // Assert
-            Assert.AreEqual(1, gearCollectionGearSystem.Amount);
-        }
-
-        [TestMethod]
-        public void GearCollectionGearSystem_Amount_Zero()
-        {
-            // Arrange
-            GearCollectionGearSystem gearCollectionGearSystem = new GearCollectionGearSystem();
-
-            // Act
-            gearCollectionGearSystem.Amount = 0;
-
-            // Assert
-            Assert.AreEqual(1, gearCollectionGearSystem.Amount);
-        }
-#endregion
     }
 }

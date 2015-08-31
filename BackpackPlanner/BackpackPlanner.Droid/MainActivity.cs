@@ -11,6 +11,9 @@ using Android.Support.V7.App;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
+
+using EnergonSoftware.BackpackPlanner.Droid.Fragments;
+using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items;
 using EnergonSoftware.BackpackPlanner.Droid.Util;
 
 using SQLite.Net.Platform.XamarinAndroid;
@@ -28,23 +31,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid
         private DrawerLayout _drawerLayout;
         private DrawerToggle _drawerToggle;
         private NavigationView _navigation;
+        private TextView _navigationHeaderText;
 
-		protected async override void OnCreate(Bundle savedInstanceState)
-		{
-			base.OnCreate(savedInstanceState);
-
-			// Set our view from the "main" layout resource
-			SetContentView(Resource.Layout.Main);
-
-            InitHockeyApp();
-
-            await BackpackPlannerState.Instance.InitDatabaseAsync(new SQLitePlatformAndroid(),
-                System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), BackpackPlannerState.DatabaseName);
-
-            InitToolBar();
-            InitNavigation();
-            InitDrawer();
-		}
+        public void UpdateNavigationHeaderText()
+        {
+            _navigationHeaderText.Text = !string.IsNullOrWhiteSpace(BackpackPlannerState.Instance.PersonalInformation.FirstName)
+                ? BackpackPlannerState.Instance.PersonalInformation.FullName
+                : "Backpacking Planner";
+        }
 
 	    public override void OnPostCreate(Bundle savedInstanceState, PersistableBundle persistentState)
 	    {
@@ -66,6 +60,22 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
             return base.OnOptionsItemSelected(item);
 	    }
+
+		protected async override void OnCreate(Bundle savedInstanceState)
+		{
+			base.OnCreate(savedInstanceState);
+
+			SetContentView(Resource.Layout.activity_main);
+
+            InitHockeyApp();
+
+            await BackpackPlannerState.Instance.InitDatabaseAsync(new SQLitePlatformAndroid(),
+                System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), BackpackPlannerState.DatabaseName);
+
+            InitToolBar();
+            InitNavigation();
+            InitDrawer();
+		}
 
 	    private void InitHockeyApp()
         {
@@ -98,40 +108,60 @@ namespace EnergonSoftware.BackpackPlanner.Droid
         {
             _toolBar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(_toolBar);
-            SupportActionBar.Title = GetString(Resource.String.app_name);
         }
 
         private void InitDrawer()
         {
             _drawerLayout = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
 
-            _drawerToggle = new DrawerToggle(this, _drawerLayout, Resource.String.drawer_open, Resource.String.drawer_close);
+            _drawerToggle = new DrawerToggle(this, _drawerLayout, _toolBar, Resource.String.drawer_open, Resource.String.drawer_close);
+            _drawerToggle.SyncState();
             _drawerLayout.SetDrawerListener(_drawerToggle);
-
-            SupportActionBar.SetDisplayHomeAsUpEnabled(true);
-            SupportActionBar.SetHomeButtonEnabled(true);
         }
 
         private void InitNavigation()
         {
             _navigation = FindViewById<NavigationView>(Resource.Id.navigation);
             _navigation.NavigationItemSelected += (sender, args) => {
+                // this solves the problem of checking more than one item
+                // in the list across groups even when checkableBehavior is single on each group
+                // TODO: the problem with this solution is that it requires an update
+                // any time a new group is added to the menu, and that's maybe not so good
+                _navigation.Menu.SetGroupCheckable(Resource.Id.group_personal_information, (args.MenuItem.GroupId == Resource.Id.group_personal_information), true);
+                _navigation.Menu.SetGroupCheckable(Resource.Id.group_gear, (args.MenuItem.GroupId == Resource.Id.group_gear), true);
+                _navigation.Menu.SetGroupCheckable(Resource.Id.group_meals, (args.MenuItem.GroupId == Resource.Id.group_meals), true);
+                _navigation.Menu.SetGroupCheckable(Resource.Id.group_trips, (args.MenuItem.GroupId == Resource.Id.group_trips), true);
+                _navigation.Menu.SetGroupCheckable(Resource.Id.group_settings, (args.MenuItem.GroupId == Resource.Id.group_settings), true);
+
                 SelectDrawerItem(args.MenuItem);
             };
 
-            TextView navigationHeaderText = FindViewById<TextView>(Resource.Id.navigation_header_text);
-            navigationHeaderText.Text = BackpackPlannerState.Instance.PersonalInformation.FullName;
+            _navigationHeaderText = FindViewById<TextView>(Resource.Id.navigation_header_text);
+            UpdateNavigationHeaderText();
         }
 
         private void SelectDrawerItem(IMenuItem menuItem)
         {
-            Fragment fragment = null;
+            Android.Support.V4.App.Fragment fragment;
             switch(menuItem.ItemId)
             {
+            case Resource.Id.nav_personal_information_fragment:
+                fragment = new PersonalInformationFragment();
+                break;
+            case Resource.Id.nav_gear_items_fragment:
+                fragment = new GearItemsFragment();
+                break;
+            default:
+                fragment = null;
+                break;
+            }
+
+            if(null != fragment) {
+                SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_content, fragment).Commit();
             }
 
             menuItem.SetChecked(true);
-            //SetTitle(menuItem.Title);
+            Title = menuItem.TitleFormatted.ToString();
             _drawerLayout.CloseDrawers();
         }
 	}

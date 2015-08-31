@@ -14,6 +14,7 @@
    limitations under the License.
 */
 
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -52,15 +53,29 @@ namespace EnergonSoftware.BackpackPlanner.Cache
             }
         }
 
-#region LoadFromDevice
+        private readonly HashSet<Meal> _mealCache = new HashSet<Meal>();
+
         /// <summary>
-        /// Loads the meal state from the database.
+        /// Gets the meal count.
         /// </summary>
-        /// <param name="asyncDbConnection">The asynchronous database connection.</param>
-        public async Task LoadFromDeviceAsync(SQLiteAsyncConnection asyncDbConnection)
+        /// <value>
+        /// The meal count.
+        /// </value>
+        public int MealCount => _mealCache.Count;
+
+        public async Task LoadMealsAsync()
         {
-            Debug.WriteLine("Loading meal cache from device...");
+            _mealCache.Clear();
+
+            Debug.WriteLine("Loading meal cache...");
+            using(SQLiteConnectionWithLock dbConnection = BackpackPlannerState.Instance.GetDatabaseConnection()) {
+                SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
+
+                var meals = await Meal.GetMealsAsync(asyncDbConnection).ConfigureAwait(false);
+                foreach(Meal meal in meals) {
+                    //await AddMealAsync(meal).ConfigureAwait(false);
+                }
+            }
         }
-#endregion
     }
 }

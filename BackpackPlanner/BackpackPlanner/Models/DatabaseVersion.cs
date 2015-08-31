@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 
 using SQLite.Net.Async;
 using SQLite.Net.Attributes;
+using SQLiteNetExtensionsAsync.Extensions;
 
 namespace EnergonSoftware.BackpackPlanner.Models
 {
@@ -34,7 +35,8 @@ namespace EnergonSoftware.BackpackPlanner.Models
         {
             await asyncDbConnection.CreateTableAsync<DatabaseVersion>().ConfigureAwait(false);
 
-            await asyncDbConnection.InsertAsync(new DatabaseVersion { Version = BackpackPlannerState.CurrentDatabaseVersion }).ConfigureAwait(false);
+            // sets the version to -1 (we haven't built the database yet!)
+            await asyncDbConnection.InsertAsync(new DatabaseVersion()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -51,9 +53,9 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// </summary>
         /// <param name="asyncDbConnection">The asynchronous database connection.</param>
         /// <param name="databaseVersion">The current database version.</param>
-        public static async Task<int> UpdateAsync(SQLiteAsyncConnection asyncDbConnection, DatabaseVersion databaseVersion)
+        public static async Task UpdateAsync(SQLiteAsyncConnection asyncDbConnection, DatabaseVersion databaseVersion)
         {
-            return await asyncDbConnection.UpdateAsync(databaseVersion).ConfigureAwait(false);
+            await asyncDbConnection.UpdateWithChildrenAsync(databaseVersion).ConfigureAwait(false);
         }
 
         /// <summary>

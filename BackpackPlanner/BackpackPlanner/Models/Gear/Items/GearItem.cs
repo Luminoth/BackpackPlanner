@@ -24,6 +24,7 @@ using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
 using SQLite.Net.Async;
 using SQLite.Net.Attributes;
 using SQLiteNetExtensions.Attributes;
+using SQLiteNetExtensionsAsync.Extensions;
 
 namespace EnergonSoftware.BackpackPlanner.Models.Gear.Items
 {
@@ -41,21 +42,23 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Items
             await asyncDbConnection.CreateTableAsync<GearItem>().ConfigureAwait(false);
         }
 
-        public static async Task<List<GearItem>>  GetGearItemsAsync(SQLiteAsyncConnection asyncDbConnection)
+        public static async Task<List<GearItem>> GetGearItemsAsync(SQLiteAsyncConnection asyncDbConnection)
         {
-            return await asyncDbConnection.Table<GearItem>().ToListAsync().ConfigureAwait(false);
+            return await asyncDbConnection.GetAllWithChildrenAsync<GearItem>().ConfigureAwait(false);
         }
 
         public static async Task<GearItem> GetGearItemAsync(SQLiteAsyncConnection asyncDbConnection, int gearItemId)
         {
-            return await asyncDbConnection.GetAsync<GearItem>(gearItemId).ConfigureAwait(false);
+            return await asyncDbConnection.GetWithChildrenAsync<GearItem>(gearItemId).ConfigureAwait(false);
         }
 
-        public static async Task<int> SaveGearItemAsync(SQLiteAsyncConnection asyncDbConnection, GearItem gearItem)
+        public static async Task SaveGearItemAsync(SQLiteAsyncConnection asyncDbConnection, GearItem gearItem)
         {
-            return gearItem.GearItemId <= 0
-                ? await asyncDbConnection.InsertAsync(gearItem).ConfigureAwait(false)
-                : await asyncDbConnection.UpdateAsync(gearItem).ConfigureAwait(false);
+            if(gearItem.GearItemId <= 0) {
+                await asyncDbConnection.InsertWithChildrenAsync(gearItem).ConfigureAwait(false);
+            } else {
+                await asyncDbConnection.UpdateWithChildrenAsync(gearItem).ConfigureAwait(false);
+            }
         }
 
         public static async Task<int> DeleteGearItemAsync(SQLiteAsyncConnection asyncDbConnection, GearItem gearItem)
@@ -74,7 +77,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Items
         /// <value>
         /// The gear item identifier.
         /// </value>
-        [PrimaryKey, AutoIncrement]
+        [PrimaryKey, AutoIncrement, Column("_id")]
         public int GearItemId { get; set; } = -1;
 
         /// <summary>
@@ -188,13 +191,13 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Items
         [MaxLength(1024)]
         public string Note { get; set; } = string.Empty;
 
-        [ManyToMany(typeof(GearSystemGearItem))]
+        [ManyToMany(typeof(GearSystemGearItem), CascadeOperations = CascadeOperation.CascadeRead, ReadOnly = true)]
         public List<GearSystem> GearSystems { get; set; }
 
-        [ManyToMany(typeof(GearCollectionGearItem))]
+        [ManyToMany(typeof(GearCollectionGearItem), CascadeOperations = CascadeOperation.CascadeRead, ReadOnly = true)]
         public List<GearCollection> GearCollections { get; set; }
 
-        [ManyToMany(typeof(TripPlanGearItem))]
+        [ManyToMany(typeof(TripPlanGearItem), CascadeOperations = CascadeOperation.CascadeRead, ReadOnly = true)]
         public List<TripPlan> TripPlans { get; set; }
 
         public override bool Equals(object obj)

@@ -27,6 +27,7 @@ using EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries;
 using SQLite.Net.Async;
 using SQLite.Net.Attributes;
 using SQLiteNetExtensions.Attributes;
+using SQLiteNetExtensionsAsync.Extensions;
 
 namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
 {
@@ -48,6 +49,34 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
             await TripPlanGearItem.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
             await TripPlanMeal.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
         }
+        public static async Task<List<TripPlan>> GetTripPlansAsync(SQLiteAsyncConnection asyncDbConnection)
+        {
+            return await asyncDbConnection.GetAllWithChildrenAsync<TripPlan>().ConfigureAwait(false);
+        }
+
+        public static async Task<TripPlan> GetTripPlanAsync(SQLiteAsyncConnection asyncDbConnection, int tripPlanId)
+        {
+            return await asyncDbConnection.GetWithChildrenAsync<TripPlan>(tripPlanId).ConfigureAwait(false);
+        }
+
+        public static async Task SaveTripPlanAsync(SQLiteAsyncConnection asyncDbConnection, TripPlan tripPlan)
+        {
+            if(tripPlan.TripPlanId <= 0) {
+                await asyncDbConnection.InsertWithChildrenAsync(tripPlan).ConfigureAwait(false);
+            } else {
+                await asyncDbConnection.UpdateWithChildrenAsync(tripPlan).ConfigureAwait(false);
+            }
+        }
+
+        public static async Task<int> DeleteTripPlanAsync(SQLiteAsyncConnection asyncDbConnection, TripPlan tripPlan)
+        {
+            return await asyncDbConnection.DeleteAsync(tripPlan).ConfigureAwait(false);
+        }
+
+        public static async Task<int> DeleteAllTripPlansAsync(SQLiteAsyncConnection asyncDbConnection)
+        {
+            return await asyncDbConnection.DeleteAllAsync<TripPlan>().ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Gets or sets the trip plan identifier.
@@ -55,7 +84,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
         /// <value>
         /// The trip plan identifier.
         /// </value>
-        [PrimaryKey, AutoIncrement]
+        [PrimaryKey, AutoIncrement, Column("_id")]
         public int TripPlanId { get; set; } = -1;
 
         /// <summary>
@@ -107,7 +136,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
         /// <value>
         /// The gear collections contained in this plan.
         /// </value>
-        [ManyToMany(typeof(TripPlanGearCollection))]
+        [ManyToMany(typeof(TripPlanGearCollection), CascadeOperations = CascadeOperation.All)]
         public List<GearCollection> GearCollections { get; set; }
 
         /// <summary>
@@ -116,7 +145,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
         /// <value>
         /// The gear systems contained in this plan.
         /// </value>
-        [ManyToMany(typeof(TripPlanGearSystem))]
+        [ManyToMany(typeof(TripPlanGearSystem), CascadeOperations = CascadeOperation.All)]
         public List<GearSystem> GearSystems { get; set; }
 
         /// <summary>
@@ -125,7 +154,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
         /// <value>
         /// The gear items contained in this plan.
         /// </value>
-        [ManyToMany(typeof(TripPlanGearItem))]
+        [ManyToMany(typeof(TripPlanGearItem), CascadeOperations = CascadeOperation.All)]
         public List<GearItem> GearItems { get; set; }
 
         /// <summary>
@@ -134,7 +163,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
         /// <value>
         /// The meals contained in this plan.
         /// </value>
-        [ManyToMany(typeof(TripPlanMeal))]
+        [ManyToMany(typeof(TripPlanMeal), CascadeOperations = CascadeOperation.All)]
         public List<Meal> Meals { get; set; }
 
         /// <summary>

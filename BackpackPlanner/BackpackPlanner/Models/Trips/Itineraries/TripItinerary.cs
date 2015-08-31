@@ -14,11 +14,13 @@
    limitations under the License.
 */
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
-
+using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
 using SQLite.Net.Async;
 using SQLite.Net.Attributes;
-
+using SQLiteNetExtensions.Attributes;
+using SQLiteNetExtensionsAsync.Extensions;
 
 namespace EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries
 {
@@ -36,13 +38,42 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries
             await asyncDbConnection.CreateTableAsync<TripItinerary>().ConfigureAwait(false);
         }
 
+        public static async Task<List<TripItinerary>> GetTripItinerariesAsync(SQLiteAsyncConnection asyncDbConnection)
+        {
+            return await asyncDbConnection.GetAllWithChildrenAsync<TripItinerary>().ConfigureAwait(false);
+        }
+
+        public static async Task<TripItinerary> GetTripItineraryAsync(SQLiteAsyncConnection asyncDbConnection, int tripItineraryId)
+        {
+            return await asyncDbConnection.GetWithChildrenAsync<TripItinerary>(tripItineraryId).ConfigureAwait(false);
+        }
+
+        public static async Task SaveTripItineraryAsync(SQLiteAsyncConnection asyncDbConnection, TripItinerary tripItinerary)
+        {
+            if(tripItinerary.TripItineraryId <= 0) {
+                await asyncDbConnection.InsertWithChildrenAsync(tripItinerary).ConfigureAwait(false);
+            } else {
+                await asyncDbConnection.UpdateWithChildrenAsync(tripItinerary).ConfigureAwait(false);
+            }
+        }
+
+        public static async Task<int> DeleteTripItineraryAsync(SQLiteAsyncConnection asyncDbConnection, TripItinerary tripItinerary)
+        {
+            return await asyncDbConnection.DeleteAsync(tripItinerary).ConfigureAwait(false);
+        }
+
+        public static async Task<int> DeleteAllTripItinerariesAsync(SQLiteAsyncConnection asyncDbConnection)
+        {
+            return await asyncDbConnection.DeleteAllAsync<TripItinerary>().ConfigureAwait(false);
+        }
+
         /// <summary>
         /// Gets or sets the trip itinerary identifier.
         /// </summary>
         /// <value>
         /// The trip itinerary identifier.
         /// </value>
-        [PrimaryKey, AutoIncrement]
+        [PrimaryKey, AutoIncrement, Column("_id")]
         public int TripItineraryId { get; set; } = -1;
 
         /// <summary>
@@ -62,6 +93,9 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries
         /// </value>
         [MaxLength(1024)]
         public string Note { get; set; } = string.Empty;
+
+        [ManyToOne(CascadeOperations = CascadeOperation.CascadeRead, ReadOnly = true)]
+        public List<TripPlan> TripPlans { get; set; }
 
         public override bool Equals(object obj)
         {

@@ -5,6 +5,8 @@
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
 
+    <string name="title_personal_information">Personal Information</string>
+
     <string name="title_gear_items">Gear Items</string>
     <string name="title_gear_systems">Gear Systems</string>
     <string name="title_gear_collections">Gear Collections</string>
@@ -13,4 +15,7 @@
 
     <string name="title_trip_itineraries">Trip Itineraries</string>
     <string name="title_trip_plans">Trip Plans</string>
+
+    <string name="title_settings">Settings</string>
+    <string name="title_help">Help</string>
 </resources>

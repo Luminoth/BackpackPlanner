@@ -31,9 +31,6 @@ ng-md-icon {
 .mockup-sidenav-button {
   text-align: left; }
 
-.mockup-sidenav-divider {
-  background-color: #668000; }
-
 .mockup-add-button {
   position: fixed;
   bottom: 5%;
@@ -60,8 +57,3 @@ ng-md-icon {
   line-height: 30px; }
 
 /* TODO: this doesn't work... */
-md-radio-button {
-  white-space: nowrap; }
-
-label {
-  white-space: nowrap; }

@@ -15,6 +15,7 @@
 */
 
 using System;
+using System.Text;
 
 namespace EnergonSoftware.BackpackPlanner.Models.Personal
 {
@@ -45,7 +46,24 @@ namespace EnergonSoftware.BackpackPlanner.Models.Personal
         /// <value>
         /// The user's full name.
         /// </value>
-        public string FullName => "John Doe";//FirstName + " " + LastName;
+        public string FullName
+        {
+            get
+            {
+                StringBuilder fullNameBuilder = new StringBuilder();
+                if(!string.IsNullOrWhiteSpace(FirstName)) {
+                    fullNameBuilder.Append(FirstName);
+                }
+
+                if(!string.IsNullOrWhiteSpace(LastName)) {
+                    if(fullNameBuilder.Length > 0) {
+                        fullNameBuilder.Append(" ");
+                    }
+                    fullNameBuilder.Append(LastName);
+                }
+                return fullNameBuilder.ToString();
+            }
+        }
 
         /// <summary>
         /// Gets or sets the user's date of birth.

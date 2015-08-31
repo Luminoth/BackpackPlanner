@@ -1,6 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group
+        android:id="@+id/group_personal_information"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_personal_information_fragment"
+            android:title="@string/title_personal_information" />
+    </group>
+    <group
         android:id="@+id/group_gear"
         android:checkableBehavior="single">
             <item
@@ -30,5 +37,17 @@
             <item
                 android:id="@+id/nav_trip_plans_fragment"
                 android:title="@string/title_trip_plans" />
+    </group>
+    <group
+        android:id="@+id/group_settings"
+        android:checkableBehavior="single">
+            <item
+                android:id="@+id/nav_settings_fragment"
+                android:icon="@drawable/ic_settings"
+                android:title="@string/title_settings" />
+            <item
+                android:id="@+id/nav_help_fragment"
+                android:icon="@drawable/ic_help"
+                android:title="@string/title_help" />
     </group>
 </menu>

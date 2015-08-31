@@ -14,6 +14,7 @@
    limitations under the License.
 */
 
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -54,14 +55,56 @@ namespace EnergonSoftware.BackpackPlanner.Cache
             }
         }
 
-#region LoadFromDevice
+        private readonly HashSet<TripItinerary> _tripItineraryCache = new HashSet<TripItinerary>();
+        private readonly HashSet<TripPlan> _tripPlanCache = new HashSet<TripPlan>();
+
         /// <summary>
-        /// Loads the trip state from the database.
+        /// Gets the trip itinerary count.
         /// </summary>
-        /// <param name="asyncDbConnection">The asynchronous database connection.</param>
-        public async Task LoadFromDeviceAsync(SQLiteAsyncConnection asyncDbConnection)
+        /// <value>
+        /// The trip itinerary count.
+        /// </value>
+        public int TripItineraryCount => _tripItineraryCache.Count;
+
+        /// <summary>
+        /// Gets the trip plan count.
+        /// </summary>
+        /// <value>
+        /// The trip plan count.
+        /// </value>
+        public int TripPlanCount => _tripPlanCache.Count;
+
+#region Trip Itineraries
+        public async Task LoadTripItinerariesAsync()
         {
-            Debug.WriteLine("Loading trip cache from device...");
+            _tripItineraryCache.Clear();
+
+            Debug.WriteLine("Loading trip itinerary cache...");
+            using(SQLiteConnectionWithLock dbConnection = BackpackPlannerState.Instance.GetDatabaseConnection()) {
+                SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
+
+                var tripItineraries = await TripItinerary.GetTripItinerariesAsync(asyncDbConnection).ConfigureAwait(false);
+                foreach(TripItinerary tripItinerary in tripItineraries) {
+                    //await AddTripItineraryAsync(tripItinerary).ConfigureAwait(false);
+                }
+            }
+        }
+#endregion
+
+#region Trip Plans
+        public async Task LoadTripPlansAsync()
+        {
+            _tripPlanCache.Clear();
+
+            Debug.WriteLine("Loading trip plan cache...");
+            using(SQLiteConnectionWithLock dbConnection = BackpackPlannerState.Instance.GetDatabaseConnection()) {
+                SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
+
+                var tripPlans = await TripPlan.GetTripPlansAsync(asyncDbConnection).ConfigureAwait(false);
+                foreach(TripPlan tripPlan in tripPlans) {
+                    //await AddTripPlanAsync(tripPlan).ConfigureAwait(false);
+                }
+            }
         }
 #endregion
     }

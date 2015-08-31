@@ -3,6 +3,7 @@
 using Android.App;
 using Android.Support.V4.Widget;
 using Android.Support.V7.App;
+using Android.Support.V7.Widget;
 using Android.Views;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Util
@@ -16,8 +17,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
         public event EventHandler<DrawerToggleEventArgs> DrawerStateChangedEvent;
 #endregion
 
-        public DrawerToggle(Activity activity, DrawerLayout drawerLayout, int openDrawerContentDescRes, int closeDrawerContentDescRes)
-            : base(activity, drawerLayout, openDrawerContentDescRes, closeDrawerContentDescRes)
+        public DrawerToggle(Activity activity, DrawerLayout drawerLayout, Toolbar toolbar, int openDrawerContentDescRes, int closeDrawerContentDescRes)
+            : base(activity, drawerLayout, toolbar, openDrawerContentDescRes, closeDrawerContentDescRes)
         {
         }
 

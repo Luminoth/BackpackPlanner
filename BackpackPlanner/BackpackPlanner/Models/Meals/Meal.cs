@@ -22,6 +22,7 @@ using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
 using SQLite.Net.Async;
 using SQLite.Net.Attributes;
 using SQLiteNetExtensions.Attributes;
+using SQLiteNetExtensionsAsync.Extensions;
 
 namespace EnergonSoftware.BackpackPlanner.Models.Meals
 {
@@ -39,13 +40,42 @@ namespace EnergonSoftware.BackpackPlanner.Models.Meals
             await asyncDbConnection.CreateTableAsync<Meal>().ConfigureAwait(false);
         }
 
+        public static async Task<List<Meal>> GetMealsAsync(SQLiteAsyncConnection asyncDbConnection)
+        {
+            return await asyncDbConnection.GetAllWithChildrenAsync<Meal>().ConfigureAwait(false);
+        }
+
+        public static async Task<Meal> GetMealAsync(SQLiteAsyncConnection asyncDbConnection, int mealId)
+        {
+            return await asyncDbConnection.GetWithChildrenAsync<Meal>(mealId).ConfigureAwait(false);
+        }
+
+        public static async Task SaveMealsAsync(SQLiteAsyncConnection asyncDbConnection, Meal meal)
+        {
+            if(meal.MealId <= 0) {
+                await asyncDbConnection.InsertWithChildrenAsync(meal).ConfigureAwait(false);
+            } else {
+                await asyncDbConnection.UpdateWithChildrenAsync(meal).ConfigureAwait(false);
+            }
+        }
+
+        public static async Task<int> DeleteMealAsync(SQLiteAsyncConnection asyncDbConnection, Meal meal)
+        {
+            return await asyncDbConnection.DeleteAsync(meal).ConfigureAwait(false);
+        }
+
+        public static async Task<int> DeleteAllMealsAsync(SQLiteAsyncConnection asyncDbConnection)
+        {
+            return await asyncDbConnection.DeleteAllAsync<Meal>().ConfigureAwait(false);
+        }
+
         /// <summary>
         /// Gets or sets the meal identifier.
         /// </summary>
         /// <value>
         /// The meal identifier.
         /// </value>
-        [PrimaryKey, AutoIncrement]
+        [PrimaryKey, AutoIncrement, Column("_id")]
         public int MealId { get; set; } = -1;
 
         /// <summary>
@@ -176,7 +206,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Meals
         [MaxLength(1024)]
         public string Note { get; set; } = string.Empty;
 
-        [ManyToMany(typeof(TripPlanMeal))]
+        [ManyToMany(typeof(TripPlanMeal), CascadeOperations = CascadeOperation.CascadeRead, ReadOnly = true)]
         public List<TripPlan> TripPlans { get; set; }
 
         public override bool Equals(object obj)
