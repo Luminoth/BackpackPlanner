@@ -13,7 +13,12 @@ using Android.Views;
 using Android.Widget;
 
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
+using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items;
+using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems;
+using EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals;
+using EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries;
+using EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans;
 using EnergonSoftware.BackpackPlanner.Droid.Util;
 
 using SQLite.Net.Platform.XamarinAndroid;
@@ -123,16 +128,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid
         {
             _navigation = FindViewById<NavigationView>(Resource.Id.navigation);
             _navigation.NavigationItemSelected += (sender, args) => {
-                // this solves the problem of checking more than one item
-                // in the list across groups even when checkableBehavior is single on each group
-                // TODO: the problem with this solution is that it requires an update
-                // any time a new group is added to the menu, and that's maybe not so good
-                _navigation.Menu.SetGroupCheckable(Resource.Id.group_personal_information, (args.MenuItem.GroupId == Resource.Id.group_personal_information), true);
-                _navigation.Menu.SetGroupCheckable(Resource.Id.group_gear, (args.MenuItem.GroupId == Resource.Id.group_gear), true);
-                _navigation.Menu.SetGroupCheckable(Resource.Id.group_meals, (args.MenuItem.GroupId == Resource.Id.group_meals), true);
-                _navigation.Menu.SetGroupCheckable(Resource.Id.group_trips, (args.MenuItem.GroupId == Resource.Id.group_trips), true);
-                _navigation.Menu.SetGroupCheckable(Resource.Id.group_settings, (args.MenuItem.GroupId == Resource.Id.group_settings), true);
-
                 SelectDrawerItem(args.MenuItem);
             };
 
@@ -142,6 +137,16 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
         private void SelectDrawerItem(IMenuItem menuItem)
         {
+            // this solves the problem of checking more than one item
+            // in the list across groups even when checkableBehavior is single on each group
+            // TODO: the problem with this solution is that it requires an update
+            // any time a new group is added to the menu, and that's maybe not so good
+            _navigation.Menu.SetGroupCheckable(Resource.Id.group_personal_information, (menuItem.GroupId == Resource.Id.group_personal_information), true);
+            _navigation.Menu.SetGroupCheckable(Resource.Id.group_gear, (menuItem.GroupId == Resource.Id.group_gear), true);
+            _navigation.Menu.SetGroupCheckable(Resource.Id.group_meals, (menuItem.GroupId == Resource.Id.group_meals), true);
+            _navigation.Menu.SetGroupCheckable(Resource.Id.group_trips, (menuItem.GroupId == Resource.Id.group_trips), true);
+            _navigation.Menu.SetGroupCheckable(Resource.Id.group_settings, (menuItem.GroupId == Resource.Id.group_settings), true);
+
             Android.Support.V4.App.Fragment fragment;
             switch(menuItem.ItemId)
             {
@@ -150,6 +155,27 @@ namespace EnergonSoftware.BackpackPlanner.Droid
                 break;
             case Resource.Id.nav_gear_items_fragment:
                 fragment = new GearItemsFragment();
+                break;
+            case Resource.Id.nav_gear_systems_fragment:
+                fragment = new GearSystemsFragment();
+                break;
+            case Resource.Id.nav_gear_collections_fragment:
+                fragment = new GearCollectionsFragment();
+                break;
+            case Resource.Id.nav_meals_fragment:
+                fragment = new MealsFragment();
+                break;
+            case Resource.Id.nav_trip_itineraries_fragment:
+                fragment = new TripItinerariesFragment();
+                break;
+            case Resource.Id.nav_trip_plans_fragment:
+                fragment = new TripPlansFragment();
+                break;
+            case Resource.Id.nav_settings_fragment:
+                fragment = new SettingsFragment();
+                break;
+            case Resource.Id.nav_help_fragment:
+                fragment = new HelpFragment();
                 break;
             default:
                 fragment = null;

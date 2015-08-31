@@ -1800,8 +1800,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0b007a
 			public const int group_personal_information = 2131427450;
 			
-			// aapt resource value: 0x7f0b0084
-			public const int group_settings = 2131427460;
+			// aapt resource value: 0x7f0b0085
+			public const int group_settings = 2131427461;
 			
 			// aapt resource value: 0x7f0b0082
 			public const int group_trips = 2131427458;
@@ -1860,8 +1860,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0b007e
 			public const int nav_gear_systems_fragment = 2131427454;
 			
-			// aapt resource value: 0x7f0b0086
-			public const int nav_help_fragment = 2131427462;
+			// aapt resource value: 0x7f0b0087
+			public const int nav_help_fragment = 2131427463;
 			
 			// aapt resource value: 0x7f0b0081
 			public const int nav_meals_fragment = 2131427457;
@@ -1869,11 +1869,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0b007b
 			public const int nav_personal_information_fragment = 2131427451;
 			
-			// aapt resource value: 0x7f0b0085
-			public const int nav_settings_fragment = 2131427461;
+			// aapt resource value: 0x7f0b0086
+			public const int nav_settings_fragment = 2131427462;
 			
 			// aapt resource value: 0x7f0b0083
-			public const int nav_trip_plans_fragment = 2131427459;
+			public const int nav_trip_itineraries_fragment = 2131427459;
+			
+			// aapt resource value: 0x7f0b0084
+			public const int nav_trip_plans_fragment = 2131427460;
 			
 			// aapt resource value: 0x7f0b0069
 			public const int navigation = 2131427433;
@@ -2178,64 +2181,85 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			public const int design_navigation_menu = 2130903070;
 			
 			// aapt resource value: 0x7f03001f
-			public const int fragment_gear_items = 2130903071;
+			public const int fragment_gear_collections = 2130903071;
 			
 			// aapt resource value: 0x7f030020
-			public const int fragment_personal_information = 2130903072;
+			public const int fragment_gear_items = 2130903072;
 			
 			// aapt resource value: 0x7f030021
-			public const int layout_snackbar = 2130903073;
+			public const int fragment_gear_systems = 2130903073;
 			
 			// aapt resource value: 0x7f030022
-			public const int layout_snackbar_include = 2130903074;
+			public const int fragment_help = 2130903074;
 			
 			// aapt resource value: 0x7f030023
-			public const int layout_tab_icon = 2130903075;
+			public const int fragment_meals = 2130903075;
 			
 			// aapt resource value: 0x7f030024
-			public const int layout_tab_text = 2130903076;
+			public const int fragment_personal_information = 2130903076;
 			
 			// aapt resource value: 0x7f030025
-			public const int nav_header = 2130903077;
+			public const int fragment_settings = 2130903077;
 			
 			// aapt resource value: 0x7f030026
-			public const int notification_media_action = 2130903078;
+			public const int fragment_trip_itineraries = 2130903078;
 			
 			// aapt resource value: 0x7f030027
-			public const int notification_media_cancel_action = 2130903079;
+			public const int fragment_trip_plans = 2130903079;
 			
 			// aapt resource value: 0x7f030028
-			public const int notification_template_big_media = 2130903080;
+			public const int layout_snackbar = 2130903080;
 			
 			// aapt resource value: 0x7f030029
-			public const int notification_template_big_media_narrow = 2130903081;
+			public const int layout_snackbar_include = 2130903081;
 			
 			// aapt resource value: 0x7f03002a
-			public const int notification_template_lines = 2130903082;
+			public const int layout_tab_icon = 2130903082;
 			
 			// aapt resource value: 0x7f03002b
-			public const int notification_template_media = 2130903083;
+			public const int layout_tab_text = 2130903083;
 			
 			// aapt resource value: 0x7f03002c
-			public const int notification_template_part_chronometer = 2130903084;
+			public const int nav_header = 2130903084;
 			
 			// aapt resource value: 0x7f03002d
-			public const int notification_template_part_time = 2130903085;
+			public const int notification_media_action = 2130903085;
 			
 			// aapt resource value: 0x7f03002e
-			public const int select_dialog_item_material = 2130903086;
+			public const int notification_media_cancel_action = 2130903086;
 			
 			// aapt resource value: 0x7f03002f
-			public const int select_dialog_multichoice_material = 2130903087;
+			public const int notification_template_big_media = 2130903087;
 			
 			// aapt resource value: 0x7f030030
-			public const int select_dialog_singlechoice_material = 2130903088;
+			public const int notification_template_big_media_narrow = 2130903088;
 			
 			// aapt resource value: 0x7f030031
-			public const int support_simple_spinner_dropdown_item = 2130903089;
+			public const int notification_template_lines = 2130903089;
 			
 			// aapt resource value: 0x7f030032
-			public const int toolbar = 2130903090;
+			public const int notification_template_media = 2130903090;
+			
+			// aapt resource value: 0x7f030033
+			public const int notification_template_part_chronometer = 2130903091;
+			
+			// aapt resource value: 0x7f030034
+			public const int notification_template_part_time = 2130903092;
+			
+			// aapt resource value: 0x7f030035
+			public const int select_dialog_item_material = 2130903093;
+			
+			// aapt resource value: 0x7f030036
+			public const int select_dialog_multichoice_material = 2130903094;
+			
+			// aapt resource value: 0x7f030037
+			public const int select_dialog_singlechoice_material = 2130903095;
+			
+			// aapt resource value: 0x7f030038
+			public const int support_simple_spinner_dropdown_item = 2130903096;
+			
+			// aapt resource value: 0x7f030039
+			public const int toolbar = 2130903097;
 			
 			static Layout()
 			{
