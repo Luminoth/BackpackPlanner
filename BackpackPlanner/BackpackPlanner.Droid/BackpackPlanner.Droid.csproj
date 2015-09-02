@@ -116,6 +116,8 @@
     <Compile Include="Fragments\SettingsFragment.cs" />
     <Compile Include="Fragments\Trips\Itineraries\TripItinerariesFragment.cs" />
     <Compile Include="Fragments\Trips\Plans\TripPlansFragment.cs" />
+    <Compile Include="SettingsActivity.cs" />
+    <Compile Include="Util\AppCompatPreferenceActivity.cs" />
     <Compile Include="Util\DrawerToggle.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Fragments\Gear\Items\GearItemsFragment.cs" />
@@ -237,6 +239,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\xml\settings.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\values\array.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>

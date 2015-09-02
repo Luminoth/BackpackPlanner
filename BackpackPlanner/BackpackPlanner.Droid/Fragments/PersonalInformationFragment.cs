@@ -9,6 +9,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
     public class PersonalInformationFragment : Android.Support.V4.App.Fragment
     {
         EditText _editFirstName, _editLastName;
+        Button _buttonSave;
 
         public override void OnCreate(Bundle savedInstanceState)
         {
@@ -44,6 +45,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
             _editLastName = view.FindViewById<EditText>(Resource.Id.last_name);
             _editLastName.Text = personalInformation.LastName;
+
+            _buttonSave = view.FindViewById<Button>(Resource.Id.button_save_personal_information);
         }
     }
 }

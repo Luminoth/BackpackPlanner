@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Android.App;
 using Android.Content.Res;
 using Android.OS;
-using Android.Preferences;
 using Android.Runtime;
 using Android.Support.Design.Widget;
 using Android.Support.V4.Widget;
@@ -23,6 +22,8 @@ using EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans;
 using EnergonSoftware.BackpackPlanner.Droid.Util;
 
 using SQLite.Net.Platform.XamarinAndroid;
+
+// nav drawer checked state bug: https://code.google.com/p/android/issues/detail?id=175224 and http://stackoverflow.com/questions/30592080/save-state-on-navigationview
 
 namespace EnergonSoftware.BackpackPlanner.Droid
 {
@@ -46,6 +47,22 @@ namespace EnergonSoftware.BackpackPlanner.Droid
                 : "Backpacking Planner";
         }
 
+		protected async override void OnCreate(Bundle savedInstanceState)
+		{
+			base.OnCreate(savedInstanceState);
+
+			SetContentView(Resource.Layout.activity_main);
+
+            InitHockeyApp();
+
+            await BackpackPlannerState.Instance.InitDatabaseAsync(new SQLitePlatformAndroid(),
+                System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), BackpackPlannerState.DatabaseName);
+
+            InitToolBar();
+            InitNavigation();
+            InitDrawer();
+		}
+
 	    public override void OnPostCreate(Bundle savedInstanceState, PersistableBundle persistentState)
 	    {
 	        base.OnPostCreate(savedInstanceState, persistentState);
@@ -66,22 +83,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
             return base.OnOptionsItemSelected(item);
 	    }
-
-		protected async override void OnCreate(Bundle savedInstanceState)
-		{
-			base.OnCreate(savedInstanceState);
-
-			SetContentView(Resource.Layout.activity_main);
-
-            InitHockeyApp();
-
-            await BackpackPlannerState.Instance.InitDatabaseAsync(new SQLitePlatformAndroid(),
-                System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), BackpackPlannerState.DatabaseName);
-
-            InitToolBar();
-            InitNavigation();
-            InitDrawer();
-		}
 
 	    private void InitHockeyApp()
         {
@@ -173,8 +174,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid
                 fragment = new TripPlansFragment();
                 break;
             case Resource.Id.nav_settings_fragment:
-                //SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_content, new SettingsFragment()).Commit();
-                break;
+                /*SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_content, new SettingsFragment()).Commit();
+                break;*/
+                StartActivity(typeof(SettingsActivity));
+                return;
             case Resource.Id.nav_help_fragment:
                 fragment = new HelpFragment();
                 break;
