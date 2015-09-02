@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Android.App;
 using Android.Content.Res;
 using Android.OS;
+using Android.Preferences;
 using Android.Runtime;
 using Android.Support.Design.Widget;
 using Android.Support.V4.Widget;
@@ -147,7 +148,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             _navigation.Menu.SetGroupCheckable(Resource.Id.group_trips, (menuItem.GroupId == Resource.Id.group_trips), true);
             _navigation.Menu.SetGroupCheckable(Resource.Id.group_settings, (menuItem.GroupId == Resource.Id.group_settings), true);
 
-            Android.Support.V4.App.Fragment fragment;
+            Android.Support.V4.App.Fragment fragment = null;
             switch(menuItem.ItemId)
             {
             case Resource.Id.nav_personal_information_fragment:
@@ -172,7 +173,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
                 fragment = new TripPlansFragment();
                 break;
             case Resource.Id.nav_settings_fragment:
-                fragment = new SettingsFragment();
+                //SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_content, new SettingsFragment()).Commit();
                 break;
             case Resource.Id.nav_help_fragment:
                 fragment = new HelpFragment();

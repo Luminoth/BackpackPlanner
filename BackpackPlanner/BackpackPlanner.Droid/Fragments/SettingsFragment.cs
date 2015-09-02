@@ -1,13 +1,15 @@
 using Android.OS;
-using Android.Views;
+using Android.Preferences;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 {
-    public class SettingsFragment : Android.Support.V4.App.Fragment
+    public class SettingsFragment : PreferenceFragment
     {
-        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        public override void OnCreate(Bundle savedInstanceState)
         {
-            return inflater.Inflate(Resource.Layout.fragment_settings, container, false);
+            base.OnCreate(savedInstanceState);
+
+            AddPreferencesFromResource(Resource.Xml.settings);
         }
     }
 }
