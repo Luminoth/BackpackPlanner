@@ -6,6 +6,7 @@ using EnergonSoftware.BackpackPlanner.Models.Personal;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 {
+    // TODO: move this into the settings page
     public class PersonalInformationFragment : Android.Support.V4.App.Fragment
     {
         EditText _editFirstName, _editLastName;

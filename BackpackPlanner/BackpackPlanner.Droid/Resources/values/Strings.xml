@@ -47,4 +47,6 @@
 
     <string name="label_trip_plans">What is a trip plan?</string>
     <string name="label_no_trip_plans">You have no trip plans! Try adding one!</string>
+
+    <string name="label_feedback">Feedback</string>
 </resources>
