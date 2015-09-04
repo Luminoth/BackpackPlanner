@@ -1,3 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <resources>
+    <string-array name="unit_system_entries">
+        <item>Metric</item>
+        <item>United States</item>
+    </string-array>
+    <string-array name="unit_system_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="currency_entries">
+        <item>United States Dollar</item>
+    </string-array>
+    <string-array name="currency_values">
+        <item>0</item>
+    </string-array>
 </resources>

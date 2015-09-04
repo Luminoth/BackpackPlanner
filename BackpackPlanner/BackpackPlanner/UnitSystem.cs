@@ -24,11 +24,11 @@ namespace EnergonSoftware.BackpackPlanner
         /// <summary>
         /// The metric system
         /// </summary>
-        Metric,
+        Metric = 0,
 
         /// <summary>
         /// The united states system
         /// </summary>
-        UnitedStates
+        UnitedStates = 1
     }
 }

@@ -9,7 +9,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
     // TODO: move this into the settings page
     public class PersonalInformationFragment : Android.Support.V4.App.Fragment
     {
-        EditText _editFirstName, _editLastName;
+        EditText _editName;
         Button _buttonSave;
 
         public override void OnCreate(Bundle savedInstanceState)
@@ -21,12 +21,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             ISharedPreferences preferences = Activity.GetSharedPreferences("PersonalInformation", FileCreationMode.Private);
             ISharedPreferencesEditor preferencesEditor = preferences.Edit();
 
-            if(!preferences.Contains("FirstName")) {
-                preferencesEditor.PutString("FirstName", personalInformation.FirstName);
-            }
-
-            if(!preferences.Contains("LastName")) {
-                preferencesEditor.PutString("LastName", personalInformation.LastName);
+            if(!preferences.Contains("Name")) {
+                preferencesEditor.PutString("Name", personalInformation.Name);
             }
         }
 
@@ -41,11 +37,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
             PersonalInformation personalInformation = BackpackPlannerState.Instance.PersonalInformation;
 
-            _editFirstName = view.FindViewById<EditText>(Resource.Id.first_name);
-            _editFirstName.Text = personalInformation.FirstName;
-
-            _editLastName = view.FindViewById<EditText>(Resource.Id.last_name);
-            _editLastName.Text = personalInformation.LastName;
+            _editName = view.FindViewById<EditText>(Resource.Id.name);
+            _editName.Text = personalInformation.Name;
 
             _buttonSave = view.FindViewById<Button>(Resource.Id.button_save_personal_information);
         }

@@ -25,45 +25,12 @@ namespace EnergonSoftware.BackpackPlanner.Models.Personal
     public sealed class PersonalInformation
     {
         /// <summary>
-        /// Gets or sets the user's first name.
+        /// Gets or sets the user's name.
         /// </summary>
         /// <value>
-        /// The user's first name.
+        /// The user's name.
         /// </value>
-        public string FirstName { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Gets or sets the user's last name.
-        /// </summary>
-        /// <value>
-        /// The user's last name.
-        /// </value>
-        public string LastName { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Gets the user's full name.
-        /// </summary>
-        /// <value>
-        /// The user's full name.
-        /// </value>
-        public string FullName
-        {
-            get
-            {
-                StringBuilder fullNameBuilder = new StringBuilder();
-                if(!string.IsNullOrWhiteSpace(FirstName)) {
-                    fullNameBuilder.Append(FirstName);
-                }
-
-                if(!string.IsNullOrWhiteSpace(LastName)) {
-                    if(fullNameBuilder.Length > 0) {
-                        fullNameBuilder.Append(" ");
-                    }
-                    fullNameBuilder.Append(LastName);
-                }
-                return fullNameBuilder.ToString();
-            }
-        }
+        public string Name { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the user's date of birth.

@@ -42,8 +42,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
         public void UpdateNavigationHeaderText()
         {
-            _navigationHeaderText.Text = !string.IsNullOrWhiteSpace(BackpackPlannerState.Instance.PersonalInformation.FirstName)
-                ? BackpackPlannerState.Instance.PersonalInformation.FullName
+            _navigationHeaderText.Text = !string.IsNullOrWhiteSpace(BackpackPlannerState.Instance.PersonalInformation.Name)
+                ? BackpackPlannerState.Instance.PersonalInformation.Name
                 : "Backpacking Planner";
         }
 
@@ -94,6 +94,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             // Register to with the Update Manager
             HockeyApp.UpdateManager.Register(this, HockeyAppAppId);
 
+            // Register the Feedback Manager
+            HockeyApp.FeedbackManager.Register(this, HockeyAppAppId);
+
             // Initialize the Trace Writer
             HockeyApp.TraceWriter.Initialize();
 
@@ -143,7 +146,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             // in the list across groups even when checkableBehavior is single on each group
             // TODO: the problem with this solution is that it requires an update
             // any time a new group is added to the menu, and that's maybe not so good
-            _navigation.Menu.SetGroupCheckable(Resource.Id.group_personal_information, (menuItem.GroupId == Resource.Id.group_personal_information), true);
+            //_navigation.Menu.SetGroupCheckable(Resource.Id.group_personal_information, (menuItem.GroupId == Resource.Id.group_personal_information), true);
             _navigation.Menu.SetGroupCheckable(Resource.Id.group_gear, (menuItem.GroupId == Resource.Id.group_gear), true);
             _navigation.Menu.SetGroupCheckable(Resource.Id.group_meals, (menuItem.GroupId == Resource.Id.group_meals), true);
             _navigation.Menu.SetGroupCheckable(Resource.Id.group_trips, (menuItem.GroupId == Resource.Id.group_trips), true);
@@ -152,9 +155,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             Android.Support.V4.App.Fragment fragment = null;
             switch(menuItem.ItemId)
             {
-            case Resource.Id.nav_personal_information_fragment:
+            /*case Resource.Id.nav_personal_information_fragment:
                 fragment = new PersonalInformationFragment();
-                break;
+                break;*/
             case Resource.Id.nav_gear_items_fragment:
                 fragment = new GearItemsFragment();
                 break;
@@ -174,7 +177,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
                 fragment = new TripPlansFragment();
                 break;
             case Resource.Id.nav_settings_fragment:
-                /*SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_content, new SettingsFragment()).Commit();
+                /*fragment = new SettingsFragment();
                 break;*/
                 StartActivity(typeof(SettingsActivity));
                 return;

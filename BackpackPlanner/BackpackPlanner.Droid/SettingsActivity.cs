@@ -1,12 +1,14 @@
 using Android.App;
+using Android.Content;
 using Android.OS;
+using Android.Views;
+using Android.Widget;
 
 using EnergonSoftware.BackpackPlanner.Droid.Util;
+using EnergonSoftware.BackpackPlanner.Models.Personal;
 
 // http://stackoverflow.com/questions/30114730/how-to-use-appcompatpreferenceactivity
-// http://stackoverflow.com/questions/26439139/getactionbar-returns-null-in-preferenceactivity-appcompat-v7-21
-// http://stackoverflow.com/questions/17849193/how-to-add-action-bar-from-support-library-into-preferenceactivity
-// https://code.google.com/p/android/issues/detail?id=78819
+// http://developer.android.com/guide/topics/ui/settings.html
 
 namespace EnergonSoftware.BackpackPlanner.Droid
 {
@@ -19,7 +21,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid
         {
             base.OnCreate(savedInstanceState);
 
-            // TODO: this causes a crash
             //InitToolBar();
 
             AddPreferencesFromResource(Resource.Xml.settings);
@@ -27,7 +28,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
         private void InitToolBar()
         {
-            _toolBar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
+            ViewGroup rootViewGroup = (ViewGroup)FindViewById(Android.Resource.Id.List).Parent.Parent.Parent;
+            _toolBar = (Android.Support.V7.Widget.Toolbar)LayoutInflater.From(this).Inflate(Resource.Layout.toolbar, rootViewGroup, false);
+            rootViewGroup.AddView(_toolBar, 0);
+
             SetSupportActionBar(_toolBar);
         }
     }

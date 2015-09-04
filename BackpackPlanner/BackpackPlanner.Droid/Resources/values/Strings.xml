@@ -20,11 +20,10 @@
     <string name="title_trip_plans">Trip Plans</string>
 
     <string name="title_settings">Settings</string>
-    <string name="title_help">Help</string>
+    <string name="title_help">Help &amp; feedback</string>
 
     <string name="label_personal_information">What is this used for?</string>
-    <string name="label_first_name">First Name</string>
-    <string name="label_last_name">Last Name</string>
+    <string name="label_name">Name</string>
     <string name="label_birthdate">Date of Birth</string>
     <string name="label_sex">Sex</string>
     <string name="label_height">Height</string>
@@ -47,6 +46,12 @@
 
     <string name="label_trip_plans">What is a trip plan?</string>
     <string name="label_no_trip_plans">You have no trip plans! Try adding one!</string>
+
+    <string name="label_unit_system">Unit System</string>
+    <string name="summary_unit_system">Summary of the Unit System here</string>
+    <string name="label_currency">Currency</string>
+    <string name="summary_currency">Summary of the Currency here</string>
+    <string name="summary_name">Summary of the Name here</string>
 
     <string name="label_feedback">Feedback</string>
 </resources>

@@ -24,6 +24,6 @@ namespace EnergonSoftware.BackpackPlanner
         /// <summary>
         /// The united states dollar
         /// </summary>
-        UnitedStatesDollar
+        UnitedStatesDollar = 0
     }
 }
