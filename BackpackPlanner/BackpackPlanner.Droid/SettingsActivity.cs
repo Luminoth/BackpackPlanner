@@ -13,7 +13,7 @@ using EnergonSoftware.BackpackPlanner.Models.Personal;
 namespace EnergonSoftware.BackpackPlanner.Droid
 {
     [Activity(Label = "@string/title_settings")]
-    public class SettingsActivity : AppCompatPreferenceActivity
+    public class SettingsActivity : AppCompatPreferenceActivity, ISharedPreferencesOnSharedPreferenceChangeListener
     {
         private Android.Support.V7.Widget.Toolbar _toolBar;
 
@@ -21,9 +21,23 @@ namespace EnergonSoftware.BackpackPlanner.Droid
         {
             base.OnCreate(savedInstanceState);
 
-            //InitToolBar();
-
             AddPreferencesFromResource(Resource.Xml.settings);
+
+            //InitToolBar();
+        }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+
+            PreferenceScreen.SharedPreferences.RegisterOnSharedPreferenceChangeListener(this);
+        }
+
+        protected override void OnPause()
+        {
+            base.OnPause();
+
+            PreferenceScreen.SharedPreferences.UnregisterOnSharedPreferenceChangeListener(this);
         }
 
         private void InitToolBar()
@@ -33,6 +47,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             rootViewGroup.AddView(_toolBar, 0);
 
             SetSupportActionBar(_toolBar);
+        }
+
+        public void OnSharedPreferenceChanged(ISharedPreferences sharedPreferences, string key)
+        {
         }
     }
 }

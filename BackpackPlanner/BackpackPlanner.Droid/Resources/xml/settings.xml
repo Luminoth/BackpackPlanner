@@ -1,23 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
-    <PreferenceCategory
-        android:title="@string/title_personal_information">
+    <PreferenceScreen
+        android:key="personalInformation"
+        android:title="@string/title_personal_information"
+        android:persistent="false">
         <EditTextPreference android:title="@string/label_name"
             android:key="name"
             android:summary="@string/summary_name" />
-    </PreferenceCategory>
+    </PreferenceScreen>
     <ListPreference
         android:title="@string/label_unit_system"
         android:summary="@string/summary_unit_system"
         android:key="unitSystem"
-        android:defaultValue="0"
         android:entries="@array/unit_system_entries"
-        android:entryValues="@array/unit_system_values" />
+        android:entryValues="@array/unit_system_values"
+        android:defaultValue="0" />
     <ListPreference
         android:title="@string/label_currency"
         android:summary="@string/summary_currency"
         android:key="currency"
-        android:defaultValue="0"
         android:entries="@array/currency_entries"
-        android:entryValues="@array/currency_values" />
+        android:entryValues="@array/currency_values"
+        android:defaultValue="0" />
 </PreferenceScreen>

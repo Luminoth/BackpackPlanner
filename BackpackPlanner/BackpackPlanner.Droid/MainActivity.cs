@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Android.App;
 using Android.Content.Res;
 using Android.OS;
+using Android.Preferences;
 using Android.Runtime;
 using Android.Support.Design.Widget;
 using Android.Support.V4.Widget;
@@ -28,6 +29,7 @@ using SQLite.Net.Platform.XamarinAndroid;
 namespace EnergonSoftware.BackpackPlanner.Droid
 {
 	[Activity(Label = "@string/app_name", MainLauncher = true, Icon = "@drawable/icon")]
+    [MetaData("com.google.android.gms.version", Value = "@integer/google_play_services_version")]
 	public class MainActivity : AppCompatActivity
 	{
         public const string LogTag = "BackpackPlanner.Droid";
@@ -55,23 +57,29 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
             InitHockeyApp();
 
-            await BackpackPlannerState.Instance.InitDatabaseAsync(new SQLitePlatformAndroid(),
-                System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), BackpackPlannerState.DatabaseName);
-
             InitToolBar();
             InitNavigation();
             InitDrawer();
+
+            await BackpackPlannerState.Instance.InitDatabaseAsync(new SQLitePlatformAndroid(),
+                System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), BackpackPlannerState.DatabaseName);
+
+            PreferenceManager.SetDefaultValues(this, Resource.Xml.settings, false);
+
+            _navigation.Menu.PerformIdentifierAction(Resource.Id.nav_gear_items_fragment, 0);
 		}
 
 	    public override void OnPostCreate(Bundle savedInstanceState, PersistableBundle persistentState)
 	    {
 	        base.OnPostCreate(savedInstanceState, persistentState);
+
             _drawerToggle.SyncState();
 	    }
 
 	    public override void OnConfigurationChanged(Configuration newConfig)
 	    {
 	        base.OnConfigurationChanged(newConfig);
+
             _drawerToggle.OnConfigurationChanged(newConfig);
 	    }
 
@@ -152,6 +160,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             _navigation.Menu.SetGroupCheckable(Resource.Id.group_trips, (menuItem.GroupId == Resource.Id.group_trips), true);
             _navigation.Menu.SetGroupCheckable(Resource.Id.group_settings, (menuItem.GroupId == Resource.Id.group_settings), true);
 
+            _drawerLayout.CloseDrawers();
+
             Android.Support.V4.App.Fragment fragment = null;
             switch(menuItem.ItemId)
             {
@@ -189,13 +199,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid
                 break;
             }
 
+            menuItem.SetChecked(true);
+            Title = menuItem.TitleFormatted.ToString();
+
             if(null != fragment) {
                 SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_content, fragment).Commit();
             }
-
-            menuItem.SetChecked(true);
-            Title = menuItem.TitleFormatted.ToString();
-            _drawerLayout.CloseDrawers();
         }
 	}
 }
