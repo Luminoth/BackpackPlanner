@@ -106,7 +106,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             EditTextPreference birthDatePreference = (EditTextPreference)FindPreference("birthDate");
             birthDatePreference.Summary = null == BackpackPlannerState.Instance.PersonalInformation.DateOfBirth
                 ? Resources.GetString(Resource.String.summary_birthdate)
-                : BackpackPlannerState.Instance.PersonalInformation.DateOfBirth.Value.ToString(CultureInfo.InvariantCulture);
+                : BackpackPlannerState.Instance.PersonalInformation.DateOfBirth.Value.ToString("YYYY-MM-DD", CultureInfo.InvariantCulture);
         }
 
         private void SetUserSexSummary()
