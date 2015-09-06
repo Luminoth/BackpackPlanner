@@ -61,15 +61,15 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             rootViewGroup.AddView(view, 0);
 
             // then we can find the toolbar as a toolbar and set it as the action bar
-            Android.Support.V7.Widget.Toolbar toolBar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.settings_toolbar);
-            SetSupportActionBar(toolBar);
+            Android.Support.V7.Widget.Toolbar toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.settings_toolbar);
+            SetSupportActionBar(toolbar);
 
             // then we can setup the home button
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
-            SupportActionBar.SetHomeAsUpIndicator(Resource.Drawable.ic_close);
+            //SupportActionBar.SetHomeAsUpIndicator(Resource.Drawable.ic_close);
 
             // enable the home button to work
-            toolBar.NavigationClick += (sender, args) => {
+            toolbar.NavigationClick += (sender, args) => {
                 Finish();
             };
         }
@@ -84,10 +84,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             rootViewGroup.AddView(view, 0);
 
             // then we can find the toolbar as a toolbar and set it as the action bar
-            Android.Support.V7.Widget.Toolbar toolBar = dialog.FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.settings_toolbar);
+            Android.Support.V7.Widget.Toolbar toolbar = dialog.FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.settings_toolbar);
 
             // enable the home button to work
-            toolBar.NavigationClick += (sender, args) => {
+            toolbar.NavigationClick += (sender, args) => {
                 dialog.Dismiss();
             };
         }

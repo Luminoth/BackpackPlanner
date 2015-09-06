@@ -22,16 +22,16 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
         {
         }
 
-        public override void OnDrawerClosed(View drawerView)
-        {
-            base.OnDrawerClosed(drawerView);
-            DrawerClosedEvent?.Invoke(this, new DrawerToggleEventArgs { DrawerView = drawerView });
-        }
-
         public override void OnDrawerOpened(View drawerView)
         {
             base.OnDrawerOpened(drawerView);
             DrawerOpenedEvent?.Invoke(this, new DrawerToggleEventArgs { DrawerView = drawerView });
+        }
+
+        public override void OnDrawerClosed(View drawerView)
+        {
+            base.OnDrawerClosed(drawerView);
+            DrawerClosedEvent?.Invoke(this, new DrawerToggleEventArgs { DrawerView = drawerView });
         }
 
         public override void OnDrawerSlide(View drawerView, float slideOffset)

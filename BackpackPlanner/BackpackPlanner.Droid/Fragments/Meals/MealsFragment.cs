@@ -1,4 +1,5 @@
 using Android.OS;
+using Android.Support.Design.Widget;
 using Android.Views;
 using Android.Widget;
 
@@ -6,9 +7,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
 {
     public class MealsFragment : Android.Support.V4.App.Fragment
     {
-        TextView _noMealsTextView;
-        ViewGroup _mealsLayout;
-
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             return inflater.Inflate(Resource.Layout.fragment_meals, container, false);
@@ -18,10 +16,22 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
         {
             base.OnViewCreated(view, savedInstanceState);
 
-            _noMealsTextView = view.FindViewById<TextView>(Resource.Id.no_meals);
+            TextView noMealsTextView = view.FindViewById<TextView>(Resource.Id.no_meals);
 
-            _mealsLayout = view.FindViewById<LinearLayout>(Resource.Id.meals_layout);
-            _mealsLayout.Visibility = ViewStates.Gone;
+            ViewGroup mealsLayout = view.FindViewById<LinearLayout>(Resource.Id.meals_layout);
+            mealsLayout.Visibility = ViewStates.Gone;
+
+            FloatingActionButton addMealButton = view.FindViewById<FloatingActionButton>(Resource.Id.fab_add_meal);
+            addMealButton.Click += (sender, args) => {
+                // TODO
+            };
+        }
+
+        public override void OnResume()
+        {
+            base.OnResume();
+
+            Activity.Title = Resources.GetString(Resource.String.title_meals);
         }
     }
 }

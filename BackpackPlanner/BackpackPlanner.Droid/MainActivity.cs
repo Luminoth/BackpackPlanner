@@ -28,8 +28,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid
         public const string LogTag = "BackpackPlanner.Droid";
 
         private const string HockeyAppAppId = "32a2c37622529305ec763b7e2c224deb";
+        private const string StateBackEnabled = "navigation_back_enabled";
 
+        private Android.Support.V7.Widget.Toolbar _toolbar;
         private readonly NavigationDrawerManager _navigationDrawerManager = new NavigationDrawerManager();
+
+        private bool _backEnabled;
 
 		protected async override void OnCreate(Bundle savedInstanceState)
 		{
@@ -43,18 +47,40 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             await BackpackPlannerState.Instance.InitDatabaseAsync(new SQLitePlatformAndroid(),
                 System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), BackpackPlannerState.DatabaseName);
 
-            Android.Support.V7.Widget.Toolbar toolbar = InitToolBar();
+            InitToolBar();
 
             _navigationDrawerManager.DefaultSelectedResId = Resource.Id.nav_gear_items_fragment;
             _navigationDrawerManager.NavigationItemSelected += (sender, args) => {
                 SelectDrawerItem(args.MenuItem);
             };
 
-            _navigationDrawerManager.Create(this, toolbar, savedInstanceState);
+            _navigationDrawerManager.Create(this, _toolbar, savedInstanceState);
             _navigationDrawerManager.UpdateNavigationHeaderText(
                 !string.IsNullOrWhiteSpace(BackpackPlannerState.Instance.PersonalInformation.Name)
                     ? BackpackPlannerState.Instance.PersonalInformation.Name
                     : "Backpacking Planner");
+
+            if(null != savedInstanceState) {
+                _backEnabled = savedInstanceState.GetBoolean(StateBackEnabled);
+            }
+
+            SupportFragmentManager.BackStackChanged += (sender, args) => {
+                if(SupportFragmentManager.BackStackEntryCount > 0) {
+                    _navigationDrawerManager.DrawerIndicatorEnabled = false;
+                    SupportActionBar.SetDisplayHomeAsUpEnabled(true);
+
+                    /*if(!_backEnabled) {
+                        _toolbar.NavigationClick += NavigationClickBackEventHandler;
+                    }
+                    _backEnabled = true;*/
+                } else {
+                    SupportActionBar.SetDisplayHomeAsUpEnabled(false);
+                    _navigationDrawerManager.DrawerIndicatorEnabled = true;
+
+                    /*_toolbar.NavigationClick -= NavigationClickBackEventHandler;
+                    _backEnabled = false;*/
+                }
+            };
 		}
 
 	    public override void OnPostCreate(Bundle savedInstanceState, PersistableBundle persistentState)
@@ -83,6 +109,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 	    protected override void OnSaveInstanceState(Bundle outState)
 	    {
 	        base.OnSaveInstanceState(outState);
+
+             outState.PutBoolean(StateBackEnabled, _backEnabled);
 
             _navigationDrawerManager.OnSaveInstanceState(outState);
 	    }
@@ -117,11 +145,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             TaskScheduler.UnobservedTaskException += (sender, args) => HockeyApp.TraceWriter.WriteTrace(args.Exception);
         }
 
-        private Android.Support.V7.Widget.Toolbar InitToolBar()
+        private void InitToolBar()
         {
-            Android.Support.V7.Widget.Toolbar toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
-            SetSupportActionBar(toolbar);
-            return toolbar;
+            _toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
+            SetSupportActionBar(_toolbar);
         }
 
         private void SelectDrawerItem(IMenuItem menuItem)
@@ -175,11 +202,17 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             }
 
             if(null != fragment) {
-                SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_content, fragment).Commit();
+                Android.Support.V4.App.FragmentTransaction fragmentTransaction = SupportFragmentManager.BeginTransaction();
+                fragmentTransaction.Replace(Resource.Id.frame_content, fragment);
+                fragmentTransaction.Commit();
             }
 
             menuItem.SetChecked(true);
-            Title = menuItem.TitleFormatted.ToString();
+        }
+
+        private void NavigationClickBackEventHandler(object sender, Android.Support.V7.Widget.Toolbar.NavigationClickEventArgs args)
+        {
+            OnBackPressed();
         }
 	}
 }

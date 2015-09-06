@@ -1,6 +1,7 @@
 using System;
 
 using Android.Content.Res;
+using Android.InputMethodServices;
 using Android.OS;
 using Android.Support.Design.Widget;
 using Android.Support.V4.Widget;
@@ -20,7 +21,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 
         public int DefaultSelectedResId { get; set; }
 
-        private AppCompatActivity _owner;
+        public bool DrawerIndicatorEnabled
+        {
+            get { return _drawerToggle.DrawerIndicatorEnabled; }
+            set { _drawerToggle.DrawerIndicatorEnabled = value; }
+        }
+
+        private AppCompatActivity _activity;
 
         private DrawerLayout _drawerLayout;
         private DrawerToggle _drawerToggle;
@@ -33,9 +40,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
         public event EventHandler<NavigationView.NavigationItemSelectedEventArgs> NavigationItemSelected;
 #endregion
 
-        public void Create(AppCompatActivity owner, Android.Support.V7.Widget.Toolbar toolbar, Bundle savedInstanceState)
+        public void Create(AppCompatActivity activity, Android.Support.V7.Widget.Toolbar toolbar, Bundle savedInstanceState)
         {
-            _owner = owner;
+            _activity = activity;
 
             InitNavigation();
             InitDrawer(toolbar);
@@ -87,7 +94,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 
         private void InitNavigation()
         {
-            _navigation = _owner.FindViewById<NavigationView>(Resource.Id.navigation);
+            _navigation = _activity.FindViewById<NavigationView>(Resource.Id.navigation);
             _navigation.NavigationItemSelected += (sender, args) => {
                 _selectedResId = args.MenuItem.ItemId;
 
@@ -95,14 +102,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
                 NavigationItemSelected?.Invoke(sender, args);
             };
 
-            _navigationHeaderText = _owner.FindViewById<TextView>(Resource.Id.navigation_header_text);
+            _navigationHeaderText = _activity.FindViewById<TextView>(Resource.Id.navigation_header_text);
         }
 
         private void InitDrawer(Android.Support.V7.Widget.Toolbar toolbar)
         {
-            _drawerLayout = _owner.FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
+            _drawerLayout = _activity.FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
 
-            _drawerToggle = new DrawerToggle(_owner, _drawerLayout, toolbar, Resource.String.drawer_open, Resource.String.drawer_close);
+            _drawerToggle = new DrawerToggle(_activity, _drawerLayout, toolbar, Resource.String.drawer_open, Resource.String.drawer_close);
             _drawerToggle.SyncState();
             _drawerLayout.SetDrawerListener(_drawerToggle);
         }

@@ -1,4 +1,5 @@
 using Android.OS;
+using Android.Support.Design.Widget;
 using Android.Views;
 using Android.Widget;
 
@@ -6,9 +7,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 {
     public class GearSystemsFragment : Android.Support.V4.App.Fragment
     {
-        TextView _noGearSystemsTextView;
-        ViewGroup _gearSystemsLayout;
-
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             return inflater.Inflate(Resource.Layout.fragment_gear_systems, container, false);
@@ -18,10 +16,22 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
         {
             base.OnViewCreated(view, savedInstanceState);
 
-            _noGearSystemsTextView = view.FindViewById<TextView>(Resource.Id.no_gear_systems);
+            TextView noGearSystemsTextView = view.FindViewById<TextView>(Resource.Id.no_gear_systems);
 
-            _gearSystemsLayout = view.FindViewById<LinearLayout>(Resource.Id.gear_systems_layout);
-            _gearSystemsLayout.Visibility = ViewStates.Gone;
+            ViewGroup gearSystemsLayout = view.FindViewById<LinearLayout>(Resource.Id.gear_systems_layout);
+            gearSystemsLayout.Visibility = ViewStates.Gone;
+
+            FloatingActionButton addGearSystemButton = view.FindViewById<FloatingActionButton>(Resource.Id.fab_add_gear_system);
+            addGearSystemButton.Click += (sender, args) => {
+                // TODO
+            };
+        }
+
+        public override void OnResume()
+        {
+            base.OnResume();
+
+            Activity.Title = Resources.GetString(Resource.String.title_gear_systems);
         }
     }
 }

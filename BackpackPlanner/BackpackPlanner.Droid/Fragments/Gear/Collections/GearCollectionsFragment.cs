@@ -1,4 +1,5 @@
 using Android.OS;
+using Android.Support.Design.Widget;
 using Android.Views;
 using Android.Widget;
 
@@ -6,9 +7,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
 {
     public class GearCollectionsFragment : Android.Support.V4.App.Fragment
     {
-        TextView _noGearCollectionsTextView;
-        ViewGroup _gearCollectionsLayout;
-
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             return inflater.Inflate(Resource.Layout.fragment_gear_collections, container, false);
@@ -18,10 +16,23 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
         {
             base.OnViewCreated(view, savedInstanceState);
 
-            _noGearCollectionsTextView = view.FindViewById<TextView>(Resource.Id.no_gear_collections);
+            TextView noGearCollectionsTextView = view.FindViewById<TextView>(Resource.Id.no_gear_collections);
+            // TODO
 
-            _gearCollectionsLayout = view.FindViewById<LinearLayout>(Resource.Id.gear_collections_layout);
-            _gearCollectionsLayout.Visibility = ViewStates.Gone;
+            ViewGroup gearCollectionsLayout = view.FindViewById<LinearLayout>(Resource.Id.gear_collections_layout);
+            gearCollectionsLayout.Visibility = ViewStates.Gone;
+
+            FloatingActionButton addGearCollectionButton = view.FindViewById<FloatingActionButton>(Resource.Id.fab_add_gear_collection);
+            addGearCollectionButton.Click += (sender, args) => {
+                // TODO
+            };
+        }
+
+        public override void OnResume()
+        {
+            base.OnResume();
+
+            Activity.Title = Resources.GetString(Resource.String.title_gear_collections);
         }
     }
 }

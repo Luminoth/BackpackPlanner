@@ -9,8 +9,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 {
     public class HelpFragment : Android.Support.V4.App.Fragment
     {
-        Button _buttonHelp;
-
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             return inflater.Inflate(Resource.Layout.fragment_help, container, false);
@@ -20,11 +18,18 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         {
             base.OnViewCreated(view, savedInstanceState);
 
-            _buttonHelp = view.FindViewById<Button>(Resource.Id.button_feedback);
-            _buttonHelp.Click += (sender, args) => {
+            Button buttonFeedback = view.FindViewById<Button>(Resource.Id.button_feedback);
+            buttonFeedback.Click += (sender, args) => {
                 Log.Debug(MainActivity.LogTag, "Showing feedback activity");
                 FeedbackManager.ShowFeedbackActivity(Activity);
             };
+        }
+
+        public override void OnResume()
+        {
+            base.OnResume();
+
+            Activity.Title = Resources.GetString(Resource.String.title_help);
         }
     }
 }
