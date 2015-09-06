@@ -14,6 +14,8 @@
    limitations under the License.
 */
 
+using EnergonSoftware.BackpackPlanner.Util;
+
 namespace EnergonSoftware.BackpackPlanner.Models.Gear.Items
 {
     /// <summary>
@@ -24,16 +26,19 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Items
         /// <summary>
         /// The gear item is not carried
         /// </summary>
+        [Description("Not Carried")]
         NotCarried,
 
         /// <summary>
         /// The gear item is carried
         /// </summary>
+        [Description("Carried")]
         Carried,
 
         /// <summary>
         /// The gear item is worn
         /// </summary>
+        [Description("Worn")]
         Worn
     }
 }

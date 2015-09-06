@@ -14,6 +14,8 @@
    limitations under the License.
 */
 
+using EnergonSoftware.BackpackPlanner.Util;
+
 namespace EnergonSoftware.BackpackPlanner.Models.Personal
 {
     /// <summary>
@@ -24,21 +26,25 @@ namespace EnergonSoftware.BackpackPlanner.Models.Personal
         /// <summary>
         /// The user has decided not to declare their sex
         /// </summary>
-        Undeclared,
+        [Description("Undeclared")]
+        Undeclared = 0,
 
         /// <summary>
         /// The user is male
         /// </summary>
-        Male,
+        [Description("Male")]
+        Male = 1,
 
         /// <summary>
         /// The user is female
         /// </summary>
-        Female,
+        [Description("Female")]
+        Female = 2,
 
         /// <summary>
         /// The user is some other sex
         /// </summary>
-        Other
+        [Description("Other")]
+        Other = 3
     }
 }

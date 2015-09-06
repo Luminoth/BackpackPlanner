@@ -14,6 +14,8 @@
    limitations under the License.
 */
 
+using EnergonSoftware.BackpackPlanner.Util;
+
 namespace EnergonSoftware.BackpackPlanner
 {
     /// <summary>
@@ -24,11 +26,13 @@ namespace EnergonSoftware.BackpackPlanner
         /// <summary>
         /// The metric system
         /// </summary>
+        [Description("Metric")]
         Metric = 0,
 
         /// <summary>
         /// The united states system
         /// </summary>
+        [Description("United States")]
         UnitedStates = 1
     }
 }

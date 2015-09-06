@@ -24,7 +24,8 @@ using EnergonSoftware.BackpackPlanner.Droid.Util;
 
 using SQLite.Net.Platform.XamarinAndroid;
 
-// nav drawer checked state bug: https://code.google.com/p/android/issues/detail?id=175224 and http://stackoverflow.com/questions/30592080/save-state-on-navigationview
+// nav drawer checked state bug: https://code.google.com/p/android/issues/detail?id=175224
+// and http://stackoverflow.com/questions/30592080/save-state-on-navigationview
 
 namespace EnergonSoftware.BackpackPlanner.Droid
 {
@@ -165,9 +166,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             Android.Support.V4.App.Fragment fragment = null;
             switch(menuItem.ItemId)
             {
-            /*case Resource.Id.nav_personal_information_fragment:
-                fragment = new PersonalInformationFragment();
-                break;*/
             case Resource.Id.nav_gear_items_fragment:
                 fragment = new GearItemsFragment();
                 break;
@@ -187,24 +185,19 @@ namespace EnergonSoftware.BackpackPlanner.Droid
                 fragment = new TripPlansFragment();
                 break;
             case Resource.Id.nav_settings_fragment:
-                /*fragment = new SettingsFragment();
-                break;*/
                 StartActivity(typeof(SettingsActivity));
                 return;
             case Resource.Id.nav_help_fragment:
                 fragment = new HelpFragment();
                 break;
-            default:
-                fragment = null;
-                break;
             }
-
-            menuItem.SetChecked(true);
-            Title = menuItem.TitleFormatted.ToString();
 
             if(null != fragment) {
                 SupportFragmentManager.BeginTransaction().Replace(Resource.Id.frame_content, fragment).Commit();
             }
+
+            menuItem.SetChecked(true);
+            Title = menuItem.TitleFormatted.ToString();
         }
 	}
 }

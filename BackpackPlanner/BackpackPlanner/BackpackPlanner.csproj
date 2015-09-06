@@ -63,6 +63,8 @@
     <Compile Include="Models\Trips\Plans\TripPlanMeal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitSystem.cs" />
+    <Compile Include="Util\DescriptionAttribute.cs" />
+    <Compile Include="Util\EnumDescription.cs" />
     <Compile Include="WeightCategory.cs" />
     <Compile Include="WeightClass.cs" />
   </ItemGroup>

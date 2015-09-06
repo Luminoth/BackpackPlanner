@@ -14,6 +14,8 @@
    limitations under the License.
 */
 
+using EnergonSoftware.BackpackPlanner.Util;
+
 namespace EnergonSoftware.BackpackPlanner
 {
     /// <summary>
@@ -24,6 +26,7 @@ namespace EnergonSoftware.BackpackPlanner
         /// <summary>
         /// The united states dollar
         /// </summary>
+        [Description("United States Dollar")]
         UnitedStatesDollar = 0
     }
 }

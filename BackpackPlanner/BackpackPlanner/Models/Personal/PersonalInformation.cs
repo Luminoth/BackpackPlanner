@@ -38,7 +38,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Personal
         /// <value>
         /// The user's date of birth.
         /// </value>
-        public DateTime DateOfBirth { get; set; } = new DateTime();
+        public DateTime? DateOfBirth { get; set; } = null;
 
         /// <summary>
         /// Gets or sets the user's sex.

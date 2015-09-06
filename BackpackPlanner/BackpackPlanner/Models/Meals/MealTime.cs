@@ -14,6 +14,8 @@
    limitations under the License.
 */
 
+using EnergonSoftware.BackpackPlanner.Util;
+
 namespace EnergonSoftware.BackpackPlanner.Models.Meals
 {
     /// <summary>
@@ -24,31 +26,37 @@ namespace EnergonSoftware.BackpackPlanner.Models.Meals
         /// <summary>
         /// Some other meal type
         /// </summary>
+        [Description("Other")]
         Other,
 
         /// <summary>
         /// 
         /// </summary>
+        [Description("Drink")]
         Drink,
 
         /// <summary>
         /// The breakfast meal time
         /// </summary>
+        [Description("Breakfast")]
         Breakfast,
 
         /// <summary>
         /// The lunch meal time
         /// </summary>
+        [Description("Lunch")]
         Lunch,
 
         /// <summary>
         /// The dinner meal time
         /// </summary>
+        [Description("Dinner")]
         Dinner,
 
         /// <summary>
         /// The snack meal time
         /// </summary>
+        [Description("Snack")]
         Snack
     }
 }

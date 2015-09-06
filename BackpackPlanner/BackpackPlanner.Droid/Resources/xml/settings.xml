@@ -6,7 +6,27 @@
         android:persistent="false">
         <EditTextPreference android:title="@string/label_name"
             android:key="name"
-            android:summary="@string/summary_name" />
+            android:summary="@string/summary_name"
+            android:inputType="text|textCapWords" />
+        <EditTextPreference android:title="@string/label_birthdate"
+            android:key="birthDate"
+            android:summary="@string/summary_birthdate"
+            android:inputType="date" />
+        <ListPreference
+            android:title="@string/label_user_sex"
+            android:summary="@string/summary_user_sex"
+            android:key="userSex"
+            android:entries="@array/user_sex_entries"
+            android:entryValues="@array/user_sex_values"
+            android:defaultValue="0" />
+        <EditTextPreference android:title="@string/label_height"
+            android:key="height"
+            android:summary="@string/summary_height"
+            android:inputType="number" />
+        <EditTextPreference android:title="@string/label_weight"
+            android:key="weight"
+            android:summary="@string/summary_weight"
+            android:inputType="number" />
     </PreferenceScreen>
     <ListPreference
         android:title="@string/label_unit_system"

@@ -120,8 +120,6 @@
     <Compile Include="Fragments\Gear\Systems\GearSystemsFragment.cs" />
     <Compile Include="Fragments\HelpFragment.cs" />
     <Compile Include="Fragments\Meals\MealsFragment.cs" />
-    <Compile Include="Fragments\PersonalInformationFragment.cs" />
-    <Compile Include="Fragments\SettingsFragment.cs" />
     <Compile Include="Fragments\Trips\Itineraries\TripItinerariesFragment.cs" />
     <Compile Include="Fragments\Trips\Plans\TripPlansFragment.cs" />
     <Compile Include="SettingsActivity.cs" />
@@ -152,9 +150,6 @@
       <SubType>AndroidResource</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\nav_header.axml" />
-    <AndroidResource Include="Resources\layout\fragment_personal_information.axml">
-      <SubType>AndroidResource</SubType>
-    </AndroidResource>
     <AndroidResource Include="Resources\layout\fragment_gear_systems.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
@@ -171,6 +166,9 @@
       <SubType>AndroidResource</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\fragment_help.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\settings_toolbar.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -254,6 +252,21 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\array.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\ic_close.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\ic_close.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_close.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_close.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_close.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>

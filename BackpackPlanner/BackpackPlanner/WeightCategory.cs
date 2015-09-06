@@ -14,6 +14,8 @@
    limitations under the License.
 */
 
+using EnergonSoftware.BackpackPlanner.Util;
+
 namespace EnergonSoftware.BackpackPlanner
 {
     /// <summary>
@@ -24,31 +26,37 @@ namespace EnergonSoftware.BackpackPlanner
         /// <summary>
         /// No weight category (0 "or less" grams)
         /// </summary>
+        [Description("None")]
         None,
 
         /// <summary>
         /// The ultralight weight category
         /// </summary>
+        [Description("Ultralight")]
         Ultralight,
 
         /// <summary>
         /// The light weight category
         /// </summary>
+        [Description("Light")]
         Light,
 
         /// <summary>
         /// The medium weight category
         /// </summary>
+        [Description("Medium")]
         Medium,
 
         /// <summary>
         /// The heavy weight category
         /// </summary>
+        [Description("Heavy")]
         Heavy,
 
         /// <summary>
         /// The extra heavy weight category
         /// </summary>
+        [Description("Extra Heavy")]
         ExtraHeavy
     }
 }

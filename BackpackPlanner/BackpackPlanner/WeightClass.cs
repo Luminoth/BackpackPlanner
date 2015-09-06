@@ -14,6 +14,8 @@
    limitations under the License.
 */
 
+using EnergonSoftware.BackpackPlanner.Util;
+
 namespace EnergonSoftware.BackpackPlanner
 {
     /// <summary>
@@ -24,16 +26,19 @@ namespace EnergonSoftware.BackpackPlanner
         /// <summary>
         /// The ultralight weight class
         /// </summary>
+        [Description("Ultralight")]
         Ultralight,
 
         /// <summary>
         /// The lightweight weight class
         /// </summary>
+        [Description("Lightweight")]
         Lightweight,
 
         /// <summary>
         /// The traditional weight class
         /// </summary>
+        [Description("Traditional")]
         Traditional
     }
 }
