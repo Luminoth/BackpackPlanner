@@ -130,6 +130,7 @@
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\DrawerToggleEventArgs.cs" />
+    <Compile Include="Util\NavigationDrawerManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

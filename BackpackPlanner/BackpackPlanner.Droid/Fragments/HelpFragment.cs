@@ -1,4 +1,5 @@
 using Android.OS;
+using Android.Util;
 using Android.Views;
 using Android.Widget;
 
@@ -21,6 +22,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
             _buttonHelp = view.FindViewById<Button>(Resource.Id.button_feedback);
             _buttonHelp.Click += (sender, args) => {
+                Log.Debug(MainActivity.LogTag, "Showing feedback activity");
                 FeedbackManager.ShowFeedbackActivity(Activity);
             };
         }
