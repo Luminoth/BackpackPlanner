@@ -21,6 +21,18 @@ namespace EnergonSoftware.BackpackPlanner
     /// </summary>
     public sealed class BackpackPlannerSettings
     {
+#region Preference Keys
+        /// <summary>
+        /// The unit system preference key
+        /// </summary>
+        public const string UnitSystemPreferenceKey = "unitSystem";
+
+        /// <summary>
+        /// The currency preference key
+        /// </summary>
+        public const string CurrencyPreferenceKey = "currency";
+#endregion
+
         /// <summary>
         /// Gets or sets the unit system to use.
         /// </summary>

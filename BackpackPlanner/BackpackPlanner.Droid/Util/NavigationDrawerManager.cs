@@ -1,7 +1,22 @@
+/*
+   Copyright 2015 Shane Lillie
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+*/
+
 using System;
 
 using Android.Content.Res;
-using Android.InputMethodServices;
 using Android.OS;
 using Android.Support.Design.Widget;
 using Android.Support.V4.Widget;
@@ -9,9 +24,6 @@ using Android.Support.V7.App;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
-
-// nav drawer checked state bug: https://code.google.com/p/android/issues/detail?id=175224
-// and http://stackoverflow.com/questions/30592080/save-state-on-navigationview
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Util
 {

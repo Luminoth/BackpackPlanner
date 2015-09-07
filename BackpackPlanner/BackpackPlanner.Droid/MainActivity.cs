@@ -1,9 +1,27 @@
-﻿using System;
+﻿/*
+   Copyright 2015 Shane Lillie
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+*/
+
+using System;
 using System.Threading.Tasks;
 
 using Android.App;
+using Android.Content;
 using Android.Content.Res;
 using Android.OS;
+using Android.Preferences;
 using Android.Runtime;
 using Android.Util;
 using Android.Views;
@@ -16,6 +34,7 @@ using EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans;
 using EnergonSoftware.BackpackPlanner.Droid.Util;
+using EnergonSoftware.BackpackPlanner.Models.Personal;
 
 using SQLite.Net.Platform.XamarinAndroid;
 
@@ -28,12 +47,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid
         public const string LogTag = "BackpackPlanner.Droid";
 
         private const string HockeyAppAppId = "32a2c37622529305ec763b7e2c224deb";
-        private const string StateBackEnabled = "navigation_back_enabled";
 
         private Android.Support.V7.Widget.Toolbar _toolbar;
         private readonly NavigationDrawerManager _navigationDrawerManager = new NavigationDrawerManager();
-
-        private bool _backEnabled;
 
 		protected async override void OnCreate(Bundle savedInstanceState)
 		{
@@ -60,27 +76,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid
                     ? BackpackPlannerState.Instance.PersonalInformation.Name
                     : "Backpacking Planner");
 
-            if(null != savedInstanceState) {
-                _backEnabled = savedInstanceState.GetBoolean(StateBackEnabled);
-            }
-
             SupportFragmentManager.BackStackChanged += (sender, args) => {
-                if(SupportFragmentManager.BackStackEntryCount > 0) {
-                    _navigationDrawerManager.DrawerIndicatorEnabled = false;
-                    SupportActionBar.SetDisplayHomeAsUpEnabled(true);
-
-                    /*if(!_backEnabled) {
-                        _toolbar.NavigationClick += NavigationClickBackEventHandler;
-                    }
-                    _backEnabled = true;*/
-                } else {
-                    SupportActionBar.SetDisplayHomeAsUpEnabled(false);
-                    _navigationDrawerManager.DrawerIndicatorEnabled = true;
-
-                    /*_toolbar.NavigationClick -= NavigationClickBackEventHandler;
-                    _backEnabled = false;*/
-                }
+                _navigationDrawerManager.DrawerIndicatorEnabled = SupportFragmentManager.BackStackEntryCount == 0;
+                SupportActionBar.SetDisplayHomeAsUpEnabled(SupportFragmentManager.BackStackEntryCount > 0);
+                _navigationDrawerManager.SyncState();
             };
+
+            LoadPreferences();
 		}
 
 	    public override void OnPostCreate(Bundle savedInstanceState, PersistableBundle persistentState)
@@ -109,8 +111,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 	    protected override void OnSaveInstanceState(Bundle outState)
 	    {
 	        base.OnSaveInstanceState(outState);
-
-             outState.PutBoolean(StateBackEnabled, _backEnabled);
 
             _navigationDrawerManager.OnSaveInstanceState(outState);
 	    }
@@ -149,6 +149,60 @@ namespace EnergonSoftware.BackpackPlanner.Droid
         {
             _toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(_toolbar);
+        }
+
+        private void LoadPreferences()
+        {
+            ISharedPreferences sharedPreferences = PreferenceManager.GetDefaultSharedPreferences(this);
+
+            BackpackPlannerState.Instance.PersonalInformation.Name = sharedPreferences.GetString(
+                PersonalInformation.NamePreferenceKey, "");
+
+            string scratch;
+
+            try {
+                scratch = sharedPreferences.GetString(PersonalInformation.DateOfBirthPreferenceKey, "");
+                if(!string.IsNullOrWhiteSpace(scratch)) {
+                    BackpackPlannerState.Instance.PersonalInformation.DateOfBirth = Convert.ToDateTime(scratch);
+                }
+            } catch(FormatException) {
+                // it's k, we'll live
+            }
+
+            try {
+                scratch = sharedPreferences.GetString(PersonalInformation.UserSexPreferenceKey, "0");
+                BackpackPlannerState.Instance.PersonalInformation.Sex = (UserSex)Convert.ToInt32(scratch);
+            } catch(FormatException) {
+                // it's k, we'll live
+            }
+
+            try {
+                scratch = sharedPreferences.GetString(PersonalInformation.HeightPreferenceKey, "0");
+                BackpackPlannerState.Instance.PersonalInformation.HeightInCm = Convert.ToInt32(scratch);
+            } catch(FormatException) {
+                // it's k, we'll live
+            }
+
+            try {
+                scratch = sharedPreferences.GetString(PersonalInformation.WeightPreferenceKey, "0");
+                BackpackPlannerState.Instance.PersonalInformation.WeightInGrams = Convert.ToInt32(scratch);
+            } catch(FormatException) {
+                // it's k, we'll live
+            }
+
+            try {
+                scratch = sharedPreferences.GetString(BackpackPlannerSettings.UnitSystemPreferenceKey, "0");
+                BackpackPlannerState.Instance.Settings.Units = (UnitSystem)Convert.ToInt32(scratch);
+            } catch(FormatException) {
+                // it's k, we'll live
+            }
+
+            try {
+                scratch = sharedPreferences.GetString(BackpackPlannerSettings.CurrencyPreferenceKey, "0");
+                BackpackPlannerState.Instance.Settings.Currency = (Currency)Convert.ToInt32(scratch);
+            } catch(FormatException) {
+                // it's k, we'll live
+            }
         }
 
         private void SelectDrawerItem(IMenuItem menuItem)
@@ -208,11 +262,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             }
 
             menuItem.SetChecked(true);
-        }
-
-        private void NavigationClickBackEventHandler(object sender, Android.Support.V7.Widget.Toolbar.NavigationClickEventArgs args)
-        {
-            OnBackPressed();
         }
 	}
 }

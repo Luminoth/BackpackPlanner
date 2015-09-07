@@ -15,7 +15,6 @@
 */
 
 using System;
-using System.Text;
 
 namespace EnergonSoftware.BackpackPlanner.Models.Personal
 {
@@ -24,6 +23,33 @@ namespace EnergonSoftware.BackpackPlanner.Models.Personal
     /// </summary>
     public sealed class PersonalInformation
     {
+#region Preference Keys
+        /// <summary>
+        /// The name preference key
+        /// </summary>
+        public const string NamePreferenceKey = "personalInformationName";
+
+        /// <summary>
+        /// The date of birth preference key
+        /// </summary>
+        public const string DateOfBirthPreferenceKey = "personalInformationBirthdate";
+
+        /// <summary>
+        /// The user sex preference key
+        /// </summary>
+        public const string UserSexPreferenceKey = "personalInformationSex";
+
+        /// <summary>
+        /// The height preference key
+        /// </summary>
+        public const string HeightPreferenceKey = "personalInformationHeight";
+
+        /// <summary>
+        /// The weight preference key
+        /// </summary>
+        public const string WeightPreferenceKey = "personalInformationWeight";
+#endregion
+
         /// <summary>
         /// Gets or sets the user's name.
         /// </summary>

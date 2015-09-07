@@ -5,28 +5,32 @@
         android:title="@string/title_personal_information"
         android:persistent="false">
         <EditTextPreference android:title="@string/label_name"
-            android:key="name"
+            android:key="personalInformationName"
             android:summary="@string/summary_name"
-            android:inputType="text|textCapWords" />
+            android:inputType="text|textCapWords"
+            android:defaultValue="" />
         <EditTextPreference android:title="@string/label_birthdate"
-            android:key="birthDate"
+            android:key="personalInformationBirthdate"
             android:summary="@string/summary_birthdate"
-            android:inputType="date" />
+            android:inputType="date"
+            android:defaultValue="" />
         <ListPreference
             android:title="@string/label_user_sex"
             android:summary="@string/summary_user_sex"
-            android:key="userSex"
+            android:key="personalInformationSex"
             android:entries="@array/user_sex_entries"
             android:entryValues="@array/user_sex_values"
             android:defaultValue="0" />
         <EditTextPreference android:title="@string/label_height"
-            android:key="height"
+            android:key="personalInformationHeight"
             android:summary="@string/summary_height"
-            android:inputType="number" />
+            android:inputType="number"
+            android:defaultValue="0" />
         <EditTextPreference android:title="@string/label_weight"
-            android:key="weight"
+            android:key="personalInformationWeight"
             android:summary="@string/summary_weight"
-            android:inputType="number" />
+            android:inputType="number"
+            android:defaultValue="0" />
     </PreferenceScreen>
     <ListPreference
         android:title="@string/label_unit_system"
