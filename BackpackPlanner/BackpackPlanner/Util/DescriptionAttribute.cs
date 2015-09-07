@@ -22,7 +22,7 @@ namespace EnergonSoftware.BackpackPlanner.Util
     /// Imlementation of DescriptionAttribute for PCL
     /// </summary>
     [AttributeUsage(AttributeTargets.All)]
-    public class DescriptionAttribute : Attribute
+    public sealed class DescriptionAttribute : Attribute
     {
         /// <summary>
         /// Gets or sets the description.

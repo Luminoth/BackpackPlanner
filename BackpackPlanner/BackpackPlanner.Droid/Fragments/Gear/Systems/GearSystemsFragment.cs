@@ -21,12 +21,11 @@ using Android.Widget;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 {
-    public class GearSystemsFragment : Android.Support.V4.App.Fragment
+    public class GearSystemsFragment : BaseFragment
     {
-        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-        {
-            return inflater.Inflate(Resource.Layout.fragment_gear_systems, container, false);
-        }
+        public override int LayoutResource => Resource.Layout.fragment_gear_systems;
+
+        public override int TitleResource => Resource.String.title_gear_systems;
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
@@ -41,13 +40,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
             addGearSystemButton.Click += (sender, args) => {
                 // TODO
             };
-        }
-
-        public override void OnResume()
-        {
-            base.OnResume();
-
-            Activity.Title = Resources.GetString(Resource.String.title_gear_systems);
         }
     }
 }

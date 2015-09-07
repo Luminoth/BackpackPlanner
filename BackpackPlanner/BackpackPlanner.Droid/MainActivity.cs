@@ -33,6 +33,7 @@ using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans;
+using EnergonSoftware.BackpackPlanner.Droid.Logging;
 using EnergonSoftware.BackpackPlanner.Droid.Util;
 using EnergonSoftware.BackpackPlanner.Models.Personal;
 
@@ -42,7 +43,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 {
 	[Activity(Label = "@string/app_name", MainLauncher = true, Icon = "@drawable/icon")]
     [MetaData("com.google.android.gms.version", Value = "@integer/google_play_services_version")]
-	public class MainActivity : Android.Support.V7.App.AppCompatActivity
+	public class MainActivity : Android.Support.V7.App.AppCompatActivity, View.IOnClickListener
 	{
         public const string LogTag = "BackpackPlanner.Droid";
 
@@ -59,7 +60,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
             InitHockeyApp();
 
-            Log.Info(LogTag, "Initializing database...");
+            BackpackPlannerState.Instance.Logger = new DroidLogger();
+
             await BackpackPlannerState.Instance.InitDatabaseAsync(new SQLitePlatformAndroid(),
                 System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), BackpackPlannerState.DatabaseName);
 
@@ -71,15 +73,15 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             };
 
             _navigationDrawerManager.Create(this, _toolbar, savedInstanceState);
-            _navigationDrawerManager.UpdateNavigationHeaderText(
-                !string.IsNullOrWhiteSpace(BackpackPlannerState.Instance.PersonalInformation.Name)
+            _navigationDrawerManager.Toggle.ToolbarNavigationClickListener = this;
+            _navigationDrawerManager.HeaderText.Text = !string.IsNullOrWhiteSpace(BackpackPlannerState.Instance.PersonalInformation.Name)
                     ? BackpackPlannerState.Instance.PersonalInformation.Name
-                    : "Backpacking Planner");
+                    : "Backpacking Planner";
 
             SupportFragmentManager.BackStackChanged += (sender, args) => {
-                _navigationDrawerManager.DrawerIndicatorEnabled = SupportFragmentManager.BackStackEntryCount == 0;
+                _navigationDrawerManager.Toggle.DrawerIndicatorEnabled = SupportFragmentManager.BackStackEntryCount < 1;
                 SupportActionBar.SetDisplayHomeAsUpEnabled(SupportFragmentManager.BackStackEntryCount > 0);
-                _navigationDrawerManager.SyncState();
+                _navigationDrawerManager.Toggle.SyncState();
             };
 
             LoadPreferences();
@@ -89,7 +91,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 	    {
 	        base.OnPostCreate(savedInstanceState, persistentState);
 
-            _navigationDrawerManager.SyncState();
+            _navigationDrawerManager.Toggle.SyncState();
 	    }
 
 	    public override void OnConfigurationChanged(Configuration newConfig)
@@ -114,6 +116,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
             _navigationDrawerManager.OnSaveInstanceState(outState);
 	    }
+
+        public void OnClick(View view)
+        {
+            // this handles the toolbar button press on stacked fragments
+            OnBackPressed();
+        }
 
 	    private void InitHockeyApp()
         {
@@ -155,8 +163,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
         {
             ISharedPreferences sharedPreferences = PreferenceManager.GetDefaultSharedPreferences(this);
 
-            BackpackPlannerState.Instance.PersonalInformation.Name = sharedPreferences.GetString(
-                PersonalInformation.NamePreferenceKey, "");
+            BackpackPlannerState.Instance.PersonalInformation.Name = sharedPreferences.GetString(PersonalInformation.NamePreferenceKey, "");
 
             string scratch;
 

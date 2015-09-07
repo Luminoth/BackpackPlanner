@@ -15,7 +15,6 @@
 */
 
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Models.Meals;
@@ -43,12 +42,12 @@ namespace EnergonSoftware.BackpackPlanner.Cache
         public static async Task InitDatabaseAsync(SQLiteAsyncConnection asyncDbConnection, int oldVersion, int newVersion)
         {
             if(oldVersion >= newVersion) {
-                Debug.WriteLine("Database versions match, nothing to do for meal cache update...");
+                BackpackPlannerState.Instance.Logger.Debug("Database versions match, nothing to do for meal cache update...");
                 return;
             }
 
             if(oldVersion < 2 && newVersion >= 2) {
-                Debug.WriteLine("Creating meal cache tables...");
+                BackpackPlannerState.Instance.Logger.Debug("Creating meal cache tables...");
                 await Meal.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
             }
         }
@@ -67,7 +66,7 @@ namespace EnergonSoftware.BackpackPlanner.Cache
         {
             _mealCache.Clear();
 
-            Debug.WriteLine("Loading meal cache...");
+            BackpackPlannerState.Instance.Logger.Debug("Loading meal cache...");
             using(SQLiteConnectionWithLock dbConnection = BackpackPlannerState.Instance.GetDatabaseConnection()) {
                 SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
 

@@ -15,12 +15,12 @@
 */
 
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Cache;
+using EnergonSoftware.BackpackPlanner.Logging;
 using EnergonSoftware.BackpackPlanner.Models;
 using EnergonSoftware.BackpackPlanner.Models.Personal;
 
@@ -52,6 +52,20 @@ namespace EnergonSoftware.BackpackPlanner
         /// The singleton instance.
         /// </value>
         public static readonly BackpackPlannerState Instance = new BackpackPlannerState();
+
+        private ILogger _logger = new DebugLogger();
+
+        /// <summary>
+        /// Gets or sets the logger.
+        /// </summary>
+        /// <value>
+        /// The logger.
+        /// </value>
+        public ILogger Logger
+        {
+            get { return _logger; }
+            set { _logger = value ?? new DebugLogger(); }
+        }
 
         /// <summary>
         /// Gets the library settings.
@@ -86,7 +100,7 @@ namespace EnergonSoftware.BackpackPlanner
                 throw new InvalidOperationException("SQLite connection string is null!");
             }
 
-            Debug.WriteLine("Getting a new database connection...");
+            Logger.Debug("Getting a new database connection...");
             return _connectionPool.GetConnection(_connectionString);
         }
 
@@ -99,14 +113,14 @@ namespace EnergonSoftware.BackpackPlanner
         public async Task InitDatabaseAsync(ISQLitePlatform sqlitePlatform, string dbPath, string dbName)
         {
             if(null != _connectionPool) {
-                Debug.WriteLine("Connection pool already initialized!");
+                Logger.Warn("Connection pool already initialized!");
                 return;
             }
 
             _connectionString = new SQLiteConnectionString(Path.Combine(dbPath, dbName), true);
             _connectionPool = new SQLiteConnectionPool(sqlitePlatform);
 
-            Debug.WriteLine($"Initializing database at {_connectionString.ConnectionString}...");
+            Logger.Info($"Initializing database at {_connectionString.ConnectionString}...");
             using(SQLiteConnectionWithLock dbConnection = GetDatabaseConnection()) {
                 SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
 
@@ -118,11 +132,11 @@ namespace EnergonSoftware.BackpackPlanner
 
                 var databaseVersionTableInfo = dbConnection.GetTableInfo("DatabaseVersion");
                 if(!databaseVersionTableInfo.Any()) {
-                    Debug.WriteLine("New database!");
+                    Logger.Debug("Creating a new database...");
                     await DatabaseVersion.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
                 } else {
                     oldVersion = await DatabaseVersion.GetAsync(asyncDbConnection).ConfigureAwait(false);
-                    Debug.WriteLine($"Old database version: {oldVersion.Version}, current database version: {CurrentDatabaseVersion}");
+                    Logger.Debug($"Old database version: {oldVersion.Version}, current database version: {CurrentDatabaseVersion}");
                 }
 
                 // TODO: find a way to make this transactional

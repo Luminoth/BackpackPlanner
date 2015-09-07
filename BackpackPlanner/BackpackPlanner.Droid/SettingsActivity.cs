@@ -43,6 +43,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             InitSummaries();
         }
 
+        [Obsolete("deprecated")]
         public override bool OnPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference)
         {
             base.OnPreferenceTreeClick(preferenceScreen, preference);

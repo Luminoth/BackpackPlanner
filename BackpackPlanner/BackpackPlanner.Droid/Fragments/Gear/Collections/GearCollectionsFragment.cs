@@ -21,12 +21,11 @@ using Android.Widget;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
 {
-    public class GearCollectionsFragment : Android.Support.V4.App.Fragment
+    public class GearCollectionsFragment : BaseFragment
     {
-        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-        {
-            return inflater.Inflate(Resource.Layout.fragment_gear_collections, container, false);
-        }
+        public override int LayoutResource => Resource.Layout.fragment_gear_collections;
+
+        public override int TitleResource => Resource.String.title_gear_collections;
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
@@ -42,13 +41,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
             addGearCollectionButton.Click += (sender, args) => {
                 // TODO
             };
-        }
-
-        public override void OnResume()
-        {
-            base.OnResume();
-
-            Activity.Title = Resources.GetString(Resource.String.title_gear_collections);
         }
     }
 }

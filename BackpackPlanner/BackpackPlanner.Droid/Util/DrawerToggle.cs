@@ -24,6 +24,12 @@ using Android.Views;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Util
 {
+    /// <summary>
+    /// Utility class to turn ActionBarDrawerToggle callbacks into events
+    /// </summary>
+    /// <remarks>
+    /// https://github.com/jamesmontemagno/Xamarin.Android-AppCompat/blob/master/ActionBarCompat/DrawerLayout/Helpers/MyActionBarDrawerToggle.cs
+    /// </remarks>
     public class DrawerToggle : ActionBarDrawerToggle
     {
 #region Events

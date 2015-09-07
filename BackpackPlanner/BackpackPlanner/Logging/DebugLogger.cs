@@ -1,4 +1,4 @@
-/*
+﻿/*
    Copyright 2015 Shane Lillie
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,24 +14,31 @@
    limitations under the License.
 */
 
-using System;
-
-using Android.Views;
-
-namespace EnergonSoftware.BackpackPlanner.Droid.Util
+namespace EnergonSoftware.BackpackPlanner.Logging
 {
     /// <summary>
-    /// Utility class to turn ActionBarDrawerToggle callbacks into events
+    /// A logger that writes to System.Diagnostics.Debug
     /// </summary>
-    /// <remarks>
-    /// https://github.com/jamesmontemagno/Xamarin.Android-AppCompat/blob/master/ActionBarCompat/DrawerLayout/Helpers/MyActionBarDrawerToggle.cs
-    /// </remarks>
-    public sealed class DrawerToggleEventArgs : EventArgs
+    public class DebugLogger : ILogger
     {
-        public View DrawerView { get; set; }
+        public void Debug(string message)
+        {
+            System.Diagnostics.Debug.WriteLine(message);
+        }
 
-        public float SlideOffset { get; set; }
+        public void Info(string message)
+        {
+            System.Diagnostics.Debug.WriteLine(message);
+        }
 
-        public int NewState { get; set; }
+        public void Warn(string message)
+        {
+            System.Diagnostics.Debug.WriteLine(message);
+        }
+
+        public void Error(string message)
+        {
+            System.Diagnostics.Debug.WriteLine(message);
+        }
     }
 }

@@ -33,18 +33,15 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 
         public int DefaultSelectedResId { get; set; }
 
-        public bool DrawerIndicatorEnabled
-        {
-            get { return _drawerToggle.DrawerIndicatorEnabled; }
-            set { _drawerToggle.DrawerIndicatorEnabled = value; }
-        }
+        public DrawerLayout Layout { get; private set; }
+
+        public DrawerToggle Toggle { get; private set; }
+
+        public NavigationView NavView { get; private set; }
+
+        public TextView HeaderText { get; private set; }
 
         private AppCompatActivity _activity;
-
-        private DrawerLayout _drawerLayout;
-        private DrawerToggle _drawerToggle;
-        private NavigationView _navigation;
-        private TextView _navigationHeaderText;
 
         private int _selectedResId;
 
@@ -69,19 +66,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
             }
         }
 
-        public void SyncState()
-        {
-            _drawerToggle.SyncState();
-        }
-
         public void OnConfigurationChanged(Configuration newConfig)
         {
-            _drawerToggle.OnConfigurationChanged(newConfig);
+            Toggle.OnConfigurationChanged(newConfig);
         }
 
         public bool OnOptionsItemSelected(IMenuItem item)
         {
-            return _drawerToggle.OnOptionsItemSelected(item);
+            return Toggle.OnOptionsItemSelected(item);
         }
 
         public void OnSaveInstanceState(Bundle outState)
@@ -89,41 +81,36 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
             outState.PutInt(StateSelectedResId, _selectedResId);
         }
 
-        public void UpdateNavigationHeaderText(string text)
-        {
-            _navigationHeaderText.Text = text;
-        }
-
         public void SelectItemByResId(int resId)
         {
-            _navigation.Menu.PerformIdentifierAction(resId, 0);
+            NavView.Menu.PerformIdentifierAction(resId, 0);
         }
 
         public void SetGroupCheckable(int group, bool checkable, bool exclusive)
         {
-            _navigation.Menu.SetGroupCheckable(group, checkable, exclusive);
+            NavView.Menu.SetGroupCheckable(group, checkable, exclusive);
         }
 
         private void InitNavigation()
         {
-            _navigation = _activity.FindViewById<NavigationView>(Resource.Id.navigation);
-            _navigation.NavigationItemSelected += (sender, args) => {
+            NavView = _activity.FindViewById<NavigationView>(Resource.Id.navigation);
+            NavView.NavigationItemSelected += (sender, args) => {
                 _selectedResId = args.MenuItem.ItemId;
 
-                _drawerLayout.CloseDrawers();
+                Layout.CloseDrawers();
                 NavigationItemSelected?.Invoke(sender, args);
             };
 
-            _navigationHeaderText = _activity.FindViewById<TextView>(Resource.Id.navigation_header_text);
+            HeaderText = _activity.FindViewById<TextView>(Resource.Id.navigation_header_text);
         }
 
         private void InitDrawer(Android.Support.V7.Widget.Toolbar toolbar)
         {
-            _drawerLayout = _activity.FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
+            Layout = _activity.FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
 
-            _drawerToggle = new DrawerToggle(_activity, _drawerLayout, toolbar, Resource.String.drawer_open, Resource.String.drawer_close);
-            _drawerToggle.SyncState();
-            _drawerLayout.SetDrawerListener(_drawerToggle);
+            Toggle = new DrawerToggle(_activity, Layout, toolbar, Resource.String.drawer_open, Resource.String.drawer_close);
+            Toggle.SyncState();
+            Layout.SetDrawerListener(Toggle);
         }
     }
 }

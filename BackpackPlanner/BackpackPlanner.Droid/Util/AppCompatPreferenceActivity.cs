@@ -26,6 +26,12 @@ using Java.Lang;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Util
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <remarks>
+    /// https://github.com/android/platform_development/blob/master/samples/Support7Demos/src/com/example/android/supportv7/app/AppCompatPreferenceActivity.java
+    /// </remarks>
     public class AppCompatPreferenceActivity : PreferenceActivity
     {
         private AppCompatDelegate _delegate;

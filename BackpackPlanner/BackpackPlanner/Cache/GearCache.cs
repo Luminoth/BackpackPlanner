@@ -16,7 +16,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -47,12 +46,12 @@ namespace EnergonSoftware.BackpackPlanner.Cache
         public static async Task InitDatabaseAsync(SQLiteAsyncConnection asyncDbConnection, int oldVersion, int newVersion)
         {
             if(oldVersion >= newVersion) {
-                Debug.WriteLine("Database versions match, nothing to do for gear cache update...");
+                BackpackPlannerState.Instance.Logger.Debug("Database versions match, nothing to do for gear cache update...");
                 return;
             }
 
             if(oldVersion < 1 && newVersion >= 1) {
-                Debug.WriteLine("Creating gear cache tables...");
+                BackpackPlannerState.Instance.Logger.Debug("Creating gear cache tables...");
                 await GearItem.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
                 await GearSystem.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
                 await GearCollection.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
@@ -92,7 +91,7 @@ namespace EnergonSoftware.BackpackPlanner.Cache
         {
             _gearItemCache.Clear();
 
-            Debug.WriteLine("Loading gear item cache...");
+            BackpackPlannerState.Instance.Logger.Debug("Loading gear item cache...");
             using(SQLiteConnectionWithLock dbConnection = BackpackPlannerState.Instance.GetDatabaseConnection()) {
                 SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
 
@@ -195,7 +194,7 @@ namespace EnergonSoftware.BackpackPlanner.Cache
         {
             _gearSystemCache.Clear();
 
-            Debug.WriteLine("Loading gear system cache...");
+            BackpackPlannerState.Instance.Logger.Debug("Loading gear system cache...");
             using(SQLiteConnectionWithLock dbConnection = BackpackPlannerState.Instance.GetDatabaseConnection()) {
                 SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
 
@@ -298,7 +297,7 @@ namespace EnergonSoftware.BackpackPlanner.Cache
         {
             _gearCollectionCache.Clear();
 
-            Debug.WriteLine("Loading gear collection cache...");
+            BackpackPlannerState.Instance.Logger.Debug("Loading gear collection cache...");
             using(SQLiteConnectionWithLock dbConnection = BackpackPlannerState.Instance.GetDatabaseConnection()) {
                 SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
 

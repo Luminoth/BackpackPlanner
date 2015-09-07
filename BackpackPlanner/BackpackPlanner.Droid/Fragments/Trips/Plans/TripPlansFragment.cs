@@ -21,12 +21,11 @@ using Android.Widget;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
 {
-    public class TripPlansFragment : Android.Support.V4.App.Fragment
+    public class TripPlansFragment : BaseFragment
     {
-        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-        {
-            return inflater.Inflate(Resource.Layout.fragment_trip_plans, container, false);
-        }
+        public override int LayoutResource => Resource.Layout.fragment_trip_plans;
+
+        public override int TitleResource => Resource.String.title_trip_plans;
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
@@ -41,13 +40,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
             addTripPlanButton.Click += (sender, args) => {
                 // TODO
             };
-        }
-
-        public override void OnResume()
-        {
-            base.OnResume();
-
-            Activity.Title = Resources.GetString(Resource.String.title_trip_plans);
         }
     }
 }

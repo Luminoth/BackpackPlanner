@@ -43,6 +43,8 @@
     <Compile Include="Currency.cs" />
     <Compile Include="Cache\GearCache.cs" />
     <Compile Include="BackpackPlannerSettings.cs" />
+    <Compile Include="Logging\DebugLogger.cs" />
+    <Compile Include="Logging\Logger.cs" />
     <Compile Include="Models\DatabaseVersion.cs" />
     <Compile Include="Models\Gear\Collections\GearCollectionGearItem.cs" />
     <Compile Include="Models\Gear\Collections\GearCollectionGearSystem.cs" />

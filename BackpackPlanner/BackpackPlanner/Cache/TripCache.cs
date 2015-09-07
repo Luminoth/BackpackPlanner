@@ -15,7 +15,6 @@
 */
 
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries;
@@ -44,12 +43,12 @@ namespace EnergonSoftware.BackpackPlanner.Cache
         public static async Task InitDatabaseAsync(SQLiteAsyncConnection asyncDbConnection, int oldVersion, int newVersion)
         {
             if(oldVersion >= newVersion) {
-                Debug.WriteLine("Database versions match, nothing to do for trip cache update...");
+                BackpackPlannerState.Instance.Logger.Debug("Database versions match, nothing to do for trip cache update...");
                 return;
             }
 
             if(oldVersion < 2 && newVersion >= 2) {
-                Debug.WriteLine("Creating trip cache tables...");
+                BackpackPlannerState.Instance.Logger.Debug("Creating trip cache tables...");
                 await TripItinerary.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
                 await TripPlan.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
             }
@@ -79,7 +78,7 @@ namespace EnergonSoftware.BackpackPlanner.Cache
         {
             _tripItineraryCache.Clear();
 
-            Debug.WriteLine("Loading trip itinerary cache...");
+            BackpackPlannerState.Instance.Logger.Debug("Loading trip itinerary cache...");
             using(SQLiteConnectionWithLock dbConnection = BackpackPlannerState.Instance.GetDatabaseConnection()) {
                 SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
 
@@ -96,7 +95,7 @@ namespace EnergonSoftware.BackpackPlanner.Cache
         {
             _tripPlanCache.Clear();
 
-            Debug.WriteLine("Loading trip plan cache...");
+            BackpackPlannerState.Instance.Logger.Debug("Loading trip plan cache...");
             using(SQLiteConnectionWithLock dbConnection = BackpackPlannerState.Instance.GetDatabaseConnection()) {
                 SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
 

@@ -23,12 +23,11 @@ using HockeyApp;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 {
-    public class HelpFragment : Android.Support.V4.App.Fragment
+    public class HelpFragment : BaseFragment
     {
-        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-        {
-            return inflater.Inflate(Resource.Layout.fragment_help, container, false);
-        }
+        public override int LayoutResource => Resource.Layout.fragment_help;
+
+        public override int TitleResource => Resource.String.title_help;
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
@@ -39,13 +38,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                 Log.Debug(MainActivity.LogTag, "Showing feedback activity");
                 FeedbackManager.ShowFeedbackActivity(Activity);
             };
-        }
-
-        public override void OnResume()
-        {
-            base.OnResume();
-
-            Activity.Title = Resources.GetString(Resource.String.title_help);
         }
     }
 }

@@ -52,13 +52,13 @@
     <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
     <BundleAssemblies>False</BundleAssemblies>
     <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
-    <AndroidSupportedAbis>armeabi</AndroidSupportedAbis>
+    <AndroidSupportedAbis>armeabi,armeabi-v7a,x86</AndroidSupportedAbis>
     <AndroidStoreUncompressedFileExtensions />
     <MandroidI18n />
     <Debugger>Xamarin</Debugger>
     <AotAssemblies>True</AotAssemblies>
     <EnableLLVM>True</EnableLLVM>
-    <AndroidEnableMultiDex>True</AndroidEnableMultiDex>
+    <AndroidEnableMultiDex>False</AndroidEnableMultiDex>
     <EnableProguard>True</EnableProguard>
     <DevInstrumentationEnabled>False</DevInstrumentationEnabled>
   </PropertyGroup>
@@ -115,6 +115,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Fragments\BaseFragment.cs" />
     <Compile Include="Fragments\Gear\Items\AddGearItemFragment.cs" />
     <Compile Include="Fragments\Util\DatePickerFragment.cs" />
     <Compile Include="Fragments\Gear\Collections\GearCollectionsFragment.cs" />
@@ -123,6 +124,7 @@
     <Compile Include="Fragments\Meals\MealsFragment.cs" />
     <Compile Include="Fragments\Trips\Itineraries\TripItinerariesFragment.cs" />
     <Compile Include="Fragments\Trips\Plans\TripPlansFragment.cs" />
+    <Compile Include="Logging\DroidLogger.cs" />
     <Compile Include="SettingsActivity.cs" />
     <Compile Include="Util\AppCompatPreferenceActivity.cs" />
     <Compile Include="Util\DrawerToggle.cs" />
@@ -136,6 +138,8 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <ProguardConfiguration Include="proguard.cfg" />
+    <None Include="README.md" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml" />
     <None Include="Assets\AboutAssets.txt" />
