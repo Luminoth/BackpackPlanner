@@ -36,6 +36,7 @@ using EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans;
 using EnergonSoftware.BackpackPlanner.Droid.Logging;
 using EnergonSoftware.BackpackPlanner.Droid.Util;
 using EnergonSoftware.BackpackPlanner.Models.Personal;
+using EnergonSoftware.BackpackPlanner.Units;
 
 using SQLite.Net.Platform.XamarinAndroid;
 
@@ -163,9 +164,24 @@ namespace EnergonSoftware.BackpackPlanner.Droid
         {
             ISharedPreferences sharedPreferences = PreferenceManager.GetDefaultSharedPreferences(this);
 
-            BackpackPlannerState.Instance.PersonalInformation.Name = sharedPreferences.GetString(PersonalInformation.NamePreferenceKey, "");
-
             string scratch;
+
+            // NOTE: have to read these settings first so we know how to interpret everything else
+            try {
+                scratch = sharedPreferences.GetString(BackpackPlannerSettings.UnitSystemPreferenceKey, "0");
+                BackpackPlannerState.Instance.Settings.Units = (UnitSystem)Convert.ToInt32(scratch);
+            } catch(FormatException) {
+                // it's k, we'll live
+            }
+
+            try {
+                scratch = sharedPreferences.GetString(BackpackPlannerSettings.CurrencyPreferenceKey, "0");
+                BackpackPlannerState.Instance.Settings.Currency = (Currency)Convert.ToInt32(scratch);
+            } catch(FormatException) {
+                // it's k, we'll live
+            }
+
+            BackpackPlannerState.Instance.PersonalInformation.Name = sharedPreferences.GetString(PersonalInformation.NamePreferenceKey, "");
 
             try {
                 scratch = sharedPreferences.GetString(PersonalInformation.DateOfBirthPreferenceKey, "");
@@ -185,28 +201,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
             try {
                 scratch = sharedPreferences.GetString(PersonalInformation.HeightPreferenceKey, "0");
-                BackpackPlannerState.Instance.PersonalInformation.HeightInCm = Convert.ToInt32(scratch);
+                BackpackPlannerState.Instance.PersonalInformation.HeightInUnits = Convert.ToInt32(scratch);
             } catch(FormatException) {
                 // it's k, we'll live
             }
 
             try {
                 scratch = sharedPreferences.GetString(PersonalInformation.WeightPreferenceKey, "0");
-                BackpackPlannerState.Instance.PersonalInformation.WeightInGrams = Convert.ToInt32(scratch);
-            } catch(FormatException) {
-                // it's k, we'll live
-            }
-
-            try {
-                scratch = sharedPreferences.GetString(BackpackPlannerSettings.UnitSystemPreferenceKey, "0");
-                BackpackPlannerState.Instance.Settings.Units = (UnitSystem)Convert.ToInt32(scratch);
-            } catch(FormatException) {
-                // it's k, we'll live
-            }
-
-            try {
-                scratch = sharedPreferences.GetString(BackpackPlannerSettings.CurrencyPreferenceKey, "0");
-                BackpackPlannerState.Instance.Settings.Currency = (Currency)Convert.ToInt32(scratch);
+                BackpackPlannerState.Instance.PersonalInformation.WeightInUnits = Convert.ToInt32(scratch);
             } catch(FormatException) {
                 // it's k, we'll live
             }

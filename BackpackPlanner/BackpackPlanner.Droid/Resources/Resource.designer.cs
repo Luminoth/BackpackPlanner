@@ -2735,14 +2735,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f06003e
 			public const int drawer_open = 2131099710;
 			
-			// aapt resource value: 0x7f06005f
-			public const int label_birthdate = 2131099743;
+			// aapt resource value: 0x7f060060
+			public const int label_birthdate = 2131099744;
 			
-			// aapt resource value: 0x7f060069
-			public const int label_currency = 2131099753;
+			// aapt resource value: 0x7f06006a
+			public const int label_currency = 2131099754;
 			
-			// aapt resource value: 0x7f06006b
-			public const int label_feedback = 2131099755;
+			// aapt resource value: 0x7f06006c
+			public const int label_feedback = 2131099756;
 			
 			// aapt resource value: 0x7f060054
 			public const int label_gear_collections = 2131099732;
@@ -2753,14 +2753,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f060052
 			public const int label_gear_systems = 2131099730;
 			
-			// aapt resource value: 0x7f060063
-			public const int label_height = 2131099747;
+			// aapt resource value: 0x7f060064
+			public const int label_height = 2131099748;
 			
 			// aapt resource value: 0x7f060056
 			public const int label_meals = 2131099734;
 			
-			// aapt resource value: 0x7f06005d
-			public const int label_name = 2131099741;
+			// aapt resource value: 0x7f06005e
+			public const int label_name = 2131099742;
 			
 			// aapt resource value: 0x7f060055
 			public const int label_no_gear_collections = 2131099733;
@@ -2780,6 +2780,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f06005b
 			public const int label_no_trip_plans = 2131099739;
 			
+			// aapt resource value: 0x7f06005d
+			public const int label_personal_information = 2131099741;
+			
 			// aapt resource value: 0x7f060041
 			public const int label_reset = 2131099713;
 			
@@ -2792,14 +2795,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f06005a
 			public const int label_trip_plans = 2131099738;
 			
-			// aapt resource value: 0x7f060067
-			public const int label_unit_system = 2131099751;
+			// aapt resource value: 0x7f060068
+			public const int label_unit_system = 2131099752;
 			
-			// aapt resource value: 0x7f060061
-			public const int label_user_sex = 2131099745;
+			// aapt resource value: 0x7f060062
+			public const int label_user_sex = 2131099746;
 			
-			// aapt resource value: 0x7f060065
-			public const int label_weight = 2131099749;
+			// aapt resource value: 0x7f060066
+			public const int label_weight = 2131099750;
 			
 			// aapt resource value: 0x7f060039
 			public const int status_bar_notification_info_overflow = 2131099705;
@@ -2810,26 +2813,26 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f060022
 			public const int store_picture_title = 2131099682;
 			
-			// aapt resource value: 0x7f060060
-			public const int summary_birthdate = 2131099744;
+			// aapt resource value: 0x7f060061
+			public const int summary_birthdate = 2131099745;
 			
-			// aapt resource value: 0x7f06006a
-			public const int summary_currency = 2131099754;
+			// aapt resource value: 0x7f06006b
+			public const int summary_currency = 2131099755;
 			
-			// aapt resource value: 0x7f060064
-			public const int summary_height = 2131099748;
+			// aapt resource value: 0x7f060065
+			public const int summary_height = 2131099749;
 			
-			// aapt resource value: 0x7f06005e
-			public const int summary_name = 2131099742;
+			// aapt resource value: 0x7f06005f
+			public const int summary_name = 2131099743;
 			
-			// aapt resource value: 0x7f060068
-			public const int summary_unit_system = 2131099752;
+			// aapt resource value: 0x7f060069
+			public const int summary_unit_system = 2131099753;
 			
-			// aapt resource value: 0x7f060062
-			public const int summary_user_sex = 2131099746;
+			// aapt resource value: 0x7f060063
+			public const int summary_user_sex = 2131099747;
 			
-			// aapt resource value: 0x7f060066
-			public const int summary_weight = 2131099750;
+			// aapt resource value: 0x7f060067
+			public const int summary_weight = 2131099751;
 			
 			// aapt resource value: 0x7f060047
 			public const int title_add_gear_collection = 2131099719;

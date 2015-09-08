@@ -16,7 +16,7 @@
 
 using EnergonSoftware.BackpackPlanner.Util;
 
-namespace EnergonSoftware.BackpackPlanner
+namespace EnergonSoftware.BackpackPlanner.Units
 {
     /// <summary>
     /// 

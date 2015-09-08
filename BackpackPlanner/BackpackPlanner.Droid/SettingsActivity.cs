@@ -25,6 +25,7 @@ using Android.Views;
 
 using EnergonSoftware.BackpackPlanner.Droid.Util;
 using EnergonSoftware.BackpackPlanner.Models.Personal;
+using EnergonSoftware.BackpackPlanner.Units;
 
 namespace EnergonSoftware.BackpackPlanner.Droid
 {
@@ -40,6 +41,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
             InitToolBar();
 
+            InitLabels();
             InitSummaries();
         }
 
@@ -109,6 +111,22 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             };
         }
 
+#region Labels
+        private void SetHeightLabel()
+        {
+            EditTextPreference heightPreference = (EditTextPreference)FindPreference(PersonalInformation.HeightPreferenceKey);
+            heightPreference.Title = Resources.GetString(Resource.String.label_height)
+                + " " + BackpackPlannerState.Instance.Settings.Units.GetSmallLengthString();
+        }
+
+        private void SetWeightLabel()
+        {
+            EditTextPreference weightPreference = (EditTextPreference)FindPreference(PersonalInformation.WeightPreferenceKey);
+            weightPreference.Title = Resources.GetString(Resource.String.label_weight)
+                + " " + BackpackPlannerState.Instance.Settings.Units.GetSmallWeightString();
+        }
+#endregion
+
 #region Summaries
         private void SetNameSummary()
         {
@@ -135,13 +153,15 @@ namespace EnergonSoftware.BackpackPlanner.Droid
         private void SetHeightSummary()
         {
             EditTextPreference heightPreference = (EditTextPreference)FindPreference(PersonalInformation.HeightPreferenceKey);
-            heightPreference.Summary = BackpackPlannerState.Instance.PersonalInformation.HeightInCm.ToString();
+            heightPreference.Summary = BackpackPlannerState.Instance.PersonalInformation.HeightInUnits.ToString("N2", CultureInfo.InvariantCulture)
+                + " " + BackpackPlannerState.Instance.Settings.Units.GetSmallLengthString();
         }
 
         private void SetWeightSummary()
         {
             EditTextPreference weightPreference = (EditTextPreference)FindPreference(PersonalInformation.WeightPreferenceKey);
-            weightPreference.Summary = BackpackPlannerState.Instance.PersonalInformation.WeightInGrams.ToString();
+            weightPreference.Summary = BackpackPlannerState.Instance.PersonalInformation.WeightInUnits.ToString("N2", CultureInfo.InvariantCulture)
+                + " " + BackpackPlannerState.Instance.Settings.Units.GetSmallWeightString();
         }
 
         private void SetUnitSystemSummary()
@@ -156,6 +176,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             currencyPreference.Summary = Resources.GetStringArray(Resource.Array.currency_entries)[(int)BackpackPlannerState.Instance.Settings.Currency];
         }
 #endregion
+
+        private void InitLabels()
+        {
+            SetHeightLabel();
+            SetWeightLabel();
+        }
 
         private void InitSummaries()
         {
@@ -190,18 +216,25 @@ namespace EnergonSoftware.BackpackPlanner.Droid
                 break;
             case PersonalInformation.HeightPreferenceKey:
                 EditTextPreference heightPreference = (EditTextPreference)FindPreference(key);
-                //BackpackPlannerState.Instance.PersonalInformation.HeightInCm = Convert.ToInt32(heightPreference.Text);
+                BackpackPlannerState.Instance.PersonalInformation.HeightInUnits = Convert.ToInt32(heightPreference.Text);
                 SetHeightSummary();
                 break;
             case PersonalInformation.WeightPreferenceKey:
                 EditTextPreference weightPreference = (EditTextPreference)FindPreference(key);
-                //BackpackPlannerState.Instance.PersonalInformation.WeightInGrams = Convert.ToInt32(weightPreference.Text);
+                BackpackPlannerState.Instance.PersonalInformation.WeightInUnits = Convert.ToInt32(weightPreference.Text);
                 SetWeightSummary();
                 break;
             case BackpackPlannerSettings.UnitSystemPreferenceKey:
                 ListPreference unitSystemPreference = (ListPreference)FindPreference(key);
                 BackpackPlannerState.Instance.Settings.Units = (UnitSystem)Convert.ToInt32(unitSystemPreference.Value);
                 SetUnitSystemSummary();
+
+                // TODO: package these up in a single method call?
+                SetHeightLabel();
+                SetHeightSummary();
+
+                SetWeightLabel();
+                SetWeightSummary();
                 break;
             case BackpackPlannerSettings.CurrencyPreferenceKey:
                 ListPreference currencyPreference = (ListPreference)FindPreference(key);

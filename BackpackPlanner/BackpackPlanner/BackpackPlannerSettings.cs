@@ -14,6 +14,8 @@
    limitations under the License.
 */
 
+using EnergonSoftware.BackpackPlanner.Units;
+
 namespace EnergonSoftware.BackpackPlanner
 {
     /// <summary>

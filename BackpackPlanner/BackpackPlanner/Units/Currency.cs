@@ -16,29 +16,17 @@
 
 using EnergonSoftware.BackpackPlanner.Util;
 
-namespace EnergonSoftware.BackpackPlanner
+namespace EnergonSoftware.BackpackPlanner.Units
 {
     /// <summary>
     /// 
     /// </summary>
-    public enum WeightClass
+    public enum Currency
     {
         /// <summary>
-        /// The ultralight weight class
+        /// The united states dollar
         /// </summary>
-        [Description("Ultralight")]
-        Ultralight,
-
-        /// <summary>
-        /// The lightweight weight class
-        /// </summary>
-        [Description("Lightweight")]
-        Lightweight,
-
-        /// <summary>
-        /// The traditional weight class
-        /// </summary>
-        [Description("Traditional")]
-        Traditional
+        [Description("United States Dollar")]
+        UnitedStatesDollar = 0
     }
 }

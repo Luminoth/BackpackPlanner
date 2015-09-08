@@ -16,17 +16,23 @@
 
 using EnergonSoftware.BackpackPlanner.Util;
 
-namespace EnergonSoftware.BackpackPlanner
+namespace EnergonSoftware.BackpackPlanner.Units
 {
     /// <summary>
     /// 
     /// </summary>
-    public enum Currency
+    public enum UnitSystem
     {
         /// <summary>
-        /// The united states dollar
+        /// The metric system
         /// </summary>
-        [Description("United States Dollar")]
-        UnitedStatesDollar = 0
+        [Description("Metric")]
+        Metric = 0,
+
+        /// <summary>
+        /// The united states system
+        /// </summary>
+        [Description("United States")]
+        UnitedStates = 1
     }
 }

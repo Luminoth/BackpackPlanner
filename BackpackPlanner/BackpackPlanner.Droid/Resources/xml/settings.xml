@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
     <PreferenceScreen
         android:key="personalInformation"
-        android:title="@string/title_personal_information"
+        android:title="@string/label_personal_information"
         android:persistent="false">
         <EditTextPreference android:title="@string/label_name"
             android:key="personalInformationName"

@@ -15,6 +15,7 @@
 */
 
 using System;
+using EnergonSoftware.BackpackPlanner.Units;
 
 namespace EnergonSoftware.BackpackPlanner.Models.Personal
 {
@@ -88,6 +89,18 @@ namespace EnergonSoftware.BackpackPlanner.Models.Personal
             set { _heightInCm = value < 0 ? 0 : value; }
         }
 
+        /// <summary>
+        /// Gets or sets the user's height in length units.
+        /// </summary>
+        /// <value>
+        /// The user's height in length units.
+        /// </value>
+        public double HeightInUnits
+        {
+            get { return BackpackPlannerState.Instance.Settings.Units.LengthFromCentimeters(_heightInCm); }
+            set { _heightInCm = (int)BackpackPlannerState.Instance.Settings.Units.CentimetersFromLength(value); }
+        }
+
         private int _weightInGrams;
 
         /// <summary>
@@ -100,6 +113,18 @@ namespace EnergonSoftware.BackpackPlanner.Models.Personal
         {
             get { return _weightInGrams; }
             set { _weightInGrams = value < 0 ? 0 : value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the user's weight in weight units.
+        /// </summary>
+        /// <value>
+        /// The user's weight in weight units.
+        /// </value>
+        public double WeightInUnits
+        {
+            get { return BackpackPlannerState.Instance.Settings.Units.WeightFromGrams(_weightInGrams); }
+            set { _weightInGrams = (int)BackpackPlannerState.Instance.Settings.Units.GramsFromWeight(value); }
         }
     }
 }
