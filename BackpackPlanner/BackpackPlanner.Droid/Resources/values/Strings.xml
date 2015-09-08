@@ -32,6 +32,9 @@
     <string name="label_gear_items">What is a gear item?</string>
     <string name="label_no_gear_items">You have no gear items! Try adding one!</string>
 
+    <string name="label_gear_item_name">Name</string>
+    <string name="label_add_gear_item">Add Gear Item</string>
+
     <string name="label_gear_systems">What is a gear system?</string>
     <string name="label_no_gear_systems">You have no gear systems! Try adding one!</string>
 
