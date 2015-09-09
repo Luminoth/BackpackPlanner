@@ -162,6 +162,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
         private void LoadPreferences()
         {
+            PreferenceManager.SetDefaultValues(this, Resource.Xml.settings, false);
+
             ISharedPreferences sharedPreferences = PreferenceManager.GetDefaultSharedPreferences(this);
 
             string scratch;

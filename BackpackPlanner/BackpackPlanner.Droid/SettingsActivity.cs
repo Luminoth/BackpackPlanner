@@ -115,14 +115,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid
         private void SetHeightLabel()
         {
             EditTextPreference heightPreference = (EditTextPreference)FindPreference(PersonalInformation.HeightPreferenceKey);
-            heightPreference.Title = Resources.GetString(Resource.String.label_height)
+            heightPreference.DialogTitle = heightPreference.Title = Resources.GetString(Resource.String.label_height)
                 + " " + BackpackPlannerState.Instance.Settings.Units.GetSmallLengthString();
         }
 
         private void SetWeightLabel()
         {
             EditTextPreference weightPreference = (EditTextPreference)FindPreference(PersonalInformation.WeightPreferenceKey);
-            weightPreference.Title = Resources.GetString(Resource.String.label_weight)
+            weightPreference.DialogTitle = weightPreference.Title = Resources.GetString(Resource.String.label_weight)
                 + " " + BackpackPlannerState.Instance.Settings.Units.GetSmallWeightString();
         }
 #endregion
@@ -153,14 +153,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid
         private void SetHeightSummary()
         {
             EditTextPreference heightPreference = (EditTextPreference)FindPreference(PersonalInformation.HeightPreferenceKey);
-            heightPreference.Summary = BackpackPlannerState.Instance.PersonalInformation.HeightInUnits.ToString("N2", CultureInfo.InvariantCulture)
+            heightPreference.Summary = BackpackPlannerState.Instance.PersonalInformation.HeightInUnits.ToString("N0", CultureInfo.InvariantCulture)
                 + " " + BackpackPlannerState.Instance.Settings.Units.GetSmallLengthString();
         }
 
         private void SetWeightSummary()
         {
             EditTextPreference weightPreference = (EditTextPreference)FindPreference(PersonalInformation.WeightPreferenceKey);
-            weightPreference.Summary = BackpackPlannerState.Instance.PersonalInformation.WeightInUnits.ToString("N2", CultureInfo.InvariantCulture)
+            weightPreference.Summary = BackpackPlannerState.Instance.PersonalInformation.WeightInUnits.ToString("N0", CultureInfo.InvariantCulture)
                 + " " + BackpackPlannerState.Instance.Settings.Units.GetSmallWeightString();
         }
 
