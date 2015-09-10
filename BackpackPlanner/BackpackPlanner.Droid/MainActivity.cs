@@ -80,8 +80,18 @@ namespace EnergonSoftware.BackpackPlanner.Droid
                     : "Backpacking Planner";
 
             SupportFragmentManager.BackStackChanged += (sender, args) => {
-                _navigationDrawerManager.Toggle.DrawerIndicatorEnabled = SupportFragmentManager.BackStackEntryCount < 1;
-                SupportActionBar.SetDisplayHomeAsUpEnabled(SupportFragmentManager.BackStackEntryCount > 0);
+                if(SupportFragmentManager.BackStackEntryCount > 0) {
+                    _navigationDrawerManager.Toggle.DrawerIndicatorEnabled = false;
+                    _navigationDrawerManager.LockDrawer(false);
+
+                    SupportActionBar.SetDisplayHomeAsUpEnabled(true);
+                } else {
+                    _navigationDrawerManager.Toggle.DrawerIndicatorEnabled = true;
+                    _navigationDrawerManager.UnlockDrawer();
+
+                    SupportActionBar.SetDisplayHomeAsUpEnabled(false);
+                }
+
                 _navigationDrawerManager.Toggle.SyncState();
             };
 

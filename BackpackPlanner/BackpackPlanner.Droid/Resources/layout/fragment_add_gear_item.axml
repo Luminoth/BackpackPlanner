@@ -89,5 +89,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="@string/label_add_gear_item" />
+        android:text="@string/label_add_gear_item"
+        android:textColor="@android:color/white" />
 </RelativeLayout>

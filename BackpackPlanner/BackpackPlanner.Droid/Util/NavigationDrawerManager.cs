@@ -91,6 +91,16 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
             NavView.Menu.SetGroupCheckable(group, checkable, exclusive);
         }
 
+        public void LockDrawer(bool open)
+        {
+            Layout.SetDrawerLockMode(open ? DrawerLayout.LockModeLockedOpen : DrawerLayout.LockModeLockedClosed);
+        }
+
+        public void UnlockDrawer()
+        {
+            Layout.SetDrawerLockMode(DrawerLayout.LockModeUnlocked);
+        }
+
         private void InitNavigation()
         {
             NavView = _activity.FindViewById<NavigationView>(Resource.Id.navigation);
