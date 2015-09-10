@@ -27,6 +27,9 @@ using Android.Widget;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Util
 {
+    /// <summary>
+    /// Helper to manage all of the NavigationDrawer controls
+    /// </summary>
     public class NavigationDrawerManager
     {
         private const string StateSelectedResId = "navigation_selected_resid";

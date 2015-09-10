@@ -10,9 +10,9 @@
         android:layout_height="match_parent">
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:id="@+id/gear_item_name">
             <EditText
-                android:id="@+id/gear_item_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/label_gear_item_name"
@@ -20,9 +20,9 @@
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:id="@+id/gear_item_make">
             <EditText
-                android:id="@+id/gear_item_make"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/label_gear_item_make"
@@ -30,9 +30,9 @@
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:id="@+id/gear_item_model">
             <EditText
-                android:id="@+id/gear_item_model"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/label_gear_item_model"
@@ -40,44 +40,81 @@
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:id="@+id/gear_item_website">
             <EditText
-                android:id="@+id/gear_item_website"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/label_gear_item_website"
                 android:inputType="textUri" />
         </android.support.design.widget.TextInputLayout>
-        <Spinner
+        <RadioGroup
             android:id="@+id/gear_item_carried"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <!-- TODO: consumable -->
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/gear_item_carried_carried"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/item_gear_item_carried"
+                android:checked="true" />
+            <RadioButton
+                android:id="@+id/gear_item_carried_worn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/item_gear_item_worn" />
+            <RadioButton
+                android:id="@+id/gear_item_carried_not_carried"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/item_gear_item_not_carried" />
+        </RadioGroup>
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/gear_item_consumable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_gear_item_consumable"
+            android:checked="false" />
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:id="@+id/gear_item_consumed"
+            android:visibility="gone">
             <EditText
-                android:id="@+id/gear_item_weight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/label_gear_item_consumed"
+                android:inputType="number"
+                android:text="1" />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/gear_item_weight">
+            <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/label_gear_item_weight"
-                android:inputType="number" />
+                android:inputType="number"
+                android:text="0" />
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:id="@+id/gear_item_cost">
             <EditText
-                android:id="@+id/gear_item_cost"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/label_gear_item_cost"
-                android:inputType="number" />
+                android:inputType="number"
+                android:text="0" />
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:id="@+id/gear_item_note">
             <EditText
-                android:id="@+id/gear_item_note"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/label_gear_item_note"

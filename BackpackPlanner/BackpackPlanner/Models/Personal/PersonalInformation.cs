@@ -97,7 +97,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Personal
         /// </value>
         public double HeightInUnits
         {
-            get { return BackpackPlannerState.Instance.Settings.Units.LengthFromCentimeters(_heightInCm); }
+            get { return BackpackPlannerState.Instance.Settings.Units.LengthFromCentimeters(HeightInCm); }
             set { _heightInCm = (int)BackpackPlannerState.Instance.Settings.Units.CentimetersFromLength(value); }
         }
 
@@ -123,7 +123,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Personal
         /// </value>
         public double WeightInUnits
         {
-            get { return BackpackPlannerState.Instance.Settings.Units.WeightFromGrams(_weightInGrams); }
+            get { return BackpackPlannerState.Instance.Settings.Units.WeightFromGrams(WeightInGrams); }
             set { _weightInGrams = (int)BackpackPlannerState.Instance.Settings.Units.GramsFromWeight(value); }
         }
     }

@@ -116,6 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fragments\BaseFragment.cs" />
+    <Compile Include="Fragments\DataFragment.cs" />
     <Compile Include="Fragments\Gear\Items\AddGearItemFragment.cs" />
     <Compile Include="Fragments\Util\DatePickerFragment.cs" />
     <Compile Include="Fragments\Gear\Collections\GearCollectionsFragment.cs" />
@@ -146,7 +147,7 @@
     <AndroidResource Include="Resources\values\colors.xml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\values-v21\styles.xml">
+    <AndroidResource Include="Resources\values-v21\themes.xml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\fragment_gear_items.axml">
@@ -201,7 +202,7 @@
     <AndroidResource Include="Resources\menu\drawer_view.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\values-v19\styles.xml" />
+    <AndroidResource Include="Resources\values-v19\themes.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-anydpi-v21\ic_settings.xml" />
@@ -276,6 +277,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_close.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\values\themes.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>

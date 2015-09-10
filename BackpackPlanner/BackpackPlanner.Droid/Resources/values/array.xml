@@ -1,11 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <resources>
-    <string-array name="gear_item_carried_entries">
-        <item>Carried</item>
-        <item>Not Carried</item>
-        <item>Worn</item>
-    </string-array>
-
     <string-array name="user_sex_entries">
         <item>Undeclared</item>
         <item>Male</item>

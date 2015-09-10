@@ -67,7 +67,7 @@ namespace EnergonSoftware.BackpackPlanner.Units
         /// <returns>The USDP from the given currency amount</returns>
         /// <exception cref="System.InvalidOperationException">Invalid unit system!</exception>
         // ReSharper disable once InconsistentNaming
-        public static double USDPFromCurrency(this Currency currency, int currencyAmount)
+        public static double USDPFromCurrency(this Currency currency, double currencyAmount)
         {
             switch(currency)
             {

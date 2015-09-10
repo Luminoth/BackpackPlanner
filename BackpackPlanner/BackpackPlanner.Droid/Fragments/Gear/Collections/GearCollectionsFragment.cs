@@ -32,10 +32,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
             base.OnViewCreated(view, savedInstanceState);
 
             TextView noGearCollectionsTextView = view.FindViewById<TextView>(Resource.Id.no_gear_collections);
-            // TODO
 
             ViewGroup gearCollectionsLayout = view.FindViewById<LinearLayout>(Resource.Id.gear_collections_layout);
-            gearCollectionsLayout.Visibility = ViewStates.Gone;
 
             FloatingActionButton addGearCollectionButton = view.FindViewById<FloatingActionButton>(Resource.Id.fab_add_gear_collection);
             addGearCollectionButton.Click += (sender, args) => {

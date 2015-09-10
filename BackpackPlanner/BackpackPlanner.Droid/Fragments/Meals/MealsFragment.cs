@@ -34,7 +34,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
             TextView noMealsTextView = view.FindViewById<TextView>(Resource.Id.no_meals);
 
             ViewGroup mealsLayout = view.FindViewById<LinearLayout>(Resource.Id.meals_layout);
-            mealsLayout.Visibility = ViewStates.Gone;
 
             FloatingActionButton addMealButton = view.FindViewById<FloatingActionButton>(Resource.Id.fab_add_meal);
             addMealButton.Click += (sender, args) => {

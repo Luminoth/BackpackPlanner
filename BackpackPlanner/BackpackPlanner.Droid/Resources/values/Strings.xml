@@ -36,6 +36,11 @@
     <string name="label_gear_item_make">Make</string>
     <string name="label_gear_item_model">Model</string>
     <string name="label_gear_item_website">Website</string>
+    <string name="item_gear_item_carried">Carried</string>
+    <string name="item_gear_item_not_carried">Not Carried</string>
+    <string name="item_gear_item_worn">Worn</string>
+    <string name="label_gear_item_consumable">Consumable</string>
+    <string name="label_gear_item_consumed">Consumed per day</string>
     <string name="label_gear_item_weight">Weight in</string>
     <string name="label_gear_item_cost">Cost in</string>
     <string name="label_gear_item_note">Note</string>

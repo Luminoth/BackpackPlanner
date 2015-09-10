@@ -34,7 +34,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
             TextView noGearSystemsTextView = view.FindViewById<TextView>(Resource.Id.no_gear_systems);
 
             ViewGroup gearSystemsLayout = view.FindViewById<LinearLayout>(Resource.Id.gear_systems_layout);
-            gearSystemsLayout.Visibility = ViewStates.Gone;
 
             FloatingActionButton addGearSystemButton = view.FindViewById<FloatingActionButton>(Resource.Id.fab_add_gear_system);
             addGearSystemButton.Click += (sender, args) => {

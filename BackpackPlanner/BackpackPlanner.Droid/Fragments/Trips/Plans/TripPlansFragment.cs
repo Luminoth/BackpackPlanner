@@ -34,7 +34,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
             TextView noTripPlansTextView = view.FindViewById<TextView>(Resource.Id.no_trip_plans);
 
             ViewGroup tripPlansLayout = view.FindViewById<LinearLayout>(Resource.Id.trip_plans_layout);
-            tripPlansLayout.Visibility = ViewStates.Gone;
 
             FloatingActionButton addTripPlanButton = view.FindViewById<FloatingActionButton>(Resource.Id.fab_add_trip_plan);
             addTripPlanButton.Click += (sender, args) => {

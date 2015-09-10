@@ -33,13 +33,33 @@ namespace EnergonSoftware.BackpackPlanner.Droid
     [Activity(Label = "@string/title_settings")]
     public class SettingsActivity : AppCompatPreferenceActivity, ISharedPreferencesOnSharedPreferenceChangeListener
     {
+#region Controls
+        private EditTextPreference _namePreference;
+        private EditTextPreference _birthDatePreference;
+        private ListPreference _userSexPreference;
+        private EditTextPreference _heightPreference;
+        private EditTextPreference _weightPreference;
+
+        private ListPreference _unitSystemPreference;
+        private ListPreference _currencyPreference;
+#endregion
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
+            InitToolBar();
+
             AddPreferencesFromResource(Resource.Xml.settings);
 
-            InitToolBar();
+            _namePreference = (EditTextPreference)FindPreference(PersonalInformation.NamePreferenceKey);
+            _birthDatePreference = (EditTextPreference)FindPreference(PersonalInformation.DateOfBirthPreferenceKey);
+            _userSexPreference = (ListPreference)FindPreference(PersonalInformation.UserSexPreferenceKey);
+            _heightPreference = (EditTextPreference)FindPreference(PersonalInformation.HeightPreferenceKey);
+            _weightPreference = (EditTextPreference)FindPreference(PersonalInformation.WeightPreferenceKey);
+
+            _unitSystemPreference = (ListPreference)FindPreference(BackpackPlannerSettings.UnitSystemPreferenceKey);
+            _currencyPreference = (ListPreference)FindPreference(BackpackPlannerSettings.CurrencyPreferenceKey);
 
             InitLabels();
             InitSummaries();
@@ -85,7 +105,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
             // then we can setup the home button
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
-            //SupportActionBar.SetHomeAsUpIndicator(Resource.Drawable.ic_close);
 
             // enable the home button to work
             toolbar.NavigationClick += (sender, args) => {
@@ -114,15 +133,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 #region Labels
         private void SetHeightLabel()
         {
-            EditTextPreference heightPreference = (EditTextPreference)FindPreference(PersonalInformation.HeightPreferenceKey);
-            heightPreference.DialogTitle = heightPreference.Title = Resources.GetString(Resource.String.label_height)
+            _heightPreference.DialogTitle = _heightPreference.Title = Resources.GetString(Resource.String.label_height)
                 + " " + BackpackPlannerState.Instance.Settings.Units.GetSmallLengthString();
         }
 
         private void SetWeightLabel()
         {
-            EditTextPreference weightPreference = (EditTextPreference)FindPreference(PersonalInformation.WeightPreferenceKey);
-            weightPreference.DialogTitle = weightPreference.Title = Resources.GetString(Resource.String.label_weight)
+            _weightPreference.DialogTitle = _weightPreference.Title = Resources.GetString(Resource.String.label_weight)
                 + " " + BackpackPlannerState.Instance.Settings.Units.GetSmallWeightString();
         }
 #endregion
@@ -130,50 +147,43 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 #region Summaries
         private void SetNameSummary()
         {
-            EditTextPreference namePreference = (EditTextPreference)FindPreference(PersonalInformation.NamePreferenceKey);
-            namePreference.Summary = string.IsNullOrWhiteSpace(BackpackPlannerState.Instance.PersonalInformation.Name)
+            _namePreference.Summary = string.IsNullOrWhiteSpace(BackpackPlannerState.Instance.PersonalInformation.Name)
                 ? Resources.GetString(Resource.String.summary_name)
                 : BackpackPlannerState.Instance.PersonalInformation.Name;
         }
 
         private void SetBirthDateSummary()
         {
-            EditTextPreference birthDatePreference = (EditTextPreference)FindPreference(PersonalInformation.DateOfBirthPreferenceKey);
-            birthDatePreference.Summary = null == BackpackPlannerState.Instance.PersonalInformation.DateOfBirth
+            _birthDatePreference.Summary = null == BackpackPlannerState.Instance.PersonalInformation.DateOfBirth
                 ? Resources.GetString(Resource.String.summary_birthdate)
                 : BackpackPlannerState.Instance.PersonalInformation.DateOfBirth.Value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
         }
 
         private void SetUserSexSummary()
         {
-            ListPreference userSexPreference = (ListPreference)FindPreference(PersonalInformation.UserSexPreferenceKey);
-            userSexPreference.Summary = Resources.GetStringArray(Resource.Array.user_sex_entries)[(int)BackpackPlannerState.Instance.PersonalInformation.Sex];
+            _userSexPreference.Summary = Resources.GetStringArray(Resource.Array.user_sex_entries)[(int)BackpackPlannerState.Instance.PersonalInformation.Sex];
         }
 
         private void SetHeightSummary()
         {
-            EditTextPreference heightPreference = (EditTextPreference)FindPreference(PersonalInformation.HeightPreferenceKey);
-            heightPreference.Summary = BackpackPlannerState.Instance.PersonalInformation.HeightInUnits.ToString("N0", CultureInfo.InvariantCulture)
+            _heightPreference.Summary = BackpackPlannerState.Instance.PersonalInformation.HeightInUnits.ToString("N0", CultureInfo.InvariantCulture)
                 + " " + BackpackPlannerState.Instance.Settings.Units.GetSmallLengthString();
         }
 
         private void SetWeightSummary()
         {
-            EditTextPreference weightPreference = (EditTextPreference)FindPreference(PersonalInformation.WeightPreferenceKey);
-            weightPreference.Summary = BackpackPlannerState.Instance.PersonalInformation.WeightInUnits.ToString("N0", CultureInfo.InvariantCulture)
+            _weightPreference.Summary = BackpackPlannerState.Instance.PersonalInformation.WeightInUnits.ToString("N0", CultureInfo.InvariantCulture)
                 + " " + BackpackPlannerState.Instance.Settings.Units.GetSmallWeightString();
         }
 
         private void SetUnitSystemSummary()
         {
-            ListPreference unitSystemPreference = (ListPreference)FindPreference(BackpackPlannerSettings.UnitSystemPreferenceKey);
-            unitSystemPreference.Summary = Resources.GetStringArray(Resource.Array.unit_system_entries)[(int)BackpackPlannerState.Instance.Settings.Units];
+            _unitSystemPreference.Summary = Resources.GetStringArray(Resource.Array.unit_system_entries)[(int)BackpackPlannerState.Instance.Settings.Units];
         }
 
         private void SetCurrencySummary()
         {
-            ListPreference currencyPreference = (ListPreference)FindPreference(BackpackPlannerSettings.CurrencyPreferenceKey);
-            currencyPreference.Summary = Resources.GetStringArray(Resource.Array.currency_entries)[(int)BackpackPlannerState.Instance.Settings.Currency];
+            _currencyPreference.Summary = Resources.GetStringArray(Resource.Array.currency_entries)[(int)BackpackPlannerState.Instance.Settings.Currency];
         }
 #endregion
 
@@ -200,33 +210,27 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             switch(key)
             {
             case PersonalInformation.NamePreferenceKey:
-                EditTextPreference namePreference = (EditTextPreference)FindPreference(key);
-                BackpackPlannerState.Instance.PersonalInformation.Name = namePreference.Text;
+                BackpackPlannerState.Instance.PersonalInformation.Name = _namePreference.Text;
                 SetNameSummary();
                 break;
             case PersonalInformation.DateOfBirthPreferenceKey:
-                EditTextPreference birthDatePreference = (EditTextPreference)FindPreference(key);
-                BackpackPlannerState.Instance.PersonalInformation.DateOfBirth = Convert.ToDateTime(birthDatePreference.Text);
+                BackpackPlannerState.Instance.PersonalInformation.DateOfBirth = Convert.ToDateTime(_birthDatePreference.Text);
                 SetBirthDateSummary();
                 break;
             case PersonalInformation.UserSexPreferenceKey:
-                ListPreference userSexPreference = (ListPreference)FindPreference(key);
-                BackpackPlannerState.Instance.PersonalInformation.Sex = (UserSex)Convert.ToInt32(userSexPreference.Value);
+                BackpackPlannerState.Instance.PersonalInformation.Sex = (UserSex)Convert.ToInt32(_userSexPreference.Value);
                 SetUserSexSummary();
                 break;
             case PersonalInformation.HeightPreferenceKey:
-                EditTextPreference heightPreference = (EditTextPreference)FindPreference(key);
-                BackpackPlannerState.Instance.PersonalInformation.HeightInUnits = Convert.ToInt32(heightPreference.Text);
+                BackpackPlannerState.Instance.PersonalInformation.HeightInUnits = Convert.ToInt32(_heightPreference.Text);
                 SetHeightSummary();
                 break;
             case PersonalInformation.WeightPreferenceKey:
-                EditTextPreference weightPreference = (EditTextPreference)FindPreference(key);
-                BackpackPlannerState.Instance.PersonalInformation.WeightInUnits = Convert.ToInt32(weightPreference.Text);
+                BackpackPlannerState.Instance.PersonalInformation.WeightInUnits = Convert.ToInt32(_weightPreference.Text);
                 SetWeightSummary();
                 break;
             case BackpackPlannerSettings.UnitSystemPreferenceKey:
-                ListPreference unitSystemPreference = (ListPreference)FindPreference(key);
-                BackpackPlannerState.Instance.Settings.Units = (UnitSystem)Convert.ToInt32(unitSystemPreference.Value);
+                BackpackPlannerState.Instance.Settings.Units = (UnitSystem)Convert.ToInt32(_unitSystemPreference.Value);
                 SetUnitSystemSummary();
 
                 // TODO: package these up in a single method call?
@@ -237,8 +241,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
                 SetWeightSummary();
                 break;
             case BackpackPlannerSettings.CurrencyPreferenceKey:
-                ListPreference currencyPreference = (ListPreference)FindPreference(key);
-                BackpackPlannerState.Instance.Settings.Currency = (Currency)Convert.ToInt32(currencyPreference.Value);
+                BackpackPlannerState.Instance.Settings.Currency = (Currency)Convert.ToInt32(_currencyPreference.Value);
                 SetCurrencySummary();
                 break;
             }

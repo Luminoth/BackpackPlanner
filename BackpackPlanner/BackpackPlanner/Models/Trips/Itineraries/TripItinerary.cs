@@ -16,7 +16,9 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
+
 using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
+
 using SQLite.Net.Async;
 using SQLite.Net.Attributes;
 using SQLiteNetExtensions.Attributes;

@@ -50,8 +50,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
         private const string HockeyAppAppId = "32a2c37622529305ec763b7e2c224deb";
 
+#region Controls
         private Android.Support.V7.Widget.Toolbar _toolbar;
         private readonly NavigationDrawerManager _navigationDrawerManager = new NavigationDrawerManager();
+#endregion
 
 		protected async override void OnCreate(Bundle savedInstanceState)
 		{

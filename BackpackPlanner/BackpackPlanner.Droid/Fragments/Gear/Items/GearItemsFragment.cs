@@ -32,10 +32,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
             base.OnViewCreated(view, savedInstanceState);
 
             TextView noGearItemsTextView = view.FindViewById<TextView>(Resource.Id.no_gear_items);
-            // TODO
 
             ViewGroup gearItemsLayout = view.FindViewById<LinearLayout>(Resource.Id.gear_items_layout);
-            gearItemsLayout.Visibility = ViewStates.Gone;
 
             FloatingActionButton addGearItemButton = view.FindViewById<FloatingActionButton>(Resource.Id.fab_add_gear_item);
             addGearItemButton.Click += (sender, args) => {

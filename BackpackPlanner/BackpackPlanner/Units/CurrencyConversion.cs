@@ -38,7 +38,7 @@ namespace EnergonSoftware.BackpackPlanner.Units
         /// <param name="usd">The USD value.</param>
         /// <returns>The USD in USDP</returns>
         // ReSharper disable once InconsistentNaming
-        public static double USDToUSDP(int usd)
+        public static double USDToUSDP(double usd)
         {
             return usd * 100.0;
         }

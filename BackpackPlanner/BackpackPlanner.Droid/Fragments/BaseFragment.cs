@@ -3,6 +3,9 @@ using Android.Views;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 {
+    /// <summary>
+    /// Helper for fragment creation
+    /// </summary>
     public abstract class BaseFragment : Android.Support.V4.App.Fragment
     {
         public abstract int LayoutResource { get; }

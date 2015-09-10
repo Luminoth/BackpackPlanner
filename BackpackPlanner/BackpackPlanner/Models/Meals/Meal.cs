@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
+using EnergonSoftware.BackpackPlanner.Units;
 
 using SQLite.Net.Async;
 using SQLite.Net.Attributes;
@@ -180,6 +181,19 @@ namespace EnergonSoftware.BackpackPlanner.Models.Meals
             set { _weightInGrams = value < 0 ? 0 : value; }
         }
 
+        /// <summary>
+        /// Gets or sets the weight of this meal in weight units.
+        /// </summary>
+        /// <value>
+        /// The weight of this meal in weight units.
+        /// </value>
+        [Ignore]
+        public double WeightInUnits
+        {
+            get { return BackpackPlannerState.Instance.Settings.Units.WeightFromGrams(WeightInGrams); }
+            set { _weightInGrams = (int)BackpackPlannerState.Instance.Settings.Units.GramsFromWeight(value); }
+        }
+
         // ReSharper disable once InconsistentNaming
         private int _costInUSDP;
 
@@ -189,12 +203,25 @@ namespace EnergonSoftware.BackpackPlanner.Models.Meals
         /// <value>
         /// The cost of this meal in US pennies.
         /// </value>
-        // ReSharper disable once InconsistentNaming
         [NotNull]
+        // ReSharper disable once InconsistentNaming
         public int CostInUSDP
         {
             get { return _costInUSDP; }
             set { _costInUSDP = value < 0 ? 0 : value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the cost of this meal in currency units.
+        /// </summary>
+        /// <value>
+        /// The cost of this meal in currency units.
+        /// </value>
+        [Ignore]
+        public double CostInCurrency
+        {
+            get { return BackpackPlannerState.Instance.Settings.Currency.CurrencyFromUSDP(CostInUSDP); }
+            set { _costInUSDP = (int)BackpackPlannerState.Instance.Settings.Currency.USDPFromCurrency(value); }
         }
 
         /// <summary>
