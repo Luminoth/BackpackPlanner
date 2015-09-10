@@ -15,27 +15,31 @@
 */
 
 using Android.OS;
-using Android.Support.Design.Widget;
 using Android.Views;
 using Android.Widget;
 
+using EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals;
+
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
 {
-    public class MealsFragment : BaseFragment
+    public class MealsFragment : RecyclerFragment
     {
         public override int LayoutResource => Resource.Layout.fragment_meals;
 
         public override int TitleResource => Resource.String.title_meals;
 
+        private MealListAdapter _adapter;
+
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
             base.OnViewCreated(view, savedInstanceState);
 
+            InitLayout(view, Resource.Id.meals_layout);
+            //Layout.SetAdapter(_adapter);
+
             TextView noMealsTextView = view.FindViewById<TextView>(Resource.Id.no_meals);
 
-            ViewGroup mealsLayout = view.FindViewById<LinearLayout>(Resource.Id.meals_layout);
-
-            FloatingActionButton addMealButton = view.FindViewById<FloatingActionButton>(Resource.Id.fab_add_meal);
+            Android.Support.Design.Widget.FloatingActionButton addMealButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(Resource.Id.fab_add_meal);
             addMealButton.Click += (sender, args) => {
                 // TODO
             };

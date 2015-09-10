@@ -17,7 +17,6 @@
 using System;
 
 using Android.OS;
-using Android.Support.Design.Widget;
 using Android.Views;
 using Android.Widget;
 
@@ -29,16 +28,16 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
     public class AddGearItemFragment : DataFragment
     {
 #region Controls
-        private TextInputLayout _gearItemNameEditText;
-        private TextInputLayout _gearItemMakeEditText;
-        private TextInputLayout _gearItemModelEditText;
-        private TextInputLayout _gearItemWebsiteEditText;
+        private Android.Support.Design.Widget.TextInputLayout _gearItemNameEditText;
+        private Android.Support.Design.Widget.TextInputLayout _gearItemMakeEditText;
+        private Android.Support.Design.Widget.TextInputLayout _gearItemModelEditText;
+        private Android.Support.Design.Widget.TextInputLayout _gearItemWebsiteEditText;
         private RadioGroup _gearItemCarriedRadioGroup;
         private Android.Support.V7.Widget.SwitchCompat _gearItemConsumableSwitch;
-        private TextInputLayout _gearItemConsumedEditText;
-        private TextInputLayout _gearItemWeightEditText;
-        private TextInputLayout _gearItemCostEditText;
-        private TextInputLayout _gearItemNoteEditText;
+        private Android.Support.Design.Widget.TextInputLayout _gearItemConsumedEditText;
+        private Android.Support.Design.Widget.TextInputLayout _gearItemWeightEditText;
+        private Android.Support.Design.Widget.TextInputLayout _gearItemCostEditText;
+        private Android.Support.Design.Widget.TextInputLayout _gearItemNoteEditText;
 #endregion
 
         private GearItem _gearItem;
@@ -51,16 +50,16 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
         {
             base.OnViewCreated(view, savedInstanceState);
 
-            _gearItemNameEditText = view.FindViewById<TextInputLayout>(Resource.Id.gear_item_name);
-            _gearItemMakeEditText = view.FindViewById<TextInputLayout>(Resource.Id.gear_item_make);
-            _gearItemModelEditText = view.FindViewById<TextInputLayout>(Resource.Id.gear_item_model);
-            _gearItemWebsiteEditText = view.FindViewById<TextInputLayout>(Resource.Id.gear_item_website);
+            _gearItemNameEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_name);
+            _gearItemMakeEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_make);
+            _gearItemModelEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_model);
+            _gearItemWebsiteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_website);
             _gearItemCarriedRadioGroup = view.FindViewById<RadioGroup>(Resource.Id.gear_item_carried);
             _gearItemConsumableSwitch = view.FindViewById<Android.Support.V7.Widget.SwitchCompat>(Resource.Id.gear_item_consumable);
-            _gearItemConsumedEditText = view.FindViewById<TextInputLayout>(Resource.Id.gear_item_consumed);
-            _gearItemWeightEditText = view.FindViewById<TextInputLayout>(Resource.Id.gear_item_weight);
-            _gearItemCostEditText = view.FindViewById<TextInputLayout>(Resource.Id.gear_item_cost);
-            _gearItemNoteEditText = view.FindViewById<TextInputLayout>(Resource.Id.gear_item_note);
+            _gearItemConsumedEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_consumed);
+            _gearItemWeightEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_weight);
+            _gearItemCostEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_cost);
+            _gearItemNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_note);
 
             _gearItemConsumableSwitch.CheckedChange += (sender, args) => {
                 _gearItemConsumedEditText.Visibility = args.IsChecked ? ViewStates.Visible : ViewStates.Gone;

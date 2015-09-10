@@ -18,9 +18,6 @@ using System;
 
 using Android.Content.Res;
 using Android.OS;
-using Android.Support.Design.Widget;
-using Android.Support.V4.Widget;
-using Android.Support.V7.App;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
@@ -36,23 +33,23 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 
         public int DefaultSelectedResId { get; set; }
 
-        public DrawerLayout Layout { get; private set; }
+        public Android.Support.V4.Widget.DrawerLayout Layout { get; private set; }
 
         public DrawerToggle Toggle { get; private set; }
 
-        public NavigationView NavView { get; private set; }
+        public Android.Support.Design.Widget.NavigationView NavView { get; private set; }
 
         public TextView HeaderText { get; private set; }
 
-        private AppCompatActivity _activity;
+        private Android.Support.V7.App.AppCompatActivity _activity;
 
         private int _selectedResId;
 
 #region Events
-        public event EventHandler<NavigationView.NavigationItemSelectedEventArgs> NavigationItemSelected;
+        public event EventHandler<Android.Support.Design.Widget.NavigationView.NavigationItemSelectedEventArgs> NavigationItemSelected;
 #endregion
 
-        public void Create(AppCompatActivity activity, Android.Support.V7.Widget.Toolbar toolbar, Bundle savedInstanceState)
+        public void Create(Android.Support.V7.App.AppCompatActivity activity, Android.Support.V7.Widget.Toolbar toolbar, Bundle savedInstanceState)
         {
             _activity = activity;
 
@@ -96,17 +93,17 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 
         public void LockDrawer(bool open)
         {
-            Layout.SetDrawerLockMode(open ? DrawerLayout.LockModeLockedOpen : DrawerLayout.LockModeLockedClosed);
+            Layout.SetDrawerLockMode(open ? Android.Support.V4.Widget.DrawerLayout.LockModeLockedOpen : Android.Support.V4.Widget.DrawerLayout.LockModeLockedClosed);
         }
 
         public void UnlockDrawer()
         {
-            Layout.SetDrawerLockMode(DrawerLayout.LockModeUnlocked);
+            Layout.SetDrawerLockMode(Android.Support.V4.Widget.DrawerLayout.LockModeUnlocked);
         }
 
         private void InitNavigation()
         {
-            NavView = _activity.FindViewById<NavigationView>(Resource.Id.navigation);
+            NavView = _activity.FindViewById<Android.Support.Design.Widget.NavigationView>(Resource.Id.navigation);
             NavView.NavigationItemSelected += (sender, args) => {
                 _selectedResId = args.MenuItem.ItemId;
 
@@ -119,7 +116,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 
         private void InitDrawer(Android.Support.V7.Widget.Toolbar toolbar)
         {
-            Layout = _activity.FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
+            Layout = _activity.FindViewById<Android.Support.V4.Widget.DrawerLayout>(Resource.Id.drawer_layout);
 
             Toggle = new DrawerToggle(_activity, Layout, toolbar, Resource.String.drawer_open, Resource.String.drawer_close);
             Toggle.SyncState();

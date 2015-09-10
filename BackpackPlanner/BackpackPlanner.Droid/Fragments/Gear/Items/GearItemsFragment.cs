@@ -15,27 +15,31 @@
 */
 
 using Android.OS;
-using Android.Support.Design.Widget;
 using Android.Views;
 using Android.Widget;
 
+using EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items;
+
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
 {
-    public class GearItemsFragment : BaseFragment
+    public class GearItemsFragment : RecyclerFragment
     {
         public override int LayoutResource => Resource.Layout.fragment_gear_items;
 
         public override int TitleResource => Resource.String.title_gear_items;
 
+        private GearItemListAdapter _adapter;
+
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
             base.OnViewCreated(view, savedInstanceState);
 
+            InitLayout(view, Resource.Id.gear_items_layout);
+            //Layout.SetAdapter(_adapter);
+
             TextView noGearItemsTextView = view.FindViewById<TextView>(Resource.Id.no_gear_items);
 
-            ViewGroup gearItemsLayout = view.FindViewById<LinearLayout>(Resource.Id.gear_items_layout);
-
-            FloatingActionButton addGearItemButton = view.FindViewById<FloatingActionButton>(Resource.Id.fab_add_gear_item);
+            Android.Support.Design.Widget.FloatingActionButton addGearItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(Resource.Id.fab_add_gear_item);
             addGearItemButton.Click += (sender, args) => {
                 Android.Support.V4.App.FragmentTransaction fragmentTransaction = FragmentManager.BeginTransaction();
                 fragmentTransaction.Replace(Resource.Id.frame_content, new AddGearItemFragment());

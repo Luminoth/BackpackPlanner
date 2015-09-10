@@ -17,9 +17,6 @@
 using System;
 
 using Android.App;
-using Android.Support.V4.Widget;
-using Android.Support.V7.App;
-using Android.Support.V7.Widget;
 using Android.Views;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Util
@@ -30,7 +27,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
     /// <remarks>
     /// https://github.com/jamesmontemagno/Xamarin.Android-AppCompat/blob/master/ActionBarCompat/DrawerLayout/Helpers/MyActionBarDrawerToggle.cs
     /// </remarks>
-    public class DrawerToggle : ActionBarDrawerToggle
+    public class DrawerToggle : Android.Support.V7.App.ActionBarDrawerToggle
     {
 #region Events
         public event EventHandler<DrawerToggleEventArgs> DrawerClosedEvent;
@@ -39,7 +36,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
         public event EventHandler<DrawerToggleEventArgs> DrawerStateChangedEvent;
 #endregion
 
-        public DrawerToggle(Activity activity, DrawerLayout drawerLayout, Toolbar toolbar, int openDrawerContentDescRes, int closeDrawerContentDescRes)
+        public DrawerToggle(Activity activity, Android.Support.V4.Widget.DrawerLayout drawerLayout, Android.Support.V7.Widget.Toolbar toolbar, int openDrawerContentDescRes, int closeDrawerContentDescRes)
             : base(activity, drawerLayout, toolbar, openDrawerContentDescRes, closeDrawerContentDescRes)
         {
         }

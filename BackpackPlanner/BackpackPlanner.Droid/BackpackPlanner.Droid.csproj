@@ -100,6 +100,14 @@
       <HintPath>..\..\packages\Xamarin.Android.Support.v7.AppCompat.22.2.1.0\lib\MonoAndroid403\Xamarin.Android.Support.v7.AppCompat.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Xamarin.Android.Support.v7.CardView, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xamarin.Android.Support.v7.CardView.22.2.1.0\lib\MonoAndroid403\Xamarin.Android.Support.v7.CardView.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.v7.RecyclerView, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xamarin.Android.Support.v7.RecyclerView.22.2.1.0\lib\MonoAndroid403\Xamarin.Android.Support.v7.RecyclerView.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Xamarin.GooglePlayServices.Ads, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xamarin.GooglePlayServices.Ads.25.0.0.0\lib\MonoAndroid41\Xamarin.GooglePlayServices.Ads.dll</HintPath>
       <Private>True</Private>
@@ -115,6 +123,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adapters\Gear\Collections\GearCollectionListAdapter.cs" />
+    <Compile Include="Adapters\Gear\Items\GearItemListAdapter.cs" />
+    <Compile Include="Adapters\Gear\Systems\GearSystemListAdapter.cs" />
+    <Compile Include="Adapters\Meals\MealListAdapter.cs" />
+    <Compile Include="Adapters\Trips\Itineraries\TripItineraryListAdapter.cs" />
+    <Compile Include="Adapters\Trips\Plans\TripPlanListAdapter.cs" />
     <Compile Include="Fragments\BaseFragment.cs" />
     <Compile Include="Fragments\DataFragment.cs" />
     <Compile Include="Fragments\Gear\Items\AddGearItemFragment.cs" />
@@ -125,6 +139,7 @@
     <Compile Include="Fragments\Meals\MealsFragment.cs" />
     <Compile Include="Fragments\Trips\Itineraries\TripItinerariesFragment.cs" />
     <Compile Include="Fragments\Trips\Plans\TripPlansFragment.cs" />
+    <Compile Include="Fragments\RecyclerFragment.cs" />
     <Compile Include="Logging\DroidLogger.cs" />
     <Compile Include="SettingsActivity.cs" />
     <Compile Include="Util\AppCompatPreferenceActivity.cs" />
@@ -281,5 +296,6 @@
   <ItemGroup>
     <AndroidResource Include="Resources\values\themes.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>

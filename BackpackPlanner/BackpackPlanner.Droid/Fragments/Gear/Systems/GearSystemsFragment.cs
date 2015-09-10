@@ -15,27 +15,32 @@
 */
 
 using Android.OS;
-using Android.Support.Design.Widget;
 using Android.Views;
 using Android.Widget;
 
+using EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Systems;
+
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 {
-    public class GearSystemsFragment : BaseFragment
+    public class GearSystemsFragment : RecyclerFragment
     {
         public override int LayoutResource => Resource.Layout.fragment_gear_systems;
 
         public override int TitleResource => Resource.String.title_gear_systems;
 
+        private GearSystemListAdapter _adapter;
+
+
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
             base.OnViewCreated(view, savedInstanceState);
 
+            InitLayout(view, Resource.Id.gear_systems_layout);
+            //Layout.SetAdapter(_adapter);
+
             TextView noGearSystemsTextView = view.FindViewById<TextView>(Resource.Id.no_gear_systems);
 
-            ViewGroup gearSystemsLayout = view.FindViewById<LinearLayout>(Resource.Id.gear_systems_layout);
-
-            FloatingActionButton addGearSystemButton = view.FindViewById<FloatingActionButton>(Resource.Id.fab_add_gear_system);
+            Android.Support.Design.Widget.FloatingActionButton addGearSystemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(Resource.Id.fab_add_gear_system);
             addGearSystemButton.Click += (sender, args) => {
                 // TODO
             };

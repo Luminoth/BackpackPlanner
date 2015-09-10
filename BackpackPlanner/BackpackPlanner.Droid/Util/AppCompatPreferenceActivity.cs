@@ -18,8 +18,6 @@ using Android.Content.Res;
 using Android.Graphics;
 using Android.OS;
 using Android.Preferences;
-using Android.Support.V7.App;
-using Android.Support.V7.Widget;
 using Android.Views;
 
 using Java.Lang;
@@ -34,9 +32,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
     /// </remarks>
     public class AppCompatPreferenceActivity : PreferenceActivity
     {
-        private AppCompatDelegate _delegate;
+        private Android.Support.V7.App.AppCompatDelegate _delegate;
 
-        private AppCompatDelegate Delegate => _delegate ?? (_delegate = AppCompatDelegate.Create(this, null));
+        private Android.Support.V7.App.AppCompatDelegate Delegate => _delegate ?? (_delegate = Android.Support.V7.App.AppCompatDelegate.Create(this, null));
 
         public Android.Support.V7.App.ActionBar SupportActionBar => Delegate.SupportActionBar;
 
@@ -117,7 +115,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
             Delegate.InvalidateOptionsMenu();
         }
 
-        public void SetSupportActionBar(Toolbar toolbar)
+        public void SetSupportActionBar(Android.Support.V7.Widget.Toolbar toolbar)
         {
             Delegate.SetSupportActionBar(toolbar);
         }

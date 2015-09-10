@@ -15,27 +15,31 @@
 */
 
 using Android.OS;
-using Android.Support.Design.Widget;
 using Android.Views;
 using Android.Widget;
 
+using EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Itineraries;
+
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries
 {
-    public class TripItinerariesFragment : BaseFragment
+    public class TripItinerariesFragment : RecyclerFragment
     {
         public override int LayoutResource => Resource.Layout.fragment_trip_itineraries;
 
         public override int TitleResource => Resource.String.title_trip_itineraries;
 
+        private TripItineraryListAdapter _adapter;
+
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
             base.OnViewCreated(view, savedInstanceState);
 
+            InitLayout(view, Resource.Id.trip_itineraries_layout);
+            //Layout.SetAdapter(_adapter);
+
             TextView noTripItinerariesTextView = view.FindViewById<TextView>(Resource.Id.no_trip_itineraries);
 
-            ViewGroup tripItinerariesLayout = view.FindViewById<LinearLayout>(Resource.Id.trip_itineraries_layout);
-
-            FloatingActionButton addTripItineraryButton = view.FindViewById<FloatingActionButton>(Resource.Id.fab_add_trip_itinerary);
+            Android.Support.Design.Widget.FloatingActionButton addTripItineraryButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(Resource.Id.fab_add_trip_itinerary);
             addTripItineraryButton.Click += (sender, args) => {
                 // TODO
             };
