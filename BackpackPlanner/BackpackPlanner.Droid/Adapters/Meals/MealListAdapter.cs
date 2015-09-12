@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using Android.Views;
 
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
+using EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals;
 using EnergonSoftware.BackpackPlanner.Models.Meals;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
@@ -29,6 +30,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
         {
             public MealViewHolder(View itemView, BaseFragment fragment) : base(itemView, fragment)
             {
+            }
+
+            protected override Android.Support.V4.App.Fragment CreateViewItemFragment()
+            {
+                return new ViewMealFragment();
             }
         }
 

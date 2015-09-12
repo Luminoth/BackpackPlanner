@@ -137,13 +137,19 @@
     <Compile Include="Fragments\AddItemFragment.cs" />
     <Compile Include="Fragments\BaseFragment.cs" />
     <Compile Include="Fragments\DataFragment.cs" />
+    <Compile Include="Fragments\Gear\Collections\ViewGearCollectionFragment.cs" />
+    <Compile Include="Fragments\Gear\Items\ViewGearItemFragment.cs" />
     <Compile Include="Fragments\Gear\Systems\AddGearSystemFragment.cs" />
+    <Compile Include="Fragments\Gear\Systems\ViewGearSystemFragment.cs" />
     <Compile Include="Fragments\ListItemsFragment.cs" />
     <Compile Include="Fragments\Gear\Collections\AddGearCollectionFragment.cs" />
     <Compile Include="Fragments\Gear\Items\AddGearItemFragment.cs" />
     <Compile Include="Fragments\Meals\AddMealFragment.cs" />
+    <Compile Include="Fragments\Meals\ViewMealFragment.cs" />
     <Compile Include="Fragments\Trips\Itineraries\AddTripItineraryFragment.cs" />
+    <Compile Include="Fragments\Trips\Itineraries\ViewTripItineraryFragment.cs" />
     <Compile Include="Fragments\Trips\Plans\AddTripPlanFragment.cs" />
+    <Compile Include="Fragments\Trips\Plans\ViewTripPlanFragment.cs" />
     <Compile Include="Fragments\Util\DatePickerFragment.cs" />
     <Compile Include="Fragments\Gear\Collections\GearCollectionsFragment.cs" />
     <Compile Include="Fragments\Gear\Systems\GearSystemsFragment.cs" />
@@ -223,6 +229,24 @@
       <SubType>AndroidResource</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\fragment_add_trip_plan.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\fragment_view_gear_collection.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\fragment_view_gear_item.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\fragment_view_gear_system.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\fragment_view_meal.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\fragment_view_trip_itinerary.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\fragment_view_trip_plan.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\view_gear_collection.axml">

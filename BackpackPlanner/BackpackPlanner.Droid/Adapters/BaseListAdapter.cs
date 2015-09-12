@@ -24,12 +24,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
     {
         protected abstract class BaseViewHolder : Android.Support.V7.Widget.RecyclerView.ViewHolder
         {
-            //protected abstract Android.Support.V4.App.Fragment CreateViewItemFragment();
+            protected abstract Android.Support.V4.App.Fragment CreateViewItemFragment();
 
             protected BaseViewHolder(View itemView, BaseFragment fragment) : base(itemView)
             {
                 itemView.Click += (sender, args) => {
-                    //fragment.TransitionToFragment(Resource.Id.frame_content, CreateViewItemFragment());
+                    fragment.TransitionToFragment(Resource.Id.frame_content, CreateViewItemFragment());
                 };
             }
         }

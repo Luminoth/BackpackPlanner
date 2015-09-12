@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using Android.Views;
 
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
+using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items
@@ -29,6 +30,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items
         {
             public GearItemViewHolder(View itemView, BaseFragment fragment) : base(itemView, fragment)
             {
+            }
+
+            protected override Android.Support.V4.App.Fragment CreateViewItemFragment()
+            {
+                return new ViewGearItemFragment();
             }
         }
 

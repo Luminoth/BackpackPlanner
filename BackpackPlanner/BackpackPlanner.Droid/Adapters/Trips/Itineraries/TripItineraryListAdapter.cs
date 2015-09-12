@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using Android.Views;
 
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
+using EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Itineraries
@@ -29,6 +30,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Itineraries
         {
             public TripItineraryViewHolder(View itemView, BaseFragment fragment) : base(itemView, fragment)
             {
+            }
+
+            protected override Android.Support.V4.App.Fragment CreateViewItemFragment()
+            {
+                return new ViewTripItineraryFragment();
             }
         }
 
