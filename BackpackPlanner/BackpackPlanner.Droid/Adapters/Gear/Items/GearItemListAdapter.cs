@@ -1,28 +1,50 @@
+/*
+   Copyright 2015 Shane Lillie
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+*/
+
 using System.Collections.Generic;
 
 using Android.Views;
 
+using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items
 {
-    public class GearItemListAdapter : Android.Support.V7.Widget.RecyclerView.Adapter
+    public class GearItemListAdapter : BaseListAdapter
     {
-        private class GearItemViewHolder : Android.Support.V7.Widget.RecyclerView.ViewHolder
+        private class GearItemViewHolder : BaseViewHolder
         {
-            public GearItemViewHolder(View itemView) : base(itemView)
+            public GearItemViewHolder(View itemView, BaseFragment fragment) : base(itemView, fragment)
             {
             }
         }
 
+        public override int LayoutResource => Resource.Layout.view_gear_item;
+
         public override int ItemCount => GearItems?.Count ?? 0;
 
-        public IReadOnlyCollection<GearItem> GearItems { get; set; } 
+        public IReadOnlyCollection<GearItem> GearItems { get; set; }
 
-        public override Android.Support.V7.Widget.RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
+        public GearItemListAdapter(BaseFragment fragment) : base(fragment)
         {
-            View itemView = LayoutInflater.From(parent.Context).Inflate(Resource.Layout.view_gear_item, parent, false);
-            return new GearItemViewHolder(itemView);
+        }
+
+        protected override BaseViewHolder CreateViewHolder(View itemView)
+        {
+            return new GearItemViewHolder(itemView, Fragment);
         }
 
         public override void OnBindViewHolder(Android.Support.V7.Widget.RecyclerView.ViewHolder holder, int position)

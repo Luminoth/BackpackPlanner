@@ -63,7 +63,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries
             base.OnViewCreated(view, savedInstanceState);
 
             Layout.SetAdapter(
-                new TripItineraryListAdapter
+                new TripItineraryListAdapter(this)
                 {
                     TripItineraries = _tripItineraries
                 }

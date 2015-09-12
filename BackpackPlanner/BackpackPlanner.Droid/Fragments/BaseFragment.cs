@@ -17,6 +17,8 @@
 using Android.OS;
 using Android.Views;
 
+using EnergonSoftware.BackpackPlanner.Droid.Util;
+
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 {
     /// <summary>
@@ -40,12 +42,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             Activity.Title = Resources.GetString(TitleResource);
         }
 
-        protected void TransitionToFragment(int frameResId, Android.Support.V4.App.Fragment fragment)
+        public void TransitionToFragment(int frameResId, Android.Support.V4.App.Fragment fragment)
         {
-            Android.Support.V4.App.FragmentTransaction fragmentTransaction = FragmentManager.BeginTransaction();
-            fragmentTransaction.Replace(frameResId, fragment);
-            fragmentTransaction.AddToBackStack(null);
-            fragmentTransaction.Commit();
+            FragmentTransitionUtil.StackTransition(FragmentManager.BeginTransaction(), frameResId, fragment);
         }
     }
 }

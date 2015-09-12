@@ -282,9 +282,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             }
 
             if(null != fragment) {
-                Android.Support.V4.App.FragmentTransaction fragmentTransaction = SupportFragmentManager.BeginTransaction();
-                fragmentTransaction.Replace(Resource.Id.frame_content, fragment);
-                fragmentTransaction.Commit();
+                FragmentTransitionUtil.Transition(SupportFragmentManager.BeginTransaction(), Resource.Id.frame_content, fragment);
             }
 
             menuItem.SetChecked(true);

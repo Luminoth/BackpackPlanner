@@ -63,7 +63,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
             base.OnViewCreated(view, savedInstanceState);
 
             Layout.SetAdapter(
-                new GearItemListAdapter
+                new GearItemListAdapter(this)
                 {
                     GearItems = _gearItems
                 }

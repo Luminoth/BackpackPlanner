@@ -63,7 +63,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
             base.OnViewCreated(view, savedInstanceState);
 
             Layout.SetAdapter(
-                new MealListAdapter
+                new MealListAdapter(this)
                 {
                     Meals = _meals
                 }
