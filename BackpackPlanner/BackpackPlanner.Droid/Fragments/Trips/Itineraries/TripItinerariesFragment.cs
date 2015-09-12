@@ -14,11 +14,14 @@
    limitations under the License.
 */
 
+using System.Collections.Generic;
+
 using Android.OS;
 using Android.Views;
 using Android.Widget;
 
 using EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Itineraries;
+using EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries
 {
@@ -28,16 +31,30 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries
 
         public override int TitleResource => Resource.String.title_trip_itineraries;
 
-        private TripItineraryListAdapter _adapter;
-
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
             base.OnViewCreated(view, savedInstanceState);
 
-            InitLayout(view, Resource.Id.trip_itineraries_layout);
-            //Layout.SetAdapter(_adapter);
+            // TODO
+            var tripItineraries = new List<TripItinerary>();
+            for(int i=0; i<20; ++i) {
+                tripItineraries.Add(new TripItinerary());
+            }
 
             TextView noTripItinerariesTextView = view.FindViewById<TextView>(Resource.Id.no_trip_itineraries);
+
+            if(tripItineraries.Count > 0) {
+                noTripItinerariesTextView.Visibility = ViewStates.Gone;
+
+                InitLayout(view, Resource.Id.trip_itineraries_layout,
+                    new TripItineraryListAdapter
+                    {
+                        TripItineraries = tripItineraries
+                    }
+                );
+
+                Layout.Visibility = ViewStates.Visible;
+            }
 
             Android.Support.Design.Widget.FloatingActionButton addTripItineraryButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(Resource.Id.fab_add_trip_itinerary);
             addTripItineraryButton.Click += (sender, args) => {

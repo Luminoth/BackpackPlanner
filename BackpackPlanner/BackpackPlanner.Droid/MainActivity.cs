@@ -70,17 +70,20 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
             InitToolBar();
 
+            // setup the navigation drawer manager
             _navigationDrawerManager.DefaultSelectedResId = Resource.Id.nav_gear_items_fragment;
             _navigationDrawerManager.NavigationItemSelected += (sender, args) => {
                 SelectDrawerItem(args.MenuItem);
             };
 
+            // create the navigation drawer
             _navigationDrawerManager.Create(this, _toolbar, savedInstanceState);
             _navigationDrawerManager.Toggle.ToolbarNavigationClickListener = this;
             _navigationDrawerManager.HeaderText.Text = !string.IsNullOrWhiteSpace(BackpackPlannerState.Instance.PersonalInformation.Name)
                     ? BackpackPlannerState.Instance.PersonalInformation.Name
                     : "Backpacking Planner";
 
+            // setup the fragment drawer indicator state
             SupportFragmentManager.BackStackChanged += (sender, args) => {
                 if(SupportFragmentManager.BackStackEntryCount > 0) {
                     _navigationDrawerManager.Toggle.DrawerIndicatorEnabled = false;

@@ -1,5 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <resources>
+    <string-array name="gear_items_sort">
+        <item>Name</item>
+        <item>Weight</item>
+        <item>Cost</item>
+        <item>Cost / Weight</item>
+    </string-array>
+
+    <string-array name="gear_systems_sort">
+        <item>Name</item>
+        <item>Items</item>
+        <item>Weight</item>
+        <item>Cost</item>
+        <item>Cost / Weight</item>
+    </string-array>
+
+    <string-array name="gear_collections_sort">
+        <item>Name</item>
+        <item>Items</item>
+        <item>Weight</item>
+        <item>Cost</item>
+        <item>Cost / Weight</item>
+    </string-array>
+
+    <string-array name="meals_sort">
+        <item>Name</item>
+        <item>Meal</item>
+        <item>Weight</item>
+        <item>Cost</item>
+        <item>Cost / Weight</item>
+        <item>Calories</item>
+    </string-array>
+
+    <string-array name="trip_plans_sort">
+        <item>Name</item>
+        <item>Items</item>
+        <item>Weight</item>
+        <item>Cost</item>
+        <item>Cost / Weight</item>
+    </string-array>
+
     <string-array name="user_sex_entries">
         <item>Undeclared</item>
         <item>Male</item>

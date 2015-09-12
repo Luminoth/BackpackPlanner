@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/view_trip_plan"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:layout_marginTop="8dp"
+    card_view:cardCornerRadius="0dp"
+    card_view:cardElevation="2dp"
+    card_view:cardBackgroundColor="@color/android:white">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:background="@color/primary">
+            <TextView
+                android:id="@+id/view_trip_plan_name"
+                style="@style/Base.TextAppearance.AppCompat.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Trip Plan Name" />
+            <TextView
+                android:id="@+id/view_trip_plan_days"
+                style="@style/Base.TextAppearance.AppCompat.Body1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0 day(s)" />
+            <TextView
+                android:id="@+id/view_trip_plan_meals"
+                style="@style/Base.TextAppearance.AppCompat.Body1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0 meal(s) (0 total calories)" />
+            <TextView
+                android:id="@+id/view_trip_plan_collections"
+                style="@style/Base.TextAppearance.AppCompat.Body1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0 collection(s)" />
+            <TextView
+                android:id="@+id/view_trip_plan_systems"
+                style="@style/Base.TextAppearance.AppCompat.Body1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0 system(s)" />
+            <TextView
+                android:id="@+id/view_trip_plan_items"
+                style="@style/Base.TextAppearance.AppCompat.Body1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0 item(s) (0 total)" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+            <TextView
+                android:id="@+id/view_trip_plan_base_weight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Base Weight: 0 weights" />
+            <TextView
+                android:id="@+id/view_trip_plan_pack_weight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pack Weight: 0 weights" />
+            <TextView
+                android:id="@+id/view_trip_plan_skinout_weight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Skin-out Weight: 0 weights" />
+            <TextView
+                android:id="@+id/view_trip_plan_cost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="$0 ($0 per weights)" />
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

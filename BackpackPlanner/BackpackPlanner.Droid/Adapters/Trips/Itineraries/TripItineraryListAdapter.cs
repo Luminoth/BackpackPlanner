@@ -1,19 +1,35 @@
+using System.Collections.Generic;
+
 using Android.Views;
+
+using EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Itineraries
 {
     public class TripItineraryListAdapter : Android.Support.V7.Widget.RecyclerView.Adapter
     {
-        public override int ItemCount { get { return 0; } }
+        private class TripItineraryViewHolder : Android.Support.V7.Widget.RecyclerView.ViewHolder
+        {
+            public TripItineraryViewHolder(View itemView) : base(itemView)
+            {
+            }
+        }
+
+        public override int ItemCount => TripItineraries?.Count ?? 0;
+
+        public IReadOnlyCollection<TripItinerary> TripItineraries { get; set; } 
 
         public override Android.Support.V7.Widget.RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
         {
-            throw new System.NotImplementedException();
+            View itemView = LayoutInflater.From(parent.Context).Inflate(Resource.Layout.view_trip_itinerary, parent, false);
+            return new TripItineraryViewHolder(itemView);
         }
 
         public override void OnBindViewHolder(Android.Support.V7.Widget.RecyclerView.ViewHolder holder, int position)
         {
-            throw new System.NotImplementedException();
+            TripItineraryViewHolder tripItineraryViewHolder = (TripItineraryViewHolder)holder;
+
+            // setup the view holder
         }
     }
 }

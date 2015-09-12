@@ -14,11 +14,14 @@
    limitations under the License.
 */
 
+using System.Collections.Generic;
+
 using Android.OS;
 using Android.Views;
 using Android.Widget;
 
 using EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Plans;
+using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
 {
@@ -28,16 +31,32 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
 
         public override int TitleResource => Resource.String.title_trip_plans;
 
-        private TripPlanListAdapter _adapter;
-
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
             base.OnViewCreated(view, savedInstanceState);
 
-            InitLayout(view, Resource.Id.trip_plans_layout);
-            //Layout.SetAdapter(_adapter);
+            // TODO
+            var tripPlans = new List<TripPlan>();
+            for(int i=0; i<20; ++i) {
+                tripPlans.Add(new TripPlan());
+            }
 
             TextView noTripPlansTextView = view.FindViewById<TextView>(Resource.Id.no_trip_plans);
+            Spinner tripPlansSort = view.FindViewById<Spinner>(Resource.Id.trip_plans_sort);
+
+            if(tripPlans.Count > 0) {
+                noTripPlansTextView.Visibility = ViewStates.Gone;
+                tripPlansSort.Visibility = ViewStates.Visible;
+
+                InitLayout(view, Resource.Id.trip_plans_layout,
+                    new TripPlanListAdapter
+                    {
+                        TripPlans = tripPlans
+                    }
+                );
+
+                Layout.Visibility = ViewStates.Visible;
+            }
 
             Android.Support.Design.Widget.FloatingActionButton addTripPlanButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(Resource.Id.fab_add_trip_plan);
             addTripPlanButton.Click += (sender, args) => {

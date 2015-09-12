@@ -14,11 +14,14 @@
    limitations under the License.
 */
 
+using System.Collections.Generic;
+
 using Android.OS;
 using Android.Views;
 using Android.Widget;
 
 using EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Systems;
+using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 {
@@ -28,17 +31,32 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 
         public override int TitleResource => Resource.String.title_gear_systems;
 
-        private GearSystemListAdapter _adapter;
-
-
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
             base.OnViewCreated(view, savedInstanceState);
 
-            InitLayout(view, Resource.Id.gear_systems_layout);
-            //Layout.SetAdapter(_adapter);
+            // TODO
+            var gearSystems = new List<GearSystem>();
+            for(int i=0; i<20; ++i) {
+                gearSystems.Add(new GearSystem());
+            }
 
             TextView noGearSystemsTextView = view.FindViewById<TextView>(Resource.Id.no_gear_systems);
+            Spinner gearSystemsSort = view.FindViewById<Spinner>(Resource.Id.gear_systems_sort);
+
+            if(gearSystems.Count > 0) {
+                noGearSystemsTextView.Visibility = ViewStates.Gone;
+                gearSystemsSort.Visibility = ViewStates.Visible;
+
+                InitLayout(view, Resource.Id.gear_systems_layout,
+                    new GearSystemListAdapter
+                    {
+                        GearSystems = gearSystems
+                    }
+                );
+
+                Layout.Visibility = ViewStates.Visible;
+            }
 
             Android.Support.Design.Widget.FloatingActionButton addGearSystemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(Resource.Id.fab_add_gear_system);
             addGearSystemButton.Click += (sender, args) => {
