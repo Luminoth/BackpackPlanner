@@ -26,6 +26,14 @@
                 android:text="@string/label_no_trip_itineraries"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+            <Spinner
+                android:id="@+id/trip_itineraries_sort"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/label_sort"
+                android:entries="@array/trip_itineraries_sort"
+                android:visibility="gone"
+                style="@style/Widget.AppCompat.Spinner.Underlined" />
         </LinearLayout>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/trip_itineraries_layout"

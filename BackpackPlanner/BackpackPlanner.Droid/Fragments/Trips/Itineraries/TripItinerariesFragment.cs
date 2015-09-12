@@ -18,48 +18,56 @@ using System.Collections.Generic;
 
 using Android.OS;
 using Android.Views;
-using Android.Widget;
 
 using EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Itineraries;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries
 {
-    public class TripItinerariesFragment : RecyclerFragment
+    public class TripItinerariesFragment : ListItemsFragment<TripItinerary>
     {
-        public override int LayoutResource => Resource.Layout.fragment_trip_itineraries;
+        protected override int LayoutResource => Resource.Layout.fragment_trip_itineraries;
 
-        public override int TitleResource => Resource.String.title_trip_itineraries;
+        protected override int TitleResource => Resource.String.title_trip_itineraries;
+
+        protected override int ListLayoutResource => Resource.Id.trip_itineraries_layout;
+
+        protected override int NoItemsResource => Resource.Id.no_trip_itineraries;
+
+        protected override int SortItemsResource => Resource.Id.trip_itineraries_sort;
+
+        private List<TripItinerary> _tripItineraries = new List<TripItinerary>(); 
+
+        protected override int ItemCount => _tripItineraries.Count;
+
+        protected override int AddItemResource => Resource.Id.fab_add_trip_itinerary;
+
+        protected override Android.Support.V4.App.Fragment CreateAddItemFragment()
+        {
+            return new AddTripItineraryFragment();
+        }
+
+        public override void OnCreate(Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);
+
+            // TODO
+            _tripItineraries = new List<TripItinerary>();
+            for(int i=0; i<20; ++i) {
+                _tripItineraries.Add(new TripItinerary());
+            }
+        }
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
             base.OnViewCreated(view, savedInstanceState);
 
-            // TODO
-            var tripItineraries = new List<TripItinerary>();
-            for(int i=0; i<20; ++i) {
-                tripItineraries.Add(new TripItinerary());
-            }
-
-            TextView noTripItinerariesTextView = view.FindViewById<TextView>(Resource.Id.no_trip_itineraries);
-
-            if(tripItineraries.Count > 0) {
-                noTripItinerariesTextView.Visibility = ViewStates.Gone;
-
-                InitLayout(view, Resource.Id.trip_itineraries_layout,
-                    new TripItineraryListAdapter
-                    {
-                        TripItineraries = tripItineraries
-                    }
-                );
-
-                Layout.Visibility = ViewStates.Visible;
-            }
-
-            Android.Support.Design.Widget.FloatingActionButton addTripItineraryButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(Resource.Id.fab_add_trip_itinerary);
-            addTripItineraryButton.Click += (sender, args) => {
-                // TODO
-            };
+            Layout.SetAdapter(
+                new TripItineraryListAdapter
+                {
+                    TripItineraries = _tripItineraries
+                }
+            );
         }
     }
 }

@@ -104,6 +104,10 @@
       <HintPath>..\..\packages\Xamarin.Android.Support.v7.CardView.22.2.1.0\lib\MonoAndroid403\Xamarin.Android.Support.v7.CardView.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Xamarin.Android.Support.v7.GridLayout, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xamarin.Android.Support.v7.GridLayout.22.2.1.0\lib\MonoAndroid403\Xamarin.Android.Support.v7.GridLayout.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Xamarin.Android.Support.v7.RecyclerView, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xamarin.Android.Support.v7.RecyclerView.22.2.1.0\lib\MonoAndroid403\Xamarin.Android.Support.v7.RecyclerView.dll</HintPath>
       <Private>True</Private>
@@ -129,9 +133,16 @@
     <Compile Include="Adapters\Meals\MealListAdapter.cs" />
     <Compile Include="Adapters\Trips\Itineraries\TripItineraryListAdapter.cs" />
     <Compile Include="Adapters\Trips\Plans\TripPlanListAdapter.cs" />
+    <Compile Include="Fragments\AddItemFragment.cs" />
     <Compile Include="Fragments\BaseFragment.cs" />
     <Compile Include="Fragments\DataFragment.cs" />
+    <Compile Include="Fragments\Gear\Systems\AddGearSystemFragment.cs" />
+    <Compile Include="Fragments\ListItemsFragment.cs" />
+    <Compile Include="Fragments\Gear\Collections\AddGearCollectionFragment.cs" />
     <Compile Include="Fragments\Gear\Items\AddGearItemFragment.cs" />
+    <Compile Include="Fragments\Meals\AddMealFragment.cs" />
+    <Compile Include="Fragments\Trips\Itineraries\AddTripItineraryFragment.cs" />
+    <Compile Include="Fragments\Trips\Plans\AddTripPlanFragment.cs" />
     <Compile Include="Fragments\Util\DatePickerFragment.cs" />
     <Compile Include="Fragments\Gear\Collections\GearCollectionsFragment.cs" />
     <Compile Include="Fragments\Gear\Systems\GearSystemsFragment.cs" />
@@ -193,7 +204,22 @@
     <AndroidResource Include="Resources\layout\settings_toolbar.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
+    <AndroidResource Include="Resources\layout\fragment_add_gear_collection.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
     <AndroidResource Include="Resources\layout\fragment_add_gear_item.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\fragment_add_gear_system.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\fragment_add_meal.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\fragment_add_trip_itinerary.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\fragment_add_trip_plan.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\view_gear_collection.axml">

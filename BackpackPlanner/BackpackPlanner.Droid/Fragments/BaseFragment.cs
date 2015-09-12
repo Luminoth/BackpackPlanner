@@ -24,9 +24,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
     /// </summary>
     public abstract class BaseFragment : Android.Support.V4.App.Fragment
     {
-        public abstract int LayoutResource { get; }
+        protected abstract int LayoutResource { get; }
 
-        public abstract int TitleResource { get; }
+        protected abstract int TitleResource { get; }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
@@ -38,6 +38,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             base.OnResume();
 
             Activity.Title = Resources.GetString(TitleResource);
+        }
+
+        protected void TransitionToFragment(int frameResId, Android.Support.V4.App.Fragment fragment)
+        {
+            Android.Support.V4.App.FragmentTransaction fragmentTransaction = FragmentManager.BeginTransaction();
+            fragmentTransaction.Replace(frameResId, fragment);
+            fragmentTransaction.AddToBackStack(null);
+            fragmentTransaction.Commit();
         }
     }
 }

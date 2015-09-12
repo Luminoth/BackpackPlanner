@@ -57,25 +57,35 @@
     <string name="label_gear_systems">What is a gear system?</string>
     <string name="label_no_gear_systems">You have no gear systems! Try adding one!</string>
 
+    <string name="label_add_gear_system">Add Gear System</string>
+
     <!-- Gear Collections -->
 
     <string name="label_gear_collections">What is a gear collection?</string>
     <string name="label_no_gear_collections">You have no gear collections! Try adding one!</string>
+
+    <string name="label_add_gear_collection">Add Gear Collection</string>
 
     <!-- Meals -->
 
     <string name="label_meals">What is a meal?</string>
     <string name="label_no_meals">You have no meals! Try adding one!</string>
 
+    <string name="label_add_meal">Add Meal</string>
+
     <!-- Trip Itineraries -->
 
     <string name="label_trip_itineraries">What is a trip itinerary?</string>
     <string name="label_no_trip_itineraries">You have no trip itineraries! Try adding one!</string>
 
+    <string name="label_add_trip_itinerary">Add Trip Itinerary</string>
+
     <!-- Trip Plans -->
 
     <string name="label_trip_plans">What is a trip plan?</string>
     <string name="label_no_trip_plans">You have no trip plans! Try adding one!</string>
+
+    <string name="label_add_trip_plan">Add Trip Plan</string>
 
     <!-- Settings -->
 

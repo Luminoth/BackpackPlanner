@@ -15,28 +15,28 @@
 */
 
 using Android.OS;
-using Android.Util;
 using Android.Views;
 using Android.Widget;
 
-using HockeyApp;
-
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 {
-    public class HelpFragment : BaseFragment
+    public abstract class AddItemFragment : DataFragment
     {
-        protected override int LayoutResource => Resource.Layout.fragment_help;
-
-        protected override int TitleResource => Resource.String.title_help;
+        protected abstract int AddItemResource { get; }
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
             base.OnViewCreated(view, savedInstanceState);
 
-            Button buttonFeedback = view.FindViewById<Button>(Resource.Id.button_feedback);
-            buttonFeedback.Click += (sender, args) => {
-                /*Log.Debug(MainActivity.LogTag, "Showing feedback activity");
-                FeedbackManager.ShowFeedbackActivity(Activity);*/
+            Button addItemButton = view.FindViewById<Button>(AddItemResource);
+            addItemButton.Click += (sender, args) => {
+                if(!DoDataExchange()) {
+                    return;
+                }
+
+                // TODO: add the item!
+
+                Activity.SupportFragmentManager.PopBackStack();
             };
         }
     }

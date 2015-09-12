@@ -25,7 +25,7 @@ using EnergonSoftware.BackpackPlanner.Units;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
 {
-    public class AddGearItemFragment : DataFragment
+    public class AddGearItemFragment : AddItemFragment
     {
 #region Controls
         private Android.Support.Design.Widget.TextInputLayout _gearItemNameEditText;
@@ -42,9 +42,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
 
         private GearItem _gearItem;
 
-        public override int LayoutResource => Resource.Layout.fragment_add_gear_item;
+        protected override int LayoutResource => Resource.Layout.fragment_add_gear_item;
 
-        public override int TitleResource => Resource.String.title_add_gear_item;
+        protected override int TitleResource => Resource.String.title_add_gear_item;
+
+        protected override int AddItemResource => Resource.Id.button_add_gear_item;
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
@@ -69,17 +71,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
                 Resources.GetString(Resource.String.label_gear_item_weight) + " " + BackpackPlannerState.Instance.Settings.Units.GetSmallWeightString());
             _gearItemCostEditText.SetHint(
                 Resources.GetString(Resource.String.label_gear_item_cost) + " " + BackpackPlannerState.Instance.Settings.Currency.GetCurrencyString());
-
-            Button addGearItemButton = view.FindViewById<Button>(Resource.Id.button_add_gear_item);
-            addGearItemButton.Click += (sender, args) => {
-                if(!DoDataExchange()) {
-                    return;
-                }
-
-                // TODO: add the item!
-
-                Activity.SupportFragmentManager.PopBackStack();
-            };
         }
 
         protected override void OnDoDataExchange()

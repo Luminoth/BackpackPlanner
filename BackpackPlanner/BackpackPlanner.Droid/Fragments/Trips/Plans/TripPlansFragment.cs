@@ -18,50 +18,56 @@ using System.Collections.Generic;
 
 using Android.OS;
 using Android.Views;
-using Android.Widget;
 
 using EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Plans;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
 {
-    public class TripPlansFragment : RecyclerFragment
+    public class TripPlansFragment : ListItemsFragment<TripPlan>
     {
-        public override int LayoutResource => Resource.Layout.fragment_trip_plans;
+        protected override int LayoutResource => Resource.Layout.fragment_trip_plans;
 
-        public override int TitleResource => Resource.String.title_trip_plans;
+        protected override int TitleResource => Resource.String.title_trip_plans;
+
+        protected override int ListLayoutResource => Resource.Id.trip_plans_layout;
+
+        protected override int NoItemsResource => Resource.Id.no_trip_plans;
+
+        protected override int SortItemsResource => Resource.Id.trip_plans_sort;
+
+        private List<TripPlan> _tripPlans = new List<TripPlan>(); 
+
+        protected override int ItemCount => _tripPlans.Count;
+
+        protected override int AddItemResource => Resource.Id.fab_add_trip_plan;
+
+        protected override Android.Support.V4.App.Fragment CreateAddItemFragment()
+        {
+            return new AddTripPlanFragment();
+        }
+
+        public override void OnCreate(Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);
+
+            // TODO
+            _tripPlans = new List<TripPlan>();
+            for(int i=0; i<20; ++i) {
+                _tripPlans.Add(new TripPlan());
+            }
+        }
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
             base.OnViewCreated(view, savedInstanceState);
 
-            // TODO
-            var tripPlans = new List<TripPlan>();
-            for(int i=0; i<20; ++i) {
-                tripPlans.Add(new TripPlan());
-            }
-
-            TextView noTripPlansTextView = view.FindViewById<TextView>(Resource.Id.no_trip_plans);
-            Spinner tripPlansSort = view.FindViewById<Spinner>(Resource.Id.trip_plans_sort);
-
-            if(tripPlans.Count > 0) {
-                noTripPlansTextView.Visibility = ViewStates.Gone;
-                tripPlansSort.Visibility = ViewStates.Visible;
-
-                InitLayout(view, Resource.Id.trip_plans_layout,
-                    new TripPlanListAdapter
-                    {
-                        TripPlans = tripPlans
-                    }
-                );
-
-                Layout.Visibility = ViewStates.Visible;
-            }
-
-            Android.Support.Design.Widget.FloatingActionButton addTripPlanButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(Resource.Id.fab_add_trip_plan);
-            addTripPlanButton.Click += (sender, args) => {
-                // TODO
-            };
+            Layout.SetAdapter(
+                new TripPlanListAdapter
+                {
+                    TripPlans = _tripPlans
+                }
+            );
         }
     }
 }

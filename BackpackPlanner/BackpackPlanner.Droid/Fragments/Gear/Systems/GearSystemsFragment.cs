@@ -18,50 +18,56 @@ using System.Collections.Generic;
 
 using Android.OS;
 using Android.Views;
-using Android.Widget;
 
 using EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Systems;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 {
-    public class GearSystemsFragment : RecyclerFragment
+    public class GearSystemsFragment : ListItemsFragment<GearSystem>
     {
-        public override int LayoutResource => Resource.Layout.fragment_gear_systems;
+        protected override int LayoutResource => Resource.Layout.fragment_gear_systems;
 
-        public override int TitleResource => Resource.String.title_gear_systems;
+        protected override int TitleResource => Resource.String.title_gear_systems;
+
+        protected override int ListLayoutResource => Resource.Id.gear_systems_layout;
+
+        protected override int NoItemsResource => Resource.Id.no_gear_systems;
+
+        protected override int SortItemsResource => Resource.Id.gear_systems_sort;
+
+        private List<GearSystem> _gearSystems = new List<GearSystem>(); 
+
+        protected override int ItemCount => _gearSystems.Count;
+
+        protected override int AddItemResource => Resource.Id.fab_add_gear_system;
+
+        protected override Android.Support.V4.App.Fragment CreateAddItemFragment()
+        {
+            return new AddGearSystemFragment();
+        }
+
+        public override void OnCreate(Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);
+
+            // TODO
+            _gearSystems = new List<GearSystem>();
+            for(int i=0; i<20; ++i) {
+                _gearSystems.Add(new GearSystem());
+            }
+        }
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
             base.OnViewCreated(view, savedInstanceState);
 
-            // TODO
-            var gearSystems = new List<GearSystem>();
-            for(int i=0; i<20; ++i) {
-                gearSystems.Add(new GearSystem());
-            }
-
-            TextView noGearSystemsTextView = view.FindViewById<TextView>(Resource.Id.no_gear_systems);
-            Spinner gearSystemsSort = view.FindViewById<Spinner>(Resource.Id.gear_systems_sort);
-
-            if(gearSystems.Count > 0) {
-                noGearSystemsTextView.Visibility = ViewStates.Gone;
-                gearSystemsSort.Visibility = ViewStates.Visible;
-
-                InitLayout(view, Resource.Id.gear_systems_layout,
-                    new GearSystemListAdapter
-                    {
-                        GearSystems = gearSystems
-                    }
-                );
-
-                Layout.Visibility = ViewStates.Visible;
-            }
-
-            Android.Support.Design.Widget.FloatingActionButton addGearSystemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(Resource.Id.fab_add_gear_system);
-            addGearSystemButton.Click += (sender, args) => {
-                // TODO
-            };
+            Layout.SetAdapter(
+                new GearSystemListAdapter
+                {
+                    GearSystems = _gearSystems
+                }
+            );
         }
     }
 }

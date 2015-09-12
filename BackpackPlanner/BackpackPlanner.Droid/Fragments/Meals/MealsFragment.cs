@@ -18,50 +18,56 @@ using System.Collections.Generic;
 
 using Android.OS;
 using Android.Views;
-using Android.Widget;
 
 using EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals;
 using EnergonSoftware.BackpackPlanner.Models.Meals;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
 {
-    public class MealsFragment : RecyclerFragment
+    public class MealsFragment : ListItemsFragment<Meal>
     {
-        public override int LayoutResource => Resource.Layout.fragment_meals;
+        protected override int LayoutResource => Resource.Layout.fragment_meals;
 
-        public override int TitleResource => Resource.String.title_meals;
+        protected override int TitleResource => Resource.String.title_meals;
+
+       protected override int ListLayoutResource => Resource.Id.meals_layout;
+
+        protected override int NoItemsResource => Resource.Id.no_meals;
+
+        protected override int SortItemsResource => Resource.Id.meals_sort;
+
+        private List<Meal> _meals = new List<Meal>(); 
+
+        protected override int ItemCount => _meals.Count;
+
+        protected override int AddItemResource => Resource.Id.fab_add_meal;
+
+        protected override Android.Support.V4.App.Fragment CreateAddItemFragment()
+        {
+            return new AddMealFragment();
+        }
+
+        public override void OnCreate(Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);
+
+            // TODO
+            _meals = new List<Meal>();
+            for(int i=0; i<20; ++i) {
+                _meals.Add(new Meal());
+            }
+        }
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
             base.OnViewCreated(view, savedInstanceState);
 
-            // TODO
-            var meals = new List<Meal>();
-            for(int i=0; i<20; ++i) {
-                meals.Add(new Meal());
-            }
-
-            TextView noMealsTextView = view.FindViewById<TextView>(Resource.Id.no_meals);
-            Spinner mealsSort = view.FindViewById<Spinner>(Resource.Id.meals_sort);
-
-            if(meals.Count > 0) {
-                noMealsTextView.Visibility = ViewStates.Gone;
-                mealsSort.Visibility = ViewStates.Visible;
-
-                InitLayout(view, Resource.Id.meals_layout,
-                    new MealListAdapter
-                    {
-                        Meals = meals
-                    }
-                );
-
-                Layout.Visibility = ViewStates.Visible;
-            }
-
-            Android.Support.Design.Widget.FloatingActionButton addMealButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(Resource.Id.fab_add_meal);
-            addMealButton.Click += (sender, args) => {
-                // TODO
-            };
+            Layout.SetAdapter(
+                new MealListAdapter
+                {
+                    Meals = _meals
+                }
+            );
         }
     }
 }

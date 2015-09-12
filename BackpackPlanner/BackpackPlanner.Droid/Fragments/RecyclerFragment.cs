@@ -14,6 +14,7 @@
    limitations under the License.
 */
 
+using Android.OS;
 using Android.Views;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
@@ -23,18 +24,18 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
     /// </summary>
     public abstract class RecyclerFragment : BaseFragment
     {
+        protected abstract int ListLayoutResource { get; }
+
         protected Android.Support.V7.Widget.RecyclerView Layout { get; set; }
 
         protected Android.Support.V7.Widget.RecyclerView.LayoutManager LayoutManager { get; set; }
 
-        protected void InitLayout(View view, int layoutResId, Android.Support.V7.Widget.RecyclerView.Adapter adapter)
+        public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
-            Layout = view.FindViewById<Android.Support.V7.Widget.RecyclerView>(layoutResId);
+            Layout = view.FindViewById<Android.Support.V7.Widget.RecyclerView>(ListLayoutResource);
 
             LayoutManager = new Android.Support.V7.Widget.LinearLayoutManager(Activity);
             Layout.SetLayoutManager(LayoutManager);
-
-            Layout.SetAdapter(adapter);
         }
     }
 }

@@ -18,50 +18,56 @@ using System.Collections.Generic;
 
 using Android.OS;
 using Android.Views;
-using Android.Widget;
 
 using EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Collections;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
 {
-    public class GearCollectionsFragment : RecyclerFragment
+    public class GearCollectionsFragment : ListItemsFragment<GearCollection>
     {
-        public override int LayoutResource => Resource.Layout.fragment_gear_collections;
+        protected override int LayoutResource => Resource.Layout.fragment_gear_collections;
 
-        public override int TitleResource => Resource.String.title_gear_collections;
+        protected override int TitleResource => Resource.String.title_gear_collections;
+
+        protected override int ListLayoutResource => Resource.Id.gear_collections_layout;
+
+        protected override int NoItemsResource => Resource.Id.no_gear_collections;
+
+        protected override int SortItemsResource => Resource.Id.gear_collections_sort;
+
+        private List<GearCollection> _gearCollections = new List<GearCollection>(); 
+
+        protected override int ItemCount => _gearCollections.Count;
+
+        protected override int AddItemResource => Resource.Id.fab_add_gear_collection;
+
+        protected override Android.Support.V4.App.Fragment CreateAddItemFragment()
+        {
+            return new AddGearCollectionFragment();
+        }
+
+        public override void OnCreate(Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);
+
+            // TODO
+            _gearCollections = new List<GearCollection>();
+            for(int i=0; i<20; ++i) {
+                _gearCollections.Add(new GearCollection());
+            }
+        }
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
             base.OnViewCreated(view, savedInstanceState);
 
-            // TODO
-            var gearCollections = new List<GearCollection>();
-            for(int i=0; i<20; ++i) {
-                gearCollections.Add(new GearCollection());
-            }
-
-            TextView noGearCollectionsTextView = view.FindViewById<TextView>(Resource.Id.no_gear_collections);
-            Spinner gearCollectionsSort = view.FindViewById<Spinner>(Resource.Id.gear_collections_sort);
-
-            if(gearCollections.Count > 0) {
-                noGearCollectionsTextView.Visibility = ViewStates.Gone;
-                gearCollectionsSort.Visibility = ViewStates.Visible;
-
-                InitLayout(view, Resource.Id.gear_collections_layout,
-                    new GearCollectionListAdapter
-                    {
-                        GearCollections = gearCollections
-                    }
-                );
-
-                Layout.Visibility = ViewStates.Visible;
-            }
-
-            Android.Support.Design.Widget.FloatingActionButton addGearCollectionButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(Resource.Id.fab_add_gear_collection);
-            addGearCollectionButton.Click += (sender, args) => {
-                // TODO
-            };
+            Layout.SetAdapter(
+                new GearCollectionListAdapter
+                {
+                    GearCollections = _gearCollections
+                }
+            );
         }
     }
 }

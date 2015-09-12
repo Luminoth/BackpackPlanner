@@ -27,6 +27,13 @@ using EnergonSoftware.BackpackPlanner.Droid.Util;
 using EnergonSoftware.BackpackPlanner.Models.Personal;
 using EnergonSoftware.BackpackPlanner.Units;
 
+// TODO: when the Xamarin Support Library Preference v7 is out
+// replace this activity with the PreferenceFragmentCompat fragment
+// https://plus.google.com/+AndroidDevelopers/posts/9kZ3SsXdT2T
+// http://developer.android.com/reference/android/support/v7/preference/package-summary.html
+// https://www.nuget.org/packages/Xamarin.Android.Support.v7.Preference/
+// http://developer.android.com/reference/android/support/v7/preference/PreferenceFragmentCompat.html
+
 namespace EnergonSoftware.BackpackPlanner.Droid
 {
     // this trainwreck is necessary until there's an AppCompatPreferenceFragment to work with
