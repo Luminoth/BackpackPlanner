@@ -32,6 +32,10 @@
                 android:layout_height="wrap_content"
                 android:text="0 item(s)" />
         </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/accent" />
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
