@@ -43,7 +43,9 @@ using SQLite.Net.Platform.XamarinAndroid;
 namespace EnergonSoftware.BackpackPlanner.Droid
 {
 	[Activity(Label = "@string/app_name", MainLauncher = true, Icon = "@drawable/icon")]
+    [IntentFilter(new[] { "android.intent.action.SEARCH" })]
     [MetaData("com.google.android.gms.version", Value = "@integer/google_play_services_version")]
+    [MetaData("android.app.searchable", Resource = "@xml/searchable")]
 	public class MainActivity : Android.Support.V7.App.AppCompatActivity, View.IOnClickListener
 	{
         public const string LogTag = "BackpackPlanner.Droid";
@@ -68,7 +70,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             await BackpackPlannerState.Instance.InitDatabaseAsync(new SQLitePlatformAndroid(),
                 System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), BackpackPlannerState.DatabaseName);
 
-            InitToolBar();
+            InitToolbar();
 
             // setup the navigation drawer manager
             _navigationDrawerManager.DefaultSelectedResId = Resource.Id.nav_gear_items_fragment;
@@ -101,6 +103,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             };
 
             LoadPreferences();
+
+            HandleIntent(Intent);
 		}
 
 	    public override void OnPostCreate(Bundle savedInstanceState, PersistableBundle persistentState)
@@ -108,6 +112,25 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 	        base.OnPostCreate(savedInstanceState, persistentState);
 
             _navigationDrawerManager.Toggle.SyncState();
+	    }
+
+	    public override bool OnCreateOptionsMenu(IMenu menu)
+	    {
+            // TODO: OnPrepareOptionsMenu might be better for dynamic items
+
+            // TODO: I think the _toolbar.Inflate or something should be used here instead of this
+            MenuInflater.Inflate(Resource.Menu.options_menu, menu);
+
+            IMenuItem searchItem = menu.FindItem(Resource.Id.search_item);
+
+// no clue what to do here
+
+            //Android.Support.V7.Widget.SearchView searchView = Android.Support.V4.View.MenuItemCompat.GetActionView(searchItem).JavaCast<Android.Support.V7.Widget.SearchView>();
+
+            SearchManager searchManager = (SearchManager)GetSystemService(SearchService);
+	        //searchView.SetSearchableInfo(searchManager.GetSearchableInfo(ComponentName));
+
+	        return true;
 	    }
 
 	    public override void OnConfigurationChanged(Configuration newConfig)
@@ -169,7 +192,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             TaskScheduler.UnobservedTaskException += (sender, args) => HockeyApp.TraceWriter.WriteTrace(args.Exception);
         }
 
-        private void InitToolBar()
+        private void InitToolbar()
         {
             _toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(_toolbar);
@@ -228,6 +251,16 @@ namespace EnergonSoftware.BackpackPlanner.Droid
                 BackpackPlannerState.Instance.PersonalInformation.WeightInUnits = Convert.ToInt32(scratch);
             } catch(FormatException) {
                 // it's k, we'll live
+            }
+        }
+
+        private void HandleIntent(Intent intent)
+        {
+            if(Intent.ActionSearch.Equals(intent.Action)) {
+                //string query = intent.GetStringExtra(SearchManager.Query);
+                // TODO: use the query somehow
+// https://developer.android.com/training/search/setup.html
+// https://developer.android.com/training/search/search.html
             }
         }
 

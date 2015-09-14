@@ -8,6 +8,9 @@
     <string name="label_save">Save</string>
     <string name="label_reset">Reset</string>
 
+    <string name="label_search">Search</string>
+    <string name="search_hint">Type things</string>
+
     <string name="label_sort">Sort by</string>
 
     <!-- Fragment titles -->
