@@ -42,9 +42,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             Activity.Title = Resources.GetString(TitleResource);
         }
 
-        public void TransitionToFragment(int frameResId, Android.Support.V4.App.Fragment fragment)
+        public void TransitionToFragment(int frameResId, Android.Support.V4.App.Fragment fragment, string tags)
         {
-            FragmentTransitionUtil.StackTransition(FragmentManager.BeginTransaction(), frameResId, fragment);
+            FragmentTransitionUtil.StackTransition(Activity, FragmentManager.BeginTransaction(), frameResId, fragment, tags);
         }
     }
 }

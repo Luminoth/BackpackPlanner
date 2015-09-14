@@ -41,7 +41,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
             Android.Support.Design.Widget.FloatingActionButton addItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(AddItemResource);
             addItemButton.Click += (sender, args) => {
-                TransitionToFragment(Resource.Id.frame_content, CreateAddItemFragment());
+                TransitionToFragment(Resource.Id.frame_content, CreateAddItemFragment(), null);
             };
 
             if(ItemCount > 0) {

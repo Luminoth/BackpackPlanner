@@ -388,5 +388,8 @@
   <ItemGroup>
     <AndroidResource Include="Resources\xml\searchable.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\menu\options_menu_nosearch.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>

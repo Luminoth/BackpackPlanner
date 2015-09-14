@@ -1996,6 +1996,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0b0043
 			public const int action_mode_close_button = 2131427395;
 			
+			// aapt resource value: 0x7f0b00ed
+			public const int action_search = 2131427565;
+			
 			// aapt resource value: 0x7f0b0044
 			public const int activity_chooser_view_content = 2131427396;
 			
@@ -2427,9 +2430,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			
 			// aapt resource value: 0x7f0b006a
 			public const int search_go_btn = 2131427434;
-			
-			// aapt resource value: 0x7f0b00ed
-			public const int search_item = 2131427565;
 			
 			// aapt resource value: 0x7f0b0065
 			public const int search_mag_icon = 2131427429;
@@ -2955,6 +2955,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			
 			// aapt resource value: 0x7f0e0001
 			public const int options_menu = 2131623937;
+			
+			// aapt resource value: 0x7f0e0002
+			public const int options_menu_nosearch = 2131623938;
 			
 			static Menu()
 			{

@@ -60,7 +60,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 		protected async override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
-
 			SetContentView(Resource.Layout.activity_main);
 
             InitHockeyApp();
@@ -116,21 +115,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
 	    public override bool OnCreateOptionsMenu(IMenu menu)
 	    {
-            // TODO: OnPrepareOptionsMenu might be better for dynamic items
+            return InitOptionsMenu(menu);
+	    }
 
-            // TODO: I think the _toolbar.Inflate or something should be used here instead of this
-            MenuInflater.Inflate(Resource.Menu.options_menu, menu);
-
-            IMenuItem searchItem = menu.FindItem(Resource.Id.search_item);
-
-// no clue what to do here
-
-            //Android.Support.V7.Widget.SearchView searchView = Android.Support.V4.View.MenuItemCompat.GetActionView(searchItem).JavaCast<Android.Support.V7.Widget.SearchView>();
-
-            SearchManager searchManager = (SearchManager)GetSystemService(SearchService);
-	        //searchView.SetSearchableInfo(searchManager.GetSearchableInfo(ComponentName));
-
-	        return true;
+	    public override bool OnPrepareOptionsMenu(IMenu menu)
+	    {
+            return InitOptionsMenu(menu);
 	    }
 
 	    public override void OnConfigurationChanged(Configuration newConfig)
@@ -196,6 +186,36 @@ namespace EnergonSoftware.BackpackPlanner.Droid
         {
             _toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(_toolbar);
+        }
+
+        private bool InitSearchView(IMenuItem searchItem)
+        {
+            if(null == searchItem) {
+                return true;
+            }
+
+            View actionView = Android.Support.V4.View.MenuItemCompat.GetActionView(searchItem);
+            Android.Support.V7.Widget.SearchView searchView = actionView.JavaCast<Android.Support.V7.Widget.SearchView>();
+
+            SearchManager searchManager = (SearchManager)GetSystemService(SearchService);
+	        searchView.SetSearchableInfo(searchManager.GetSearchableInfo(ComponentName));
+
+            return true;
+        }
+
+        public bool InitOptionsMenu(IMenu menu)
+        {
+            menu.Clear();
+
+            if(FragmentManager.BackStackEntryCount < 1) {
+                // TODO: this should depend on the currently selected drawer item
+                MenuInflater.Inflate(Resource.Menu.options_menu, menu);
+                return InitSearchView(menu.FindItem(Resource.Id.action_search));
+            } 
+
+            // TODO: this should depend on the top fragment's tags
+            MenuInflater.Inflate(Resource.Menu.options_menu_nosearch, menu);
+            return true;
         }
 
         private void LoadPreferences()
@@ -305,6 +325,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
                 fragment = new TripPlansFragment();
                 break;
             case Resource.Id.nav_settings_fragment:
+// TODO: when the Xamarin Support Library Preference v7 is out
+// replace this activity with the PreferenceFragment
                 Log.Info(LogTag, "Settings selected");
                 StartActivity(typeof(SettingsActivity));
                 return;
@@ -315,7 +337,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             }
 
             if(null != fragment) {
-                FragmentTransitionUtil.Transition(SupportFragmentManager.BeginTransaction(), Resource.Id.frame_content, fragment);
+                FragmentTransitionUtil.Transition(this, SupportFragmentManager.BeginTransaction(), Resource.Id.frame_content, fragment);
             }
 
             menuItem.SetChecked(true);

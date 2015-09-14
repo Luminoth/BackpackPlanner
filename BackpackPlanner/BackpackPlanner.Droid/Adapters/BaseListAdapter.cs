@@ -29,7 +29,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
             protected BaseViewHolder(View itemView, BaseFragment fragment) : base(itemView)
             {
                 itemView.Click += (sender, args) => {
-                    fragment.TransitionToFragment(Resource.Id.frame_content, CreateViewItemFragment());
+                    fragment.TransitionToFragment(Resource.Id.frame_content, CreateViewItemFragment(), null);
                 };
             }
         }
