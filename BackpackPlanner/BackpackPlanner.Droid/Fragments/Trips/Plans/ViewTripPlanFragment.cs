@@ -24,6 +24,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
 
         protected override int SaveItemResource => Resource.Id.button_save_trip_plan;
 
+        protected override bool HasSearchView => false;
+
         protected override void OnDoDataExchange()
         {
         }

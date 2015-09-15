@@ -36,6 +36,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
 
         protected override int SortItemsResource => Resource.Id.gear_collections_sort;
 
+        protected override bool HasSearchView => true;
+
         private List<GearCollection> _gearCollections = new List<GearCollection>(); 
 
         protected override int ItemCount => _gearCollections.Count;

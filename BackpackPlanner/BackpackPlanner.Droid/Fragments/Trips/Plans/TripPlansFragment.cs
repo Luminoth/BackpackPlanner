@@ -36,6 +36,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
 
         protected override int SortItemsResource => Resource.Id.trip_plans_sort;
 
+        protected override bool HasSearchView => true;
+
         private List<TripPlan> _tripPlans = new List<TripPlan>(); 
 
         protected override int ItemCount => _tripPlans.Count;

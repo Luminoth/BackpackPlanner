@@ -24,6 +24,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
 
         protected override int AddItemResource => Resource.Id.button_add_gear_collection;
 
+        protected override bool HasSearchView => false;
+
         protected override void OnDoDataExchange()
         {
         }

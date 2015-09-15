@@ -24,6 +24,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 
         protected override int SaveItemResource => Resource.Id.button_save_gear_system;
 
+        protected override bool HasSearchView => false;
+
         protected override void OnDoDataExchange()
         {
         }

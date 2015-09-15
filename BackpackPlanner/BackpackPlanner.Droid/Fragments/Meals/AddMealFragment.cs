@@ -24,6 +24,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
 
         protected override int AddItemResource => Resource.Id.button_add_meal;
 
+        protected override bool HasSearchView => false;
+
         protected override void OnDoDataExchange()
         {
         }

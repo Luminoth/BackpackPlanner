@@ -1,5 +1,4 @@
 using Android.App;
-using Android.OS;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Util
 {
@@ -7,8 +6,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
     {
         private static void InitTransaction(Android.Support.V4.App.FragmentTransaction fragmentTransaction)
         {
-            // TODO: why can't we slide in right and slide out left? wtf....
-            fragmentTransaction.SetCustomAnimations(Android.Resource.Animation.SlideInLeft, Android.Resource.Animation.SlideOutRight,
+            fragmentTransaction.SetCustomAnimations(
+                Android.Resource.Animation.FadeIn, Android.Resource.Animation.FadeOut,
                 Android.Resource.Animation.FadeIn, Android.Resource.Animation.FadeOut);
         }
 
@@ -18,10 +17,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 
             fragmentTransaction.Replace(frameResId, fragment);
             fragmentTransaction.Commit();
-
-            if(Build.VERSION.SdkInt >= BuildVersionCodes.Honeycomb) {
-                activity.InvalidateOptionsMenu();
-            }
         }
 
         public static void StackTransition(Activity activity, Android.Support.V4.App.FragmentTransaction fragmentTransaction, int frameResId, Android.Support.V4.App.Fragment fragment, string tags)
@@ -31,11 +26,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
             fragmentTransaction.Replace(frameResId, fragment);
             fragmentTransaction.AddToBackStack(tags);
             fragmentTransaction.Commit();
-
-            // TODO: is this if necessary here?
-            if(Build.VERSION.SdkInt >= BuildVersionCodes.Honeycomb) {
-                activity.InvalidateOptionsMenu();
-            }
         }
     }
 }

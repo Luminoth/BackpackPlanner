@@ -43,9 +43,7 @@ using SQLite.Net.Platform.XamarinAndroid;
 namespace EnergonSoftware.BackpackPlanner.Droid
 {
 	[Activity(Label = "@string/app_name", MainLauncher = true, Icon = "@drawable/icon")]
-    [IntentFilter(new[] { "android.intent.action.SEARCH" })]
     [MetaData("com.google.android.gms.version", Value = "@integer/google_play_services_version")]
-    [MetaData("android.app.searchable", Resource = "@xml/searchable")]
 	public class MainActivity : Android.Support.V7.App.AppCompatActivity, View.IOnClickListener
 	{
         public const string LogTag = "BackpackPlanner.Droid";
@@ -113,16 +111,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             _navigationDrawerManager.Toggle.SyncState();
 	    }
 
-	    public override bool OnCreateOptionsMenu(IMenu menu)
-	    {
-            return InitOptionsMenu(menu);
-	    }
-
-	    public override bool OnPrepareOptionsMenu(IMenu menu)
-	    {
-            return InitOptionsMenu(menu);
-	    }
-
 	    public override void OnConfigurationChanged(Configuration newConfig)
 	    {
 	        base.OnConfigurationChanged(newConfig);
@@ -188,36 +176,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             SetSupportActionBar(_toolbar);
         }
 
-        private bool InitSearchView(IMenuItem searchItem)
-        {
-            if(null == searchItem) {
-                return true;
-            }
-
-            View actionView = Android.Support.V4.View.MenuItemCompat.GetActionView(searchItem);
-            Android.Support.V7.Widget.SearchView searchView = actionView.JavaCast<Android.Support.V7.Widget.SearchView>();
-
-            SearchManager searchManager = (SearchManager)GetSystemService(SearchService);
-	        searchView.SetSearchableInfo(searchManager.GetSearchableInfo(ComponentName));
-
-            return true;
-        }
-
-        public bool InitOptionsMenu(IMenu menu)
-        {
-            menu.Clear();
-
-            if(FragmentManager.BackStackEntryCount < 1) {
-                // TODO: this should depend on the currently selected drawer item
-                MenuInflater.Inflate(Resource.Menu.options_menu, menu);
-                return InitSearchView(menu.FindItem(Resource.Id.action_search));
-            } 
-
-            // TODO: this should depend on the top fragment's tags
-            MenuInflater.Inflate(Resource.Menu.options_menu_nosearch, menu);
-            return true;
-        }
-
         private void LoadPreferences()
         {
             PreferenceManager.SetDefaultValues(this, Resource.Xml.settings, false);
@@ -276,12 +234,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
         private void HandleIntent(Intent intent)
         {
-            if(Intent.ActionSearch.Equals(intent.Action)) {
-                //string query = intent.GetStringExtra(SearchManager.Query);
-                // TODO: use the query somehow
-// https://developer.android.com/training/search/setup.html
-// https://developer.android.com/training/search/search.html
-            }
         }
 
         private void SelectDrawerItem(IMenuItem menuItem)

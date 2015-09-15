@@ -29,6 +29,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         protected override int TitleResource => Resource.String.title_help;
 
+        protected override bool HasSearchView => false;
+
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
             base.OnViewCreated(view, savedInstanceState);

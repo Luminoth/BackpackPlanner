@@ -36,6 +36,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
 
         protected override int SortItemsResource => Resource.Id.meals_sort;
 
+        protected override bool HasSearchView => true;
+
         private List<Meal> _meals = new List<Meal>(); 
 
         protected override int ItemCount => _meals.Count;

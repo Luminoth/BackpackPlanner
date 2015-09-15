@@ -4367,10 +4367,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 		{
 			
 			// aapt resource value: 0x7f050000
-			public const int searchable = 2131034112;
-			
-			// aapt resource value: 0x7f050001
-			public const int settings = 2131034113;
+			public const int settings = 2131034112;
 			
 			static Xml()
 			{

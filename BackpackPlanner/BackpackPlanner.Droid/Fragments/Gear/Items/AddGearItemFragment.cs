@@ -48,6 +48,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
 
         protected override int AddItemResource => Resource.Id.button_add_gear_item;
 
+        protected override bool HasSearchView => false;
+
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
             base.OnViewCreated(view, savedInstanceState);
