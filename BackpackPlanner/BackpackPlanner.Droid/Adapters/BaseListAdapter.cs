@@ -18,6 +18,8 @@ using Android.Views;
 
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 
+// sorting: http://stackoverflow.com/questions/29795299/what-is-the-sortedlistt-working-with-recyclerview-adapter
+
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 {
     public abstract class BaseListAdapter : Android.Support.V7.Widget.RecyclerView.Adapter

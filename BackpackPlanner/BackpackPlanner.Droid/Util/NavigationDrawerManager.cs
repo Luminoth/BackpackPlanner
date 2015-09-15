@@ -105,6 +105,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
         {
             NavView = _activity.FindViewById<Android.Support.Design.Widget.NavigationView>(Resource.Id.navigation);
             NavView.NavigationItemSelected += (sender, args) => {
+                // TODO: something about this callback is causing
+                // java.lang.IllegalStateException: Can not perform this action after onSaveInstanceState
+                // when the app is killed. need to find out where we're
+                // trying to commit after saving state with this
+                // http://www.androiddesignpatterns.com/2013/08/fragment-transaction-commit-state-loss.html
+
                 _selectedResId = args.MenuItem.ItemId;
 
                 Layout.CloseDrawers();

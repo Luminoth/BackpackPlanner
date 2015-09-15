@@ -15,6 +15,7 @@
 */
 
 using System.Collections.Generic;
+using System.Linq;
 
 using Android.Views;
 
@@ -28,24 +29,44 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Collections
     {
         private class GearCollectionViewHolder : BaseViewHolder
         {
+            private GearCollection _gearCollection;
+
+            public GearCollection GearCollection
+            {
+                get { return _gearCollection; }
+                set { _gearCollection = value; UpdateView(); }
+            }
+
             public GearCollectionViewHolder(View itemView, BaseFragment fragment) : base(itemView, fragment)
             {
+                // TODO: get handles to controls here
             }
 
             protected override Android.Support.V4.App.Fragment CreateViewItemFragment()
             {
                 return new ViewGearCollectionFragment();
             }
+
+            private void UpdateView()
+            {
+                // TODO: update the controls here
+            }
         }
 
         public override int LayoutResource => Resource.Layout.view_gear_collection;
 
-        public override int ItemCount => GearCollections?.Count ?? 0;
+        public override int ItemCount => _gearCollections?.Count ?? 0;
 
-        public IReadOnlyCollection<GearCollection> GearCollections { get; set; }
+        private readonly SortedList<string, GearCollection> _gearCollections = new SortedList<string, GearCollection>();
 
-        public GearCollectionListAdapter(BaseFragment fragment) : base(fragment)
+        public GearCollectionListAdapter(BaseFragment fragment, IReadOnlyCollection<GearCollection> gearCollections) : base(fragment)
         {
+            // TODO: ok, so next step is handling different sorting methods
+            // and updating when the sort method is changed
+
+            foreach(GearCollection gearCollection in gearCollections) {
+                _gearCollections.Add(gearCollection.Name, gearCollection);
+            }
         }
 
         protected override BaseViewHolder CreateViewHolder(View itemView)
@@ -56,8 +77,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Collections
         public override void OnBindViewHolder(Android.Support.V7.Widget.RecyclerView.ViewHolder holder, int position)
         {
             GearCollectionViewHolder gearCollectionViewHolder = (GearCollectionViewHolder)holder;
-
-            // setup the view holder
+            GearCollection gearCollection = _gearCollections.ElementAt(position).Value;
+            gearCollectionViewHolder.GearCollection = gearCollection;
         }
     }
 }

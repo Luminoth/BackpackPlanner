@@ -15,6 +15,7 @@
 */
 
 using System.Collections.Generic;
+using System.Linq;
 
 using Android.Views;
 
@@ -28,24 +29,44 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items
     {
         private class GearItemViewHolder : BaseViewHolder
         {
+            private GearItem _gearItem;
+
+            public GearItem GearItem
+            {
+                get { return _gearItem; }
+                set { _gearItem = value; UpdateView(); }
+            }
+
             public GearItemViewHolder(View itemView, BaseFragment fragment) : base(itemView, fragment)
             {
+                // TODO: get handles to controls here
             }
 
             protected override Android.Support.V4.App.Fragment CreateViewItemFragment()
             {
                 return new ViewGearItemFragment();
             }
+
+            private void UpdateView()
+            {
+                // TODO: update the controls here
+            }
         }
 
         public override int LayoutResource => Resource.Layout.view_gear_item;
 
-        public override int ItemCount => GearItems?.Count ?? 0;
+        public override int ItemCount => _gearItems?.Count ?? 0;
 
-        public IReadOnlyCollection<GearItem> GearItems { get; set; }
+        private readonly SortedList<string, GearItem> _gearItems = new SortedList<string, GearItem>(); 
 
-        public GearItemListAdapter(BaseFragment fragment) : base(fragment)
+        public GearItemListAdapter(BaseFragment fragment, IReadOnlyCollection<GearItem> gearItems) : base(fragment)
         {
+            // TODO: ok, so next step is handling different sorting methods
+            // and updating when the sort method is changed
+
+            foreach(GearItem gearItem in gearItems) {
+                _gearItems.Add(gearItem.Name, gearItem);
+            }
         }
 
         protected override BaseViewHolder CreateViewHolder(View itemView)
@@ -56,8 +77,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items
         public override void OnBindViewHolder(Android.Support.V7.Widget.RecyclerView.ViewHolder holder, int position)
         {
             GearItemViewHolder gearItemViewHolder = (GearItemViewHolder)holder;
-
-            // setup the view holder
+            GearItem gearItem = _gearItems.ElementAt(position).Value;
+            gearItemViewHolder.GearItem = gearItem;
         }
     }
 }
