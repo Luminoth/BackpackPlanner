@@ -19,6 +19,7 @@ using Android.Views;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 
 // sorting: http://stackoverflow.com/questions/29795299/what-is-the-sortedlistt-working-with-recyclerview-adapter
+// NOTE: can't get the android SortedList working, so for now doing it the linq way
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 {

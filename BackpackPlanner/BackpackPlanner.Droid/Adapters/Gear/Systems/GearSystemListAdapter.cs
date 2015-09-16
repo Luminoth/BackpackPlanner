@@ -15,6 +15,7 @@
 */
 
 using System.Collections.Generic;
+using System.Linq;
 
 using Android.Views;
 
@@ -28,24 +29,42 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Systems
     {
         private class GearSystemViewHolder : BaseViewHolder
         {
+            private GearSystem _gearSystem;
+
+            public GearSystem GearSystem
+            {
+                get { return _gearSystem; }
+                set { _gearSystem = value; UpdateView(); }
+            }
+
             public GearSystemViewHolder(View itemView, BaseFragment fragment) : base(itemView, fragment)
             {
+                // TODO: get handles to controls here
             }
 
             protected override Android.Support.V4.App.Fragment CreateViewItemFragment()
             {
                 return new ViewGearSystemFragment();
             }
+
+            private void UpdateView()
+            {
+                // TODO: update the controls here
+            }
         }
 
         public override int LayoutResource => Resource.Layout.view_gear_system;
 
-        public override int ItemCount => GearSystems?.Count ?? 0;
+        public override int ItemCount => _gearSystems?.Count ?? 0;
 
-        public IReadOnlyCollection<GearSystem> GearSystems { get; set; } 
+        private readonly ICollection<GearSystem> _gearSystems;
 
-        public GearSystemListAdapter(BaseFragment fragment) : base(fragment)
+        public GearSystemListAdapter(BaseFragment fragment, IEnumerable<GearSystem> gearSystems) : base(fragment)
         {
+            // TODO: ok, so next step is handling different sorting methods
+            // and updating when the sort method is changed
+
+            _gearSystems = gearSystems.OrderBy(x => x.Name).ToList();
         }
 
         protected override BaseViewHolder CreateViewHolder(View itemView)
@@ -56,8 +75,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Systems
         public override void OnBindViewHolder(Android.Support.V7.Widget.RecyclerView.ViewHolder holder, int position)
         {
             GearSystemViewHolder gearSystemViewHolder = (GearSystemViewHolder)holder;
-
-            // setup the view holder
+            GearSystem gearSystem = _gearSystems.ElementAt(position);
+            gearSystemViewHolder.GearSystem = gearSystem;
         }
     }
 }

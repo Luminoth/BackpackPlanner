@@ -15,6 +15,7 @@
 */
 
 using System.Collections.Generic;
+using System.Linq;
 
 using Android.Views;
 
@@ -28,24 +29,42 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
     {
         private class MealViewHolder : BaseViewHolder
         {
+            private Meal _meal;
+
+            public Meal Meal
+            {
+                get { return _meal; }
+                set { _meal = value; UpdateView(); }
+            }
+
             public MealViewHolder(View itemView, BaseFragment fragment) : base(itemView, fragment)
             {
+                // TODO: get handles to controls here
             }
 
             protected override Android.Support.V4.App.Fragment CreateViewItemFragment()
             {
                 return new ViewMealFragment();
             }
+
+            private void UpdateView()
+            {
+                // TODO: update the controls here
+            }
         }
 
         public override int LayoutResource => Resource.Layout.view_meal;
 
-        public override int ItemCount => Meals?.Count ?? 0;
+        public override int ItemCount => _meals?.Count ?? 0;
 
-        public IReadOnlyCollection<Meal> Meals { get; set; }
+        private readonly ICollection<Meal> _meals;
 
-        public MealListAdapter(BaseFragment fragment) : base(fragment)
+        public MealListAdapter(BaseFragment fragment, IEnumerable<Meal> meals) : base(fragment)
         {
+            // TODO: ok, so next step is handling different sorting methods
+            // and updating when the sort method is changed
+
+            _meals = meals.OrderBy(x => x.Name).ToList();
         }
 
         protected override BaseViewHolder CreateViewHolder(View itemView)
@@ -53,12 +72,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
             return new MealViewHolder(itemView, Fragment);
         }
 
-
         public override void OnBindViewHolder(Android.Support.V7.Widget.RecyclerView.ViewHolder holder, int position)
         {
             MealViewHolder mealViewHolder = (MealViewHolder)holder;
-
-            // setup the view holder
+            Meal meal = _meals.ElementAt(position);
+            mealViewHolder.Meal = meal;
         }
     }
 }

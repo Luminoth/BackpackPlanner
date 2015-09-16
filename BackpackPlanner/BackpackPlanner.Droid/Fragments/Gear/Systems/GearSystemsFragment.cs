@@ -64,12 +64,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
         {
             base.OnViewCreated(view, savedInstanceState);
 
-            Layout.SetAdapter(
-                new GearSystemListAdapter(this)
-                {
-                    GearSystems = _gearSystems
-                }
-            );
+            Layout.SetAdapter(new GearSystemListAdapter(this, _gearSystems));
         }
     }
 }

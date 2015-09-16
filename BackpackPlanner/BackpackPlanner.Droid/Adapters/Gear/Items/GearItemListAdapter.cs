@@ -57,16 +57,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items
 
         public override int ItemCount => _gearItems?.Count ?? 0;
 
-        private readonly SortedList<string, GearItem> _gearItems = new SortedList<string, GearItem>(); 
+        private readonly ICollection<GearItem> _gearItems;
 
-        public GearItemListAdapter(BaseFragment fragment, IReadOnlyCollection<GearItem> gearItems) : base(fragment)
+        public GearItemListAdapter(BaseFragment fragment, IEnumerable<GearItem> gearItems) : base(fragment)
         {
             // TODO: ok, so next step is handling different sorting methods
             // and updating when the sort method is changed
 
-            foreach(GearItem gearItem in gearItems) {
-                _gearItems.Add(gearItem.Name, gearItem);
-            }
+            _gearItems = gearItems.OrderBy(x => x.Name).ToList();
         }
 
         protected override BaseViewHolder CreateViewHolder(View itemView)
@@ -77,7 +75,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items
         public override void OnBindViewHolder(Android.Support.V7.Widget.RecyclerView.ViewHolder holder, int position)
         {
             GearItemViewHolder gearItemViewHolder = (GearItemViewHolder)holder;
-            GearItem gearItem = _gearItems.ElementAt(position).Value;
+            GearItem gearItem = _gearItems.ElementAt(position);
             gearItemViewHolder.GearItem = gearItem;
         }
     }

@@ -18,7 +18,6 @@ using System;
 
 using Android.Content.Res;
 using Android.OS;
-using Android.Util;
 using Android.Views;
 using Android.Widget;
 
@@ -31,8 +30,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
     {
         private const string StateSelectedResId = "navigation_selected_resid";
 
-        public int DefaultSelectedResId { get; set; }
-
         public Android.Support.V4.Widget.DrawerLayout Layout { get; private set; }
 
         public DrawerToggle Toggle { get; private set; }
@@ -43,7 +40,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 
         private Android.Support.V7.App.AppCompatActivity _activity;
 
-        private int _selectedResId;
+        private int _selectedMenuItemResId = -1;
 
 #region Events
         public event EventHandler<Android.Support.Design.Widget.NavigationView.NavigationItemSelectedEventArgs> NavigationItemSelected;
@@ -57,12 +54,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
             InitDrawer(toolbar);
 
             if(null != savedInstanceState) {
-                int selectedResId = savedInstanceState.GetInt(StateSelectedResId);
-                Log.Debug(MainActivity.LogTag, "Setting selected item from savedInstanceState: " + selectedResId);
-                SelectItemByResId(selectedResId);
-            } else if(DefaultSelectedResId > 1) {
-                Log.Debug(MainActivity.LogTag, "Setting selected item from DefaultSelectedResId: " + DefaultSelectedResId);
-                SelectItemByResId(DefaultSelectedResId);
+                _selectedMenuItemResId = savedInstanceState.GetInt(StateSelectedResId);
             }
         }
 
@@ -78,7 +70,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 
         public void OnSaveInstanceState(Bundle outState)
         {
-            outState.PutInt(StateSelectedResId, _selectedResId);
+            outState.PutInt(StateSelectedResId, _selectedMenuItemResId);
+        }
+
+        public void SelectInitialItem(int defaultMenuItemResId)
+        {
+            SelectItemByResId(_selectedMenuItemResId < 0 ? defaultMenuItemResId : _selectedMenuItemResId);
         }
 
         public void SelectItemByResId(int resId)
@@ -105,13 +102,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
         {
             NavView = _activity.FindViewById<Android.Support.Design.Widget.NavigationView>(Resource.Id.navigation);
             NavView.NavigationItemSelected += (sender, args) => {
-                // TODO: something about this callback is causing
-                // java.lang.IllegalStateException: Can not perform this action after onSaveInstanceState
-                // when the app is killed. need to find out where we're
-                // trying to commit after saving state with this
-                // http://www.androiddesignpatterns.com/2013/08/fragment-transaction-commit-state-loss.html
-
-                _selectedResId = args.MenuItem.ItemId;
+                _selectedMenuItemResId = args.MenuItem.ItemId;
 
                 Layout.CloseDrawers();
                 NavigationItemSelected?.Invoke(sender, args);

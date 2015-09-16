@@ -15,6 +15,7 @@
 */
 
 using System.Collections.Generic;
+using System.Linq;
 
 using Android.Views;
 
@@ -28,24 +29,42 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Itineraries
     {
         private class TripItineraryViewHolder : BaseViewHolder
         {
+            private TripItinerary _tripItinerary;
+
+            public TripItinerary TripItinerary
+            {
+                get { return _tripItinerary; }
+                set { _tripItinerary = value; UpdateView(); }
+            }
+
             public TripItineraryViewHolder(View itemView, BaseFragment fragment) : base(itemView, fragment)
             {
+                // TODO: get handles to controls here
             }
 
             protected override Android.Support.V4.App.Fragment CreateViewItemFragment()
             {
                 return new ViewTripItineraryFragment();
             }
+
+            private void UpdateView()
+            {
+                // TODO: update the controls here
+            }
         }
 
         public override int LayoutResource => Resource.Layout.view_trip_itinerary;
 
-        public override int ItemCount => TripItineraries?.Count ?? 0;
+        public override int ItemCount => _tripItineraries?.Count ?? 0;
 
-        public IReadOnlyCollection<TripItinerary> TripItineraries { get; set; } 
+        private readonly ICollection<TripItinerary> _tripItineraries;
 
-        public TripItineraryListAdapter(BaseFragment fragment) : base(fragment)
+        public TripItineraryListAdapter(BaseFragment fragment, IEnumerable<TripItinerary> tripItineraries) : base(fragment)
         {
+            // TODO: ok, so next step is handling different sorting methods
+            // and updating when the sort method is changed
+
+            _tripItineraries = tripItineraries.OrderBy(x => x.Name).ToList();
         }
 
         protected override BaseViewHolder CreateViewHolder(View itemView)
@@ -56,8 +75,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Itineraries
         public override void OnBindViewHolder(Android.Support.V7.Widget.RecyclerView.ViewHolder holder, int position)
         {
             TripItineraryViewHolder tripItineraryViewHolder = (TripItineraryViewHolder)holder;
-
-            // setup the view holder
+            TripItinerary tripItinerary = _tripItineraries.ElementAt(position);
+            tripItineraryViewHolder.TripItinerary = tripItinerary;
         }
     }
 }

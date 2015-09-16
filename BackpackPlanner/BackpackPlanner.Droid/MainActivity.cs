@@ -70,7 +70,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             InitToolbar();
 
             // setup the navigation drawer manager
-            _navigationDrawerManager.DefaultSelectedResId = Resource.Id.nav_gear_items_fragment;
             _navigationDrawerManager.NavigationItemSelected += (sender, args) => {
                 SelectDrawerItem(args.MenuItem);
             };
@@ -102,6 +101,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             LoadPreferences();
 
             HandleIntent(Intent);
+
+            _navigationDrawerManager.SelectInitialItem(Resource.Id.nav_gear_items_fragment);
 		}
 
 	    public override void OnPostCreate(Bundle savedInstanceState, PersistableBundle persistentState)
@@ -134,7 +135,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             _navigationDrawerManager.OnSaveInstanceState(outState);
 	    }
 
-        public void OnClick(View view)
+	    public void OnClick(View view)
         {
             // this handles the toolbar button press on stacked fragments
             OnBackPressed();
