@@ -15,12 +15,15 @@
 */
 
 using System.Collections.Generic;
+using System.Globalization;
 
 using Android.Views;
+using Android.Widget;
 
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
+using EnergonSoftware.BackpackPlanner.Units;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Systems
 {
@@ -28,9 +31,17 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Systems
     {
         private class GearSystemViewHolder : BaseViewHolder
         {
+            private readonly TextView _textViewName;
+            private readonly TextView _textViewItems;
+            private readonly TextView _textViewWeight;
+            private readonly TextView _textViewCost;
+
             public GearSystemViewHolder(View itemView, ListItemsFragment<GearSystem> fragment) : base(itemView, fragment)
             {
-                // TODO: get handles to controls here
+                _textViewName = itemView.FindViewById<TextView>(Resource.Id.view_gear_system_name);
+                _textViewItems = itemView.FindViewById<TextView>(Resource.Id.view_gear_system_items);
+                _textViewWeight = itemView.FindViewById<TextView>(Resource.Id.view_gear_system_weight);
+                _textViewCost = itemView.FindViewById<TextView>(Resource.Id.view_gear_system_cost);
             }
 
             protected override Android.Support.V4.App.Fragment CreateViewItemFragment()
@@ -40,7 +51,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Systems
 
             protected override void UpdateView()
             {
-                // TODO: update the controls here
+                _textViewName.Text = ListItem.Name;
+                _textViewItems.Text = $"{ListItem.GearItemCount} item(s)";
+                /*_textViewWeight.Text = $"{ListItem.WeightInUnits} {BackpackPlannerState.Instance.Settings.Units.GetSmallWeightString()}";
+
+                string formattedCost = ListItem.CostInCurrency.ToString("C", CultureInfo.CurrentCulture);
+                _textViewCost.Text = $"{formattedCost} (cost per weight)";*/
             }
         }
 

@@ -221,11 +221,20 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Items
         [ManyToMany(typeof(GearSystemGearItem), CascadeOperations = CascadeOperation.CascadeRead, ReadOnly = true)]
         public List<GearSystem> GearSystems { get; set; }
 
+        [Ignore]
+        public int GearSystemCount => GearSystems?.Count ?? 0;
+
         [ManyToMany(typeof(GearCollectionGearItem), CascadeOperations = CascadeOperation.CascadeRead, ReadOnly = true)]
         public List<GearCollection> GearCollections { get; set; }
 
+        [Ignore]
+        public int GearCollectionCount => GearCollections?.Count ?? 0;
+
         [ManyToMany(typeof(TripPlanGearItem), CascadeOperations = CascadeOperation.CascadeRead, ReadOnly = true)]
         public List<TripPlan> TripPlans { get; set; }
+
+        [Ignore]
+        public int TripPlanCount => TripPlans?.Count ?? 0;
 
         public override bool Equals(object obj)
         {

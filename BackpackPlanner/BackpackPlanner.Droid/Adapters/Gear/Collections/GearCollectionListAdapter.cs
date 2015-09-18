@@ -15,12 +15,15 @@
 */
 
 using System.Collections.Generic;
+using System.Globalization;
 
 using Android.Views;
+using Android.Widget;
 
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Collections;
+using EnergonSoftware.BackpackPlanner.Units;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Collections
 {
@@ -28,9 +31,19 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Collections
     {
         private class GearCollectionViewHolder : BaseViewHolder
         {
+            private readonly TextView _textViewName;
+            private readonly TextView _textViewSystems;
+            private readonly TextView _textViewItems;
+            private readonly TextView _textViewWeight;
+            private readonly TextView _textViewCost;
+
             public GearCollectionViewHolder(View itemView, ListItemsFragment<GearCollection> fragment) : base(itemView, fragment)
             {
-                // TODO: get handles to controls here
+                _textViewName = itemView.FindViewById<TextView>(Resource.Id.view_gear_collection_name);
+                _textViewSystems = itemView.FindViewById<TextView>(Resource.Id.view_gear_collection_systems);
+                _textViewItems = itemView.FindViewById<TextView>(Resource.Id.view_gear_collection_items);
+                _textViewWeight = itemView.FindViewById<TextView>(Resource.Id.view_gear_collection_weight);
+                _textViewCost = itemView.FindViewById<TextView>(Resource.Id.view_gear_collection_cost);
             }
 
             protected override Android.Support.V4.App.Fragment CreateViewItemFragment()
@@ -40,7 +53,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Collections
 
             protected override void UpdateView()
             {
-                // TODO: update the controls here
+                _textViewName.Text = ListItem.Name;
+                _textViewSystems.Text = $"{ListItem.GearSystemCount} system(s)";
+                _textViewItems.Text = $"{ListItem.GearItemCount} item(s) (some total)";
+                /*_textViewWeight.Text = $"{ListItem.WeightInUnits} {BackpackPlannerState.Instance.Settings.Units.GetSmallWeightString()}";
+
+                string formattedCost = ListItem.CostInCurrency.ToString("C", CultureInfo.CurrentCulture);
+                _textViewCost.Text = $"{formattedCost} (cost per weight)";*/
             }
         }
 

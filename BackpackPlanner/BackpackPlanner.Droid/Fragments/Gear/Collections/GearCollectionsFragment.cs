@@ -48,9 +48,67 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
             base.OnCreate(savedInstanceState);
 
             // TODO
-            for(int i=0; i<20; ++i) {
-                ListItems.Add(new GearCollection());
-            }
+#region Test Items
+            ListItems.Add(new GearCollection
+                {
+                    Name = "One"
+                }
+            );
+
+            ListItems.Add(new GearCollection
+                {
+                    Name = "Two"
+                }
+            );
+
+            ListItems.Add(new GearCollection
+                {
+                    Name = "Three"
+                }
+            );
+
+            ListItems.Add(new GearCollection
+                {
+                    Name = "Four"
+                }
+            );
+
+            ListItems.Add(new GearCollection
+                {
+                    Name = "Five"
+                }
+            );
+
+            ListItems.Add(new GearCollection
+                {
+                    Name = "Six"
+                }
+            );
+
+            ListItems.Add(new GearCollection
+                {
+                    Name = "Seven"
+                }
+            );
+
+            ListItems.Add(new GearCollection
+                {
+                    Name = "Eight"
+                }
+            );
+
+            ListItems.Add(new GearCollection
+                {
+                    Name = "Nine"
+                }
+            );
+
+            ListItems.Add(new GearCollection
+                {
+                    Name = "Ten"
+                }
+            );
+#endregion
         }
 
         // TODO: this can go into the base class along with a CreateListAdapter() method

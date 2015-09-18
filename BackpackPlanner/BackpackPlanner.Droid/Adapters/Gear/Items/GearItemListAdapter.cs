@@ -15,12 +15,15 @@
 */
 
 using System.Collections.Generic;
+using System.Globalization;
 
 using Android.Views;
+using Android.Widget;
 
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
+using EnergonSoftware.BackpackPlanner.Units;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items
 {
@@ -28,9 +31,17 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items
     {
         private class GearItemViewHolder : BaseViewHolder
         {
-            public GearItemViewHolder(View itemView, ListItemsFragment<GearItem> fragment) : base(itemView, fragment)
+            private readonly TextView _textViewName;
+            private readonly TextView _textViewMakeModel;
+            private readonly TextView _textViewWeight;
+            private readonly TextView _textViewCost;
+
+            public GearItemViewHolder(View itemView, BaseFragment fragment) : base(itemView, fragment)
             {
-                // TODO: get handles to controls here
+                _textViewName = itemView.FindViewById<TextView>(Resource.Id.view_gear_item_name);
+                _textViewMakeModel = itemView.FindViewById<TextView>(Resource.Id.view_gear_item_make_model);
+                _textViewWeight = itemView.FindViewById<TextView>(Resource.Id.view_gear_item_weight);
+                _textViewCost = itemView.FindViewById<TextView>(Resource.Id.view_gear_item_cost);
             }
 
             protected override Android.Support.V4.App.Fragment CreateViewItemFragment()
@@ -40,7 +51,21 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items
 
             protected override void UpdateView()
             {
-                // TODO: update the controls here
+                _textViewName.Text = ListItem.Name;
+
+                string makeModel = $"{ListItem.Make} {ListItem.Model}";
+                if(string.IsNullOrWhiteSpace(makeModel)) {
+                    _textViewMakeModel.Visibility = ViewStates.Gone;
+                    _textViewMakeModel.Text = string.Empty;
+                } else {
+                    _textViewMakeModel.Visibility = ViewStates.Visible;
+                    _textViewMakeModel.Text = makeModel;
+                }
+
+                _textViewWeight.Text = $"{ListItem.WeightInUnits} {BackpackPlannerState.Instance.Settings.Units.GetSmallWeightString()}";
+
+                string formattedCost = ListItem.CostInCurrency.ToString("C", CultureInfo.CurrentCulture);
+                _textViewCost.Text = $"{formattedCost} (cost per weight)";
             }
         }
 

@@ -236,6 +236,9 @@ namespace EnergonSoftware.BackpackPlanner.Models.Meals
         [ManyToMany(typeof(TripPlanMeal), CascadeOperations = CascadeOperation.CascadeRead, ReadOnly = true)]
         public List<TripPlan> TripPlans { get; set; }
 
+        [Ignore]
+        public int TripPlanCount => TripPlans?.Count ?? 0;
+
         public override bool Equals(object obj)
         {
             if(MealId < 1) {

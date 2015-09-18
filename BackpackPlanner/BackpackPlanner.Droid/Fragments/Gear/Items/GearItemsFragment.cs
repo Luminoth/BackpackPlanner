@@ -48,9 +48,91 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
             base.OnCreate(savedInstanceState);
 
             // TODO
-            for(int i=0; i<20; ++i) {
-                ListItems.Add(new GearItem());
-            }
+#region Test Items
+            ListItems.Add(new GearItem
+                {
+                    Name = "One",
+                    Make = "Test Make",
+                    Model = "Test Model",
+                    WeightInGrams = 1,
+                    CostInUSDP = 20
+                }
+            );
+
+            ListItems.Add(new GearItem
+                {
+                    Name = "Two",
+                    Make = "Test Make",
+                    WeightInGrams = 2,
+                    CostInUSDP = 19
+                }
+            );
+
+            ListItems.Add(new GearItem
+                {
+                    Name = "Three",
+                    Model = "Test Model",
+                    WeightInGrams = 3,
+                    CostInUSDP = 18
+                }
+            );
+
+            ListItems.Add(new GearItem
+                {
+                    Name = "Four",
+                    WeightInGrams = 4,
+                    CostInUSDP = 17
+                }
+            );
+
+            ListItems.Add(new GearItem
+                {
+                    Name = "Five",
+                    WeightInGrams = 5,
+                    CostInUSDP = 16
+                }
+            );
+
+            ListItems.Add(new GearItem
+                {
+                    Name = "Six",
+                    WeightInGrams = 6,
+                    CostInUSDP = 15
+                }
+            );
+
+            ListItems.Add(new GearItem
+                {
+                    Name = "Seven",
+                    WeightInGrams = 7,
+                    CostInUSDP = 14
+                }
+            );
+
+            ListItems.Add(new GearItem
+                {
+                    Name = "Eight",
+                    WeightInGrams = 8,
+                    CostInUSDP = 13
+                }
+            );
+
+            ListItems.Add(new GearItem
+                {
+                    Name = "Nine",
+                    WeightInGrams = 9,
+                    CostInUSDP = 12
+                }
+            );
+
+            ListItems.Add(new GearItem
+                {
+                    Name = "Ten",
+                    WeightInGrams = 10,
+                    CostInUSDP = 11
+                }
+            );
+#endregion
         }
 
         // TODO: this can go into the base class along with a CreateListAdapter() method

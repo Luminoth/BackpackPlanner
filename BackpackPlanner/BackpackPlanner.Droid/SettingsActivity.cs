@@ -48,7 +48,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
         private EditTextPreference _weightPreference;
 
         private ListPreference _unitSystemPreference;
-        private ListPreference _currencyPreference;
+        //private ListPreference _currencyPreference;
 #endregion
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -66,7 +66,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             _weightPreference = (EditTextPreference)FindPreference(PersonalInformation.WeightPreferenceKey);
 
             _unitSystemPreference = (ListPreference)FindPreference(BackpackPlannerSettings.UnitSystemPreferenceKey);
-            _currencyPreference = (ListPreference)FindPreference(BackpackPlannerSettings.CurrencyPreferenceKey);
+            //_currencyPreference = (ListPreference)FindPreference(BackpackPlannerSettings.CurrencyPreferenceKey);
 
             InitLabels();
             InitSummaries();
@@ -188,10 +188,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             _unitSystemPreference.Summary = Resources.GetStringArray(Resource.Array.unit_system_entries)[(int)BackpackPlannerState.Instance.Settings.Units];
         }
 
-        private void SetCurrencySummary()
+        /*private void SetCurrencySummary()
         {
             _currencyPreference.Summary = Resources.GetStringArray(Resource.Array.currency_entries)[(int)BackpackPlannerState.Instance.Settings.Currency];
-        }
+        }*/
 #endregion
 
         private void InitLabels()
@@ -209,7 +209,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             SetWeightSummary();
 
             SetUnitSystemSummary();
-            SetCurrencySummary();
+            //SetCurrencySummary();
         }
 
         public void OnSharedPreferenceChanged(ISharedPreferences sharedPreferences, string key)
@@ -247,10 +247,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid
                 SetWeightLabel();
                 SetWeightSummary();
                 break;
-            case BackpackPlannerSettings.CurrencyPreferenceKey:
+            /*case BackpackPlannerSettings.CurrencyPreferenceKey:
                 BackpackPlannerState.Instance.Settings.Currency = (Currency)Convert.ToInt32(_currencyPreference.Value);
                 SetCurrencySummary();
-                break;
+                break;*/
             }
 
             OnContentChanged();

@@ -139,6 +139,9 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
         [ManyToMany(typeof(TripPlanGearCollection), CascadeOperations = CascadeOperation.All)]
         public List<GearCollection> GearCollections { get; set; }
 
+        [Ignore]
+        public int GearCollectionCount => GearCollections?.Count ?? 0;
+
         /// <summary>
         /// Gets or sets the gear systems contained in this plan.
         /// </summary>
@@ -147,6 +150,9 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
         /// </value>
         [ManyToMany(typeof(TripPlanGearSystem), CascadeOperations = CascadeOperation.All)]
         public List<GearSystem> GearSystems { get; set; }
+
+        [Ignore]
+        public int GearSystemCount => GearSystems?.Count ?? 0;
 
         /// <summary>
         /// Gets or sets the gear items contained in this plan.
@@ -157,6 +163,9 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
         [ManyToMany(typeof(TripPlanGearItem), CascadeOperations = CascadeOperation.All)]
         public List<GearItem> GearItems { get; set; }
 
+        [Ignore]
+        public int GearItemCount => GearItems?.Count ?? 0;
+
         /// <summary>
         /// Gets or sets the meals contained in this plan.
         /// </summary>
@@ -165,6 +174,9 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
         /// </value>
         [ManyToMany(typeof(TripPlanMeal), CascadeOperations = CascadeOperation.All)]
         public List<Meal> Meals { get; set; }
+
+        [Ignore]
+        public int MealCount => Meals?.Count ?? 0;
 
         /// <summary>
         /// Gets or sets the trip plan note.

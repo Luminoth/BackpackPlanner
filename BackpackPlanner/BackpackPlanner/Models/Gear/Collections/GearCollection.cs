@@ -101,6 +101,9 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Collections
         [ManyToMany(typeof(GearCollectionGearSystem), CascadeOperations = CascadeOperation.All)]
         public List<GearSystem> GearSystems { get; set; }
 
+        [Ignore]
+        public int GearSystemCount => GearSystems?.Count ?? 0;
+
         /// <summary>
         /// Gets or sets the gear items contained in this collection.
         /// </summary>
@@ -109,6 +112,9 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Collections
         /// </value>
         [ManyToMany(typeof(GearCollectionGearItem), CascadeOperations = CascadeOperation.All)]
         public List<GearItem> GearItems { get; set; }
+
+        [Ignore]
+        public int GearItemCount => GearItems?.Count ?? 0;
 
         /// <summary>
         /// Gets or sets the gear collection note.
@@ -121,6 +127,9 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Collections
 
         [ManyToMany(typeof(TripPlanGearCollection), CascadeOperations = CascadeOperation.CascadeRead, ReadOnly = true)]
         public List<TripPlan> TripPlans { get; set; }
+
+        [Ignore]
+        public int TripPlanCount => TripPlans?.Count ?? 0;
 
         public override bool Equals(object obj)
         {

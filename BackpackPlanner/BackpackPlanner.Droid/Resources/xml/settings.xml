@@ -39,11 +39,11 @@
         android:entries="@array/unit_system_entries"
         android:entryValues="@array/unit_system_values"
         android:defaultValue="0" />
-    <ListPreference
+    <!--<ListPreference
         android:title="@string/label_currency"
         android:summary="@string/summary_currency"
         android:key="currency"
         android:entries="@array/currency_entries"
         android:entryValues="@array/currency_values"
-        android:defaultValue="0" />
+        android:defaultValue="0" />-->
 </PreferenceScreen>

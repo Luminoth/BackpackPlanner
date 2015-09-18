@@ -99,6 +99,9 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries
         [ManyToOne(CascadeOperations = CascadeOperation.CascadeRead, ReadOnly = true)]
         public List<TripPlan> TripPlans { get; set; }
 
+        [Ignore]
+        public int TripPlanCount => TripPlans?.Count ?? 0;
+
         public override bool Equals(object obj)
         {
             if(TripItineraryId < 1) {
