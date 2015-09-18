@@ -14,8 +14,6 @@
    limitations under the License.
 */
 
-using System.Collections.Generic;
-
 using Android.OS;
 using Android.Views;
 
@@ -38,10 +36,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
 
         protected override bool HasSearchView => true;
 
-        private List<TripPlan> _tripPlans = new List<TripPlan>(); 
-
-        protected override int ItemCount => _tripPlans.Count;
-
         protected override int AddItemResource => Resource.Id.fab_add_trip_plan;
 
         protected override Android.Support.V4.App.Fragment CreateAddItemFragment()
@@ -54,17 +48,17 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
             base.OnCreate(savedInstanceState);
 
             // TODO
-            _tripPlans = new List<TripPlan>();
             for(int i=0; i<20; ++i) {
-                _tripPlans.Add(new TripPlan());
+                ListItems.Add(new TripPlan());
             }
         }
 
+        // TODO: this can go into the base class along with a CreateListAdapter() method
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
             base.OnViewCreated(view, savedInstanceState);
 
-            Layout.SetAdapter(new TripPlanListAdapter(this, _tripPlans));
+            Layout.SetAdapter(new TripPlanListAdapter(this, ListItems));
         }
     }
 }

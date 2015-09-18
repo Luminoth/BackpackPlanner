@@ -15,7 +15,6 @@
 */
 
 using System.Collections.Generic;
-using System.Linq;
 
 using Android.Views;
 
@@ -25,19 +24,12 @@ using EnergonSoftware.BackpackPlanner.Models.Meals;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
 {
-    public class MealListAdapter : BaseListAdapter
+    public class MealListAdapter : BaseListAdapter<Meal>
     {
         private class MealViewHolder : BaseViewHolder
         {
-            private Meal _meal;
 
-            public Meal Meal
-            {
-                get { return _meal; }
-                set { _meal = value; UpdateView(); }
-            }
-
-            public MealViewHolder(View itemView, BaseFragment fragment) : base(itemView, fragment)
+            public MealViewHolder(View itemView, ListItemsFragment<Meal> fragment) : base(itemView, fragment)
             {
                 // TODO: get handles to controls here
             }
@@ -47,7 +39,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
                 return new ViewMealFragment();
             }
 
-            private void UpdateView()
+            protected override void UpdateView()
             {
                 // TODO: update the controls here
             }
@@ -55,28 +47,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
 
         public override int LayoutResource => Resource.Layout.view_meal;
 
-        public override int ItemCount => _meals?.Count ?? 0;
-
-        private readonly ICollection<Meal> _meals;
-
-        public MealListAdapter(BaseFragment fragment, IEnumerable<Meal> meals) : base(fragment)
+        public MealListAdapter(ListItemsFragment<Meal> fragment, IEnumerable<Meal> listItems) : base(fragment, listItems)
         {
-            // TODO: ok, so next step is handling different sorting methods
-            // and updating when the sort method is changed
-
-            _meals = meals.OrderBy(x => x.Name).ToList();
         }
 
         protected override BaseViewHolder CreateViewHolder(View itemView)
         {
             return new MealViewHolder(itemView, Fragment);
-        }
-
-        public override void OnBindViewHolder(Android.Support.V7.Widget.RecyclerView.ViewHolder holder, int position)
-        {
-            MealViewHolder mealViewHolder = (MealViewHolder)holder;
-            Meal meal = _meals.ElementAt(position);
-            mealViewHolder.Meal = meal;
         }
     }
 }

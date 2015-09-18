@@ -15,7 +15,6 @@
 */
 
 using System.Collections.Generic;
-using System.Linq;
 
 using Android.Views;
 
@@ -25,19 +24,11 @@ using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Systems
 {
-    public class GearSystemListAdapter : BaseListAdapter
+    public class GearSystemListAdapter : BaseListAdapter<GearSystem>
     {
         private class GearSystemViewHolder : BaseViewHolder
         {
-            private GearSystem _gearSystem;
-
-            public GearSystem GearSystem
-            {
-                get { return _gearSystem; }
-                set { _gearSystem = value; UpdateView(); }
-            }
-
-            public GearSystemViewHolder(View itemView, BaseFragment fragment) : base(itemView, fragment)
+            public GearSystemViewHolder(View itemView, ListItemsFragment<GearSystem> fragment) : base(itemView, fragment)
             {
                 // TODO: get handles to controls here
             }
@@ -47,7 +38,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Systems
                 return new ViewGearSystemFragment();
             }
 
-            private void UpdateView()
+            protected override void UpdateView()
             {
                 // TODO: update the controls here
             }
@@ -55,28 +46,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Systems
 
         public override int LayoutResource => Resource.Layout.view_gear_system;
 
-        public override int ItemCount => _gearSystems?.Count ?? 0;
-
-        private readonly ICollection<GearSystem> _gearSystems;
-
-        public GearSystemListAdapter(BaseFragment fragment, IEnumerable<GearSystem> gearSystems) : base(fragment)
+        public GearSystemListAdapter(ListItemsFragment<GearSystem> fragment, IEnumerable<GearSystem> listItems) : base(fragment, listItems)
         {
-            // TODO: ok, so next step is handling different sorting methods
-            // and updating when the sort method is changed
-
-            _gearSystems = gearSystems.OrderBy(x => x.Name).ToList();
         }
 
         protected override BaseViewHolder CreateViewHolder(View itemView)
         {
             return new GearSystemViewHolder(itemView, Fragment);
-        }
-
-        public override void OnBindViewHolder(Android.Support.V7.Widget.RecyclerView.ViewHolder holder, int position)
-        {
-            GearSystemViewHolder gearSystemViewHolder = (GearSystemViewHolder)holder;
-            GearSystem gearSystem = _gearSystems.ElementAt(position);
-            gearSystemViewHolder.GearSystem = gearSystem;
         }
     }
 }

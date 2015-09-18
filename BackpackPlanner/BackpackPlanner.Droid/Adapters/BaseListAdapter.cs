@@ -14,6 +14,9 @@
    limitations under the License.
 */
 
+using System.Collections.Generic;
+using System.Linq;
+
 using Android.Views;
 
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
@@ -23,11 +26,21 @@ using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 {
-    public abstract class BaseListAdapter : Android.Support.V7.Widget.RecyclerView.Adapter
+    public abstract class BaseListAdapter<T> : Android.Support.V7.Widget.RecyclerView.Adapter
     {
         protected abstract class BaseViewHolder : Android.Support.V7.Widget.RecyclerView.ViewHolder
         {
+            private T _listItem;
+
+            public T ListItem
+            {
+                get { return _listItem; }
+                set { _listItem = value; UpdateView(); }
+            }
+
             protected abstract Android.Support.V4.App.Fragment CreateViewItemFragment();
+
+            protected abstract void UpdateView();
 
             protected BaseViewHolder(View itemView, BaseFragment fragment) : base(itemView)
             {
@@ -37,21 +50,38 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
             }
         }
 
-        public BaseFragment Fragment { get; }
+        public ListItemsFragment<T> Fragment { get; }
 
         public abstract int LayoutResource { get; }
 
+        public override int ItemCount => ListItems?.Count ?? 0;
+
+        protected ICollection<T> ListItems { get; }
+
         protected abstract BaseViewHolder CreateViewHolder(View itemView);
 
-        protected BaseListAdapter(BaseFragment fragment)
+        protected BaseListAdapter(ListItemsFragment<T> fragment, IEnumerable<T> listItems)
         {
             Fragment = fragment;
+
+            ListItems = listItems.ToList();
         }
 
         public override Android.Support.V7.Widget.RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
         {
             View itemView = LayoutInflater.From(parent.Context).Inflate(LayoutResource, parent, false);
+
+            // TODO: ok, so next step is handling different sorting methods
+            // and updating when the sort method is changed
+
             return CreateViewHolder(itemView);
+        }
+
+        public override void OnBindViewHolder(Android.Support.V7.Widget.RecyclerView.ViewHolder holder, int position)
+        {
+            BaseViewHolder baseViewHolder = (BaseViewHolder)holder;
+            T gearItem = ListItems.ElementAt(position);
+            baseViewHolder.ListItem = gearItem;
         }
     }
 }

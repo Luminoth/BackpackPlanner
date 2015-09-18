@@ -14,8 +14,6 @@
    limitations under the License.
 */
 
-using System.Collections.Generic;
-
 using Android.OS;
 using Android.Views;
 
@@ -38,10 +36,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
 
         protected override bool HasSearchView => true;
 
-        private List<Meal> _meals = new List<Meal>(); 
-
-        protected override int ItemCount => _meals.Count;
-
         protected override int AddItemResource => Resource.Id.fab_add_meal;
 
         protected override Android.Support.V4.App.Fragment CreateAddItemFragment()
@@ -54,17 +48,17 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
             base.OnCreate(savedInstanceState);
 
             // TODO
-            _meals = new List<Meal>();
             for(int i=0; i<20; ++i) {
-                _meals.Add(new Meal());
+                ListItems.Add(new Meal());
             }
         }
 
+        // TODO: this can go into the base class along with a CreateListAdapter() method
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
             base.OnViewCreated(view, savedInstanceState);
 
-            Layout.SetAdapter(new MealListAdapter(this, _meals));
+            Layout.SetAdapter(new MealListAdapter(this, ListItems));
         }
     }
 }

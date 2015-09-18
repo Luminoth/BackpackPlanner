@@ -55,17 +55,21 @@ namespace EnergonSoftware.BackpackPlanner.Droid
         private readonly NavigationDrawerManager _navigationDrawerManager = new NavigationDrawerManager();
 #endregion
 
-		protected async override void OnCreate(Bundle savedInstanceState)
+		protected override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
 			SetContentView(Resource.Layout.activity_main);
 
-            InitHockeyApp();
-
             BackpackPlannerState.Instance.Logger = new DroidLogger();
 
-            await BackpackPlannerState.Instance.InitDatabaseAsync(new SQLitePlatformAndroid(),
-                System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), BackpackPlannerState.DatabaseName);
+            InitHockeyApp();
+
+            // this needs to be waited on because aysyncing OnCreate() seems
+            // to cause future lifecycle methods to get called earlier
+            // than they're supposed to
+            // TODO: This actually seems to be hanging the app
+            /*BackpackPlannerState.Instance.InitDatabaseAsync(new SQLitePlatformAndroid(),
+                System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), BackpackPlannerState.DatabaseName).Wait();*/
 
             InitToolbar();
 

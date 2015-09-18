@@ -15,7 +15,6 @@
 */
 
 using System.Collections.Generic;
-using System.Linq;
 
 using Android.Views;
 
@@ -25,19 +24,11 @@ using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Plans
 {
-    public class TripPlanListAdapter : BaseListAdapter
+    public class TripPlanListAdapter : BaseListAdapter<TripPlan>
     {
         private class TripPlanViewHolder : BaseViewHolder
         {
-            private TripPlan _tripPlan;
-
-            public TripPlan TripPlan
-            {
-                get { return _tripPlan; }
-                set { _tripPlan = value; UpdateView(); }
-            }
-
-            public TripPlanViewHolder(View itemView, BaseFragment fragment) : base(itemView, fragment)
+            public TripPlanViewHolder(View itemView, ListItemsFragment<TripPlan> fragment) : base(itemView, fragment)
             {
                 // TODO: get handles to controls here
             }
@@ -47,7 +38,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Plans
                 return new ViewTripPlanFragment();
             }
 
-            private void UpdateView()
+            protected override void UpdateView()
             {
                 // TODO: update the controls here
             }
@@ -55,28 +46,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Plans
 
         public override int LayoutResource => Resource.Layout.view_trip_plan;
 
-        public override int ItemCount => _tripPlans?.Count ?? 0;
-
-        private readonly ICollection<TripPlan> _tripPlans;
-
-        public TripPlanListAdapter(BaseFragment fragment, IEnumerable<TripPlan> tripPlans) : base(fragment)
+        public TripPlanListAdapter(ListItemsFragment<TripPlan> fragment, IEnumerable<TripPlan> listItems) : base(fragment, listItems)
         {
-            // TODO: ok, so next step is handling different sorting methods
-            // and updating when the sort method is changed
-
-            _tripPlans = tripPlans.OrderBy(x => x.Name).ToList();
         }
 
         protected override BaseViewHolder CreateViewHolder(View itemView)
         {
             return new TripPlanViewHolder(itemView, Fragment);
-        }
-
-        public override void OnBindViewHolder(Android.Support.V7.Widget.RecyclerView.ViewHolder holder, int position)
-        {
-            TripPlanViewHolder tripPlanViewHolder = (TripPlanViewHolder)holder;
-            TripPlan tripPlan = _tripPlans.ElementAt(position);
-            tripPlanViewHolder.TripPlan = tripPlan;
         }
     }
 }

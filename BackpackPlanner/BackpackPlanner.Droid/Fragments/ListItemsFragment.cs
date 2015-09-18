@@ -14,6 +14,8 @@
    limitations under the License.
 */
 
+using System.Collections.Generic;
+
 using Android.OS;
 using Android.Views;
 using Android.Widget;
@@ -29,9 +31,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         protected abstract int SortItemsResource { get; }
 
-        protected abstract int ItemCount { get; }
-
         protected abstract int AddItemResource { get; }
+
+        protected readonly List<T> ListItems = new List<T>();
+
+#region Controls
+        private Spinner _sortItemsSpinner;
+#endregion
 
         protected abstract Android.Support.V4.App.Fragment CreateAddItemFragment();
 
@@ -44,13 +50,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                 TransitionToFragment(Resource.Id.frame_content, CreateAddItemFragment(), null);
             };
 
-            if(ItemCount > 0) {
+            if(ListItems.Count > 0) {
                 TextView noItemsTextView = view.FindViewById<TextView>(NoItemsResource);
                 noItemsTextView.Visibility = ViewStates.Gone;
 
-                Spinner sortItemsSpinner = view.FindViewById<Spinner>(SortItemsResource);
-                if(null != sortItemsSpinner) {
-                    sortItemsSpinner.Visibility = ViewStates.Visible;
+                _sortItemsSpinner = view.FindViewById<Spinner>(SortItemsResource);
+                if(null != _sortItemsSpinner) {
+                    _sortItemsSpinner.Visibility = ViewStates.Visible;
                 }
 
                 Layout.Visibility = ViewStates.Visible;

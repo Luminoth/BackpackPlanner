@@ -40,8 +40,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
         private Android.Support.Design.Widget.TextInputLayout _gearItemNoteEditText;
 #endregion
 
-        private GearItem _gearItem;
-
         protected override int LayoutResource => Resource.Layout.fragment_add_gear_item;
 
         protected override int TitleResource => Resource.String.title_add_gear_item;
@@ -49,6 +47,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
         protected override int AddItemResource => Resource.Id.button_add_gear_item;
 
         protected override bool HasSearchView => false;
+
+        private GearItem _gearItem;
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
