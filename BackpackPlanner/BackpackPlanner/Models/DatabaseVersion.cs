@@ -45,7 +45,7 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// <param name="asyncDbConnection">The asynchronous database connection.</param>
         public static async Task<DatabaseVersion> GetAsync(SQLiteAsyncConnection asyncDbConnection)
         {
-            return await asyncDbConnection.Table<DatabaseVersion>().FirstOrDefaultAsync();
+            return await asyncDbConnection.Table<DatabaseVersion>().FirstOrDefaultAsync().ConfigureAwait(false);
         }
 
         /// <summary>

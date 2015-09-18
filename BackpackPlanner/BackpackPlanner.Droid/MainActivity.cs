@@ -67,9 +67,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             // this needs to be waited on because aysyncing OnCreate() seems
             // to cause future lifecycle methods to get called earlier
             // than they're supposed to
-            // TODO: This actually seems to be hanging the app
-            /*BackpackPlannerState.Instance.InitDatabaseAsync(new SQLitePlatformAndroid(),
-                System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), BackpackPlannerState.DatabaseName).Wait();*/
+            BackpackPlannerState.Instance.InitDatabaseAsync(new SQLitePlatformAndroid(),
+                System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), BackpackPlannerState.DatabaseName).Wait();
 
             InitToolbar();
 
