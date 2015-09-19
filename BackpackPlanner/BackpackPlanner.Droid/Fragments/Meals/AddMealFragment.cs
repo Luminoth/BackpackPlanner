@@ -14,9 +14,11 @@
    limitations under the License.
 */
 
+using EnergonSoftware.BackpackPlanner.Models.Meals;
+
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
 {
-    public class AddMealFragment : AddItemFragment
+    public class AddMealFragment : AddItemFragment<Meal>
     {
         protected override int LayoutResource => Resource.Layout.fragment_add_meal;
 
@@ -28,6 +30,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
 
         protected override void OnDoDataExchange()
         {
+            Item = new Meal
+            {
+            };
         }
 
         protected override bool OnValidate()

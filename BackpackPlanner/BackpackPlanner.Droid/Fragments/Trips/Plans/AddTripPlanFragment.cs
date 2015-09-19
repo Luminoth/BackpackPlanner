@@ -14,9 +14,11 @@
    limitations under the License.
 */
 
+using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
+
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
 {
-    public class AddTripPlanFragment : AddItemFragment
+    public class AddTripPlanFragment : AddItemFragment<TripPlan>
     {
         protected override int LayoutResource => Resource.Layout.fragment_add_trip_plan;
 
@@ -28,6 +30,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
 
         protected override void OnDoDataExchange()
         {
+            Item = new TripPlan
+            {
+            };
         }
 
         protected override bool OnValidate()

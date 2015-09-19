@@ -14,9 +14,11 @@
    limitations under the License.
 */
 
+using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
+
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 {
-    public class AddGearSystemFragment : AddItemFragment
+    public class AddGearSystemFragment : AddItemFragment<GearSystem>
     {
         protected override int LayoutResource => Resource.Layout.fragment_add_gear_system;
 
@@ -28,6 +30,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 
         protected override void OnDoDataExchange()
         {
+            Item = new GearSystem
+            {
+            };
         }
 
         protected override bool OnValidate()

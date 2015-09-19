@@ -25,7 +25,7 @@ using EnergonSoftware.BackpackPlanner.Units;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
 {
-    public class AddGearItemFragment : AddItemFragment
+    public class AddGearItemFragment : AddItemFragment<GearItem>
     {
 #region Controls
         private Android.Support.Design.Widget.TextInputLayout _gearItemNameEditText;
@@ -47,8 +47,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
         protected override int AddItemResource => Resource.Id.button_add_gear_item;
 
         protected override bool HasSearchView => false;
-
-        private GearItem _gearItem;
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
@@ -77,7 +75,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
 
         protected override void OnDoDataExchange()
         {
-            _gearItem = new GearItem
+            Item = new GearItem
             {
                 Name = _gearItemNameEditText.EditText.Text,
                 Make = _gearItemMakeEditText.EditText.Text,
@@ -92,13 +90,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
             switch(carriedSelectionResId)
             {
             case Resource.Id.gear_item_carried_carried:
-                _gearItem.Carried = GearCarried.Carried;
+                Item.Carried = GearCarried.Carried;
                 break;
             case Resource.Id.gear_item_carried_worn:
-                _gearItem.Carried = GearCarried.Worn;
+                Item.Carried = GearCarried.Worn;
                 break;
             case Resource.Id.gear_item_carried_not_carried:
-                _gearItem.Carried = GearCarried.NotCarried;
+                Item.Carried = GearCarried.NotCarried;
                 break;
             }
         }

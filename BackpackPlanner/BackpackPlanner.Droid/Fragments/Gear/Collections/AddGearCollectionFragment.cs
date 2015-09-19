@@ -14,9 +14,11 @@
    limitations under the License.
 */
 
+using EnergonSoftware.BackpackPlanner.Models.Gear.Collections;
+
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
 {
-    public class AddGearCollectionFragment : AddItemFragment
+    public class AddGearCollectionFragment : AddItemFragment<GearCollection>
     {
         protected override int LayoutResource => Resource.Layout.fragment_add_gear_collection;
 
@@ -28,6 +30,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
 
         protected override void OnDoDataExchange()
         {
+            Item = new GearCollection
+            {
+            };
         }
 
         protected override bool OnValidate()

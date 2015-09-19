@@ -14,9 +14,11 @@
    limitations under the License.
 */
 
+using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
+
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
 {
-    public class ViewTripPlanFragment : ViewItemFragment
+    public class ViewTripPlanFragment : ViewItemFragment<TripPlan>
     {
         protected override int LayoutResource => Resource.Layout.fragment_view_trip_plan;
 

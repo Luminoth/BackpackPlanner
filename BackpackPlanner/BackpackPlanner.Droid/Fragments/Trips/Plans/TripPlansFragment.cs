@@ -48,9 +48,67 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
             base.OnCreate(savedInstanceState);
 
             // TODO
-            for(int i=0; i<20; ++i) {
-                ListItems.Add(new TripPlan());
-            }
+#region Test Items
+            ListItems.Add(new TripPlan
+                {
+                    Name = "One"
+                }
+            );
+
+            ListItems.Add(new TripPlan
+                {
+                    Name = "Two"
+                }
+            );
+
+            ListItems.Add(new TripPlan
+                {
+                    Name = "Three"
+                }
+            );
+
+            ListItems.Add(new TripPlan
+                {
+                    Name = "Four"
+                }
+            );
+
+            ListItems.Add(new TripPlan
+                {
+                    Name = "Five"
+                }
+            );
+
+            ListItems.Add(new TripPlan
+                {
+                    Name = "Six"
+                }
+            );
+
+            ListItems.Add(new TripPlan
+                {
+                    Name = "Seven"
+                }
+            );
+
+            ListItems.Add(new TripPlan
+                {
+                    Name = "Eight"
+                }
+            );
+
+            ListItems.Add(new TripPlan
+                {
+                    Name = "Nine"
+                }
+            );
+
+            ListItems.Add(new TripPlan
+                {
+                    Name = "Ten"
+                }
+            );
+#endregion
         }
 
         // TODO: this can go into the base class along with a CreateListAdapter() method

@@ -14,9 +14,11 @@
    limitations under the License.
 */
 
+using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
+
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
 {
-    public class ViewGearItemFragment : ViewItemFragment
+    public class ViewGearItemFragment : ViewItemFragment<GearItem>
     {
         protected override int LayoutResource => Resource.Layout.fragment_view_gear_item;
 

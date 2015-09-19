@@ -14,9 +14,11 @@
    limitations under the License.
 */
 
+using EnergonSoftware.BackpackPlanner.Models.Meals;
+
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
 {
-    public class ViewMealFragment : ViewItemFragment
+    public class ViewMealFragment : ViewItemFragment<Meal>
     {
         protected override int LayoutResource => Resource.Layout.fragment_view_meal;
 

@@ -48,9 +48,137 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
             base.OnCreate(savedInstanceState);
 
             // TODO
-            for(int i=0; i<20; ++i) {
-                ListItems.Add(new Meal());
-            }
+#region Test Items
+            ListItems.Add(new Meal
+                {
+                    Name = "One",
+                    MealTime = MealTime.Dinner,
+                    ServingCount = 1,
+                    Calories = 50,
+                    ProteinInGrams = 1,
+                    FiberInGrams = 1,
+                    WeightInGrams = 1,
+                    CostInUSDP = 20
+                }
+            );
+
+            ListItems.Add(new Meal
+                {
+                    Name = "Two",
+                    MealTime = MealTime.Dinner,
+                    ServingCount = 1,
+                    Calories = 50,
+                    ProteinInGrams = 1,
+                    FiberInGrams = 1,
+                    WeightInGrams = 2,
+                    CostInUSDP = 19
+                }
+            );
+
+            ListItems.Add(new Meal
+                {
+                    Name = "Three",
+                    MealTime = MealTime.Dinner,
+                    ServingCount = 1,
+                    Calories = 50,
+                    ProteinInGrams = 1,
+                    FiberInGrams = 1,
+                    WeightInGrams = 3,
+                    CostInUSDP = 18
+                }
+            );
+
+            ListItems.Add(new Meal
+                {
+                    Name = "Four",
+                    MealTime = MealTime.Dinner,
+                    ServingCount = 1,
+                    Calories = 50,
+                    ProteinInGrams = 1,
+                    FiberInGrams = 1,
+                    WeightInGrams = 4,
+                    CostInUSDP = 17
+                }
+            );
+
+            ListItems.Add(new Meal
+                {
+                    Name = "Five",
+                    MealTime = MealTime.Dinner,
+                    ServingCount = 1,
+                    Calories = 50,
+                    ProteinInGrams = 1,
+                    FiberInGrams = 1,
+                    WeightInGrams = 5,
+                    CostInUSDP = 16
+                }
+            );
+
+            ListItems.Add(new Meal
+                {
+                    Name = "Six",
+                    MealTime = MealTime.Dinner,
+                    ServingCount = 1,
+                    Calories = 50,
+                    ProteinInGrams = 1,
+                    FiberInGrams = 1,
+                    WeightInGrams = 6,
+                    CostInUSDP = 15
+                }
+            );
+
+            ListItems.Add(new Meal
+                {
+                    Name = "Seven",
+                    MealTime = MealTime.Dinner,
+                    ServingCount = 1,
+                    Calories = 50,
+                    ProteinInGrams = 1,
+                    FiberInGrams = 1,
+                    WeightInGrams = 7,
+                    CostInUSDP = 14
+                }
+            );
+
+            ListItems.Add(new Meal
+                {
+                    Name = "Eight",
+                    MealTime = MealTime.Dinner,
+                    ServingCount = 1,
+                    Calories = 50,
+                    ProteinInGrams = 1,
+                    FiberInGrams = 1,
+                    WeightInGrams = 8,
+                    CostInUSDP = 13
+                }
+            );
+
+            ListItems.Add(new Meal
+                {
+                    Name = "Nine",
+                    MealTime = MealTime.Dinner,
+                    ServingCount = 1,
+                    Calories = 50,
+                    ProteinInGrams = 1,
+                    FiberInGrams = 1,
+                    WeightInGrams = 9,
+                    CostInUSDP = 12
+                }
+            );
+
+            ListItems.Add(new Meal
+                {
+                    Name = "Ten",
+                    MealTime = MealTime.Dinner,
+                    ServingCount = 1,
+                    Calories = 50,
+                    ProteinInGrams = 1,
+                    FiberInGrams = 1,
+                    WeightInGrams = 10,
+                    CostInUSDP = 11
+                }
+            );
+#endregion
         }
 
         // TODO: this can go into the base class along with a CreateListAdapter() method

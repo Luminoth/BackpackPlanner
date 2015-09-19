@@ -20,9 +20,11 @@ using Android.Widget;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 {
-    public abstract class AddItemFragment : DataFragment
+    public abstract class AddItemFragment<T> : DataFragment
     {
         protected abstract int AddItemResource { get; }
+
+        public T Item { get; protected set; }
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {

@@ -17,6 +17,7 @@
 using System.Collections.Generic;
 
 using Android.Views;
+using Android.Widget;
 
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries;
@@ -28,9 +29,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Itineraries
     {
         private class TripItineraryViewHolder : BaseViewHolder
         {
+            private readonly TextView _textViewName;
+
             public TripItineraryViewHolder(View itemView, ListItemsFragment<TripItinerary> fragment) : base(itemView, fragment)
             {
-                // TODO: get handles to controls here
+                _textViewName = itemView.FindViewById<TextView>(Resource.Id.view_trip_itinerary_name);
             }
 
             protected override Android.Support.V4.App.Fragment CreateViewItemFragment()
@@ -40,7 +43,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Itineraries
 
             protected override void UpdateView()
             {
-                // TODO: update the controls here
+                _textViewName.Text = ListItem.Name;
             }
         }
 

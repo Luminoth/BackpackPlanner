@@ -15,12 +15,15 @@
 */
 
 using System.Collections.Generic;
+using System.Globalization;
 
 using Android.Views;
+using Android.Widget;
 
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals;
 using EnergonSoftware.BackpackPlanner.Models.Meals;
+using EnergonSoftware.BackpackPlanner.Units;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
 {
@@ -28,10 +31,17 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
     {
         private class MealViewHolder : BaseViewHolder
         {
+            private readonly TextView _textViewName;
+            private readonly TextView _textViewServings;
+            private readonly TextView _textViewWeight;
+            private readonly TextView _textViewCost;
 
             public MealViewHolder(View itemView, ListItemsFragment<Meal> fragment) : base(itemView, fragment)
             {
-                // TODO: get handles to controls here
+                _textViewName = itemView.FindViewById<TextView>(Resource.Id.view_meal_name);
+                _textViewServings = itemView.FindViewById<TextView>(Resource.Id.view_meal_servings);
+                _textViewWeight = itemView.FindViewById<TextView>(Resource.Id.view_meal_weight);
+                _textViewCost = itemView.FindViewById<TextView>(Resource.Id.view_meal_cost);
             }
 
             protected override Android.Support.V4.App.Fragment CreateViewItemFragment()
@@ -41,7 +51,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
 
             protected override void UpdateView()
             {
-                // TODO: update the controls here
+                _textViewName.Text = ListItem.Name;
+                _textViewServings.Text = $"{ListItem.ServingCount} serving(s) of {ListItem.MealTime}";
+                _textViewWeight.Text = $"{ListItem.WeightInUnits} {BackpackPlannerState.Instance.Settings.Units.GetSmallWeightString()}";
+
+                string formattedCost = ListItem.CostInCurrency.ToString("C", CultureInfo.CurrentCulture);
+                _textViewCost.Text = $"{formattedCost} (cost per weight)";
             }
         }
 
