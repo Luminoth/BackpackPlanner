@@ -20,6 +20,8 @@ using Android.OS;
 using Android.Views;
 using Android.Widget;
 
+using EnergonSoftware.BackpackPlanner.Droid.Adapters;
+
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 {
     /// <summary>
@@ -35,11 +37,15 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         protected readonly List<T> ListItems = new List<T>();
 
+        protected BaseListAdapter<T> Adapter { get; private set; } 
+
 #region Controls
-        private Spinner _sortItemsSpinner;
+        protected Spinner SortItemsSpinner { get; private set; }
 #endregion
 
         protected abstract Android.Support.V4.App.Fragment CreateAddItemFragment();
+
+        protected abstract BaseListAdapter<T> CreateAdapter();
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
@@ -54,9 +60,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                 TextView noItemsTextView = view.FindViewById<TextView>(NoItemsResource);
                 noItemsTextView.Visibility = ViewStates.Gone;
 
-                _sortItemsSpinner = view.FindViewById<Spinner>(SortItemsResource);
-                if(null != _sortItemsSpinner) {
-                    _sortItemsSpinner.Visibility = ViewStates.Visible;
+                Adapter = CreateAdapter();
+                Layout.SetAdapter(Adapter);
+
+                SortItemsSpinner = view.FindViewById<Spinner>(SortItemsResource);
+                if(null != SortItemsSpinner) {
+                    SortItemsSpinner.Visibility = ViewStates.Visible;
+                    SortItemsSpinner.ItemSelected += Adapter.SortByItemSelectedEventHander;
                 }
 
                 Layout.Visibility = ViewStates.Visible;

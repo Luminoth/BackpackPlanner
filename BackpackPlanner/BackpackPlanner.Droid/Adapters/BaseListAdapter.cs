@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Android.Views;
+using Android.Widget;
 
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 
@@ -58,22 +59,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
         protected ICollection<T> ListItems { get; }
 
+        public abstract void SortByItemSelectedEventHander(object sender, AdapterView.ItemSelectedEventArgs args);
+
         protected abstract BaseViewHolder CreateViewHolder(View itemView);
-
-        protected BaseListAdapter(ListItemsFragment<T> fragment, IEnumerable<T> listItems)
-        {
-            Fragment = fragment;
-
-            ListItems = listItems.ToList();
-        }
 
         public override Android.Support.V7.Widget.RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
         {
             View itemView = LayoutInflater.From(parent.Context).Inflate(LayoutResource, parent, false);
-
-            // TODO: ok, so next step is handling different sorting methods
-            // and updating when the sort method is changed
-
             return CreateViewHolder(itemView);
         }
 
@@ -82,6 +74,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
             BaseViewHolder baseViewHolder = (BaseViewHolder)holder;
             T gearItem = ListItems.ElementAt(position);
             baseViewHolder.ListItem = gearItem;
+        }
+
+        protected BaseListAdapter(ListItemsFragment<T> fragment, IEnumerable<T> listItems)
+        {
+            Fragment = fragment;
+
+            ListItems = listItems.ToList();
         }
     }
 }

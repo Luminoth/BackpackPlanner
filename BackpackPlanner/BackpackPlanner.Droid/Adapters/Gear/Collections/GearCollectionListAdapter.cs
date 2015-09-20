@@ -69,6 +69,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Collections
         {
         }
 
+        public override void SortByItemSelectedEventHander(object sender, AdapterView.ItemSelectedEventArgs args)
+        {
+            // TODO: sort the list
+        }
+
         protected override BaseViewHolder CreateViewHolder(View itemView)
         {
             return new GearCollectionViewHolder(itemView, Fragment);

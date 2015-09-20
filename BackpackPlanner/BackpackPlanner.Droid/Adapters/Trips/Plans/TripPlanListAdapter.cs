@@ -75,6 +75,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Plans
         {
         }
 
+        public override void SortByItemSelectedEventHander(object sender, AdapterView.ItemSelectedEventArgs args)
+        {
+            // TODO: sort the list
+        }
+
         protected override BaseViewHolder CreateViewHolder(View itemView)
         {
             return new TripPlanViewHolder(itemView, Fragment);

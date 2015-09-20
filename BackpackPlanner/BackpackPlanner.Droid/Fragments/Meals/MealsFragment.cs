@@ -15,8 +15,8 @@
 */
 
 using Android.OS;
-using Android.Views;
 
+using EnergonSoftware.BackpackPlanner.Droid.Adapters;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals;
 using EnergonSoftware.BackpackPlanner.Models.Meals;
 
@@ -41,6 +41,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
         protected override Android.Support.V4.App.Fragment CreateAddItemFragment()
         {
             return new AddMealFragment();
+        }
+
+        protected override BaseListAdapter<Meal> CreateAdapter()
+        {
+            return new MealListAdapter(this, ListItems);
         }
 
         public override void OnCreate(Bundle savedInstanceState)
@@ -179,14 +184,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
                 }
             );
 #endregion
-        }
-
-        // TODO: this can go into the base class along with a CreateListAdapter() method
-        public override void OnViewCreated(View view, Bundle savedInstanceState)
-        {
-            base.OnViewCreated(view, savedInstanceState);
-
-            Layout.SetAdapter(new MealListAdapter(this, ListItems));
         }
     }
 }

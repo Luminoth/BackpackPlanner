@@ -15,8 +15,8 @@
 */
 
 using Android.OS;
-using Android.Views;
 
+using EnergonSoftware.BackpackPlanner.Droid.Adapters;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Systems;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
 
@@ -41,6 +41,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
         protected override Android.Support.V4.App.Fragment CreateAddItemFragment()
         {
             return new AddGearSystemFragment();
+        }
+
+        protected override BaseListAdapter<GearSystem> CreateAdapter()
+        {
+            return new GearSystemListAdapter(this, ListItems);
         }
 
         public override void OnCreate(Bundle savedInstanceState)
@@ -109,14 +114,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
                 }
             );
 #endregion
-        }
-
-        // TODO: this can go into the base class along with a CreateListAdapter() method
-        public override void OnViewCreated(View view, Bundle savedInstanceState)
-        {
-            base.OnViewCreated(view, savedInstanceState);
-
-            Layout.SetAdapter(new GearSystemListAdapter(this, ListItems));
         }
     }
 }

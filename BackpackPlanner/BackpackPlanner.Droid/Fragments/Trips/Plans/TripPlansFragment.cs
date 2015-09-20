@@ -15,8 +15,8 @@
 */
 
 using Android.OS;
-using Android.Views;
 
+using EnergonSoftware.BackpackPlanner.Droid.Adapters;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Plans;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
 
@@ -41,6 +41,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
         protected override Android.Support.V4.App.Fragment CreateAddItemFragment()
         {
             return new AddTripPlanFragment();
+        }
+
+        protected override BaseListAdapter<TripPlan> CreateAdapter()
+        {
+            return new TripPlanListAdapter(this, ListItems);
         }
 
         public override void OnCreate(Bundle savedInstanceState)
@@ -109,14 +114,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
                 }
             );
 #endregion
-        }
-
-        // TODO: this can go into the base class along with a CreateListAdapter() method
-        public override void OnViewCreated(View view, Bundle savedInstanceState)
-        {
-            base.OnViewCreated(view, savedInstanceState);
-
-            Layout.SetAdapter(new TripPlanListAdapter(this, ListItems));
         }
     }
 }
