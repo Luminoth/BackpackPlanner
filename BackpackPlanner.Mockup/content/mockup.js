@@ -451,8 +451,8 @@ var BackpackPlanner;
                             : Mockup.convertUSDPToCurrency(this._costInUSDP, Mockup.AppState.getInstance().getAppSettings().currency());
                     };
                     Meal.prototype.getCostPerUnitInCurrency = function () {
-                        var weightInUnits = Mockup.convertGramsToUnits(this._weightInGrams, Mockup.AppState.getInstance().getAppSettings().units());
-                        var costInCurrency = Mockup.convertUSDPToCurrency(this._costInUSDP, Mockup.AppState.getInstance().getAppSettings().currency());
+                        var weightInUnits = Mockup.convertGramsToUnits(this._weightInGrams, /*units*/ Mockup.AppState.getInstance().getAppSettings().units());
+                        var costInCurrency = Mockup.convertUSDPToCurrency(this._costInUSDP, /*currency*/ Mockup.AppState.getInstance().getAppSettings().currency());
                         return 0 == weightInUnits
                             ? costInCurrency
                             : costInCurrency / weightInUnits;
@@ -532,7 +532,7 @@ var BackpackPlanner;
                         return this._count * meal.getWeightInGrams();
                     };
                     MealEntry.prototype.getTotalWeightInUnits = function () {
-                        return parseFloat(Mockup.convertGramsToUnits(this.getTotalWeightInGrams(), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
+                        return parseFloat(Mockup.convertGramsToUnits(this.getTotalWeightInGrams(), /*units*/ Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
                     };
                     MealEntry.prototype.getCostInUSDP = function () {
                         var meal = Mockup.AppState.getInstance().getMealState().getMealById(this._mealId);
@@ -542,7 +542,7 @@ var BackpackPlanner;
                         return this._count * meal.getCostInUSDP();
                     };
                     MealEntry.prototype.getCostInCurrency = function () {
-                        return Mockup.convertUSDPToCurrency(this.getCostInUSDP(), Mockup.AppState.getInstance().getAppSettings().currency());
+                        return Mockup.convertUSDPToCurrency(this.getCostInUSDP(), /*currency*/ Mockup.AppState.getInstance().getAppSettings().currency());
                     };
                     return MealEntry;
                 })();
@@ -791,8 +791,8 @@ var BackpackPlanner;
                             : Mockup.convertUSDPToCurrency(this._costInUSDP, Mockup.AppState.getInstance().getAppSettings().currency());
                     };
                     GearItem.prototype.getCostPerUnitInCurrency = function () {
-                        var weightInUnits = Mockup.convertGramsToUnits(this._weightInGrams, Mockup.AppState.getInstance().getAppSettings().units());
-                        var costInCurrency = Mockup.convertUSDPToCurrency(this._costInUSDP, Mockup.AppState.getInstance().getAppSettings().currency());
+                        var weightInUnits = Mockup.convertGramsToUnits(this._weightInGrams, /*units*/ Mockup.AppState.getInstance().getAppSettings().units());
+                        var costInCurrency = Mockup.convertUSDPToCurrency(this._costInUSDP, /*currency*/ Mockup.AppState.getInstance().getAppSettings().currency());
                         return 0 == weightInUnits
                             ? costInCurrency
                             : costInCurrency / weightInUnits;
@@ -886,7 +886,7 @@ var BackpackPlanner;
                         return this._count * gearItem.getWeightInGrams();
                     };
                     GearItemEntry.prototype.getTotalWeightInUnits = function () {
-                        return parseFloat(Mockup.convertGramsToUnits(this.getTotalWeightInGrams(), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
+                        return parseFloat(Mockup.convertGramsToUnits(this.getTotalWeightInGrams(), /*units*/ Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
                     };
                     GearItemEntry.prototype.getCostInUSDP = function () {
                         var gearItem = Mockup.AppState.getInstance().getGearState().getGearItemById(this._gearItemId);
@@ -896,7 +896,7 @@ var BackpackPlanner;
                         return this._count * gearItem.getCostInUSDP();
                     };
                     GearItemEntry.prototype.getCostInCurrency = function () {
-                        return Mockup.convertUSDPToCurrency(this.getCostInUSDP(), Mockup.AppState.getInstance().getAppSettings().currency());
+                        return Mockup.convertUSDPToCurrency(this.getCostInUSDP(), /*currency*/ Mockup.AppState.getInstance().getAppSettings().currency());
                     };
                     return GearItemEntry;
                 })();
@@ -1016,7 +1016,7 @@ var BackpackPlanner;
                         return weightInGrams;
                     };
                     GearSystem.prototype.getTotalWeightInUnits = function () {
-                        return parseFloat(Mockup.convertGramsToUnits(this.getTotalWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
+                        return parseFloat(Mockup.convertGramsToUnits(this.getTotalWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
                     };
                     GearSystem.prototype.getBaseWeightInGrams = function (visitedGearItems) {
                         if (!visitedGearItems) {
@@ -1037,7 +1037,7 @@ var BackpackPlanner;
                         return weightInGrams;
                     };
                     GearSystem.prototype.getBaseWeightInUnits = function () {
-                        return parseFloat(Mockup.convertGramsToUnits(this.getBaseWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
+                        return parseFloat(Mockup.convertGramsToUnits(this.getBaseWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
                     };
                     GearSystem.prototype.getPackWeightInGrams = function (visitedGearItems) {
                         if (!visitedGearItems) {
@@ -1058,7 +1058,7 @@ var BackpackPlanner;
                         return weightInGrams;
                     };
                     GearSystem.prototype.getPackWeightInUnits = function () {
-                        return parseFloat(Mockup.convertGramsToUnits(this.getPackWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
+                        return parseFloat(Mockup.convertGramsToUnits(this.getPackWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
                     };
                     GearSystem.prototype.getSkinOutWeightInGrams = function (visitedGearItems) {
                         if (!visitedGearItems) {
@@ -1080,7 +1080,7 @@ var BackpackPlanner;
                         return packWeightInGrams + weightInGrams;
                     };
                     GearSystem.prototype.getSkinOutWeightInUnits = function () {
-                        return parseFloat(Mockup.convertGramsToUnits(this.getSkinOutWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
+                        return parseFloat(Mockup.convertGramsToUnits(this.getSkinOutWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
                     };
                     GearSystem.prototype.getCostInUSDP = function (visitedGearItems) {
                         if (!visitedGearItems) {
@@ -1098,11 +1098,11 @@ var BackpackPlanner;
                         return costInUSDP;
                     };
                     GearSystem.prototype.getCostInCurrency = function () {
-                        return Mockup.convertUSDPToCurrency(this.getCostInUSDP([]), Mockup.AppState.getInstance().getAppSettings().currency());
+                        return Mockup.convertUSDPToCurrency(this.getCostInUSDP([]), /*currency*/ Mockup.AppState.getInstance().getAppSettings().currency());
                     };
                     GearSystem.prototype.getCostPerUnitInCurrency = function () {
-                        var weightInUnits = Mockup.convertGramsToUnits(this.getTotalWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units());
-                        var costInCurrency = Mockup.convertUSDPToCurrency(this.getCostInUSDP([]), Mockup.AppState.getInstance().getAppSettings().currency());
+                        var weightInUnits = Mockup.convertGramsToUnits(this.getTotalWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units());
+                        var costInCurrency = Mockup.convertUSDPToCurrency(this.getCostInUSDP([]), /*currency*/ Mockup.AppState.getInstance().getAppSettings().currency());
                         return 0 == weightInUnits
                             ? costInCurrency
                             : costInCurrency / weightInUnits;
@@ -1183,7 +1183,7 @@ var BackpackPlanner;
                         return this._count * gearSystem.getTotalWeightInGrams(visitedGearItems);
                     };
                     GearSystemEntry.prototype.getTotalWeightInUnits = function () {
-                        return parseFloat(Mockup.convertGramsToUnits(this.getTotalWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
+                        return parseFloat(Mockup.convertGramsToUnits(this.getTotalWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
                     };
                     GearSystemEntry.prototype.getBaseWeightInGrams = function (visitedGearItems) {
                         var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(this._gearSystemId);
@@ -1193,7 +1193,7 @@ var BackpackPlanner;
                         return this._count * gearSystem.getBaseWeightInGrams(visitedGearItems);
                     };
                     GearSystemEntry.prototype.getBaseWeightInUnits = function () {
-                        return parseFloat(Mockup.convertGramsToUnits(this.getBaseWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
+                        return parseFloat(Mockup.convertGramsToUnits(this.getBaseWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
                     };
                     GearSystemEntry.prototype.getPackWeightInGrams = function (visitedGearItems) {
                         var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(this._gearSystemId);
@@ -1203,7 +1203,7 @@ var BackpackPlanner;
                         return this._count * gearSystem.getPackWeightInGrams(visitedGearItems);
                     };
                     GearSystemEntry.prototype.getPackWeightInUnits = function () {
-                        return parseFloat(Mockup.convertGramsToUnits(this.getPackWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
+                        return parseFloat(Mockup.convertGramsToUnits(this.getPackWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
                     };
                     GearSystemEntry.prototype.getSkinOutWeightInGrams = function (visitedGearItems) {
                         var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(this._gearSystemId);
@@ -1213,7 +1213,7 @@ var BackpackPlanner;
                         return this._count * gearSystem.getSkinOutWeightInGrams(visitedGearItems);
                     };
                     GearSystemEntry.prototype.getSkinOutWeightInUnits = function () {
-                        return parseFloat(Mockup.convertGramsToUnits(this.getSkinOutWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
+                        return parseFloat(Mockup.convertGramsToUnits(this.getSkinOutWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
                     };
                     GearSystemEntry.prototype.getCostInUSDP = function (visitedGearItems) {
                         var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(this._gearSystemId);
@@ -1223,7 +1223,7 @@ var BackpackPlanner;
                         return this._count * gearSystem.getCostInUSDP(visitedGearItems);
                     };
                     GearSystemEntry.prototype.getCostInCurrency = function () {
-                        return Mockup.convertUSDPToCurrency(this.getCostInUSDP([]), Mockup.AppState.getInstance().getAppSettings().currency());
+                        return Mockup.convertUSDPToCurrency(this.getCostInUSDP([]), /*currency*/ Mockup.AppState.getInstance().getAppSettings().currency());
                     };
                     return GearSystemEntry;
                 })();
@@ -1678,7 +1678,7 @@ var BackpackPlanner;
                         return weightInGrams;
                     };
                     TripPlan.prototype.getTotalWeightInUnits = function () {
-                        return Mockup.convertGramsToUnits(this.getTotalWeightInGrams([], []), Mockup.AppState.getInstance().getAppSettings().units());
+                        return Mockup.convertGramsToUnits(this.getTotalWeightInGrams([], []), /*units*/ Mockup.AppState.getInstance().getAppSettings().units());
                     };
                     TripPlan.prototype.getBaseWeightInGrams = function (visitedGearItems) {
                         if (!visitedGearItems) {
@@ -1707,7 +1707,7 @@ var BackpackPlanner;
                         return weightInGrams;
                     };
                     TripPlan.prototype.getBaseWeightInUnits = function () {
-                        return Mockup.convertGramsToUnits(this.getBaseWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units());
+                        return Mockup.convertGramsToUnits(this.getBaseWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units());
                     };
                     TripPlan.prototype.getPackWeightInGrams = function (visitedGearItems, visitedMeals) {
                         if (!visitedGearItems) {
@@ -1747,7 +1747,7 @@ var BackpackPlanner;
                         return weightInGrams;
                     };
                     TripPlan.prototype.getPackWeightInUnits = function () {
-                        return Mockup.convertGramsToUnits(this.getPackWeightInGrams([], []), Mockup.AppState.getInstance().getAppSettings().units());
+                        return Mockup.convertGramsToUnits(this.getPackWeightInGrams([], []), /*units*/ Mockup.AppState.getInstance().getAppSettings().units());
                     };
                     TripPlan.prototype.getSkinOutWeightInGrams = function (visitedGearItems, visitedMeals) {
                         if (!visitedGearItems) {
@@ -1787,7 +1787,7 @@ var BackpackPlanner;
                         return weightInGrams;
                     };
                     TripPlan.prototype.getSkinOutWeightInUnits = function () {
-                        return Mockup.convertGramsToUnits(this.getSkinOutWeightInGrams([], []), Mockup.AppState.getInstance().getAppSettings().units());
+                        return Mockup.convertGramsToUnits(this.getSkinOutWeightInGrams([], []), /*units*/ Mockup.AppState.getInstance().getAppSettings().units());
                     };
                     TripPlan.prototype.getCostInUSDP = function (visitedGearItems, visitedMeals) {
                         if (!visitedGearItems) {
@@ -1821,7 +1821,7 @@ var BackpackPlanner;
                         return costInUSDP;
                     };
                     TripPlan.prototype.getCostInCurrency = function () {
-                        return Mockup.convertUSDPToCurrency(this.getCostInUSDP([], []), Mockup.AppState.getInstance().getAppSettings().currency());
+                        return Mockup.convertUSDPToCurrency(this.getCostInUSDP([], []), /*currency*/ Mockup.AppState.getInstance().getAppSettings().currency());
                     };
                     TripPlan.prototype.getCostPerUnitInCurrency = function () {
                         var weightInUnits = Mockup.convertGramsToUnits(this.getTotalWeightInGrams([], []), Mockup.AppState.getInstance().getAppSettings().units());
@@ -2885,7 +2885,7 @@ var BackpackPlanner;
                         return weightInGrams;
                     };
                     GearCollection.prototype.getTotalWeightInUnits = function () {
-                        return Mockup.convertGramsToUnits(this.getTotalWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units());
+                        return Mockup.convertGramsToUnits(this.getTotalWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units());
                     };
                     GearCollection.prototype.getBaseWeightInGrams = function (visitedGearItems) {
                         if (!visitedGearItems) {
@@ -2910,7 +2910,7 @@ var BackpackPlanner;
                         return weightInGrams;
                     };
                     GearCollection.prototype.getBaseWeightInUnits = function () {
-                        return Mockup.convertGramsToUnits(this.getBaseWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units());
+                        return Mockup.convertGramsToUnits(this.getBaseWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units());
                     };
                     GearCollection.prototype.getPackWeightInGrams = function (visitedGearItems) {
                         if (!visitedGearItems) {
@@ -2935,7 +2935,7 @@ var BackpackPlanner;
                         return weightInGrams;
                     };
                     GearCollection.prototype.getPackWeightInUnits = function () {
-                        return Mockup.convertGramsToUnits(this.getPackWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units());
+                        return Mockup.convertGramsToUnits(this.getPackWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units());
                     };
                     GearCollection.prototype.getSkinOutWeightInGrams = function (visitedGearItems) {
                         if (!visitedGearItems) {
@@ -2960,7 +2960,7 @@ var BackpackPlanner;
                         return weightInGrams;
                     };
                     GearCollection.prototype.getSkinOutWeightInUnits = function () {
-                        return Mockup.convertGramsToUnits(this.getSkinOutWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units());
+                        return Mockup.convertGramsToUnits(this.getSkinOutWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units());
                     };
                     GearCollection.prototype.getCostInUSDP = function (visitedGearItems) {
                         if (!visitedGearItems) {
@@ -2982,11 +2982,11 @@ var BackpackPlanner;
                         return costInUSDP;
                     };
                     GearCollection.prototype.getCostInCurrency = function () {
-                        return Mockup.convertUSDPToCurrency(this.getCostInUSDP([]), Mockup.AppState.getInstance().getAppSettings().currency());
+                        return Mockup.convertUSDPToCurrency(this.getCostInUSDP([]), /*currency*/ Mockup.AppState.getInstance().getAppSettings().currency());
                     };
                     GearCollection.prototype.getCostPerUnitInCurrency = function () {
-                        var weightInUnits = Mockup.convertGramsToUnits(this.getTotalWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units());
-                        var costInCurrency = Mockup.convertUSDPToCurrency(this.getCostInUSDP([]), Mockup.AppState.getInstance().getAppSettings().currency());
+                        var weightInUnits = Mockup.convertGramsToUnits(this.getTotalWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units());
+                        var costInCurrency = Mockup.convertUSDPToCurrency(this.getCostInUSDP([]), /*currency*/ Mockup.AppState.getInstance().getAppSettings().currency());
                         return 0 == weightInUnits
                             ? costInCurrency
                             : costInCurrency / weightInUnits;
@@ -3098,7 +3098,7 @@ var BackpackPlanner;
                         return this._count * gearCollection.getTotalWeightInGrams(visitedGearItems);
                     };
                     GearCollectionEntry.prototype.getTotalWeightInUnits = function () {
-                        return parseFloat(Mockup.convertGramsToUnits(this.getTotalWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
+                        return parseFloat(Mockup.convertGramsToUnits(this.getTotalWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
                     };
                     GearCollectionEntry.prototype.getBaseWeightInGrams = function (visitedGearItems) {
                         var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
@@ -3108,7 +3108,7 @@ var BackpackPlanner;
                         return this._count * gearCollection.getBaseWeightInGrams(visitedGearItems);
                     };
                     GearCollectionEntry.prototype.getBaseWeightInUnits = function () {
-                        return parseFloat(Mockup.convertGramsToUnits(this.getBaseWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
+                        return parseFloat(Mockup.convertGramsToUnits(this.getBaseWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
                     };
                     GearCollectionEntry.prototype.getPackWeightInGrams = function (visitedGearItems) {
                         var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
@@ -3118,7 +3118,7 @@ var BackpackPlanner;
                         return this._count * gearCollection.getPackWeightInGrams(visitedGearItems);
                     };
                     GearCollectionEntry.prototype.getPackWeightInUnits = function () {
-                        return parseFloat(Mockup.convertGramsToUnits(this.getPackWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
+                        return parseFloat(Mockup.convertGramsToUnits(this.getPackWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
                     };
                     GearCollectionEntry.prototype.getSkinOutWeightInGrams = function (visitedGearItems) {
                         var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
@@ -3128,7 +3128,7 @@ var BackpackPlanner;
                         return this._count * gearCollection.getSkinOutWeightInGrams(visitedGearItems);
                     };
                     GearCollectionEntry.prototype.getSkinOutWeightInUnits = function () {
-                        return parseFloat(Mockup.convertGramsToUnits(this.getSkinOutWeightInGrams([]), Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
+                        return parseFloat(Mockup.convertGramsToUnits(this.getSkinOutWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
                     };
                     GearCollectionEntry.prototype.getCostInUSDP = function (visitedGearItems) {
                         var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
@@ -3138,7 +3138,7 @@ var BackpackPlanner;
                         return this._count * gearCollection.getCostInUSDP(visitedGearItems);
                     };
                     GearCollectionEntry.prototype.getCostInCurrency = function () {
-                        return Mockup.convertUSDPToCurrency(this.getCostInUSDP([]), Mockup.AppState.getInstance().getAppSettings().currency());
+                        return Mockup.convertUSDPToCurrency(this.getCostInUSDP([]), /*currency*/ Mockup.AppState.getInstance().getAppSettings().currency());
                     };
                     return GearCollectionEntry;
                 })();
@@ -5120,111 +5120,144 @@ var BackpackPlanner;
     var Mockup;
     (function (Mockup) {
         "use strict";
+        var CustomRouteConfig = (function () {
+            function CustomRouteConfig() {
+            }
+            return CustomRouteConfig;
+        })();
         var RouteConfig = (function () {
             function RouteConfig($routeProvider) {
                 $routeProvider.when("/", {
                     redirectTo: "/gear/items"
-                })
-                    .when("/gear/items", {
+                });
+                // gear items
+                this.addRoute($routeProvider, "/gear/items", {
                     templateUrl: "content/partials/gear/items/items.html",
                     controller: "GearItemsCtrl",
                     title: "Gear Items"
-                })
-                    .when("/gear/items/add", {
+                });
+                this.addRoute($routeProvider, "/gear/items/add", {
                     templateUrl: "content/partials/gear/items/add.html",
                     controller: "AddGearItemCtrl",
                     title: "Add a Gear Item"
-                })
-                    .when("/gear/items/:gearItemId", {
+                });
+                this.addRoute($routeProvider, "/gear/items/:gearItemId", {
                     templateUrl: "content/partials/gear/items/item.html",
                     controller: "GearItemCtrl",
                     title: "Gear Item"
-                })
-                    .when("/gear/systems", {
+                });
+                // gear system
+                this.addRoute($routeProvider, "/gear/systems", {
                     templateUrl: "content/partials/gear/systems/systems.html",
                     controller: "GearSystemsCtrl",
                     title: "Gear Systems"
-                })
-                    .when("/gear/systems/add", {
+                });
+                this.addRoute($routeProvider, "/gear/systems/add", {
                     templateUrl: "content/partials/gear/systems/add.html",
                     controller: "AddGearSystemCtrl",
                     title: "Add a Gear System"
-                })
-                    .when("/gear/systems/:gearSystemId", {
+                });
+                this.addRoute($routeProvider, "/gear/systems/:gearSystemId", {
                     templateUrl: "content/partials/gear/systems/system.html",
                     controller: "GearSystemCtrl",
                     title: "Gear System"
-                })
-                    .when("/gear/collections", {
+                });
+                // gear collections
+                this.addRoute($routeProvider, "/gear/collections", {
                     templateUrl: "content/partials/gear/collections/collections.html",
                     controller: "GearCollectionsCtrl",
                     title: "Gear Collections"
-                })
-                    .when("/gear/collections/add", {
+                });
+                this.addRoute($routeProvider, "/gear/collections/add", {
                     templateUrl: "content/partials/gear/collections/add.html",
                     controller: "AddGearCollectionCtrl",
                     title: "Add a Gear Collection"
-                })
-                    .when("/gear/collections/:gearCollectionId", {
+                });
+                this.addRoute($routeProvider, "/gear/collections/:gearCollectionId", {
                     templateUrl: "content/partials/gear/collections/collection.html",
                     controller: "GearCollectionCtrl",
                     title: "Gear Collection"
-                })
-                    .when("/meals", {
+                });
+                // meals
+                this.addRoute($routeProvider, "/meals", {
                     templateUrl: "content/partials/meals/meals.html",
                     controller: "MealsCtrl",
                     title: "Meals"
-                })
-                    .when("/meals/add", {
+                });
+                this.addRoute($routeProvider, "/meals/add", {
                     templateUrl: "content/partials/meals/add.html",
                     controller: "AddMealCtrl",
                     title: "Add a Meal"
-                })
-                    .when("/meals/:mealId", {
+                });
+                this.addRoute($routeProvider, "/meals/:mealId", {
                     templateUrl: "content/partials/meals/meal.html",
                     controller: "MealCtrl",
                     title: "Meal"
-                })
-                    .when("/trips/plans", {
+                });
+                // trip itineraries
+                /*this.addRoute($routeProvider, "/trips/itineraries", {
+                    templateUrl: "content/partials/trips/itineraries/itineraries.html",
+                    controller: "TripItinerariesCtrl",
+                    title: "Trip Itineraries"
+                });
+                this.addRoute($routeProvider, "/trips/itineraries/add", {
+                    templateUrl: "content/partials/trips/itineraries/add.html",
+                    controller: "AddTripItineraryCtrl",
+                    title: "Add a Trip Itinerary"
+                });
+                this.addRoute($routeProvider, "/trips/itineraries/:tripItineraryId", {
+                    templateUrl: "content/partials/trips/itineraries/itinerary.html",
+                    controller: "TripItineraryCtrl",
+                    title: "Trip Itinerary"
+                });*/
+                // trip plans
+                this.addRoute($routeProvider, "/trips/plans", {
                     templateUrl: "content/partials/trips/plans/plans.html",
                     controller: "TripPlansCtrl",
                     title: "Trip Plans"
-                })
-                    .when("/trips/plans/add", {
+                });
+                this.addRoute($routeProvider, "/trips/plans/add", {
                     templateUrl: "content/partials/trips/plans/add.html",
                     controller: "AddTripPlanCtrl",
                     title: "Add a Trip Plan"
-                })
-                    .when("/trips/plans/:tripPlanId", {
+                });
+                this.addRoute($routeProvider, "/trips/plans/:tripPlanId", {
                     templateUrl: "content/partials/trips/plans/plan.html",
                     controller: "TripPlanCtrl",
                     title: "Trip Plan"
-                })
-                    .when("/personal", {
+                });
+                // personal information and settings
+                this.addRoute($routeProvider, "/personal", {
                     templateUrl: "content/partials/personal/personal.html",
                     controller: "UserInformationCtrl",
                     title: "Personal Information"
-                })
-                    .when("/settings", {
+                });
+                this.addRoute($routeProvider, "/settings", {
                     templateUrl: "content/partials/settings.html",
                     controller: "AppSettingsCtrl",
                     title: "Settings"
-                })
-                    .when("/help", {
+                });
+                this.addRoute($routeProvider, "/help", {
                     templateUrl: "content/partials/help.html",
                     title: "Help"
-                })
-                    .when("/404", {
+                });
+                // error codes
+                this.addRoute($routeProvider, "/404", {
                     templateUrl: "content/partials/404.html",
                     title: "Backpacking Planner"
-                }).when("/500", {
+                });
+                this.addRoute($routeProvider, "/500", {
                     templateUrl: "content/partials/500.html",
                     title: "Backpacking Planner"
-                })
-                    .otherwise({
+                });
+                // 404 at the bottom
+                $routeProvider.otherwise({
                     redirectTo: "/404"
                 });
             }
+            RouteConfig.prototype.addRoute = function ($routeProvider, url, routeConfig) {
+                $routeProvider.when(url, routeConfig);
+            };
             return RouteConfig;
         })();
         Mockup.RouteConfig = RouteConfig;

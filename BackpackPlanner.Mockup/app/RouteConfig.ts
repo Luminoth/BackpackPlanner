@@ -3,140 +3,158 @@
 module BackpackPlanner.Mockup {
     "use strict";
 
+    interface ICustomRouteConfig extends ng.route.IRoute {
+        title: string;
+    }
+
+    class CustomRouteConfig implements ICustomRouteConfig {
+        public templateUrl: string;
+        public controller: string;
+        public title: string;
+    }
+
     export class RouteConfig {
         constructor($routeProvider: ng.route.IRouteProvider) {
             $routeProvider.when("/", {
                 redirectTo: "/gear/items"
-            })
+            });
 
             // gear items
-            .when("/gear/items", {
+            this.addRoute($routeProvider, "/gear/items", {
                 templateUrl: "content/partials/gear/items/items.html",
                 controller: "GearItemsCtrl",
                 title: "Gear Items"
-            })
-            .when("/gear/items/add", {
+            });
+            this.addRoute($routeProvider, "/gear/items/add", {
                 templateUrl: "content/partials/gear/items/add.html",
                 controller: "AddGearItemCtrl",
                 title: "Add a Gear Item"
-            })
-            .when("/gear/items/:gearItemId", {
+            });
+            this.addRoute($routeProvider, "/gear/items/:gearItemId", {
                 templateUrl: "content/partials/gear/items/item.html",
                 controller: "GearItemCtrl",
                 title: "Gear Item"
-            })
+            });
 
-            // gear systems
-            .when("/gear/systems", {
+            // gear system
+            this.addRoute($routeProvider, "/gear/systems", {
                 templateUrl: "content/partials/gear/systems/systems.html",
                 controller: "GearSystemsCtrl",
                 title: "Gear Systems"
-            })
-            .when("/gear/systems/add", {
+            });
+            this.addRoute($routeProvider, "/gear/systems/add", {
                 templateUrl: "content/partials/gear/systems/add.html",
                 controller: "AddGearSystemCtrl",
                 title: "Add a Gear System"
-            })
-            .when("/gear/systems/:gearSystemId", {
+            });
+            this.addRoute($routeProvider, "/gear/systems/:gearSystemId", {
                 templateUrl: "content/partials/gear/systems/system.html",
                 controller: "GearSystemCtrl",
                 title: "Gear System"
-            })
+            });
 
             // gear collections
-            .when("/gear/collections", {
+            this.addRoute($routeProvider, "/gear/collections", {
                 templateUrl: "content/partials/gear/collections/collections.html",
                 controller: "GearCollectionsCtrl",
                 title: "Gear Collections"
-            })
-            .when("/gear/collections/add", {
+            });
+            this.addRoute($routeProvider, "/gear/collections/add", {
                 templateUrl: "content/partials/gear/collections/add.html",
                 controller: "AddGearCollectionCtrl",
                 title: "Add a Gear Collection"
-            })
-            .when("/gear/collections/:gearCollectionId", {
+            });
+            this.addRoute($routeProvider, "/gear/collections/:gearCollectionId", {
                 templateUrl: "content/partials/gear/collections/collection.html",
                 controller: "GearCollectionCtrl",
                 title: "Gear Collection"
-            })
+            });
 
             // meals
-            .when("/meals", {
+            this.addRoute($routeProvider, "/meals", {
                 templateUrl: "content/partials/meals/meals.html",
                 controller: "MealsCtrl",
                 title: "Meals"
-            })
-            .when("/meals/add", {
+            });
+            this.addRoute($routeProvider, "/meals/add", {
                 templateUrl: "content/partials/meals/add.html",
                 controller: "AddMealCtrl",
                 title: "Add a Meal"
-            })
-            .when("/meals/:mealId", {
+            });
+            this.addRoute($routeProvider, "/meals/:mealId", {
                 templateUrl: "content/partials/meals/meal.html",
                 controller: "MealCtrl",
                 title: "Meal"
-            })
+            });
 
             // trip itineraries
-            /*.when("/trips/itineraries", {
+            /*this.addRoute($routeProvider, "/trips/itineraries", {
                 templateUrl: "content/partials/trips/itineraries/itineraries.html",
                 controller: "TripItinerariesCtrl",
                 title: "Trip Itineraries"
-            })
-            .when("/trips/itineraries/add", {
+            });
+            this.addRoute($routeProvider, "/trips/itineraries/add", {
                 templateUrl: "content/partials/trips/itineraries/add.html",
                 controller: "AddTripItineraryCtrl",
                 title: "Add a Trip Itinerary"
-            })
-            .when("/trips/itineraries/:tripItineraryId", {
+            });
+            this.addRoute($routeProvider, "/trips/itineraries/:tripItineraryId", {
                 templateUrl: "content/partials/trips/itineraries/itinerary.html",
                 controller: "TripItineraryCtrl",
                 title: "Trip Itinerary"
-            })*/
+            });*/
 
             // trip plans
-            .when("/trips/plans", {
+            this.addRoute($routeProvider, "/trips/plans", {
                 templateUrl: "content/partials/trips/plans/plans.html",
                 controller: "TripPlansCtrl",
                 title: "Trip Plans"
-            })
-            .when("/trips/plans/add", {
+            });
+            this.addRoute($routeProvider, "/trips/plans/add", {
                 templateUrl: "content/partials/trips/plans/add.html",
                 controller: "AddTripPlanCtrl",
                 title: "Add a Trip Plan"
-            })
-            .when("/trips/plans/:tripPlanId", {
+            });
+            this.addRoute($routeProvider, "/trips/plans/:tripPlanId", {
                 templateUrl: "content/partials/trips/plans/plan.html",
                 controller: "TripPlanCtrl",
                 title: "Trip Plan"
-            })
+            });
 
             // personal information and settings
-            .when("/personal", {
+            this.addRoute($routeProvider, "/personal", {
                 templateUrl: "content/partials/personal/personal.html",
                 controller: "UserInformationCtrl",
                 title: "Personal Information"
-            })
-            .when("/settings", {
+            });
+            this.addRoute($routeProvider, "/settings", {
                 templateUrl: "content/partials/settings.html",
                 controller: "AppSettingsCtrl",
                 title: "Settings"
-            })
-            .when("/help", {
+            });
+            this.addRoute($routeProvider, "/help", {
                 templateUrl: "content/partials/help.html",
                 title: "Help"
-            })
+            });
 
-            .when("/404", {
+            // error codes
+            this.addRoute($routeProvider, "/404", {
                 templateUrl: "content/partials/404.html",
                 title: "Backpacking Planner"
-            }).when("/500", {
+            });
+            this.addRoute($routeProvider, "/500", {
                 templateUrl: "content/partials/500.html",
                 title: "Backpacking Planner"
-            })
-            .otherwise({
+            });
+
+            // 404 at the bottom
+            $routeProvider.otherwise({
                 redirectTo: "/404"
             });
+        }
+
+        private addRoute($routeProvider: ng.route.IRouteProvider, url: string, routeConfig: ICustomRouteConfig) {
+            $routeProvider.when(url, routeConfig);
         }
     };
 
