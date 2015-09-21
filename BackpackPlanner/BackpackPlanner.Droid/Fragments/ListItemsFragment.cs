@@ -72,5 +72,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                 Layout.Visibility = ViewStates.Visible;
             }
         }
+
+        public override void OnCreateOptionsMenu(IMenu menu, MenuInflater inflater)
+        {
+            base.OnCreateOptionsMenu(menu, inflater);
+
+            FilterView.QueryTextChange += Adapter.FilterItems;
+        }
     }
 }

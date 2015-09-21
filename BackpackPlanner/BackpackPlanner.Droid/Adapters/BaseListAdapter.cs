@@ -22,9 +22,6 @@ using Android.Widget;
 
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 
-// sorting: http://stackoverflow.com/questions/29795299/what-is-the-sortedlistt-working-with-recyclerview-adapter
-// NOTE: can't get the android SortedList working, so for now doing it the linq way
-
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 {
     public abstract class BaseListAdapter<T> : Android.Support.V7.Widget.RecyclerView.Adapter
@@ -55,11 +52,25 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
         public abstract int LayoutResource { get; }
 
-        public override int ItemCount => ListItems?.Count ?? 0;
+        public override int ItemCount => FilteredListItems?.Count() ?? 0;
 
-        protected ICollection<T> ListItems { get; }
+        protected List<T> ListItems { get; }
+
+        private IEnumerable<T> _filteredListItems = new List<T>();
+
+        protected IEnumerable<T> FilteredListItems
+        {
+            get { return _filteredListItems; }
+
+            set
+            {
+                _filteredListItems = value ?? new List<T>(ListItems);
+            }
+        }
 
         public abstract void SortByItemSelectedEventHander(object sender, AdapterView.ItemSelectedEventArgs args);
+
+        public abstract void FilterItems(object sender, Android.Support.V7.Widget.SearchView.QueryTextChangeEventArgs args);
 
         protected abstract BaseViewHolder CreateViewHolder(View itemView);
 
@@ -72,7 +83,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
         public override void OnBindViewHolder(Android.Support.V7.Widget.RecyclerView.ViewHolder holder, int position)
         {
             BaseViewHolder baseViewHolder = (BaseViewHolder)holder;
-            T gearItem = ListItems.ElementAt(position);
+            T gearItem = FilteredListItems.ElementAt(position);
             baseViewHolder.ListItem = gearItem;
         }
 
@@ -81,6 +92,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
             Fragment = fragment;
 
             ListItems = listItems.ToList();
+            FilteredListItems = new List<T>(ListItems);
         }
     }
 }

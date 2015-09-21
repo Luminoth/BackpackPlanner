@@ -14,8 +14,10 @@
    limitations under the License.
 */
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 using Android.Views;
 using Android.Widget;
@@ -77,7 +79,28 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items
 
         public override void SortByItemSelectedEventHander(object sender, AdapterView.ItemSelectedEventArgs args)
         {
-            // TODO: sort the list
+            switch(args.Position)
+            {
+            case 0:         // Name
+                FilteredListItems = FilteredListItems.OrderBy(x => x.Name, StringComparer.CurrentCulture);
+                break;
+            case 1:         // Weight
+                FilteredListItems = FilteredListItems.OrderBy(x => x.WeightInGrams);
+                break;
+            case 2:         // Cost
+                FilteredListItems = FilteredListItems.OrderBy(x => x.CostInUSDP);
+                break;
+            case 3:         // Cost / Weight
+                // TODO
+                break;
+            }
+            NotifyDataSetChanged();
+        }
+
+        public override void FilterItems(object sender, Android.Support.V7.Widget.SearchView.QueryTextChangeEventArgs args)
+        {
+            FilteredListItems = from item in ListItems where item.Name.ToLower().Contains(args.NewText) select item;
+            NotifyDataSetChanged();
         }
 
         protected override BaseViewHolder CreateViewHolder(View itemView)

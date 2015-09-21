@@ -16,7 +16,6 @@
 
 using Android.OS;
 using Android.Runtime;
-using Android.Util;
 using Android.Views;
 
 using EnergonSoftware.BackpackPlanner.Droid.Util;
@@ -33,6 +32,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         protected abstract int TitleResource { get; }
 
         protected abstract bool HasSearchView { get; }
+
+        protected Android.Support.V7.Widget.SearchView FilterView { get; private set; }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
@@ -52,14 +53,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             }
 
             View actionView = Android.Support.V4.View.MenuItemCompat.GetActionView(searchItem);
-            Android.Support.V7.Widget.SearchView searchView = actionView.JavaCast<Android.Support.V7.Widget.SearchView>();
-            searchView.QueryHint = Resources.GetString(Resource.String.search_hint);
+            FilterView = actionView.JavaCast<Android.Support.V7.Widget.SearchView>();
 
-// http://stackoverflow.com/questions/30398247/how-to-filter-a-recyclerview-with-a-searchview
-
-            searchView.QueryTextChange += (sender, args) => {
-Log.Debug(MainActivity.LogTag, "changed");
-            };
+            // TODO: let the subclasses set this up
+            FilterView.QueryHint = Resources.GetString(Resource.String.search_hint);
         }
 
         public override void OnResume()
