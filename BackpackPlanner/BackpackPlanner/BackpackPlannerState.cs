@@ -20,12 +20,12 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Cache;
+using EnergonSoftware.BackpackPlanner.Database;
 using EnergonSoftware.BackpackPlanner.Logging;
 using EnergonSoftware.BackpackPlanner.Models;
 using EnergonSoftware.BackpackPlanner.Models.Personal;
 
 using SQLite.Net;
-using SQLite.Net.Async;
 using SQLite.Net.Interop;
 
 namespace EnergonSoftware.BackpackPlanner
@@ -83,26 +83,17 @@ namespace EnergonSoftware.BackpackPlanner
         /// </value>
         public PersonalInformation PersonalInformation { get; set; } = new PersonalInformation();
 
-        private SQLiteConnectionString _connectionString;
-        private SQLiteConnectionPool _connectionPool;
-
         /// <summary>
-        /// Gets a connection to the database.
+        /// Gets the database connection.
         /// </summary>
-        /// <returns>A connection to the database.</returns>
-        public SQLiteConnectionWithLock GetDatabaseConnection()
-        {
-            if(null == _connectionPool) {
-                throw new InvalidOperationException("SQLite connection pool not initialized!");
-            }
-
-            if(null == _connectionString) {
-                throw new InvalidOperationException("SQLite connection string is null!");
-            }
-
-            Logger.Debug("Getting a new database connection...");
-            return _connectionPool.GetConnection(_connectionString);
-        }
+        /// <value>
+        /// The database connection.
+        /// </value>
+        /// <remarks>
+        /// Android recommends only having a single, long-lived
+        /// connection to the database... so here we are
+        /// </remarks>
+        public DatabaseConnection DatabaseConnection { get; } = new DatabaseConnection();
 
         /// <summary>
         /// Initializes the library database.
@@ -112,40 +103,46 @@ namespace EnergonSoftware.BackpackPlanner
         /// <param name="dbName">Name of the database.</param>
         public async Task InitDatabaseAsync(ISQLitePlatform sqlitePlatform, string dbPath, string dbName)
         {
-            if(null != _connectionPool) {
-                Logger.Warn("Connection pool already initialized!");
+            if(DatabaseConnection.IsConnected) {
+                Logger.Warn("SQLite connection already initialized!");
                 return;
             }
 
-            _connectionString = new SQLiteConnectionString(Path.Combine(dbPath, dbName), true);
-            _connectionPool = new SQLiteConnectionPool(sqlitePlatform);
+            // connect to the database
+            SQLiteConnectionString connectionString = new SQLiteConnectionString(Path.Combine(dbPath, dbName), true);
+            Logger.Info($"Initializing database at {connectionString.ConnectionString}...");
+            await DatabaseConnection.ConnectAsync(sqlitePlatform, connectionString).ConfigureAwait(false);
 
-            Logger.Info($"Initializing database at {_connectionString.ConnectionString}...");
-            using(SQLiteConnectionWithLock dbConnection = GetDatabaseConnection()) {
-                SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
+            DatabaseVersion newVersion = new DatabaseVersion
+            {
+                Version = CurrentDatabaseVersion
+            };
+            DatabaseVersion oldVersion = new DatabaseVersion();
 
-                DatabaseVersion newVersion = new DatabaseVersion
-                {
-                    Version = CurrentDatabaseVersion
-                };
-                DatabaseVersion oldVersion = new DatabaseVersion();
-
-                var databaseVersionTableInfo = dbConnection.GetTableInfo("DatabaseVersion");
+            await DatabaseConnection.Lock.WaitAsync().ConfigureAwait(false);
+            try {
+                var databaseVersionTableInfo = DatabaseConnection.Connection.GetTableInfo("DatabaseVersion");
                 if(!databaseVersionTableInfo.Any()) {
                     Logger.Debug("Creating a new database...");
-                    await DatabaseVersion.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
+                    await DatabaseVersion.CreateTablesAsync(DatabaseConnection.AsyncConnection).ConfigureAwait(false);
                 } else {
-                    oldVersion = await DatabaseVersion.GetAsync(asyncDbConnection).ConfigureAwait(false);
+                    oldVersion = await DatabaseVersion.GetAsync(DatabaseConnection.AsyncConnection).ConfigureAwait(false);
+                    if(null == oldVersion) {
+                        Logger.Debug("DatabaseVersion.Get returned null!?!");
+                        throw new InvalidOperationException("DatabaseVersion.Get returned null!?!");
+                    }
                     Logger.Debug($"Old database version: {oldVersion.Version}, current database version: {CurrentDatabaseVersion}");
                 }
 
                 // TODO: find a way to make this transactional
                 // so that we can roll it back on error and avoid updating the db version
-                await GearCache.InitDatabaseAsync(asyncDbConnection, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
-                await MealCache.InitDatabaseAsync(asyncDbConnection, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
-                await TripCache.InitDatabaseAsync(asyncDbConnection, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
+                await GearCache.InitDatabaseAsync(DatabaseConnection.AsyncConnection, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
+                await MealCache.InitDatabaseAsync(DatabaseConnection.AsyncConnection, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
+                await TripCache.InitDatabaseAsync(DatabaseConnection.AsyncConnection, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
 
-                await DatabaseVersion.UpdateAsync(asyncDbConnection, newVersion).ConfigureAwait(false);
+                await DatabaseVersion.UpdateAsync(DatabaseConnection.AsyncConnection, newVersion).ConfigureAwait(false);
+            } finally {
+                DatabaseConnection.Lock.Release();
             }
         }
 

@@ -20,7 +20,8 @@ namespace BackpackPlanner.UnitTests
             SQLiteAsyncConnection fakeAsyncDbConnection = Isolate.Fake.AllInstances<SQLiteAsyncConnection>(Members.ReturnRecursiveFakes);
 
             BackpackPlannerState fakePlannerState = Isolate.Fake.AllInstances<BackpackPlannerState>(Members.ReturnRecursiveFakes);
-            Isolate.WhenCalled(() => fakePlannerState.GetDatabaseConnection()).WillReturn(fakedbConnection);
+            // TODO: fix this
+            //Isolate.WhenCalled(() => fakePlannerState.GetDatabaseConnection()).WillReturn(fakedbConnection);
 
             return fakeAsyncDbConnection;
         }

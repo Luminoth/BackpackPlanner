@@ -23,7 +23,6 @@ using EnergonSoftware.BackpackPlanner.Models.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
 
-using SQLite.Net;
 using SQLite.Net.Async;
 
 namespace EnergonSoftware.BackpackPlanner.Cache
@@ -43,6 +42,9 @@ namespace EnergonSoftware.BackpackPlanner.Cache
         /// <param name="asyncDbConnection">The asynchronous database connection.</param>
         /// <param name="oldVersion">The old database version.</param>
         /// <param name="newVersion">The new database version.</param>
+        /// <remarks>
+        /// The connection should be thread locked
+        /// </remarks>
         public static async Task InitDatabaseAsync(SQLiteAsyncConnection asyncDbConnection, int oldVersion, int newVersion)
         {
             if(oldVersion >= newVersion) {
@@ -92,13 +94,14 @@ namespace EnergonSoftware.BackpackPlanner.Cache
             _gearItemCache.Clear();
 
             BackpackPlannerState.Instance.Logger.Debug("Loading gear item cache...");
-            using(SQLiteConnectionWithLock dbConnection = BackpackPlannerState.Instance.GetDatabaseConnection()) {
-                SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
-
-                var gearItems = await GearItem.GetGearItemsAsync(asyncDbConnection).ConfigureAwait(false);
+            await BackpackPlannerState.Instance.DatabaseConnection.Lock.WaitAsync().ConfigureAwait(false);
+            try {
+                var gearItems = await GearItem.GetGearItemsAsync(BackpackPlannerState.Instance.DatabaseConnection.AsyncConnection).ConfigureAwait(false);
                 foreach(GearItem gearItem in gearItems) {
                     await AddGearItemAsync(gearItem).ConfigureAwait(false);
                 }
+            } finally {
+                BackpackPlannerState.Instance.DatabaseConnection.Lock.Release();
             }
         }
 
@@ -118,14 +121,15 @@ namespace EnergonSoftware.BackpackPlanner.Cache
                 return gearItem;
             }
 
-            using(SQLiteConnectionWithLock dbConnection = BackpackPlannerState.Instance.GetDatabaseConnection()) {
-                SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
-
-                gearItem = await GearItem.GetGearItemAsync(asyncDbConnection, gearItemId).ConfigureAwait(false);
+            await BackpackPlannerState.Instance.DatabaseConnection.Lock.WaitAsync().ConfigureAwait(false);
+            try {
+                gearItem = await GearItem.GetGearItemAsync(BackpackPlannerState.Instance.DatabaseConnection.AsyncConnection, gearItemId).ConfigureAwait(false);
                 if(null != gearItem) {
                     await AddGearItemAsync(gearItem).ConfigureAwait(false);
                 }
                 return gearItem;
+            } finally {
+                BackpackPlannerState.Instance.DatabaseConnection.Lock.Release();
             }
         }
 
@@ -141,10 +145,11 @@ namespace EnergonSoftware.BackpackPlanner.Cache
             }
 
             if(gearItem.GearItemId < 1) {
-                using(SQLiteConnectionWithLock dbConnection = BackpackPlannerState.Instance.GetDatabaseConnection()) {
-                    SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
-
-                    await GearItem.SaveGearItemAsync(asyncDbConnection, gearItem).ConfigureAwait(false);
+                await BackpackPlannerState.Instance.DatabaseConnection.Lock.WaitAsync().ConfigureAwait(false);
+                try {
+                    await GearItem.SaveGearItemAsync(BackpackPlannerState.Instance.DatabaseConnection.AsyncConnection, gearItem).ConfigureAwait(false);
+                } finally {
+                    BackpackPlannerState.Instance.DatabaseConnection.Lock.Release();
                 }
             }
 
@@ -165,10 +170,11 @@ namespace EnergonSoftware.BackpackPlanner.Cache
                 throw new ArgumentException("GearItemId cannot be less than 1!", nameof(gearItem));
             }
 
-            using(SQLiteConnectionWithLock dbConnection = BackpackPlannerState.Instance.GetDatabaseConnection()) {
-                SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
-
-                await GearItem.DeleteGearItemAsync(asyncDbConnection, gearItem).ConfigureAwait(false);
+            await BackpackPlannerState.Instance.DatabaseConnection.Lock.WaitAsync().ConfigureAwait(false);
+            try {
+                await GearItem.DeleteGearItemAsync(BackpackPlannerState.Instance.DatabaseConnection.AsyncConnection, gearItem).ConfigureAwait(false);
+            } finally {
+                BackpackPlannerState.Instance.DatabaseConnection.Lock.Release();
             }
 
             _gearItemCache.Remove(gearItem);
@@ -179,10 +185,11 @@ namespace EnergonSoftware.BackpackPlanner.Cache
         /// </summary>
         public async Task RemoveAllGearItemsAsync()
         {
-            using(SQLiteConnectionWithLock dbConnection = BackpackPlannerState.Instance.GetDatabaseConnection()) {
-                SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
-
-                await GearItem.DeleteAllGearItemsAsync(asyncDbConnection).ConfigureAwait(false);
+            await BackpackPlannerState.Instance.DatabaseConnection.Lock.WaitAsync().ConfigureAwait(false);
+            try {
+                await GearItem.DeleteAllGearItemsAsync(BackpackPlannerState.Instance.DatabaseConnection.AsyncConnection).ConfigureAwait(false);
+            } finally {
+                BackpackPlannerState.Instance.DatabaseConnection.Lock.Release();
             }
 
             _gearItemCache.Clear();
@@ -195,13 +202,14 @@ namespace EnergonSoftware.BackpackPlanner.Cache
             _gearSystemCache.Clear();
 
             BackpackPlannerState.Instance.Logger.Debug("Loading gear system cache...");
-            using(SQLiteConnectionWithLock dbConnection = BackpackPlannerState.Instance.GetDatabaseConnection()) {
-                SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
-
-                var gearSystems = await GearSystem.GetGearSystemsAsync(asyncDbConnection).ConfigureAwait(false);
+            await BackpackPlannerState.Instance.DatabaseConnection.Lock.WaitAsync().ConfigureAwait(false);
+            try {
+                var gearSystems = await GearSystem.GetGearSystemsAsync(BackpackPlannerState.Instance.DatabaseConnection.AsyncConnection).ConfigureAwait(false);
                 foreach(GearSystem gearSystem in gearSystems) {
                     await AddGearSystemAsync(gearSystem).ConfigureAwait(false);
                 }
+            } finally {
+                BackpackPlannerState.Instance.DatabaseConnection.Lock.Release();
             }
         }
 
@@ -221,14 +229,15 @@ namespace EnergonSoftware.BackpackPlanner.Cache
                 return gearSystem;
             }
 
-            using(SQLiteConnectionWithLock dbConnection = BackpackPlannerState.Instance.GetDatabaseConnection()) {
-                SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
-
-                gearSystem = await GearSystem.GetGearSystemAsync(asyncDbConnection, gearSystemId).ConfigureAwait(false);
+            await BackpackPlannerState.Instance.DatabaseConnection.Lock.WaitAsync().ConfigureAwait(false);
+            try {
+                gearSystem = await GearSystem.GetGearSystemAsync(BackpackPlannerState.Instance.DatabaseConnection.AsyncConnection, gearSystemId).ConfigureAwait(false);
                 if(null != gearSystem) {
                     await AddGearSystemAsync(gearSystem).ConfigureAwait(false);
                 }
                 return gearSystem;
+            } finally {
+                BackpackPlannerState.Instance.DatabaseConnection.Lock.Release();
             }
         }
 
@@ -244,10 +253,11 @@ namespace EnergonSoftware.BackpackPlanner.Cache
             }
 
             if(gearSystem.GearSystemId < 1) {
-                using(SQLiteConnectionWithLock dbConnection = BackpackPlannerState.Instance.GetDatabaseConnection()) {
-                    SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
-
-                    await GearSystem.SaveGearSystemAsync(asyncDbConnection, gearSystem).ConfigureAwait(false);
+                await BackpackPlannerState.Instance.DatabaseConnection.Lock.WaitAsync().ConfigureAwait(false);
+                try {
+                    await GearSystem.SaveGearSystemAsync(BackpackPlannerState.Instance.DatabaseConnection.AsyncConnection, gearSystem).ConfigureAwait(false);
+                } finally {
+                    BackpackPlannerState.Instance.DatabaseConnection.Lock.Release();
                 }
             }
 
@@ -268,10 +278,11 @@ namespace EnergonSoftware.BackpackPlanner.Cache
                 throw new ArgumentException("GearSystemId cannot be less than 1!", nameof(gearSystem));
             }
 
-            using(SQLiteConnectionWithLock dbConnection = BackpackPlannerState.Instance.GetDatabaseConnection()) {
-                SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
-
-                await GearSystem.DeleteGearSystemAsync(asyncDbConnection, gearSystem).ConfigureAwait(false);
+            await BackpackPlannerState.Instance.DatabaseConnection.Lock.WaitAsync().ConfigureAwait(false);
+            try {
+                await GearSystem.DeleteGearSystemAsync(BackpackPlannerState.Instance.DatabaseConnection.AsyncConnection, gearSystem).ConfigureAwait(false);
+            } finally {
+                BackpackPlannerState.Instance.DatabaseConnection.Lock.Release();
             }
 
             _gearSystemCache.Remove(gearSystem);
@@ -282,10 +293,11 @@ namespace EnergonSoftware.BackpackPlanner.Cache
         /// </summary>
         public async Task RemoveAllGearSystemsAsync()
         {
-            using(SQLiteConnectionWithLock dbConnection = BackpackPlannerState.Instance.GetDatabaseConnection()) {
-                SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
-
-                await GearSystem.DeleteAllGearSystemsAsync(asyncDbConnection).ConfigureAwait(false);
+            await BackpackPlannerState.Instance.DatabaseConnection.Lock.WaitAsync().ConfigureAwait(false);
+            try {
+                await GearSystem.DeleteAllGearSystemsAsync(BackpackPlannerState.Instance.DatabaseConnection.AsyncConnection).ConfigureAwait(false);
+            } finally {
+                BackpackPlannerState.Instance.DatabaseConnection.Lock.Release();
             }
 
             _gearSystemCache.Clear();
@@ -298,13 +310,14 @@ namespace EnergonSoftware.BackpackPlanner.Cache
             _gearCollectionCache.Clear();
 
             BackpackPlannerState.Instance.Logger.Debug("Loading gear collection cache...");
-            using(SQLiteConnectionWithLock dbConnection = BackpackPlannerState.Instance.GetDatabaseConnection()) {
-                SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
-
-                var gearCollections = await GearCollection.GetGearCollectionsAsync(asyncDbConnection).ConfigureAwait(false);
+            await BackpackPlannerState.Instance.DatabaseConnection.Lock.WaitAsync().ConfigureAwait(false);
+            try {
+                var gearCollections = await GearCollection.GetGearCollectionsAsync(BackpackPlannerState.Instance.DatabaseConnection.AsyncConnection).ConfigureAwait(false);
                 foreach(GearCollection gearCollection in gearCollections) {
                     await AddGearCollectionAsync(gearCollection).ConfigureAwait(false);
                 }
+            } finally {
+                BackpackPlannerState.Instance.DatabaseConnection.Lock.Release();
             }
         }
 
@@ -324,14 +337,15 @@ namespace EnergonSoftware.BackpackPlanner.Cache
                 return gearCollection;
             }
 
-            using(SQLiteConnectionWithLock dbConnection = BackpackPlannerState.Instance.GetDatabaseConnection()) {
-                SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
-
-                gearCollection = await GearCollection.GetGearCollectionAsync(asyncDbConnection, gearCollectionId).ConfigureAwait(false);
+            await BackpackPlannerState.Instance.DatabaseConnection.Lock.WaitAsync().ConfigureAwait(false);
+            try {
+                gearCollection = await GearCollection.GetGearCollectionAsync(BackpackPlannerState.Instance.DatabaseConnection.AsyncConnection, gearCollectionId).ConfigureAwait(false);
                 if(null != gearCollection) {
                     await AddGearCollectionAsync(gearCollection).ConfigureAwait(false);
                 }
                 return gearCollection;
+            } finally {
+                BackpackPlannerState.Instance.DatabaseConnection.Lock.Release();
             }
         }
 
@@ -347,9 +361,11 @@ namespace EnergonSoftware.BackpackPlanner.Cache
             }
 
             if(gearCollection.GearCollectionId < 1) {
-                using(SQLiteConnectionWithLock dbConnection = BackpackPlannerState.Instance.GetDatabaseConnection()) {
-                    SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
-                    await GearCollection.SaveGearCollectionAsync(asyncDbConnection, gearCollection).ConfigureAwait(false);
+                await BackpackPlannerState.Instance.DatabaseConnection.Lock.WaitAsync().ConfigureAwait(false);
+                try {
+                    await GearCollection.SaveGearCollectionAsync(BackpackPlannerState.Instance.DatabaseConnection.AsyncConnection, gearCollection).ConfigureAwait(false);
+                } finally {
+                    BackpackPlannerState.Instance.DatabaseConnection.Lock.Release();
                 }
             }
 
@@ -370,10 +386,11 @@ namespace EnergonSoftware.BackpackPlanner.Cache
                 throw new ArgumentException("GearCollectionId cannot be less than 1!", nameof(gearCollection));
             }
 
-            using(SQLiteConnectionWithLock dbConnection = BackpackPlannerState.Instance.GetDatabaseConnection()) {
-                SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
-
-                await GearCollection.DeleteGearCollectionAsync(asyncDbConnection, gearCollection).ConfigureAwait(false);
+            await BackpackPlannerState.Instance.DatabaseConnection.Lock.WaitAsync().ConfigureAwait(false);
+            try {
+                await GearCollection.DeleteGearCollectionAsync(BackpackPlannerState.Instance.DatabaseConnection.AsyncConnection, gearCollection).ConfigureAwait(false);
+            } finally {
+                BackpackPlannerState.Instance.DatabaseConnection.Lock.Release();
             }
 
             _gearCollectionCache.Remove(gearCollection);
@@ -384,10 +401,11 @@ namespace EnergonSoftware.BackpackPlanner.Cache
         /// </summary>
         public async Task RemoveAllGearCollectionsAsync()
         {
-            using(SQLiteConnectionWithLock dbConnection = BackpackPlannerState.Instance.GetDatabaseConnection()) {
-                SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
-
-                await GearCollection.DeleteAllGearCollectionsAsync(asyncDbConnection).ConfigureAwait(false);
+            await BackpackPlannerState.Instance.DatabaseConnection.Lock.WaitAsync().ConfigureAwait(false);
+            try {
+                await GearCollection.DeleteAllGearCollectionsAsync(BackpackPlannerState.Instance.DatabaseConnection.AsyncConnection).ConfigureAwait(false);
+            } finally {
+                BackpackPlannerState.Instance.DatabaseConnection.Lock.Release();
             }
 
             _gearCollectionCache.Clear();

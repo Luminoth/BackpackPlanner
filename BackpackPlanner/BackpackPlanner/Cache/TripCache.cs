@@ -20,7 +20,6 @@ using System.Threading.Tasks;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
 
-using SQLite.Net;
 using SQLite.Net.Async;
 
 namespace EnergonSoftware.BackpackPlanner.Cache
@@ -40,6 +39,9 @@ namespace EnergonSoftware.BackpackPlanner.Cache
         /// <param name="asyncDbConnection">The asynchronous database connection.</param>
         /// <param name="oldVersion">The old database version.</param>
         /// <param name="newVersion">The new database version.</param>
+        /// <remarks>
+        /// The connection should be thread locked
+        /// </remarks>
         public static async Task InitDatabaseAsync(SQLiteAsyncConnection asyncDbConnection, int oldVersion, int newVersion)
         {
             if(oldVersion >= newVersion) {
@@ -79,13 +81,14 @@ namespace EnergonSoftware.BackpackPlanner.Cache
             _tripItineraryCache.Clear();
 
             BackpackPlannerState.Instance.Logger.Debug("Loading trip itinerary cache...");
-            using(SQLiteConnectionWithLock dbConnection = BackpackPlannerState.Instance.GetDatabaseConnection()) {
-                SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
-
-                var tripItineraries = await TripItinerary.GetTripItinerariesAsync(asyncDbConnection).ConfigureAwait(false);
+            await BackpackPlannerState.Instance.DatabaseConnection.Lock.WaitAsync().ConfigureAwait(false);
+            try {
+                var tripItineraries = await TripItinerary.GetTripItinerariesAsync(BackpackPlannerState.Instance.DatabaseConnection.AsyncConnection).ConfigureAwait(false);
                 foreach(TripItinerary tripItinerary in tripItineraries) {
                     //await AddTripItineraryAsync(tripItinerary).ConfigureAwait(false);
                 }
+            } finally {
+                BackpackPlannerState.Instance.DatabaseConnection.Lock.Release();
             }
         }
 #endregion
@@ -96,13 +99,14 @@ namespace EnergonSoftware.BackpackPlanner.Cache
             _tripPlanCache.Clear();
 
             BackpackPlannerState.Instance.Logger.Debug("Loading trip plan cache...");
-            using(SQLiteConnectionWithLock dbConnection = BackpackPlannerState.Instance.GetDatabaseConnection()) {
-                SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
-
-                var tripPlans = await TripPlan.GetTripPlansAsync(asyncDbConnection).ConfigureAwait(false);
+            await BackpackPlannerState.Instance.DatabaseConnection.Lock.WaitAsync().ConfigureAwait(false);
+            try {
+                var tripPlans = await TripPlan.GetTripPlansAsync(BackpackPlannerState.Instance.DatabaseConnection.AsyncConnection).ConfigureAwait(false);
                 foreach(TripPlan tripPlan in tripPlans) {
                     //await AddTripPlanAsync(tripPlan).ConfigureAwait(false);
                 }
+            } finally {
+                BackpackPlannerState.Instance.DatabaseConnection.Lock.Release();
             }
         }
 #endregion

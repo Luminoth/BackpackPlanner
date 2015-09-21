@@ -19,7 +19,6 @@ using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Models.Meals;
 
-using SQLite.Net;
 using SQLite.Net.Async;
 
 namespace EnergonSoftware.BackpackPlanner.Cache
@@ -39,6 +38,9 @@ namespace EnergonSoftware.BackpackPlanner.Cache
         /// <param name="asyncDbConnection">The asynchronous database connection.</param>
         /// <param name="oldVersion">The old database version.</param>
         /// <param name="newVersion">The new database version.</param>
+        /// <remarks>
+        /// The connection should be thread locked
+        /// </remarks>
         public static async Task InitDatabaseAsync(SQLiteAsyncConnection asyncDbConnection, int oldVersion, int newVersion)
         {
             if(oldVersion >= newVersion) {
@@ -67,13 +69,14 @@ namespace EnergonSoftware.BackpackPlanner.Cache
             _mealCache.Clear();
 
             BackpackPlannerState.Instance.Logger.Debug("Loading meal cache...");
-            using(SQLiteConnectionWithLock dbConnection = BackpackPlannerState.Instance.GetDatabaseConnection()) {
-                SQLiteAsyncConnection asyncDbConnection = new SQLiteAsyncConnection(() => dbConnection);
-
-                var meals = await Meal.GetMealsAsync(asyncDbConnection).ConfigureAwait(false);
+            await BackpackPlannerState.Instance.DatabaseConnection.Lock.WaitAsync().ConfigureAwait(false);
+            try {
+                var meals = await Meal.GetMealsAsync(BackpackPlannerState.Instance.DatabaseConnection.AsyncConnection).ConfigureAwait(false);
                 foreach(Meal meal in meals) {
                     //await AddMealAsync(meal).ConfigureAwait(false);
                 }
+            } finally {
+                BackpackPlannerState.Instance.DatabaseConnection.Lock.Release();
             }
         }
     }

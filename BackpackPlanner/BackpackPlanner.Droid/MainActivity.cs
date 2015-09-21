@@ -152,6 +152,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             HockeyApp.CrashManager.Register(this, HockeyAppAppId); 
 
             // Register to with the Update Manager
+            // TODO: this call causes a crash on the lollipop
+            // emulators, but I have no idea why!
             HockeyApp.UpdateManager.Register(this, HockeyAppAppId);
 
             // Register the Feedback Manager
