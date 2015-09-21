@@ -13,18 +13,20 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/view_trip_plan_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:background="?attr/colorPrimary"
+            card_view:title="Trip Plan Name" />
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:background="@color/primary">
-            <TextView
-                android:id="@+id/view_trip_plan_name"
-                style="@style/Base.TextAppearance.AppCompat.Title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Trip Plan Name" />
             <TextView
                 android:id="@+id/view_trip_plan_days"
                 style="@style/Base.TextAppearance.AppCompat.Body1"

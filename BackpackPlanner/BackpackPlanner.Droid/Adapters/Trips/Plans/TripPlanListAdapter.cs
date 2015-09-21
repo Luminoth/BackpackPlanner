@@ -31,9 +31,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Plans
 {
     public class TripPlanListAdapter : BaseListAdapter<TripPlan>
     {
-        private class TripPlanViewHolder : BaseViewHolder
+        private class TripPlanViewHolder : BaseViewHolder, Android.Support.V7.Widget.Toolbar.IOnMenuItemClickListener
         {
-            private readonly TextView _textViewName;
+            private readonly Android.Support.V7.Widget.Toolbar _toolbar;
+
             private readonly TextView _textViewDays;
             private readonly TextView _textViewMeals;
             private readonly TextView _textViewCollections;
@@ -43,13 +44,22 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Plans
 
             public TripPlanViewHolder(View itemView, ListItemsFragment<TripPlan> fragment) : base(itemView, fragment)
             {
-                _textViewName = itemView.FindViewById<TextView>(Resource.Id.view_trip_plan_name);
+                _toolbar = itemView.FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.view_trip_plan_toolbar);
+                _toolbar.InflateMenu(Resource.Menu.trip_plan_menu);
+                _toolbar.SetOnMenuItemClickListener(this);
+
                 _textViewDays = itemView.FindViewById<TextView>(Resource.Id.view_trip_plan_days);
                 _textViewMeals = itemView.FindViewById<TextView>(Resource.Id.view_trip_plan_meals);
                 _textViewCollections = itemView.FindViewById<TextView>(Resource.Id.view_trip_plan_collections);
                 _textViewSystems = itemView.FindViewById<TextView>(Resource.Id.view_trip_plan_systems);
                 _textViewItems = itemView.FindViewById<TextView>(Resource.Id.view_trip_plan_items);
                 _textViewCost = itemView.FindViewById<TextView>(Resource.Id.view_trip_plan_cost);
+            }
+
+            public bool OnMenuItemClick(IMenuItem menuItem)
+            {
+                // TODO
+                return true;
             }
 
             protected override Android.Support.V4.App.Fragment CreateViewItemFragment()
@@ -59,7 +69,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Plans
 
             protected override void UpdateView()
             {
-                _textViewName.Text = ListItem.Name;
+                _toolbar.Title = ListItem.Name;
+
                 //_textViewDays.Text = $"{ListItem.Days} day(s)";
                 _textViewCollections.Text = $"{ListItem.MealCount} meal(s)";
                 _textViewCollections.Text = $"{ListItem.GearCollectionCount} collection(s)";
@@ -79,6 +90,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Plans
 
         public override void SortByItemSelectedEventHander(object sender, AdapterView.ItemSelectedEventArgs args)
         {
+            // TODO: can this be made clearer somehow by using args.Id?
             switch(args.Position)
             {
             case 0:         // Name

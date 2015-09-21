@@ -8,6 +8,26 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/add_gear_system_name">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/label_gear_system_name"
+                android:inputType="text|textCapWords" />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/add_gear_system_note">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/label_gear_system_note"
+                android:inputType="text|textMultiLine" />
+        </android.support.design.widget.TextInputLayout>
     </LinearLayout>
     <Button
         android:id="@+id/button_add_gear_system"

@@ -29,13 +29,21 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Itineraries
 {
     public class TripItineraryListAdapter : BaseListAdapter<TripItinerary>
     {
-        private class TripItineraryViewHolder : BaseViewHolder
+        private class TripItineraryViewHolder : BaseViewHolder, Android.Support.V7.Widget.Toolbar.IOnMenuItemClickListener
         {
-            private readonly TextView _textViewName;
+            private readonly Android.Support.V7.Widget.Toolbar _toolbar;
 
             public TripItineraryViewHolder(View itemView, ListItemsFragment<TripItinerary> fragment) : base(itemView, fragment)
             {
-                _textViewName = itemView.FindViewById<TextView>(Resource.Id.view_trip_itinerary_name);
+                _toolbar = itemView.FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.view_trip_itinerary_toolbar);
+                _toolbar.InflateMenu(Resource.Menu.trip_itinerary_menu);
+                _toolbar.SetOnMenuItemClickListener(this);
+            }
+
+            public bool OnMenuItemClick(IMenuItem menuItem)
+            {
+                // TODO
+                return true;
             }
 
             protected override Android.Support.V4.App.Fragment CreateViewItemFragment()
@@ -45,7 +53,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Itineraries
 
             protected override void UpdateView()
             {
-                _textViewName.Text = ListItem.Name;
+                _toolbar.Title = ListItem.Name;
             }
         }
 
@@ -57,6 +65,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Itineraries
 
         public override void SortByItemSelectedEventHander(object sender, AdapterView.ItemSelectedEventArgs args)
         {
+            // TODO: can this be made clearer somehow by using args.Id?
             switch(args.Position)
             {
             case 0:         // Name

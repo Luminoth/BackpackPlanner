@@ -31,9 +31,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Collections
 {
     public class GearCollectionListAdapter : BaseListAdapter<GearCollection>
     {
-        private class GearCollectionViewHolder : BaseViewHolder
+        private class GearCollectionViewHolder : BaseViewHolder, Android.Support.V7.Widget.Toolbar.IOnMenuItemClickListener
         {
-            private readonly TextView _textViewName;
+            private readonly Android.Support.V7.Widget.Toolbar _toolbar;
+
             private readonly TextView _textViewSystems;
             private readonly TextView _textViewItems;
             private readonly TextView _textViewWeight;
@@ -41,11 +42,20 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Collections
 
             public GearCollectionViewHolder(View itemView, ListItemsFragment<GearCollection> fragment) : base(itemView, fragment)
             {
-                _textViewName = itemView.FindViewById<TextView>(Resource.Id.view_gear_collection_name);
+                _toolbar = itemView.FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.view_gear_collection_toolbar);
+                _toolbar.InflateMenu(Resource.Menu.gear_collection_menu);
+                _toolbar.SetOnMenuItemClickListener(this);
+
                 _textViewSystems = itemView.FindViewById<TextView>(Resource.Id.view_gear_collection_systems);
                 _textViewItems = itemView.FindViewById<TextView>(Resource.Id.view_gear_collection_items);
                 _textViewWeight = itemView.FindViewById<TextView>(Resource.Id.view_gear_collection_weight);
                 _textViewCost = itemView.FindViewById<TextView>(Resource.Id.view_gear_collection_cost);
+            }
+
+            public bool OnMenuItemClick(IMenuItem menuItem)
+            {
+                // TODO
+                return true;
             }
 
             protected override Android.Support.V4.App.Fragment CreateViewItemFragment()
@@ -55,7 +65,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Collections
 
             protected override void UpdateView()
             {
-                _textViewName.Text = ListItem.Name;
+                _toolbar.Title = ListItem.Name;
+
                 _textViewSystems.Text = $"{ListItem.GearSystemCount} system(s)";
                 _textViewItems.Text = $"{ListItem.GearItemCount} item(s) (some total)";
                 /*_textViewWeight.Text = $"{ListItem.WeightInUnits} {BackpackPlannerState.Instance.Settings.Units.GetSmallWeightString()}";
@@ -73,6 +84,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Collections
 
         public override void SortByItemSelectedEventHander(object sender, AdapterView.ItemSelectedEventArgs args)
         {
+            // TODO: can this be made clearer somehow by using args.Id?
             switch(args.Position)
             {
             case 0:         // Name

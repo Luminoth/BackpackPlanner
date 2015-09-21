@@ -31,19 +31,29 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Systems
 {
     public class GearSystemListAdapter : BaseListAdapter<GearSystem>
     {
-        private class GearSystemViewHolder : BaseViewHolder
+        private class GearSystemViewHolder : BaseViewHolder, Android.Support.V7.Widget.Toolbar.IOnMenuItemClickListener
         {
-            private readonly TextView _textViewName;
+            private readonly Android.Support.V7.Widget.Toolbar _toolbar;
+
             private readonly TextView _textViewItems;
             private readonly TextView _textViewWeight;
             private readonly TextView _textViewCost;
 
             public GearSystemViewHolder(View itemView, ListItemsFragment<GearSystem> fragment) : base(itemView, fragment)
             {
-                _textViewName = itemView.FindViewById<TextView>(Resource.Id.view_gear_system_name);
+                _toolbar = itemView.FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.view_gear_system_toolbar);
+                _toolbar.InflateMenu(Resource.Menu.gear_system_menu);
+                _toolbar.SetOnMenuItemClickListener(this);
+
                 _textViewItems = itemView.FindViewById<TextView>(Resource.Id.view_gear_system_items);
                 _textViewWeight = itemView.FindViewById<TextView>(Resource.Id.view_gear_system_weight);
                 _textViewCost = itemView.FindViewById<TextView>(Resource.Id.view_gear_system_cost);
+            }
+
+            public bool OnMenuItemClick(IMenuItem menuItem)
+            {
+                // TODO
+                return true;
             }
 
             protected override Android.Support.V4.App.Fragment CreateViewItemFragment()
@@ -53,7 +63,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Systems
 
             protected override void UpdateView()
             {
-                _textViewName.Text = ListItem.Name;
+                _toolbar.Title = ListItem.Name;
+
                 _textViewItems.Text = $"{ListItem.GearItemCount} item(s)";
                 /*_textViewWeight.Text = $"{ListItem.WeightInUnits} {BackpackPlannerState.Instance.Settings.Units.GetSmallWeightString()}";
 
@@ -70,6 +81,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Systems
 
         public override void SortByItemSelectedEventHander(object sender, AdapterView.ItemSelectedEventArgs args)
         {
+            // TODO: can this be made clearer somehow by using args.Id?
             switch(args.Position)
             {
             case 0:         // Name

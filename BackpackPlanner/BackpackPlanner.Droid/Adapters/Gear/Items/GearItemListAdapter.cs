@@ -31,19 +31,29 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items
 {
     public class GearItemListAdapter : BaseListAdapter<GearItem>
     {
-        private class GearItemViewHolder : BaseViewHolder
+        private class GearItemViewHolder : BaseViewHolder, Android.Support.V7.Widget.Toolbar.IOnMenuItemClickListener
         {
-            private readonly TextView _textViewName;
+            private readonly Android.Support.V7.Widget.Toolbar _toolbar;
+
             private readonly TextView _textViewMakeModel;
             private readonly TextView _textViewWeight;
             private readonly TextView _textViewCost;
 
             public GearItemViewHolder(View itemView, BaseFragment fragment) : base(itemView, fragment)
             {
-                _textViewName = itemView.FindViewById<TextView>(Resource.Id.view_gear_item_name);
+                _toolbar = itemView.FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.view_gear_item_toolbar);
+                _toolbar.InflateMenu(Resource.Menu.gear_item_menu);
+                _toolbar.SetOnMenuItemClickListener(this);
+
                 _textViewMakeModel = itemView.FindViewById<TextView>(Resource.Id.view_gear_item_make_model);
                 _textViewWeight = itemView.FindViewById<TextView>(Resource.Id.view_gear_item_weight);
                 _textViewCost = itemView.FindViewById<TextView>(Resource.Id.view_gear_item_cost);
+            }
+
+            public bool OnMenuItemClick(IMenuItem menuItem)
+            {
+                // TODO
+                return true;
             }
 
             protected override Android.Support.V4.App.Fragment CreateViewItemFragment()
@@ -53,7 +63,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items
 
             protected override void UpdateView()
             {
-                _textViewName.Text = ListItem.Name;
+                _toolbar.Title = ListItem.Name;
 
                 string makeModel = $"{ListItem.Make} {ListItem.Model}";
                 if(string.IsNullOrWhiteSpace(makeModel)) {
@@ -79,6 +89,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items
 
         public override void SortByItemSelectedEventHander(object sender, AdapterView.ItemSelectedEventArgs args)
         {
+            // TODO: can this be made clearer somehow by using args.Id?
             switch(args.Position)
             {
             case 0:         // Name

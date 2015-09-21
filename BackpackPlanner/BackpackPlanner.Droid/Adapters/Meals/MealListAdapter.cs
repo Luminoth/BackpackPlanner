@@ -31,19 +31,29 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
 {
     public class MealListAdapter : BaseListAdapter<Meal>
     {
-        private class MealViewHolder : BaseViewHolder
+        private class MealViewHolder : BaseViewHolder, Android.Support.V7.Widget.Toolbar.IOnMenuItemClickListener
         {
-            private readonly TextView _textViewName;
+            private readonly Android.Support.V7.Widget.Toolbar _toolbar;
+
             private readonly TextView _textViewServings;
             private readonly TextView _textViewWeight;
             private readonly TextView _textViewCost;
 
             public MealViewHolder(View itemView, ListItemsFragment<Meal> fragment) : base(itemView, fragment)
             {
-                _textViewName = itemView.FindViewById<TextView>(Resource.Id.view_meal_name);
+                _toolbar = itemView.FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.view_meal_toolbar);
+                _toolbar.InflateMenu(Resource.Menu.meal_menu);
+                _toolbar.SetOnMenuItemClickListener(this);
+
                 _textViewServings = itemView.FindViewById<TextView>(Resource.Id.view_meal_servings);
                 _textViewWeight = itemView.FindViewById<TextView>(Resource.Id.view_meal_weight);
                 _textViewCost = itemView.FindViewById<TextView>(Resource.Id.view_meal_cost);
+            }
+
+            public bool OnMenuItemClick(IMenuItem menuItem)
+            {
+                // TODO
+                return true;
             }
 
             protected override Android.Support.V4.App.Fragment CreateViewItemFragment()
@@ -53,7 +63,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
 
             protected override void UpdateView()
             {
-                _textViewName.Text = ListItem.Name;
+                _toolbar.Title = ListItem.Name;
+
                 _textViewServings.Text = $"{ListItem.ServingCount} serving(s) of {ListItem.MealTime}";
                 _textViewWeight.Text = $"{ListItem.WeightInUnits} {BackpackPlannerState.Instance.Settings.Units.GetSmallWeightString()}";
 
@@ -70,6 +81,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
 
         public override void SortByItemSelectedEventHander(object sender, AdapterView.ItemSelectedEventArgs args)
         {
+            // TODO: can this be made clearer somehow by using args.Id?
             switch(args.Position)
             {
             case 0:         // Name
