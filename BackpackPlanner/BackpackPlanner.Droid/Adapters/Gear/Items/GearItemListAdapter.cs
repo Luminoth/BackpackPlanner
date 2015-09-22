@@ -58,7 +58,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items
 
             protected override Android.Support.V4.App.Fragment CreateViewItemFragment()
             {
-                return new ViewGearItemFragment();
+                return new ViewGearItemFragment
+                {
+                    Item = ListItem
+                };
             }
 
             protected override void UpdateView()

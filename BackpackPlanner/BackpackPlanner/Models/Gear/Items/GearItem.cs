@@ -159,6 +159,9 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Items
         /// <value>
         /// The weight of this gear item in grams.
         /// </value>
+        /// <remarks>
+        /// TODO: it's possible this should be in milligrams
+        /// </remarks>
         [NotNull]
         public int WeightInGrams
         {

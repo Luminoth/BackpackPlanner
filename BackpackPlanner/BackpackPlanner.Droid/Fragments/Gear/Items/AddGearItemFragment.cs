@@ -27,6 +27,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
 {
     public class AddGearItemFragment : AddItemFragment<GearItem>
     {
+        protected override int LayoutResource => Resource.Layout.fragment_add_gear_item;
+
+        protected override int TitleResource => Resource.String.title_add_gear_item;
+
+        protected override int AddItemResource => Resource.Id.button_add_gear_item;
+
+        protected override bool HasSearchView => false;
+
 #region Controls
         private Android.Support.Design.Widget.TextInputLayout _gearItemNameEditText;
         private Android.Support.Design.Widget.TextInputLayout _gearItemMakeEditText;
@@ -39,14 +47,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
         private Android.Support.Design.Widget.TextInputLayout _gearItemCostEditText;
         private Android.Support.Design.Widget.TextInputLayout _gearItemNoteEditText;
 #endregion
-
-        protected override int LayoutResource => Resource.Layout.fragment_add_gear_item;
-
-        protected override int TitleResource => Resource.String.title_add_gear_item;
-
-        protected override int AddItemResource => Resource.Id.button_add_gear_item;
-
-        protected override bool HasSearchView => false;
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {

@@ -56,85 +56,132 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
 #region Test Items
             ListItems.Add(new GearItem
                 {
-                    Name = "One",
-                    Make = "Test Make",
-                    Model = "Test Model",
+                    Name = "Alcohol Stove",
+                    Make = "Zelph's Stoveworks",
+                    Model = "StarLyte",
+                    Url = "http://www.woodgaz-stove.com/starlyte-burner-with-lid.php",
+                    WeightInGrams = 19,
+                    CostInUSDP = 1300,
+                }
+            );
+
+            ListItems.Add(new GearItem
+                {
+                    Name = "Backpack",
+                    Make = "ULA",
+                    Model = "Circuit",
+                    Url = "http://www.ula-equipment.com/product_p/circuit.htm",
+                    WeightInGrams = 986,
+                    CostInUSDP = 22500,
+                    Note = "Medium torso (18\" - 21\"). Medium hipbelt (34\" - 38\"). J-Curve shoulder strap. Aluminum stay removed. Includes hanging s-biner \"Ahhh\" and water shoe carabiner. 39L main body. Max 15 pound base weight, 30-35 pack weight."
+                }
+            );
+
+            ListItems.Add(new GearItem
+                {
+                    Name = "Hammock",
+                    Make = "Aaron Erbe",
+                    Model = "DIY",
+                    WeightInGrams = 422,
+                    CostInUSDP = 0,
+                    Note = "Includes adjustable ridge line and 2x whoopie slings from whoopieslings.com, and bishop bag."
+                }
+            );
+
+            ListItems.Add(new GearItem
+                {
+                    Name = "Head Lamp",
+                    Make = "Petzl",
+                    Model = "Tikka Plus 2",
+                    WeightInGrams = 79,
+                    CostInUSDP = 2995
+                }
+            );
+
+            ListItems.Add(new GearItem
+                {
+                    Name = "Kilt",
+                    Make = "Utilikilt",
+                    Model = "Survival",
+                    Url = "http://www.utilikilts.com/index.php/the-survival.html",
+                    Carried = GearCarried.Worn,
+                    WeightInGrams = 989,
+                    CostInUSDP = 33000,
+                    Note = "100% cotton. Cargo pockets removed (3.8 ounces each)."
+                }
+            );
+
+            ListItems.Add(new GearItem
+                {
+                    Name = "New Underquilt",
+                    Make = "Arrowhead Equipment",
+                    Model = "Anniversary Jarbridge 3S (25F)",
+                    Url = "http://www.arrowhead-equipment.com/store/p510/Anniversary_Jarbidge_UnderQuilt.htmll",
+                    WeightInGrams = 566,
+                    CostInUSDP = 7500,
+                    Note = "6oz APEX Climashield synthetic"
+                }
+            );
+
+            ListItems.Add(new GearItem
+                {
+                    Name = "Old Underquilt",
+                    Make = "Aaron Erbe",
+                    Model = "DIY",
+                    WeightInGrams = 887,
+                    CostInUSDP = 0,
+                    Note = "Synthetic material. Need to have Aaron or Joe possibly remove some material from the overstuff collars to get the size and weight down on this."
+                }
+            );
+
+            ListItems.Add(new GearItem
+                {
+                    Name = "Overquilt",
+                    Make = "Arrowhead Equipment",
+                    Model = "Owyhee Top Quilt Regular 3S (25F)",
+                    Url = "http://www.arrowhead-equipment.com/store/p314/Owyhee_Top_Quilt_Regular.html",
+                    WeightInGrams = 802,
+                    CostInUSDP = 17900,
+                    Note = "6oz APEX Climashield synthetic"
+                }
+            );
+
+            ListItems.Add(new GearItem
+                {
+                    Name = "Toilet Paper",
+                    IsConsumable = true,
+                    ConsumedPerDay = 10,
                     WeightInGrams = 1,
-                    CostInUSDP = 20
+                    CostInUSDP = 1,
+                    Note = "Can't have too much!"
                 }
             );
 
             ListItems.Add(new GearItem
                 {
-                    Name = "Two",
-                    Make = "Test Make",
-                    WeightInGrams = 2,
-                    CostInUSDP = 19
+                    Name = "Tree Straps",
+                    Url = "http://shop.whoopieslings.com/Tree-Huggers-TH.htm",
+                    WeightInGrams = 198,
+                    CostInUSDP = 1200,
+                    Note = "12'x1\". Includes dutch buckle and titanium dutch clip (max 300 pounds)."
                 }
             );
 
             ListItems.Add(new GearItem
                 {
-                    Name = "Three",
-                    Model = "Test Model",
-                    WeightInGrams = 3,
-                    CostInUSDP = 18
+                    Name = "5g Water Jug",
+                    Carried = GearCarried.NotCarried
                 }
             );
 
             ListItems.Add(new GearItem
                 {
-                    Name = "Four",
-                    WeightInGrams = 4,
-                    CostInUSDP = 17
-                }
-            );
-
-            ListItems.Add(new GearItem
-                {
-                    Name = "Five",
-                    WeightInGrams = 5,
-                    CostInUSDP = 16
-                }
-            );
-
-            ListItems.Add(new GearItem
-                {
-                    Name = "Six",
-                    WeightInGrams = 6,
-                    CostInUSDP = 15
-                }
-            );
-
-            ListItems.Add(new GearItem
-                {
-                    Name = "Seven",
-                    WeightInGrams = 7,
-                    CostInUSDP = 14
-                }
-            );
-
-            ListItems.Add(new GearItem
-                {
-                    Name = "Eight",
-                    WeightInGrams = 8,
-                    CostInUSDP = 13
-                }
-            );
-
-            ListItems.Add(new GearItem
-                {
-                    Name = "Nine",
-                    WeightInGrams = 9,
-                    CostInUSDP = 12
-                }
-            );
-
-            ListItems.Add(new GearItem
-                {
-                    Name = "Ten",
-                    WeightInGrams = 10,
-                    CostInUSDP = 11
+                    Name = "Wind Screen",
+                    Make = "Trail Designs",
+                    Model = "Caldera Cone System",
+                    Url = "http://www.traildesigns.com/stoves/caldera-cone-system",
+                    WeightInGrams = 141,
+                    CostInUSDP = 3400
                 }
             );
 #endregion

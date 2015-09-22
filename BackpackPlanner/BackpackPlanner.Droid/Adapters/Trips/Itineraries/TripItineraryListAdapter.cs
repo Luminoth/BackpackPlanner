@@ -48,7 +48,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Itineraries
 
             protected override Android.Support.V4.App.Fragment CreateViewItemFragment()
             {
-                return new ViewTripItineraryFragment();
+                return new ViewTripItineraryFragment
+                {
+                    Item = ListItem
+                };
             }
 
             protected override void UpdateView()
