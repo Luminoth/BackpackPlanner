@@ -32,7 +32,7 @@ namespace EnergonSoftware.BackpackPlanner.Database
     /// has a lock, but it releases that lock in Dispose() which isn't
     /// something that really guarantees the lock is released, right?
     /// </remarks>
-    public class DatabaseConnection
+    public sealed class DatabaseConnection
     {
         /// <summary>
         /// Gets the lock.

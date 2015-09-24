@@ -30,7 +30,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Meals
     /// <summary>
     /// 
     /// </summary>
-    public class Meal
+    public sealed class Meal
     {
         /// <summary>
         /// Creates the database tables.

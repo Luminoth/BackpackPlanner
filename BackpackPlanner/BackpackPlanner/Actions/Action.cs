@@ -14,31 +14,12 @@
    limitations under the License.
 */
 
-namespace EnergonSoftware.BackpackPlanner.Logging
+namespace EnergonSoftware.BackpackPlanner.Actions
 {
     /// <summary>
-    /// A logger that writes to System.Diagnostics.Debug
+    /// 
     /// </summary>
-    public sealed class DebugLogger : ILogger
+    public interface IAction
     {
-        public void Debug(string message)
-        {
-            System.Diagnostics.Debug.WriteLine(message);
-        }
-
-        public void Info(string message)
-        {
-            System.Diagnostics.Debug.WriteLine(message);
-        }
-
-        public void Warn(string message)
-        {
-            System.Diagnostics.Debug.WriteLine(message);
-        }
-
-        public void Error(string message)
-        {
-            System.Diagnostics.Debug.WriteLine(message);
-        }
     }
 }

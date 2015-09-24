@@ -17,6 +17,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+using EnergonSoftware.BackpackPlanner.Logging;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
 
@@ -33,6 +34,8 @@ namespace EnergonSoftware.BackpackPlanner.Cache
     /// </remarks>
     public sealed class TripCache
     {
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(TripCache));
+
         /// <summary>
         /// Initializes the trip tables in the database.
         /// </summary>
@@ -44,13 +47,17 @@ namespace EnergonSoftware.BackpackPlanner.Cache
         /// </remarks>
         public static async Task InitDatabaseAsync(SQLiteAsyncConnection asyncDbConnection, int oldVersion, int newVersion)
         {
+            if(null == asyncDbConnection) {
+                throw new ArgumentNullException(nameof(asyncDbConnection));
+            }
+            
             if(oldVersion >= newVersion) {
-                BackpackPlannerState.Instance.Logger.Debug("Database versions match, nothing to do for trip cache update...");
+                Logger.Debug("Database versions match, nothing to do for trip cache update...");
                 return;
             }
 
             if(oldVersion < 2 && newVersion >= 2) {
-                BackpackPlannerState.Instance.Logger.Debug("Creating trip cache tables...");
+                Logger.Debug("Creating trip cache tables...");
                 await TripItinerary.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
                 await TripPlan.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
             }
@@ -80,7 +87,7 @@ namespace EnergonSoftware.BackpackPlanner.Cache
         {
             _tripItineraryCache.Clear();
 
-            BackpackPlannerState.Instance.Logger.Debug("Loading trip itinerary cache...");
+            Logger.Debug("Loading trip itinerary cache...");
             await BackpackPlannerState.Instance.DatabaseConnection.Lock.WaitAsync().ConfigureAwait(false);
             try {
                 var tripItineraries = await TripItinerary.GetTripItinerariesAsync(BackpackPlannerState.Instance.DatabaseConnection.AsyncConnection).ConfigureAwait(false);
@@ -98,7 +105,7 @@ namespace EnergonSoftware.BackpackPlanner.Cache
         {
             _tripPlanCache.Clear();
 
-            BackpackPlannerState.Instance.Logger.Debug("Loading trip plan cache...");
+            Logger.Debug("Loading trip plan cache...");
             await BackpackPlannerState.Instance.DatabaseConnection.Lock.WaitAsync().ConfigureAwait(false);
             try {
                 var tripPlans = await TripPlan.GetTripPlansAsync(BackpackPlannerState.Instance.DatabaseConnection.AsyncConnection).ConfigureAwait(false);

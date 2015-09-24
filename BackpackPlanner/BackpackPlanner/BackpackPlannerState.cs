@@ -35,6 +35,8 @@ namespace EnergonSoftware.BackpackPlanner
     /// </summary>
     public sealed class BackpackPlannerState
     {
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(BackpackPlannerState));
+
         /// <summary>
         /// The database name
         /// </summary>
@@ -53,7 +55,7 @@ namespace EnergonSoftware.BackpackPlanner
         /// </value>
         public static readonly BackpackPlannerState Instance = new BackpackPlannerState();
 
-        private ILogger _logger = new DebugLogger();
+        private ILogger _systemLogger = new DebugLogger();
 
         /// <summary>
         /// Gets or sets the logger.
@@ -61,10 +63,10 @@ namespace EnergonSoftware.BackpackPlanner
         /// <value>
         /// The logger.
         /// </value>
-        public ILogger Logger
+        public ILogger SystemLogger
         {
-            get { return _logger; }
-            set { _logger = value ?? new DebugLogger(); }
+            get { return _systemLogger; }
+            set { _systemLogger = value ?? new DebugLogger(); }
         }
 
         /// <summary>

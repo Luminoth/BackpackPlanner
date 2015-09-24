@@ -24,43 +24,108 @@ using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using MSTestExtensions;
+
 using SQLite.Net.Async;
+using SQLiteNetExtensionsAsync.Extensions;
 
 using TypeMock.ArrangeActAssert;
 
-namespace BackpackPlanner.UnitTests
+namespace BackpackPlanner.UnitTests.Cache
 {
-    [TestClass]
-    public class GearCacheTests
+    [TestClass, Isolated]
+    public class GearCacheTests : BaseTest
     {
-#region GetGearItemById
-        [TestMethod, ExpectedException(typeof(ArgumentException))]
-        public async Task GearCache_GetGearItemById_Negative_ArgumentException()
+#region InitDatabase
+        [TestMethod]
+        public void GearCache_InitDatabase_NullConnection()
         {
             // Arrange
-            GearCache gearCache = new GearCache();
 
             // Act
-            GearItem gearItem = await gearCache.GetGearItemByIdAsync(-1).ConfigureAwait(false);
 
             // Assert
+            Assert.ThrowsAsync<ArgumentNullException>(GearCache.InitDatabaseAsync(null, 0, 0));
         }
 
-        [TestMethod, ExpectedException(typeof(ArgumentException))]
-        public async Task GearCache_GetGearItemById_Zero_ArgumentException()
+        [TestMethod]
+        public async Task GearCache_InitDatabase_OldVersionEqual()
         {
+            // Isolate
+            SQLiteAsyncConnection fakeAsyncDbConnection = MockUtil.FakeDbConnections();
+
             // Arrange
-            GearCache gearCache = new GearCache();
 
             // Act
-            GearItem gearItem = await gearCache.GetGearItemByIdAsync(0).ConfigureAwait(false);
+            await GearCache.InitDatabaseAsync(fakeAsyncDbConnection, 0, 0).ConfigureAwait(false);
 
             // Assert
         }
 
         [TestMethod]
+        public async Task GearCache_InitDatabase_OldVersionLarger()
+        {
+            // Isolate
+            SQLiteAsyncConnection fakeAsyncDbConnection = MockUtil.FakeDbConnections();
+
+            // Arrange
+
+            // Act
+            await GearCache.InitDatabaseAsync(fakeAsyncDbConnection, 1, 0).ConfigureAwait(false);
+
+            // Assert
+        }
+
+        [TestMethod]
+        public async Task GearCache_InitDatabase_NewDatabase()
+        {
+            // Isolate
+            SQLiteAsyncConnection fakeAsyncDbConnection = MockUtil.FakeDbConnections();
+
+            Isolate.Fake.StaticMethods(typeof(GearItem), Members.CallOriginal);
+
+            // Arrange
+
+            // Act
+            await GearCache.InitDatabaseAsync(fakeAsyncDbConnection, -1, 1).ConfigureAwait(false);
+
+            // Assert
+            Isolate.Verify.WasCalledWithExactArguments(() => GearItem.CreateTablesAsync(fakeAsyncDbConnection));
+        }
+#endregion
+
+#region GetGearItemById
+        [TestMethod]
+        public void GearCache_GetGearItemById_Negative_ArgumentException()
+        {
+            // Arrange
+            GearCache gearCache = new GearCache();
+
+            // Act
+
+            // Assert
+            Assert.ThrowsAsync<ArgumentException>(gearCache.GetGearItemByIdAsync(-1));
+        }
+
+        [TestMethod]
+        public void GearCache_GetGearItemById_Zero_ArgumentException()
+        {
+            // Arrange
+            GearCache gearCache = new GearCache();
+
+            // Act
+
+            // Assert
+            Assert.ThrowsAsync<ArgumentException>(gearCache.GetGearItemByIdAsync(0));
+        }
+
+        [TestMethod]
         public async Task GearCache_GetGearItemById_NonExistant_Empty_Null()
         {
+            // Isolate
+            SQLiteAsyncConnection fakeAsyncDbConnection = MockUtil.FakeDbConnections();
+            Isolate.WhenCalled(() => fakeAsyncDbConnection.GetWithChildrenAsync<GearItem>(0)).DoInstead(x => Task.FromResult((GearItem)null));
+
             // Arrange
             GearCache gearCache = new GearCache();
 
@@ -74,6 +139,10 @@ namespace BackpackPlanner.UnitTests
         [TestMethod]
         public async Task GearCache_GetGearItemById_NonExistant_Null()
         {
+            // Isolate
+            SQLiteAsyncConnection fakeAsyncDbConnection = MockUtil.FakeDbConnections();
+            Isolate.WhenCalled(() => fakeAsyncDbConnection.GetWithChildrenAsync<GearItem>(0)).DoInstead(x => Task.FromResult((GearItem)null));
+
             // Arrange
             GearCache gearCache = new GearCache();
             GearItem insertGearItem = new GearItem
@@ -110,26 +179,26 @@ namespace BackpackPlanner.UnitTests
 #endregion
 
 #region AddGearItem
-        [TestMethod, ExpectedException(typeof(ArgumentNullException))]
-        public async Task GearCache_AddGearItem_Null_ArgumentNullException()
+        /*[TestMethod]
+        public void GearCache_AddGearItem_Null_ArgumentNullException()
         {
             // Arrange
             GearCache gearCache = new GearCache();
 
             // Act
-            await gearCache.AddGearItemAsync(null).ConfigureAwait(false);
+            ExceptionAssert.Throws<ArgumentNullException>(async () => await gearCache.AddGearItemAsync(null).ConfigureAwait(false));
 
             // Assert
-        }
+        }*/
 
-        [TestMethod, Isolated]
+        [TestMethod]
         public async Task GearCache_AddGearItem_NewItem_Success()
         {
             // Isolate
             SQLiteAsyncConnection fakeAsyncDbConnection = MockUtil.FakeDbConnections();
-            Isolate.WhenCalled(() => fakeAsyncDbConnection.InsertAsync(null)).DoInstead(x =>
+            Isolate.WhenCalled(() => fakeAsyncDbConnection.InsertWithChildrenAsync(null)).DoInstead(x =>
                 {
-                    ((GearItem)x.Parameters[0]).GearItemId = 1;
+                    ((GearItem)x.Parameters[1]).GearItemId = 1;
                     return Task.FromResult(1);
                 }
             );
@@ -189,20 +258,20 @@ namespace BackpackPlanner.UnitTests
 #endregion
 
 #region RemoveGearItem
-        [TestMethod, ExpectedException(typeof(ArgumentNullException))]
-        public async Task GearCache_RemoveGearItem_Null_ArgumentNullException()
+        [TestMethod]
+        public void GearCache_RemoveGearItem_Null_ArgumentNullException()
         {
             // Arrange
             GearCache gearCache = new GearCache();
 
             // Act
-            await gearCache.RemoveGearItemAsync(null).ConfigureAwait(false);
 
             // Assert
+            Assert.ThrowsAsync<ArgumentNullException>(gearCache.RemoveGearItemAsync(null));
         }
 
-        [TestMethod, ExpectedException(typeof(ArgumentException))]
-        public async Task GearCache_RemoveGearItem_InvalidId_Negative_ArgumentException()
+        [TestMethod]
+        public void GearCache_RemoveGearItem_InvalidId_Negative_ArgumentException()
         {
             // Arrange
             GearCache gearCache = new GearCache();
@@ -212,13 +281,13 @@ namespace BackpackPlanner.UnitTests
             };
 
             // Act
-            await gearCache.RemoveGearItemAsync(gearItem).ConfigureAwait(false);
 
             // Assert
+            Assert.ThrowsAsync<ArgumentException>(gearCache.RemoveGearItemAsync(gearItem));
         }
 
-        [TestMethod, ExpectedException(typeof(ArgumentException))]
-        public async Task GearCache_RemoveGearItem_InvalidId_Zero_ArgumentException()
+        [TestMethod]
+        public void GearCache_RemoveGearItem_InvalidId_Zero_ArgumentException()
         {
             // Arrange
             GearCache gearCache = new GearCache();
@@ -228,19 +297,19 @@ namespace BackpackPlanner.UnitTests
             };
 
             // Act
-            await gearCache.RemoveGearItemAsync(gearItem).ConfigureAwait(false);
 
             // Assert
+            Assert.ThrowsAsync<ArgumentException>(gearCache.RemoveGearItemAsync(gearItem));
         }
 
-        [TestMethod, Isolated]
+        [TestMethod]
         public async Task GearCache_RemoveGearItem_Success()
         {
             // Isolate
             SQLiteAsyncConnection fakeAsyncDbConnection = MockUtil.FakeDbConnections();
-            Isolate.WhenCalled(() => fakeAsyncDbConnection.InsertAsync(null)).DoInstead(x =>
+            Isolate.WhenCalled(() => fakeAsyncDbConnection.InsertWithChildrenAsync(null)).DoInstead(x =>
                 {
-                    ((GearItem)x.Parameters[0]).GearItemId = 1;
+                    ((GearItem)x.Parameters[1]).GearItemId = 1;
                     return Task.FromResult(1);
                 }
             );
@@ -263,6 +332,15 @@ namespace BackpackPlanner.UnitTests
         [TestMethod]
         public async Task GearCache_RemoveAllGearItems_Empty_Success()
         {
+            // Isolate
+            SQLiteAsyncConnection fakeAsyncDbConnection = MockUtil.FakeDbConnections();
+            Isolate.WhenCalled(() => fakeAsyncDbConnection.InsertWithChildrenAsync(null)).DoInstead(x =>
+                {
+                    ((GearCollection)x.Parameters[0]).GearCollectionId = 1;
+                    return Task.FromResult(1);
+                }
+            );
+
             // Arrange
             GearCache gearCache = new GearCache();
 
@@ -276,6 +354,15 @@ namespace BackpackPlanner.UnitTests
         [TestMethod]
         public async Task GearCache_RemoveAllGearItems_Success()
         {
+            // Isolate
+            SQLiteAsyncConnection fakeAsyncDbConnection = MockUtil.FakeDbConnections();
+            Isolate.WhenCalled(() => fakeAsyncDbConnection.InsertWithChildrenAsync(null)).DoInstead(x =>
+                {
+                    ((GearItem)x.Parameters[1]).GearItemId = 1;
+                    return Task.FromResult(1);
+                }
+            );
+
             // Arrange
             GearCache gearCache = new GearCache();
 
@@ -292,33 +379,37 @@ namespace BackpackPlanner.UnitTests
 #endregion
 
 #region GetGearSystemById
-        [TestMethod, ExpectedException(typeof(ArgumentException))]
-        public async Task GearCache_GetGearSystemById_Negative_ArgumentException()
+        [TestMethod]
+        public void GearCache_GetGearSystemById_Negative_ArgumentException()
         {
             // Arrange
             GearCache gearCache = new GearCache();
 
             // Act
-            GearSystem gearSystem = await gearCache.GetGearSystemByIdAsync(-1).ConfigureAwait(false);
 
             // Assert
+            Assert.ThrowsAsync<ArgumentException>(gearCache.GetGearSystemByIdAsync(-1));
         }
 
-        [TestMethod, ExpectedException(typeof(ArgumentException))]
-        public async Task GearCache_GetGearSystemById_Zero_ArgumentException()
+        [TestMethod]
+        public void GearCache_GetGearSystemById_Zero_ArgumentException()
         {
             // Arrange
             GearCache gearCache = new GearCache();
 
             // Act
-            GearSystem gearSystem = await gearCache.GetGearSystemByIdAsync(0).ConfigureAwait(false);
 
             // Assert
+            Assert.ThrowsAsync<ArgumentException>(gearCache.GetGearSystemByIdAsync(0));
         }
 
         [TestMethod]
         public async Task GearCache_GetGearSystemById_NonExistant_Empty_Null()
         {
+            // Isolate
+            SQLiteAsyncConnection fakeAsyncDbConnection = MockUtil.FakeDbConnections();
+            Isolate.WhenCalled(() => fakeAsyncDbConnection.GetWithChildrenAsync<GearSystem>(0)).DoInstead(x => Task.FromResult((GearSystem)null));
+
             // Arrange
             GearCache gearCache = new GearCache();
 
@@ -332,6 +423,10 @@ namespace BackpackPlanner.UnitTests
         [TestMethod]
         public async Task GearCache_GetGearSystemById_NonExistant_Null()
         {
+            // Isolate
+            SQLiteAsyncConnection fakeAsyncDbConnection = MockUtil.FakeDbConnections();
+            Isolate.WhenCalled(() => fakeAsyncDbConnection.GetWithChildrenAsync<GearSystem>(0)).DoInstead(x => Task.FromResult((GearSystem)null));
+
             // Arrange
             GearCache gearCache = new GearCache();
             GearSystem insertGearSystem = new GearSystem
@@ -368,26 +463,26 @@ namespace BackpackPlanner.UnitTests
 #endregion
 
 #region AddGearSystem
-        [TestMethod, ExpectedException(typeof(ArgumentNullException))]
-        public async Task GearCache_AddGearSystem_Null_ArgumentNullException()
+        /*[TestMethod]
+        public void GearCache_AddGearSystem_Null_ArgumentNullException()
         {
             // Arrange
             GearCache gearCache = new GearCache();
 
             // Act
-            await gearCache.AddGearSystemAsync(null).ConfigureAwait(false);
+            ExceptionAssert.Throws<ArgumentNullException>(async () => await gearCache.AddGearSystemAsync(null).ConfigureAwait(false));
 
             // Assert
-        }
+        }*/
 
-        [TestMethod, Isolated]
+        [TestMethod]
         public async Task GearCache_AddGearSystem_NewSystem_Success()
         {
             // Isolate
             SQLiteAsyncConnection fakeAsyncDbConnection = MockUtil.FakeDbConnections();
-            Isolate.WhenCalled(() => fakeAsyncDbConnection.InsertAsync(null)).DoInstead(x =>
+            Isolate.WhenCalled(() => fakeAsyncDbConnection.InsertWithChildrenAsync(null)).DoInstead(x =>
                 {
-                    ((GearSystem)x.Parameters[0]).GearSystemId = 1;
+                    ((GearSystem)x.Parameters[1]).GearSystemId = 1;
                     return Task.FromResult(1);
                 }
             );
@@ -447,20 +542,20 @@ namespace BackpackPlanner.UnitTests
 #endregion
 
 #region RemoveGearSystem
-        [TestMethod, ExpectedException(typeof(ArgumentNullException))]
-        public async Task GearCache_RemoveGearSystem_Null_ArgumentNullException()
+        [TestMethod]
+        public void GearCache_RemoveGearSystem_Null_ArgumentNullException()
         {
             // Arrange
             GearCache gearCache = new GearCache();
 
             // Act
-            await gearCache.RemoveGearSystemAsync(null).ConfigureAwait(false);
 
             // Assert
+            Assert.ThrowsAsync<ArgumentNullException>(gearCache.RemoveGearSystemAsync(null));
         }
 
-        [TestMethod, ExpectedException(typeof(ArgumentException))]
-        public async Task GearCache_RemoveGearSystem_InvalidId_Negative_ArgumentException()
+        [TestMethod]
+        public void GearCache_RemoveGearSystem_InvalidId_Negative_ArgumentException()
         {
             // Arrange
             GearCache gearCache = new GearCache();
@@ -470,13 +565,13 @@ namespace BackpackPlanner.UnitTests
             };
 
             // Act
-            await gearCache.RemoveGearSystemAsync(gearSystem).ConfigureAwait(false);
 
             // Assert
+            Assert.ThrowsAsync<ArgumentException>(gearCache.RemoveGearSystemAsync(gearSystem));
         }
 
-        [TestMethod, ExpectedException(typeof(ArgumentException))]
-        public async Task GearCache_RemoveGearSystem_InvalidId_Zero_ArgumentException()
+        [TestMethod]
+        public void GearCache_RemoveGearSystem_InvalidId_Zero_ArgumentException()
         {
             // Arrange
             GearCache gearCache = new GearCache();
@@ -486,19 +581,19 @@ namespace BackpackPlanner.UnitTests
             };
 
             // Act
-            await gearCache.RemoveGearSystemAsync(gearSystem).ConfigureAwait(false);
 
             // Assert
+            Assert.ThrowsAsync<ArgumentException>(gearCache.RemoveGearSystemAsync(gearSystem));
         }
 
-        [TestMethod, Isolated]
+        [TestMethod]
         public async Task GearCache_RemoveGearSystem_Success()
         {
             // Isolate
             SQLiteAsyncConnection fakeAsyncDbConnection = MockUtil.FakeDbConnections();
-            Isolate.WhenCalled(() => fakeAsyncDbConnection.InsertAsync(null)).DoInstead(x =>
+            Isolate.WhenCalled(() => fakeAsyncDbConnection.InsertWithChildrenAsync(null)).DoInstead(x =>
                 {
-                    ((GearSystem)x.Parameters[0]).GearSystemId = 1;
+                    ((GearSystem)x.Parameters[1]).GearSystemId = 1;
                     return Task.FromResult(1);
                 }
             );
@@ -521,6 +616,15 @@ namespace BackpackPlanner.UnitTests
         [TestMethod]
         public async Task GearCache_RemoveAllGearSystems_Empty_Success()
         {
+            // Isolate
+            SQLiteAsyncConnection fakeAsyncDbConnection = MockUtil.FakeDbConnections();
+            Isolate.WhenCalled(() => fakeAsyncDbConnection.InsertWithChildrenAsync(null)).DoInstead(x =>
+                {
+                    ((GearCollection)x.Parameters[0]).GearCollectionId = 1;
+                    return Task.FromResult(1);
+                }
+            );
+
             // Arrange
             GearCache gearCache = new GearCache();
 
@@ -534,6 +638,15 @@ namespace BackpackPlanner.UnitTests
         [TestMethod]
         public async Task GearCache_RemoveAllGearSystems_Success()
         {
+            // Isolate
+            SQLiteAsyncConnection fakeAsyncDbConnection = MockUtil.FakeDbConnections();
+            Isolate.WhenCalled(() => fakeAsyncDbConnection.InsertWithChildrenAsync(null)).DoInstead(x =>
+                {
+                    ((GearSystem)x.Parameters[1]).GearSystemId = 1;
+                    return Task.FromResult(1);
+                }
+            );
+
             // Arrange
             GearCache gearCache = new GearCache();
 
@@ -550,33 +663,37 @@ namespace BackpackPlanner.UnitTests
 #endregion
 
 #region GetGearCollectionById
-        [TestMethod, ExpectedException(typeof(ArgumentException))]
-        public async Task GearCache_GetGearCollectionById_Negative_ArgumentException()
+        [TestMethod]
+        public void GearCache_GetGearCollectionById_Negative_ArgumentException()
         {
             // Arrange
             GearCache gearCache = new GearCache();
 
             // Act
-            GearCollection gearCollection = await gearCache.GetGearCollectionByIdAsync(-1).ConfigureAwait(false);
 
             // Assert
+            Assert.ThrowsAsync<ArgumentException>(gearCache.GetGearCollectionByIdAsync(-1));
         }
 
-        [TestMethod, ExpectedException(typeof(ArgumentException))]
-        public async Task GearCache_GetGearCollectionById_Zero_ArgumentException()
+        [TestMethod]
+        public void GearCache_GetGearCollectionById_Zero_ArgumentException()
         {
             // Arrange
             GearCache gearCache = new GearCache();
 
             // Act
-            GearCollection gearCollection = await gearCache.GetGearCollectionByIdAsync(0).ConfigureAwait(false);
 
             // Assert
+            Assert.ThrowsAsync<ArgumentException>(gearCache.GetGearCollectionByIdAsync(0));
         }
 
         [TestMethod]
         public async Task GearCache_GetGearCollectionById_NonExistant_Empty_Null()
         {
+            // Isolate
+            SQLiteAsyncConnection fakeAsyncDbConnection = MockUtil.FakeDbConnections();
+            Isolate.WhenCalled(() => fakeAsyncDbConnection.GetWithChildrenAsync<GearCollection>(0)).DoInstead(x => Task.FromResult((GearCollection)null));
+
             // Arrange
             GearCache gearCache = new GearCache();
 
@@ -590,6 +707,10 @@ namespace BackpackPlanner.UnitTests
         [TestMethod]
         public async Task GearCache_GetGearCollectionById_NonExistant_Null()
         {
+            // Isolate
+            SQLiteAsyncConnection fakeAsyncDbConnection = MockUtil.FakeDbConnections();
+            Isolate.WhenCalled(() => fakeAsyncDbConnection.GetWithChildrenAsync<GearCollection>(0)).DoInstead(x => Task.FromResult((GearCollection)null));
+
             // Arrange
             GearCache gearCache = new GearCache();
             GearCollection insertGearCollection = new GearCollection
@@ -626,26 +747,26 @@ namespace BackpackPlanner.UnitTests
 #endregion
 
 #region AddGearCollection
-        [TestMethod, ExpectedException(typeof(ArgumentNullException))]
-        public async Task GearCache_AddGearCollection_Null_ArgumentNullException()
+        /*[TestMethod]
+        public void GearCache_AddGearCollection_Null_ArgumentNullException()
         {
             // Arrange
             GearCache gearCache = new GearCache();
 
             // Act
-            await gearCache.AddGearCollectionAsync(null).ConfigureAwait(false);
+            ExceptionAssert.Throws<ArgumentNullException>(async () => await gearCache.AddGearCollectionAsync(null).ConfigureAwait(false));
 
             // Assert
-        }
+        }*/
 
-        [TestMethod, Isolated]
+        [TestMethod]
         public async Task GearCache_AddGearCollection_NewCollection_Success()
         {
             // Isolate
             SQLiteAsyncConnection fakeAsyncDbConnection = MockUtil.FakeDbConnections();
-            Isolate.WhenCalled(() => fakeAsyncDbConnection.InsertAsync(null)).DoInstead(x =>
+            Isolate.WhenCalled(() => fakeAsyncDbConnection.InsertWithChildrenAsync(null)).DoInstead(x =>
                 {
-                    ((GearCollection)x.Parameters[0]).GearCollectionId = 1;
+                    ((GearCollection)x.Parameters[1]).GearCollectionId = 1;
                     return Task.FromResult(1);
                 }
             );
@@ -705,20 +826,20 @@ namespace BackpackPlanner.UnitTests
 #endregion
 
 #region RemoveGearCollection
-        [TestMethod, ExpectedException(typeof(ArgumentNullException))]
-        public async Task GearCache_RemoveGearCollection_Null_ArgumentNullException()
+        [TestMethod]
+        public void GearCache_RemoveGearCollection_Null_ArgumentNullException()
         {
             // Arrange
             GearCache gearCache = new GearCache();
 
             // Act
-            await gearCache.RemoveGearCollectionAsync(null).ConfigureAwait(false);
 
             // Assert
+            Assert.ThrowsAsync<ArgumentNullException>(gearCache.RemoveGearCollectionAsync(null));
         }
 
-        [TestMethod, ExpectedException(typeof(ArgumentException))]
-        public async Task GearCache_RemoveGearCollection_InvalidId_Negative_ArgumentException()
+        [TestMethod]
+        public void GearCache_RemoveGearCollection_InvalidId_Negative_ArgumentException()
         {
             // Arrange
             GearCache gearCache = new GearCache();
@@ -728,13 +849,13 @@ namespace BackpackPlanner.UnitTests
             };
 
             // Act
-            await gearCache.RemoveGearCollectionAsync(gearCollection).ConfigureAwait(false);
+            Assert.ThrowsAsync<ArgumentException>(gearCache.RemoveGearCollectionAsync(gearCollection));
 
             // Assert
         }
 
-        [TestMethod, ExpectedException(typeof(ArgumentException))]
-        public async Task GearCache_RemoveGearCollection_InvalidId_Zero_ArgumentException()
+        [TestMethod]
+        public void GearCache_RemoveGearCollection_InvalidId_Zero_ArgumentException()
         {
             // Arrange
             GearCache gearCache = new GearCache();
@@ -744,19 +865,19 @@ namespace BackpackPlanner.UnitTests
             };
 
             // Act
-            await gearCache.RemoveGearCollectionAsync(gearCollection).ConfigureAwait(false);
+            Assert.ThrowsAsync<ArgumentException>(gearCache.RemoveGearCollectionAsync(gearCollection));
 
             // Assert
         }
 
-        [TestMethod, Isolated]
+        [TestMethod]
         public async Task GearCache_RemoveGearCollection_Success()
         {
             // Isolate
             SQLiteAsyncConnection fakeAsyncDbConnection = MockUtil.FakeDbConnections();
-            Isolate.WhenCalled(() => fakeAsyncDbConnection.InsertAsync(null)).DoInstead(x =>
+            Isolate.WhenCalled(() => fakeAsyncDbConnection.InsertWithChildrenAsync(null)).DoInstead(x =>
                 {
-                    ((GearCollection)x.Parameters[0]).GearCollectionId = 1;
+                    ((GearCollection)x.Parameters[1]).GearCollectionId = 1;
                     return Task.FromResult(1);
                 }
             );
@@ -779,6 +900,15 @@ namespace BackpackPlanner.UnitTests
         [TestMethod]
         public async Task GearCache_RemoveAllGearCollections_Empty_Success()
         {
+            // Isolate
+            SQLiteAsyncConnection fakeAsyncDbConnection = MockUtil.FakeDbConnections();
+            Isolate.WhenCalled(() => fakeAsyncDbConnection.InsertWithChildrenAsync(null)).DoInstead(x =>
+                {
+                    ((GearCollection)x.Parameters[0]).GearCollectionId = 1;
+                    return Task.FromResult(1);
+                }
+            );
+
             // Arrange
             GearCache gearCache = new GearCache();
 
@@ -792,6 +922,15 @@ namespace BackpackPlanner.UnitTests
         [TestMethod]
         public async Task GearCache_RemoveAllGearCollections_Success()
         {
+            // Isolate
+            SQLiteAsyncConnection fakeAsyncDbConnection = MockUtil.FakeDbConnections();
+            Isolate.WhenCalled(() => fakeAsyncDbConnection.InsertWithChildrenAsync(null)).DoInstead(x =>
+                {
+                    ((GearCollection)x.Parameters[1]).GearCollectionId = 1;
+                    return Task.FromResult(1);
+                }
+            );
+
             // Arrange
             GearCache gearCache = new GearCache();
 

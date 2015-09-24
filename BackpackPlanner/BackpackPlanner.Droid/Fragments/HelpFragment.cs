@@ -19,12 +19,16 @@ using Android.Util;
 using Android.Views;
 using Android.Widget;
 
+using EnergonSoftware.BackpackPlanner.Logging;
+
 using HockeyApp;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 {
     public class HelpFragment : BaseFragment
     {
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(HelpFragment));
+
         protected override int LayoutResource => Resource.Layout.fragment_help;
 
         protected override int TitleResource => Resource.String.title_help;
@@ -37,7 +41,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
             Button buttonFeedback = view.FindViewById<Button>(Resource.Id.button_feedback);
             buttonFeedback.Click += (sender, args) => {
-                /*Log.Debug(MainActivity.LogTag, "Showing feedback activity");
+                /*Logger.Debug("Showing feedback activity");
                 FeedbackManager.ShowFeedbackActivity(Activity);*/
             };
         }

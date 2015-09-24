@@ -14,6 +14,9 @@
    limitations under the License.
 */
 
+using System;
+using System.Collections.Generic;
+
 namespace EnergonSoftware.BackpackPlanner.Logging
 {
     /// <summary>
@@ -47,5 +50,59 @@ namespace EnergonSoftware.BackpackPlanner.Logging
         /// </summary>
         /// <param name="message">The message.</param>
         void Error(string message);
+    }
+
+    /// <summary>
+    /// log4net-style logger class
+    /// </summary>
+    public sealed class CustomLogger : ILogger
+    {
+        private static readonly object CacheLock = new object();
+        
+        private static readonly Dictionary<Type, ILogger> LoggerCache = new Dictionary<Type, ILogger>();
+
+        /// <summary>
+        /// Gets a logger for the given type.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>A logger for the given type</returns>
+        public static ILogger GetLogger(Type type)
+        {
+            lock(CacheLock) {
+                ILogger logger;
+                if(LoggerCache.TryGetValue(type, out logger)) {
+                    return logger;
+                }
+
+                logger = new CustomLogger();
+                LoggerCache.Add(type, logger);
+                return logger;
+            }
+        }
+
+        private static string BuildMessage(string level, string message)
+        {
+            return $"{DateTime.Now} {level}: {message}";
+        }
+
+        public void Debug(string message)
+        {
+            BackpackPlannerState.Instance.SystemLogger.Debug(BuildMessage("DEBUG", message));
+        }
+
+        public void Info(string message)
+        {
+            BackpackPlannerState.Instance.SystemLogger.Debug(BuildMessage("INFO", message));
+        }
+
+        public void Warn(string message)
+        {
+            BackpackPlannerState.Instance.SystemLogger.Debug(BuildMessage("WARNING", message));
+        }
+
+        public void Error(string message)
+        {
+            BackpackPlannerState.Instance.SystemLogger.Debug(BuildMessage("ERROR", message));
+        }
     }
 }

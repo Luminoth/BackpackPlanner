@@ -35,6 +35,7 @@ using EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans;
 using EnergonSoftware.BackpackPlanner.Droid.Logging;
 using EnergonSoftware.BackpackPlanner.Droid.Util;
+using EnergonSoftware.BackpackPlanner.Logging;
 using EnergonSoftware.BackpackPlanner.Models.Personal;
 using EnergonSoftware.BackpackPlanner.Units;
 
@@ -50,6 +51,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
         private const string HockeyAppAppId = "32a2c37622529305ec763b7e2c224deb";
 
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(MainActivity));
+
 #region Controls
         private Android.Support.V7.Widget.Toolbar _toolbar;
         private readonly NavigationDrawerManager _navigationDrawerManager = new NavigationDrawerManager();
@@ -60,7 +63,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			base.OnCreate(savedInstanceState);
 			SetContentView(Resource.Layout.activity_main);
 
-            BackpackPlannerState.Instance.Logger = new DroidLogger();
+            BackpackPlannerState.Instance.SystemLogger = new DroidLogger();
 
             InitHockeyApp();
 
@@ -146,7 +149,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
 	    private void InitHockeyApp()
         {
-            Log.Info(LogTag, "Initializing HockeyApp...");
+            Logger.Info("Initializing HockeyApp...");
 
             // Register the crash manager before Initializing the trace writer
             HockeyApp.CrashManager.Register(this, HockeyAppAppId); 
@@ -244,8 +247,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
         private void SelectDrawerItem(IMenuItem menuItem)
         {
-            Log.Debug(LogTag, "DrawerItem selected, ItemId=" + menuItem.ItemId + ", GroupId=" + menuItem.GroupId);
-
             // this solves the problem of checking more than one item
             // in the list across groups even when checkableBehavior is single on each group
             // TODO: the problem with this solution is that it requires an update
@@ -259,37 +260,29 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             switch(menuItem.ItemId)
             {
             case Resource.Id.nav_gear_items_fragment:
-                Log.Info(LogTag, "Gear Items selected");
                 fragment = new GearItemsFragment();
                 break;
             case Resource.Id.nav_gear_systems_fragment:
-                Log.Info(LogTag, "Gear Systems");
                 fragment = new GearSystemsFragment();
                 break;
             case Resource.Id.nav_gear_collections_fragment:
-                Log.Info(LogTag, "Gear Collections selected");
                 fragment = new GearCollectionsFragment();
                 break;
             case Resource.Id.nav_meals_fragment:
-                Log.Info(LogTag, "Meals selected");
                 fragment = new MealsFragment();
                 break;
             case Resource.Id.nav_trip_itineraries_fragment:
-                Log.Info(LogTag, "Trip Itineraries selected");
                 fragment = new TripItinerariesFragment();
                 break;
             case Resource.Id.nav_trip_plans_fragment:
-                Log.Info(LogTag, "Trip Plans selected");
                 fragment = new TripPlansFragment();
                 break;
             case Resource.Id.nav_settings_fragment:
 // TODO: when the Xamarin Support Library Preference v7 is out
 // replace this activity with the PreferenceFragment
-                Log.Info(LogTag, "Settings selected");
                 StartActivity(typeof(SettingsActivity));
                 return;
             case Resource.Id.nav_help_fragment:
-                Log.Info(LogTag, "Help selected");
                 fragment = new HelpFragment();
                 break;
             }

@@ -17,6 +17,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+using EnergonSoftware.BackpackPlanner.Logging;
 using EnergonSoftware.BackpackPlanner.Models.Meals;
 
 using SQLite.Net.Async;
@@ -32,6 +33,8 @@ namespace EnergonSoftware.BackpackPlanner.Cache
     /// </remarks>
     public sealed class MealCache
     {
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(MealCache));
+
         /// <summary>
         /// Initializes the meal tables in the database.
         /// </summary>
@@ -43,13 +46,17 @@ namespace EnergonSoftware.BackpackPlanner.Cache
         /// </remarks>
         public static async Task InitDatabaseAsync(SQLiteAsyncConnection asyncDbConnection, int oldVersion, int newVersion)
         {
+            if(null == asyncDbConnection) {
+                throw new ArgumentNullException(nameof(asyncDbConnection));
+            }
+            
             if(oldVersion >= newVersion) {
-                BackpackPlannerState.Instance.Logger.Debug("Database versions match, nothing to do for meal cache update...");
+                Logger.Debug("Database versions match, nothing to do for meal cache update...");
                 return;
             }
 
             if(oldVersion < 2 && newVersion >= 2) {
-                BackpackPlannerState.Instance.Logger.Debug("Creating meal cache tables...");
+                Logger.Debug("Creating meal cache tables...");
                 await Meal.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
             }
         }
@@ -68,7 +75,7 @@ namespace EnergonSoftware.BackpackPlanner.Cache
         {
             _mealCache.Clear();
 
-            BackpackPlannerState.Instance.Logger.Debug("Loading meal cache...");
+            Logger.Debug("Loading meal cache...");
             await BackpackPlannerState.Instance.DatabaseConnection.Lock.WaitAsync().ConfigureAwait(false);
             try {
                 var meals = await Meal.GetMealsAsync(BackpackPlannerState.Instance.DatabaseConnection.AsyncConnection).ConfigureAwait(false);

@@ -37,6 +37,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Actions\Action.cs" />
     <Compile Include="BackpackPlannerState.cs" />
     <Compile Include="Cache\MealCache.cs" />
     <Compile Include="Cache\TripCache.cs" />

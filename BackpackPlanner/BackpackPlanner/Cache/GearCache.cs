@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using EnergonSoftware.BackpackPlanner.Logging;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
@@ -36,6 +37,8 @@ namespace EnergonSoftware.BackpackPlanner.Cache
     /// </remarks>
     public sealed class GearCache
     {
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(GearCache));
+
         /// <summary>
         /// Initializes the gear state tables in the database.
         /// </summary>
@@ -47,13 +50,17 @@ namespace EnergonSoftware.BackpackPlanner.Cache
         /// </remarks>
         public static async Task InitDatabaseAsync(SQLiteAsyncConnection asyncDbConnection, int oldVersion, int newVersion)
         {
+            if(null == asyncDbConnection) {
+                throw new ArgumentNullException(nameof(asyncDbConnection));
+            }
+
             if(oldVersion >= newVersion) {
-                BackpackPlannerState.Instance.Logger.Debug("Database versions match, nothing to do for gear cache update...");
+                Logger.Debug("Database versions match, nothing to do for gear cache update...");
                 return;
             }
 
             if(oldVersion < 1 && newVersion >= 1) {
-                BackpackPlannerState.Instance.Logger.Debug("Creating gear cache tables...");
+                Logger.Debug("Creating gear cache tables...");
                 await GearItem.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
                 await GearSystem.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
                 await GearCollection.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
@@ -93,7 +100,7 @@ namespace EnergonSoftware.BackpackPlanner.Cache
         {
             _gearItemCache.Clear();
 
-            BackpackPlannerState.Instance.Logger.Debug("Loading gear item cache...");
+            Logger.Debug("Loading gear item cache...");
             await BackpackPlannerState.Instance.DatabaseConnection.Lock.WaitAsync().ConfigureAwait(false);
             try {
                 var gearItems = await GearItem.GetGearItemsAsync(BackpackPlannerState.Instance.DatabaseConnection.AsyncConnection).ConfigureAwait(false);
@@ -201,7 +208,7 @@ namespace EnergonSoftware.BackpackPlanner.Cache
         {
             _gearSystemCache.Clear();
 
-            BackpackPlannerState.Instance.Logger.Debug("Loading gear system cache...");
+            Logger.Debug("Loading gear system cache...");
             await BackpackPlannerState.Instance.DatabaseConnection.Lock.WaitAsync().ConfigureAwait(false);
             try {
                 var gearSystems = await GearSystem.GetGearSystemsAsync(BackpackPlannerState.Instance.DatabaseConnection.AsyncConnection).ConfigureAwait(false);
@@ -309,7 +316,7 @@ namespace EnergonSoftware.BackpackPlanner.Cache
         {
             _gearCollectionCache.Clear();
 
-            BackpackPlannerState.Instance.Logger.Debug("Loading gear collection cache...");
+            Logger.Debug("Loading gear collection cache...");
             await BackpackPlannerState.Instance.DatabaseConnection.Lock.WaitAsync().ConfigureAwait(false);
             try {
                 var gearCollections = await GearCollection.GetGearCollectionsAsync(BackpackPlannerState.Instance.DatabaseConnection.AsyncConnection).ConfigureAwait(false);
