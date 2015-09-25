@@ -23,7 +23,7 @@ using EnergonSoftware.BackpackPlanner.Models.Meals;
 
 using SQLite.Net.Async;
 
-namespace EnergonSoftware.BackpackPlanner.Cache
+namespace EnergonSoftware.BackpackPlanner.Cache.Meals
 {
     /// <summary>
     /// Caches meals
@@ -32,7 +32,7 @@ namespace EnergonSoftware.BackpackPlanner.Cache
     /// Fow now this is an all or nothing cache. Later on, to conserve resources,
     /// it might start allowing cached items to decay
     /// </remarks>
-    public sealed class MealCache
+    public sealed class MealCache : ItemCache<Meal>
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(MealCache));
 
@@ -62,30 +62,29 @@ namespace EnergonSoftware.BackpackPlanner.Cache
             }
         }
 
-        private readonly HashSet<Meal> _mealCache = new HashSet<Meal>();
-
-        /// <summary>
-        /// Gets the meal count.
-        /// </summary>
-        /// <value>
-        /// The meal count.
-        /// </value>
-        public int MealCount => _mealCache.Count;
-
-        public async Task LoadMealsAsync()
+        protected async override Task<List<Meal>> GetItemsAsync(SQLiteAsyncConnection dbConnection)
         {
-            _mealCache.Clear();
+            return await Meal.GetMealsAsync(dbConnection).ConfigureAwait(false);
+        }
 
-            Logger.Debug("Loading meal cache...");
-            await BackpackPlannerState.Instance.DatabaseConnection.Lock.WaitAsync().ConfigureAwait(false);
-            try {
-                var meals = await Meal.GetMealsAsync(BackpackPlannerState.Instance.DatabaseConnection.AsyncConnection).ConfigureAwait(false);
-                foreach(Meal meal in meals) {
-                    //await AddMealAsync(meal).ConfigureAwait(false);
-                }
-            } finally {
-                BackpackPlannerState.Instance.DatabaseConnection.Lock.Release();
-            }
+        protected async override Task<Meal> GetItemAsync(SQLiteAsyncConnection dbConnection, int mealId)
+        {
+            return await Meal.GetMealAsync(dbConnection, mealId).ConfigureAwait(false);
+        }
+
+        protected async override Task SaveItemAsync(SQLiteAsyncConnection dbConnection, Meal meal)
+        {
+            await Meal.SaveMealAsync(dbConnection, meal).ConfigureAwait(false);
+        }
+
+        protected async override Task DeleteItemAsync(SQLiteAsyncConnection dbConnection, Meal meal)
+        {
+            await Meal.DeleteMealAsync(dbConnection, meal).ConfigureAwait(false);
+        }
+
+        protected async override Task DeleteAllItemsAsync(SQLiteAsyncConnection dbConnection)
+        {
+            await Meal.DeleteAllMealsAsync(dbConnection).ConfigureAwait(false);
         }
     }
 }

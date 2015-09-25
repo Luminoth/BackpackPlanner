@@ -31,7 +31,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Collections
     /// <summary>
     /// 
     /// </summary>
-    public sealed class GearCollection
+    public sealed class GearCollection : IItem
     {
         /// <summary>
         /// Creates the database tables.
@@ -73,6 +73,9 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Collections
         {
             return await asyncDbConnection.DeleteAllAsync<GearCollection>().ConfigureAwait(false);
         }
+
+        [Ignore]
+        public int Id { get { return GearCollectionId; } set { GearCollectionId = value; } }
 
         /// <summary>
         /// Gets or sets the gear collection identifier.

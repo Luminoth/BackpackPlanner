@@ -24,7 +24,7 @@ using SQLite.Net.Async;
 
 using TypeMock.ArrangeActAssert;
 
-namespace BackpackPlanner.UnitTests.Models.Gear.Systems
+namespace EnergonSoftware.BackpackPlanner.UnitTests.Models.Gear.Systems
 {
     [TestClass]
     public class GearSystemGearItemTests

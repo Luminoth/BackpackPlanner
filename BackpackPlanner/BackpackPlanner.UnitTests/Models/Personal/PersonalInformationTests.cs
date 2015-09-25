@@ -18,7 +18,7 @@ using EnergonSoftware.BackpackPlanner.Models.Personal;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace BackpackPlanner.UnitTests.Models.Personal
+namespace EnergonSoftware.BackpackPlanner.UnitTests.Models.Personal
 {
     [TestClass]
     public class PersonalInformationTests

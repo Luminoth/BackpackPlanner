@@ -30,7 +30,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Meals
     /// <summary>
     /// 
     /// </summary>
-    public sealed class Meal
+    public sealed class Meal : IItem
     {
         /// <summary>
         /// Creates the database tables.
@@ -51,7 +51,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Meals
             return await asyncDbConnection.GetWithChildrenAsync<Meal>(mealId).ConfigureAwait(false);
         }
 
-        public static async Task SaveMealsAsync(SQLiteAsyncConnection asyncDbConnection, Meal meal)
+        public static async Task SaveMealAsync(SQLiteAsyncConnection asyncDbConnection, Meal meal)
         {
             if(meal.MealId <= 0) {
                 await asyncDbConnection.InsertWithChildrenAsync(meal).ConfigureAwait(false);
@@ -69,6 +69,9 @@ namespace EnergonSoftware.BackpackPlanner.Models.Meals
         {
             return await asyncDbConnection.DeleteAllAsync<Meal>().ConfigureAwait(false);
         }
+
+        [Ignore]
+        public int Id { get { return MealId; } set { MealId = value; } }
 
         /// <summary>
         /// Gets or sets the meal identifier.

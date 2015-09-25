@@ -21,5 +21,14 @@ namespace EnergonSoftware.BackpackPlanner.Actions
     /// </summary>
     public interface IAction
     {
+        /// <summary>
+        /// Does the action.
+        /// </summary>
+        void DoAction();
+
+        /// <summary>
+        /// Undoes the action.
+        /// </summary>
+        void UndoAction();
     }
 }

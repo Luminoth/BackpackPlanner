@@ -29,7 +29,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries
     /// <summary>
     /// 
     /// </summary>
-    public sealed class TripItinerary
+    public sealed class TripItinerary : IItem
     {
         /// <summary>
         /// Creates the database tables.
@@ -68,6 +68,9 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries
         {
             return await asyncDbConnection.DeleteAllAsync<TripItinerary>().ConfigureAwait(false);
         }
+
+        [Ignore]
+        public int Id { get { return TripItineraryId; } set { TripItineraryId = value; } }
 
         /// <summary>
         /// Gets or sets the trip itinerary identifier.

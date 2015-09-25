@@ -14,12 +14,19 @@
    limitations under the License.
 */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace EnergonSoftware.BackpackPlanner.UnitTests
+namespace EnergonSoftware.BackpackPlanner.Models
 {
-    [TestClass]
-    public class BackpackPlannerSettingsTests
+    /// <summary>
+    /// 
+    /// </summary>
+    public interface IItem
     {
+        /// <summary>
+        /// Gets the item identifier.
+        /// </summary>
+        /// <value>
+        /// The item identifier.
+        /// </value>
+        int Id { get; set; }
     }
 }

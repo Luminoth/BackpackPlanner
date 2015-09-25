@@ -14,12 +14,30 @@
    limitations under the License.
 */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using EnergonSoftware.BackpackPlanner.Models;
 
-namespace EnergonSoftware.BackpackPlanner.UnitTests
+namespace EnergonSoftware.BackpackPlanner.Actions
 {
-    [TestClass]
-    public class BackpackPlannerSettingsTests
+    /// <summary>
+    /// Deletes an item.
+    /// </summary>
+    /// <typeparam name="T">The tyep of item to delete</typeparam>
+    public sealed class DeleteItemAction<T> : IAction where T: IItem
     {
+        /// <summary>
+        /// Gets or sets the item to delete.
+        /// </summary>
+        /// <value>
+        /// The item to delete.
+        /// </value>
+        public T Item { get; set; }
+
+        public void DoAction()
+        {
+        }
+
+        public void UndoAction()
+        {
+        }
     }
 }

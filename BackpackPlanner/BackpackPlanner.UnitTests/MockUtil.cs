@@ -17,8 +17,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-using EnergonSoftware.BackpackPlanner;
-
 using SQLite.Net;
 using SQLite.Net.Async;
 
@@ -26,7 +24,7 @@ using EnergonSoftware.BackpackPlanner.Database;
 
 using TypeMock.ArrangeActAssert;
 
-namespace BackpackPlanner.UnitTests
+namespace EnergonSoftware.BackpackPlanner.UnitTests
 {
     public static class MockUtil
     {

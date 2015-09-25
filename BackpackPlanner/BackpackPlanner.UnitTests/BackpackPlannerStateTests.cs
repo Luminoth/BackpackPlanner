@@ -16,7 +16,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace BackpackPlanner.UnitTests
+namespace EnergonSoftware.BackpackPlanner.UnitTests
 {
     [TestClass]
     public class BackpackPlannerStateTests

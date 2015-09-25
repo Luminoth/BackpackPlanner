@@ -38,12 +38,18 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Actions\Action.cs" />
+    <Compile Include="Actions\DeleteItemAction.cs" />
     <Compile Include="BackpackPlannerState.cs" />
-    <Compile Include="Cache\MealCache.cs" />
-    <Compile Include="Cache\TripCache.cs" />
+    <Compile Include="Cache\Gear\GearCollectionCache.cs" />
+    <Compile Include="Cache\Gear\GearItemCache.cs" />
+    <Compile Include="Cache\Gear\GearSystemCache.cs" />
+    <Compile Include="Cache\ItemCache.cs" />
+    <Compile Include="Cache\Meals\MealCache.cs" />
+    <Compile Include="Cache\Trips\TripItineraryCache.cs" />
+    <Compile Include="Cache\Trips\TripPlanCache.cs" />
     <Compile Include="Database\DatabaseConnection.cs" />
+    <Compile Include="Models\Item.cs" />
     <Compile Include="Units\Currency.cs" />
-    <Compile Include="Cache\GearCache.cs" />
     <Compile Include="BackpackPlannerSettings.cs" />
     <Compile Include="Logging\DebugLogger.cs" />
     <Compile Include="Logging\Logger.cs" />
@@ -101,6 +107,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Doxyfile" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

@@ -8,7 +8,7 @@
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>EnergonSoftware.BackpackPlanner.Windows</RootNamespace>
-    <AssemblyName>EnergonSoftware.BackpackPlanner.Windows</AssemblyName>
+    <AssemblyName>BackpackPlanner.Windows</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>

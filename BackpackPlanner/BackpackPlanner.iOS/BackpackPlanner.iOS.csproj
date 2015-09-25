@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>EnergonSoftware.BackpackPlanner.iOS</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>BackpackPlanneriOS</AssemblyName>
+    <AssemblyName>BackpackPlanner.iOS</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>

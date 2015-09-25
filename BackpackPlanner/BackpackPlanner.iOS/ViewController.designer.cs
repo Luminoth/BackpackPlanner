@@ -5,7 +5,7 @@
 //
 using Foundation;
 
-namespace BackpackPlanner.iOS
+namespace EnergonSoftware.BackpackPlanner.iOS
 {
 	[Register ("ViewController")]
 	partial class ViewController
