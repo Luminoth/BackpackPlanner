@@ -21,10 +21,11 @@ using Android.Views;
 using Android.Widget;
 
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
+using EnergonSoftware.BackpackPlanner.Models;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 {
-    public abstract class BaseListAdapter<T> : Android.Support.V7.Widget.RecyclerView.Adapter
+    public abstract class BaseListAdapter<T> : Android.Support.V7.Widget.RecyclerView.Adapter where T: DatabaseItem
     {
         protected abstract class BaseViewHolder : Android.Support.V7.Widget.RecyclerView.ViewHolder
         {

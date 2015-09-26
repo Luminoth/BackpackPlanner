@@ -14,8 +14,6 @@
    limitations under the License.
 */
 
-using Android.OS;
-
 using EnergonSoftware.BackpackPlanner.Droid.Adapters;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Systems;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
@@ -46,74 +44,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
         protected override BaseListAdapter<GearSystem> CreateAdapter()
         {
             return new GearSystemListAdapter(this, ListItems);
-        }
-
-        public override void OnCreate(Bundle savedInstanceState)
-        {
-            base.OnCreate(savedInstanceState);
-
-            // TODO
-#region Test Items
-            ListItems.Add(new GearSystem
-                {
-                    Name = "One"
-                }
-            );
-
-            ListItems.Add(new GearSystem
-                {
-                    Name = "Two"
-                }
-            );
-
-            ListItems.Add(new GearSystem
-                {
-                    Name = "Three"
-                }
-            );
-
-            ListItems.Add(new GearSystem
-                {
-                    Name = "Four"
-                }
-            );
-
-            ListItems.Add(new GearSystem
-                {
-                    Name = "Five"
-                }
-            );
-
-            ListItems.Add(new GearSystem
-                {
-                    Name = "Six"
-                }
-            );
-
-            ListItems.Add(new GearSystem
-                {
-                    Name = "Seven"
-                }
-            );
-
-            ListItems.Add(new GearSystem
-                {
-                    Name = "Eight"
-                }
-            );
-
-            ListItems.Add(new GearSystem
-                {
-                    Name = "Nine"
-                }
-            );
-
-            ListItems.Add(new GearSystem
-                {
-                    Name = "Ten"
-                }
-            );
-#endregion
         }
     }
 }

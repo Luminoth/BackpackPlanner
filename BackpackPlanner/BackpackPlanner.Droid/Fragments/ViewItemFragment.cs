@@ -18,9 +18,11 @@ using Android.OS;
 using Android.Views;
 using Android.Widget;
 
+using EnergonSoftware.BackpackPlanner.Models;
+
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 {
-    public abstract class ViewItemFragment<T> : DataFragment
+    public abstract class ViewItemFragment<T> : DataFragment where T: DatabaseItem
     {
         protected abstract int SaveItemResource { get; }
 
@@ -36,7 +38,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                     return;
                 }
 
-                // TODO: save the item!
+                //DatabaseItem.SaveItemAsync(Item).Wait();
 
                 Activity.SupportFragmentManager.PopBackStack();
             };

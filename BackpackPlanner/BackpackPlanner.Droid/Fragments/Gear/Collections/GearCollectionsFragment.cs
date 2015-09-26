@@ -14,8 +14,6 @@
    limitations under the License.
 */
 
-using Android.OS;
-
 using EnergonSoftware.BackpackPlanner.Droid.Adapters;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Collections;
@@ -46,74 +44,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
         protected override BaseListAdapter<GearCollection> CreateAdapter()
         {
             return new GearCollectionListAdapter(this, ListItems);
-        }
-
-        public override void OnCreate(Bundle savedInstanceState)
-        {
-            base.OnCreate(savedInstanceState);
-
-            // TODO
-#region Test Items
-            ListItems.Add(new GearCollection
-                {
-                    Name = "One"
-                }
-            );
-
-            ListItems.Add(new GearCollection
-                {
-                    Name = "Two"
-                }
-            );
-
-            ListItems.Add(new GearCollection
-                {
-                    Name = "Three"
-                }
-            );
-
-            ListItems.Add(new GearCollection
-                {
-                    Name = "Four"
-                }
-            );
-
-            ListItems.Add(new GearCollection
-                {
-                    Name = "Five"
-                }
-            );
-
-            ListItems.Add(new GearCollection
-                {
-                    Name = "Six"
-                }
-            );
-
-            ListItems.Add(new GearCollection
-                {
-                    Name = "Seven"
-                }
-            );
-
-            ListItems.Add(new GearCollection
-                {
-                    Name = "Eight"
-                }
-            );
-
-            ListItems.Add(new GearCollection
-                {
-                    Name = "Nine"
-                }
-            );
-
-            ListItems.Add(new GearCollection
-                {
-                    Name = "Ten"
-                }
-            );
-#endregion
         }
     }
 }

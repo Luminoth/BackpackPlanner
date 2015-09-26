@@ -21,13 +21,14 @@ using Android.Views;
 using Android.Widget;
 
 using EnergonSoftware.BackpackPlanner.Droid.Adapters;
+using EnergonSoftware.BackpackPlanner.Models;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 {
     /// <summary>
     /// Helper for the data listing fragments
     /// </summary>
-    public abstract class ListItemsFragment<T> : RecyclerFragment
+    public abstract class ListItemsFragment<T> : RecyclerFragment where T: DatabaseItem
     {
         protected abstract int NoItemsResource { get; }
 
@@ -47,9 +48,19 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         protected abstract BaseListAdapter<T> CreateAdapter();
 
+        public override void OnCreate(Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);
+
+            ListItems.AddRange(DatabaseItem.GetItemsAsync<T>().Result);
+        }
+
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
             base.OnViewCreated(view, savedInstanceState);
+
+            Adapter = CreateAdapter();
+            Layout.SetAdapter(Adapter);
 
             Android.Support.Design.Widget.FloatingActionButton addItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(AddItemResource);
             addItemButton.Click += (sender, args) => {
@@ -59,11 +70,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             if(ListItems.Count > 0) {
                 TextView noItemsTextView = view.FindViewById<TextView>(NoItemsResource);
                 noItemsTextView.Visibility = ViewStates.Gone;
-
-                Adapter = CreateAdapter();
-                Layout.SetAdapter(Adapter);
-
-FilterView.QueryTextChange += Adapter.FilterItems;
 
                 SortItemsSpinner = view.FindViewById<Spinner>(SortItemsResource);
                 if(null != SortItemsSpinner) {
@@ -75,11 +81,11 @@ FilterView.QueryTextChange += Adapter.FilterItems;
             }
         }
 
-        /*public override void OnCreateOptionsMenu(IMenu menu, MenuInflater inflater)
+        public override void OnCreateOptionsMenu(IMenu menu, MenuInflater inflater)
         {
             base.OnCreateOptionsMenu(menu, inflater);
 
             FilterView.QueryTextChange += Adapter.FilterItems;
-        }*/
+        }
     }
 }

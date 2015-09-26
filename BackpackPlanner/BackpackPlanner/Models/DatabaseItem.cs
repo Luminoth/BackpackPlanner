@@ -63,6 +63,29 @@ namespace EnergonSoftware.BackpackPlanner.Models
             }
         }
 
+        public static async Task InsertItemsAsync<T>(List<T> items) where T: DatabaseItem
+        {
+            await BackpackPlannerState.Instance.DatabaseConnection.Lock.WaitAsync().ConfigureAwait(false);
+            try {
+                Logger.Debug($"Inserting {items.Count} new {typeof(T)}s into the database...");
+                await BackpackPlannerState.Instance.DatabaseConnection.AsyncConnection.InsertAllWithChildrenAsync(items).ConfigureAwait(false);
+            } finally {
+                BackpackPlannerState.Instance.DatabaseConnection.Lock.Release();
+            }
+        }
+
+        // TODO: no UpdateAllWithChildrenAsync() method?
+        /*public static async Task UpdateItemsAsync<T>(List<T> items) where T: DatabaseItem
+        {
+            await BackpackPlannerState.Instance.DatabaseConnection.Lock.WaitAsync().ConfigureAwait(false);
+            try {
+                Logger.Debug($"Updating {items.Count} new {typeof(T)}s into the database...");
+                await BackpackPlannerState.Instance.DatabaseConnection.AsyncConnection.UpdateAllWithChildrenAsync(items).ConfigureAwait(false);
+            } finally {
+                BackpackPlannerState.Instance.DatabaseConnection.Lock.Release();
+            }
+        }*/
+
         /// <summary>
         /// Saves an item in the database.
         /// </summary>

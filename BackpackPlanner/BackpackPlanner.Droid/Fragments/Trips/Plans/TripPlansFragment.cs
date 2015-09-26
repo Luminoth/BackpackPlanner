@@ -14,8 +14,6 @@
    limitations under the License.
 */
 
-using Android.OS;
-
 using EnergonSoftware.BackpackPlanner.Droid.Adapters;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Plans;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
@@ -46,74 +44,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
         protected override BaseListAdapter<TripPlan> CreateAdapter()
         {
             return new TripPlanListAdapter(this, ListItems);
-        }
-
-        public override void OnCreate(Bundle savedInstanceState)
-        {
-            base.OnCreate(savedInstanceState);
-
-            // TODO
-#region Test Items
-            ListItems.Add(new TripPlan
-                {
-                    Name = "One"
-                }
-            );
-
-            ListItems.Add(new TripPlan
-                {
-                    Name = "Two"
-                }
-            );
-
-            ListItems.Add(new TripPlan
-                {
-                    Name = "Three"
-                }
-            );
-
-            ListItems.Add(new TripPlan
-                {
-                    Name = "Four"
-                }
-            );
-
-            ListItems.Add(new TripPlan
-                {
-                    Name = "Five"
-                }
-            );
-
-            ListItems.Add(new TripPlan
-                {
-                    Name = "Six"
-                }
-            );
-
-            ListItems.Add(new TripPlan
-                {
-                    Name = "Seven"
-                }
-            );
-
-            ListItems.Add(new TripPlan
-                {
-                    Name = "Eight"
-                }
-            );
-
-            ListItems.Add(new TripPlan
-                {
-                    Name = "Nine"
-                }
-            );
-
-            ListItems.Add(new TripPlan
-                {
-                    Name = "Ten"
-                }
-            );
-#endregion
         }
     }
 }

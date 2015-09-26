@@ -23,7 +23,6 @@ using Android.Content.Res;
 using Android.OS;
 using Android.Preferences;
 using Android.Runtime;
-using Android.Util;
 using Android.Views;
 
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;

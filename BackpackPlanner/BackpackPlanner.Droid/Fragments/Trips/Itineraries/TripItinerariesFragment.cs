@@ -14,8 +14,6 @@
    limitations under the License.
 */
 
-using Android.OS;
-
 using EnergonSoftware.BackpackPlanner.Droid.Adapters;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Itineraries;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries;
@@ -46,74 +44,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries
         protected override BaseListAdapter<TripItinerary> CreateAdapter()
         {
             return new TripItineraryListAdapter(this, ListItems);
-        }
-
-        public override void OnCreate(Bundle savedInstanceState)
-        {
-            base.OnCreate(savedInstanceState);
-
-            // TODO
-#region Test Items
-            ListItems.Add(new TripItinerary
-                {
-                    Name = "One"
-                }
-            );
-
-            ListItems.Add(new TripItinerary
-                {
-                    Name = "Two"
-                }
-            );
-
-            ListItems.Add(new TripItinerary
-                {
-                    Name = "Three"
-                }
-            );
-
-            ListItems.Add(new TripItinerary
-                {
-                    Name = "Four"
-                }
-            );
-
-            ListItems.Add(new TripItinerary
-                {
-                    Name = "Five"
-                }
-            );
-
-            ListItems.Add(new TripItinerary
-                {
-                    Name = "Six"
-                }
-            );
-
-            ListItems.Add(new TripItinerary
-                {
-                    Name = "Seven"
-                }
-            );
-
-            ListItems.Add(new TripItinerary
-                {
-                    Name = "Eight"
-                }
-            );
-
-            ListItems.Add(new TripItinerary
-                {
-                    Name = "Nine"
-                }
-            );
-
-            ListItems.Add(new TripItinerary
-                {
-                    Name = "Ten"
-                }
-            );
-#endregion
         }
     }
 }
