@@ -88,13 +88,6 @@
   <ItemGroup>
     <Compile Include="BackpackPlannerSettingsTests.cs" />
     <Compile Include="BackpackPlannerStateTests.cs" />
-    <Compile Include="Cache\Gear\GearCollectionCacheTests.cs" />
-    <Compile Include="Cache\Gear\GearItemCacheTests.cs" />
-    <Compile Include="Cache\Gear\GearSystemCacheTests.cs" />
-    <Compile Include="Cache\ItemCacheTests.cs" />
-    <Compile Include="Cache\Meals\MealCacheTests.cs" />
-    <Compile Include="Cache\Trips\TripItineraryCacheTests.cs" />
-    <Compile Include="Cache\Trips\TripPlanCacheTests.cs" />
     <Compile Include="MockUtil.cs" />
     <Compile Include="Models\Gear\Collections\GearCollectionGearItemTests.cs" />
     <Compile Include="Models\Gear\Collections\GearCollectionGearSystemTests.cs" />

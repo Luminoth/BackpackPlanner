@@ -38,17 +38,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Actions\Action.cs" />
-    <Compile Include="Actions\DeleteItemAction.cs" />
+    <Compile Include="Actions\Gear\Items\DeleteGearItemAction.cs" />
     <Compile Include="BackpackPlannerState.cs" />
-    <Compile Include="Cache\Gear\GearCollectionCache.cs" />
-    <Compile Include="Cache\Gear\GearItemCache.cs" />
-    <Compile Include="Cache\Gear\GearSystemCache.cs" />
-    <Compile Include="Cache\ItemCache.cs" />
-    <Compile Include="Cache\Meals\MealCache.cs" />
-    <Compile Include="Cache\Trips\TripItineraryCache.cs" />
-    <Compile Include="Cache\Trips\TripPlanCache.cs" />
     <Compile Include="Database\DatabaseConnection.cs" />
-    <Compile Include="Models\Item.cs" />
+    <Compile Include="Models\DatabaseItem.cs" />
     <Compile Include="Units\Currency.cs" />
     <Compile Include="BackpackPlannerSettings.cs" />
     <Compile Include="Logging\DebugLogger.cs" />

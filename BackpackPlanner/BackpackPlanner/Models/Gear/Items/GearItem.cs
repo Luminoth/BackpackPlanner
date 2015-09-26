@@ -14,9 +14,11 @@
    limitations under the License.
 */
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+using EnergonSoftware.BackpackPlanner.Logging;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
@@ -25,55 +27,49 @@ using EnergonSoftware.BackpackPlanner.Units;
 using SQLite.Net.Async;
 using SQLite.Net.Attributes;
 using SQLiteNetExtensions.Attributes;
-using SQLiteNetExtensionsAsync.Extensions;
 
 namespace EnergonSoftware.BackpackPlanner.Models.Gear.Items
 {
     /// <summary>
     /// 
     /// </summary>
-    public sealed class GearItem : IItem
+    public sealed class GearItem : DatabaseItem
     {
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(GearItem));
+
         /// <summary>
-        /// Creates the database tables.
+        /// Initializes the gear item tables in the database.
         /// </summary>
         /// <param name="asyncDbConnection">The asynchronous database connection.</param>
-        public static async Task CreateTablesAsync(SQLiteAsyncConnection asyncDbConnection)
+        /// <param name="oldVersion">The old database version.</param>
+        /// <param name="newVersion">The new database version.</param>
+        /// <remarks>
+        /// The connection should be thread locked.
+        /// </remarks>
+        public static async Task InitDatabaseAsync(SQLiteAsyncConnection asyncDbConnection, int oldVersion, int newVersion)
+        {
+            if(null == asyncDbConnection) {
+                throw new ArgumentNullException(nameof(asyncDbConnection));
+            }
+
+            if(oldVersion >= newVersion) {
+                Logger.Debug("Database versions match, nothing to do for gear item tables...");
+                return;
+            }
+
+            if(oldVersion < 1 && newVersion >= 1) {
+                Logger.Debug("Creating gear item tables...");
+                await CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
+            }
+        }
+
+        private static async Task CreateTablesAsync(SQLiteAsyncConnection asyncDbConnection)
         {
             await asyncDbConnection.CreateTableAsync<GearItem>().ConfigureAwait(false);
         }
 
-        public static async Task<List<GearItem>> GetGearItemsAsync(SQLiteAsyncConnection asyncDbConnection)
-        {
-            return await asyncDbConnection.GetAllWithChildrenAsync<GearItem>().ConfigureAwait(false);
-        }
-
-        public static async Task<GearItem> GetGearItemAsync(SQLiteAsyncConnection asyncDbConnection, int gearItemId)
-        {
-            return await asyncDbConnection.GetWithChildrenAsync<GearItem>(gearItemId).ConfigureAwait(false);
-        }
-
-        public static async Task SaveGearItemAsync(SQLiteAsyncConnection asyncDbConnection, GearItem gearItem)
-        {
-            if(gearItem.GearItemId <= 0) {
-                await asyncDbConnection.InsertWithChildrenAsync(gearItem).ConfigureAwait(false);
-            } else {
-                await asyncDbConnection.UpdateWithChildrenAsync(gearItem).ConfigureAwait(false);
-            }
-        }
-
-        public static async Task<int> DeleteGearItemAsync(SQLiteAsyncConnection asyncDbConnection, GearItem gearItem)
-        {
-            return await asyncDbConnection.DeleteAsync(gearItem).ConfigureAwait(false);
-        }
-
-        public static async Task<int> DeleteAllGearItemsAsync(SQLiteAsyncConnection asyncDbConnection)
-        {
-            return await asyncDbConnection.DeleteAllAsync<GearItem>().ConfigureAwait(false);
-        }
-
         [Ignore]
-        public int Id { get { return GearItemId; } set { GearItemId = value; } }
+        public override int Id { get { return GearItemId; } set { GearItemId = value; } }
 
         /// <summary>
         /// Gets or sets the gear item identifier.

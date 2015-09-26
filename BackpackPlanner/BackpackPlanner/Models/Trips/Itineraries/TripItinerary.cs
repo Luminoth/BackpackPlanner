@@ -14,63 +14,58 @@
    limitations under the License.
 */
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
+using EnergonSoftware.BackpackPlanner.Logging;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
 
 using SQLite.Net.Async;
 using SQLite.Net.Attributes;
 using SQLiteNetExtensions.Attributes;
-using SQLiteNetExtensionsAsync.Extensions;
 
 namespace EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries
 {
     /// <summary>
     /// 
     /// </summary>
-    public sealed class TripItinerary : IItem
+    public sealed class TripItinerary : DatabaseItem
     {
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(TripItinerary));
+
         /// <summary>
-        /// Creates the database tables.
+        /// Initializes the trip itinerary tables in the database.
         /// </summary>
         /// <param name="asyncDbConnection">The asynchronous database connection.</param>
-        public static async Task CreateTablesAsync(SQLiteAsyncConnection asyncDbConnection)
+        /// <param name="oldVersion">The old database version.</param>
+        /// <param name="newVersion">The new database version.</param>
+        /// <remarks>
+        /// The connection should be thread locked
+        /// </remarks>
+        public static async Task InitDatabaseAsync(SQLiteAsyncConnection asyncDbConnection, int oldVersion, int newVersion)
+        {
+            if(null == asyncDbConnection) {
+                throw new ArgumentNullException(nameof(asyncDbConnection));
+            }
+            
+            if(oldVersion >= newVersion) {
+                Logger.Debug("Database versions match, nothing to do for trip itinerary tables...");
+                return;
+            }
+
+            if(oldVersion < 2 && newVersion >= 2) {
+                Logger.Debug("Creating trip itinerary tables...");
+                await CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
+            }
+        }
+
+        private static async Task CreateTablesAsync(SQLiteAsyncConnection asyncDbConnection)
         {
             await asyncDbConnection.CreateTableAsync<TripItinerary>().ConfigureAwait(false);
         }
 
-        public static async Task<List<TripItinerary>> GetTripItinerariesAsync(SQLiteAsyncConnection asyncDbConnection)
-        {
-            return await asyncDbConnection.GetAllWithChildrenAsync<TripItinerary>().ConfigureAwait(false);
-        }
-
-        public static async Task<TripItinerary> GetTripItineraryAsync(SQLiteAsyncConnection asyncDbConnection, int tripItineraryId)
-        {
-            return await asyncDbConnection.GetWithChildrenAsync<TripItinerary>(tripItineraryId).ConfigureAwait(false);
-        }
-
-        public static async Task SaveTripItineraryAsync(SQLiteAsyncConnection asyncDbConnection, TripItinerary tripItinerary)
-        {
-            if(tripItinerary.TripItineraryId <= 0) {
-                await asyncDbConnection.InsertWithChildrenAsync(tripItinerary).ConfigureAwait(false);
-            } else {
-                await asyncDbConnection.UpdateWithChildrenAsync(tripItinerary).ConfigureAwait(false);
-            }
-        }
-
-        public static async Task<int> DeleteTripItineraryAsync(SQLiteAsyncConnection asyncDbConnection, TripItinerary tripItinerary)
-        {
-            return await asyncDbConnection.DeleteAsync(tripItinerary).ConfigureAwait(false);
-        }
-
-        public static async Task<int> DeleteAllTripItinerariesAsync(SQLiteAsyncConnection asyncDbConnection)
-        {
-            return await asyncDbConnection.DeleteAllAsync<TripItinerary>().ConfigureAwait(false);
-        }
-
         [Ignore]
-        public int Id { get { return TripItineraryId; } set { TripItineraryId = value; } }
+        public override int Id { get { return TripItineraryId; } set { TripItineraryId = value; } }
 
         /// <summary>
         /// Gets or sets the trip itinerary identifier.

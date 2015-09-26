@@ -14,64 +14,60 @@
    limitations under the License.
 */
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+using EnergonSoftware.BackpackPlanner.Logging;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
 using EnergonSoftware.BackpackPlanner.Units;
 
 using SQLite.Net.Async;
 using SQLite.Net.Attributes;
 using SQLiteNetExtensions.Attributes;
-using SQLiteNetExtensionsAsync.Extensions;
 
 namespace EnergonSoftware.BackpackPlanner.Models.Meals
 {
     /// <summary>
     /// 
     /// </summary>
-    public sealed class Meal : IItem
+    public sealed class Meal : DatabaseItem
     {
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(Meal));
+
         /// <summary>
-        /// Creates the database tables.
+        /// Initializes the meal tables in the database.
         /// </summary>
         /// <param name="asyncDbConnection">The asynchronous database connection.</param>
-        public static async Task CreateTablesAsync(SQLiteAsyncConnection asyncDbConnection)
+        /// <param name="oldVersion">The old database version.</param>
+        /// <param name="newVersion">The new database version.</param>
+        /// <remarks>
+        /// The connection should be thread locked
+        /// </remarks>
+        public static async Task InitDatabaseAsync(SQLiteAsyncConnection asyncDbConnection, int oldVersion, int newVersion)
+        {
+            if(null == asyncDbConnection) {
+                throw new ArgumentNullException(nameof(asyncDbConnection));
+            }
+            
+            if(oldVersion >= newVersion) {
+                Logger.Debug("Database versions match, nothing to do for meal cache update...");
+                return;
+            }
+
+            if(oldVersion < 2 && newVersion >= 2) {
+                Logger.Debug("Creating meal cache tables...");
+                await CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
+            }
+        }
+
+        private static async Task CreateTablesAsync(SQLiteAsyncConnection asyncDbConnection)
         {
             await asyncDbConnection.CreateTableAsync<Meal>().ConfigureAwait(false);
         }
 
-        public static async Task<List<Meal>> GetMealsAsync(SQLiteAsyncConnection asyncDbConnection)
-        {
-            return await asyncDbConnection.GetAllWithChildrenAsync<Meal>().ConfigureAwait(false);
-        }
-
-        public static async Task<Meal> GetMealAsync(SQLiteAsyncConnection asyncDbConnection, int mealId)
-        {
-            return await asyncDbConnection.GetWithChildrenAsync<Meal>(mealId).ConfigureAwait(false);
-        }
-
-        public static async Task SaveMealAsync(SQLiteAsyncConnection asyncDbConnection, Meal meal)
-        {
-            if(meal.MealId <= 0) {
-                await asyncDbConnection.InsertWithChildrenAsync(meal).ConfigureAwait(false);
-            } else {
-                await asyncDbConnection.UpdateWithChildrenAsync(meal).ConfigureAwait(false);
-            }
-        }
-
-        public static async Task<int> DeleteMealAsync(SQLiteAsyncConnection asyncDbConnection, Meal meal)
-        {
-            return await asyncDbConnection.DeleteAsync(meal).ConfigureAwait(false);
-        }
-
-        public static async Task<int> DeleteAllMealsAsync(SQLiteAsyncConnection asyncDbConnection)
-        {
-            return await asyncDbConnection.DeleteAllAsync<Meal>().ConfigureAwait(false);
-        }
-
         [Ignore]
-        public int Id { get { return MealId; } set { MealId = value; } }
+        public override int Id { get { return MealId; } set { MealId = value; } }
 
         /// <summary>
         /// Gets or sets the meal identifier.

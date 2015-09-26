@@ -14,10 +14,13 @@
    limitations under the License.
 */
 
+using System.Collections.Generic;
+
 using Android.OS;
 
 using EnergonSoftware.BackpackPlanner.Droid.Adapters;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items;
+using EnergonSoftware.BackpackPlanner.Models;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
@@ -52,7 +55,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
         {
             base.OnCreate(savedInstanceState);
 
+            ListItems.AddRange(DatabaseItem.GetItemsAsync<GearItem>().Result);
+
             // TODO
+/*
 #region Test Items
             ListItems.Add(new GearItem
                 {
@@ -185,6 +191,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
                 }
             );
 #endregion
+*/        
         }
     }
 }

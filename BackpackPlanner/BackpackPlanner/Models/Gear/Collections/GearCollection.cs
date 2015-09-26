@@ -14,9 +14,11 @@
    limitations under the License.
 */
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+using EnergonSoftware.BackpackPlanner.Logging;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
@@ -24,20 +26,43 @@ using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
 using SQLite.Net.Async;
 using SQLite.Net.Attributes;
 using SQLiteNetExtensions.Attributes;
-using SQLiteNetExtensionsAsync.Extensions;
 
 namespace EnergonSoftware.BackpackPlanner.Models.Gear.Collections
 {
     /// <summary>
     /// 
     /// </summary>
-    public sealed class GearCollection : IItem
+    public sealed class GearCollection : DatabaseItem
     {
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(GearCollection));
+
         /// <summary>
-        /// Creates the database tables.
+        /// Initializes the gear collection tables in the database.
         /// </summary>
         /// <param name="asyncDbConnection">The asynchronous database connection.</param>
-        public static async Task CreateTablesAsync(SQLiteAsyncConnection asyncDbConnection)
+        /// <param name="oldVersion">The old database version.</param>
+        /// <param name="newVersion">The new database version.</param>
+        /// <remarks>
+        /// The connection should be thread locked.
+        /// </remarks>
+        public static async Task InitDatabaseAsync(SQLiteAsyncConnection asyncDbConnection, int oldVersion, int newVersion)
+        {
+            if(null == asyncDbConnection) {
+                throw new ArgumentNullException(nameof(asyncDbConnection));
+            }
+
+            if(oldVersion >= newVersion) {
+                Logger.Debug("Database versions match, nothing to do for gear collection tables...");
+                return;
+            }
+
+            if(oldVersion < 1 && newVersion >= 1) {
+                Logger.Debug("Creating gear collection tables...");
+                await CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
+            }
+        }
+
+        private static async Task CreateTablesAsync(SQLiteAsyncConnection asyncDbConnection)
         {
             await asyncDbConnection.CreateTableAsync<GearCollection>().ConfigureAwait(false);
 
@@ -45,37 +70,8 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Collections
             await GearCollectionGearItem.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
         }
 
-        public static async Task<List<GearCollection>> GetGearCollectionsAsync(SQLiteAsyncConnection asyncDbConnection)
-        {
-            return await asyncDbConnection.GetAllWithChildrenAsync<GearCollection>().ConfigureAwait(false);
-        }
-
-        public static async Task<GearCollection> GetGearCollectionAsync(SQLiteAsyncConnection asyncDbConnection, int gearCollectionId)
-        {
-            return await asyncDbConnection.GetWithChildrenAsync<GearCollection>(gearCollectionId).ConfigureAwait(false);
-        }
-
-        public static async Task SaveGearCollectionAsync(SQLiteAsyncConnection asyncDbConnection, GearCollection gearCollection)
-        {
-            if(gearCollection.GearCollectionId <= 0) {
-                await asyncDbConnection.InsertWithChildrenAsync(gearCollection).ConfigureAwait(false);
-            } else {
-                await asyncDbConnection.UpdateWithChildrenAsync(gearCollection).ConfigureAwait(false);
-            }
-        }
-
-        public static async Task<int> DeleteGearCollectionAsync(SQLiteAsyncConnection asyncDbConnection, GearCollection gearCollection)
-        {
-            return await asyncDbConnection.DeleteAsync(gearCollection).ConfigureAwait(false);
-        }
-
-        public static async Task<int> DeleteAllGearCollectionsAsync(SQLiteAsyncConnection asyncDbConnection)
-        {
-            return await asyncDbConnection.DeleteAllAsync<GearCollection>().ConfigureAwait(false);
-        }
-
         [Ignore]
-        public int Id { get { return GearCollectionId; } set { GearCollectionId = value; } }
+        public override int Id { get { return GearCollectionId; } set { GearCollectionId = value; } }
 
         /// <summary>
         /// Gets or sets the gear collection identifier.

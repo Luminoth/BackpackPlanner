@@ -17,7 +17,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
+using EnergonSoftware.BackpackPlanner.Logging;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
@@ -27,20 +27,43 @@ using EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries;
 using SQLite.Net.Async;
 using SQLite.Net.Attributes;
 using SQLiteNetExtensions.Attributes;
-using SQLiteNetExtensionsAsync.Extensions;
 
 namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
 {
     /// <summary>
     /// 
     /// </summary>
-    public sealed class TripPlan : IItem
+    public sealed class TripPlan : DatabaseItem
     {
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(TripPlan));
+
         /// <summary>
-        /// Creates the database tables.
+        /// Initializes the trip plans tables in the database.
         /// </summary>
         /// <param name="asyncDbConnection">The asynchronous database connection.</param>
-        public static async Task CreateTablesAsync(SQLiteAsyncConnection asyncDbConnection)
+        /// <param name="oldVersion">The old database version.</param>
+        /// <param name="newVersion">The new database version.</param>
+        /// <remarks>
+        /// The connection should be thread locked
+        /// </remarks>
+        public static async Task InitDatabaseAsync(SQLiteAsyncConnection asyncDbConnection, int oldVersion, int newVersion)
+        {
+            if(null == asyncDbConnection) {
+                throw new ArgumentNullException(nameof(asyncDbConnection));
+            }
+            
+            if(oldVersion >= newVersion) {
+                Logger.Debug("Database versions match, nothing to do for trip plan tables...");
+                return;
+            }
+
+            if(oldVersion < 2 && newVersion >= 2) {
+                Logger.Debug("Creating trip plan tables...");
+                await CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
+            }
+        }
+
+        private static async Task CreateTablesAsync(SQLiteAsyncConnection asyncDbConnection)
         {
             await asyncDbConnection.CreateTableAsync<TripPlan>().ConfigureAwait(false);
 
@@ -49,37 +72,9 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
             await TripPlanGearItem.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
             await TripPlanMeal.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
         }
-        public static async Task<List<TripPlan>> GetTripPlansAsync(SQLiteAsyncConnection asyncDbConnection)
-        {
-            return await asyncDbConnection.GetAllWithChildrenAsync<TripPlan>().ConfigureAwait(false);
-        }
-
-        public static async Task<TripPlan> GetTripPlanAsync(SQLiteAsyncConnection asyncDbConnection, int tripPlanId)
-        {
-            return await asyncDbConnection.GetWithChildrenAsync<TripPlan>(tripPlanId).ConfigureAwait(false);
-        }
-
-        public static async Task SaveTripPlanAsync(SQLiteAsyncConnection asyncDbConnection, TripPlan tripPlan)
-        {
-            if(tripPlan.TripPlanId <= 0) {
-                await asyncDbConnection.InsertWithChildrenAsync(tripPlan).ConfigureAwait(false);
-            } else {
-                await asyncDbConnection.UpdateWithChildrenAsync(tripPlan).ConfigureAwait(false);
-            }
-        }
-
-        public static async Task<int> DeleteTripPlanAsync(SQLiteAsyncConnection asyncDbConnection, TripPlan tripPlan)
-        {
-            return await asyncDbConnection.DeleteAsync(tripPlan).ConfigureAwait(false);
-        }
-
-        public static async Task<int> DeleteAllTripPlansAsync(SQLiteAsyncConnection asyncDbConnection)
-        {
-            return await asyncDbConnection.DeleteAllAsync<TripPlan>().ConfigureAwait(false);
-        }
 
         [Ignore]
-        public int Id { get { return TripPlanId; } set { TripPlanId = value; } }
+        public override int Id { get { return TripPlanId; } set { TripPlanId = value; } }
 
         /// <summary>
         /// Gets or sets the trip plan identifier.

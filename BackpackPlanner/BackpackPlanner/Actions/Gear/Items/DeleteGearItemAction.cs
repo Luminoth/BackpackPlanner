@@ -14,23 +14,22 @@
    limitations under the License.
 */
 
-using EnergonSoftware.BackpackPlanner.Models;
+using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
 
-namespace EnergonSoftware.BackpackPlanner.Actions
+namespace EnergonSoftware.BackpackPlanner.Actions.Gear.Items
 {
     /// <summary>
-    /// Deletes an item.
+    /// Deletes a gear item.
     /// </summary>
-    /// <typeparam name="T">The tyep of item to delete</typeparam>
-    public sealed class DeleteItemAction<T> : IAction where T: IItem
+    public sealed class DeleteGearItemAction : IAction
     {
         /// <summary>
-        /// Gets or sets the item to delete.
+        /// Gets or sets the gear item to delete.
         /// </summary>
         /// <value>
-        /// The item to delete.
+        /// The gear item to delete.
         /// </value>
-        public T Item { get; set; }
+        public GearItem Item { get; set; }
 
         public void DoAction()
         {

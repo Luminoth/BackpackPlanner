@@ -30,21 +30,6 @@ namespace EnergonSoftware.BackpackPlanner.UnitTests.Models.Gear.Systems
     public class GearSystemTests
     {
         [TestMethod]
-        public async Task GearSystem_CreateTablesAsync()
-        {
-            // Isolate
-            SQLiteAsyncConnection fakeAsyncDbConnection = Isolate.Fake.Instance<SQLiteAsyncConnection>(Members.ReturnRecursiveFakes);
-
-            // Arrange
-
-            // Act
-            await GearSystem.CreateTablesAsync(fakeAsyncDbConnection).ConfigureAwait(false);
-
-            // Assert
-            Isolate.Verify.WasCalledWithAnyArguments(() => fakeAsyncDbConnection.CreateTableAsync<GearSystem>());
-        }
-
-        [TestMethod]
         public void GearSystem_Id_Default()
         {
             // Arrange

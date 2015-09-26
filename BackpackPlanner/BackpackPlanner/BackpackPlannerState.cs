@@ -19,13 +19,16 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-using EnergonSoftware.BackpackPlanner.Cache.Gear;
-using EnergonSoftware.BackpackPlanner.Cache.Meals;
-using EnergonSoftware.BackpackPlanner.Cache.Trips;
 using EnergonSoftware.BackpackPlanner.Database;
 using EnergonSoftware.BackpackPlanner.Logging;
 using EnergonSoftware.BackpackPlanner.Models;
+using EnergonSoftware.BackpackPlanner.Models.Gear.Collections;
+using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
+using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
+using EnergonSoftware.BackpackPlanner.Models.Meals;
 using EnergonSoftware.BackpackPlanner.Models.Personal;
+using EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries;
+using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
 
 using SQLite.Net;
 using SQLite.Net.Interop;
@@ -140,12 +143,12 @@ namespace EnergonSoftware.BackpackPlanner
 
                 // TODO: find a way to make this transactional
                 // so that we can roll it back on error and avoid updating the db version
-                await GearItemCache.InitDatabaseAsync(DatabaseConnection.AsyncConnection, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
-                await GearSystemCache.InitDatabaseAsync(DatabaseConnection.AsyncConnection, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
-                await GearCollectionCache.InitDatabaseAsync(DatabaseConnection.AsyncConnection, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
-                await MealCache.InitDatabaseAsync(DatabaseConnection.AsyncConnection, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
-                await TripItineraryCache.InitDatabaseAsync(DatabaseConnection.AsyncConnection, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
-                await TripPlanCache.InitDatabaseAsync(DatabaseConnection.AsyncConnection, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
+                await GearItem.InitDatabaseAsync(DatabaseConnection.AsyncConnection, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
+                await GearSystem.InitDatabaseAsync(DatabaseConnection.AsyncConnection, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
+                await GearCollection.InitDatabaseAsync(DatabaseConnection.AsyncConnection, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
+                await Meal.InitDatabaseAsync(DatabaseConnection.AsyncConnection, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
+                await TripItinerary.InitDatabaseAsync(DatabaseConnection.AsyncConnection, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
+                await TripPlan.InitDatabaseAsync(DatabaseConnection.AsyncConnection, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
 
                 await DatabaseVersion.UpdateAsync(DatabaseConnection.AsyncConnection, newVersion).ConfigureAwait(false);
             } finally {

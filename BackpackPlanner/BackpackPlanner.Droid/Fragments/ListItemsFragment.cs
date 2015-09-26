@@ -63,6 +63,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                 Adapter = CreateAdapter();
                 Layout.SetAdapter(Adapter);
 
+FilterView.QueryTextChange += Adapter.FilterItems;
+
                 SortItemsSpinner = view.FindViewById<Spinner>(SortItemsResource);
                 if(null != SortItemsSpinner) {
                     SortItemsSpinner.Visibility = ViewStates.Visible;
@@ -73,11 +75,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             }
         }
 
-        public override void OnCreateOptionsMenu(IMenu menu, MenuInflater inflater)
+        /*public override void OnCreateOptionsMenu(IMenu menu, MenuInflater inflater)
         {
             base.OnCreateOptionsMenu(menu, inflater);
 
             FilterView.QueryTextChange += Adapter.FilterItems;
-        }
+        }*/
     }
 }

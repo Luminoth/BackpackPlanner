@@ -14,9 +14,11 @@
    limitations under the License.
 */
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+using EnergonSoftware.BackpackPlanner.Logging;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
@@ -24,57 +26,51 @@ using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
 using SQLite.Net.Async;
 using SQLite.Net.Attributes;
 using SQLiteNetExtensions.Attributes;
-using SQLiteNetExtensionsAsync.Extensions;
 
 namespace EnergonSoftware.BackpackPlanner.Models.Gear.Systems
 {
     /// <summary>
     /// 
     /// </summary>
-    public sealed class GearSystem : IItem
+    public sealed class GearSystem : DatabaseItem
     {
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(GearSystem));
+
         /// <summary>
-        /// Creates the database tables.
+        /// Initializes the gear system tables in the database.
         /// </summary>
         /// <param name="asyncDbConnection">The asynchronous database connection.</param>
-        public static async Task CreateTablesAsync(SQLiteAsyncConnection asyncDbConnection)
+        /// <param name="oldVersion">The old database version.</param>
+        /// <param name="newVersion">The new database version.</param>
+        /// <remarks>
+        /// The connection should be thread locked.
+        /// </remarks>
+        public static async Task InitDatabaseAsync(SQLiteAsyncConnection asyncDbConnection, int oldVersion, int newVersion)
+        {
+            if(null == asyncDbConnection) {
+                throw new ArgumentNullException(nameof(asyncDbConnection));
+            }
+
+            if(oldVersion >= newVersion) {
+                Logger.Debug("Database versions match, nothing to do for gear system tables...");
+                return;
+            }
+
+            if(oldVersion < 1 && newVersion >= 1) {
+                Logger.Debug("Creating gear system tables...");
+                await CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
+            }
+        }
+
+        private static async Task CreateTablesAsync(SQLiteAsyncConnection asyncDbConnection)
         {
             await asyncDbConnection.CreateTableAsync<GearSystem>().ConfigureAwait(false);
 
             await GearSystemGearItem.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
         }
 
-        public static async Task<List<GearSystem>> GetGearSystemsAsync(SQLiteAsyncConnection asyncDbConnection)
-        {
-            return await asyncDbConnection.GetAllWithChildrenAsync<GearSystem>().ConfigureAwait(false);
-        }
-
-        public static async Task<GearSystem> GetGearSystemAsync(SQLiteAsyncConnection asyncDbConnection, int gearSystemId)
-        {
-            return await asyncDbConnection.GetWithChildrenAsync<GearSystem>(gearSystemId).ConfigureAwait(false);
-        }
-
-        public static async Task SaveGearSystemAsync(SQLiteAsyncConnection asyncDbConnection, GearSystem gearSystem)
-        {
-            if(gearSystem.GearSystemId <= 0) {
-                await asyncDbConnection.InsertWithChildrenAsync(gearSystem).ConfigureAwait(false);
-            } else {
-                await asyncDbConnection.UpdateWithChildrenAsync(gearSystem).ConfigureAwait(false);
-            }
-        }
-
-        public static async Task<int> DeleteGearSystemAsync(SQLiteAsyncConnection asyncDbConnection, GearSystem gearSystem)
-        {
-            return await asyncDbConnection.DeleteAsync(gearSystem).ConfigureAwait(false);
-        }
-
-        public static async Task<int> DeleteAllGearSystemsAsync(SQLiteAsyncConnection asyncDbConnection)
-        {
-            return await asyncDbConnection.DeleteAllAsync<GearSystem>().ConfigureAwait(false);
-        }
-
         [Ignore]
-        public int Id { get { return GearSystemId; } set { GearSystemId = value; } }
+        public override int Id { get { return GearSystemId; } set { GearSystemId = value; } }
 
         /// <summary>
         /// Gets or sets the gear system identifier.
