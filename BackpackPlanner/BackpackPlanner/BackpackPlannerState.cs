@@ -101,7 +101,7 @@ namespace EnergonSoftware.BackpackPlanner
         /// Android recommends only having a single, long-lived
         /// connection to the database... so here we are
         /// </remarks>
-        public DatabaseConnection DatabaseConnection { get; } = new DatabaseConnection();
+        public SQLiteDatabaseConnection DatabaseConnection { get; } = new SQLiteDatabaseConnection();
 
         /// <summary>
         /// Initializes the library database.
@@ -125,22 +125,22 @@ namespace EnergonSoftware.BackpackPlanner
             {
                 Version = CurrentDatabaseVersion
             };
-            DatabaseVersion oldVersion = new DatabaseVersion();
+            DatabaseVersion oldVersion;
 
-            await DatabaseConnection.Lock.WaitAsync().ConfigureAwait(false);
+            await DatabaseConnection.LockAsync().ConfigureAwait(false);
             try {
                 var databaseVersionTableInfo = DatabaseConnection.Connection.GetTableInfo("DatabaseVersion");
                 if(!databaseVersionTableInfo.Any()) {
                     Logger.Debug("Creating a new database...");
                     await DatabaseVersion.CreateTablesAsync(DatabaseConnection.AsyncConnection).ConfigureAwait(false);
-                } else {
-                    oldVersion = await DatabaseVersion.GetAsync(DatabaseConnection.AsyncConnection).ConfigureAwait(false);
-                    if(null == oldVersion) {
-                        Logger.Debug("DatabaseVersion.Get returned null!?!");
-                        throw new InvalidOperationException("DatabaseVersion.Get returned null!?!");
-                    }
-                    Logger.Debug($"Old database version: {oldVersion.Version}, current database version: {CurrentDatabaseVersion}");
                 }
+
+                oldVersion = await DatabaseVersion.GetAsync(DatabaseConnection.AsyncConnection).ConfigureAwait(false);
+                if(null == oldVersion) {
+                    Logger.Debug("DatabaseVersion.Get returned null!?!");
+                    throw new InvalidOperationException("DatabaseVersion.Get returned null!?!");
+                }
+                Logger.Debug($"Old database version: {oldVersion.Version}, current database version: {CurrentDatabaseVersion}");
 
                 // TODO: find a way to make this transactional
                 // so that we can roll it back on error and avoid updating the db version
@@ -151,9 +151,10 @@ namespace EnergonSoftware.BackpackPlanner
                 await TripItinerary.InitDatabaseAsync(DatabaseConnection.AsyncConnection, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
                 await TripPlan.InitDatabaseAsync(DatabaseConnection.AsyncConnection, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
 
+                newVersion.DatabaseVersionId = oldVersion.DatabaseVersionId;
                 await DatabaseVersion.UpdateAsync(DatabaseConnection.AsyncConnection, newVersion).ConfigureAwait(false);
             } finally {
-                DatabaseConnection.Lock.Release();
+                DatabaseConnection.Release();
             }
 
             if(oldVersion.Version < 1) {
@@ -164,6 +165,8 @@ namespace EnergonSoftware.BackpackPlanner
         private static async Task PopulateInitialDatabaseAsync()
         {
 #if DEBUG
+            Logger.Debug("Populating test data...");
+
 #region Test Gear Items
             Logger.Debug("Inserting test gear items...");
             await DatabaseItem.InsertItemsAsync(new List<GearItem>
@@ -664,6 +667,7 @@ namespace EnergonSoftware.BackpackPlanner
             );
 #endregion
 */
+            Logger.Debug("Finished populating test data!");
 #endif
         }
 

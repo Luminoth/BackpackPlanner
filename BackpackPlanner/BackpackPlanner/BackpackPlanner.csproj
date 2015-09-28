@@ -41,6 +41,7 @@
     <Compile Include="Actions\Gear\Items\DeleteGearItemAction.cs" />
     <Compile Include="BackpackPlannerState.cs" />
     <Compile Include="Database\DatabaseConnection.cs" />
+    <Compile Include="Database\SQLiteDatabaseConnection.cs" />
     <Compile Include="Models\DatabaseItem.cs" />
     <Compile Include="Units\Currency.cs" />
     <Compile Include="BackpackPlannerSettings.cs" />

@@ -16,6 +16,8 @@
 
 using System.Threading.Tasks;
 
+using EnergonSoftware.BackpackPlanner.Logging;
+
 using SQLite.Net.Async;
 using SQLite.Net.Attributes;
 using SQLiteNetExtensionsAsync.Extensions;
@@ -27,10 +29,15 @@ namespace EnergonSoftware.BackpackPlanner.Models
     /// </summary>
     public sealed class DatabaseVersion
     {
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(DatabaseVersion));
+
         /// <summary>
         /// Creates the database tables.
         /// </summary>
         /// <param name="asyncDbConnection">The asynchronous database connection.</param>
+        /// <remarks>
+        /// This will insert the initial version entry.
+        /// </remarks>
         public static async Task CreateTablesAsync(SQLiteAsyncConnection asyncDbConnection)
         {
             await asyncDbConnection.CreateTableAsync<DatabaseVersion>().ConfigureAwait(false);
@@ -55,6 +62,7 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// <param name="databaseVersion">The current database version.</param>
         public static async Task UpdateAsync(SQLiteAsyncConnection asyncDbConnection, DatabaseVersion databaseVersion)
         {
+            Logger.Debug($"Updating database version to {databaseVersion.Version}...");
             await asyncDbConnection.UpdateWithChildrenAsync(databaseVersion).ConfigureAwait(false);
         }
 

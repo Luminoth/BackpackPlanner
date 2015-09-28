@@ -29,6 +29,7 @@ using EnergonSoftware.BackpackPlanner.Units;
 
 // TODO: when the Xamarin Support Library Preference v7 is out
 // replace this activity with the PreferenceFragmentCompat fragment
+// (can also trash the AppCompatPreferenceActivity class)
 // https://plus.google.com/+AndroidDevelopers/posts/9kZ3SsXdT2T
 // http://developer.android.com/reference/android/support/v7/preference/package-summary.html
 // https://www.nuget.org/packages/Xamarin.Android.Support.v7.Preference/
@@ -67,9 +68,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
             _unitSystemPreference = (ListPreference)FindPreference(BackpackPlannerSettings.UnitSystemPreferenceKey);
             //_currencyPreference = (ListPreference)FindPreference(BackpackPlannerSettings.CurrencyPreferenceKey);
-
-            InitLabels();
-            InitSummaries();
         }
 
         [Obsolete("deprecated")]
@@ -88,6 +86,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid
         protected override void OnResume()
         {
             base.OnResume();
+
+            InitLabels();
+            InitSummaries();
 
             PreferenceScreen.SharedPreferences.RegisterOnSharedPreferenceChangeListener(this);
         }

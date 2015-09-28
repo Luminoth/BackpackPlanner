@@ -31,6 +31,8 @@ namespace EnergonSoftware.BackpackPlanner.Actions.Gear.Items
         /// </value>
         public GearItem Item { get; set; }
 
+// TODO: this could probably subclass a generic "DeleteItemAction"
+
         public void DoAction()
         {
         }

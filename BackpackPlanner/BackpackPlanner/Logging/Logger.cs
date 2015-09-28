@@ -59,7 +59,7 @@ namespace EnergonSoftware.BackpackPlanner.Logging
     {
         private static readonly object CacheLock = new object();
         
-        private static readonly Dictionary<Type, ILogger> LoggerCache = new Dictionary<Type, ILogger>();
+        private static readonly Dictionary<Type, CustomLogger> LoggerCache = new Dictionary<Type, CustomLogger>();
 
         /// <summary>
         /// Gets a logger for the given type.
@@ -69,7 +69,7 @@ namespace EnergonSoftware.BackpackPlanner.Logging
         public static ILogger GetLogger(Type type)
         {
             lock(CacheLock) {
-                ILogger logger;
+                CustomLogger logger;
                 if(LoggerCache.TryGetValue(type, out logger)) {
                     return logger;
                 }

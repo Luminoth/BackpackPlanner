@@ -66,12 +66,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
             InitHockeyApp();
 
-            // this needs to be waited on because aysyncing OnCreate() seems
-            // to cause future lifecycle methods to get called earlier
-            // than they're supposed to
-            BackpackPlannerState.Instance.InitDatabaseAsync(new SQLitePlatformAndroid(),
-                System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), BackpackPlannerState.DatabaseName).Wait();
-
             InitToolbar();
 
             // setup the navigation drawer manager
@@ -103,11 +97,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
                 _navigationDrawerManager.Toggle.SyncState();
             };
 
-            LoadPreferences();
-
             HandleIntent(Intent);
-
-            _navigationDrawerManager.SelectInitialItem(Resource.Id.nav_gear_items_fragment);
 		}
 
 	    public override void OnPostCreate(Bundle savedInstanceState, PersistableBundle persistentState)
@@ -115,6 +105,25 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 	        base.OnPostCreate(savedInstanceState, persistentState);
 
             _navigationDrawerManager.Toggle.SyncState();
+	    }
+
+        protected override void OnResume()
+	    {
+	        base.OnResume();
+
+            LoadPreferences();
+
+            BackpackPlannerState.Instance.InitDatabaseAsync(new SQLitePlatformAndroid(),
+                System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), BackpackPlannerState.DatabaseName).Wait();
+
+            _navigationDrawerManager.SelectInitialItem(Resource.Id.nav_gear_items_fragment);
+	    }
+
+	    protected override void OnPause()
+	    {
+	        base.OnPause();
+
+            BackpackPlannerState.Instance.DatabaseConnection.CloseAsync().Wait();
 	    }
 
 	    public override void OnConfigurationChanged(Configuration newConfig)

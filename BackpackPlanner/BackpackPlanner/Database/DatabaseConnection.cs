@@ -14,80 +14,45 @@
    limitations under the License.
 */
 
-using System;
-using System.Threading;
 using System.Threading.Tasks;
-
-using SQLite.Net;
-using SQLite.Net.Async;
-using SQLite.Net.Interop;
 
 namespace EnergonSoftware.BackpackPlanner.Database
 {
     /// <summary>
-    /// Locking wrapper for a database connection
+    /// 
     /// </summary>
     /// <remarks>
-    /// This may not be super necessary because SQLiteConnectionWithLock
-    /// has a lock, but it releases that lock in Dispose() which isn't
-    /// something that really guarantees the lock is released, right?
+    /// TODO: this needs to expose all of the required db connection methods
+    /// and the SQLiteDatabaseConnection should no longer expose the low-level connections
     /// </remarks>
-    public sealed class DatabaseConnection
+    public interface IDatabaseConnection
     {
         /// <summary>
-        /// Gets the lock.
+        /// Gets a value indicating whether the connection is connected.
         /// </summary>
         /// <value>
-        /// The lock.
+        /// <c>true</c> if the connection is connected; otherwise, <c>false</c>.
         /// </value>
-        /// <remarks>
-        /// This should be locked before any operation
-        /// and released immediately after
-        /// </remarks>
-        public SemaphoreSlim Lock { get; } = new SemaphoreSlim(1);
+        bool IsConnected { get; }
 
         /// <summary>
-        /// Gets the synchronous connection.
+        /// Acquires the connection lock.
         /// </summary>
-        /// <value>
-        /// The synchronous connection.
-        /// </value>
-        public SQLiteConnectionWithLock Connection { get; private set; }
+        Task LockAsync();
 
         /// <summary>
-        /// Gets the asynchronous connection.
+        /// Releases the connection lock.
         /// </summary>
-        /// <value>
-        /// The asynchronous connection.
-        /// </value>
-        public SQLiteAsyncConnection AsyncConnection { get; private set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the connection is connected.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if the connection is connected; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsConnected => null != Connection;
+        void Release();
 
         /// <summary>
         /// Connects to the database.
         /// </summary>
-        /// <param name="sqlitePlatform">The sqlite platform.</param>
-        /// <param name="connectionString">The connection string.</param>
-        public async Task ConnectAsync(ISQLitePlatform sqlitePlatform, SQLiteConnectionString connectionString)
-        {
-            if(IsConnected) {
-                throw new InvalidOperationException("Database connection already connected!");
-            }
+        Task ConnectAsync();
 
-            await Lock.WaitAsync().ConfigureAwait(false);
-            try {
-                Connection = new SQLiteConnectionWithLock(sqlitePlatform, connectionString);
-                AsyncConnection = new SQLiteAsyncConnection(() => Connection);
-            } finally {
-                Lock.Release();
-            }
-        }
+        /// <summary>
+        /// Closes the connection.
+        /// </summary>
+        Task CloseAsync();
     }
 }

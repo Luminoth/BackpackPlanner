@@ -21,6 +21,7 @@ using Android.Views;
 using Android.Widget;
 
 using EnergonSoftware.BackpackPlanner.Droid.Adapters;
+using EnergonSoftware.BackpackPlanner.Logging;
 using EnergonSoftware.BackpackPlanner.Models;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
@@ -30,11 +31,15 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
     /// </summary>
     public abstract class ListItemsFragment<T> : RecyclerFragment where T: DatabaseItem
     {
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(ListItemsFragment<T>));
+
         protected abstract int NoItemsResource { get; }
 
         protected abstract int SortItemsResource { get; }
 
         protected abstract int AddItemResource { get; }
+
+        public int ItemCount => ListItems.Count;
 
         protected readonly List<T> ListItems = new List<T>();
 
@@ -48,11 +53,33 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         protected abstract BaseListAdapter<T> CreateAdapter();
 
-        public override void OnCreate(Bundle savedInstanceState)
+        public override void OnResume()
         {
-            base.OnCreate(savedInstanceState);
+            base.OnResume();
 
             ListItems.AddRange(DatabaseItem.GetItemsAsync<T>().Result);
+            Logger.Debug($"Read {ItemCount} items...");
+
+            if(ListItems.Count > 0) {
+                TextView noItemsTextView = View.FindViewById<TextView>(NoItemsResource);
+                noItemsTextView.Visibility = ViewStates.Gone;
+
+                SortItemsSpinner = View.FindViewById<Spinner>(SortItemsResource);
+                if(null != SortItemsSpinner) {
+                    SortItemsSpinner.Visibility = ViewStates.Visible;
+                    SortItemsSpinner.ItemSelected += Adapter.SortByItemSelectedEventHander;
+                }
+
+                Layout.Visibility = ViewStates.Visible;
+            }
+        }
+
+        public override void OnPause()
+        {
+            base.OnPause();
+
+            Logger.Debug("Clearing item list for pause...");
+            ListItems.Clear();
         }
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
@@ -66,19 +93,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             addItemButton.Click += (sender, args) => {
                 TransitionToFragment(Resource.Id.frame_content, CreateAddItemFragment(), null);
             };
-
-            if(ListItems.Count > 0) {
-                TextView noItemsTextView = view.FindViewById<TextView>(NoItemsResource);
-                noItemsTextView.Visibility = ViewStates.Gone;
-
-                SortItemsSpinner = view.FindViewById<Spinner>(SortItemsResource);
-                if(null != SortItemsSpinner) {
-                    SortItemsSpinner.Visibility = ViewStates.Visible;
-                    SortItemsSpinner.ItemSelected += Adapter.SortByItemSelectedEventHander;
-                }
-
-                Layout.Visibility = ViewStates.Visible;
-            }
         }
 
         public override void OnCreateOptionsMenu(IMenu menu, MenuInflater inflater)

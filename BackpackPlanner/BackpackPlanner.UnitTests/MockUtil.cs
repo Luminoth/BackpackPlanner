@@ -45,17 +45,15 @@ namespace EnergonSoftware.BackpackPlanner.UnitTests
             SQLiteConnectionWithLock fakeSQLiteConnection = Isolate.Fake.AllInstances<SQLiteConnectionWithLock>(Members.ReturnRecursiveFakes);
             SQLiteAsyncConnection fakeAsyncSQLiteConnection = Isolate.Fake.AllInstances<SQLiteAsyncConnection>(Members.ReturnRecursiveFakes);
 
-            // TODO: this sucks, is there not a way
-            // to have the property correctly initialized?
-            // allowing the constructor to be called doesn't do it
-            SemaphoreSlim mutex = new SemaphoreSlim(1);
-
             // fake the db wrapper
-            DatabaseConnection fakeDbConnection = Isolate.Fake.AllInstances<DatabaseConnection>(Members.ReturnRecursiveFakes, ConstructorWillBe.Called);
-            Isolate.WhenCalled(() => fakeDbConnection.Lock).WillReturn(mutex);
+            SQLiteDatabaseConnection fakeDbConnection = Isolate.Fake.AllInstances<SQLiteDatabaseConnection>(Members.ReturnRecursiveFakes, ConstructorWillBe.Called);
+            Isolate.WhenCalled(() => fakeDbConnection.IsConnected).WillReturn(true);
             Isolate.WhenCalled(() => fakeDbConnection.Connection).WillReturn(fakeSQLiteConnection);
             Isolate.WhenCalled(() => fakeDbConnection.AsyncConnection).WillReturn(fakeAsyncSQLiteConnection);
+            Isolate.WhenCalled(() => fakeDbConnection.LockAsync()).DoInstead(x => MockTask());
+            Isolate.WhenCalled(() => fakeDbConnection.Release()).IgnoreCall();
             Isolate.WhenCalled(() => fakeDbConnection.ConnectAsync(null, null)).DoInstead(x => MockTask());
+            Isolate.WhenCalled(() => fakeDbConnection.CloseAsync()).DoInstead(x => MockTask());
 
             BackpackPlannerState fakePlannerState = Isolate.Fake.AllInstances<BackpackPlannerState>(Members.ReturnRecursiveFakes, ConstructorWillBe.Called);
             Isolate.WhenCalled(() => fakePlannerState.DatabaseConnection).WillReturn(fakeDbConnection);
