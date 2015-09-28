@@ -58,7 +58,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Plans
 
             public bool OnMenuItemClick(IMenuItem menuItem)
             {
-                // TODO
+                if(Resource.Id.action_delete_trip_plan == menuItem.ItemId) {
+                    // TODO: delete Action
+                }
                 return true;
             }
 
@@ -87,7 +89,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Plans
 
         public override int LayoutResource => Resource.Layout.view_trip_plan;
 
-        public TripPlanListAdapter(ListItemsFragment<TripPlan> fragment, IEnumerable<TripPlan> listItems) : base(fragment, listItems)
+        public TripPlanListAdapter(ListItemsFragment<TripPlan> fragment) : base(fragment)
         {
         }
 

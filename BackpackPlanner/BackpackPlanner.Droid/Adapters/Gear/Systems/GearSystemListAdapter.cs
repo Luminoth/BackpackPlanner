@@ -52,7 +52,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Systems
 
             public bool OnMenuItemClick(IMenuItem menuItem)
             {
-                // TODO
+                if(Resource.Id.action_delete_gear_system == menuItem.ItemId) {
+                    // TODO: delete Action
+                }
                 return true;
             }
 
@@ -78,7 +80,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Systems
 
         public override int LayoutResource => Resource.Layout.view_gear_system;
 
-        public GearSystemListAdapter(ListItemsFragment<GearSystem> fragment, IEnumerable<GearSystem> listItems) : base(fragment, listItems)
+        public GearSystemListAdapter(ListItemsFragment<GearSystem> fragment) : base(fragment)
         {
         }
 

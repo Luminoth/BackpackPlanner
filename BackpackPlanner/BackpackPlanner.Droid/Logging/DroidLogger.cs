@@ -4,7 +4,7 @@ using EnergonSoftware.BackpackPlanner.Logging;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Logging
 {
-    internal class DroidLogger : ILogger
+    internal sealed class DroidLogger : ILogger
     {
         public void Debug(string message)
         {

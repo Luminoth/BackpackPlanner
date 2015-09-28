@@ -20,14 +20,17 @@ using Android.Content.Res;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
+using EnergonSoftware.BackpackPlanner.Logging;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Util
 {
     /// <summary>
     /// Helper to manage all of the NavigationDrawer controls
     /// </summary>
-    public class NavigationDrawerManager
+    public sealed class NavigationDrawerManager
     {
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(NavigationDrawerManager));
+
         private const string StateSelectedResId = "navigation_selected_resid";
 
         public Android.Support.V4.Widget.DrawerLayout Layout { get; private set; }
@@ -75,11 +78,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 
         public void SelectInitialItem(int defaultMenuItemResId)
         {
+            Logger.Debug($"Selecting initial navigation item with defaultId={defaultMenuItemResId} and selectedId={_selectedMenuItemResId}");
             SelectItemByResId(_selectedMenuItemResId < 0 ? defaultMenuItemResId : _selectedMenuItemResId);
         }
 
         public void SelectItemByResId(int resId)
         {
+            Logger.Debug($"Selecting navigation item with id={resId}");
             NavView.Menu.PerformIdentifierAction(resId, 0);
         }
 

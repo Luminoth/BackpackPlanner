@@ -52,7 +52,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
 
             public bool OnMenuItemClick(IMenuItem menuItem)
             {
-                // TODO
+                if(Resource.Id.action_delete_meal == menuItem.ItemId) {
+                    // TODO: delete Action
+                }
                 return true;
             }
 
@@ -78,7 +80,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
 
         public override int LayoutResource => Resource.Layout.view_meal;
 
-        public MealListAdapter(ListItemsFragment<Meal> fragment, IEnumerable<Meal> listItems) : base(fragment, listItems)
+        public MealListAdapter(ListItemsFragment<Meal> fragment) : base(fragment)
         {
         }
 

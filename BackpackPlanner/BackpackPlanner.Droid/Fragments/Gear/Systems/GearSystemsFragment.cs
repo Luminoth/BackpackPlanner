@@ -43,7 +43,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 
         protected override BaseListAdapter<GearSystem> CreateAdapter()
         {
-            return new GearSystemListAdapter(this, ListItems);
+            return new GearSystemListAdapter(this);
         }
     }
 }

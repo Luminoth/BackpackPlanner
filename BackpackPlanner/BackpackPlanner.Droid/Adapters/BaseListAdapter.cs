@@ -34,7 +34,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
             public T ListItem
             {
                 get { return _listItem; }
-                set { _listItem = value; UpdateView(); }
+
+                set
+                {
+                    _listItem = value;
+                    UpdateView();
+                }
             }
 
             protected abstract Android.Support.V4.App.Fragment CreateViewItemFragment();
@@ -55,18 +60,31 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
         public override int ItemCount => FilteredListItems?.Count() ?? 0;
 
-        protected List<T> ListItems { get; }
+        private IReadOnlyCollection<T> _listItems = new List<T>();  
+
+        public IReadOnlyCollection<T> ListItems
+        {
+            get { return _listItems; }
+
+            set
+            {
+                if(null == value) {
+                    _listItems = new List<T>();
+                    FilteredListItems = new List<T>();
+                } else {
+                    _listItems = new List<T>(value);
+                    FilteredListItems = new List<T>(ListItems);
+                }
+                NotifyDataSetChanged();
+            }
+        }
 
         private IEnumerable<T> _filteredListItems = new List<T>();
 
         protected IEnumerable<T> FilteredListItems
         {
             get { return _filteredListItems; }
-
-            set
-            {
-                _filteredListItems = value ?? new List<T>(ListItems);
-            }
+            set { _filteredListItems = value ?? new List<T>(ListItems); }
         }
 
         public abstract void SortByItemSelectedEventHander(object sender, AdapterView.ItemSelectedEventArgs args);
@@ -88,12 +106,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
             baseViewHolder.ListItem = gearItem;
         }
 
-        protected BaseListAdapter(ListItemsFragment<T> fragment, IEnumerable<T> listItems)
+        protected BaseListAdapter(ListItemsFragment<T> fragment)
         {
             Fragment = fragment;
-
-            ListItems = listItems.ToList();
-            FilteredListItems = new List<T>(ListItems);
         }
     }
 }

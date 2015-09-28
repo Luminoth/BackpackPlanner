@@ -44,7 +44,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 {
 	[Activity(Label = "@string/app_name", MainLauncher = true, Icon = "@drawable/icon")]
     [MetaData("com.google.android.gms.version", Value = "@integer/google_play_services_version")]
-	public class MainActivity : Android.Support.V7.App.AppCompatActivity, View.IOnClickListener
+	public sealed class MainActivity : Android.Support.V7.App.AppCompatActivity, View.IOnClickListener
 	{
         public const string LogTag = "BackpackPlanner.Droid";
 
@@ -98,6 +98,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             };
 
             HandleIntent(Intent);
+
+            // do this here instead of in OnResume() so that
+            // we don't open the selected fragment twice
+            _navigationDrawerManager.SelectInitialItem(Resource.Id.nav_gear_items_fragment);
 		}
 
 	    public override void OnPostCreate(Bundle savedInstanceState, PersistableBundle persistentState)
@@ -115,8 +119,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
             BackpackPlannerState.Instance.InitDatabaseAsync(new SQLitePlatformAndroid(),
                 System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), BackpackPlannerState.DatabaseName).Wait();
-
-            _navigationDrawerManager.SelectInitialItem(Resource.Id.nav_gear_items_fragment);
 	    }
 
 	    protected override void OnPause()
@@ -195,22 +197,22 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
         private void LoadPreferences()
         {
+            Logger.Debug("Setting default preferences...");
             PreferenceManager.SetDefaultValues(this, Resource.Xml.settings, false);
 
+            Logger.Debug("Loading preferences...");
             ISharedPreferences sharedPreferences = PreferenceManager.GetDefaultSharedPreferences(this);
-
-            string scratch;
 
             // NOTE: have to read these settings first so we know how to interpret everything else
             try {
-                scratch = sharedPreferences.GetString(BackpackPlannerSettings.UnitSystemPreferenceKey, "0");
+                string scratch = sharedPreferences.GetString(BackpackPlannerSettings.UnitSystemPreferenceKey, "0");
                 BackpackPlannerState.Instance.Settings.Units = (UnitSystem)Convert.ToInt32(scratch);
             } catch(FormatException) {
                 // it's k, we'll live
             }
 
             try {
-                scratch = sharedPreferences.GetString(BackpackPlannerSettings.CurrencyPreferenceKey, "0");
+                string scratch = sharedPreferences.GetString(BackpackPlannerSettings.CurrencyPreferenceKey, "0");
                 BackpackPlannerState.Instance.Settings.Currency = (Currency)Convert.ToInt32(scratch);
             } catch(FormatException) {
                 // it's k, we'll live
@@ -219,7 +221,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             BackpackPlannerState.Instance.PersonalInformation.Name = sharedPreferences.GetString(PersonalInformation.NamePreferenceKey, "");
 
             try {
-                scratch = sharedPreferences.GetString(PersonalInformation.DateOfBirthPreferenceKey, "");
+                string scratch = sharedPreferences.GetString(PersonalInformation.DateOfBirthPreferenceKey, "");
                 if(!string.IsNullOrWhiteSpace(scratch)) {
                     BackpackPlannerState.Instance.PersonalInformation.DateOfBirth = Convert.ToDateTime(scratch);
                 }
@@ -228,21 +230,21 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             }
 
             try {
-                scratch = sharedPreferences.GetString(PersonalInformation.UserSexPreferenceKey, "0");
+                string scratch = sharedPreferences.GetString(PersonalInformation.UserSexPreferenceKey, "0");
                 BackpackPlannerState.Instance.PersonalInformation.Sex = (UserSex)Convert.ToInt32(scratch);
             } catch(FormatException) {
                 // it's k, we'll live
             }
 
             try {
-                scratch = sharedPreferences.GetString(PersonalInformation.HeightPreferenceKey, "0");
+                string scratch = sharedPreferences.GetString(PersonalInformation.HeightPreferenceKey, "0");
                 BackpackPlannerState.Instance.PersonalInformation.HeightInUnits = Convert.ToInt32(scratch);
             } catch(FormatException) {
                 // it's k, we'll live
             }
 
             try {
-                scratch = sharedPreferences.GetString(PersonalInformation.WeightPreferenceKey, "0");
+                string scratch = sharedPreferences.GetString(PersonalInformation.WeightPreferenceKey, "0");
                 BackpackPlannerState.Instance.PersonalInformation.WeightInUnits = Convert.ToInt32(scratch);
             } catch(FormatException) {
                 // it's k, we'll live

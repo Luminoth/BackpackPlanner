@@ -282,69 +282,53 @@ namespace EnergonSoftware.BackpackPlanner
             );
 #endregion
 
-/*
 #region Test Gear Systems
-            ListItems.Add(new GearSystem
+            await DatabaseItem.InsertItemsAsync(new List<GearSystem>
                 {
-                    Name = "One"
-                }
-            );
-
-            ListItems.Add(new GearSystem
-                {
-                    Name = "Two"
-                }
-            );
-
-            ListItems.Add(new GearSystem
-                {
-                    Name = "Three"
-                }
-            );
-
-            ListItems.Add(new GearSystem
-                {
-                    Name = "Four"
-                }
-            );
-
-            ListItems.Add(new GearSystem
-                {
-                    Name = "Five"
-                }
-            );
-
-            ListItems.Add(new GearSystem
-                {
-                    Name = "Six"
-                }
-            );
-
-            ListItems.Add(new GearSystem
-                {
-                    Name = "Seven"
-                }
-            );
-
-            ListItems.Add(new GearSystem
-                {
-                    Name = "Eight"
-                }
-            );
-
-            ListItems.Add(new GearSystem
-                {
-                    Name = "Nine"
-                }
-            );
-
-            ListItems.Add(new GearSystem
-                {
-                    Name = "Ten"
+                    new GearSystem
+                    {
+                        Name = "One"
+                    },
+                    new GearSystem
+                    {
+                        Name = "Two"
+                    },
+                    new GearSystem
+                    {
+                        Name = "Three"
+                    },
+                    new GearSystem
+                    {
+                        Name = "Four"
+                    },
+                    new GearSystem
+                    {
+                        Name = "Five"
+                    },
+                    new GearSystem
+                    {
+                        Name = "Six"
+                    },
+                    new GearSystem
+                    {
+                        Name = "Seven"
+                    },
+                    new GearSystem
+                    {
+                        Name = "Eight"
+                    },
+                    new GearSystem
+                    {
+                        Name = "Nine"
+                    },
+                    new GearSystem
+                    {
+                        Name = "Ten"
+                    }
                 }
             );
 #endregion
-*/
+
 /*
 #region Test Gear Collections
             ListItems.Add(new GearCollection

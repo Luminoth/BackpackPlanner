@@ -27,7 +27,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
     /// <remarks>
     /// https://github.com/jamesmontemagno/Xamarin.Android-AppCompat/blob/master/ActionBarCompat/DrawerLayout/Helpers/MyActionBarDrawerToggle.cs
     /// </remarks>
-    public class DrawerToggle : Android.Support.V7.App.ActionBarDrawerToggle
+    public sealed class DrawerToggle : Android.Support.V7.App.ActionBarDrawerToggle
     {
 #region Events
         public event EventHandler<DrawerToggleEventArgs> DrawerClosedEvent;

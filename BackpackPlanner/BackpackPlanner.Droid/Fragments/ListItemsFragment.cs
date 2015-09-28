@@ -59,6 +59,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
             ListItems.AddRange(DatabaseItem.GetItemsAsync<T>().Result);
             Logger.Debug($"Read {ItemCount} items...");
+            Adapter.ListItems = ListItems;
 
             if(ListItems.Count > 0) {
                 TextView noItemsTextView = View.FindViewById<TextView>(NoItemsResource);

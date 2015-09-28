@@ -52,12 +52,16 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items
 
             public bool OnMenuItemClick(IMenuItem menuItem)
             {
-                // TODO
+                // TODO: do this generically
+                if(Resource.Id.action_delete_gear_item == menuItem.ItemId) {
+                    // TODO: delete Action
+                }
                 return true;
             }
 
             protected override Android.Support.V4.App.Fragment CreateViewItemFragment()
             {
+                // TODO: do this genericall with a CreateViewFragment() method
                 return new ViewGearItemFragment
                 {
                     Item = ListItem
@@ -86,7 +90,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items
 
         public override int LayoutResource => Resource.Layout.view_gear_item;
 
-        public GearItemListAdapter(ListItemsFragment<GearItem> fragment, IEnumerable<GearItem> listItems) : base(fragment, listItems)
+        public GearItemListAdapter(ListItemsFragment<GearItem> fragment) : base(fragment)
         {
         }
 

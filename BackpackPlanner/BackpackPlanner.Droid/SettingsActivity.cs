@@ -39,7 +39,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 {
     // this trainwreck is necessary until there's an AppCompatPreferenceFragment to work with
     [Activity(Label = "@string/title_settings")]
-    public class SettingsActivity : AppCompatPreferenceActivity, ISharedPreferencesOnSharedPreferenceChangeListener
+    public sealed class SettingsActivity : AppCompatPreferenceActivity, ISharedPreferencesOnSharedPreferenceChangeListener
     {
 #region Controls
         private EditTextPreference _namePreference;

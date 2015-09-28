@@ -38,6 +38,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                     return;
                 }
 
+                // TODO: this goes in an Action
                 //DatabaseItem.SaveItemAsync(Item).Wait();
 
                 Activity.SupportFragmentManager.PopBackStack();
