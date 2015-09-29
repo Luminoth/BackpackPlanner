@@ -27,8 +27,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 {
     public abstract class BaseListAdapter<T> : Android.Support.V7.Widget.RecyclerView.Adapter where T: DatabaseItem
     {
-        protected abstract class BaseViewHolder : Android.Support.V7.Widget.RecyclerView.ViewHolder
+        protected abstract class BaseViewHolder : Android.Support.V7.Widget.RecyclerView.ViewHolder, Android.Support.V7.Widget.Toolbar.IOnMenuItemClickListener
         {
+            protected abstract int DeleteActionResourceId { get; }
+
             private T _listItem;
 
             public T ListItem
@@ -51,6 +53,15 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
                 itemView.Click += (sender, args) => {
                     fragment.TransitionToFragment(Resource.Id.frame_content, CreateViewItemFragment(), null);
                 };
+            }
+
+            public virtual bool OnMenuItemClick(IMenuItem menuItem)
+            {
+                if(DeleteActionResourceId == menuItem.ItemId) {
+                    // TODO: delete Action
+                    return true;
+                }
+                return false;
             }
         }
 
@@ -75,7 +86,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
                     _listItems = new List<T>(value);
                     FilteredListItems = new List<T>(ListItems);
                 }
-                NotifyDataSetChanged();
             }
         }
 
@@ -84,12 +94,26 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
         protected IEnumerable<T> FilteredListItems
         {
             get { return _filteredListItems; }
-            set { _filteredListItems = value ?? new List<T>(ListItems); }
+
+            set
+            {
+                _filteredListItems = value ?? new List<T>(ListItems);
+                NotifyDataSetChanged();
+            }
         }
 
-        public abstract void SortByItemSelectedEventHander(object sender, AdapterView.ItemSelectedEventArgs args);
+        public void SortByItemSelectedEventHander(object sender, AdapterView.ItemSelectedEventArgs args)
+        {
+            // TODO: could/would this be made clearer somehow by using args.Id?
+            SortItemsByPosition(args.Position);
+        }
 
+        // TODO: should this work like sorting
+        // where this base handles the event
+        // and calls an abstract FilterBy*() method?
         public abstract void FilterItems(object sender, Android.Support.V7.Widget.SearchView.QueryTextChangeEventArgs args);
+
+        protected abstract void SortItemsByPosition(int position);
 
         protected abstract BaseViewHolder CreateViewHolder(View itemView);
 

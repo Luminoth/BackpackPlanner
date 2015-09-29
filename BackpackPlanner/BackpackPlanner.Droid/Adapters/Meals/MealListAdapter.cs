@@ -15,7 +15,6 @@
 */
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
@@ -31,8 +30,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
 {
     public class MealListAdapter : BaseListAdapter<Meal>
     {
-        private class MealViewHolder : BaseViewHolder, Android.Support.V7.Widget.Toolbar.IOnMenuItemClickListener
+        private class MealViewHolder : BaseViewHolder
         {
+            protected override int DeleteActionResourceId => Resource.Id.action_delete_meal;
+
             private readonly Android.Support.V7.Widget.Toolbar _toolbar;
 
             private readonly TextView _textViewServings;
@@ -48,14 +49,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
                 _textViewServings = itemView.FindViewById<TextView>(Resource.Id.view_meal_servings);
                 _textViewWeight = itemView.FindViewById<TextView>(Resource.Id.view_meal_weight);
                 _textViewCost = itemView.FindViewById<TextView>(Resource.Id.view_meal_cost);
-            }
-
-            public bool OnMenuItemClick(IMenuItem menuItem)
-            {
-                if(Resource.Id.action_delete_meal == menuItem.ItemId) {
-                    // TODO: delete Action
-                }
-                return true;
             }
 
             protected override Android.Support.V4.App.Fragment CreateViewItemFragment()
@@ -84,10 +77,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
         {
         }
 
-        public override void SortByItemSelectedEventHander(object sender, AdapterView.ItemSelectedEventArgs args)
+        protected override void SortItemsByPosition(int position)
         {
-            // TODO: can this be made clearer somehow by using args.Id?
-            switch(args.Position)
+            switch(position)
             {
             case 0:         // Name
                 FilteredListItems = FilteredListItems.OrderBy(x => x.Name, StringComparer.CurrentCulture);
@@ -108,13 +100,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
                 // TODO
                 break;
             }
-            NotifyDataSetChanged();
         }
 
         public override void FilterItems(object sender, Android.Support.V7.Widget.SearchView.QueryTextChangeEventArgs args)
         {
             FilteredListItems = from item in ListItems where item.Name.ToLower().Contains(args.NewText) select item;
-            NotifyDataSetChanged();
         }
 
         protected override BaseViewHolder CreateViewHolder(View itemView)

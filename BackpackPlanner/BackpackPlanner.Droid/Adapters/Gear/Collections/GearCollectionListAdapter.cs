@@ -15,7 +15,6 @@
 */
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
@@ -31,8 +30,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Collections
 {
     public class GearCollectionListAdapter : BaseListAdapter<GearCollection>
     {
-        private class GearCollectionViewHolder : BaseViewHolder, Android.Support.V7.Widget.Toolbar.IOnMenuItemClickListener
+        private class GearCollectionViewHolder : BaseViewHolder
         {
+            protected override int DeleteActionResourceId => Resource.Id.action_delete_gear_collection;
+
             private readonly Android.Support.V7.Widget.Toolbar _toolbar;
 
             private readonly TextView _textViewSystems;
@@ -50,14 +51,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Collections
                 _textViewItems = itemView.FindViewById<TextView>(Resource.Id.view_gear_collection_items);
                 _textViewWeight = itemView.FindViewById<TextView>(Resource.Id.view_gear_collection_weight);
                 _textViewCost = itemView.FindViewById<TextView>(Resource.Id.view_gear_collection_cost);
-            }
-
-            public bool OnMenuItemClick(IMenuItem menuItem)
-            {
-                if(Resource.Id.action_delete_gear_collection == menuItem.ItemId) {
-                    // TODO: delete Action
-                }
-                return true;
             }
 
             protected override Android.Support.V4.App.Fragment CreateViewItemFragment()
@@ -87,10 +80,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Collections
         {
         }
 
-        public override void SortByItemSelectedEventHander(object sender, AdapterView.ItemSelectedEventArgs args)
+        protected override void SortItemsByPosition(int position)
         {
-            // TODO: can this be made clearer somehow by using args.Id?
-            switch(args.Position)
+            switch(position)
             {
             case 0:         // Name
                 FilteredListItems = FilteredListItems.OrderBy(x => x.Name, StringComparer.CurrentCulture);
@@ -108,13 +100,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Collections
                 // TODO
                 break;
             }
-            NotifyDataSetChanged();
         }
 
         public override void FilterItems(object sender, Android.Support.V7.Widget.SearchView.QueryTextChangeEventArgs args)
         {
             FilteredListItems = from item in ListItems where item.Name.ToLower().Contains(args.NewText) select item;
-            NotifyDataSetChanged();
         }
 
         protected override BaseViewHolder CreateViewHolder(View itemView)

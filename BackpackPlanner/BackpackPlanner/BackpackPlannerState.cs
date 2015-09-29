@@ -329,328 +329,264 @@ namespace EnergonSoftware.BackpackPlanner
             );
 #endregion
 
-/*
 #region Test Gear Collections
-            ListItems.Add(new GearCollection
+            await DatabaseItem.InsertItemsAsync(new List<GearCollection>
                 {
-                    Name = "One"
-                }
-            );
-
-            ListItems.Add(new GearCollection
-                {
-                    Name = "Two"
-                }
-            );
-
-            ListItems.Add(new GearCollection
-                {
-                    Name = "Three"
-                }
-            );
-
-            ListItems.Add(new GearCollection
-                {
-                    Name = "Four"
-                }
-            );
-
-            ListItems.Add(new GearCollection
-                {
-                    Name = "Five"
-                }
-            );
-
-            ListItems.Add(new GearCollection
-                {
-                    Name = "Six"
-                }
-            );
-
-            ListItems.Add(new GearCollection
-                {
-                    Name = "Seven"
-                }
-            );
-
-            ListItems.Add(new GearCollection
-                {
-                    Name = "Eight"
-                }
-            );
-
-            ListItems.Add(new GearCollection
-                {
-                    Name = "Nine"
-                }
-            );
-
-            ListItems.Add(new GearCollection
-                {
-                    Name = "Ten"
+                    new GearCollection
+                    {
+                        Name = "One"
+                    },
+                    new GearCollection
+                    {
+                        Name = "Two"
+                    },
+                    new GearCollection
+                    {
+                        Name = "Three"
+                    },
+                    new GearCollection
+                    {
+                        Name = "Four"
+                    },
+                    new GearCollection
+                    {
+                        Name = "Five"
+                    },
+                    new GearCollection
+                    {
+                        Name = "Six"
+                    },
+                    new GearCollection
+                    {
+                        Name = "Seven"
+                    },
+                    new GearCollection
+                    {
+                        Name = "Eight"
+                    },
+                    new GearCollection
+                    {
+                        Name = "Nine"
+                    },
+                    new GearCollection
+                    {
+                        Name = "Ten"
+                    }
                 }
             );
 #endregion
-*/
-/*
+
 #region Test Meals
-            ListItems.Add(new Meal
+            await DatabaseItem.InsertItemsAsync(new List<Meal>
                 {
-                    Name = "One",
-                    MealTime = MealTime.Dinner,
-                    ServingCount = 1,
-                    Calories = 50,
-                    ProteinInGrams = 1,
-                    FiberInGrams = 1,
-                    WeightInGrams = 1,
-                    CostInUSDP = 20
-                }
-            );
-
-            ListItems.Add(new Meal
-                {
-                    Name = "Two",
-                    MealTime = MealTime.Dinner,
-                    ServingCount = 1,
-                    Calories = 50,
-                    ProteinInGrams = 1,
-                    FiberInGrams = 1,
-                    WeightInGrams = 2,
-                    CostInUSDP = 19
-                }
-            );
-
-            ListItems.Add(new Meal
-                {
-                    Name = "Three",
-                    MealTime = MealTime.Dinner,
-                    ServingCount = 1,
-                    Calories = 50,
-                    ProteinInGrams = 1,
-                    FiberInGrams = 1,
-                    WeightInGrams = 3,
-                    CostInUSDP = 18
-                }
-            );
-
-            ListItems.Add(new Meal
-                {
-                    Name = "Four",
-                    MealTime = MealTime.Dinner,
-                    ServingCount = 1,
-                    Calories = 50,
-                    ProteinInGrams = 1,
-                    FiberInGrams = 1,
-                    WeightInGrams = 4,
-                    CostInUSDP = 17
-                }
-            );
-
-            ListItems.Add(new Meal
-                {
-                    Name = "Five",
-                    MealTime = MealTime.Dinner,
-                    ServingCount = 1,
-                    Calories = 50,
-                    ProteinInGrams = 1,
-                    FiberInGrams = 1,
-                    WeightInGrams = 5,
-                    CostInUSDP = 16
-                }
-            );
-
-            ListItems.Add(new Meal
-                {
-                    Name = "Six",
-                    MealTime = MealTime.Dinner,
-                    ServingCount = 1,
-                    Calories = 50,
-                    ProteinInGrams = 1,
-                    FiberInGrams = 1,
-                    WeightInGrams = 6,
-                    CostInUSDP = 15
-                }
-            );
-
-            ListItems.Add(new Meal
-                {
-                    Name = "Seven",
-                    MealTime = MealTime.Dinner,
-                    ServingCount = 1,
-                    Calories = 50,
-                    ProteinInGrams = 1,
-                    FiberInGrams = 1,
-                    WeightInGrams = 7,
-                    CostInUSDP = 14
-                }
-            );
-
-            ListItems.Add(new Meal
-                {
-                    Name = "Eight",
-                    MealTime = MealTime.Dinner,
-                    ServingCount = 1,
-                    Calories = 50,
-                    ProteinInGrams = 1,
-                    FiberInGrams = 1,
-                    WeightInGrams = 8,
-                    CostInUSDP = 13
-                }
-            );
-
-            ListItems.Add(new Meal
-                {
-                    Name = "Nine",
-                    MealTime = MealTime.Dinner,
-                    ServingCount = 1,
-                    Calories = 50,
-                    ProteinInGrams = 1,
-                    FiberInGrams = 1,
-                    WeightInGrams = 9,
-                    CostInUSDP = 12
-                }
-            );
-
-            ListItems.Add(new Meal
-                {
-                    Name = "Ten",
-                    MealTime = MealTime.Dinner,
-                    ServingCount = 1,
-                    Calories = 50,
-                    ProteinInGrams = 1,
-                    FiberInGrams = 1,
-                    WeightInGrams = 10,
-                    CostInUSDP = 11
+                    new Meal
+                    {
+                        Name = "One",
+                        MealTime = MealTime.Dinner,
+                        ServingCount = 1,
+                        Calories = 50,
+                        ProteinInGrams = 1,
+                        FiberInGrams = 1,
+                        WeightInGrams = 1,
+                        CostInUSDP = 20
+                    },
+                    new Meal
+                    {
+                        Name = "Two",
+                        MealTime = MealTime.Dinner,
+                        ServingCount = 1,
+                        Calories = 50,
+                        ProteinInGrams = 1,
+                        FiberInGrams = 1,
+                        WeightInGrams = 2,
+                        CostInUSDP = 19
+                    },
+                    new Meal
+                    {
+                        Name = "Three",
+                        MealTime = MealTime.Dinner,
+                        ServingCount = 1,
+                        Calories = 50,
+                        ProteinInGrams = 1,
+                        FiberInGrams = 1,
+                        WeightInGrams = 3,
+                        CostInUSDP = 18
+                    },
+                    new Meal
+                    {
+                        Name = "Four",
+                        MealTime = MealTime.Dinner,
+                        ServingCount = 1,
+                        Calories = 50,
+                        ProteinInGrams = 1,
+                        FiberInGrams = 1,
+                        WeightInGrams = 4,
+                        CostInUSDP = 17
+                    },
+                    new Meal
+                    {
+                        Name = "Five",
+                        MealTime = MealTime.Dinner,
+                        ServingCount = 1,
+                        Calories = 50,
+                        ProteinInGrams = 1,
+                        FiberInGrams = 1,
+                        WeightInGrams = 5,
+                        CostInUSDP = 16
+                    },
+                    new Meal
+                    {
+                        Name = "Six",
+                        MealTime = MealTime.Dinner,
+                        ServingCount = 1,
+                        Calories = 50,
+                        ProteinInGrams = 1,
+                        FiberInGrams = 1,
+                        WeightInGrams = 6,
+                        CostInUSDP = 15
+                    },
+                    new Meal
+                    {
+                        Name = "Seven",
+                        MealTime = MealTime.Dinner,
+                        ServingCount = 1,
+                        Calories = 50,
+                        ProteinInGrams = 1,
+                        FiberInGrams = 1,
+                        WeightInGrams = 7,
+                        CostInUSDP = 14
+                    },
+                    new Meal
+                    {
+                        Name = "Eight",
+                        MealTime = MealTime.Dinner,
+                        ServingCount = 1,
+                        Calories = 50,
+                        ProteinInGrams = 1,
+                        FiberInGrams = 1,
+                        WeightInGrams = 8,
+                        CostInUSDP = 13
+                    },
+                    new Meal
+                    {
+                        Name = "Nine",
+                        MealTime = MealTime.Dinner,
+                        ServingCount = 1,
+                        Calories = 50,
+                        ProteinInGrams = 1,
+                        FiberInGrams = 1,
+                        WeightInGrams = 9,
+                        CostInUSDP = 12
+                    },
+                    new Meal
+                    {
+                        Name = "Ten",
+                        MealTime = MealTime.Dinner,
+                        ServingCount = 1,
+                        Calories = 50,
+                        ProteinInGrams = 1,
+                        FiberInGrams = 1,
+                        WeightInGrams = 10,
+                        CostInUSDP = 11
+                    }
                 }
             );
 #endregion
-*/
-/*
+
 #region Test Trip Itineraries
-            ListItems.Add(new TripItinerary
+            await DatabaseItem.InsertItemsAsync(new List<TripItinerary>
                 {
-                    Name = "One"
-                }
-            );
-
-            ListItems.Add(new TripItinerary
-                {
-                    Name = "Two"
-                }
-            );
-
-            ListItems.Add(new TripItinerary
-                {
-                    Name = "Three"
-                }
-            );
-
-            ListItems.Add(new TripItinerary
-                {
-                    Name = "Four"
-                }
-            );
-
-            ListItems.Add(new TripItinerary
-                {
-                    Name = "Five"
-                }
-            );
-
-            ListItems.Add(new TripItinerary
-                {
-                    Name = "Six"
-                }
-            );
-
-            ListItems.Add(new TripItinerary
-                {
-                    Name = "Seven"
-                }
-            );
-
-            ListItems.Add(new TripItinerary
-                {
-                    Name = "Eight"
-                }
-            );
-
-            ListItems.Add(new TripItinerary
-                {
-                    Name = "Nine"
-                }
-            );
-
-            ListItems.Add(new TripItinerary
-                {
-                    Name = "Ten"
+                    new TripItinerary
+                    {
+                        Name = "One"
+                    },
+                    new TripItinerary
+                    {
+                        Name = "Two"
+                    },
+                    new TripItinerary
+                    {
+                        Name = "Three"
+                    },
+                    new TripItinerary
+                    {
+                        Name = "Four"
+                    },
+                    new TripItinerary
+                    {
+                        Name = "Five"
+                    },
+                    new TripItinerary
+                    {
+                        Name = "Six"
+                    },
+                    new TripItinerary
+                    {
+                        Name = "Seven"
+                    },
+                    new TripItinerary
+                    {
+                        Name = "Eight"
+                    },
+                    new TripItinerary
+                    {
+                        Name = "Nine"
+                    },
+                    new TripItinerary
+                    {
+                        Name = "Ten"
+                    }
                 }
             );
 #endregion
-*/
-/*
+
 #region Test Trip Plans
-            ListItems.Add(new TripPlan
+            await DatabaseItem.InsertItemsAsync(new List<TripPlan>
                 {
-                    Name = "One"
-                }
-            );
-
-            ListItems.Add(new TripPlan
-                {
-                    Name = "Two"
-                }
-            );
-
-            ListItems.Add(new TripPlan
-                {
-                    Name = "Three"
-                }
-            );
-
-            ListItems.Add(new TripPlan
-                {
-                    Name = "Four"
-                }
-            );
-
-            ListItems.Add(new TripPlan
-                {
-                    Name = "Five"
-                }
-            );
-
-            ListItems.Add(new TripPlan
-                {
-                    Name = "Six"
-                }
-            );
-
-            ListItems.Add(new TripPlan
-                {
-                    Name = "Seven"
-                }
-            );
-
-            ListItems.Add(new TripPlan
-                {
-                    Name = "Eight"
-                }
-            );
-
-            ListItems.Add(new TripPlan
-                {
-                    Name = "Nine"
-                }
-            );
-
-            ListItems.Add(new TripPlan
-                {
-                    Name = "Ten"
+                    new TripPlan
+                    {
+                        Name = "One"
+                    },
+                    new TripPlan
+                    {
+                        Name = "Two"
+                    },
+                    new TripPlan
+                    {
+                        Name = "Three"
+                    },
+                    new TripPlan
+                    {
+                        Name = "Four"
+                    },
+                    new TripPlan
+                    {
+                        Name = "Five"
+                    },
+                    new TripPlan
+                    {
+                        Name = "Six"
+                    },
+                    new TripPlan
+                    {
+                        Name = "Seven"
+                    },
+                    new TripPlan
+                    {
+                        Name = "Eight"
+                    },
+                    new TripPlan
+                    {
+                        Name = "Nine"
+                    },
+                    new TripPlan
+                    {
+                        Name = "Ten"
+                    }
                 }
             );
 #endregion
-*/
+
             Logger.Debug("Finished populating test data!");
 #endif
         }

@@ -94,7 +94,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries
         [MaxLength(1024)]
         public string Note { get; set; } = string.Empty;
 
-        [ManyToOne(CascadeOperations = CascadeOperation.CascadeRead, ReadOnly = true)]
+        [OneToMany(CascadeOperations = CascadeOperation.CascadeRead, ReadOnly = true)]
         public List<TripPlan> TripPlans { get; set; }
 
         [Ignore]

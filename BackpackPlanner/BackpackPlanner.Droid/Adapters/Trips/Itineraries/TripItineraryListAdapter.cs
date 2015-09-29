@@ -15,7 +15,6 @@
 */
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 using Android.Views;
@@ -29,8 +28,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Itineraries
 {
     public class TripItineraryListAdapter : BaseListAdapter<TripItinerary>
     {
-        private class TripItineraryViewHolder : BaseViewHolder, Android.Support.V7.Widget.Toolbar.IOnMenuItemClickListener
+        private class TripItineraryViewHolder : BaseViewHolder
         {
+            protected override int DeleteActionResourceId => Resource.Id.action_delete_trip_itinerary;
+
             private readonly Android.Support.V7.Widget.Toolbar _toolbar;
 
             public TripItineraryViewHolder(View itemView, ListItemsFragment<TripItinerary> fragment) : base(itemView, fragment)
@@ -38,14 +39,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Itineraries
                 _toolbar = itemView.FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.view_trip_itinerary_toolbar);
                 _toolbar.InflateMenu(Resource.Menu.trip_itinerary_menu);
                 _toolbar.SetOnMenuItemClickListener(this);
-            }
-
-            public bool OnMenuItemClick(IMenuItem menuItem)
-            {
-                if(Resource.Id.action_delete_trip_itinerary == menuItem.ItemId) {
-                    // TODO: delete Action
-                }
-                return true;
             }
 
             protected override Android.Support.V4.App.Fragment CreateViewItemFragment()
@@ -68,10 +61,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Itineraries
         {
         }
 
-        public override void SortByItemSelectedEventHander(object sender, AdapterView.ItemSelectedEventArgs args)
+        protected override void SortItemsByPosition(int position)
         {
-            // TODO: can this be made clearer somehow by using args.Id?
-            switch(args.Position)
+            switch(position)
             {
             case 0:         // Name
                 FilteredListItems = FilteredListItems.OrderBy(x => x.Name, StringComparer.CurrentCulture);
@@ -82,7 +74,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Itineraries
         public override void FilterItems(object sender, Android.Support.V7.Widget.SearchView.QueryTextChangeEventArgs args)
         {
             FilteredListItems = from item in ListItems where item.Name.ToLower().Contains(args.NewText) select item;
-            NotifyDataSetChanged();
         }
 
         protected override BaseViewHolder CreateViewHolder(View itemView)

@@ -53,6 +53,19 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         protected abstract BaseListAdapter<T> CreateAdapter();
 
+        public override void OnViewCreated(View view, Bundle savedInstanceState)
+        {
+            base.OnViewCreated(view, savedInstanceState);
+
+            Adapter = CreateAdapter();
+            Layout.SetAdapter(Adapter);
+
+            Android.Support.Design.Widget.FloatingActionButton addItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(AddItemResource);
+            addItemButton.Click += (sender, args) => {
+                TransitionToFragment(Resource.Id.frame_content, CreateAddItemFragment(), null);
+            };
+        }
+
         public override void OnResume()
         {
             base.OnResume();
@@ -81,19 +94,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
             Logger.Debug("Clearing item list for pause...");
             ListItems.Clear();
-        }
-
-        public override void OnViewCreated(View view, Bundle savedInstanceState)
-        {
-            base.OnViewCreated(view, savedInstanceState);
-
-            Adapter = CreateAdapter();
-            Layout.SetAdapter(Adapter);
-
-            Android.Support.Design.Widget.FloatingActionButton addItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(AddItemResource);
-            addItemButton.Click += (sender, args) => {
-                TransitionToFragment(Resource.Id.frame_content, CreateAddItemFragment(), null);
-            };
         }
 
         public override void OnCreateOptionsMenu(IMenu menu, MenuInflater inflater)
