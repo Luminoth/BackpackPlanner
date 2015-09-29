@@ -18,7 +18,7 @@
                 android:id="@+id/button_what_trip_plan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/label_trip_plans"
+                android:text="@string/label_what_trip_plan"
                 android:drawableLeft="@drawable/ic_help"
                 style="?android:attr/borderlessButtonStyle" />
             <TextView

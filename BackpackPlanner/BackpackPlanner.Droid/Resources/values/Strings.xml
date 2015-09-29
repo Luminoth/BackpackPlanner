@@ -14,38 +14,58 @@
 
     <string name="label_sort">Sort by</string>
 
+    <!-- What is a text -->
+
+    <string name="what_is_a_gear_item">Lots of text about gear items</string>
+
+    <string name="what_is_a_gear_system">Lots of text about gear systems</string>
+
+    <string name="what_is_a_gear_collection">Lots of text about gear collections</string>
+
+    <string name="what_is_a_meal">Lots of text about meals</string>
+
+    <string name="what_is_a_trip_itinerary">Lots of text about trip itineraries</string>
+
+    <string name="what_is_a_trip_plan">Lots of text about trip plans</string>
+
     <!-- Fragment titles -->
 
     <string name="title_gear_items">Gear Items</string>
     <string name="title_add_gear_item">Add a Gear Item</string>
     <string name="title_view_gear_item">Gear Item</string>
+    <string name="title_what_gear_item">What is a Gear Item</string>
 
     <string name="title_gear_systems">Gear Systems</string>
     <string name="title_add_gear_system">Add a Gear System</string>
     <string name="title_view_gear_system">Gear System</string>
+    <string name="title_what_gear_system">What is a Gear System</string>
 
     <string name="title_gear_collections">Gear Collections</string>
     <string name="title_add_gear_collection">Add a Gear Collection</string>
     <string name="title_view_gear_collection">Gear Collection</string>
+    <string name="title_what_gear_collection">What is a Gear Collection</string>
 
     <string name="title_meals">Meals</string>
     <string name="title_add_meal">Add a Meal</string>
     <string name="title_view_meal">Meal</string>
+    <string name="title_what_meal">What is a Meal</string>
 
     <string name="title_trip_itineraries">Trip Itineraries</string>
     <string name="title_add_trip_itinerary">Add a Trip Itinerary</string>
     <string name="title_view_trip_itinerary">Trip Itinerary</string>
+    <string name="title_what_trip_itinerary">What is a Trip Itinerary</string>
 
     <string name="title_trip_plans">Trip Plans</string>
     <string name="title_add_trip_plan">Add a Trip Plan</string>
     <string name="title_view_trip_plan">Trip Plan</string>
+    <string name="title_what_trip_plan">What is a Trip Plan</string>
 
     <string name="title_settings">Settings</string>
     <string name="title_help">Help &amp; feedback</string>
 
     <!-- Gear Items -->
 
-    <string name="label_gear_items">What is a gear item?</string>
+    <string name="label_what_gear_item">What is a gear item?</string>
     <string name="label_no_gear_items">You have no gear items! Try adding one!</string>
 
     <string name="label_gear_item_name">Name</string>
@@ -66,7 +86,7 @@
 
     <!-- Gear Systems -->
 
-    <string name="label_gear_systems">What is a gear system?</string>
+    <string name="label_what_gear_system">What is a gear system?</string>
     <string name="label_no_gear_systems">You have no gear systems! Try adding one!</string>
 
     <string name="label_gear_system_name">Name</string>
@@ -77,7 +97,7 @@
 
     <!-- Gear Collections -->
 
-    <string name="label_gear_collections">What is a gear collection?</string>
+    <string name="label_what_gear_collection">What is a gear collection?</string>
     <string name="label_no_gear_collections">You have no gear collections! Try adding one!</string>
 
     <string name="label_gear_collection_name">Name</string>
@@ -88,7 +108,7 @@
 
     <!-- Meals -->
 
-    <string name="label_meals">What is a meal?</string>
+    <string name="label_what_meal">What is a meal?</string>
     <string name="label_no_meals">You have no meals! Try adding one!</string>
 
     <string name="label_meal_name">Name</string>
@@ -99,7 +119,7 @@
 
     <!-- Trip Itineraries -->
 
-    <string name="label_trip_itineraries">What is a trip itinerary?</string>
+    <string name="label_what_trip_itinerary">What is a trip itinerary?</string>
     <string name="label_no_trip_itineraries">You have no trip itineraries! Try adding one!</string>
 
     <string name="label_trip_itinerary_name">Name</string>
@@ -110,7 +130,7 @@
 
     <!-- Trip Plans -->
 
-    <string name="label_trip_plans">What is a trip plan?</string>
+    <string name="label_what_trip_plan">What is a trip plan?</string>
     <string name="label_no_trip_plans">You have no trip plans! Try adding one!</string>
 
     <string name="label_trip_plan_name">Name</string>

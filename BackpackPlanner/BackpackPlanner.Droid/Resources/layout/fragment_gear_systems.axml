@@ -18,7 +18,7 @@
                 android:id="@+id/button_what_gear_system"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/label_gear_systems"
+                android:text="@string/label_what_gear_system"
                 android:drawableLeft="@drawable/ic_help"
                 style="?android:attr/borderlessButtonStyle" />
             <TextView

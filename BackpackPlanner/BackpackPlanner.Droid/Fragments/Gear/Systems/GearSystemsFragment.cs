@@ -28,6 +28,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 
         protected override int ListLayoutResource => Resource.Id.gear_systems_layout;
 
+        protected override int WhatIsAnItemButtonResource => Resource.Id.button_what_gear_system;
+
+        protected override int WhatIsAnItemTitleResource => Resource.String.title_what_gear_system;
+
+        protected override int WhatIsAnItemTextResource => Resource.String.what_is_a_gear_system;
+
         protected override int NoItemsResource => Resource.Id.no_gear_systems;
 
         protected override int SortItemsResource => Resource.Id.gear_systems_sort;

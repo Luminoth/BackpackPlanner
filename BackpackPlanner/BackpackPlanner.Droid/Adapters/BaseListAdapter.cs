@@ -31,6 +31,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
         {
             protected abstract int DeleteActionResourceId { get; }
 
+            private BaseFragment _fragment;
+
             private T _listItem;
 
             public T ListItem
@@ -50,8 +52,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
             protected BaseViewHolder(View itemView, BaseFragment fragment) : base(itemView)
             {
+                _fragment = fragment;
+
                 itemView.Click += (sender, args) => {
-                    fragment.TransitionToFragment(Resource.Id.frame_content, CreateViewItemFragment(), null);
+                    _fragment.TransitionToFragment(Resource.Id.frame_content, CreateViewItemFragment(), null);
                 };
             }
 
@@ -59,6 +63,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
             {
                 if(DeleteActionResourceId == menuItem.ItemId) {
                     // TODO: delete Action
+                    Android.Support.Design.Widget.Snackbar.Make(_fragment.View, "make me a resource id", Android.Support.Design.Widget.Snackbar.LengthLong)
+                        .SetAction("undo", view => {
+                            }
+                        ).Show();
                     return true;
                 }
                 return false;

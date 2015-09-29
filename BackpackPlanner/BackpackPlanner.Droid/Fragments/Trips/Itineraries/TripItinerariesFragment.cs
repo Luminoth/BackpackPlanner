@@ -28,6 +28,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries
 
         protected override int ListLayoutResource => Resource.Id.trip_itineraries_layout;
 
+        protected override int WhatIsAnItemButtonResource => Resource.Id.button_what_trip_itinerary;
+
+        protected override int WhatIsAnItemTitleResource => Resource.String.title_what_trip_itinerary;
+
+        protected override int WhatIsAnItemTextResource => Resource.String.what_is_a_trip_itinerary;
+
         protected override int NoItemsResource => Resource.Id.no_trip_itineraries;
 
         protected override int SortItemsResource => Resource.Id.trip_itineraries_sort;

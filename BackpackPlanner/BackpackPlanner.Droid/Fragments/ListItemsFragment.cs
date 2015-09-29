@@ -21,6 +21,7 @@ using Android.Views;
 using Android.Widget;
 
 using EnergonSoftware.BackpackPlanner.Droid.Adapters;
+using EnergonSoftware.BackpackPlanner.Droid.Fragments.Dialogs;
 using EnergonSoftware.BackpackPlanner.Logging;
 using EnergonSoftware.BackpackPlanner.Models;
 
@@ -32,6 +33,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
     public abstract class ListItemsFragment<T> : RecyclerFragment where T: DatabaseItem
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(ListItemsFragment<T>));
+
+        protected abstract int WhatIsAnItemButtonResource { get; }
+
+        protected abstract int WhatIsAnItemTitleResource { get; }
+
+        protected abstract int WhatIsAnItemTextResource { get; }
 
         protected abstract int NoItemsResource { get; }
 
@@ -59,6 +66,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
             Adapter = CreateAdapter();
             Layout.SetAdapter(Adapter);
+
+            Button whatIsAButton = view.FindViewById<Button>(WhatIsAnItemButtonResource);
+            whatIsAButton.Click += (sender, args) => {
+                WhatIsADialog dialog = new WhatIsADialog(WhatIsAnItemTextResource, WhatIsAnItemTitleResource);
+                dialog.Show(FragmentManager, null);
+            };
 
             Android.Support.Design.Widget.FloatingActionButton addItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(AddItemResource);
             addItemButton.Click += (sender, args) => {

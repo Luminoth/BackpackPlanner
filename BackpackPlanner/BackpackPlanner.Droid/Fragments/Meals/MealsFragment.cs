@@ -28,6 +28,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
 
        protected override int ListLayoutResource => Resource.Id.meals_layout;
 
+        protected override int WhatIsAnItemButtonResource => Resource.Id.button_what_meal;
+
+        protected override int WhatIsAnItemTitleResource => Resource.String.title_what_meal;
+
+        protected override int WhatIsAnItemTextResource => Resource.String.what_is_a_meal;
+
         protected override int NoItemsResource => Resource.Id.no_meals;
 
         protected override int SortItemsResource => Resource.Id.meals_sort;

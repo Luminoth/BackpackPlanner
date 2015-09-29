@@ -21,6 +21,7 @@ using Android.OS;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Util
 {
+    // TODO: why does this exist? it's not used and DatePickerDialog does the correct thing, no?
     public class DatePickerFragment : Android.Support.V4.App.DialogFragment
     {
         // TODO: this may not be the "best" way to do this

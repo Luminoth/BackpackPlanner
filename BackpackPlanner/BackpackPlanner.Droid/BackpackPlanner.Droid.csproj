@@ -138,6 +138,7 @@
     <Compile Include="Fragments\AddItemFragment.cs" />
     <Compile Include="Fragments\BaseFragment.cs" />
     <Compile Include="Fragments\DataFragment.cs" />
+    <Compile Include="Fragments\Dialogs\WhatIsADialog.cs" />
     <Compile Include="Fragments\Gear\Collections\ViewGearCollectionFragment.cs" />
     <Compile Include="Fragments\Gear\Items\ViewGearItemFragment.cs" />
     <Compile Include="Fragments\Gear\Systems\AddGearSystemFragment.cs" />
