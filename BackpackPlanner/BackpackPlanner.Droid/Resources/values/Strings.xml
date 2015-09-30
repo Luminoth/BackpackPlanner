@@ -142,26 +142,34 @@
     <!-- Settings -->
 
     <string name="title_personal_information">Personal Information</string>
-    <string name="label_personal_information">Your personal information</string>
 
+    <string name="title_name">Your name</string>
     <string name="label_name">Your name</string>
     <string name="summary_name">Enter your name</string>
 
+    <string name="title_birthdate">Your date of birth</string>
     <string name="label_birthdate">Your date of birth</string>
     <string name="summary_birthdate">Enter your date of birth</string>
 
+    <string name="title_user_sex">Your sex</string>
     <string name="label_user_sex">Your sex</string>
     <string name="summary_user_sex">Select your sex</string>
 
+    <string name="title_height">Your height in</string>
     <string name="label_height">Your height in</string>
     <string name="summary_height">Enter your height in units</string>
 
+    <string name="title_weight">Your weight in</string>
     <string name="label_weight">Your weight in</string>
     <string name="summary_weight">Enter your weight in units</string>
 
+    <string name="title_units">Unit Settings</string>
+
+    <string name="title_unit_system">Preferred unit system</string>
     <string name="label_unit_system">Preferred unit system</string>
     <string name="summary_unit_system">Select your preferred unit system</string>
 
+    <string name="title_currency">Preferred currency</string>
     <string name="label_currency">Preferred currency</string>
     <string name="summary_currency">Select your preferred currency</string>
 

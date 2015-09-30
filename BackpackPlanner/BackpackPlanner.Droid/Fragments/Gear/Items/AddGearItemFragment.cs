@@ -67,10 +67,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
                 _gearItemConsumedEditText.Visibility = args.IsChecked ? ViewStates.Visible : ViewStates.Gone;
             };
 
-            _gearItemWeightEditText.SetHint(
-                Resources.GetString(Resource.String.label_gear_item_weight) + " " + BackpackPlannerState.Instance.Settings.Units.GetSmallWeightString());
-            _gearItemCostEditText.SetHint(
-                Resources.GetString(Resource.String.label_gear_item_cost) + " " + BackpackPlannerState.Instance.Settings.Currency.GetCurrencyString());
+            _gearItemWeightEditText.Hint =
+                $"{Resources.GetString(Resource.String.label_gear_item_weight)} {BackpackPlannerState.Instance.Settings.Units.GetSmallWeightString()}";
+            _gearItemCostEditText.Hint =
+                $"{Resources.GetString(Resource.String.label_gear_item_cost)} {BackpackPlannerState.Instance.Settings.Currency.GetCurrencyString()}";
         }
 
         protected override void OnDoDataExchange()

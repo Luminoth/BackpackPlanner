@@ -1,49 +1,61 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
-    <PreferenceScreen
-        android:key="personalInformation"
-        android:title="@string/label_personal_information"
-        android:persistent="false">
-        <EditTextPreference android:title="@string/label_name"
+    <PreferenceCategory
+        android:title="@string/title_personal_information">
+        <EditTextPreference
+            android:title="@string/label_name"
+            android:dialogTitle="@string/title_name"
             android:key="personalInformationName"
             android:summary="@string/summary_name"
             android:inputType="text|textCapWords"
             android:defaultValue="" />
-        <EditTextPreference android:title="@string/label_birthdate"
+        <EditTextPreference
+            android:title="@string/label_birthdate"
+            android:dialogTitle="@string/title_birthdate"
             android:key="personalInformationBirthdate"
             android:summary="@string/summary_birthdate"
             android:inputType="date"
             android:defaultValue="" />
         <ListPreference
             android:title="@string/label_user_sex"
+            android:dialogTitle="@string/title_user_sex"
             android:summary="@string/summary_user_sex"
             android:key="personalInformationSex"
             android:entries="@array/user_sex_entries"
             android:entryValues="@array/user_sex_values"
             android:defaultValue="0" />
-        <EditTextPreference android:title="@string/label_height"
+        <EditTextPreference
+            android:title="@string/label_height"
+            android:dialogTitle="@string/title_height"
             android:key="personalInformationHeight"
             android:summary="@string/summary_height"
             android:inputType="number"
             android:defaultValue="0" />
-        <EditTextPreference android:title="@string/label_weight"
+        <EditTextPreference
+            android:title="@string/label_weight"
+            android:dialogTitle="@string/title_weight"
             android:key="personalInformationWeight"
             android:summary="@string/summary_weight"
             android:inputType="number"
             android:defaultValue="0" />
-    </PreferenceScreen>
-    <ListPreference
-        android:title="@string/label_unit_system"
-        android:summary="@string/summary_unit_system"
-        android:key="unitSystem"
-        android:entries="@array/unit_system_entries"
-        android:entryValues="@array/unit_system_values"
-        android:defaultValue="0" />
-    <!--<ListPreference
-        android:title="@string/label_currency"
-        android:summary="@string/summary_currency"
-        android:key="currency"
-        android:entries="@array/currency_entries"
-        android:entryValues="@array/currency_values"
-        android:defaultValue="0" />-->
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/title_units">
+        <ListPreference
+            android:title="@string/label_unit_system"
+            android:dialogTitle="@string/title_unit_system"
+            android:summary="@string/summary_unit_system"
+            android:key="unitSystem"
+            android:entries="@array/unit_system_entries"
+            android:entryValues="@array/unit_system_values"
+            android:defaultValue="0" />
+        <!--<ListPreference
+            android:title="@string/label_currency"
+            android:dialogTitle="@string/title_currency"
+            android:summary="@string/summary_currency"
+            android:key="currency"
+            android:entries="@array/currency_entries"
+            android:entryValues="@array/currency_values"
+            android:defaultValue="0" />-->
+    </PreferenceCategory>
 </PreferenceScreen>

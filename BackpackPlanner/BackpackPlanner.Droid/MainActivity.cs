@@ -20,6 +20,9 @@ using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.Content.Res;
+using Android.Gms.Common;
+using Android.Gms.Common.Apis;
+using Android.Gms.Drive;
 using Android.OS;
 using Android.Preferences;
 using Android.Runtime;
@@ -42,13 +45,17 @@ using SQLite.Net.Platform.XamarinAndroid;
 
 namespace EnergonSoftware.BackpackPlanner.Droid
 {
+    // TODO: https://developers.google.com/drive/android/appfolder
+    // TODO: https://developers.google.com/drive/android/auth#connecting_and_authorizing_the_google_drive_android_api
 	[Activity(Label = "@string/app_name", MainLauncher = true, Icon = "@drawable/icon")]
     [MetaData("com.google.android.gms.version", Value = "@integer/google_play_services_version")]
-	public sealed class MainActivity : Android.Support.V7.App.AppCompatActivity, View.IOnClickListener
+	public sealed class MainActivity : Android.Support.V7.App.AppCompatActivity, View.IOnClickListener, IGoogleApiClientConnectionCallbacks, IGoogleApiClientOnConnectionFailedListener
 	{
         public const string LogTag = "BackpackPlanner.Droid";
 
         private const string HockeyAppAppId = "32a2c37622529305ec763b7e2c224deb";
+
+        private const int RequestCodeResolve = 9001;
 
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(MainActivity));
 
@@ -56,6 +63,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
         private Android.Support.V7.Widget.Toolbar _toolbar;
         private readonly NavigationDrawerManager _navigationDrawerManager = new NavigationDrawerManager();
 #endregion
+
+        private IGoogleApiClient _googleClientApi;
 
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
@@ -65,6 +74,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             BackpackPlannerState.Instance.SystemLogger = new DroidLogger();
 
             InitHockeyApp();
+
+            _googleClientApi = new GoogleApiClientBuilder(this)
+                .AddApi(DriveClass.API)
+                .AddScope(DriveClass.ScopeFile)
+                .AddConnectionCallbacks(this)
+                .AddOnConnectionFailedListener(this)
+                .Build();
 
             InitToolbar();
 
@@ -111,7 +127,23 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             _navigationDrawerManager.Toggle.SyncState();
 	    }
 
-        protected override void OnResume()
+	    protected override void OnStart()
+	    {
+	        base.OnStart();
+
+            Logger.Info("Connecting Google API client...");
+            _googleClientApi.Connect();
+	    }
+
+	    protected override void OnStop()
+	    {
+	        base.OnStop();
+
+            Logger.Info("Disonnecting Google API client...");
+            _googleClientApi.Disconnect();
+	    }
+
+	    protected override void OnResume()
 	    {
 	        base.OnResume();
 
@@ -156,6 +188,44 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             // this handles the toolbar button press on stacked fragments
             OnBackPressed();
         }
+
+	    public void OnConnected(Bundle connectionHint)
+	    {
+	        Logger.Info("Google Play connected!");
+	    }
+
+	    public void OnConnectionSuspended(int cause)
+	    {
+	        throw new NotImplementedException();
+	    }
+
+	    public void OnConnectionFailed(ConnectionResult result)
+	    {
+            if(result.HasResolution) {
+                try {
+                    result.StartResolutionForResult(this, RequestCodeResolve);
+                } catch (IntentSender.SendIntentException e) {
+                    // Unable to resolve, message user appropriately
+                }
+            } else {
+                GoogleApiAvailability.Instance.GetErrorDialog(this, result.ErrorCode, 0).Show();
+            }
+	    }
+
+	    protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+	    {
+	        base.OnActivityResult(requestCode, resultCode, data);
+
+            switch(requestCode)
+            {
+            case RequestCodeResolve:
+                if(Result.Ok == resultCode) {
+                    Logger.Info("Connecting Google API client...");
+                    _googleClientApi.Connect();
+                }
+                break;
+            }
+	    }
 
 	    private void InitHockeyApp()
         {
@@ -288,10 +358,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
                 fragment = new TripPlansFragment();
                 break;
             case Resource.Id.nav_settings_fragment:
-// TODO: when the Xamarin Support Library Preference v7 is out
-// replace this activity with the PreferenceFragment
-                StartActivity(typeof(SettingsActivity));
-                return;
+                fragment = new SettingsFragment();
+                break;
             case Resource.Id.nav_help_fragment:
                 fragment = new HelpFragment();
                 break;
