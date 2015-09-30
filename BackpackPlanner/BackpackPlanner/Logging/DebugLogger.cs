@@ -14,6 +14,8 @@
    limitations under the License.
 */
 
+using System;
+
 namespace EnergonSoftware.BackpackPlanner.Logging
 {
     /// <summary>
@@ -29,9 +31,19 @@ namespace EnergonSoftware.BackpackPlanner.Logging
             System.Diagnostics.Debug.WriteLine(message);
         }
 
+        public void Debug(string message, Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine(message, ex);
+        }
+
         public void Info(string message)
         {
             System.Diagnostics.Debug.WriteLine(message);
+        }
+
+        public void Info(string message, Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine(message, ex);
         }
 
         public void Warn(string message)
@@ -39,9 +51,19 @@ namespace EnergonSoftware.BackpackPlanner.Logging
             System.Diagnostics.Debug.WriteLine(message);
         }
 
+        public void Warn(string message, Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine(message, ex);
+        }
+
         public void Error(string message)
         {
             System.Diagnostics.Debug.WriteLine(message);
+        }
+
+        public void Error(string message, Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine(message, ex);
         }
     }
 }

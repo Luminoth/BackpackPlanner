@@ -45,19 +45,36 @@ using SQLite.Net.Platform.XamarinAndroid;
 
 namespace EnergonSoftware.BackpackPlanner.Droid
 {
-    // TODO: https://developers.google.com/drive/android/appfolder
-    // TODO: https://developers.google.com/drive/android/auth#connecting_and_authorizing_the_google_drive_android_api
 	[Activity(Label = "@string/app_name", MainLauncher = true, Icon = "@drawable/icon")]
     [MetaData("com.google.android.gms.version", Value = "@integer/google_play_services_version")]
-	public sealed class MainActivity : Android.Support.V7.App.AppCompatActivity, View.IOnClickListener, IGoogleApiClientConnectionCallbacks, IGoogleApiClientOnConnectionFailedListener
+	public sealed class MainActivity : Android.Support.V7.App.AppCompatActivity, View.IOnClickListener,
+        IGoogleApiClientConnectionCallbacks, IGoogleApiClientOnConnectionFailedListener
 	{
         public const string LogTag = "BackpackPlanner.Droid";
 
         private const string HockeyAppAppId = "32a2c37622529305ec763b7e2c224deb";
 
-        private const int RequestCodeResolve = 9001;
+        // Google Play Services error resolution
+        private const int RequestCodeResolution = 9001;
 
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(MainActivity));
+
+        private class DriveContentsResultCallback : Java.Lang.Object, IResultCallback
+        {
+	        public void OnResult(Java.Lang.Object result)
+	        {
+// TODO: https://github.com/googledrive/android-demos/blob/master/app/src/main/java/com/google/android/gms/drive/sample/demo/CreateFileInAppFolderActivity.java
+                var contentsResult = result.JavaCast<IDriveApiDriveContentsResult>();
+                if(null == contentsResult) {
+                    // TODO: error
+                    return;
+                }
+
+// https://developers.google.com/drive/android/appfolder
+
+                Logger.Debug("Got a contents result!");
+	        }
+        }
 
 #region Controls
         private Android.Support.V7.Widget.Toolbar _toolbar;
@@ -78,6 +95,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             _googleClientApi = new GoogleApiClientBuilder(this)
                 .AddApi(DriveClass.API)
                 .AddScope(DriveClass.ScopeFile)
+                .AddScope(DriveClass.ScopeAppfolder)
                 .AddConnectionCallbacks(this)
                 .AddOnConnectionFailedListener(this)
                 .Build();
@@ -131,7 +149,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 	    {
 	        base.OnStart();
 
-            Logger.Info("Connecting Google API client...");
+            Logger.Info("Connecting Google Play Services client...");
             _googleClientApi.Connect();
 	    }
 
@@ -139,7 +157,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 	    {
 	        base.OnStop();
 
-            Logger.Info("Disonnecting Google API client...");
+            Logger.Info("Disonnecting Google Play Services client...");
             _googleClientApi.Disconnect();
 	    }
 
@@ -191,24 +209,27 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
 	    public void OnConnected(Bundle connectionHint)
 	    {
-	        Logger.Info("Google Play connected!");
+	        Logger.Info("Google Play Services connected!");
+            DriveClass.DriveApi.NewDriveContents(_googleClientApi).SetResultCallback(new DriveContentsResultCallback());
 	    }
 
 	    public void OnConnectionSuspended(int cause)
 	    {
-	        throw new NotImplementedException();
+	        Logger.Info($"Google Play Services suspended: {cause}");
 	    }
 
 	    public void OnConnectionFailed(ConnectionResult result)
 	    {
-            if(result.HasResolution) {
-                try {
-                    result.StartResolutionForResult(this, RequestCodeResolve);
-                } catch (IntentSender.SendIntentException e) {
-                    // Unable to resolve, message user appropriately
-                }
-            } else {
+            Logger.Info($"Google Play Services connection failed: {result}");
+            if(!result.HasResolution) {
                 GoogleApiAvailability.Instance.GetErrorDialog(this, result.ErrorCode, 0).Show();
+                return;
+            }
+
+            try {
+                result.StartResolutionForResult(this, RequestCodeResolution);
+            } catch (IntentSender.SendIntentException ex) {
+                Logger.Error("Exception while starting resolution activity", ex);
             }
 	    }
 
@@ -218,9 +239,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
             switch(requestCode)
             {
-            case RequestCodeResolve:
+            case RequestCodeResolution:
                 if(Result.Ok == resultCode) {
-                    Logger.Info("Connecting Google API client...");
+                    Logger.Info("Connecting Google Play Services client...");
                     _googleClientApi.Connect();
                 }
                 break;

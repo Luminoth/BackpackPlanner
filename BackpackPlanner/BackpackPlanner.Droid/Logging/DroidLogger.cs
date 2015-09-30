@@ -1,3 +1,5 @@
+using System;
+
 using Android.Util;
 
 using EnergonSoftware.BackpackPlanner.Logging;
@@ -11,9 +13,20 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Logging
             Log.Debug(MainActivity.LogTag, message);
         }
 
+        public void Debug(string message, Exception ex)
+        {
+            Log.Debug(MainActivity.LogTag, message, ex);
+        }
+
+
         public void Info(string message)
         {
             Log.Info(MainActivity.LogTag, message);
+        }
+
+        public void Info(string message, Exception ex)
+        {
+            Log.Info(MainActivity.LogTag, message, ex);
         }
 
         public void Warn(string message)
@@ -21,9 +34,19 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Logging
             Log.Warn(MainActivity.LogTag, message);
         }
 
+        public void Warn(string message, Exception ex)
+        {
+            Log.Warn(MainActivity.LogTag, message, ex);
+        }
+
         public void Error(string message)
         {
             Log.Error(MainActivity.LogTag, message);
+        }
+
+        public void Error(string message, Exception ex)
+        {
+            Log.Error(MainActivity.LogTag, message, ex);
         }
     }
 }

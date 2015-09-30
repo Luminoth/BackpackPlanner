@@ -33,11 +33,15 @@ namespace EnergonSoftware.BackpackPlanner.Logging
         /// <param name="message">The message.</param>
         void Debug(string message);
 
+        void Debug(string message, Exception ex);
+
         /// <summary>
         /// Info entry.
         /// </summary>
         /// <param name="message">The message.</param>
         void Info(string message);
+
+        void Info(string message, Exception ex);
 
         /// <summary>
         /// Warning entry.
@@ -45,11 +49,15 @@ namespace EnergonSoftware.BackpackPlanner.Logging
         /// <param name="message">The message.</param>
         void Warn(string message);
 
+        void Warn(string message, Exception ex);
+
         /// <summary>
         /// Error entry.
         /// </summary>
         /// <param name="message">The message.</param>
         void Error(string message);
+
+        void Error(string message, Exception ex);
     }
 
     /// <summary>
@@ -90,9 +98,19 @@ namespace EnergonSoftware.BackpackPlanner.Logging
             BackpackPlannerState.Instance.SystemLogger.Debug(BuildMessage("DEBUG", message));
         }
 
+        public void Debug(string message, Exception ex)
+        {
+            BackpackPlannerState.Instance.SystemLogger.Debug(BuildMessage("DEBUG", message), ex);
+        }
+
         public void Info(string message)
         {
             BackpackPlannerState.Instance.SystemLogger.Debug(BuildMessage("INFO", message));
+        }
+
+        public void Info(string message, Exception ex)
+        {
+            BackpackPlannerState.Instance.SystemLogger.Debug(BuildMessage("INFO", message), ex);
         }
 
         public void Warn(string message)
@@ -100,9 +118,19 @@ namespace EnergonSoftware.BackpackPlanner.Logging
             BackpackPlannerState.Instance.SystemLogger.Debug(BuildMessage("WARNING", message));
         }
 
+        public void Warn(string message, Exception ex)
+        {
+            BackpackPlannerState.Instance.SystemLogger.Debug(BuildMessage("WARNING", message), ex);
+        }
+
         public void Error(string message)
         {
             BackpackPlannerState.Instance.SystemLogger.Debug(BuildMessage("ERROR", message));
+        }
+
+        public void Error(string message, Exception ex)
+        {
+            BackpackPlannerState.Instance.SystemLogger.Debug(BuildMessage("ERROR", message), ex);
         }
     }
 }
