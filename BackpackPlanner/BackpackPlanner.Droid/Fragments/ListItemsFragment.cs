@@ -20,9 +20,9 @@ using Android.OS;
 using Android.Views;
 using Android.Widget;
 
+using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Dialogs;
-using EnergonSoftware.BackpackPlanner.Logging;
 using EnergonSoftware.BackpackPlanner.Models;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments

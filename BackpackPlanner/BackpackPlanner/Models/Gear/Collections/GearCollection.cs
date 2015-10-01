@@ -18,7 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using EnergonSoftware.BackpackPlanner.Logging;
+using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;

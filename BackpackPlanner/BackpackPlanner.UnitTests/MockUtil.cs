@@ -14,13 +14,12 @@
    limitations under the License.
 */
 
-using System.Threading;
 using System.Threading.Tasks;
 
 using SQLite.Net;
 using SQLite.Net.Async;
 
-using EnergonSoftware.BackpackPlanner.Database;
+using EnergonSoftware.BackpackPlanner.Core.Database;
 
 using TypeMock.ArrangeActAssert;
 

@@ -2,7 +2,7 @@ using System;
 
 using Android.Util;
 
-using EnergonSoftware.BackpackPlanner.Logging;
+using EnergonSoftware.BackpackPlanner.Core.Logging;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Logging
 {

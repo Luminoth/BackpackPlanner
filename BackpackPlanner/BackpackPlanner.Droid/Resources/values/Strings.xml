@@ -7,6 +7,7 @@
 
     <string name="label_save">Save</string>
     <string name="label_delete">Delete</string>
+    <string name="label_undo">Undo</string>
     <string name="label_reset">Reset</string>
 
     <string name="label_search">Search</string>
@@ -62,6 +63,11 @@
 
     <string name="title_settings">Settings</string>
     <string name="title_help">Help &amp; feedback</string>
+
+    <!-- Actions -->
+    <string name="label_added_item">Added an item!</string>
+    <string name="label_saved_item">Saved an item!</string>
+    <string name="label_deleted_item">Deleted an item!</string>
 
     <!-- Gear Items -->
 

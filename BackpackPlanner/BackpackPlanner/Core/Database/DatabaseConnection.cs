@@ -14,9 +14,10 @@
    limitations under the License.
 */
 
+using System;
 using System.Threading.Tasks;
 
-namespace EnergonSoftware.BackpackPlanner.Database
+namespace EnergonSoftware.BackpackPlanner.Core.Database
 {
     /// <summary>
     /// 
@@ -25,7 +26,7 @@ namespace EnergonSoftware.BackpackPlanner.Database
     /// TODO: this needs to expose all of the required db connection methods
     /// and the SQLiteDatabaseConnection should no longer expose the low-level connections
     /// </remarks>
-    public interface IDatabaseConnection
+    public interface IDatabaseConnection : IDisposable
     {
         /// <summary>
         /// Gets a value indicating whether the connection is connected.

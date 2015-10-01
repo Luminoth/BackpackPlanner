@@ -14,19 +14,15 @@
    limitations under the License.
 */
 
-using EnergonSoftware.BackpackPlanner.Util;
-
-namespace EnergonSoftware.BackpackPlanner.Units
+namespace EnergonSoftware.BackpackPlanner.Core.PlayServices
 {
     /// <summary>
     /// 
     /// </summary>
-    public enum Currency
+    /// <remarks>
+    /// http://android-developers.blogspot.com/2015/09/google-play-services-81-and-android-60.html
+    /// </remarks>
+    public interface IPlayServices
     {
-        /// <summary>
-        /// The united states dollar
-        /// </summary>
-        [Description("United States Dollar")]
-        UnitedStatesDollar = 0
     }
 }

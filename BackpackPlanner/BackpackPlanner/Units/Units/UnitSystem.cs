@@ -14,33 +14,25 @@
    limitations under the License.
 */
 
-namespace EnergonSoftware.BackpackPlanner.Units
+using EnergonSoftware.BackpackPlanner.Core.Util;
+
+namespace EnergonSoftware.BackpackPlanner.Units.Units
 {
     /// <summary>
-    /// Unit conversion utilities
+    /// 
     /// </summary>
-    public static class CurrencyConversion
+    public enum UnitSystem
     {
         /// <summary>
-        /// Converts USDP to USD.
+        /// The metric system
         /// </summary>
-        /// <param name="usdp">The USDP value.</param>
-        /// <returns>The USDP in USD</returns>
-        // ReSharper disable once InconsistentNaming
-        public static double USDPToUSD(int usdp)
-        {
-            return usdp * 0.01;
-        }
+        [Description("Metric")]
+        Metric = 0,
 
         /// <summary>
-        /// Converts USD to USDP.
+        /// The united states system
         /// </summary>
-        /// <param name="usd">The USD value.</param>
-        /// <returns>The USD in USDP</returns>
-        // ReSharper disable once InconsistentNaming
-        public static double USDToUSDP(double usd)
-        {
-            return usd * 100.0;
-        }
+        [Description("United States")]
+        UnitedStates = 1
     }
 }

@@ -24,7 +24,7 @@ using Android.Widget;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals;
 using EnergonSoftware.BackpackPlanner.Models.Meals;
-using EnergonSoftware.BackpackPlanner.Units;
+using EnergonSoftware.BackpackPlanner.Units.Units;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
 {

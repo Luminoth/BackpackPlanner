@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-namespace EnergonSoftware.BackpackPlanner.Units
+namespace EnergonSoftware.BackpackPlanner.Units.Units
 {
     /// <summary>
     /// Unit conversion utilities

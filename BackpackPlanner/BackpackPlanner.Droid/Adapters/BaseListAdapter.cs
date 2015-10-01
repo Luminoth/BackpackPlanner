@@ -17,10 +17,13 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using Android.Graphics;
 using Android.Views;
 using Android.Widget;
 
+using EnergonSoftware.BackpackPlanner.Actions;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
+using EnergonSoftware.BackpackPlanner.Droid.Util;
 using EnergonSoftware.BackpackPlanner.Models;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
@@ -31,7 +34,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
         {
             protected abstract int DeleteActionResourceId { get; }
 
-            private BaseFragment _fragment;
+            private readonly BaseFragment _fragment;
 
             private T _listItem;
 
@@ -62,11 +65,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
             public virtual bool OnMenuItemClick(IMenuItem menuItem)
             {
                 if(DeleteActionResourceId == menuItem.ItemId) {
-                    // TODO: delete Action
-                    Android.Support.Design.Widget.Snackbar.Make(_fragment.View, "make me a resource id", Android.Support.Design.Widget.Snackbar.LengthLong)
-                        .SetAction("undo", view => {
-                            }
-                        ).Show();
+                    IAction action = new DeleteItemAction<T>();
+                    action.DoAction();
+
+                    SnackbarUtil.ShowUndoSnackbar(_fragment.View, Resource.String.label_deleted_item, Android.Support.Design.Widget.Snackbar.LengthLong,
+                        view => {
+                            action.UndoAction();
+                        }
+                    );
                     return true;
                 }
                 return false;

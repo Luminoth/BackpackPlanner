@@ -17,7 +17,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace EnergonSoftware.BackpackPlanner.Logging
+namespace EnergonSoftware.BackpackPlanner.Core.Logging
 {
     /// <summary>
     /// Cross-platform logger interface.

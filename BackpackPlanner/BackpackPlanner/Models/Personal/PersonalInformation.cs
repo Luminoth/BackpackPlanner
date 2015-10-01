@@ -15,7 +15,8 @@
 */
 
 using System;
-using EnergonSoftware.BackpackPlanner.Units;
+
+using EnergonSoftware.BackpackPlanner.Units.Units;
 
 namespace EnergonSoftware.BackpackPlanner.Models.Personal
 {

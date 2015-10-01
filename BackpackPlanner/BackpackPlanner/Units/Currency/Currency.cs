@@ -14,25 +14,19 @@
    limitations under the License.
 */
 
-namespace EnergonSoftware.BackpackPlanner.Actions
+using EnergonSoftware.BackpackPlanner.Core.Util;
+
+namespace EnergonSoftware.BackpackPlanner.Units.Currency
 {
     /// <summary>
     /// 
     /// </summary>
-    public interface IAction
+    public enum Currency
     {
-// TODO: make these async!
-// ALSO VERIFY IDISPOSABLE ON DB CONNECTION FIXES ERRORS!
-
-
         /// <summary>
-        /// Does the action.
+        /// The united states dollar
         /// </summary>
-        void DoAction();
-
-        /// <summary>
-        /// Undoes the action.
-        /// </summary>
-        void UndoAction();
+        [Description("United States Dollar")]
+        UnitedStatesDollar = 0
     }
 }

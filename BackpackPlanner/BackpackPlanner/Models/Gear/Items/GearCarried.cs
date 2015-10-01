@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-using EnergonSoftware.BackpackPlanner.Util;
+using EnergonSoftware.BackpackPlanner.Core.Util;
 
 namespace EnergonSoftware.BackpackPlanner.Models.Gear.Items
 {

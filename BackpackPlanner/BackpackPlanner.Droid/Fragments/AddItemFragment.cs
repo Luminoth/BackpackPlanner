@@ -18,6 +18,8 @@ using Android.OS;
 using Android.Views;
 using Android.Widget;
 
+using EnergonSoftware.BackpackPlanner.Actions;
+using EnergonSoftware.BackpackPlanner.Droid.Util;
 using EnergonSoftware.BackpackPlanner.Models;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
@@ -38,8 +40,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                     return;
                 }
 
-                // TODO: this goes in an Action
-                //DatabaseItem.SaveItemAsync(Item).Wait();
+                IAction action = new AddItemAction<T>();
+                action.DoAction();
+
+                SnackbarUtil.ShowSnackbar(View, Resource.String.label_added_item, Android.Support.Design.Widget.Snackbar.LengthShort);
 
                 Activity.SupportFragmentManager.PopBackStack();
             };

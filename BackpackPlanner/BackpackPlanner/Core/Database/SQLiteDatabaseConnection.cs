@@ -18,13 +18,13 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-using EnergonSoftware.BackpackPlanner.Logging;
+using EnergonSoftware.BackpackPlanner.Core.Logging;
 
 using SQLite.Net;
 using SQLite.Net.Async;
 using SQLite.Net.Interop;
 
-namespace EnergonSoftware.BackpackPlanner.Database
+namespace EnergonSoftware.BackpackPlanner.Core.Database
 {
     /// <summary>
     /// Wrapper for a SQLite database connection.
@@ -55,6 +55,21 @@ namespace EnergonSoftware.BackpackPlanner.Database
         public SQLiteAsyncConnection AsyncConnection { get; private set; }
 
         private SQLiteConnectionString _connectionString;
+
+#region Dispose
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if(disposing) {
+                _lock.Dispose();
+            }
+        }
+#endregion
 
         public async Task LockAsync()
         {

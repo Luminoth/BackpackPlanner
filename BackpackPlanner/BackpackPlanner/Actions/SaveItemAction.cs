@@ -14,25 +14,33 @@
    limitations under the License.
 */
 
+using System;
+
+using EnergonSoftware.BackpackPlanner.Models;
+
 namespace EnergonSoftware.BackpackPlanner.Actions
 {
     /// <summary>
-    /// 
+    /// Adds an item.
     /// </summary>
-    public interface IAction
+    public class SaveItemAction<T> : IAction where T: DatabaseItem
     {
-// TODO: make these async!
-// ALSO VERIFY IDISPOSABLE ON DB CONNECTION FIXES ERRORS!
-
-
         /// <summary>
-        /// Does the action.
+        /// Gets or sets the item to delete.
         /// </summary>
-        void DoAction();
+        /// <value>
+        /// The item to delete.
+        /// </value>
+        public T Item { get; set; }
 
-        /// <summary>
-        /// Undoes the action.
-        /// </summary>
-        void UndoAction();
+        public void DoAction()
+        {
+            //DatabaseItem.SaveItemAsync(Item).Wait();
+        }
+
+        public void UndoAction()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -18,7 +18,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 
-namespace EnergonSoftware.BackpackPlanner.Util
+namespace EnergonSoftware.BackpackPlanner.Core.Util
 {
     /// <summary>
     /// Enumeration description utilities

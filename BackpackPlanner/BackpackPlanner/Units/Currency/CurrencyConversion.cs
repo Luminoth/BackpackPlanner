@@ -14,25 +14,33 @@
    limitations under the License.
 */
 
-namespace EnergonSoftware.BackpackPlanner.Actions
+namespace EnergonSoftware.BackpackPlanner.Units.Currency
 {
     /// <summary>
-    /// 
+    /// Unit conversion utilities
     /// </summary>
-    public interface IAction
+    public static class CurrencyConversion
     {
-// TODO: make these async!
-// ALSO VERIFY IDISPOSABLE ON DB CONNECTION FIXES ERRORS!
-
+        /// <summary>
+        /// Converts USDP to USD.
+        /// </summary>
+        /// <param name="usdp">The USDP value.</param>
+        /// <returns>The USDP in USD</returns>
+        // ReSharper disable once InconsistentNaming
+        public static double USDPToUSD(int usdp)
+        {
+            return usdp * 0.01;
+        }
 
         /// <summary>
-        /// Does the action.
+        /// Converts USD to USDP.
         /// </summary>
-        void DoAction();
-
-        /// <summary>
-        /// Undoes the action.
-        /// </summary>
-        void UndoAction();
+        /// <param name="usd">The USD value.</param>
+        /// <returns>The USD in USDP</returns>
+        // ReSharper disable once InconsistentNaming
+        public static double USDToUSDP(double usd)
+        {
+            return usd * 100.0;
+        }
     }
 }

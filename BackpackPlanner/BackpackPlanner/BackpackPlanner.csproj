@@ -38,15 +38,18 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Actions\Action.cs" />
-    <Compile Include="Actions\Gear\Items\DeleteGearItemAction.cs" />
+    <Compile Include="Actions\AddItemAction.cs" />
+    <Compile Include="Actions\DeleteItemAction.cs" />
+    <Compile Include="Actions\SaveItemAction.cs" />
     <Compile Include="BackpackPlannerState.cs" />
-    <Compile Include="Database\DatabaseConnection.cs" />
-    <Compile Include="Database\SQLiteDatabaseConnection.cs" />
+    <Compile Include="Core\Database\DatabaseConnection.cs" />
+    <Compile Include="Core\Database\SQLiteDatabaseConnection.cs" />
+    <Compile Include="Core\PlayServices\PlayServices.cs" />
     <Compile Include="Models\DatabaseItem.cs" />
-    <Compile Include="Units\Currency.cs" />
+    <Compile Include="Units\Currency\Currency.cs" />
     <Compile Include="BackpackPlannerSettings.cs" />
-    <Compile Include="Logging\DebugLogger.cs" />
-    <Compile Include="Logging\Logger.cs" />
+    <Compile Include="Core\Logging\DiagnosticsLogger.cs" />
+    <Compile Include="Core\Logging\Logger.cs" />
     <Compile Include="Models\DatabaseVersion.cs" />
     <Compile Include="Models\Gear\Collections\GearCollectionGearItem.cs" />
     <Compile Include="Models\Gear\Collections\GearCollectionGearSystem.cs" />
@@ -66,14 +69,14 @@
     <Compile Include="Models\Trips\Plans\TripPlanGearSystem.cs" />
     <Compile Include="Models\Trips\Plans\TripPlanMeal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Units\CurrencyConversion.cs" />
-    <Compile Include="Units\CurrencyExtensions.cs" />
-    <Compile Include="Units\UnitSystem.cs" />
-    <Compile Include="Units\UnitSystemLengthExtensions.cs" />
-    <Compile Include="Units\UnitSystemWeightExtensions.cs" />
-    <Compile Include="Util\DescriptionAttribute.cs" />
-    <Compile Include="Util\EnumDescription.cs" />
-    <Compile Include="Units\UnitConversion.cs" />
+    <Compile Include="Units\Currency\CurrencyConversion.cs" />
+    <Compile Include="Units\Currency\CurrencyExtensions.cs" />
+    <Compile Include="Units\Units\UnitSystem.cs" />
+    <Compile Include="Units\Units\UnitSystemLengthExtensions.cs" />
+    <Compile Include="Units\Units\UnitSystemWeightExtensions.cs" />
+    <Compile Include="Core\Util\DescriptionAttribute.cs" />
+    <Compile Include="Core\Util\EnumDescription.cs" />
+    <Compile Include="Units\Units\UnitConversion.cs" />
     <Compile Include="Units\WeightCategory.cs" />
     <Compile Include="Units\WeightClass.cs" />
   </ItemGroup>

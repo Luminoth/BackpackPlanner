@@ -20,8 +20,8 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-using EnergonSoftware.BackpackPlanner.Database;
-using EnergonSoftware.BackpackPlanner.Logging;
+using EnergonSoftware.BackpackPlanner.Core.Database;
+using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Models;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
@@ -39,7 +39,7 @@ namespace EnergonSoftware.BackpackPlanner
     /// <summary>
     /// Collects the general library state
     /// </summary>
-    public sealed class BackpackPlannerState
+    public sealed class BackpackPlannerState : IDisposable
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(BackpackPlannerState));
 
@@ -102,6 +102,21 @@ namespace EnergonSoftware.BackpackPlanner
         /// connection to the database... so here we are
         /// </remarks>
         public SQLiteDatabaseConnection DatabaseConnection { get; } = new SQLiteDatabaseConnection();
+
+#region Dispose
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if(disposing) {
+                DatabaseConnection.Dispose();
+            }
+        }
+#endregion
 
         /// <summary>
         /// Initializes the library database.

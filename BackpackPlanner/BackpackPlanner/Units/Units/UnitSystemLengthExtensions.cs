@@ -16,66 +16,66 @@
 
 using System;
 
-namespace EnergonSoftware.BackpackPlanner.Units
+namespace EnergonSoftware.BackpackPlanner.Units.Units
 {
     /// <summary>
-    /// Weight-related extensions for the UnitSystem enumeration
+    /// Length-related extensions for the UnitSystem enumeration
     /// </summary>
-    public static class UnitSystemWeightExtensions
+    public static class UnitSystemLengthExtensions
     {
         /// <summary>
-        /// Gets the small weight string for the unit system.
+        /// Gets the small length string for the unit system.
         /// </summary>
         /// <param name="unitSystem">The unit system.</param>
-        /// <returns>The small weight string for the unit system</returns>
-        public static string GetSmallWeightString(this UnitSystem unitSystem)
+        /// <returns>The small length string for the unit system</returns>
+        public static string GetSmallLengthString(this UnitSystem unitSystem)
         {
             switch(unitSystem)
             {
             case UnitSystem.Metric:
-                return "grams";
+                return "centimeters";
             case UnitSystem.UnitedStates:
-                return "ounces";
+                return "inches";
             default:
                 throw new InvalidOperationException("Invalid unit system!");
             }
         }
 
         /// <summary>
-        /// Converts grams to the unit system weight.
+        /// Converts centimeters to the unit system length.
         /// </summary>
         /// <param name="unitSystem">The unit system.</param>
-        /// <param name="grams">The grams.</param>
-        /// <returns>The unit system weight from the given grams</returns>
+        /// <param name="centimeters">The centimeters.</param>
+        /// <returns>The unit system length from the given centimeters</returns>
         /// <exception cref="System.InvalidOperationException">Invalid unit system!</exception>
-        public static double WeightFromGrams(this UnitSystem unitSystem, int grams)
+        public static double LengthFromCentimeters(this UnitSystem unitSystem, int centimeters)
         {
             switch(unitSystem)
             {
             case UnitSystem.Metric:
-                return grams;
+                return centimeters;
             case UnitSystem.UnitedStates:
-                return UnitConversion.GramsToOunces(grams);
+                return UnitConversion.CentimetersToInches(centimeters);
             default:
                 throw new InvalidOperationException("Invalid unit system!");
             }
         }
 
         /// <summary>
-        /// Converts the unit system weight to grams.
+        /// Converts the unit system length to centimeters.
         /// </summary>
         /// <param name="unitSystem">The unit system.</param>
-        /// <param name="weight">The unit system weight.</param>
-        /// <returns>The grams from the given unit system weight</returns>
+        /// <param name="length">The unit system length.</param>
+        /// <returns>The centimeters from the given unit system length</returns>
         /// <exception cref="System.InvalidOperationException">Invalid unit system!</exception>
-        public static double GramsFromWeight(this UnitSystem unitSystem, double weight)
+        public static double CentimetersFromLength(this UnitSystem unitSystem, double length)
         {
             switch(unitSystem)
             {
             case UnitSystem.Metric:
-                return weight;
+                return length;
             case UnitSystem.UnitedStates:
-                return UnitConversion.OuncesToGrams(weight);
+                return UnitConversion.InchesToCentimeters(length);
             default:
                 throw new InvalidOperationException("Invalid unit system!");
             }

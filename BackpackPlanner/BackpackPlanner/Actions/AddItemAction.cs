@@ -14,31 +14,33 @@
    limitations under the License.
 */
 
-using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
+using System;
 
-namespace EnergonSoftware.BackpackPlanner.Actions.Gear.Items
+using EnergonSoftware.BackpackPlanner.Models;
+
+namespace EnergonSoftware.BackpackPlanner.Actions
 {
     /// <summary>
-    /// Deletes a gear item.
+    /// Adds an item.
     /// </summary>
-    public sealed class DeleteGearItemAction : IAction
+    public class AddItemAction<T> : IAction where T: DatabaseItem
     {
         /// <summary>
-        /// Gets or sets the gear item to delete.
+        /// Gets or sets the item to delete.
         /// </summary>
         /// <value>
-        /// The gear item to delete.
+        /// The item to delete.
         /// </value>
-        public GearItem Item { get; set; }
-
-// TODO: this could probably subclass a generic "DeleteItemAction"
+        public T Item { get; set; }
 
         public void DoAction()
         {
+            //DatabaseItem.SaveItemAsync(Item).Wait();
         }
 
         public void UndoAction()
         {
+            throw new NotImplementedException();
         }
     }
 }

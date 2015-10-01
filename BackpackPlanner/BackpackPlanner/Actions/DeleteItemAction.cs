@@ -14,31 +14,30 @@
    limitations under the License.
 */
 
-using System;
+using EnergonSoftware.BackpackPlanner.Models;
 
-namespace EnergonSoftware.BackpackPlanner.Util
+namespace EnergonSoftware.BackpackPlanner.Actions
 {
     /// <summary>
-    /// Imlementation of DescriptionAttribute for PCL
+    /// Deletes an item.
     /// </summary>
-    [AttributeUsage(AttributeTargets.All)]
-    public sealed class DescriptionAttribute : Attribute
+    public class DeleteItemAction<T> : IAction where T: DatabaseItem
     {
         /// <summary>
-        /// Gets or sets the description.
+        /// Gets or sets the item to delete.
         /// </summary>
         /// <value>
-        /// The description.
+        /// The item to delete.
         /// </value>
-        public string Description { get; set; }
+        public T Item { get; set; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DescriptionAttribute"/> class.
-        /// </summary>
-        /// <param name="description">The description.</param>
-        public DescriptionAttribute(string description)
+        public void DoAction()
         {
-            Description = description;
+            //DatabaseItem.DeleteItemAsync(Item).Wait();
+        }
+
+        public void UndoAction()
+        {
         }
     }
 }

@@ -14,25 +14,31 @@
    limitations under the License.
 */
 
-using EnergonSoftware.BackpackPlanner.Util;
+using System;
 
-namespace EnergonSoftware.BackpackPlanner.Units
+namespace EnergonSoftware.BackpackPlanner.Core.Util
 {
     /// <summary>
-    /// 
+    /// Imlementation of DescriptionAttribute for PCL
     /// </summary>
-    public enum UnitSystem
+    [AttributeUsage(AttributeTargets.All)]
+    public sealed class DescriptionAttribute : Attribute
     {
         /// <summary>
-        /// The metric system
+        /// Gets or sets the description.
         /// </summary>
-        [Description("Metric")]
-        Metric = 0,
+        /// <value>
+        /// The description.
+        /// </value>
+        public string Description { get; set; }
 
         /// <summary>
-        /// The united states system
+        /// Initializes a new instance of the <see cref="DescriptionAttribute"/> class.
         /// </summary>
-        [Description("United States")]
-        UnitedStates = 1
+        /// <param name="description">The description.</param>
+        public DescriptionAttribute(string description)
+        {
+            Description = description;
+        }
     }
 }

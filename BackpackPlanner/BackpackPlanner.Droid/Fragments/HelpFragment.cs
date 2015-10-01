@@ -19,7 +19,7 @@ using Android.Util;
 using Android.Views;
 using Android.Widget;
 
-using EnergonSoftware.BackpackPlanner.Logging;
+using EnergonSoftware.BackpackPlanner.Core.Logging;
 
 using HockeyApp;
 

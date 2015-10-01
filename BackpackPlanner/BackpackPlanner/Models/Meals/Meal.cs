@@ -18,9 +18,10 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using EnergonSoftware.BackpackPlanner.Logging;
+using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
-using EnergonSoftware.BackpackPlanner.Units;
+using EnergonSoftware.BackpackPlanner.Units.Currency;
+using EnergonSoftware.BackpackPlanner.Units.Units;
 
 using SQLite.Net.Async;
 using SQLite.Net.Attributes;

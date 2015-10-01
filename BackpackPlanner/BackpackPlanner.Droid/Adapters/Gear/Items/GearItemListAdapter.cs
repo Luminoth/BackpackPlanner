@@ -24,7 +24,7 @@ using Android.Widget;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
-using EnergonSoftware.BackpackPlanner.Units;
+using EnergonSoftware.BackpackPlanner.Units.Units;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items
 {

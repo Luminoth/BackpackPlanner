@@ -16,7 +16,7 @@
 
 using System.Threading.Tasks;
 
-using EnergonSoftware.BackpackPlanner.Logging;
+using EnergonSoftware.BackpackPlanner.Core.Logging;
 
 using SQLite.Net.Async;
 using SQLite.Net.Attributes;

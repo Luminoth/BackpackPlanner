@@ -16,7 +16,7 @@
 
 using System;
 
-namespace EnergonSoftware.BackpackPlanner.Units
+namespace EnergonSoftware.BackpackPlanner.Units.Currency
 {
     /// <summary>
     /// Extensions for the Currency enumeration

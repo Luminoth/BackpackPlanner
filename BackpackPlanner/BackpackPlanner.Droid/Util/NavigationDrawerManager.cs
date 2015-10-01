@@ -20,7 +20,8 @@ using Android.Content.Res;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
-using EnergonSoftware.BackpackPlanner.Logging;
+
+using EnergonSoftware.BackpackPlanner.Core.Logging;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Util
 {

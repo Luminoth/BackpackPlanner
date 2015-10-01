@@ -17,7 +17,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using EnergonSoftware.BackpackPlanner.Logging;
+using EnergonSoftware.BackpackPlanner.Core.Logging;
 
 using SQLiteNetExtensionsAsync.Extensions;
 

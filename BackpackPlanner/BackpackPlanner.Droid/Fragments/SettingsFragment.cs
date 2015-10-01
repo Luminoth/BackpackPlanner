@@ -18,11 +18,15 @@ using Android.OS;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 {
+    // TODO: there's some text on this that needs to be dynamic
+    // need to figure out a way to get that updated
     public class SettingsFragment : Android.Support.V7.Preferences.PreferenceFragmentCompat
     {
         public override void OnCreatePreferences(Bundle savedInstanceState, string rootKey)
         {
             AddPreferencesFromResource(Resource.Xml.settings);
+
+            Activity.Title = Resources.GetString(Resource.String.title_settings);
         }
     }
 }

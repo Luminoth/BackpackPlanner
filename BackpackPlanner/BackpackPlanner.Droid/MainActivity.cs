@@ -28,6 +28,7 @@ using Android.Preferences;
 using Android.Runtime;
 using Android.Views;
 
+using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items;
@@ -37,9 +38,9 @@ using EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans;
 using EnergonSoftware.BackpackPlanner.Droid.Logging;
 using EnergonSoftware.BackpackPlanner.Droid.Util;
-using EnergonSoftware.BackpackPlanner.Logging;
 using EnergonSoftware.BackpackPlanner.Models.Personal;
-using EnergonSoftware.BackpackPlanner.Units;
+using EnergonSoftware.BackpackPlanner.Units.Currency;
+using EnergonSoftware.BackpackPlanner.Units.Units;
 
 using SQLite.Net.Platform.XamarinAndroid;
 
