@@ -14,6 +14,8 @@
    limitations under the License.
 */
 
+using System.Threading.Tasks;
+
 namespace EnergonSoftware.BackpackPlanner.Actions
 {
     /// <summary>
@@ -21,18 +23,14 @@ namespace EnergonSoftware.BackpackPlanner.Actions
     /// </summary>
     public interface IAction
     {
-// TODO: make these async!
-// ALSO VERIFY IDISPOSABLE ON DB CONNECTION FIXES ERRORS!
-
-
         /// <summary>
         /// Does the action.
         /// </summary>
-        void DoAction();
+        Task DoActionAsync();
 
         /// <summary>
         /// Undoes the action.
         /// </summary>
-        void UndoAction();
+        Task UndoActionAsync();
     }
 }

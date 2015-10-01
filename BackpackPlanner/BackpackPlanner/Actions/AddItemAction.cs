@@ -15,6 +15,7 @@
 */
 
 using System;
+using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Models;
 
@@ -26,19 +27,20 @@ namespace EnergonSoftware.BackpackPlanner.Actions
     public class AddItemAction<T> : IAction where T: DatabaseItem
     {
         /// <summary>
-        /// Gets or sets the item to delete.
+        /// Gets or sets the item to add.
         /// </summary>
         /// <value>
-        /// The item to delete.
+        /// The item to add.
         /// </value>
         public T Item { get; set; }
 
-        public void DoAction()
+        public async Task DoActionAsync()
         {
-            //DatabaseItem.SaveItemAsync(Item).Wait();
+            //await DatabaseItem.SaveItemAsync(Item).ConfigureAwait(false);
+await Task.Delay(0).ConfigureAwait(false);
         }
 
-        public void UndoAction()
+        public Task UndoActionAsync()
         {
             throw new NotImplementedException();
         }

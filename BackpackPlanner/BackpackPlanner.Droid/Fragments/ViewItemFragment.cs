@@ -41,7 +41,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                 }
 
                 IAction action = new SaveItemAction<T>();
-                action.DoAction();
+                action.DoActionAsync().Wait();
 
                 SnackbarUtil.ShowSnackbar(View, Resource.String.label_saved_item, Android.Support.Design.Widget.Snackbar.LengthShort);
 

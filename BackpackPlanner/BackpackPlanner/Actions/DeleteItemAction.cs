@@ -14,6 +14,8 @@
    limitations under the License.
 */
 
+using System.Threading.Tasks;
+
 using EnergonSoftware.BackpackPlanner.Models;
 
 namespace EnergonSoftware.BackpackPlanner.Actions
@@ -31,13 +33,17 @@ namespace EnergonSoftware.BackpackPlanner.Actions
         /// </value>
         public T Item { get; set; }
 
-        public void DoAction()
+        public async Task DoActionAsync()
         {
-            //DatabaseItem.DeleteItemAsync(Item).Wait();
+            //await DatabaseItem.DeleteItemAsync(Item).ConfigureAwait(false);
+await Task.Delay(0).ConfigureAwait(false);
+
+// TODO: how do we save "undo" state? maybe in the item itself?
         }
 
-        public void UndoAction()
+        public async Task UndoActionAsync()
         {
+            await Task.Delay(0).ConfigureAwait(false);
         }
     }
 }

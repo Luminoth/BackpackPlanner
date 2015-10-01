@@ -66,11 +66,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
             {
                 if(DeleteActionResourceId == menuItem.ItemId) {
                     IAction action = new DeleteItemAction<T>();
-                    action.DoAction();
+                    action.DoActionAsync().Wait();
 
                     SnackbarUtil.ShowUndoSnackbar(_fragment.View, Resource.String.label_deleted_item, Android.Support.Design.Widget.Snackbar.LengthLong,
                         view => {
-                            action.UndoAction();
+                            action.UndoActionAsync().Wait();
                         }
                     );
                     return true;
