@@ -40,7 +40,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
             private readonly TextView _textViewWeight;
             private readonly TextView _textViewCost;
 
-            public MealViewHolder(View itemView, ListItemsFragment<Meal> fragment) : base(itemView, fragment)
+            public MealViewHolder(View itemView, BaseListAdapter<Meal> adapter) : base(itemView, adapter)
             {
                 _toolbar = itemView.FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.view_meal_toolbar);
                 _toolbar.InflateMenu(Resource.Menu.meal_menu);
@@ -102,14 +102,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
             }
         }
 
-        public override void FilterItems(object sender, Android.Support.V7.Widget.SearchView.QueryTextChangeEventArgs args)
+        protected override void FilterItems(string text)
         {
-            FilteredListItems = from item in ListItems where item.Name.ToLower().Contains(args.NewText) select item;
+            FilteredListItems = from item in ListItems where item.Name.ToLower().Contains(text) select item;
         }
 
         protected override BaseViewHolder CreateViewHolder(View itemView)
         {
-            return new MealViewHolder(itemView, Fragment);
+            return new MealViewHolder(itemView, this);
         }
     }
 }

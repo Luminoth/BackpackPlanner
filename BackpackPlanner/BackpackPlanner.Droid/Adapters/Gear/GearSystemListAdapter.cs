@@ -22,40 +22,38 @@ using Android.Views;
 using Android.Widget;
 
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
-using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections;
-using EnergonSoftware.BackpackPlanner.Models.Gear.Collections;
+using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems;
+using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
 using EnergonSoftware.BackpackPlanner.Units;
 
-namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Collections
+namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
 {
-    public class GearCollectionListAdapter : BaseListAdapter<GearCollection>
+    public class GearSystemListAdapter : BaseListAdapter<GearSystem>
     {
-        private class GearCollectionViewHolder : BaseViewHolder
+        private class GearSystemViewHolder : BaseViewHolder
         {
-            protected override int DeleteActionResourceId => Resource.Id.action_delete_gear_collection;
+            protected override int DeleteActionResourceId => Resource.Id.action_delete_gear_system;
 
             private readonly Android.Support.V7.Widget.Toolbar _toolbar;
 
-            private readonly TextView _textViewSystems;
             private readonly TextView _textViewItems;
             private readonly TextView _textViewWeight;
             private readonly TextView _textViewCost;
 
-            public GearCollectionViewHolder(View itemView, ListItemsFragment<GearCollection> fragment) : base(itemView, fragment)
+            public GearSystemViewHolder(View itemView, BaseListAdapter<GearSystem> adapter) : base(itemView, adapter)
             {
-                _toolbar = itemView.FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.view_gear_collection_toolbar);
-                _toolbar.InflateMenu(Resource.Menu.gear_collection_menu);
+                _toolbar = itemView.FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.view_gear_system_toolbar);
+                _toolbar.InflateMenu(Resource.Menu.gear_system_menu);
                 _toolbar.SetOnMenuItemClickListener(this);
 
-                _textViewSystems = itemView.FindViewById<TextView>(Resource.Id.view_gear_collection_systems);
-                _textViewItems = itemView.FindViewById<TextView>(Resource.Id.view_gear_collection_items);
-                _textViewWeight = itemView.FindViewById<TextView>(Resource.Id.view_gear_collection_weight);
-                _textViewCost = itemView.FindViewById<TextView>(Resource.Id.view_gear_collection_cost);
+                _textViewItems = itemView.FindViewById<TextView>(Resource.Id.view_gear_system_items);
+                _textViewWeight = itemView.FindViewById<TextView>(Resource.Id.view_gear_system_weight);
+                _textViewCost = itemView.FindViewById<TextView>(Resource.Id.view_gear_system_cost);
             }
 
             protected override Android.Support.V4.App.Fragment CreateViewItemFragment()
             {
-                return new ViewGearCollectionFragment
+                return new ViewGearSystemFragment
                 {
                     Item = ListItem
                 };
@@ -65,8 +63,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Collections
             {
                 _toolbar.Title = ListItem.Name;
 
-                _textViewSystems.Text = $"{ListItem.GearSystemCount} system(s)";
-                _textViewItems.Text = $"{ListItem.GearItemCount} item(s) (some total)";
+                _textViewItems.Text = $"{ListItem.GearItemCount} item(s)";
                 /*_textViewWeight.Text = $"{ListItem.WeightInUnits} {BackpackPlannerState.Instance.Settings.Units.GetSmallWeightString()}";
 
                 string formattedCost = ListItem.CostInCurrency.ToString("C", CultureInfo.CurrentCulture);
@@ -74,9 +71,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Collections
             }
         }
 
-        public override int LayoutResource => Resource.Layout.view_gear_collection;
+        public override int LayoutResource => Resource.Layout.view_gear_system;
 
-        public GearCollectionListAdapter(ListItemsFragment<GearCollection> fragment) : base(fragment)
+        public GearSystemListAdapter(ListItemsFragment<GearSystem> fragment) : base(fragment)
         {
         }
 
@@ -102,14 +99,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Collections
             }
         }
 
-        public override void FilterItems(object sender, Android.Support.V7.Widget.SearchView.QueryTextChangeEventArgs args)
+        protected override void FilterItems(string text)
         {
-            FilteredListItems = from item in ListItems where item.Name.ToLower().Contains(args.NewText) select item;
+            FilteredListItems = from item in ListItems where item.Name.ToLower().Contains(text) select item;
         }
 
         protected override BaseViewHolder CreateViewHolder(View itemView)
         {
-            return new GearCollectionViewHolder(itemView, Fragment);
+            return new GearSystemViewHolder(itemView, this);
         }
     }
 }

@@ -19,10 +19,11 @@ using System.Collections.Generic;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
-
+using EnergonSoftware.BackpackPlanner.Actions;
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Dialogs;
+using EnergonSoftware.BackpackPlanner.Droid.Util;
 using EnergonSoftware.BackpackPlanner.Models;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
@@ -53,6 +54,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         protected BaseListAdapter<T> Adapter { get; private set; } 
 
 #region Controls
+        private TextView _noItemsTextView;
+
         protected Spinner SortItemsSpinner { get; private set; }
 #endregion
 
@@ -66,6 +69,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
             Adapter = CreateAdapter();
             Layout.SetAdapter(Adapter);
+
+            _noItemsTextView = View.FindViewById<TextView>(NoItemsResource);
+
+            SortItemsSpinner = View.FindViewById<Spinner>(SortItemsResource);
+            SortItemsSpinner.ItemSelected += Adapter.SortByItemSelectedEventHander;
 
             Button whatIsAButton = view.FindViewById<Button>(WhatIsAnItemButtonResource);
             whatIsAButton.Click += (sender, args) => {
@@ -87,18 +95,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             Logger.Debug($"Read {ItemCount} items...");
             Adapter.ListItems = ListItems;
 
-            if(ListItems.Count > 0) {
-                TextView noItemsTextView = View.FindViewById<TextView>(NoItemsResource);
-                noItemsTextView.Visibility = ViewStates.Gone;
-
-                SortItemsSpinner = View.FindViewById<Spinner>(SortItemsResource);
-                if(null != SortItemsSpinner) {
-                    SortItemsSpinner.Visibility = ViewStates.Visible;
-                    SortItemsSpinner.ItemSelected += Adapter.SortByItemSelectedEventHander;
-                }
-
-                Layout.Visibility = ViewStates.Visible;
-            }
+            UpdateView();
         }
 
         public override void OnPause()
@@ -113,7 +110,47 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         {
             base.OnCreateOptionsMenu(menu, inflater);
 
-            FilterView.QueryTextChange += Adapter.FilterItems;
+            FilterView.QueryTextChange += Adapter.FilterItemsEventHandler;
+        }
+
+        public void DeleteItem(T item)
+        {
+            IAction action = new DeleteItemAction<T>(item);
+            if(!action.DoActionAsync().Result) {
+                // TODO: error!
+                return;
+            }
+
+            Adapter.RemoveItem(item);
+
+            ListItems.Remove(item);
+            UpdateView();
+
+            SnackbarUtil.ShowUndoSnackbar(View, Resource.String.label_deleted_item, Android.Support.Design.Widget.Snackbar.LengthLong,
+                view => {
+                    action.UndoActionAsync().Wait();
+
+                    Adapter.AddItem(item);
+
+                    ListItems.Add(item);
+                    UpdateView();
+
+                    SnackbarUtil.ShowSnackbar(view, Resource.String.label_deleted_item_undo, Android.Support.Design.Widget.Snackbar.LengthShort);
+                }
+            );
+        }
+
+        private void UpdateView()
+        {
+            bool hasItems = ItemCount > 0;
+
+            _noItemsTextView.Visibility = hasItems ? ViewStates.Gone : ViewStates.Visible;
+
+            if(null != SortItemsSpinner) {
+                SortItemsSpinner.Visibility = hasItems ? ViewStates.Visible : ViewStates.Gone;
+            }
+
+            Layout.Visibility = hasItems ? ViewStates.Visible : ViewStates.Gone;
         }
     }
 }

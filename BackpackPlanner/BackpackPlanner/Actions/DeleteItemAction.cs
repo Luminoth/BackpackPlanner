@@ -14,6 +14,7 @@
    limitations under the License.
 */
 
+using System;
 using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Models;
@@ -31,19 +32,33 @@ namespace EnergonSoftware.BackpackPlanner.Actions
         /// <value>
         /// The item to delete.
         /// </value>
-        public T Item { get; set; }
+        public T Item { get; }
 
-        public async Task DoActionAsync()
+        public DeleteItemAction(T item)
         {
-            //await DatabaseItem.DeleteItemAsync(Item).ConfigureAwait(false);
-await Task.Delay(0).ConfigureAwait(false);
+            if(null == item) {
+                throw new ArgumentNullException(nameof(item));
+            }
+
+            Item = item;
+        } 
+
+        public async Task<bool> DoActionAsync()
+        {
+            int count = await DatabaseItem.DeleteItemAsync(Item).ConfigureAwait(false);
 
 // TODO: how do we save "undo" state? maybe in the item itself?
+
+            return count > 0;
         }
 
-        public async Task UndoActionAsync()
+        public async Task<bool> UndoActionAsync()
         {
-            await Task.Delay(0).ConfigureAwait(false);
+            await DatabaseItem.SaveItemAsync(Item).ConfigureAwait(false);
+
+// TODO: how do we load "undo" state? maybe in the item itself?
+
+            return true;
         }
     }
 }

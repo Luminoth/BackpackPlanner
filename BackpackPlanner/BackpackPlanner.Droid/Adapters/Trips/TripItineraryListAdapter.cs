@@ -24,7 +24,7 @@ using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries;
 
-namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Itineraries
+namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips
 {
     public class TripItineraryListAdapter : BaseListAdapter<TripItinerary>
     {
@@ -34,7 +34,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Itineraries
 
             private readonly Android.Support.V7.Widget.Toolbar _toolbar;
 
-            public TripItineraryViewHolder(View itemView, ListItemsFragment<TripItinerary> fragment) : base(itemView, fragment)
+            public TripItineraryViewHolder(View itemView, BaseListAdapter<TripItinerary> adapter) : base(itemView, adapter)
             {
                 _toolbar = itemView.FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.view_trip_itinerary_toolbar);
                 _toolbar.InflateMenu(Resource.Menu.trip_itinerary_menu);
@@ -71,14 +71,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Itineraries
             }
         }
 
-        public override void FilterItems(object sender, Android.Support.V7.Widget.SearchView.QueryTextChangeEventArgs args)
+        protected override void FilterItems(string text)
         {
-            FilteredListItems = from item in ListItems where item.Name.ToLower().Contains(args.NewText) select item;
+            FilteredListItems = from item in ListItems where item.Name.ToLower().Contains(text) select item;
         }
 
         protected override BaseViewHolder CreateViewHolder(View itemView)
         {
-            return new TripItineraryViewHolder(itemView, Fragment);
+            return new TripItineraryViewHolder(itemView, this);
         }
     }
 }

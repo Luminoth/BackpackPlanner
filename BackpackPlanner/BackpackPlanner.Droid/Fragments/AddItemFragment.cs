@@ -40,7 +40,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                     return;
                 }
 
-                IAction action = new AddItemAction<T>();
+                IAction action = new AddItemAction<T>(Item);
                 action.DoActionAsync().Wait();
 
                 SnackbarUtil.ShowSnackbar(View, Resource.String.label_added_item, Android.Support.Design.Widget.Snackbar.LengthShort);

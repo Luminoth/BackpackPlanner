@@ -15,7 +15,7 @@
 */
 
 using EnergonSoftware.BackpackPlanner.Droid.Adapters;
-using EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Itineraries;
+using EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries

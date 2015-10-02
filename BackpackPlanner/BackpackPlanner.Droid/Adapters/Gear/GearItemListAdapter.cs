@@ -26,7 +26,7 @@ using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
 using EnergonSoftware.BackpackPlanner.Units.Units;
 
-namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items
+namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
 {
     public class GearItemListAdapter : BaseListAdapter<GearItem>
     {
@@ -40,7 +40,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items
             private readonly TextView _textViewWeight;
             private readonly TextView _textViewCost;
 
-            public GearItemViewHolder(View itemView, BaseFragment fragment) : base(itemView, fragment)
+            public GearItemViewHolder(View itemView, BaseListAdapter<GearItem> adapter) : base(itemView, adapter)
             {
                 _toolbar = itemView.FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.view_gear_item_toolbar);
                 _toolbar.InflateMenu(Resource.Menu.gear_item_menu);
@@ -104,14 +104,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items
             }
         }
 
-        public override void FilterItems(object sender, Android.Support.V7.Widget.SearchView.QueryTextChangeEventArgs args)
+        protected override void FilterItems(string text)
         {
-            FilteredListItems = from item in ListItems where item.Name.ToLower().Contains(args.NewText) select item;
+            FilteredListItems = from item in ListItems where item.Name.ToLower().Contains(text) select item;
         }
 
         protected override BaseViewHolder CreateViewHolder(View itemView)
         {
-            return new GearItemViewHolder(itemView, Fragment);
+            return new GearItemViewHolder(itemView, this);
         }
     }
 }

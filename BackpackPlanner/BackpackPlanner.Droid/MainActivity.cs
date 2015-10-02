@@ -46,6 +46,7 @@ using SQLite.Net.Platform.XamarinAndroid;
 
 namespace EnergonSoftware.BackpackPlanner.Droid
 {
+// TODO: split this into separate activities for the FTUE, etc
 	[Activity(Label = "@string/app_name", MainLauncher = true, Icon = "@drawable/icon")]
     [MetaData("com.google.android.gms.version", Value = "@integer/google_play_services_version")]
 	public sealed class MainActivity : Android.Support.V7.App.AppCompatActivity, View.IOnClickListener,

@@ -15,7 +15,7 @@
 */
 
 using EnergonSoftware.BackpackPlanner.Droid.Adapters;
-using EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Collections;
+using EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Collections;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections

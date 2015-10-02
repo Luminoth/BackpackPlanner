@@ -32,15 +32,24 @@ namespace EnergonSoftware.BackpackPlanner.Actions
         /// <value>
         /// The item to save.
         /// </value>
-        public T Item { get; set; }
+        public T Item { get; }
 
-        public async Task DoActionAsync()
+        public SaveItemAction(T item)
         {
-            //await DatabaseItem.SaveItemAsync(Item).ConfigureAwait(false);
-await Task.Delay(0).ConfigureAwait(false);
+            if(null == item) {
+                throw new ArgumentNullException(nameof(item));
+            }
+
+            Item = item;
+        } 
+
+        public async Task<bool> DoActionAsync()
+        {
+            await DatabaseItem.SaveItemAsync(Item).ConfigureAwait(false);
+            return true;
         }
 
-        public Task UndoActionAsync()
+        public Task<bool> UndoActionAsync()
         {
             throw new NotImplementedException();
         }

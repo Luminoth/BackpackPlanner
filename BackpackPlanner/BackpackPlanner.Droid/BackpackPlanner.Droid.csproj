@@ -149,12 +149,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Adapters\BaseListAdapter.cs" />
-    <Compile Include="Adapters\Gear\Collections\GearCollectionListAdapter.cs" />
-    <Compile Include="Adapters\Gear\Items\GearItemListAdapter.cs" />
-    <Compile Include="Adapters\Gear\Systems\GearSystemListAdapter.cs" />
+    <Compile Include="Adapters\Gear\GearCollectionListAdapter.cs" />
+    <Compile Include="Adapters\Gear\GearItemListAdapter.cs" />
+    <Compile Include="Adapters\Gear\GearSystemListAdapter.cs" />
     <Compile Include="Adapters\Meals\MealListAdapter.cs" />
-    <Compile Include="Adapters\Trips\Itineraries\TripItineraryListAdapter.cs" />
-    <Compile Include="Adapters\Trips\Plans\TripPlanListAdapter.cs" />
+    <Compile Include="Adapters\Trips\TripItineraryListAdapter.cs" />
+    <Compile Include="Adapters\Trips\TripPlanListAdapter.cs" />
     <Compile Include="Fragments\AddItemFragment.cs" />
     <Compile Include="Fragments\BaseFragment.cs" />
     <Compile Include="Fragments\DataFragment.cs" />

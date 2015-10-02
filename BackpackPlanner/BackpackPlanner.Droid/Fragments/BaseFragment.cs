@@ -33,7 +33,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         protected abstract bool HasSearchView { get; }
 
-        protected Android.Support.V7.Widget.SearchView FilterView { get; private set; }
+        public Android.Support.V7.Widget.SearchView FilterView { get; private set; }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {

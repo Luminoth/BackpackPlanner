@@ -17,7 +17,6 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Android.Graphics;
 using Android.Views;
 using Android.Widget;
 
@@ -34,7 +33,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
         {
             protected abstract int DeleteActionResourceId { get; }
 
-            private readonly BaseFragment _fragment;
+            protected BaseListAdapter<T> Adapter { get; }
 
             private T _listItem;
 
@@ -53,26 +52,19 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
             protected abstract void UpdateView();
 
-            protected BaseViewHolder(View itemView, BaseFragment fragment) : base(itemView)
+            protected BaseViewHolder(View itemView, BaseListAdapter<T> adapter) : base(itemView)
             {
-                _fragment = fragment;
+                Adapter = adapter;
 
                 itemView.Click += (sender, args) => {
-                    _fragment.TransitionToFragment(Resource.Id.frame_content, CreateViewItemFragment(), null);
+                    Adapter.Fragment.TransitionToFragment(Resource.Id.frame_content, CreateViewItemFragment(), null);
                 };
             }
 
             public virtual bool OnMenuItemClick(IMenuItem menuItem)
             {
                 if(DeleteActionResourceId == menuItem.ItemId) {
-                    IAction action = new DeleteItemAction<T>();
-                    action.DoActionAsync().Wait();
-
-                    SnackbarUtil.ShowUndoSnackbar(_fragment.View, Resource.String.label_deleted_item, Android.Support.Design.Widget.Snackbar.LengthLong,
-                        view => {
-                            action.UndoActionAsync().Wait();
-                        }
-                    );
+                    Adapter.Fragment.DeleteItem(ListItem);
                     return true;
                 }
                 return false;
@@ -85,7 +77,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
         public override int ItemCount => FilteredListItems?.Count() ?? 0;
 
-        private IReadOnlyCollection<T> _listItems = new List<T>();  
+        private List<T> _listItems = new List<T>();  
 
         public IReadOnlyCollection<T> ListItems
         {
@@ -122,12 +114,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
             SortItemsByPosition(args.Position);
         }
 
-        // TODO: should this work like sorting
-        // where this base handles the event
-        // and calls an abstract FilterBy*() method?
-        public abstract void FilterItems(object sender, Android.Support.V7.Widget.SearchView.QueryTextChangeEventArgs args);
-
         protected abstract void SortItemsByPosition(int position);
+
+        public void FilterItemsEventHandler(object sender, Android.Support.V7.Widget.SearchView.QueryTextChangeEventArgs args)
+        {
+            FilterItems(args.NewText);
+        }
+
+        protected abstract void FilterItems(string text);
 
         protected abstract BaseViewHolder CreateViewHolder(View itemView);
 
@@ -142,6 +136,18 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
             BaseViewHolder baseViewHolder = (BaseViewHolder)holder;
             T gearItem = FilteredListItems.ElementAt(position);
             baseViewHolder.ListItem = gearItem;
+        }
+
+        public void AddItem(T item)
+        {
+            _listItems.Add(item);
+            FilterItems(Fragment.FilterView.Query);
+        }
+
+        public void RemoveItem(T item)
+        {
+            _listItems.Remove(item);
+            FilterItems(Fragment.FilterView.Query);
         }
 
         protected BaseListAdapter(ListItemsFragment<T> fragment)

@@ -26,11 +26,11 @@ namespace EnergonSoftware.BackpackPlanner.Actions
         /// <summary>
         /// Does the action.
         /// </summary>
-        Task DoActionAsync();
+        Task<bool> DoActionAsync();
 
         /// <summary>
         /// Undoes the action.
         /// </summary>
-        Task UndoActionAsync();
+        Task<bool> UndoActionAsync();
     }
 }

@@ -65,9 +65,12 @@
     <string name="title_help">Help &amp; feedback</string>
 
     <!-- Actions -->
+
     <string name="label_added_item">Added an item!</string>
     <string name="label_saved_item">Saved an item!</string>
+
     <string name="label_deleted_item">Deleted an item!</string>
+    <string name="label_deleted_item_undo">Undeleted an item!</string>
 
     <!-- Gear Items -->
 
