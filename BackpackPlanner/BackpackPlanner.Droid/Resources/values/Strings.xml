@@ -29,6 +29,26 @@
 
     <string name="what_is_a_trip_plan">Lots of text about trip plans</string>
 
+    <!-- Delete confirmations -->
+
+    <string name="title_delete_confirmation_gear_item">Are you sure?</string>
+    <string name="confirm_delete_gear_item">Are you sure you wish to delete this gear item?</string>
+
+    <string name="title_delete_confirmation_gear_system">Are you sure?</string>
+    <string name="confirm_delete_gear_system">Are you sure you wish to delete this gear system?</string>
+
+    <string name="title_delete_confirmation_gear_collection">Are you sure?</string>
+    <string name="confirm_delete_gear_collection">Are you sure you wish to delete this gear collection?</string>
+
+    <string name="title_delete_confirmation_meal">Are you sure?</string>
+    <string name="confirm_delete_meal">Are you sure you wish to delete this meal?</string>
+
+    <string name="title_delete_confirmation_trip_itinerary">Are you sure?</string>
+    <string name="confirm_delete_trip_itinerary">Are you sure you wish to delete this trip itinerary?</string>
+
+    <string name="title_delete_confirmation_trip_plan">Are you sure?</string>
+    <string name="confirm_delete_trip_plan">Are you sure you wish to delete this trip plan?</string>
+
     <!-- Fragment titles -->
 
     <string name="title_gear_items">Gear Items</string>

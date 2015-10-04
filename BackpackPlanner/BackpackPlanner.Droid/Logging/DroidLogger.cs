@@ -3,6 +3,7 @@ using System;
 using Android.Util;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
+using EnergonSoftware.BackpackPlanner.Droid.Activities;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Logging
 {

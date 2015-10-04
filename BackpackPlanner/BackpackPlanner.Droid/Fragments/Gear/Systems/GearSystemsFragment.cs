@@ -34,6 +34,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 
         protected override int WhatIsAnItemTextResource => Resource.String.what_is_a_gear_system;
 
+        protected override int DeleteItemConfirmationTextResource => Resource.String.confirm_delete_gear_system;
+
+        protected override int DeleteItemConfirmationTitleResource => Resource.String.title_delete_confirmation_gear_system;
+
         protected override int NoItemsResource => Resource.Id.no_gear_systems;
 
         protected override int SortItemsResource => Resource.Id.gear_systems_sort;

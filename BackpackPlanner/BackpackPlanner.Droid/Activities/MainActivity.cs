@@ -44,9 +44,8 @@ using EnergonSoftware.BackpackPlanner.Units.Units;
 
 using SQLite.Net.Platform.XamarinAndroid;
 
-namespace EnergonSoftware.BackpackPlanner.Droid
+namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 {
-// TODO: split this into separate activities for the FTUE, etc
 	[Activity(Label = "@string/app_name", MainLauncher = true, Icon = "@drawable/icon")]
     [MetaData("com.google.android.gms.version", Value = "@integer/google_play_services_version")]
 	public sealed class MainActivity : Android.Support.V7.App.AppCompatActivity, View.IOnClickListener,
@@ -69,6 +68,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
                 var contentsResult = result.JavaCast<IDriveApiDriveContentsResult>();
                 if(null == contentsResult) {
                     // TODO: error
+                    Logger.Error("Null content result?");
                     return;
                 }
 
@@ -94,6 +94,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
             InitHockeyApp();
 
+            Logger.Debug("Building Google API Client...");
             _googleClientApi = new GoogleApiClientBuilder(this)
                 .AddApi(DriveClass.API)
                 .AddScope(DriveClass.ScopeFile)
@@ -114,7 +115,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             _navigationDrawerManager.Toggle.ToolbarNavigationClickListener = this;
             _navigationDrawerManager.HeaderText.Text = !string.IsNullOrWhiteSpace(BackpackPlannerState.Instance.PersonalInformation.Name)
                     ? BackpackPlannerState.Instance.PersonalInformation.Name
-                    : "Backpacking Planner";
+                    : Resources.GetString(Resource.String.app_name);
 
             // setup the fragment drawer indicator state
             SupportFragmentManager.BackStackChanged += (sender, args) => {
@@ -258,8 +259,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             HockeyApp.CrashManager.Register(this, HockeyAppAppId); 
 
             // Register to with the Update Manager
-            // TODO: this call causes a crash on the lollipop
-            // emulators, but I have no idea why!
             HockeyApp.UpdateManager.Register(this, HockeyAppAppId);
 
             // Register the Feedback Manager

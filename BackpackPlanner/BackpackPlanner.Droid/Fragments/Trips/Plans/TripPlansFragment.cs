@@ -34,6 +34,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
 
         protected override int WhatIsAnItemTextResource => Resource.String.what_is_a_trip_plan;
 
+        protected override int DeleteItemConfirmationTextResource => Resource.String.confirm_delete_trip_plan;
+
+        protected override int DeleteItemConfirmationTitleResource => Resource.String.title_delete_confirmation_trip_plan;
+
         protected override int NoItemsResource => Resource.Id.no_trip_plans;
 
         protected override int SortItemsResource => Resource.Id.trip_plans_sort;

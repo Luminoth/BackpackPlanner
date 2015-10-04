@@ -19,10 +19,10 @@ using System.Collections.Generic;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
+
 using EnergonSoftware.BackpackPlanner.Actions;
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters;
-using EnergonSoftware.BackpackPlanner.Droid.Fragments.Dialogs;
 using EnergonSoftware.BackpackPlanner.Droid.Util;
 using EnergonSoftware.BackpackPlanner.Models;
 
@@ -40,6 +40,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         protected abstract int WhatIsAnItemTitleResource { get; }
 
         protected abstract int WhatIsAnItemTextResource { get; }
+
+        protected abstract int DeleteItemConfirmationTextResource { get; }
+
+        protected abstract int DeleteItemConfirmationTitleResource { get; }
 
         protected abstract int NoItemsResource { get; }
 
@@ -77,8 +81,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
             Button whatIsAButton = view.FindViewById<Button>(WhatIsAnItemButtonResource);
             whatIsAButton.Click += (sender, args) => {
-                WhatIsADialog dialog = new WhatIsADialog(WhatIsAnItemTextResource, WhatIsAnItemTitleResource);
-                dialog.Show(FragmentManager, null);
+                DialogUtil.ShowOkDialog(Activity, WhatIsAnItemTextResource, WhatIsAnItemTitleResource);
             };
 
             Android.Support.Design.Widget.FloatingActionButton addItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(AddItemResource);
@@ -115,27 +118,31 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         public void DeleteItem(T item)
         {
-            IAction action = new DeleteItemAction<T>(item);
-            if(!action.DoActionAsync().Result) {
-                // TODO: error!
-                return;
-            }
+            DialogUtil.ShowOkCancelDialog(Activity, DeleteItemConfirmationTextResource, DeleteItemConfirmationTitleResource,
+                (sender, args) => {
+                    IAction action = new DeleteItemAction<T>(item);
+                    if(!action.DoActionAsync().Result) {
+                        // TODO: error!
+                        return;
+                    }
 
-            Adapter.RemoveItem(item);
+                    Adapter.RemoveItem(item);
 
-            ListItems.Remove(item);
-            UpdateView();
-
-            SnackbarUtil.ShowUndoSnackbar(View, Resource.String.label_deleted_item, Android.Support.Design.Widget.Snackbar.LengthLong,
-                view => {
-                    action.UndoActionAsync().Wait();
-
-                    Adapter.AddItem(item);
-
-                    ListItems.Add(item);
+                    ListItems.Remove(item);
                     UpdateView();
 
-                    SnackbarUtil.ShowSnackbar(view, Resource.String.label_deleted_item_undo, Android.Support.Design.Widget.Snackbar.LengthShort);
+                    SnackbarUtil.ShowUndoSnackbar(View, Resource.String.label_deleted_item, Android.Support.Design.Widget.Snackbar.LengthLong,
+                        view => {
+                            action.UndoActionAsync().Wait();
+
+                            Adapter.AddItem(item);
+
+                            ListItems.Add(item);
+                            UpdateView();
+
+                            SnackbarUtil.ShowSnackbar(view, Resource.String.label_deleted_item_undo, Android.Support.Design.Widget.Snackbar.LengthShort);
+                        }
+                    );
                 }
             );
         }
