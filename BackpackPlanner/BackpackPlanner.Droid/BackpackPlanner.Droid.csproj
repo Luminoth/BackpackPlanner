@@ -182,6 +182,7 @@
     <Compile Include="Fragments\Trips\Plans\TripPlansFragment.cs" />
     <Compile Include="Fragments\RecyclerFragment.cs" />
     <Compile Include="Fragments\ViewItemFragment.cs" />
+    <Compile Include="GooglePlayServicesManager.cs" />
     <Compile Include="Logging\DroidLogger.cs" />
     <Compile Include="Util\DialogUtil.cs" />
     <Compile Include="Util\DrawerToggle.cs" />
@@ -197,6 +198,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <AndroidResource Include="Resources\layout\activity_backpack_planner.axml" />
     <ProguardConfiguration Include="proguard.cfg" />
     <None Include="README.md" />
     <None Include="Resources\AboutResources.txt" />
