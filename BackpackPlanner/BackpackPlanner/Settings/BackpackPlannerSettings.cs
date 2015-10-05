@@ -14,10 +14,12 @@
    limitations under the License.
 */
 
+using System;
+
 using EnergonSoftware.BackpackPlanner.Units.Currency;
 using EnergonSoftware.BackpackPlanner.Units.Units;
 
-namespace EnergonSoftware.BackpackPlanner
+namespace EnergonSoftware.BackpackPlanner.Settings
 {
     /// <summary>
     /// 
@@ -41,13 +43,39 @@ namespace EnergonSoftware.BackpackPlanner
         public const string CurrencyPreferenceKey = "currency";
 #endregion
 
+#region Events
+        /// <summary>
+        /// Occurs when a setting is changed.
+        /// </summary>
+        public event EventHandler<SettingsChangedEventArgs> SettingsChangedEvent;
+#endregion
+
+        private bool _firstRun = true;
+
         /// <summary>
         /// Gets or sets a value indicating whether this is the first run of the app or not.
         /// </summary>
         /// <value>
         ///   <c>true</c> if this is the first run of the app; otherwise, <c>false</c>.
         /// </value>
-        public bool FirstRun { get; set; } = true;
+        public bool FirstRun
+        {
+            get { return _firstRun; }
+
+            set
+            {
+                SettingsChangedEvent?.Invoke(this, new SettingsChangedEventArgs
+                    {
+                        PreferenceKey = FirstRunPreferenceKey,
+                        OldValue = _firstRun.ToString(),
+                        NewValue = value.ToString()
+                    }
+                );
+                _firstRun = value;
+            }
+        }
+
+        private UnitSystem _units = UnitSystem.Metric;
 
         /// <summary>
         /// Gets or sets the unit system to use.
@@ -55,7 +83,24 @@ namespace EnergonSoftware.BackpackPlanner
         /// <value>
         /// The unit system to use.
         /// </value>
-        public UnitSystem Units { get; set; } = UnitSystem.Metric;
+        public UnitSystem Units
+        {
+            get { return _units; }
+
+            set
+            {
+                SettingsChangedEvent?.Invoke(this, new SettingsChangedEventArgs
+                    {
+                        PreferenceKey = UnitSystemPreferenceKey,
+                        OldValue = _units.ToString(),
+                        NewValue = value.ToString()
+                    }
+                );
+                _units = value;
+            }
+        }
+
+        private Currency _currency = Currency.UnitedStatesDollar;
 
         /// <summary>
         /// Gets or sets the currency to use.
@@ -63,11 +108,26 @@ namespace EnergonSoftware.BackpackPlanner
         /// <value>
         /// The currency to use.
         /// </value>
-        public Currency Currency { get; set; } = Currency.UnitedStatesDollar;
+        public Currency Currency
+        {
+            get { return _currency; }
+
+            set
+            {
+                SettingsChangedEvent?.Invoke(this, new SettingsChangedEventArgs
+                    {
+                        PreferenceKey = CurrencyPreferenceKey,
+                        OldValue = _currency.ToString(),
+                        NewValue = value.ToString()
+                    }
+                );
+                _currency = value;
+            }
+        }
 
 #region Weight Categories
         /// <summary>
-        /// Gets or sets the ultralight weight category maximum weight in grams.
+        /// Gets the ultralight weight category maximum weight in grams.
         /// </summary>
         /// <value>
         /// The ultralight weight category maximum weight in grams.
@@ -75,10 +135,10 @@ namespace EnergonSoftware.BackpackPlanner
         /// <remarks>
         /// 225 grams is about 8 ounces.
         /// </remarks>
-        public int UltralightWeightCategoryMaxWeightInGrams { get; set; } = 225;
+        public int UltralightWeightCategoryMaxWeightInGrams { get; } = 225;
 
         /// <summary>
-        /// Gets or sets the light weight category maximum weight in grams.
+        /// Gets the light weight category maximum weight in grams.
         /// </summary>
         /// <value>
         /// The light weight category maximum weight in grams.
@@ -86,10 +146,10 @@ namespace EnergonSoftware.BackpackPlanner
         /// <remarks>
         /// 450 grams is about 16 ounces.
         /// </remarks>
-        public int LightWeightCategoryMaxWeightInGrams { get; set; } = 450;
+        public int LightWeightCategoryMaxWeightInGrams { get; } = 450;
 
         /// <summary>
-        /// Gets or sets the medium weight category maximum weight in grams.
+        /// Gets the medium weight category maximum weight in grams.
         /// </summary>
         /// <value>
         /// The medium weight category maximum weight in grams.
@@ -97,10 +157,10 @@ namespace EnergonSoftware.BackpackPlanner
         /// <remarks>
         /// 1360 grams is about 3 pounds.
         /// </remarks>
-        public int MediumWeightCategoryMaxWeightInGrams { get; set; } = 1360;
+        public int MediumWeightCategoryMaxWeightInGrams { get; } = 1360;
 
         /// <summary>
-        /// Gets or sets the heavy weight category maximum weight in grams.
+        /// Gets the heavy weight category maximum weight in grams.
         /// </summary>
         /// <value>
         /// The heavy weight category maximum weight in grams.
@@ -108,12 +168,12 @@ namespace EnergonSoftware.BackpackPlanner
         /// <remarks>
         /// 2270 grams is about 5 pounds.
         /// </remarks>
-        public int HeavyWeightCategoryMaxWeightInGrams { get; set; } = 2270;
+        public int HeavyWeightCategoryMaxWeightInGrams { get; } = 2270;
 #endregion
 
 #region Weight Classes
         /// <summary>
-        /// Gets or sets the ultralight class maximum weight in grams.
+        /// Gets the ultralight class maximum weight in grams.
         /// </summary>
         /// <value>
         /// The ultralight class maximum weight in grams.
@@ -121,10 +181,10 @@ namespace EnergonSoftware.BackpackPlanner
         /// <remarks>
         /// 4500 grams is about 10 pounds.
         /// </remarks>
-        public int UltralightClassMaxWeightInGrams { get; set; } = 4500;
+        public int UltralightClassMaxWeightInGrams { get; } = 4500;
 
         /// <summary>
-        /// Gets or sets the lightweight class maximum weight in grams.
+        /// Gets the lightweight class maximum weight in grams.
         /// </summary>
         /// <value>
         /// The lightweight class maximum weight in grams.
@@ -132,7 +192,7 @@ namespace EnergonSoftware.BackpackPlanner
         /// <remarks>
         /// 9000 grams is about 20 pounds.
         /// </remarks>
-        public int LightweightClassMaxWeightInGrams { get; set; } = 9000;
+        public int LightweightClassMaxWeightInGrams { get; } = 9000;
 #endregion
     }
 }

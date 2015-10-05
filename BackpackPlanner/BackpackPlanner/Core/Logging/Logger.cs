@@ -95,42 +95,42 @@ namespace EnergonSoftware.BackpackPlanner.Core.Logging
 
         public void Debug(string message)
         {
-            BackpackPlannerState.Instance.SystemLogger.Debug(BuildMessage("DEBUG", message));
+            BackpackPlannerState.Instance.PlatformLogger.Debug(BuildMessage("DEBUG", message));
         }
 
         public void Debug(string message, Exception ex)
         {
-            BackpackPlannerState.Instance.SystemLogger.Debug(BuildMessage("DEBUG", message), ex);
+            BackpackPlannerState.Instance.PlatformLogger.Debug(BuildMessage("DEBUG", message), ex);
         }
 
         public void Info(string message)
         {
-            BackpackPlannerState.Instance.SystemLogger.Debug(BuildMessage("INFO", message));
+            BackpackPlannerState.Instance.PlatformLogger.Debug(BuildMessage("INFO", message));
         }
 
         public void Info(string message, Exception ex)
         {
-            BackpackPlannerState.Instance.SystemLogger.Debug(BuildMessage("INFO", message), ex);
+            BackpackPlannerState.Instance.PlatformLogger.Debug(BuildMessage("INFO", message), ex);
         }
 
         public void Warn(string message)
         {
-            BackpackPlannerState.Instance.SystemLogger.Debug(BuildMessage("WARNING", message));
+            BackpackPlannerState.Instance.PlatformLogger.Debug(BuildMessage("WARNING", message));
         }
 
         public void Warn(string message, Exception ex)
         {
-            BackpackPlannerState.Instance.SystemLogger.Debug(BuildMessage("WARNING", message), ex);
+            BackpackPlannerState.Instance.PlatformLogger.Debug(BuildMessage("WARNING", message), ex);
         }
 
         public void Error(string message)
         {
-            BackpackPlannerState.Instance.SystemLogger.Debug(BuildMessage("ERROR", message));
+            BackpackPlannerState.Instance.PlatformLogger.Debug(BuildMessage("ERROR", message));
         }
 
         public void Error(string message, Exception ex)
         {
-            BackpackPlannerState.Instance.SystemLogger.Debug(BuildMessage("ERROR", message), ex);
+            BackpackPlannerState.Instance.PlatformLogger.Debug(BuildMessage("ERROR", message), ex);
         }
     }
 }

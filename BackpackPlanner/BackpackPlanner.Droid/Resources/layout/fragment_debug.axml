@@ -4,16 +4,12 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FTUEActivity">
-    <TextView
-        android:text="This fragment is the final one!"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    tools:context=".BackpackPlannerActivity">
     <Button
-        android:id="@+id/button_ftue_finish"
-        android:text="Got it!"
+        android:id="@+id/button_reset_ftue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:text="@string/label_reset_ftue"
         android:textColor="@android:color/white" />
 </LinearLayout>

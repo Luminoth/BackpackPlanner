@@ -30,6 +30,7 @@ using EnergonSoftware.BackpackPlanner.Models.Meals;
 using EnergonSoftware.BackpackPlanner.Models.Personal;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
+using EnergonSoftware.BackpackPlanner.Settings;
 
 using SQLite.Net;
 using SQLite.Net.Interop;
@@ -61,19 +62,13 @@ namespace EnergonSoftware.BackpackPlanner
         /// </value>
         public static readonly BackpackPlannerState Instance = new BackpackPlannerState();
 
-        private ILogger _systemLogger = new DebugLogger();
-
         /// <summary>
-        /// Gets or sets the logger.
+        /// Gets the platform logger.
         /// </summary>
         /// <value>
-        /// The logger.
+        /// The platform logger.
         /// </value>
-        public ILogger SystemLogger
-        {
-            get { return _systemLogger; }
-            set { _systemLogger = value ?? new DebugLogger(); }
-        }
+        public ILogger PlatformLogger { get; private set; } = new DiagnosticsLogger();
 
         /// <summary>
         /// Gets the library settings.
@@ -116,7 +111,27 @@ namespace EnergonSoftware.BackpackPlanner
                 DatabaseConnection.Dispose();
             }
         }
-#endregion
+        #endregion
+
+        /// <summary>
+        /// Initializes the platform-specific state.
+        /// </summary>
+        /// <param name="platformLogger">The platform logger.</param>
+        /// <param name="settingsChangedEventHandler">The settings changed event handler.</param>
+        public void InitPlatform(ILogger platformLogger, EventHandler<SettingsChangedEventArgs> settingsChangedEventHandler)
+        {
+            if(null == platformLogger) {
+                throw new ArgumentNullException(nameof(platformLogger));
+            }
+
+            Logger.Debug("Initializing platform state...");
+
+            PlatformLogger = platformLogger;
+
+            if(null != settingsChangedEventHandler) {
+                Settings.SettingsChangedEvent += settingsChangedEventHandler;
+            }
+        }
 
         /// <summary>
         /// Initializes the library database.

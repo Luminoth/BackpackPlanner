@@ -46,8 +46,9 @@
     <Compile Include="Core\Database\SQLiteDatabaseConnection.cs" />
     <Compile Include="Core\PlayServices\PlayServices.cs" />
     <Compile Include="Models\DatabaseItem.cs" />
+    <Compile Include="Settings\SettingsChangedEventArgs.cs" />
     <Compile Include="Units\Currency\Currency.cs" />
-    <Compile Include="BackpackPlannerSettings.cs" />
+    <Compile Include="Settings\BackpackPlannerSettings.cs" />
     <Compile Include="Core\Logging\DiagnosticsLogger.cs" />
     <Compile Include="Core\Logging\Logger.cs" />
     <Compile Include="Models\DatabaseVersion.cs" />

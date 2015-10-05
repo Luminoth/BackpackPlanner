@@ -161,6 +161,7 @@
     <Compile Include="Fragments\AddItemFragment.cs" />
     <Compile Include="Fragments\BaseFragment.cs" />
     <Compile Include="Fragments\DataFragment.cs" />
+    <Compile Include="Fragments\DebugFragment.cs" />
     <Compile Include="Fragments\FTUE\FinishFragment.cs" />
     <Compile Include="Fragments\FTUE\GearFragment.cs" />
     <Compile Include="Fragments\FTUE\MealsFragment.cs" />
@@ -214,6 +215,7 @@
     <AndroidResource Include="Resources\layout\fragment_ftue_finish.axml" />
     <AndroidResource Include="Resources\layout\fragment_ftue_meals.axml" />
     <AndroidResource Include="Resources\layout\fragment_ftue_trips.axml" />
+    <AndroidResource Include="Resources\layout\fragment_debug.axml" />
     <ProguardConfiguration Include="proguard.cfg" />
     <None Include="README.md" />
     <None Include="Resources\AboutResources.txt" />
@@ -480,6 +482,24 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\vpi__styles.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-anydpi-v21\ic_bug.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\ic_bug.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\ic_bug.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_bug.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_bug.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_bug.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>

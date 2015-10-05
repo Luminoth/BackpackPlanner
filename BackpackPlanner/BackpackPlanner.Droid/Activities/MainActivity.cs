@@ -27,6 +27,7 @@ using Android.Runtime;
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Droid.Logging;
 using EnergonSoftware.BackpackPlanner.Models.Personal;
+using EnergonSoftware.BackpackPlanner.Settings;
 using EnergonSoftware.BackpackPlanner.Units.Currency;
 using EnergonSoftware.BackpackPlanner.Units.Units;
 
@@ -46,7 +47,15 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 		{
 			base.OnCreate(savedInstanceState);
 
-            BackpackPlannerState.Instance.SystemLogger = new DroidLogger();
+            // NOTE: this is happening *before* we init HockeyApp
+            // so any exceptions here will go un-uploaded
+            BackpackPlannerState.Instance.InitPlatform(new DroidLogger(),
+                (sender, args) => {
+                    ISharedPreferencesEditor sharedPreferencesEditor = PreferenceManager.GetDefaultSharedPreferences(this).Edit();
+                    sharedPreferencesEditor.PutString(args.PreferenceKey, args.NewValue);
+                    sharedPreferencesEditor.Commit();
+                }
+            );
 
             InitHockeyApp();
 
@@ -66,12 +75,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
                 Logger.Debug("Not first run, starting main activity...");
                 StartActivity(typeof(BackpackPlannerActivity));
             }
-
-            // TODO: this needs a platform callback so we can save-on-set settings
-            ISharedPreferencesEditor sharedPreferencesEditor = PreferenceManager.GetDefaultSharedPreferences(this).Edit();
             BackpackPlannerState.Instance.Settings.FirstRun = false;
-            sharedPreferencesEditor.PutString(BackpackPlannerSettings.FirstRunPreferenceKey, BackpackPlannerState.Instance.Settings.FirstRun.ToString());
-            sharedPreferencesEditor.Commit();
 
             // this ensures that we never come back to this activity
             Finish();

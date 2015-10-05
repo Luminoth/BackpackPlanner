@@ -21,7 +21,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Logging
     /// <summary>
     /// A logger that writes to System.Diagnostics.Debug
     /// </summary>
-    public sealed class DebugLogger : ILogger
+    public sealed class DiagnosticsLogger : ILogger
     {
         public void Debug(string message)
         {

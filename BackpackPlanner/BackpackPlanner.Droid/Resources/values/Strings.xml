@@ -83,6 +83,7 @@
 
     <string name="title_settings">Settings</string>
     <string name="title_help">Help &amp; feedback</string>
+    <string name="title_debug">Debug</string>
 
     <!-- Actions -->
 
@@ -205,4 +206,8 @@
     <!-- Help and feedback -->
 
     <string name="label_feedback">Feedback</string>
+
+    <!-- Debug -->
+
+    <string name="label_reset_ftue">Reset FTUE</string>
 </resources>

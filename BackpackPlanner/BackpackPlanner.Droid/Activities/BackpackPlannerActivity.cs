@@ -70,6 +70,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
                     ? BackpackPlannerState.Instance.PersonalInformation.Name
                     : Resources.GetString(Resource.String.app_name);
 
+#if !DEBUG
+            _navigationDrawerManager.RemoveItemByResId(Resource.Id.nav_debug_fragment);
+#endif
+
             // setup the fragment drawer indicator state
             SupportFragmentManager.BackStackChanged += (sender, args) => {
                 if(SupportFragmentManager.BackStackEntryCount > 0) {
@@ -211,6 +215,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
                 break;
             case Resource.Id.nav_help_fragment:
                 fragment = new HelpFragment();
+                break;
+            case Resource.Id.nav_debug_fragment:
+                fragment = new DebugFragment();
                 break;
             }
 

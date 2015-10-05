@@ -89,6 +89,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
             NavView.Menu.PerformIdentifierAction(resId, 0);
         }
 
+        public void RemoveItemByResId(int resId)
+        {
+            NavView.Menu.RemoveItem(resId);
+        }
+
         public void SetGroupCheckable(int group, bool checkable, bool exclusive)
         {
             NavView.Menu.SetGroupCheckable(group, checkable, exclusive);
