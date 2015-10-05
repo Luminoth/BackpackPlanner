@@ -15,6 +15,7 @@
 */
 
 using System;
+using System.Globalization;
 using System.Threading.Tasks;
 
 using Android.App;
@@ -58,10 +59,22 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 
             LoadPreferences();
 
-            // TODO: check for FTUE, etc here
+            if(BackpackPlannerState.Instance.Settings.FirstRun) {
+                Logger.Debug("First run, starting FTUE...");
+                StartActivity(typeof(FTUEActivity));
+            } else {
+                Logger.Debug("Not first run, starting main activity...");
+                StartActivity(typeof(BackpackPlannerActivity));
+            }
 
-            Logger.Debug("Starting backpack planner activity...");
-            StartActivity(typeof(BackpackPlannerActivity));
+            // TODO: this needs a platform callback so we can save-on-set settings
+            ISharedPreferencesEditor sharedPreferencesEditor = PreferenceManager.GetDefaultSharedPreferences(this).Edit();
+            BackpackPlannerState.Instance.Settings.FirstRun = false;
+            sharedPreferencesEditor.PutString(BackpackPlannerSettings.FirstRunPreferenceKey, BackpackPlannerState.Instance.Settings.FirstRun.ToString());
+            sharedPreferencesEditor.Commit();
+
+            // this ensures that we never come back to this activity
+            Finish();
 	    }
 
 	    private void InitHockeyApp()
@@ -102,25 +115,37 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             Logger.Debug("Loading preferences...");
             ISharedPreferences sharedPreferences = PreferenceManager.GetDefaultSharedPreferences(this);
 
+            try {
+                string scratch = sharedPreferences.GetString(BackpackPlannerSettings.FirstRunPreferenceKey,
+                    BackpackPlannerState.Instance.Settings.FirstRun.ToString());
+                BackpackPlannerState.Instance.Settings.FirstRun = Convert.ToBoolean(scratch);
+            } catch(FormatException) {
+                // it's k, we'll live
+            }
+
             // NOTE: have to read these settings first so we know how to interpret everything else
             try {
-                string scratch = sharedPreferences.GetString(BackpackPlannerSettings.UnitSystemPreferenceKey, "0");
+                string scratch = sharedPreferences.GetString(BackpackPlannerSettings.UnitSystemPreferenceKey,
+                    BackpackPlannerState.Instance.Settings.Units.ToString());
                 BackpackPlannerState.Instance.Settings.Units = (UnitSystem)Convert.ToInt32(scratch);
             } catch(FormatException) {
                 // it's k, we'll live
             }
 
             try {
-                string scratch = sharedPreferences.GetString(BackpackPlannerSettings.CurrencyPreferenceKey, "0");
+                string scratch = sharedPreferences.GetString(BackpackPlannerSettings.CurrencyPreferenceKey,
+                    BackpackPlannerState.Instance.Settings.Currency.ToString());
                 BackpackPlannerState.Instance.Settings.Currency = (Currency)Convert.ToInt32(scratch);
             } catch(FormatException) {
                 // it's k, we'll live
             }
 
-            BackpackPlannerState.Instance.PersonalInformation.Name = sharedPreferences.GetString(PersonalInformation.NamePreferenceKey, "");
+            BackpackPlannerState.Instance.PersonalInformation.Name = sharedPreferences.GetString(PersonalInformation.NamePreferenceKey,
+                BackpackPlannerState.Instance.PersonalInformation.Name);
 
             try {
-                string scratch = sharedPreferences.GetString(PersonalInformation.DateOfBirthPreferenceKey, "");
+                string scratch = sharedPreferences.GetString(PersonalInformation.DateOfBirthPreferenceKey,
+                    BackpackPlannerState.Instance.PersonalInformation.DateOfBirth?.ToString() ?? string.Empty);
                 if(!string.IsNullOrWhiteSpace(scratch)) {
                     BackpackPlannerState.Instance.PersonalInformation.DateOfBirth = Convert.ToDateTime(scratch);
                 }
@@ -129,21 +154,24 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             }
 
             try {
-                string scratch = sharedPreferences.GetString(PersonalInformation.UserSexPreferenceKey, "0");
+                string scratch = sharedPreferences.GetString(PersonalInformation.UserSexPreferenceKey,
+                    BackpackPlannerState.Instance.PersonalInformation.Sex.ToString());
                 BackpackPlannerState.Instance.PersonalInformation.Sex = (UserSex)Convert.ToInt32(scratch);
             } catch(FormatException) {
                 // it's k, we'll live
             }
 
             try {
-                string scratch = sharedPreferences.GetString(PersonalInformation.HeightPreferenceKey, "0");
+                string scratch = sharedPreferences.GetString(PersonalInformation.HeightPreferenceKey,
+                    BackpackPlannerState.Instance.PersonalInformation.HeightInUnits.ToString(CultureInfo.InvariantCulture));
                 BackpackPlannerState.Instance.PersonalInformation.HeightInUnits = Convert.ToInt32(scratch);
             } catch(FormatException) {
                 // it's k, we'll live
             }
 
             try {
-                string scratch = sharedPreferences.GetString(PersonalInformation.WeightPreferenceKey, "0");
+                string scratch = sharedPreferences.GetString(PersonalInformation.WeightPreferenceKey,
+                    BackpackPlannerState.Instance.PersonalInformation.WeightInUnits.ToString(CultureInfo.InvariantCulture));
                 BackpackPlannerState.Instance.PersonalInformation.WeightInUnits = Convert.ToInt32(scratch);
             } catch(FormatException) {
                 // it's k, we'll live

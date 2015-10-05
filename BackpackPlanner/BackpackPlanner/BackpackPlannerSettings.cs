@@ -26,6 +26,11 @@ namespace EnergonSoftware.BackpackPlanner
     {
 #region Preference Keys
         /// <summary>
+        /// The first run preference key
+        /// </summary>
+        public const string FirstRunPreferenceKey = "firstRun";
+
+        /// <summary>
         /// The unit system preference key
         /// </summary>
         public const string UnitSystemPreferenceKey = "unitSystem";
@@ -35,6 +40,14 @@ namespace EnergonSoftware.BackpackPlanner
         /// </summary>
         public const string CurrencyPreferenceKey = "currency";
 #endregion
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this is the first run of the app or not.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this is the first run of the app; otherwise, <c>false</c>.
+        /// </value>
+        public bool FirstRun { get; set; } = true;
 
         /// <summary>
         /// Gets or sets the unit system to use.

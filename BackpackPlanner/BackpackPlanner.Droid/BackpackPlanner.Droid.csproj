@@ -85,6 +85,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Mono.Android" />
+    <Reference Include="Mono.Android.Export" />
     <Reference Include="Xamarin.Android.Support.Design, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xamarin.Android.Support.Design.23.0.1.1\lib\MonoAndroid403\Xamarin.Android.Support.Design.dll</HintPath>
       <Private>True</Private>
@@ -148,6 +149,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activities\FTUEActivity.cs" />
     <Compile Include="Adapters\BaseListAdapter.cs" />
     <Compile Include="Adapters\Gear\GearCollectionListAdapter.cs" />
     <Compile Include="Adapters\Gear\GearItemListAdapter.cs" />
@@ -159,6 +161,11 @@
     <Compile Include="Fragments\AddItemFragment.cs" />
     <Compile Include="Fragments\BaseFragment.cs" />
     <Compile Include="Fragments\DataFragment.cs" />
+    <Compile Include="Fragments\FTUE\FinishFragment.cs" />
+    <Compile Include="Fragments\FTUE\GearFragment.cs" />
+    <Compile Include="Fragments\FTUE\MealsFragment.cs" />
+    <Compile Include="Fragments\FTUE\TripsFragment.cs" />
+    <Compile Include="Fragments\FTUE\WelcomeFragment.cs" />
     <Compile Include="Fragments\Gear\Collections\ViewGearCollectionFragment.cs" />
     <Compile Include="Fragments\Gear\Items\ViewGearItemFragment.cs" />
     <Compile Include="Fragments\Gear\Systems\AddGearSystemFragment.cs" />
@@ -184,6 +191,7 @@
     <Compile Include="Fragments\ViewItemFragment.cs" />
     <Compile Include="GooglePlayServicesManager.cs" />
     <Compile Include="Logging\DroidLogger.cs" />
+    <Compile Include="Util\CircleViewPagerIndicator.cs" />
     <Compile Include="Util\DialogUtil.cs" />
     <Compile Include="Util\DrawerToggle.cs" />
     <Compile Include="Activities\MainActivity.cs" />
@@ -194,11 +202,18 @@
     <Compile Include="Util\FragmentTransitionUtil.cs" />
     <Compile Include="Util\NavigationDrawerManager.cs" />
     <Compile Include="Util\SnackbarUtil.cs" />
+    <Compile Include="Util\ViewPagerIndicator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
     <AndroidResource Include="Resources\layout\activity_backpack_planner.axml" />
+    <AndroidResource Include="Resources\layout\activity_ftue.axml" />
+    <AndroidResource Include="Resources\layout\fragment_ftue_welcome.axml" />
+    <AndroidResource Include="Resources\layout\fragment_ftue_gear.axml" />
+    <AndroidResource Include="Resources\layout\fragment_ftue_finish.axml" />
+    <AndroidResource Include="Resources\layout\fragment_ftue_meals.axml" />
+    <AndroidResource Include="Resources\layout\fragment_ftue_trips.axml" />
     <ProguardConfiguration Include="proguard.cfg" />
     <None Include="README.md" />
     <None Include="Resources\AboutResources.txt" />
@@ -445,6 +460,26 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\menu\trip_plan_menu.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\color\vpi__dark_theme.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\color\vpi__light_theme.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\values\vpi__attrs.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\values\vpi__colors.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\values\vpi__defaults.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\values\vpi__styles.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
 </Project>
