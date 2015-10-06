@@ -22,7 +22,6 @@ using Android.Util;
 using Android.Views;
 
 using Java.Interop;
-using Java.Lang;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Util
 {
@@ -34,14 +33,18 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
     /// </remarks>
     public sealed class CircleViewPagerIndicator : View, IViewPagerIndicator
     {
-		const int HORIZONTAL = 0;
-		const int VERTICAL = 1;
-		private float mRadius;
-		private Paint mPaintPageFill;
-		private Paint mPaintStroke;
-		private Paint mPaintFill;
-		private ViewPager mViewPager;
-		private ViewPager.IOnPageChangeListener mListener;
+		private const int Horizontal = 0;
+		private const int Vertical = 1;
+
+		private float _radius;
+
+		private readonly Paint _paintPageFill;
+		private readonly Paint _paintStroke;
+		private readonly Paint _paintFill;
+
+		private ViewPager _viewPager;
+		private ViewPager.IOnPageChangeListener _listener;
+
 		private int mCurrentPage;
 		private int mSnapPage;
 		private int mCurrentOffset;
@@ -82,17 +85,17 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 		
 			mCentered = a.GetBoolean (Resource.Styleable.CirclePageIndicator_centered, defaultCentered);
 			mOrientation = a.GetInt (Resource.Styleable.CirclePageIndicator_android_orientation, defaultOrientation);
-			mPaintPageFill = new Paint (PaintFlags.AntiAlias);
-			mPaintPageFill.SetStyle (Paint.Style.Fill);
-			mPaintPageFill.Color = a.GetColor (Resource.Styleable.CirclePageIndicator_pageColor, defaultPageColor);
-			mPaintStroke = new Paint (PaintFlags.AntiAlias);
-			mPaintStroke.SetStyle (Paint.Style.Stroke);
-			mPaintStroke.Color = a.GetColor (Resource.Styleable.CirclePageIndicator_strokeColor, defaultStrokeColor);
-			mPaintStroke.StrokeWidth = a.GetDimension (Resource.Styleable.CirclePageIndicator_strokeWidth, defaultStrokeWidth);
-			mPaintFill = new Paint (PaintFlags.AntiAlias);
-			mPaintFill.SetStyle (Paint.Style.Fill);
-			mPaintFill.Color = a.GetColor (Resource.Styleable.CirclePageIndicator_fillColor, defaultFillColor);
-			mRadius = a.GetDimension (Resource.Styleable.CirclePageIndicator_radius, defaultRadius);
+			_paintPageFill = new Paint (PaintFlags.AntiAlias);
+			_paintPageFill.SetStyle (Paint.Style.Fill);
+			_paintPageFill.Color = a.GetColor (Resource.Styleable.CirclePageIndicator_pageColor, defaultPageColor);
+			_paintStroke = new Paint (PaintFlags.AntiAlias);
+			_paintStroke.SetStyle (Paint.Style.Stroke);
+			_paintStroke.Color = a.GetColor (Resource.Styleable.CirclePageIndicator_strokeColor, defaultStrokeColor);
+			_paintStroke.StrokeWidth = a.GetDimension (Resource.Styleable.CirclePageIndicator_strokeWidth, defaultStrokeWidth);
+			_paintFill = new Paint (PaintFlags.AntiAlias);
+			_paintFill.SetStyle (Paint.Style.Fill);
+			_paintFill.Color = a.GetColor (Resource.Styleable.CirclePageIndicator_fillColor, defaultFillColor);
+			_radius = a.GetDimension (Resource.Styleable.CirclePageIndicator_radius, defaultRadius);
 			mSnap = a.GetBoolean (Resource.Styleable.CirclePageIndicator_snap, defaultSnap);
 			
 			a.Recycle ();
@@ -115,38 +118,38 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 	
 		public void SetPageColor (Color pageColor)
 		{
-			mPaintPageFill.Color = pageColor;
+			_paintPageFill.Color = pageColor;
 			Invalidate ();
 		}
 	
 		public int GetPageColor ()
 		{
-			return mPaintPageFill.Color;
+			return _paintPageFill.Color;
 		}
 	
 		public void SetFillColor (Color fillColor)
 		{
-			mPaintFill.Color = fillColor;
+			_paintFill.Color = fillColor;
 			Invalidate ();
 		}
 	
 		public int GetFillColor ()
 		{
-			return mPaintFill.Color;
+			return _paintFill.Color;
 		}
 		
-		public void setOrientation (int orientation)
+		public void SetOrientation (int orientation)
 		{
-			switch (orientation) {
-			case HORIZONTAL:
-			case VERTICAL:
+			switch (orientation)
+            {
+			case Horizontal:
+			case Vertical:
 				mOrientation = orientation;
 				UpdatePageSize ();
 				RequestLayout ();
 				break;
-	
 			default:
-				throw new IllegalArgumentException ("Orientation must be either HORIZONTAL or VERTICAL.");
+				throw new Java.Lang.IllegalArgumentException("Orientation must be either Horizontal or Vertical.");
 			}
 		}
 	
@@ -157,35 +160,35 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 	
 		public void SetStrokeColor (Color strokeColor)
 		{
-			mPaintStroke.Color = strokeColor;
+			_paintStroke.Color = strokeColor;
 			Invalidate ();
 		}
 	
 		public int GetStrokeColor ()
 		{
-			return mPaintStroke.Color;
+			return _paintStroke.Color;
 		}
 	
 		public void SetStrokeWidth (float strokeWidth)
 		{
-			mPaintStroke.StrokeWidth = strokeWidth;
+			_paintStroke.StrokeWidth = strokeWidth;
 			Invalidate ();
 		}
 	
 		public float GetStrokeWidth ()
 		{
-			return mPaintStroke.StrokeWidth;
+			return _paintStroke.StrokeWidth;
 		}
 	
 		public void SetRadius (float radius)
 		{
-			mRadius = radius;
+			_radius = radius;
 			Invalidate ();
 		}
 	
 		public float GetRadius ()
 		{
-			return mRadius;
+			return _radius;
 		}
 
 		public void SetSnap (bool snap)
@@ -203,10 +206,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 		{
 			base.OnDraw (canvas);
 			
-			if (mViewPager == null) {
+			if (_viewPager == null) {
 				return;
 			}
-			int count = mViewPager.Adapter.Count;
+			int count = _viewPager.Adapter.Count;
 			if (count == 0) {
 				return;
 			}
@@ -220,7 +223,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 			int longPaddingBefore;
 			int longPaddingAfter;
 			int shortPaddingBefore;
-			if (mOrientation == HORIZONTAL) {
+			if (mOrientation == Horizontal) {
 				longSize = Width;
 				longPaddingBefore = PaddingLeft;
 				longPaddingAfter = PaddingRight;
@@ -232,9 +235,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 				shortPaddingBefore = PaddingLeft;
 			}
 	
-			float threeRadius = mRadius * 3;
-			float shortOffset = shortPaddingBefore + mRadius;
-			float longOffset = longPaddingBefore + mRadius;
+			float threeRadius = _radius * 3;
+			float shortOffset = shortPaddingBefore + _radius;
+			float longOffset = longPaddingBefore + _radius;
 			if (mCentered) {
 				longOffset += ((longSize - longPaddingBefore - longPaddingAfter) / 2.0f) - ((count * threeRadius) / 2.0f);
 			}
@@ -242,15 +245,15 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 			float dX;
 			float dY;
 	
-			float pageFillRadius = mRadius;
-			if (mPaintStroke.StrokeWidth > 0) {
-				pageFillRadius -= mPaintStroke.StrokeWidth / 2.0f;
+			float pageFillRadius = _radius;
+			if (_paintStroke.StrokeWidth > 0) {
+				pageFillRadius -= _paintStroke.StrokeWidth / 2.0f;
 			}
 	
 			//Draw stroked circles
 			for (int iLoop = 0; iLoop < count; iLoop++) {
 				float drawLong = longOffset + (iLoop * threeRadius);
-				if (mOrientation == HORIZONTAL) {
+				if (mOrientation == Horizontal) {
 					dX = drawLong;
 					dY = shortOffset;
 				} else {
@@ -258,13 +261,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 					dY = drawLong;
 				}
 				// Only paint fill if not completely transparent
-				if (mPaintPageFill.Alpha > 0) {
-					canvas.DrawCircle (dX, dY, pageFillRadius, mPaintPageFill);
+				if (_paintPageFill.Alpha > 0) {
+					canvas.DrawCircle (dX, dY, pageFillRadius, _paintPageFill);
 				}
 	
 				// Only paint stroke if a stroke width was non-zero
-				if (pageFillRadius != mRadius) {
-					canvas.DrawCircle (dX, dY, mRadius, mPaintStroke);
+				if (pageFillRadius != _radius) {
+					canvas.DrawCircle (dX, dY, _radius, _paintStroke);
 				}
 			}
 	
@@ -273,35 +276,36 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 			if (!mSnap && (mPageSize != 0)) {
 				cx += (mCurrentOffset * 1.0f / mPageSize) * threeRadius;
 			}
-			if (mOrientation == HORIZONTAL) {
+			if (mOrientation == Horizontal) {
 				dX = longOffset + cx;
 				dY = shortOffset;
 			} else {
 				dX = shortOffset;
 				dY = longOffset + cx;
 			}
-			canvas.DrawCircle (dX, dY, mRadius, mPaintFill);
+			canvas.DrawCircle (dX, dY, _radius, _paintFill);
 		}
 		
 		public override bool OnTouchEvent (MotionEvent ev)
-		{
-	        
+        {
 			if (base.OnTouchEvent (ev)) {
 				return true;
 			}
-			if ((mViewPager == null) || (mViewPager.Adapter.Count == 0)) {
+
+			if ((_viewPager == null) || (_viewPager.Adapter.Count == 0)) {
 				return false;
 			}
 	
 			var action = ev.Action;
 	
-			switch ((int)action & MotionEventCompat.ActionMask) {
+			switch ((int)action & MotionEventCompat.ActionMask)
+            {
 			case (int) MotionEventActions.Down:
 				mActivePointerId = MotionEventCompat.GetPointerId (ev, 0);
 				mLastMotionX = ev.GetX ();
 				break;
-	
-			case (int)MotionEventActions.Move: {
+			case (int)MotionEventActions.Move:
+                {
 					int activePointerIndex = MotionEventCompat.FindPointerIndex (ev, mActivePointerId);
 					float x = MotionEventCompat.GetX (ev, activePointerIndex);
 					float deltaX = x - mLastMotionX;
@@ -313,41 +317,41 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 					}
 	
 					if (mIsDragging) {
-						if (!mViewPager.IsFakeDragging) {
-							mViewPager.BeginFakeDrag ();
+						if (!_viewPager.IsFakeDragging) {
+							_viewPager.BeginFakeDrag ();
 						}
 	
 						mLastMotionX = x;
 	
-						mViewPager.FakeDragBy (deltaX);
+						_viewPager.FakeDragBy (deltaX);
 					}
 	
 					break;
 				}
-	
 			case (int)MotionEventActions.Cancel:
 			case (int)MotionEventActions.Up:
 				if (!mIsDragging) {
-					int count = mViewPager.Adapter.Count;
+					int count = _viewPager.Adapter.Count;
 					int width = Width;
 					float halfWidth = width / 2f;
 					float sixthWidth = width / 6f;
 	
 					if ((mCurrentPage > 0) && (ev.GetX () < halfWidth - sixthWidth)) {
-						mViewPager.CurrentItem = mCurrentPage - 1;
+						_viewPager.CurrentItem = mCurrentPage - 1;
 						return true;
 					} else if ((mCurrentPage < count - 1) && (ev.GetX () > halfWidth + sixthWidth)) {
-						mViewPager.CurrentItem = mCurrentPage + 1;
+						_viewPager.CurrentItem = mCurrentPage + 1;
 						return true;
 					}
 				}
 	
 				mIsDragging = false;
 				mActivePointerId = INVALID_POINTER;
-				if (mViewPager.IsFakeDragging)
-					mViewPager.EndFakeDrag ();
+
+				if (_viewPager.IsFakeDragging) {
+					_viewPager.EndFakeDrag ();
+                }
 				break;
-	
 			case MotionEventCompat.ActionPointerDown: {
 					int index = MotionEventCompat.GetActionIndex (ev);
 					float x = MotionEventCompat.GetX (ev, index);
@@ -355,7 +359,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 					mActivePointerId = MotionEventCompat.GetPointerId (ev, index);
 					break;
 				}
-	
 			case MotionEventCompat.ActionPointerUp:
 				int pointerIndex = MotionEventCompat.GetActionIndex (ev);
 				int pointerId = MotionEventCompat.GetPointerId (ev, pointerIndex);
@@ -369,22 +372,27 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 	
 			return true;
 		}
-		
-		public void SetViewPager (ViewPager view)
+
+        public override bool PerformClick()
+        {
+            return base.PerformClick();
+        }
+
+        public void SetViewPager (ViewPager view)
 		{
 			if (view.Adapter == null) {
-				throw new IllegalStateException ("ViewPager does not have adapter instance.");
+				throw new Java.Lang.IllegalStateException ("ViewPager does not have adapter instance.");
 			}
-			mViewPager = view;
-			mViewPager.SetOnPageChangeListener (this);
+			_viewPager = view;
+			_viewPager.AddOnPageChangeListener(this);
 			UpdatePageSize ();
 			Invalidate ();
 		}
 		
 		private void UpdatePageSize ()
 		{
-			if (mViewPager != null) {
-				mPageSize = (mOrientation == HORIZONTAL) ? mViewPager.Width : mViewPager.Height;
+			if (_viewPager != null) {
+				mPageSize = (mOrientation == Horizontal) ? _viewPager.Width : _viewPager.Height;
 			}
 		}
 		
@@ -396,10 +404,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 		
 		public void SetCurrentItem (int item)
 		{
-			if (mViewPager == null) {
-				throw new IllegalStateException ("ViewPager has not been bound.");
+			if (_viewPager == null) {
+				throw new Java.Lang.IllegalStateException ("ViewPager has not been bound.");
 			}
-			mViewPager.CurrentItem = item;
+			_viewPager.CurrentItem = item;
 			mCurrentPage = item;
 			Invalidate ();
 		}
@@ -412,10 +420,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 		public void OnPageScrollStateChanged (int state)
 		{
 			mScrollState = state;
-	
-			if (mListener != null) {
-				mListener.OnPageScrollStateChanged (state);
-			}
+
+		    _listener?.OnPageScrollStateChanged (state);
 		}
 		
 		public void OnPageScrolled (int position, float positionOffset, int positionOffsetPixels)
@@ -424,10 +430,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 			mCurrentOffset = positionOffsetPixels;
 			UpdatePageSize ();
 			Invalidate ();
-	
-			if (mListener != null) {
-				mListener.OnPageScrolled (position, positionOffset, positionOffsetPixels);
-			}
+
+		    _listener?.OnPageScrolled (position, positionOffset, positionOffsetPixels);
 		}
 		
 		public void OnPageSelected (int position)
@@ -437,20 +441,18 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 				mSnapPage = position;
 				Invalidate ();
 			}
-	
-			if (mListener != null) {
-				mListener.OnPageSelected (position);
-			}
+
+		    _listener?.OnPageSelected (position);
 		}
 		
 		public void SetOnPageChangeListener (ViewPager.IOnPageChangeListener listener)
 		{
-			mListener = listener;
+			_listener = listener;
 		}
 		
 		protected override void OnMeasure (int widthMeasureSpec, int heightMeasureSpec)
 		{
-			if (mOrientation == HORIZONTAL) {
+			if (mOrientation == Horizontal) {
 				SetMeasuredDimension (MeasureLong (widthMeasureSpec), MeasureShort (heightMeasureSpec));
 			} else {
 				SetMeasuredDimension (MeasureShort (widthMeasureSpec), MeasureLong (heightMeasureSpec));
@@ -466,18 +468,18 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 	     */
 		private int MeasureLong (int measureSpec)
 		{
-			int result = 0;
-			var specMode = View.MeasureSpec.GetMode (measureSpec);
-			var specSize = View.MeasureSpec.GetSize (measureSpec);
+			int result;
+			var specMode = MeasureSpec.GetMode (measureSpec);
+			var specSize = MeasureSpec.GetSize (measureSpec);
 	
-			if ((specMode == MeasureSpecMode.Exactly) || (mViewPager == null)) {
+			if ((specMode == MeasureSpecMode.Exactly) || (_viewPager == null)) {
 				//We were told how big to be
 				result = specSize;
 			} else {
 				//Calculate the width according the views count
-				int count = mViewPager.Adapter.Count;
+				int count = _viewPager.Adapter.Count;
 				result = (int)(PaddingLeft + PaddingRight
-	                    + (count * 2 * mRadius) + (count - 1) * mRadius + 1);
+	                    + (count * 2 * _radius) + (count - 1) * _radius + 1);
 				//Respect AT_MOST value if that was what is called for by measureSpec
 				if (specMode == MeasureSpecMode.AtMost) {
 					result = Java.Lang.Math.Min (result, specSize);
@@ -495,16 +497,16 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 	     */
 		private int MeasureShort (int measureSpec)
 		{
-			int result = 0;
-			var specMode = View.MeasureSpec.GetMode (measureSpec);
-			var specSize = View.MeasureSpec.GetSize (measureSpec);
+			int result;
+			var specMode = MeasureSpec.GetMode (measureSpec);
+			var specSize = MeasureSpec.GetSize (measureSpec);
 	
 			if (specMode == MeasureSpecMode.Exactly) {
 				//We were told how big to be
 				result = specSize;
 			} else {
 				//Measure the height
-				result = (int)(2 * mRadius + PaddingTop + PaddingBottom + 1);
+				result = (int)(2 * _radius + PaddingTop + PaddingBottom + 1);
 				//Respect AT_MOST value if that was what is called for by measureSpec
 				if (specMode == MeasureSpecMode.AtMost) {
 					result = Java.Lang.Math.Min (result, specSize);
@@ -531,9 +533,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 		protected override IParcelable OnSaveInstanceState ()
 		{
 			var superState = base.OnSaveInstanceState ();
-			var savedState = new SavedState (superState);
-			savedState.CurrentPage = mCurrentPage;
-			return savedState;
+		    var savedState = new SavedState(superState)
+            {
+                CurrentPage = mCurrentPage
+            };
+		    return savedState;
 		}
 		
 		public class SavedState : BaseSavedState
