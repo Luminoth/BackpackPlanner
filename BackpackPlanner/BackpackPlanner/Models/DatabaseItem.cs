@@ -15,6 +15,7 @@
 */
 
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
@@ -37,12 +38,18 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// <returns>All of the items from the database</returns>
         public static async Task<List<T>> GetItemsAsync<T>() where T: DatabaseItem
         {
-            await BackpackPlannerState.Instance.DatabaseConnection.LockAsync().ConfigureAwait(false);
+            await BackpackPlannerState.Instance.DatabaseState.Connection.LockAsync().ConfigureAwait(false);
             try {
                 Logger.Debug($"Reading all {typeof(T)}s from the database...");
-                return await BackpackPlannerState.Instance.DatabaseConnection.AsyncConnection.GetAllWithChildrenAsync<T>().ConfigureAwait(false);
+
+                Stopwatch stopWatch = Stopwatch.StartNew();
+                var items = await BackpackPlannerState.Instance.DatabaseState.Connection.AsyncConnection.GetAllWithChildrenAsync<T>().ConfigureAwait(false);
+                stopWatch.Stop();
+                Logger.Debug($"Database read took {stopWatch.ElapsedMilliseconds}ms");
+
+                return items;
             } finally {
-                BackpackPlannerState.Instance.DatabaseConnection.Release();
+                BackpackPlannerState.Instance.DatabaseState.Connection.Release();
             }
         }
 
@@ -54,35 +61,41 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// <returns>A single item from the database</returns>
         public static async Task<T> GetItemAsync<T>(int itemId) where T: DatabaseItem
         {
-            await BackpackPlannerState.Instance.DatabaseConnection.LockAsync().ConfigureAwait(false);
+            await BackpackPlannerState.Instance.DatabaseState.Connection.LockAsync().ConfigureAwait(false);
             try {
                 Logger.Debug($"Reading a {typeof(T)} with Id={itemId} from the database...");
-                return await BackpackPlannerState.Instance.DatabaseConnection.AsyncConnection.GetWithChildrenAsync<T>(itemId).ConfigureAwait(false);
+
+                Stopwatch stopWatch = Stopwatch.StartNew();
+                T item = await BackpackPlannerState.Instance.DatabaseState.Connection.AsyncConnection.GetWithChildrenAsync<T>(itemId).ConfigureAwait(false);
+                stopWatch.Stop();
+                Logger.Debug($"Database read took {stopWatch.ElapsedMilliseconds}ms");
+
+                return item;
             } finally {
-                BackpackPlannerState.Instance.DatabaseConnection.Release();
+                BackpackPlannerState.Instance.DatabaseState.Connection.Release();
             }
         }
 
         public static async Task InsertItemsAsync<T>(List<T> items) where T: DatabaseItem
         {
-            await BackpackPlannerState.Instance.DatabaseConnection.LockAsync().ConfigureAwait(false);
+            await BackpackPlannerState.Instance.DatabaseState.Connection.LockAsync().ConfigureAwait(false);
             try {
                 Logger.Debug($"Inserting {items.Count} new {typeof(T)}s into the database...");
-                await BackpackPlannerState.Instance.DatabaseConnection.AsyncConnection.InsertAllWithChildrenAsync(items).ConfigureAwait(false);
+                await BackpackPlannerState.Instance.DatabaseState.Connection.AsyncConnection.InsertAllWithChildrenAsync(items).ConfigureAwait(false);
             } finally {
-                BackpackPlannerState.Instance.DatabaseConnection.Release();
+                BackpackPlannerState.Instance.DatabaseState.Connection.Release();
             }
         }
 
         // TODO: no UpdateAllWithChildrenAsync() method?
         /*public static async Task UpdateItemsAsync<T>(List<T> items) where T: DatabaseItem
         {
-            await BackpackPlannerState.Instance.DatabaseConnection.LockAsync().ConfigureAwait(false);
+            await BackpackPlannerState.Instance.DatabaseState.Connection.LockAsync().ConfigureAwait(false);
             try {
                 Logger.Debug($"Updating {items.Count} new {typeof(T)}s into the database...");
-                await BackpackPlannerState.Instance.DatabaseConnection.AsyncConnection.UpdateAllWithChildrenAsync(items).ConfigureAwait(false);
+                await BackpackPlannerState.Instance.DatabaseState.Connection.AsyncConnection.UpdateAllWithChildrenAsync(items).ConfigureAwait(false);
             } finally {
-                BackpackPlannerState.Instance.DatabaseConnection.Release();
+                BackpackPlannerState.Instance.DatabaseState.Connection.Release();
             }
         }*/
 
@@ -93,18 +106,18 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// <param name="item">The item.</param>
         public static async Task SaveItemAsync<T>(T item) where T: DatabaseItem
         {
-            await BackpackPlannerState.Instance.DatabaseConnection.LockAsync().ConfigureAwait(false);
+            await BackpackPlannerState.Instance.DatabaseState.Connection.LockAsync().ConfigureAwait(false);
             try {
                 if(item.Id <= 0) {
                     Logger.Debug($"Inserting a new {typeof(T)} into the database...");
-                    await BackpackPlannerState.Instance.DatabaseConnection.AsyncConnection.InsertWithChildrenAsync(item).ConfigureAwait(false);
+                    await BackpackPlannerState.Instance.DatabaseState.Connection.AsyncConnection.InsertWithChildrenAsync(item).ConfigureAwait(false);
                     Logger.Debug($"The inserted {typeof(T)}'s Id={item.Id}");
                 } else {
                     Logger.Debug($"Updating the {typeof(T)} with Id={item.Id} in the database...");
-                    await BackpackPlannerState.Instance.DatabaseConnection.AsyncConnection.UpdateWithChildrenAsync(item).ConfigureAwait(false);
+                    await BackpackPlannerState.Instance.DatabaseState.Connection.AsyncConnection.UpdateWithChildrenAsync(item).ConfigureAwait(false);
                 }
             } finally {
-                BackpackPlannerState.Instance.DatabaseConnection.Release();
+                BackpackPlannerState.Instance.DatabaseState.Connection.Release();
             }
         }
 
@@ -116,12 +129,12 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// <returns>The number of items deleted?</returns>
         public static async Task<int> DeleteItemAsync<T>(T item) where T: DatabaseItem
         {
-            await BackpackPlannerState.Instance.DatabaseConnection.LockAsync().ConfigureAwait(false);
+            await BackpackPlannerState.Instance.DatabaseState.Connection.LockAsync().ConfigureAwait(false);
             try {
                 Logger.Debug($"Deleting the {typeof(T)} with Id={item.Id} from the database...");
-                return await BackpackPlannerState.Instance.DatabaseConnection.AsyncConnection.DeleteAsync(item).ConfigureAwait(false);
+                return await BackpackPlannerState.Instance.DatabaseState.Connection.AsyncConnection.DeleteAsync(item).ConfigureAwait(false);
             } finally {
-                BackpackPlannerState.Instance.DatabaseConnection.Release();
+                BackpackPlannerState.Instance.DatabaseState.Connection.Release();
             }
         }
 
@@ -132,12 +145,12 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// <returns>The number of items deleted?</returns>
         public static async Task<int> DeleteAllItemsAsync<T>() where T: DatabaseItem
         {
-            await BackpackPlannerState.Instance.DatabaseConnection.LockAsync().ConfigureAwait(false);
+            await BackpackPlannerState.Instance.DatabaseState.Connection.LockAsync().ConfigureAwait(false);
             try {
                 Logger.Debug($"Deleting all {typeof(T)}s from the database...");
-                return await BackpackPlannerState.Instance.DatabaseConnection.AsyncConnection.DeleteAllAsync<T>().ConfigureAwait(false);
+                return await BackpackPlannerState.Instance.DatabaseState.Connection.AsyncConnection.DeleteAllAsync<T>().ConfigureAwait(false);
             } finally {
-                BackpackPlannerState.Instance.DatabaseConnection.Release();
+                BackpackPlannerState.Instance.DatabaseState.Connection.Release();
             }
         }
 

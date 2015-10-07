@@ -94,10 +94,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         {
             base.OnResume();
 
-            ListItems.AddRange(DatabaseItem.GetItemsAsync<T>().Result);
-            Logger.Debug($"Read {ItemCount} items...");
-            Adapter.ListItems = ListItems;
+            if(BackpackPlannerState.Instance.DatabaseState.IsInitialized) {
+                ListItems.AddRange(DatabaseItem.GetItemsAsync<T>().Result);
+                Logger.Debug($"Read {ItemCount} items...");
+            }
 
+            Adapter.ListItems = ListItems;
             UpdateView();
         }
 

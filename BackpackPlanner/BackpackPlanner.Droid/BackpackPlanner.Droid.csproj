@@ -149,6 +149,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activities\BaseActivity.cs" />
     <Compile Include="Activities\FTUEActivity.cs" />
     <Compile Include="Adapters\BaseListAdapter.cs" />
     <Compile Include="Adapters\Gear\GearCollectionListAdapter.cs" />

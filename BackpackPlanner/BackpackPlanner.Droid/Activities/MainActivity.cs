@@ -31,11 +31,13 @@ using EnergonSoftware.BackpackPlanner.Settings;
 using EnergonSoftware.BackpackPlanner.Units.Currency;
 using EnergonSoftware.BackpackPlanner.Units.Units;
 
+using SQLite.Net.Platform.XamarinAndroid;
+
 namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 {
 	[Activity(Label = "@string/app_name", MainLauncher = true, Icon = "@drawable/icon")]
     [MetaData("com.google.android.gms.version", Value = "@integer/google_play_services_version")]
-	public sealed class MainActivity : Android.Support.V7.App.AppCompatActivity
+	public sealed class MainActivity : BaseActivity
 	{
         public const string LogTag = "BackpackPlanner.Droid";
 
@@ -49,7 +51,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 
             // NOTE: this is happening *before* we init HockeyApp
             // so any exceptions here will go un-uploaded
-            BackpackPlannerState.Instance.InitPlatform(new DroidLogger(),
+            BackpackPlannerState.Instance.InitPlatform(new DroidLogger(), new SQLitePlatformAndroid(),
                 (sender, args) => {
                     ISharedPreferencesEditor sharedPreferencesEditor = PreferenceManager.GetDefaultSharedPreferences(this).Edit();
                     sharedPreferencesEditor.PutString(args.PreferenceKey, args.NewValue);
@@ -130,7 +132,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             // NOTE: have to read these settings first so we know how to interpret everything else
             try {
                 string scratch = sharedPreferences.GetString(BackpackPlannerSettings.UnitSystemPreferenceKey,
-                    BackpackPlannerState.Instance.Settings.Units.ToString());
+                    ((int)BackpackPlannerState.Instance.Settings.Units).ToString());
                 BackpackPlannerState.Instance.Settings.Units = (UnitSystem)Convert.ToInt32(scratch);
             } catch(FormatException) {
                 // it's k, we'll live
@@ -138,7 +140,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 
             try {
                 string scratch = sharedPreferences.GetString(BackpackPlannerSettings.CurrencyPreferenceKey,
-                    BackpackPlannerState.Instance.Settings.Currency.ToString());
+                    ((int)BackpackPlannerState.Instance.Settings.Currency).ToString());
                 BackpackPlannerState.Instance.Settings.Currency = (Currency)Convert.ToInt32(scratch);
             } catch(FormatException) {
                 // it's k, we'll live
@@ -159,7 +161,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 
             try {
                 string scratch = sharedPreferences.GetString(PersonalInformation.UserSexPreferenceKey,
-                    BackpackPlannerState.Instance.PersonalInformation.Sex.ToString());
+                    ((int)BackpackPlannerState.Instance.PersonalInformation.Sex).ToString());
                 BackpackPlannerState.Instance.PersonalInformation.Sex = (UserSex)Convert.ToInt32(scratch);
             } catch(FormatException) {
                 // it's k, we'll live

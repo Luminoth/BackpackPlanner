@@ -15,6 +15,7 @@
 */
 
 using System;
+using System.Diagnostics;
 
 using Android.App;
 using Android.Content;
@@ -35,6 +36,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(GooglePlayServicesManager));
 
+        private readonly Stopwatch _connectStopwatch = new Stopwatch();
+
         private class DriveContentsResultCallback : Java.Lang.Object, IResultCallback
         {
 	        public void OnResult(Java.Lang.Object result)
@@ -43,13 +46,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid
                 IDriveApiDriveContentsResult contentsResult = result.JavaCast<IDriveApiDriveContentsResult>();
                 if(null == contentsResult) {
                     // TODO: error
-                    Logger.Error("Null content result?");
+                    Logger.Error("Null Google Drive content result?");
                     return;
                 }
 
 // https://developers.google.com/drive/android/appfolder
 
-                Logger.Debug("Got a contents result!");
+                Logger.Debug("Got a Google Drive contents result!");
 	        }
         }
 
@@ -80,8 +83,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
         public void OnStart()
         {
-            Logger.Info("Connecting Google Play Services client...");
-            _googleClientApi.Connect();
+            if(_googleClientApi.IsConnected) {
+                Logger.Info("Google API already connected!");
+            } else {
+                Logger.Info("Connecting Google Play Services client...");
+                _connectStopwatch.Start();
+                _googleClientApi.Connect();
+            }
         }
 
         public void OnStop()
@@ -104,7 +112,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             {
             case RequestCodeResolution:
                 if(Result.Ok == resultCode) {
-                    Logger.Info("Connecting Google Play Services client...");
+                    Logger.Info("Got Ok result code, connecting Google Play Services client...");
+                    // TODO: maybe we shouldn't assume the stopwatch is stopped here?
+                    _connectStopwatch.Start();
                     _googleClientApi.Connect();
                 }
                 break;
@@ -113,7 +123,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
 	    public void OnConnected(Bundle connectionHint)
 	    {
-	        Logger.Info("Google Play Services connected!");
+            _connectStopwatch.Stop();
+	        Logger.Info($"Google Play Services connected in {_connectStopwatch.ElapsedMilliseconds}ms!");
+
             DriveClass.DriveApi.NewDriveContents(_googleClientApi).SetResultCallback(new DriveContentsResultCallback());
 	    }
 
@@ -124,16 +136,20 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
 	    public void OnConnectionFailed(ConnectionResult result)
 	    {
-            Logger.Info($"Google Play Services connection failed: {result}");
+            _connectStopwatch.Stop();
+            Logger.Warn($"Google Play Services connection failed after {_connectStopwatch.ElapsedMilliseconds}ms: {result}");
+
             if(!result.HasResolution) {
+                Logger.Debug("Google Play Services connection failure has no resolution, showing error dialog");
                 GoogleApiAvailability.Instance.GetErrorDialog(_activity, result.ErrorCode, 0).Show();
                 return;
             }
 
             try {
+                Logger.Debug("Starting Google Play Services connection failure resolution activity...");
                 result.StartResolutionForResult(_activity, RequestCodeResolution);
-            } catch (IntentSender.SendIntentException ex) {
-                Logger.Error("Exception while starting resolution activity", ex);
+            } catch(IntentSender.SendIntentException ex) {
+                Logger.Error("Exception while starting resolution activity!", ex);
             }
 	    }
     }

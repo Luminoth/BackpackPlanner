@@ -26,7 +26,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 {
     [Activity(Label = "@string/app_name")]
     // ReSharper disable once InconsistentNaming
-    public sealed class FTUEActivity : Android.Support.V7.App.AppCompatActivity
+    public sealed class FTUEActivity : BaseActivity
     {
         // ReSharper disable once InconsistentNaming
         private sealed class FTUEPagerAdapter : Android.Support.V4.App.FragmentPagerAdapter

@@ -14,10 +14,13 @@
    limitations under the License.
 */
 
+using System.Diagnostics;
+
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
 
+using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Droid.Util;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
@@ -27,13 +30,24 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
     /// </summary>
     public abstract class BaseFragment : Android.Support.V4.App.Fragment
     {
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(BaseFragment));
+
         protected abstract int LayoutResource { get; }
 
         protected abstract int TitleResource { get; }
 
         protected abstract bool HasSearchView { get; }
 
+        private readonly Stopwatch _startupStopwatch = new Stopwatch();
+
         public Android.Support.V7.Widget.SearchView FilterView { get; private set; }
+
+        public override void OnCreate(Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);
+
+            _startupStopwatch.Start();
+        }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
@@ -59,11 +73,25 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             FilterView.QueryHint = Resources.GetString(Resource.String.search_hint);
         }
 
+        public override void OnStart()
+        {
+            base.OnStart();
+
+            if(_startupStopwatch.IsRunning) {
+                Logger.Debug($"Time to Fragment.Start(): {_startupStopwatch.ElapsedMilliseconds}ms");
+            }
+        }
+
         public override void OnResume()
         {
             base.OnResume();
 
             Activity.Title = Resources.GetString(TitleResource);
+
+            if(_startupStopwatch.IsRunning) {
+                Logger.Debug($"Time to Fragment.OnResume(): {_startupStopwatch.ElapsedMilliseconds}ms");
+            }
+            _startupStopwatch.Stop();
         }
 
         public void TransitionToFragment(int frameResId, Android.Support.V4.App.Fragment fragment, string tags)

@@ -45,6 +45,7 @@
     <Compile Include="Core\Database\DatabaseConnection.cs" />
     <Compile Include="Core\Database\SQLiteDatabaseConnection.cs" />
     <Compile Include="Core\PlayServices\PlayServices.cs" />
+    <Compile Include="Core\Database\DatabaseState.cs" />
     <Compile Include="Models\DatabaseItem.cs" />
     <Compile Include="Settings\SettingsChangedEventArgs.cs" />
     <Compile Include="Units\Currency\Currency.cs" />

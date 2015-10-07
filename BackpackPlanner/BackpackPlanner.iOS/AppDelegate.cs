@@ -16,7 +16,7 @@
 
 using System;
 using System.Threading.Tasks;
-
+using EnergonSoftware.BackpackPlanner.Core.Database;
 using Foundation;
 using HockeyApp;
 using SQLite.Net.Platform.XamarinIOS;
@@ -39,8 +39,8 @@ namespace EnergonSoftware.BackpackPlanner.iOS
 		{
             InitHockeyApp();
 
-            BackpackPlannerState.Instance.InitDatabaseAsync(new SQLitePlatformIOS(),
-                Environment.GetFolderPath(Environment.SpecialFolder.Personal), BackpackPlannerState.DatabaseName).Wait();
+            BackpackPlannerState.Instance.DatabaseState.ConnectAsync(Environment.GetFolderPath(Environment.SpecialFolder.Personal), DatabaseState.DatabaseName).Wait();
+            BackpackPlannerState.Instance.DatabaseState.InitDatabaseAsync().Wait();
 
 			// Override point for customization after application launch.
 			// If not required for your application you can safely delete this method

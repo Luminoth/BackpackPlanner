@@ -95,12 +95,16 @@ namespace EnergonSoftware.BackpackPlanner.Core.Logging
 
         public void Debug(string message)
         {
+#if DEBUG
             BackpackPlannerState.Instance.PlatformLogger.Debug(BuildMessage("DEBUG", message));
+#endif
         }
 
         public void Debug(string message, Exception ex)
         {
+#if DEBUG
             BackpackPlannerState.Instance.PlatformLogger.Debug(BuildMessage("DEBUG", message), ex);
+#endif
         }
 
         public void Info(string message)

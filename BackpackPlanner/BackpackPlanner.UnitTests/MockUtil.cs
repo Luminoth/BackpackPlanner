@@ -55,7 +55,7 @@ namespace EnergonSoftware.BackpackPlanner.UnitTests
             Isolate.WhenCalled(() => fakeDbConnection.CloseAsync()).DoInstead(x => MockTask());
 
             BackpackPlannerState fakePlannerState = Isolate.Fake.AllInstances<BackpackPlannerState>(Members.ReturnRecursiveFakes, ConstructorWillBe.Called);
-            Isolate.WhenCalled(() => fakePlannerState.DatabaseConnection).WillReturn(fakeDbConnection);
+            Isolate.WhenCalled(() => fakePlannerState.DatabaseState.Connection).WillReturn(fakeDbConnection);
 
             return fakeAsyncSQLiteConnection;
         }

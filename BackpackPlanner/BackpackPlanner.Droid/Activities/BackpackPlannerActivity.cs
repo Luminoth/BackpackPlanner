@@ -14,12 +14,17 @@
    limitations under the License.
 */
 
+using System.Diagnostics;
+using System.Threading.Tasks;
+
 using Android.App;
 using Android.Content;
 using Android.Content.Res;
 using Android.OS;
 using Android.Views;
 
+using EnergonSoftware.BackpackPlanner.Core.Database;
+using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items;
@@ -29,13 +34,13 @@ using EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans;
 using EnergonSoftware.BackpackPlanner.Droid.Util;
 
-using SQLite.Net.Platform.XamarinAndroid;
-
 namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 {
     [Activity(Label = "@string/app_name")]
-    public sealed class BackpackPlannerActivity : Android.Support.V7.App.AppCompatActivity, View.IOnClickListener
+    public sealed class BackpackPlannerActivity : BaseActivity, View.IOnClickListener
     {
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(BackpackPlannerActivity));
+
 #region Controls
         private Android.Support.V7.Widget.Toolbar _toolbar;
         private readonly NavigationDrawerManager _navigationDrawerManager = new NavigationDrawerManager();
@@ -123,8 +128,16 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 
             _googlePlayServicesManager.OnResume();
 
-            BackpackPlannerState.Instance.InitDatabaseAsync(new SQLitePlatformAndroid(),
-                System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), BackpackPlannerState.DatabaseName).Wait();
+            BackpackPlannerState.Instance.DatabaseState.ConnectAsync(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), DatabaseState.DatabaseName).Wait();
+
+            Task.Run(async () => {
+                Stopwatch stopwatch = Stopwatch.StartNew();
+                await BackpackPlannerState.Instance.DatabaseState.InitDatabaseAsync().ConfigureAwait(false);
+                stopwatch.Stop();
+                Logger.Debug($"Database init took {stopwatch.ElapsedMilliseconds}ms");
+
+                FragmentTransitionUtil.ReloadCurrentFragment(SupportFragmentManager);
+            });
 	    }
 
 	    protected override void OnPause()
@@ -133,7 +146,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 
             _googlePlayServicesManager.OnPause();
 
-            BackpackPlannerState.Instance.DatabaseConnection.CloseAsync().Wait();
+            BackpackPlannerState.Instance.DatabaseState.Connection.CloseAsync().Wait();
 	    }
 
 	    public override void OnConfigurationChanged(Configuration newConfig)

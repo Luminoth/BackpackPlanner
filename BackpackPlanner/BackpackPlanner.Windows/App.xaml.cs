@@ -16,9 +16,9 @@
 
 using System;
 
-using HockeyApp;
+using EnergonSoftware.BackpackPlanner.Core.Database;
 
-using SQLite.Net.Platform.WinRT;
+using HockeyApp;
 
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -99,8 +99,8 @@ namespace EnergonSoftware.BackpackPlanner.Windows
             await HockeyClient.Current.CheckForAppUpdateAsync();
 #endif
 
-            await BackpackPlannerState.Instance.InitDatabaseAsync(new SQLitePlatformWinRT(), 
-                ApplicationData.Current.LocalFolder.Path, BackpackPlannerState.DatabaseName);
+            await BackpackPlannerState.Instance.DatabaseState.ConnectAsync(ApplicationData.Current.LocalFolder.Path, DatabaseState.DatabaseName);
+            await BackpackPlannerState.Instance.DatabaseState.InitDatabaseAsync();
         }
 
         /// <summary>
