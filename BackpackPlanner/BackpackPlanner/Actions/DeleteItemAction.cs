@@ -24,15 +24,11 @@ namespace EnergonSoftware.BackpackPlanner.Actions
     /// <summary>
     /// Deletes an item.
     /// </summary>
-    public class DeleteItemAction<T> : IAction where T: DatabaseItem
+    public class DeleteItemAction<T> : Action where T: DatabaseItem
     {
-        /// <summary>
-        /// Gets or sets the item to delete.
-        /// </summary>
-        /// <value>
-        /// The item to delete.
-        /// </value>
         public T Item { get; }
+
+        public bool IsItemDeleted { get; private set; }
 
         public DeleteItemAction(T item)
         {
@@ -43,22 +39,20 @@ namespace EnergonSoftware.BackpackPlanner.Actions
             Item = item;
         } 
 
-        public async Task<bool> DoActionAsync()
+        public async override Task DoActionAsync()
         {
             int count = await DatabaseItem.DeleteItemAsync(Item).ConfigureAwait(false);
 
 // TODO: how do we save "undo" state? maybe in the item itself?
 
-            return count > 0;
+            IsItemDeleted = count > 0;
         }
 
-        public async Task<bool> UndoActionAsync()
+        public async override Task UndoActionAsync()
         {
             await DatabaseItem.SaveItemAsync(Item).ConfigureAwait(false);
 
 // TODO: how do we load "undo" state? maybe in the item itself?
-
-            return true;
         }
     }
 }

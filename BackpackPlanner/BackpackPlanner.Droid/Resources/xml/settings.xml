@@ -21,9 +21,9 @@
             android:dialogTitle="@string/title_user_sex"
             android:summary="@string/summary_user_sex"
             android:key="personalInformationSex"
-            android:entries="@array/user_sex_entries"
-            android:entryValues="@array/user_sex_values"
-            android:defaultValue="0" />
+            android:entries="@array/user_sex"
+            android:entryValues="@array/user_sex"
+            android:defaultValue="Undeclared" />
         <EditTextPreference
             android:title="@string/label_height"
             android:dialogTitle="@string/title_height"
@@ -46,16 +46,16 @@
             android:dialogTitle="@string/title_unit_system"
             android:summary="@string/summary_unit_system"
             android:key="unitSystem"
-            android:entries="@array/unit_system_entries"
-            android:entryValues="@array/unit_system_values"
-            android:defaultValue="0" />
+            android:entries="@array/unit_system"
+            android:entryValues="@array/unit_system"
+            android:defaultValue="Metric" />
         <!--<ListPreference
             android:title="@string/label_currency"
             android:dialogTitle="@string/title_currency"
             android:summary="@string/summary_currency"
             android:key="currency"
-            android:entries="@array/currency_entries"
-            android:entryValues="@array/currency_values"
-            android:defaultValue="0" />-->
+            android:entries="@array/currency"
+            android:entryValues="@array/currency"
+            android:defaultValue="UnitedStatesDollar" />-->
     </PreferenceCategory>
 </PreferenceScreen>

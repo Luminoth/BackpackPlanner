@@ -24,14 +24,8 @@ namespace EnergonSoftware.BackpackPlanner.Actions
     /// <summary>
     /// Adds an item.
     /// </summary>
-    public class AddItemAction<T> : IAction where T: DatabaseItem
+    public class AddItemAction<T> : Action where T: DatabaseItem
     {
-        /// <summary>
-        /// Gets or sets the item to add.
-        /// </summary>
-        /// <value>
-        /// The item to add.
-        /// </value>
         public T Item { get; }
 
         public AddItemAction(T item)
@@ -43,15 +37,9 @@ namespace EnergonSoftware.BackpackPlanner.Actions
             Item = item;
         }
 
-        public async Task<bool> DoActionAsync()
+        public async override Task DoActionAsync()
         {
             await DatabaseItem.SaveItemAsync(Item).ConfigureAwait(false);
-            return true;
-        }
-
-        public Task<bool> UndoActionAsync()
-        {
-            throw new NotImplementedException();
         }
     }
 }

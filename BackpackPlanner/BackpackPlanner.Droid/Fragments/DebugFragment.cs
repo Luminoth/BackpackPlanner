@@ -41,6 +41,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                 Logger.Debug("Resetting FTUE state");
                 BackpackPlannerState.Instance.Settings.FirstRun = true;
             };
+
+            Button resetDatabaseButton = view.FindViewById<Button>(Resource.Id.button_reset_database);
+            resetDatabaseButton.Click += (sender, args) => {
+                Logger.Debug("Resetting database");
+                // TODO
+            };
         }
     }
 }

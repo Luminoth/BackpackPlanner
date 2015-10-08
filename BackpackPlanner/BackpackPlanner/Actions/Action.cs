@@ -14,6 +14,7 @@
    limitations under the License.
 */
 
+using System;
 using System.Threading.Tasks;
 
 namespace EnergonSoftware.BackpackPlanner.Actions
@@ -21,16 +22,31 @@ namespace EnergonSoftware.BackpackPlanner.Actions
     /// <summary>
     /// 
     /// </summary>
-    public interface IAction
+    public abstract class Action
     {
         /// <summary>
         /// Does the action.
         /// </summary>
-        Task<bool> DoActionAsync();
+        public abstract Task DoActionAsync();
+
+        /// <summary>
+        /// Does the action in a background thread.
+        /// </summary>
+        public void DoActionInBackground(Action<Action> actionFinishedCallback)
+        {
+            Task.Run(async () => {
+                    await DoActionAsync().ConfigureAwait(false);
+                    actionFinishedCallback?.Invoke(this);
+                }
+            );
+        }
 
         /// <summary>
         /// Undoes the action.
         /// </summary>
-        Task<bool> UndoActionAsync();
+        public virtual Task UndoActionAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -40,9 +40,11 @@
     <Compile Include="Actions\Action.cs" />
     <Compile Include="Actions\AddItemAction.cs" />
     <Compile Include="Actions\DeleteItemAction.cs" />
+    <Compile Include="Actions\GetItemsAction.cs" />
     <Compile Include="Actions\SaveItemAction.cs" />
     <Compile Include="BackpackPlannerState.cs" />
     <Compile Include="Core\Database\DatabaseConnection.cs" />
+    <Compile Include="Core\Database\DatabaseStateChangedEventArgs.cs" />
     <Compile Include="Core\Database\SQLiteDatabaseConnection.cs" />
     <Compile Include="Core\PlayServices\PlayServices.cs" />
     <Compile Include="Core\Database\DatabaseState.cs" />

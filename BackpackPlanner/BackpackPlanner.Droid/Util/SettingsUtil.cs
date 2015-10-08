@@ -1,4 +1,4 @@
-﻿/*
+/*
    Copyright 2015 Shane Lillie
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,18 +14,12 @@
    limitations under the License.
 */
 
-using System;
-
-namespace EnergonSoftware.BackpackPlanner.Settings
+namespace EnergonSoftware.BackpackPlanner.Droid.Util
 {
-    public sealed class SettingsChangedEventArgs : EventArgs
+    public static class SettingsUtil
     {
-        /// <summary>
-        /// Gets or sets the preference key that changed.
-        /// </summary>
-        /// <value>
-        /// The preference key that changed.
-        /// </value>
-        public string PreferenceKey { get; set; }
+// TODO: put methods here that help deal with all of our settings
+// note that for whatever reason settings are always stored as strings
+// even if you say PutBoolean or PutFloat or whatever
     }
 }

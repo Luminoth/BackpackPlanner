@@ -135,8 +135,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
                 await BackpackPlannerState.Instance.DatabaseState.InitDatabaseAsync().ConfigureAwait(false);
                 stopwatch.Stop();
                 Logger.Debug($"Database init took {stopwatch.ElapsedMilliseconds}ms");
-
-                FragmentTransitionUtil.ReloadCurrentFragment(SupportFragmentManager);
             });
 	    }
 

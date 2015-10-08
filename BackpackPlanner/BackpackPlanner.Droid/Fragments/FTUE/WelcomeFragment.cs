@@ -16,6 +16,9 @@
 
 using Android.OS;
 using Android.Views;
+using Android.Widget;
+
+using EnergonSoftware.BackpackPlanner.Droid.Activities;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.FTUE
 {
@@ -24,6 +27,17 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.FTUE
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             return inflater.Inflate(Resource.Layout.fragment_ftue_welcome, container, false);
+        }
+
+        public override void OnViewCreated(View view, Bundle savedInstanceState)
+        {
+            base.OnViewCreated(view, savedInstanceState);
+
+            Button skipButton = view.FindViewById<Button>(Resource.Id.button_ftue_skip);
+            skipButton.Click += (sender, args) => {
+                Activity.StartActivity(typeof(BackpackPlannerActivity));
+                Activity.Finish();
+            };
         }
     }
 }

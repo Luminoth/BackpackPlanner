@@ -302,6 +302,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
 #endregion
 
 #region Test Gear Systems
+            Logger.Debug("Inserting test gear systems...");
             await DatabaseItem.InsertItemsAsync(new List<GearSystem>
                 {
                     new GearSystem
@@ -349,6 +350,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
 #endregion
 
 #region Test Gear Collections
+            Logger.Debug("Inserting test gear collections...");
             await DatabaseItem.InsertItemsAsync(new List<GearCollection>
                 {
                     new GearCollection
@@ -396,6 +398,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
 #endregion
 
 #region Test Meals
+            Logger.Debug("Inserting test meals...");
             await DatabaseItem.InsertItemsAsync(new List<Meal>
                 {
                     new Meal
@@ -513,6 +516,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
 #endregion
 
 #region Test Trip Itineraries
+            Logger.Debug("Inserting test trip itineraries...");
             await DatabaseItem.InsertItemsAsync(new List<TripItinerary>
                 {
                     new TripItinerary
@@ -560,6 +564,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
 #endregion
 
 #region Test Trip Plans
+            Logger.Debug("Inserting test trip plans...");
             await DatabaseItem.InsertItemsAsync(new List<TripPlan>
                 {
                     new TripPlan

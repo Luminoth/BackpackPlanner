@@ -12,4 +12,11 @@
         android:layout_gravity="center_horizontal"
         android:text="@string/label_reset_ftue"
         android:textColor="@android:color/white" />
+    <Button
+        android:id="@+id/button_reset_database"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/label_reset_database"
+        android:textColor="@android:color/white" />
 </LinearLayout>

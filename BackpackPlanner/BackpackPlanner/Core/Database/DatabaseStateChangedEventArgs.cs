@@ -15,31 +15,13 @@
 */
 
 using System;
-using System.Threading.Tasks;
 
-using EnergonSoftware.BackpackPlanner.Models;
-
-namespace EnergonSoftware.BackpackPlanner.Actions
+namespace EnergonSoftware.BackpackPlanner.Core.Database
 {
     /// <summary>
-    /// Saves an item.
+    /// 
     /// </summary>
-    public class SaveItemAction<T> : Action where T: DatabaseItem
+    public class DatabaseStateChangedEventArgs : EventArgs
     {
-        public T Item { get; }
-
-        public SaveItemAction(T item)
-        {
-            if(null == item) {
-                throw new ArgumentNullException(nameof(item));
-            }
-
-            Item = item;
-        } 
-
-        public async override Task DoActionAsync()
-        {
-            await DatabaseItem.SaveItemAsync(Item).ConfigureAwait(false);
-        }
     }
 }

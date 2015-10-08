@@ -64,14 +64,12 @@ namespace EnergonSoftware.BackpackPlanner.Settings
 
             set
             {
-                SettingsChangedEvent?.Invoke(this, new SettingsChangedEventArgs
+                _firstRun = value;
+                SettingChanged(this, new SettingsChangedEventArgs
                     {
-                        PreferenceKey = FirstRunPreferenceKey,
-                        OldValue = _firstRun.ToString(),
-                        NewValue = value.ToString()
+                        PreferenceKey = FirstRunPreferenceKey
                     }
                 );
-                _firstRun = value;
             }
         }
 
@@ -89,14 +87,12 @@ namespace EnergonSoftware.BackpackPlanner.Settings
 
             set
             {
-                SettingsChangedEvent?.Invoke(this, new SettingsChangedEventArgs
+                _units = value;
+                SettingChanged(this, new SettingsChangedEventArgs
                     {
-                        PreferenceKey = UnitSystemPreferenceKey,
-                        OldValue = _units.ToString(),
-                        NewValue = value.ToString()
+                        PreferenceKey = UnitSystemPreferenceKey
                     }
                 );
-                _units = value;
             }
         }
 
@@ -114,14 +110,12 @@ namespace EnergonSoftware.BackpackPlanner.Settings
 
             set
             {
-                SettingsChangedEvent?.Invoke(this, new SettingsChangedEventArgs
+                _currency = value;
+                SettingChanged(this, new SettingsChangedEventArgs
                     {
-                        PreferenceKey = CurrencyPreferenceKey,
-                        OldValue = _currency.ToString(),
-                        NewValue = value.ToString()
+                        PreferenceKey = CurrencyPreferenceKey
                     }
                 );
-                _currency = value;
             }
         }
 
@@ -194,5 +188,10 @@ namespace EnergonSoftware.BackpackPlanner.Settings
         /// </remarks>
         public int LightweightClassMaxWeightInGrams { get; } = 9000;
 #endregion
+
+        public void SettingChanged(object sender, SettingsChangedEventArgs args)
+        {
+            SettingsChangedEvent?.Invoke(sender, args);
+        }
     }
 }

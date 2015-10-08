@@ -94,13 +94,23 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         {
             base.OnResume();
 
-            if(BackpackPlannerState.Instance.DatabaseState.IsInitialized) {
-                ListItems.AddRange(DatabaseItem.GetItemsAsync<T>().Result);
-                Logger.Debug($"Read {ItemCount} items...");
-            }
+            Android.Support.V7.App.AlertDialog dialog = DialogUtil.ShowDialog(Activity, Resource.String.label_loading_items, Resource.String.title_loading_items);
 
-            Adapter.ListItems = ListItems;
-            UpdateView();
+            var action = new GetItemsAction<T>();
+            action.DoActionInBackground(a => {
+                    Activity.RunOnUiThread(() => {
+                            dialog.Dismiss();
+
+                            ListItems.Clear();
+                            ListItems.AddRange(action.Items);
+                            Logger.Debug($"Read {ItemCount} items...");
+
+                            Adapter.ListItems = ListItems;
+                            UpdateView();
+                        }
+                    );
+                }
+            );
         }
 
         public override void OnPause()
@@ -122,8 +132,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         {
             DialogUtil.ShowOkCancelDialog(Activity, DeleteItemConfirmationTextResource, DeleteItemConfirmationTitleResource,
                 (sender, args) => {
-                    IAction action = new DeleteItemAction<T>(item);
-                    if(!action.DoActionAsync().Result) {
+                    var action = new DeleteItemAction<T>(item);
+                    action.DoActionAsync().Wait();
+                    if(!action.IsItemDeleted) {
                         // TODO: error!
                         return;
                     }

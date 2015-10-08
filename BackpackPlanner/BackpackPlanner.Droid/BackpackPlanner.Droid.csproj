@@ -203,6 +203,7 @@
     <Compile Include="Util\DrawerToggleEventArgs.cs" />
     <Compile Include="Util\FragmentTransitionUtil.cs" />
     <Compile Include="Util\NavigationDrawerManager.cs" />
+    <Compile Include="Util\SettingsUtil.cs" />
     <Compile Include="Util\SnackbarUtil.cs" />
     <Compile Include="Util\ViewPagerIndicator.cs" />
   </ItemGroup>

@@ -23,19 +23,27 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 {
     public static class DialogUtil
     {
-        public static void ShowOkDialog(Activity activity, int messageResId, int titleResId, EventHandler<DialogClickEventArgs> okActionHandler=null)
+        public static Android.Support.V7.App.AlertDialog ShowDialog(Activity activity, int messageResId, int titleResId)
         {
             Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(activity);
-            builder.SetMessage(messageResId)
+            return builder.SetMessage(messageResId)
                 .SetTitle(titleResId)
-                .SetPositiveButton(Android.Resource.String.Ok, okActionHandler ?? ((sender, args) => { }))
                 .Show();
         }
 
-        public static void ShowOkCancelDialog(Activity activity, int messageResId, int titleResId, EventHandler<DialogClickEventArgs> okEventHandler=null, EventHandler<DialogClickEventArgs> cancelEventHandler=null)
+        public static Android.Support.V7.App.AlertDialog ShowOkDialog(Activity activity, int messageResId, int titleResId, EventHandler<DialogClickEventArgs> okEventHandler=null)
         {
             Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(activity);
-            builder.SetMessage(messageResId)
+            return builder.SetMessage(messageResId)
+                .SetTitle(titleResId)
+                .SetPositiveButton(Android.Resource.String.Ok, okEventHandler ?? ((sender, args) => { }))
+                .Show();
+        }
+
+        public static Android.Support.V7.App.AlertDialog ShowOkCancelDialog(Activity activity, int messageResId, int titleResId, EventHandler<DialogClickEventArgs> okEventHandler=null, EventHandler<DialogClickEventArgs> cancelEventHandler=null)
+        {
+            Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(activity);
+            return builder.SetMessage(messageResId)
                 .SetTitle(titleResId)
                 .SetPositiveButton(Android.Resource.String.Ok, okEventHandler ?? ((sender, args) => { }))
                 .SetNegativeButton(Android.Resource.String.Cancel, cancelEventHandler ?? ((sender, args) => { }))

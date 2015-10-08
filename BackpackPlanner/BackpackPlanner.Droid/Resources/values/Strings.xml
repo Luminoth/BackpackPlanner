@@ -29,6 +29,11 @@
 
     <string name="what_is_a_trip_plan">Lots of text about trip plans</string>
 
+    <!-- General messages -->
+
+    <string name="title_loading_items">Loading Items</string>
+    <string name="label_loading_items">Loading items, this may take a moment</string>
+
     <!-- Delete confirmations -->
 
     <string name="title_delete_confirmation_gear_item">Are you sure?</string>
@@ -210,4 +215,5 @@
     <!-- Debug -->
 
     <string name="label_reset_ftue">Reset FTUE</string>
+    <string name="label_reset_database">Reset Database</string>
 </resources>

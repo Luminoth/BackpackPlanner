@@ -44,32 +44,21 @@
         <item>Cost / Weight</item>
     </string-array>
 
-    <string-array name="user_sex_entries">
+    <!-- These must match their corresponding enumerations -->
+
+    <string-array name="user_sex">
         <item>Undeclared</item>
         <item>Male</item>
         <item>Female</item>
         <item>Other</item>
     </string-array>
-    <string-array name="user_sex_values">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-    </string-array>
 
-    <string-array name="unit_system_entries">
+    <string-array name="unit_system">
         <item>Metric</item>
-        <item>United States</item>
-    </string-array>
-    <string-array name="unit_system_values">
-        <item>0</item>
-        <item>1</item>
+        <item>UnitedStates</item>
     </string-array>
 
-    <string-array name="currency_entries">
-        <item>United States Dollar</item>
-    </string-array>
-    <string-array name="currency_values">
-        <item>0</item>
+    <string-array name="currency">
+        <item>UnitedStatesDollar</item>
     </string-array>
 </resources>
