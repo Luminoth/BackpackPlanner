@@ -19,16 +19,16 @@ using System.Linq;
 
 using Android.Views;
 using Android.Widget;
-
-using EnergonSoftware.BackpackPlanner.Actions;
+using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
-using EnergonSoftware.BackpackPlanner.Droid.Util;
 using EnergonSoftware.BackpackPlanner.Models;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 {
     public abstract class BaseListAdapter<T> : Android.Support.V7.Widget.RecyclerView.Adapter where T: DatabaseItem
     {
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(BaseListAdapter<T>));
+
         protected abstract class BaseViewHolder : Android.Support.V7.Widget.RecyclerView.ViewHolder, Android.Support.V7.Widget.Toolbar.IOnMenuItemClickListener
         {
             protected abstract int DeleteActionResourceId { get; }
@@ -85,13 +85,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
             set
             {
-                if(null == value) {
-                    _listItems = new List<T>();
-                    FilteredListItems = new List<T>();
-                } else {
-                    _listItems = new List<T>(value);
-                    FilteredListItems = new List<T>(ListItems);
-                }
+                _listItems = null == value ? new List<T>() : new List<T>(value);
+
+                // this will correctly setup the filtered list
+                FilterAndSortItems();
             }
         }
 
@@ -103,6 +100,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
             set
             {
+                Logger.Debug("Setting filtered list items");
                 _filteredListItems = value ?? new List<T>(ListItems);
                 NotifyDataSetChanged();
             }
@@ -110,6 +108,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
         public void SortByItemSelectedEventHander(object sender, AdapterView.ItemSelectedEventArgs args)
         {
+            Logger.Debug("Sort items event!");
+
             // TODO: could/would this be made clearer somehow by using args.Id?
             SortItemsByPosition(args.Position);
         }
@@ -118,6 +118,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
         public void FilterItemsEventHandler(object sender, Android.Support.V7.Widget.SearchView.QueryTextChangeEventArgs args)
         {
+            Logger.Debug("Filter items vent!");
+
             FilterItems(args.NewText);
         }
 
@@ -141,13 +143,28 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
         public void AddItem(T item)
         {
             _listItems.Add(item);
-            FilterItems(Fragment.FilterView.Query);
+            FilterAndSortItems();
         }
 
         public void RemoveItem(T item)
         {
             _listItems.Remove(item);
-            FilterItems(Fragment.FilterView.Query);
+            FilterAndSortItems();
+        }
+
+        private void FilterAndSortItems()
+        {
+            Logger.Debug("Filtering and sorting items...");
+
+            // this must come first as it setups up
+            // the filtered items list
+            if(null != Fragment.FilterView) {
+                FilterItems(Fragment.FilterView.Query);
+            }
+
+            if(null != Fragment.SortItemsSpinner) {
+                SortItemsByPosition(Fragment.SortItemsSpinner.SelectedItemPosition);
+            }
         }
 
         protected BaseListAdapter(ListItemsFragment<T> fragment)

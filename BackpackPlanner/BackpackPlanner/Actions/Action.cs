@@ -30,7 +30,7 @@ namespace EnergonSoftware.BackpackPlanner.Actions
         public abstract Task DoActionAsync();
 
         /// <summary>
-        /// Does the action in a background thread.
+        /// Does the action in a background task.
         /// </summary>
         public void DoActionInBackground(Action<Action> actionFinishedCallback)
         {
@@ -47,6 +47,18 @@ namespace EnergonSoftware.BackpackPlanner.Actions
         public virtual Task UndoActionAsync()
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Undoes the action in a background task.
+        /// </summary>
+        public void UndoActionInBackground(Action<Action> actionFinishedCallback)
+        {
+            Task.Run(async () => {
+                    await UndoActionAsync().ConfigureAwait(false);
+                    actionFinishedCallback?.Invoke(this);
+                }
+            );
         }
     }
 }

@@ -39,6 +39,7 @@ namespace EnergonSoftware.BackpackPlanner.Actions
 
         public async override Task DoActionAsync()
         {
+            // TODO: wait for the db to initialize
             await DatabaseItem.SaveItemAsync(Item).ConfigureAwait(false);
         }
     }

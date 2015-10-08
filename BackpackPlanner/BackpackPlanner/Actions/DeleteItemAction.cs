@@ -41,6 +41,7 @@ namespace EnergonSoftware.BackpackPlanner.Actions
 
         public async override Task DoActionAsync()
         {
+            // TODO: wait for the db to initialize
             int count = await DatabaseItem.DeleteItemAsync(Item).ConfigureAwait(false);
 
 // TODO: how do we save "undo" state? maybe in the item itself?
@@ -50,6 +51,7 @@ namespace EnergonSoftware.BackpackPlanner.Actions
 
         public async override Task UndoActionAsync()
         {
+            // TODO: wait for the db to initialize
             await DatabaseItem.SaveItemAsync(Item).ConfigureAwait(false);
 
 // TODO: how do we load "undo" state? maybe in the item itself?

@@ -16,6 +16,7 @@
 
 using System.Collections.Generic;
 
+using Android.App;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
@@ -60,7 +61,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 #region Controls
         private TextView _noItemsTextView;
 
-        protected Spinner SortItemsSpinner { get; private set; }
+        public Spinner SortItemsSpinner { get; private set; }
 #endregion
 
         protected abstract Android.Support.V4.App.Fragment CreateAddItemFragment();
@@ -94,19 +95,20 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         {
             base.OnResume();
 
-            Android.Support.V7.App.AlertDialog dialog = DialogUtil.ShowDialog(Activity, Resource.String.label_loading_items, Resource.String.title_loading_items);
+            ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_loading_items);
 
             var action = new GetItemsAction<T>();
             action.DoActionInBackground(a => {
                     Activity.RunOnUiThread(() => {
-                            dialog.Dismiss();
+                            Logger.Debug($"Read {action.Items.Count} items...");
 
-                            ListItems.Clear();
+                            ListItems.Clear();  // is this unnecessary?
                             ListItems.AddRange(action.Items);
-                            Logger.Debug($"Read {ItemCount} items...");
 
                             Adapter.ListItems = ListItems;
                             UpdateView();
+
+                            progressDialog.Dismiss();
                         }
                     );
                 }
@@ -132,6 +134,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         {
             DialogUtil.ShowOkCancelDialog(Activity, DeleteItemConfirmationTextResource, DeleteItemConfirmationTitleResource,
                 (sender, args) => {
+                    // TODO: do in background
                     var action = new DeleteItemAction<T>(item);
                     action.DoActionAsync().Wait();
                     if(!action.IsItemDeleted) {
@@ -146,6 +149,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
                     SnackbarUtil.ShowUndoSnackbar(View, Resource.String.label_deleted_item, Android.Support.Design.Widget.Snackbar.LengthLong,
                         view => {
+                            // TODO: do in background
                             action.UndoActionAsync().Wait();
 
                             Adapter.AddItem(item);

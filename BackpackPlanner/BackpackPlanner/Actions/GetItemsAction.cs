@@ -46,6 +46,7 @@ namespace EnergonSoftware.BackpackPlanner.Actions
             while(stopwatch.ElapsedMilliseconds < 5000 && !BackpackPlannerState.Instance.DatabaseState.IsInitialized) {
                 await Task.Delay(1).ConfigureAwait(false);
             }
+            stopwatch.Stop();
 
             if(!BackpackPlannerState.Instance.DatabaseState.IsInitialized) {
                 throw new InvalidOperationException("Database is not initialized!");
