@@ -14,24 +14,20 @@
    limitations under the License.
 */
 
-using System;
 using System.Globalization;
 
 using Android.Content;
 using Android.OS;
 
-using EnergonSoftware.BackpackPlanner.Core.Logging;
+using EnergonSoftware.BackpackPlanner.Droid.Util;
 using EnergonSoftware.BackpackPlanner.Models.Personal;
 using EnergonSoftware.BackpackPlanner.Settings;
-using EnergonSoftware.BackpackPlanner.Units.Currency;
 using EnergonSoftware.BackpackPlanner.Units.Units;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 {
     public class SettingsFragment : Android.Support.V7.Preferences.PreferenceFragmentCompat, ISharedPreferencesOnSharedPreferenceChangeListener
     {
-        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(SettingsFragment));
-
 #region Controls
         private Android.Support.V7.Preferences.EditTextPreference _namePreference;
         private Android.Support.V7.Preferences.EditTextPreference _birthDatePreference;
@@ -56,8 +52,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             _unitSystemPreference = (Android.Support.V7.Preferences.ListPreference)FindPreference(BackpackPlannerSettings.UnitSystemPreferenceKey);
             //_currencyPreference = (Android.Support.V7.Preferences.ListPreference)FindPreference(BackpackPlannerSettings.CurrencyPreferenceKey);
 
-            InitLabels();
-            InitSummaries();
+            UpdateLabels();
+            UpdateSummaries();
 
             Activity.Title = Resources.GetString(Resource.String.title_settings);
         }
@@ -133,13 +129,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         }
 #endregion
 
-        private void InitLabels()
+        private void UpdateLabels()
         {
             SetHeightLabel();
             SetWeightLabel();
         }
 
-        private void InitSummaries()
+        private void UpdateSummaries()
         {
             SetNameSummary();
             SetBirthDateSummary();
@@ -153,80 +149,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         public void OnSharedPreferenceChanged(ISharedPreferences sharedPreferences, string key)
         {
-            Logger.Debug($"Shared preference changed: {key}");
+            SettingsUtil.UpdateFromSharedPreferences(sharedPreferences);
 
-            switch(key)
-            {
-            case PersonalInformation.NamePreferenceKey:
-                BackpackPlannerState.Instance.PersonalInformation.Name = sharedPreferences.GetString(key,
-                    BackpackPlannerState.Instance.PersonalInformation.Name);
-                SetNameSummary();
-                break;
-            case PersonalInformation.DateOfBirthPreferenceKey:
-                BackpackPlannerState.Instance.PersonalInformation.DateOfBirth = Convert.ToDateTime(sharedPreferences.GetString(key,
-                    BackpackPlannerState.Instance.PersonalInformation.DateOfBirth?.ToString() ?? string.Empty));
-                SetBirthDateSummary();
-                break;
-            case PersonalInformation.UserSexPreferenceKey:
-                string userSexPreference = sharedPreferences.GetString(key,
-                    BackpackPlannerState.Instance.PersonalInformation.Sex.ToString());
-
-                UserSex userSex;
-                if(Enum.TryParse(userSexPreference, out userSex)) {
-                    BackpackPlannerState.Instance.PersonalInformation.Sex = userSex;
-                } else {
-                    Logger.Error("Error parsing user sex preference!");
-                }
-
-                SetUserSexSummary();
-                break;
-            case PersonalInformation.HeightPreferenceKey:
-                BackpackPlannerState.Instance.PersonalInformation.HeightInUnits = Convert.ToSingle(sharedPreferences.GetString(key,
-                    BackpackPlannerState.Instance.PersonalInformation.HeightInUnits.ToString(CultureInfo.InvariantCulture)));
-                SetHeightSummary();
-                break;
-            case PersonalInformation.WeightPreferenceKey:
-                BackpackPlannerState.Instance.PersonalInformation.WeightInUnits = Convert.ToSingle(sharedPreferences.GetString(key,
-                    BackpackPlannerState.Instance.PersonalInformation.WeightInUnits.ToString(CultureInfo.InvariantCulture)));
-                SetWeightSummary();
-                break;
-            case BackpackPlannerSettings.UnitSystemPreferenceKey:
-                string unitSystemPreference = sharedPreferences.GetString(key,
-                    BackpackPlannerState.Instance.Settings.Units.ToString());
-
-                UnitSystem unitSystem;
-                if(Enum.TryParse(unitSystemPreference, out unitSystem)) {
-                    BackpackPlannerState.Instance.Settings.Units = unitSystem;
-                } else {
-                    Logger.Error("Error parsing unit system preference!");
-                }
-
-                SetUnitSystemSummary();
-
-                // TODO: package these up in a single method call?
-                SetHeightLabel();
-                SetHeightSummary();
-
-                SetWeightLabel();
-                SetWeightSummary();
-                break;
-            case BackpackPlannerSettings.CurrencyPreferenceKey:
-                string currencyPreference = sharedPreferences.GetString(key,
-                    BackpackPlannerState.Instance.Settings.Currency.ToString());
-
-                Currency currency;
-                if(Enum.TryParse(currencyPreference, out currency)) {
-                    BackpackPlannerState.Instance.Settings.Currency = currency;
-                } else {
-                    Logger.Error("Error parsing currency preference!");
-                }
-
-                SetCurrencySummary();
-                break;
-            default:
-                Logger.Warn("Unhandled preference key: " + key);
-                break;
-            }
+            UpdateLabels();
+            UpdateSummaries();
         }
     }
 }

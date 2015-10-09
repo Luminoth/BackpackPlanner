@@ -14,12 +14,118 @@
    limitations under the License.
 */
 
+using System;
+using System.Globalization;
+
+using Android.Content;
+
+using EnergonSoftware.BackpackPlanner.Core.Logging;
+using EnergonSoftware.BackpackPlanner.Models.Personal;
+using EnergonSoftware.BackpackPlanner.Settings;
+using EnergonSoftware.BackpackPlanner.Units.Currency;
+using EnergonSoftware.BackpackPlanner.Units.Units;
+
 namespace EnergonSoftware.BackpackPlanner.Droid.Util
 {
+    // note that for whatever reason settings are always stored as strings
+    // even if you say PutBoolean or PutFloat or whatever
     public static class SettingsUtil
     {
-// TODO: put methods here that help deal with all of our settings
-// note that for whatever reason settings are always stored as strings
-// even if you say PutBoolean or PutFloat or whatever
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(SettingsUtil));
+
+        // TODO: this method will actually force a call to SaveToSharedPreferences()
+        // for *every* preference (due to the notify callback). that's *bad*,
+        // so find a way to stop doing it!
+        public static void UpdateFromSharedPreferences(ISharedPreferences sharedPreferences)
+        {
+            // TODO: put these in an UpdateSettingsFromSharedPreferences() method
+
+            // NOTE: have to read the unit system/currency settings first in order
+            // to properly interpret the rest of the settings
+
+            string unitSystemPreference = sharedPreferences.GetString(
+                BackpackPlannerSettings.UnitSystemPreferenceKey,
+                BackpackPlannerState.Instance.Settings.Units.ToString());
+
+            UnitSystem unitSystem;
+            if(Enum.TryParse(unitSystemPreference, out unitSystem)) {
+                BackpackPlannerState.Instance.Settings.Units = unitSystem;
+            } else {
+                Logger.Error("Error parsing unit system preference!");
+            }
+
+            string currencyPreference = sharedPreferences.GetString(
+                BackpackPlannerSettings.CurrencyPreferenceKey,
+                BackpackPlannerState.Instance.Settings.Currency.ToString());
+
+            Currency currency;
+            if(Enum.TryParse(currencyPreference, out currency)) {
+                BackpackPlannerState.Instance.Settings.Currency = currency;
+            } else {
+                Logger.Error("Error parsing currency preference!");
+            }
+
+            BackpackPlannerState.Instance.Settings.FirstRun = Convert.ToBoolean(sharedPreferences.GetString(
+                BackpackPlannerSettings.FirstRunPreferenceKey,
+                BackpackPlannerState.Instance.Settings.FirstRun.ToString()));
+
+            // TODO: put these in an UpdatePersonalInformationFromSharedPreferences() method
+
+            BackpackPlannerState.Instance.PersonalInformation.Name = sharedPreferences.GetString(
+                PersonalInformation.NamePreferenceKey,
+                BackpackPlannerState.Instance.PersonalInformation.Name);
+
+            string birthDatePreference = sharedPreferences.GetString(
+                PersonalInformation.DateOfBirthPreferenceKey,
+                BackpackPlannerState.Instance.PersonalInformation.DateOfBirth?.ToString() ?? string.Empty);
+
+            if(!string.IsNullOrWhiteSpace(birthDatePreference)) {
+                try {
+                    BackpackPlannerState.Instance.PersonalInformation.DateOfBirth = Convert.ToDateTime(birthDatePreference);
+                } catch(FormatException) {
+                    Logger.Error("Error parsing date of birth preference!");
+                }
+            }
+
+            string userSexPreference = sharedPreferences.GetString(
+                PersonalInformation.UserSexPreferenceKey,
+                BackpackPlannerState.Instance.PersonalInformation.Sex.ToString());
+
+            UserSex userSex;
+            if(Enum.TryParse(userSexPreference, out userSex)) {
+                BackpackPlannerState.Instance.PersonalInformation.Sex = userSex;
+            } else {
+                Logger.Error("Error parsing user sex preference!");
+            }
+
+            BackpackPlannerState.Instance.PersonalInformation.HeightInUnits = Convert.ToSingle(sharedPreferences.GetString(
+                PersonalInformation.HeightPreferenceKey,
+                BackpackPlannerState.Instance.PersonalInformation.HeightInUnits.ToString(CultureInfo.InvariantCulture)));
+
+            BackpackPlannerState.Instance.PersonalInformation.WeightInUnits = Convert.ToSingle(sharedPreferences.GetString(
+                PersonalInformation.WeightPreferenceKey,
+                BackpackPlannerState.Instance.PersonalInformation.WeightInUnits.ToString(CultureInfo.InvariantCulture)));
+        }
+
+        public static void SaveToSharedPreferences(ISharedPreferences sharedPreferences)
+        {
+            ISharedPreferencesEditor sharedPreferencesEditor = sharedPreferences.Edit();
+
+            // TODO: put these in an SaveSettingsToSharedPreferences() method
+
+            sharedPreferencesEditor.PutString(BackpackPlannerSettings.FirstRunPreferenceKey, BackpackPlannerState.Instance.Settings.FirstRun.ToString());
+            sharedPreferencesEditor.PutString(BackpackPlannerSettings.UnitSystemPreferenceKey, BackpackPlannerState.Instance.Settings.Units.ToString());
+            sharedPreferencesEditor.PutString(BackpackPlannerSettings.CurrencyPreferenceKey, BackpackPlannerState.Instance.Settings.Currency.ToString());
+
+            // TODO: put these in an SavePersonalInformationToSharedPreferences() method
+
+            sharedPreferencesEditor.PutString(PersonalInformation.NamePreferenceKey, BackpackPlannerState.Instance.PersonalInformation.Name);
+            sharedPreferencesEditor.PutString(PersonalInformation.DateOfBirthPreferenceKey, BackpackPlannerState.Instance.PersonalInformation.DateOfBirth?.ToString() ?? string.Empty);
+            sharedPreferencesEditor.PutString(PersonalInformation.UserSexPreferenceKey, BackpackPlannerState.Instance.PersonalInformation.Sex.ToString());
+            sharedPreferencesEditor.PutFloat(PersonalInformation.HeightPreferenceKey, (float)BackpackPlannerState.Instance.PersonalInformation.HeightInUnits);
+            sharedPreferencesEditor.PutFloat(PersonalInformation.WeightPreferenceKey, (float)BackpackPlannerState.Instance.PersonalInformation.WeightInUnits);
+
+            sharedPreferencesEditor.Commit();
+        }
     }
 }

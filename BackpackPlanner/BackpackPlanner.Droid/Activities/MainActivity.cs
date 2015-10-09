@@ -26,6 +26,7 @@ using Android.Runtime;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Droid.Logging;
+using EnergonSoftware.BackpackPlanner.Droid.Util;
 using EnergonSoftware.BackpackPlanner.Models.Personal;
 using EnergonSoftware.BackpackPlanner.Settings;
 using EnergonSoftware.BackpackPlanner.Units.Currency;
@@ -51,43 +52,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 
             // NOTE: this is happening *before* we init HockeyApp
             // so any exceptions here will go un-uploaded
-            BackpackPlannerState.Instance.InitPlatform(new DroidLogger(), new SQLitePlatformAndroid(),
-                (sender, args) => {
-                    Logger.Debug($"Setting changed: {args.PreferenceKey}");
-
-                    ISharedPreferencesEditor sharedPreferencesEditor = PreferenceManager.GetDefaultSharedPreferences(this).Edit();
-                    switch(args.PreferenceKey)
-                    {
-                    case PersonalInformation.NamePreferenceKey:
-                        sharedPreferencesEditor.PutString(args.PreferenceKey, BackpackPlannerState.Instance.PersonalInformation.Name);
-                        break;
-                    case PersonalInformation.DateOfBirthPreferenceKey:
-                        sharedPreferencesEditor.PutString(args.PreferenceKey, BackpackPlannerState.Instance.PersonalInformation.DateOfBirth?.ToString() ?? string.Empty);
-                        break;
-                    case PersonalInformation.UserSexPreferenceKey:
-                        sharedPreferencesEditor.PutString(args.PreferenceKey, BackpackPlannerState.Instance.PersonalInformation.Sex.ToString());
-                        break;
-                    case PersonalInformation.HeightPreferenceKey:
-                        sharedPreferencesEditor.PutFloat(args.PreferenceKey, (float)BackpackPlannerState.Instance.PersonalInformation.HeightInUnits);
-                        break;
-                    case PersonalInformation.WeightPreferenceKey:
-                        sharedPreferencesEditor.PutFloat(args.PreferenceKey, (float)BackpackPlannerState.Instance.PersonalInformation.WeightInUnits);
-                        break;
-                    case BackpackPlannerSettings.FirstRunPreferenceKey:
-                        sharedPreferencesEditor.PutString(args.PreferenceKey, BackpackPlannerState.Instance.Settings.FirstRun.ToString());
-                        break;
-                    case BackpackPlannerSettings.UnitSystemPreferenceKey:
-                        sharedPreferencesEditor.PutString(args.PreferenceKey, BackpackPlannerState.Instance.Settings.Units.ToString());
-                        break;
-                    case BackpackPlannerSettings.CurrencyPreferenceKey:
-                        sharedPreferencesEditor.PutString(args.PreferenceKey, BackpackPlannerState.Instance.Settings.Currency.ToString());
-                        break;
-                    default:
-                        Logger.Warn("Unhandled preference key: " + args.PreferenceKey);
-                        break;
-                    }
-                    sharedPreferencesEditor.Commit();
-                }
+            BackpackPlannerState.Instance.InitPlatform(
+                new DroidLogger(),
+                new SQLitePlatformAndroid(),
+                (sender, args) => SettingsUtil.SaveToSharedPreferences(PreferenceManager.GetDefaultSharedPreferences(this))
             );
 
             InitHockeyApp();
@@ -150,69 +118,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             PreferenceManager.SetDefaultValues(this, Resource.Xml.settings, false);
 
             Logger.Debug("Loading preferences...");
-            ISharedPreferences sharedPreferences = PreferenceManager.GetDefaultSharedPreferences(this);
-
-            BackpackPlannerState.Instance.Settings.FirstRun = Convert.ToBoolean(sharedPreferences.GetString(
-                BackpackPlannerSettings.FirstRunPreferenceKey,
-                BackpackPlannerState.Instance.Settings.FirstRun.ToString()));
-
-            // NOTE: have to read these settings first so we know how to interpret everything else
-
-            string unitSystemPreference = sharedPreferences.GetString(
-                BackpackPlannerSettings.UnitSystemPreferenceKey,
-                BackpackPlannerState.Instance.Settings.Units.ToString());
-
-            UnitSystem unitSystem;
-            if(Enum.TryParse(unitSystemPreference, out unitSystem)) {
-                BackpackPlannerState.Instance.Settings.Units = unitSystem;
-            } else {
-                Logger.Error("Error parsing unit system preference!");
-            }
-
-            string currencyPreference = sharedPreferences.GetString(
-                BackpackPlannerSettings.CurrencyPreferenceKey,
-                BackpackPlannerState.Instance.Settings.Currency.ToString());
-
-            Currency currency;
-            if(Enum.TryParse(currencyPreference, out currency)) {
-                BackpackPlannerState.Instance.Settings.Currency = currency;
-            } else {
-                Logger.Error("Error parsing currency preference!");
-            }
-
-            BackpackPlannerState.Instance.PersonalInformation.Name = sharedPreferences.GetString(
-                PersonalInformation.NamePreferenceKey,
-                BackpackPlannerState.Instance.PersonalInformation.Name);
-
-            try {
-                string birthDatePreference = sharedPreferences.GetString(
-                    PersonalInformation.DateOfBirthPreferenceKey,
-                    BackpackPlannerState.Instance.PersonalInformation.DateOfBirth?.ToString() ?? string.Empty);
-                if(!string.IsNullOrWhiteSpace(birthDatePreference)) {
-                    BackpackPlannerState.Instance.PersonalInformation.DateOfBirth = Convert.ToDateTime(birthDatePreference);
-                }
-            } catch(FormatException) {
-                Logger.Error("Error parsing date of birth preference!");
-            }
-
-            string userSexPreference = sharedPreferences.GetString(
-                PersonalInformation.UserSexPreferenceKey,
-                BackpackPlannerState.Instance.PersonalInformation.Sex.ToString());
-
-            UserSex userSex;
-            if(Enum.TryParse(userSexPreference, out userSex)) {
-                BackpackPlannerState.Instance.PersonalInformation.Sex = userSex;
-            } else {
-                Logger.Error("Error parsing user sex preference!");
-            }
-
-            BackpackPlannerState.Instance.PersonalInformation.HeightInUnits = Convert.ToSingle(sharedPreferences.GetString(
-                PersonalInformation.HeightPreferenceKey,
-                BackpackPlannerState.Instance.PersonalInformation.HeightInUnits.ToString(CultureInfo.InvariantCulture)));
-
-            BackpackPlannerState.Instance.PersonalInformation.WeightInUnits = Convert.ToSingle(sharedPreferences.GetString(
-                PersonalInformation.WeightPreferenceKey,
-                BackpackPlannerState.Instance.PersonalInformation.WeightInUnits.ToString(CultureInfo.InvariantCulture)));
+            SettingsUtil.UpdateFromSharedPreferences(PreferenceManager.GetDefaultSharedPreferences(this));
         }
 	}
 }
