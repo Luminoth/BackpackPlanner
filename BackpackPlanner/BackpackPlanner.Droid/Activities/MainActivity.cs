@@ -15,11 +15,9 @@
 */
 
 using System;
-using System.Globalization;
 using System.Threading.Tasks;
 
 using Android.App;
-using Android.Content;
 using Android.OS;
 using Android.Preferences;
 using Android.Runtime;
@@ -27,10 +25,6 @@ using Android.Runtime;
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Droid.Logging;
 using EnergonSoftware.BackpackPlanner.Droid.Util;
-using EnergonSoftware.BackpackPlanner.Models.Personal;
-using EnergonSoftware.BackpackPlanner.Settings;
-using EnergonSoftware.BackpackPlanner.Units.Currency;
-using EnergonSoftware.BackpackPlanner.Units.Units;
 
 using SQLite.Net.Platform.XamarinAndroid;
 
@@ -46,6 +40,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(MainActivity));
 
+        public MainActivity() : base(false)
+        {
+        }
+
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
@@ -54,13 +52,18 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             // so any exceptions here will go un-uploaded
             BackpackPlannerState.Instance.InitPlatform(
                 new DroidLogger(),
+                new GooglePlayServicesManager(),
                 new SQLitePlatformAndroid(),
-                (sender, args) => SettingsUtil.SaveToSharedPreferences(PreferenceManager.GetDefaultSharedPreferences(this))
+                (sender, args) => {
+                    SettingsUtil.SaveToSharedPreferences(PreferenceManager.GetDefaultSharedPreferences(this));
+                }
             );
 
             InitHockeyApp();
 
 			SetContentView(Resource.Layout.activity_main);
+
+            Title = Resources.GetString(Resource.String.app_name);
 		}
 
 	    protected override void OnResume()
@@ -73,8 +76,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
                 Logger.Debug("First run, starting FTUE...");
                 StartActivity(typeof(FTUEActivity));
             } else {
-                Logger.Debug("Not first run, starting main activity...");
-                StartActivity(typeof(BackpackPlannerActivity));
+                Logger.Debug("Not first run, starting google play services activity...");
+                StartActivity(typeof(GooglePlayServicesActivity));
             }
             BackpackPlannerState.Instance.Settings.FirstRun = false;
 

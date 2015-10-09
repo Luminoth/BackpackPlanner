@@ -14,6 +14,8 @@
    limitations under the License.
 */
 
+using System;
+
 namespace EnergonSoftware.BackpackPlanner.Core.PlayServices
 {
     /// <summary>
@@ -21,8 +23,19 @@ namespace EnergonSoftware.BackpackPlanner.Core.PlayServices
     /// </summary>
     /// <remarks>
     /// http://android-developers.blogspot.com/2015/09/google-play-services-81-and-android-60.html
+    /// TODO: this name "PlayServices" sucks
+    /// TODO: make this a base class (tho we need to solve the need to subclass the Java Object class first)
     /// </remarks>
     public interface IPlayServices
     {
+        event EventHandler<EventArgs> PlayServicesConnectedEvent;
+
+        bool Init();
+
+        void Destroy();
+
+        void Connect();
+
+        void Disconnect();
     }
 }

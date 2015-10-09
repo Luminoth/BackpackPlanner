@@ -151,6 +151,7 @@
   <ItemGroup>
     <Compile Include="Activities\BaseActivity.cs" />
     <Compile Include="Activities\FTUEActivity.cs" />
+    <Compile Include="Activities\GooglePlayServicesActivity.cs" />
     <Compile Include="Adapters\BaseListAdapter.cs" />
     <Compile Include="Adapters\Gear\GearCollectionListAdapter.cs" />
     <Compile Include="Adapters\Gear\GearItemListAdapter.cs" />
@@ -172,6 +173,7 @@
     <Compile Include="Fragments\Gear\Items\ViewGearItemFragment.cs" />
     <Compile Include="Fragments\Gear\Systems\AddGearSystemFragment.cs" />
     <Compile Include="Fragments\Gear\Systems\ViewGearSystemFragment.cs" />
+    <Compile Include="Fragments\GooglePlayServicesFragment.cs" />
     <Compile Include="Fragments\ListItemsFragment.cs" />
     <Compile Include="Fragments\Gear\Collections\AddGearCollectionFragment.cs" />
     <Compile Include="Fragments\Gear\Items\AddGearItemFragment.cs" />
@@ -218,6 +220,8 @@
     <AndroidResource Include="Resources\layout\fragment_ftue_meals.axml" />
     <AndroidResource Include="Resources\layout\fragment_ftue_trips.axml" />
     <AndroidResource Include="Resources\layout\fragment_debug.axml" />
+    <AndroidResource Include="Resources\layout\activity_google_play_services.axml" />
+    <AndroidResource Include="Resources\layout\fragment_google_play_services.axml" />
     <ProguardConfiguration Include="proguard.cfg" />
     <None Include="README.md" />
     <None Include="Resources\AboutResources.txt" />

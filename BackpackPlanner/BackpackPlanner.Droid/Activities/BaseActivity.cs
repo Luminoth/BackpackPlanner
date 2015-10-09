@@ -16,6 +16,8 @@
 
 using System.Diagnostics;
 
+using Android.App;
+using Android.Content;
 using Android.OS;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
@@ -26,6 +28,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(BaseActivity));
 
+        private readonly bool _connectGooglePlayServices;
+
         private readonly Stopwatch _startupStopwatch = new Stopwatch();
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -33,6 +37,19 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             base.OnCreate(savedInstanceState);
 
             _startupStopwatch.Start();
+
+            if(_connectGooglePlayServices) {
+                ((GooglePlayServicesManager)BackpackPlannerState.Instance.PlatformPlayServices).Init(this);
+            }
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+
+            if(_connectGooglePlayServices) {
+                BackpackPlannerState.Instance.PlatformPlayServices.Destroy();
+            }
         }
 
         protected override void OnStart()
@@ -42,7 +59,20 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             if(_startupStopwatch.IsRunning) {
                 Logger.Debug($"Time to Activity.Start(): {_startupStopwatch.ElapsedMilliseconds}ms");
             }
+
+            if(_connectGooglePlayServices) {
+                BackpackPlannerState.Instance.PlatformPlayServices.Connect();
+            }
         }
+
+	    protected override void OnStop()
+	    {
+	        base.OnStop();
+
+            if(_connectGooglePlayServices) {
+                BackpackPlannerState.Instance.PlatformPlayServices.Disconnect();
+            }
+	    }
 
         protected override void OnResume()
         {
@@ -52,6 +82,26 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
                 Logger.Debug($"Time to Activity.OnResume(): {_startupStopwatch.ElapsedMilliseconds}ms");
             }
             _startupStopwatch.Stop();
+        }
+
+	    protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+	    {
+            base.OnActivityResult(requestCode, resultCode, data);
+
+            switch(requestCode)
+            {
+            case GooglePlayServicesManager.RequestCodeResolution:
+                if(Result.Ok == resultCode) {
+                    Logger.Info("Got Ok result code...");
+                    BackpackPlannerState.Instance.PlatformPlayServices.Connect();
+                }
+                break;
+            }
+	    }
+
+        protected BaseActivity(bool connectGooglePlayServices)
+        {
+            _connectGooglePlayServices = connectGooglePlayServices;
         }
     }
 }

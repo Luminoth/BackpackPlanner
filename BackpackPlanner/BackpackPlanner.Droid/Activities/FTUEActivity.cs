@@ -57,6 +57,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             }
         }
 
+        public FTUEActivity() : base(false)
+        {
+        }
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -68,6 +72,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 
             IViewPagerIndicator pageIndicator = FindViewById<CircleViewPagerIndicator>(Resource.Id.view_pager_indicator);
             pageIndicator.SetViewPager(viewPager);
+
+            Title = Resources.GetString(Resource.String.app_name);
         }
     }
 }

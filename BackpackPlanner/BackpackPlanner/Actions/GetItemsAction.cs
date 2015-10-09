@@ -38,18 +38,8 @@ namespace EnergonSoftware.BackpackPlanner.Actions
 
         public async override Task DoActionAsync()
         {
-            // TODO: this design sucks, some day this whole thing
-            // needs to be refactored to work better around the idea
-            // that we need to wait until the database is initialized
-            // before we can actually make any use of it
-            Stopwatch stopwatch = Stopwatch.StartNew();
-            while(stopwatch.ElapsedMilliseconds < 5000 && !BackpackPlannerState.Instance.DatabaseState.IsInitialized) {
+            while(!BackpackPlannerState.Instance.DatabaseState.IsInitialized) {
                 await Task.Delay(1).ConfigureAwait(false);
-            }
-            stopwatch.Stop();
-
-            if(!BackpackPlannerState.Instance.DatabaseState.IsInitialized) {
-                throw new InvalidOperationException("Database is not initialized!");
             }
 
             Items = await DatabaseItem.GetItemsAsync<T>().ConfigureAwait(false);

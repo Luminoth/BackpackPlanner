@@ -32,7 +32,10 @@
     <!-- General messages -->
 
     <string name="title_loading_items">Loading Items</string>
-    <string name="label_loading_items">Loading items, this may take a moment</string>
+    <string name="label_loading_items">Loading items, this may take a moment...</string>
+
+    <string name="title_connecting_google_play_services">Connecting Google Play Services</string>
+    <string name="label_connecting_google_play_services">Connecting Google Play Services, please wait...</string>
 
     <!-- Delete confirmations -->
 

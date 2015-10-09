@@ -18,6 +18,7 @@ using System;
 
 using EnergonSoftware.BackpackPlanner.Core.Database;
 using EnergonSoftware.BackpackPlanner.Core.Logging;
+using EnergonSoftware.BackpackPlanner.Core.PlayServices;
 using EnergonSoftware.BackpackPlanner.Models.Personal;
 using EnergonSoftware.BackpackPlanner.Settings;
 
@@ -72,6 +73,14 @@ namespace EnergonSoftware.BackpackPlanner
         /// </value>
         public DatabaseState DatabaseState { get; } = new DatabaseState();
 
+        /// <summary>
+        /// Gets the platform google play services interface.
+        /// </summary>
+        /// <value>
+        /// The platform google play services interface.
+        /// </value>
+        public IPlayServices PlatformPlayServices { get; private set; }
+
 #region Dispose
         public void Dispose()
         {
@@ -88,14 +97,19 @@ namespace EnergonSoftware.BackpackPlanner
         #endregion
 
         /// <summary>
-        /// Initializes the platform-specific state.
+        /// Initializes the platform-specific dependencies.
         /// </summary>
         /// <param name="platformLogger">The platform logger.</param>
+        /// <param name="platformPlayServices">The platform google play services interface.</param>
         /// <param name="sqlitePlatform">The SQLite platform.</param>
         /// <param name="settingsChangedEventHandler">The settings changed event handler.</param>
-        public void InitPlatform(ILogger platformLogger, ISQLitePlatform sqlitePlatform, EventHandler<SettingsChangedEventArgs> settingsChangedEventHandler)
+        public void InitPlatform(ILogger platformLogger, IPlayServices platformPlayServices, ISQLitePlatform sqlitePlatform, EventHandler<SettingsChangedEventArgs> settingsChangedEventHandler)
         {
             if(null == platformLogger) {
+                throw new ArgumentNullException(nameof(platformLogger));
+            }
+
+            if(null == platformPlayServices) {
                 throw new ArgumentNullException(nameof(platformLogger));
             }
 
@@ -106,6 +120,8 @@ namespace EnergonSoftware.BackpackPlanner
             Logger.Debug("Initializing platform state...");
 
             PlatformLogger = platformLogger;
+
+            PlatformPlayServices = platformPlayServices;
 
             DatabaseState.SQLitePlatform = sqlitePlatform;
 

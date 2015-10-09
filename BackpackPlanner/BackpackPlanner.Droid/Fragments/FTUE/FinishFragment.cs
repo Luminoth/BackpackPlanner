@@ -35,7 +35,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.FTUE
 
             Button finishButton = view.FindViewById<Button>(Resource.Id.button_ftue_finish);
             finishButton.Click += (sender, args) => {
-                Activity.StartActivity(typeof(BackpackPlannerActivity));
+                Activity.StartActivity(typeof(GooglePlayServicesActivity));
                 Activity.Finish();
             };
         }

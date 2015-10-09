@@ -18,7 +18,6 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 
 using Android.App;
-using Android.Content;
 using Android.Content.Res;
 using Android.OS;
 using Android.Views;
@@ -46,11 +45,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
         private readonly NavigationDrawerManager _navigationDrawerManager = new NavigationDrawerManager();
 #endregion
 
-        private readonly GooglePlayServicesManager _googlePlayServicesManager;
-
-        public BackpackPlannerActivity()
+        public BackpackPlannerActivity() : base(true)
         {
-            _googlePlayServicesManager = new GooglePlayServicesManager(this);
         }
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -58,8 +54,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             base.OnCreate(savedInstanceState);
 
 			SetContentView(Resource.Layout.activity_backpack_planner);
-
-            _googlePlayServicesManager.OnCreate();
 
             InitToolbar();
 
@@ -108,28 +102,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             _navigationDrawerManager.Toggle.SyncState();
 	    }
 
-	    protected override void OnStart()
-	    {
-	        base.OnStart();
-
-            _googlePlayServicesManager.OnStart();
-	    }
-
-	    protected override void OnStop()
-	    {
-	        base.OnStop();
-
-            _googlePlayServicesManager.OnStop();
-	    }
-
 	    protected override void OnResume()
 	    {
 	        base.OnResume();
 
-            _googlePlayServicesManager.OnResume();
-
             BackpackPlannerState.Instance.DatabaseState.ConnectAsync(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), DatabaseState.DatabaseName).Wait();
 
+            // TODO: put this in some sort of "InitDatabaseInBackground" method
+            // that runs it in a thread for us
             Task.Run(async () => {
                 Stopwatch stopwatch = Stopwatch.StartNew();
                 await BackpackPlannerState.Instance.DatabaseState.InitDatabaseAsync().ConfigureAwait(false);
@@ -141,8 +121,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 	    protected override void OnPause()
 	    {
 	        base.OnPause();
-
-            _googlePlayServicesManager.OnPause();
 
             BackpackPlannerState.Instance.DatabaseState.Connection.CloseAsync().Wait();
 	    }
@@ -175,13 +153,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             // this handles the toolbar button press on stacked fragments
             OnBackPressed();
         }
-
-	    protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
-	    {
-	        base.OnActivityResult(requestCode, resultCode, data);
-
-            _googlePlayServicesManager.OnActivityResult(requestCode, resultCode, data);
-	    }
 
         private void InitToolbar()
         {
