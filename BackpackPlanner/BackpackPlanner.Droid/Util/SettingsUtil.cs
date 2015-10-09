@@ -122,8 +122,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
             sharedPreferencesEditor.PutString(PersonalInformation.NamePreferenceKey, BackpackPlannerState.Instance.PersonalInformation.Name);
             sharedPreferencesEditor.PutString(PersonalInformation.DateOfBirthPreferenceKey, BackpackPlannerState.Instance.PersonalInformation.DateOfBirth?.ToString() ?? string.Empty);
             sharedPreferencesEditor.PutString(PersonalInformation.UserSexPreferenceKey, BackpackPlannerState.Instance.PersonalInformation.Sex.ToString());
-            sharedPreferencesEditor.PutFloat(PersonalInformation.HeightPreferenceKey, (float)BackpackPlannerState.Instance.PersonalInformation.HeightInUnits);
-            sharedPreferencesEditor.PutFloat(PersonalInformation.WeightPreferenceKey, (float)BackpackPlannerState.Instance.PersonalInformation.WeightInUnits);
+            sharedPreferencesEditor.PutString(PersonalInformation.HeightPreferenceKey, BackpackPlannerState.Instance.PersonalInformation.HeightInUnits.ToString(CultureInfo.InvariantCulture));
+            sharedPreferencesEditor.PutString(PersonalInformation.WeightPreferenceKey, BackpackPlannerState.Instance.PersonalInformation.WeightInUnits.ToString(CultureInfo.InvariantCulture));
 
             sharedPreferencesEditor.Commit();
         }
