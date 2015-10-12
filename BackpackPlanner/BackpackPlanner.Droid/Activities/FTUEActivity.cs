@@ -57,15 +57,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             }
         }
 
-        public FTUEActivity() : base(false)
-        {
-        }
-
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
 			SetContentView(Resource.Layout.activity_ftue);
+
+            InitToolbar();
 
             Android.Support.V4.View.ViewPager viewPager = FindViewById<Android.Support.V4.View.ViewPager>(Resource.Id.ftue_pager);
             viewPager.Adapter = new FTUEPagerAdapter(SupportFragmentManager);

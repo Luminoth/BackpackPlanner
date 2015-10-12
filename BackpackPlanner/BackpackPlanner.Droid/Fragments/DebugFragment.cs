@@ -39,8 +39,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             Button resetFTUEButton = view.FindViewById<Button>(Resource.Id.button_reset_ftue);
             resetFTUEButton.Click += (sender, args) => {
                 Logger.Debug("Resetting FTUE state");
-                BackpackPlannerState.Instance.Settings.FirstRun = true;
+                BackpackPlannerState.Instance.Settings.MetaSettings.FirstRun = true;
             };
+
+// TODO: reset ask google play services button
 
             Button resetDatabaseButton = view.FindViewById<Button>(Resource.Id.button_reset_database);
             resetDatabaseButton.Click += (sender, args) => {

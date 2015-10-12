@@ -38,6 +38,16 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
         // so find a way to stop doing it!
         public static void UpdateFromSharedPreferences(ISharedPreferences sharedPreferences)
         {
+            // TODO: put these in an UpdateMetaSettingsFromSharedPreferences() method
+
+            BackpackPlannerState.Instance.Settings.MetaSettings.FirstRun = Convert.ToBoolean(sharedPreferences.GetString(
+                MetaSettings.FirstRunPreferenceKey,
+                BackpackPlannerState.Instance.Settings.MetaSettings.FirstRun.ToString()));
+
+            BackpackPlannerState.Instance.Settings.MetaSettings.AskedConnectGooglePlayServices = Convert.ToBoolean(sharedPreferences.GetString(
+                MetaSettings.AskedConnectGooglePlayServicesPreferenceKey,
+                BackpackPlannerState.Instance.Settings.MetaSettings.AskedConnectGooglePlayServices.ToString()));
+
             // TODO: put these in an UpdateSettingsFromSharedPreferences() method
 
             // NOTE: have to read the unit system/currency settings first in order
@@ -65,9 +75,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
                 Logger.Error("Error parsing currency preference!");
             }
 
-            BackpackPlannerState.Instance.Settings.FirstRun = Convert.ToBoolean(sharedPreferences.GetString(
-                BackpackPlannerSettings.FirstRunPreferenceKey,
-                BackpackPlannerState.Instance.Settings.FirstRun.ToString()));
+            BackpackPlannerState.Instance.Settings.ConnectGooglePlayServices = Convert.ToBoolean(sharedPreferences.GetString(
+                BackpackPlannerSettings.ConnectGooglePlayServicesPreferenceKey,
+                BackpackPlannerState.Instance.Settings.ConnectGooglePlayServices.ToString()));
 
             // TODO: put these in an UpdatePersonalInformationFromSharedPreferences() method
 
@@ -111,13 +121,18 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
         {
             ISharedPreferencesEditor sharedPreferencesEditor = sharedPreferences.Edit();
 
-            // TODO: put these in an SaveSettingsToSharedPreferences() method
+            // TODO: put these in a SaveMetaSettingsToSharedPreferences() method
 
-            sharedPreferencesEditor.PutString(BackpackPlannerSettings.FirstRunPreferenceKey, BackpackPlannerState.Instance.Settings.FirstRun.ToString());
+            sharedPreferencesEditor.PutString(MetaSettings.FirstRunPreferenceKey, BackpackPlannerState.Instance.Settings.MetaSettings.FirstRun.ToString());
+            sharedPreferencesEditor.PutString(MetaSettings.AskedConnectGooglePlayServicesPreferenceKey, BackpackPlannerState.Instance.Settings.MetaSettings.AskedConnectGooglePlayServices.ToString());
+
+            // TODO: put these in a SaveSettingsToSharedPreferences() method
+
             sharedPreferencesEditor.PutString(BackpackPlannerSettings.UnitSystemPreferenceKey, BackpackPlannerState.Instance.Settings.Units.ToString());
             sharedPreferencesEditor.PutString(BackpackPlannerSettings.CurrencyPreferenceKey, BackpackPlannerState.Instance.Settings.Currency.ToString());
+            sharedPreferencesEditor.PutString(BackpackPlannerSettings.ConnectGooglePlayServicesPreferenceKey, BackpackPlannerState.Instance.Settings.ConnectGooglePlayServices.ToString());
 
-            // TODO: put these in an SavePersonalInformationToSharedPreferences() method
+            // TODO: put these in a SavePersonalInformationToSharedPreferences() method
 
             sharedPreferencesEditor.PutString(PersonalInformation.NamePreferenceKey, BackpackPlannerState.Instance.PersonalInformation.Name);
             sharedPreferencesEditor.PutString(PersonalInformation.DateOfBirthPreferenceKey, BackpackPlannerState.Instance.PersonalInformation.DateOfBirth?.ToString() ?? string.Empty);

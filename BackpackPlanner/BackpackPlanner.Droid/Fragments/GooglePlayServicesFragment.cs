@@ -14,8 +14,13 @@
    limitations under the License.
 */
 
+using Android.App;
 using Android.OS;
 using Android.Views;
+using Android.Widget;
+
+using EnergonSoftware.BackpackPlanner.Droid.Activities;
+using EnergonSoftware.BackpackPlanner.Droid.Util;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 {
@@ -24,6 +29,36 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             return inflater.Inflate(Resource.Layout.fragment_google_play_services, container, false);
+        }
+
+        public override void OnViewCreated(View view, Bundle savedInstanceState)
+        {
+            base.OnViewCreated(view, savedInstanceState);
+
+            BackpackPlannerState.Instance.Settings.MetaSettings.AskedConnectGooglePlayServices = true;
+
+            Button connectGooglePlayServicesButton = view.FindViewById<Button>(Resource.Id.button_connect_google_play_services);
+            connectGooglePlayServicesButton.Click += (sender, args) => {
+                BackpackPlannerState.Instance.Settings.ConnectGooglePlayServices = true;
+
+                ProgressDialog dialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_connecting_google_play_services);
+                BackpackPlannerState.Instance.PlatformPlayServices.PlayServicesConnectedEvent += (s, a) => {
+                    dialog.Dismiss();
+
+                    Activity.StartActivity(typeof(BackpackPlannerActivity));
+                    Activity.Finish();
+                };
+
+                BackpackPlannerState.Instance.PlatformPlayServices.Connect();
+            };
+
+            Button notConnectGooglePlayServicesButton = view.FindViewById<Button>(Resource.Id.button_not_connect_google_play_services);
+            notConnectGooglePlayServicesButton.Click += (sender, args) => {
+                BackpackPlannerState.Instance.Settings.ConnectGooglePlayServices = false;
+
+                Activity.StartActivity(typeof(BackpackPlannerActivity));
+                Activity.Finish();
+            };
         }
     }
 }

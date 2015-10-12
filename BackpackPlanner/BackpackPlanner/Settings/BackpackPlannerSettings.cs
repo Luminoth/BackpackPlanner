@@ -28,9 +28,9 @@ namespace EnergonSoftware.BackpackPlanner.Settings
     {
 #region Preference Keys
         /// <summary>
-        /// The first run preference key
+        /// The connect google play services preference key
         /// </summary>
-        public const string FirstRunPreferenceKey = "firstRun";
+        public const string ConnectGooglePlayServicesPreferenceKey = "connectGooglePlayServices";
 
         /// <summary>
         /// The unit system preference key
@@ -41,7 +41,7 @@ namespace EnergonSoftware.BackpackPlanner.Settings
         /// The currency preference key
         /// </summary>
         public const string CurrencyPreferenceKey = "currency";
-#endregion
+        #endregion
 
 #region Events
         /// <summary>
@@ -50,24 +50,32 @@ namespace EnergonSoftware.BackpackPlanner.Settings
         public event EventHandler<SettingsChangedEventArgs> SettingsChangedEvent;
 #endregion
 
-        private bool _firstRun = true;
-
         /// <summary>
-        /// Gets or sets a value indicating whether this is the first run of the app or not.
+        /// Gets the meta settings.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if this is the first run of the app; otherwise, <c>false</c>.
+        /// The meta settings.
         /// </value>
-        public bool FirstRun
+        public MetaSettings MetaSettings { get; private set; }
+
+        private bool _connectGooglePlayServices = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [connect google play services].
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if [connect google play services]; otherwise, <c>false</c>.
+        /// </value>
+        public bool ConnectGooglePlayServices
         {
-            get { return _firstRun; }
+            get { return _connectGooglePlayServices; }
 
             set
             {
-                _firstRun = value;
+                _connectGooglePlayServices = value;
                 SettingChanged(this, new SettingsChangedEventArgs
                     {
-                        PreferenceKey = FirstRunPreferenceKey
+                        PreferenceKey = ConnectGooglePlayServicesPreferenceKey
                     }
                 );
             }
@@ -187,8 +195,21 @@ namespace EnergonSoftware.BackpackPlanner.Settings
         /// 9000 grams is about 20 pounds.
         /// </remarks>
         public int LightweightClassMaxWeightInGrams { get; } = 9000;
-#endregion
+        #endregion
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BackpackPlannerSettings" /> class.
+        /// </summary>
+        public BackpackPlannerSettings()
+        {
+            MetaSettings = new MetaSettings(this);
+        }
+
+        /// <summary>
+        /// Notifies that a setting has changed.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The <see cref="EnergonSoftware.BackpackPlanner.Settings.SettingsChangedEventArgs" /> instance containing the event data.</param>
         public void SettingChanged(object sender, SettingsChangedEventArgs args)
         {
             SettingsChangedEvent?.Invoke(sender, args);

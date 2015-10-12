@@ -28,9 +28,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(BaseActivity));
 
-        private readonly bool _connectGooglePlayServices;
-
         private readonly Stopwatch _startupStopwatch = new Stopwatch();
+
+#region Controls
+        public Android.Support.V7.Widget.Toolbar Toolbar { get; private set; }
+#endregion
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -38,7 +40,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 
             _startupStopwatch.Start();
 
-            if(_connectGooglePlayServices) {
+            if(null != BackpackPlannerState.Instance.PlatformPlayServices) {
                 ((GooglePlayServicesManager)BackpackPlannerState.Instance.PlatformPlayServices).Init(this);
             }
         }
@@ -47,9 +49,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
         {
             base.OnDestroy();
 
-            if(_connectGooglePlayServices) {
-                BackpackPlannerState.Instance.PlatformPlayServices.Destroy();
-            }
+            BackpackPlannerState.Instance.PlatformPlayServices.Destroy();
         }
 
         protected override void OnStart()
@@ -59,20 +59,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             if(_startupStopwatch.IsRunning) {
                 Logger.Debug($"Time to Activity.Start(): {_startupStopwatch.ElapsedMilliseconds}ms");
             }
-
-            if(_connectGooglePlayServices) {
-                BackpackPlannerState.Instance.PlatformPlayServices.Connect();
-            }
         }
-
-	    protected override void OnStop()
-	    {
-	        base.OnStop();
-
-            if(_connectGooglePlayServices) {
-                BackpackPlannerState.Instance.PlatformPlayServices.Disconnect();
-            }
-	    }
 
         protected override void OnResume()
         {
@@ -99,9 +86,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             }
 	    }
 
-        protected BaseActivity(bool connectGooglePlayServices)
+        protected void InitToolbar()
         {
-            _connectGooglePlayServices = connectGooglePlayServices;
+            Toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
+            SetSupportActionBar(Toolbar);
         }
     }
 }

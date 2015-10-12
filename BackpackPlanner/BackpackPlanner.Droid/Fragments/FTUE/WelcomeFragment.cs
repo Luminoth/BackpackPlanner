@@ -35,8 +35,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.FTUE
 
             Button skipButton = view.FindViewById<Button>(Resource.Id.button_ftue_skip);
             skipButton.Click += (sender, args) => {
-                Activity.StartActivity(typeof(GooglePlayServicesActivity));
-                Activity.Finish();
+                Activity.StartActivity(BackpackPlannerState.Instance.Settings.MetaSettings.AskedConnectGooglePlayServices
+                    ? typeof(BackpackPlannerActivity)
+                    : typeof(GooglePlayServicesActivity));
             };
         }
     }

@@ -68,6 +68,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
         public bool Init(Activity activity)
         {
             _activity = activity;
+
             return Init();
         }
 
@@ -93,10 +94,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
         public void Destroy()
         {
-            if(null != _googleClientApi) {
-                _googleClientApi.Disconnect();
-                _googleClientApi = null;
-            }
+            Disconnect();
+
+            _googleClientApi = null;
         }
 
         public void Connect()
@@ -112,8 +112,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
         public void Disconnect()
         {
-            Logger.Info("Disonnecting Google Play Services client...");
-            _googleClientApi.Disconnect();
+            if(null != _googleClientApi && _googleClientApi.IsConnected) {
+                Logger.Info("Disonnecting Google Play Services client...");
+                _googleClientApi.Disconnect();
+            }
         }
 
 	    public void OnConnected(Bundle connectionHint)

@@ -184,7 +184,6 @@
     <Compile Include="Fragments\Trips\Itineraries\ViewTripItineraryFragment.cs" />
     <Compile Include="Fragments\Trips\Plans\AddTripPlanFragment.cs" />
     <Compile Include="Fragments\Trips\Plans\ViewTripPlanFragment.cs" />
-    <Compile Include="Fragments\Util\DatePickerFragment.cs" />
     <Compile Include="Fragments\Gear\Collections\GearCollectionsFragment.cs" />
     <Compile Include="Fragments\Gear\Systems\GearSystemsFragment.cs" />
     <Compile Include="Fragments\HelpFragment.cs" />
@@ -222,6 +221,7 @@
     <AndroidResource Include="Resources\layout\fragment_debug.axml" />
     <AndroidResource Include="Resources\layout\activity_google_play_services.axml" />
     <AndroidResource Include="Resources\layout\fragment_google_play_services.axml" />
+    <AndroidResource Include="Resources\layout\fragment_item_list.axml" />
     <ProguardConfiguration Include="proguard.cfg" />
     <None Include="README.md" />
     <None Include="Resources\AboutResources.txt" />

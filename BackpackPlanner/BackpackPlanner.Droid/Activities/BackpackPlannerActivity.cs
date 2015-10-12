@@ -41,13 +41,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(BackpackPlannerActivity));
 
 #region Controls
-        private Android.Support.V7.Widget.Toolbar _toolbar;
         private readonly NavigationDrawerManager _navigationDrawerManager = new NavigationDrawerManager();
 #endregion
-
-        public BackpackPlannerActivity() : base(true)
-        {
-        }
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -63,7 +58,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             };
 
             // create the navigation drawer
-            _navigationDrawerManager.Create(this, _toolbar, savedInstanceState);
+            _navigationDrawerManager.Create(this, Toolbar, savedInstanceState);
             _navigationDrawerManager.Toggle.ToolbarNavigationClickListener = this;
             _navigationDrawerManager.HeaderText.Text = !string.IsNullOrWhiteSpace(BackpackPlannerState.Instance.PersonalInformation.Name)
                     ? BackpackPlannerState.Instance.PersonalInformation.Name
@@ -102,11 +97,29 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             _navigationDrawerManager.Toggle.SyncState();
 	    }
 
+        protected override void OnStart()
+        {
+            base.OnStart();
+
+            if(BackpackPlannerState.Instance.Settings.ConnectGooglePlayServices) {
+                BackpackPlannerState.Instance.PlatformPlayServices.Connect();
+            }
+        }
+
+	    protected override void OnStop()
+	    {
+	        base.OnStop();
+
+            BackpackPlannerState.Instance.PlatformPlayServices.Disconnect();
+	    }
+
 	    protected override void OnResume()
 	    {
 	        base.OnResume();
 
-            BackpackPlannerState.Instance.DatabaseState.ConnectAsync(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), DatabaseState.DatabaseName).Wait();
+            BackpackPlannerState.Instance.DatabaseState.ConnectAsync(
+                System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal),
+                DatabaseState.DatabaseName).Wait();
 
             // TODO: put this in some sort of "InitDatabaseInBackground" method
             // that runs it in a thread for us
@@ -152,12 +165,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
         {
             // this handles the toolbar button press on stacked fragments
             OnBackPressed();
-        }
-
-        private void InitToolbar()
-        {
-            _toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
-            SetSupportActionBar(_toolbar);
         }
 
         private void SelectDrawerItem(IMenuItem menuItem)

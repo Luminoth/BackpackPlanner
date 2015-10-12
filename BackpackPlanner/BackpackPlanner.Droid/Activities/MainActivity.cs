@@ -40,10 +40,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(MainActivity));
 
-        public MainActivity() : base(false)
-        {
-        }
-
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
@@ -63,6 +59,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 
 			SetContentView(Resource.Layout.activity_main);
 
+            InitToolbar();
+
             Title = Resources.GetString(Resource.String.app_name);
 		}
 
@@ -72,14 +70,17 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 
             LoadPreferences();
 
-            if(BackpackPlannerState.Instance.Settings.FirstRun) {
-                Logger.Debug("First run, starting FTUE...");
+            if(BackpackPlannerState.Instance.Settings.MetaSettings.FirstRun) {
+                Logger.Debug("Starting FTUE...");
                 StartActivity(typeof(FTUEActivity));
-            } else {
-                Logger.Debug("Not first run, starting google play services activity...");
+            } else if(!BackpackPlannerState.Instance.Settings.MetaSettings.AskedConnectGooglePlayServices) {
+                Logger.Debug("Starting Google Play Services activity...");
                 StartActivity(typeof(GooglePlayServicesActivity));
+            } else {
+                Logger.Debug("Starting main activity...");
+                StartActivity(typeof(BackpackPlannerActivity));
             }
-            BackpackPlannerState.Instance.Settings.FirstRun = false;
+            BackpackPlannerState.Instance.Settings.MetaSettings.FirstRun = false;
 
             // this ensures that we never come back to this activity
             Finish();

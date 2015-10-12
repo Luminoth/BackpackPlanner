@@ -25,20 +25,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
     [Activity(Label = "@string/app_name")]
     public sealed class GooglePlayServicesActivity : BaseActivity
     {
-        public GooglePlayServicesActivity() : base(true)
-        {
-        }
-
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
-            BackpackPlannerState.Instance.PlatformPlayServices.PlayServicesConnectedEvent += (sender, args) => {
-                StartActivity(typeof(BackpackPlannerActivity));
-                Finish();
-            };
-
 			SetContentView(Resource.Layout.activity_google_play_services);
+
+            InitToolbar();
 
             Title = Resources.GetString(Resource.String.app_name);
 

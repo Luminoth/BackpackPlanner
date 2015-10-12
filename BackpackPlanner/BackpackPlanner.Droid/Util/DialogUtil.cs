@@ -23,10 +23,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 {
     public static class DialogUtil
     {
-        public static ProgressDialog ShowProgressDialog(Activity activity, int messageResId, ProgressDialogStyle style=ProgressDialogStyle.Spinner)
+        public static ProgressDialog ShowProgressDialog(Activity activity, int messageResId, /*int titleResId,*/ ProgressDialogStyle style=ProgressDialogStyle.Spinner)
         {
             ProgressDialog dialog = new ProgressDialog(activity);
             dialog.SetProgressStyle(style);
+            //dialog.SetTitle(titleResId);
             dialog.SetMessage(activity.Resources.GetString(messageResId));
             dialog.Show();
             return dialog;
