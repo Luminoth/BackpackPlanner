@@ -43,6 +43,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         {
             AddPreferencesFromResource(Resource.Xml.settings);
 
+// TODO: remove any of these that are unused
+
             _namePreference = (Android.Support.V7.Preferences.EditTextPreference)FindPreference(PersonalInformation.NamePreferenceKey);
             _birthDatePreference = (Android.Support.V7.Preferences.EditTextPreference)FindPreference(PersonalInformation.DateOfBirthPreferenceKey);
             _userSexPreference = (Android.Support.V7.Preferences.ListPreference)FindPreference(PersonalInformation.UserSexPreferenceKey);
@@ -149,7 +151,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         public void OnSharedPreferenceChanged(ISharedPreferences sharedPreferences, string key)
         {
-            SettingsUtil.UpdateFromSharedPreferences(sharedPreferences);
+            SettingsUtil.UpdateFromSharedPreferences(sharedPreferences, key);
 
             UpdateLabels();
             UpdateSummaries();

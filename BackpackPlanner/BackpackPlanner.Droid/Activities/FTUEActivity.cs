@@ -73,5 +73,25 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 
             Title = Resources.GetString(Resource.String.app_name);
         }
+
+        /// <summary>
+        /// Finishes the ftue.
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        public void FinishFTUE()
+        {
+            DialogUtil.ShowYesNoDialog(this, Resource.String.label_connect_google_play_services, Resource.String.title_connect_google_play_services,
+                (sender, args) => {
+                    BackpackPlannerState.Instance.Settings.ConnectGooglePlayServices = true;
+                    StartActivity(typeof(BackpackPlannerActivity));
+                    Finish();
+                },
+                (sender, args) => {
+                    BackpackPlannerState.Instance.Settings.ConnectGooglePlayServices = false;
+                    StartActivity(typeof(BackpackPlannerActivity));
+                    Finish();
+                }
+            );
+        }
     }
 }

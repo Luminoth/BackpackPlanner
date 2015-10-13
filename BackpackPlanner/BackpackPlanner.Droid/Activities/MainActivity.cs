@@ -44,6 +44,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 		{
 			base.OnCreate(savedInstanceState);
 
+// TODO: still crashing somewhere before InitHockyApp() is called
+// but it goes away when a debugger is attached
+
             // NOTE: this is happening *before* we init HockeyApp
             // so any exceptions here will go un-uploaded
             BackpackPlannerState.Instance.InitPlatform(
@@ -51,7 +54,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
                 new GooglePlayServicesManager(),
                 new SQLitePlatformAndroid(),
                 (sender, args) => {
-                    SettingsUtil.SaveToSharedPreferences(PreferenceManager.GetDefaultSharedPreferences(this));
+                    SettingsUtil.SaveToSharedPreferences(PreferenceManager.GetDefaultSharedPreferences(this), args.PreferenceKey);
                 }
             );
 
@@ -73,9 +76,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             if(BackpackPlannerState.Instance.Settings.MetaSettings.FirstRun) {
                 Logger.Debug("Starting FTUE...");
                 StartActivity(typeof(FTUEActivity));
-            } else if(!BackpackPlannerState.Instance.Settings.MetaSettings.AskedConnectGooglePlayServices) {
-                Logger.Debug("Starting Google Play Services activity...");
-                StartActivity(typeof(GooglePlayServicesActivity));
             } else {
                 Logger.Debug("Starting main activity...");
                 StartActivity(typeof(BackpackPlannerActivity));
@@ -122,7 +122,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             PreferenceManager.SetDefaultValues(this, Resource.Xml.settings, false);
 
             Logger.Debug("Loading preferences...");
-            SettingsUtil.UpdateFromSharedPreferences(PreferenceManager.GetDefaultSharedPreferences(this));
+            SettingsUtil.UpdateFromSharedPreferences(PreferenceManager.GetDefaultSharedPreferences(this), null);
         }
 	}
 }

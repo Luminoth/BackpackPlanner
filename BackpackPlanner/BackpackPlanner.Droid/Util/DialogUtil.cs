@@ -59,5 +59,15 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
                 .SetNegativeButton(Android.Resource.String.Cancel, cancelEventHandler ?? ((sender, args) => { }))
                 .Show();
         }
+
+        public static Android.Support.V7.App.AlertDialog ShowYesNoDialog(Activity activity, int messageResId, int titleResId, EventHandler<DialogClickEventArgs> yesEventHandler=null, EventHandler<DialogClickEventArgs> noEventHandler=null)
+        {
+            Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(activity);
+            return builder.SetMessage(messageResId)
+                .SetTitle(titleResId)
+                .SetPositiveButton(Android.Resource.String.Yes, yesEventHandler ?? ((sender, args) => { }))
+                .SetNegativeButton(Android.Resource.String.No, noEventHandler ?? ((sender, args) => { }))
+                .Show();
+        }
     }
 }

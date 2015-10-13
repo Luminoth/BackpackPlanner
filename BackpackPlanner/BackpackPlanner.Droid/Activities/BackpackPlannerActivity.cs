@@ -101,6 +101,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
         {
             base.OnStart();
 
+            // TODO: encapsulate this better
             if(BackpackPlannerState.Instance.Settings.ConnectGooglePlayServices) {
                 BackpackPlannerState.Instance.PlatformPlayServices.Connect();
             }

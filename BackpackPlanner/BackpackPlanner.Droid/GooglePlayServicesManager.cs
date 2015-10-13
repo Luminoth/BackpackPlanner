@@ -30,6 +30,7 @@ using EnergonSoftware.BackpackPlanner.Core.PlayServices;
 
 namespace EnergonSoftware.BackpackPlanner.Droid
 {
+    // TODO: this name sucks
     public sealed class GooglePlayServicesManager : Java.Lang.Object, IPlayServices,
         IGoogleApiClientConnectionCallbacks, IGoogleApiClientOnConnectionFailedListener
     {

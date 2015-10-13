@@ -76,6 +76,9 @@ namespace EnergonSoftware.BackpackPlanner.Models
             }
         }
 
+// TODO: somehow it's possible for this to get called with Connection non-null and AsyncConnection is null
+// that makes absolutely no sense...
+
         public static async Task InsertItemsAsync<T>(List<T> items) where T: DatabaseItem
         {
             await BackpackPlannerState.Instance.DatabaseState.Connection.LockAsync().ConfigureAwait(false);

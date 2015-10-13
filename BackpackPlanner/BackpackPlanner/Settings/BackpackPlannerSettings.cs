@@ -58,7 +58,7 @@ namespace EnergonSoftware.BackpackPlanner.Settings
         /// </value>
         public MetaSettings MetaSettings { get; private set; }
 
-        private bool _connectGooglePlayServices = true;
+        private bool _connectGooglePlayServices;
 
         /// <summary>
         /// Gets or sets a value indicating whether [connect google play services].

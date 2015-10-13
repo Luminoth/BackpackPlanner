@@ -26,11 +26,6 @@ namespace EnergonSoftware.BackpackPlanner.Settings
         /// The first run preference key
         /// </summary>
         public const string FirstRunPreferenceKey = "firstRun";
-
-        /// <summary>
-        /// The asked to connect to google play services preference key
-        /// </summary>
-        public const string AskedConnectGooglePlayServicesPreferenceKey = "askedConnectGooglePlayServices";
 #endregion
 
         private bool _firstRun = true;
@@ -51,29 +46,6 @@ namespace EnergonSoftware.BackpackPlanner.Settings
                 _settingsChangedObj.SettingChanged(this, new SettingsChangedEventArgs
                     {
                         PreferenceKey = FirstRunPreferenceKey
-                    }
-                );
-            }
-        }
-
-        private bool _askedConnectGooglePlayServices = false;
-
-        /// <summary>
-        /// Gets or sets a value indicating whether or not we've asked the user to connect to google play services.
-        /// </summary>
-        /// <value>
-        /// <c>true</c> if we've asked the user to connect to google play services; otherwise, <c>false</c>.
-        /// </value>
-        public bool AskedConnectGooglePlayServices
-        {
-            get { return _askedConnectGooglePlayServices; }
-
-            set
-            {
-                _askedConnectGooglePlayServices = value;
-                _settingsChangedObj.SettingChanged(this, new SettingsChangedEventArgs
-                    {
-                        PreferenceKey = AskedConnectGooglePlayServicesPreferenceKey
                     }
                 );
             }

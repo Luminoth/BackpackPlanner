@@ -34,8 +34,8 @@
     <string name="title_loading_items">Loading Items</string>
     <string name="label_loading_items">Loading items, this may take a moment...</string>
 
-    <string name="title_connecting_google_play_services">Connecting Google Play Services</string>
-    <string name="label_connecting_google_play_services">Connecting Google Play Services, please wait...</string>
+    <string name="title_connect_google_play_services">Connect Google Play Services</string>
+    <string name="label_connect_google_play_services">Connect Google Play Services, yeah?</string>
 
     <!-- Delete confirmations -->
 
@@ -178,6 +178,10 @@
     <string name="label_save_trip_plan">Save Trip Plan</string>
 
     <!-- Settings -->
+
+    <string name="title_google_play_services">Connect to Google Play Services</string>
+    <string name="label_google_play_services">Connect to Google Play Services</string>
+    <string name="summary_google_play_services">Connect to Google Play Services</string>
 
     <string name="title_personal_information">Personal Information</string>
 
