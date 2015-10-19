@@ -30,7 +30,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries
 
         protected override void OnDoDataExchange()
         {
-            Item = new TripItinerary
+            Item = new TripItinerary(BaseActivity.BackpackPlannerState.Settings)
             {
             };
         }

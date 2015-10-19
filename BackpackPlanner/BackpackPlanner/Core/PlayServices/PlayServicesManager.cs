@@ -15,6 +15,7 @@
 */
 
 using System;
+using System.Threading.Tasks;
 
 namespace EnergonSoftware.BackpackPlanner.Core.PlayServices
 {
@@ -23,19 +24,18 @@ namespace EnergonSoftware.BackpackPlanner.Core.PlayServices
     /// </summary>
     /// <remarks>
     /// http://android-developers.blogspot.com/2015/09/google-play-services-81-and-android-60.html
-    /// TODO: this name "PlayServices" sucks
     /// TODO: make this a base class (tho we need to solve the need to subclass the Java Object class first)
     /// </remarks>
-    public interface IPlayServices
+    public interface IPlayServicesManager
     {
-        event EventHandler<EventArgs> PlayServicesConnectedEvent;
+        event EventHandler<PlayServicesConnectedEventArgs> PlayServicesConnectedEvent;
 
-        bool Init();
+        Task InitAsync();
 
-        void Destroy();
+        Task DestroyAsync();
 
-        void Connect();
+        Task ConnectAsync();
 
-        void Disconnect();
+        Task DisconnectAsync();
     }
 }

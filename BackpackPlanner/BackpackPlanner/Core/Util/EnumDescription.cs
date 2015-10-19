@@ -40,7 +40,6 @@ namespace EnergonSoftware.BackpackPlanner.Core.Util
         /// </summary>
         /// <param name="value">The enum value.</param>
         /// <returns>The description of the enum value</returns>
-        /// <exception cref="System.ArgumentNullException">value</exception>
         public static string GetDescriptionFromEnumValue(Enum value)
         {
             if(null == value) {

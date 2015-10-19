@@ -16,6 +16,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 using Android.App;
 using Android.Content;
@@ -30,15 +31,15 @@ using EnergonSoftware.BackpackPlanner.Core.PlayServices;
 
 namespace EnergonSoftware.BackpackPlanner.Droid
 {
-    // TODO: this name sucks
-    public sealed class GooglePlayServicesManager : Java.Lang.Object, IPlayServices,
+    public sealed class PlayServicesManager : Java.Lang.Object, IPlayServicesManager,
         IGoogleApiClientConnectionCallbacks, IGoogleApiClientOnConnectionFailedListener
     {
         // error resolution
         public const int RequestCodeResolution = 9001;
 
-        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(GooglePlayServicesManager));
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(PlayServicesManager));
 
+        // TODO: continue with this
         private class DriveContentsResultCallback : Java.Lang.Object, IResultCallback
         {
 	        public void OnResult(Java.Lang.Object result)
@@ -57,28 +58,26 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 	        }
         }
 
-        public event EventHandler<EventArgs> PlayServicesConnectedEvent;
+        public event EventHandler<PlayServicesConnectedEventArgs> PlayServicesConnectedEvent;
 
         // TODO: this should go in the base class to time the lifecycle
         private readonly Stopwatch _connectStopwatch = new Stopwatch();
 
-        private Activity _activity;
+        private readonly Activity _activity;
 
         private IGoogleApiClient _googleClientApi;
 
-        public bool Init(Activity activity)
+        public PlayServicesManager(Activity activity)
         {
-            _activity = activity;
-
-            return Init();
-        }
-
-        public bool Init()
-        {
-            if(null == _activity) {
-                return false;
+            if(null == activity) {
+                throw new ArgumentNullException(nameof(activity));
             }
 
+            _activity = activity;
+        }
+
+        public async Task InitAsync()
+        {
             if(null == _googleClientApi) {
                 Logger.Debug("Building Google API Client...");
                 _googleClientApi = new GoogleApiClientBuilder(_activity)
@@ -90,18 +89,25 @@ namespace EnergonSoftware.BackpackPlanner.Droid
                     .Build();
             }
 
-            return true;
+            await Task.Delay(0).ConfigureAwait(false);
         }
 
-        public void Destroy()
+        public async Task DestroyAsync()
         {
-            Disconnect();
+            await DisconnectAsync().ConfigureAwait(false);
 
             _googleClientApi = null;
         }
 
-        public void Connect()
+        public async Task ConnectAsync()
         {
+            await Task.Delay(0).ConfigureAwait(false);
+
+            if(null == _googleClientApi) {
+                Logger.Warn("Google Play Services client is null on connect!");
+                return;
+            }
+
             if(_googleClientApi.IsConnected) {
                 Logger.Info("Google API already connected!");
             } else {
@@ -111,8 +117,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             }
         }
 
-        public void Disconnect()
+        public async Task DisconnectAsync()
         {
+            await Task.Delay(0).ConfigureAwait(false);
+
             if(null != _googleClientApi && _googleClientApi.IsConnected) {
                 Logger.Info("Disonnecting Google Play Services client...");
                 _googleClientApi.Disconnect();
@@ -126,7 +134,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
             DriveClass.DriveApi.NewDriveContents(_googleClientApi).SetResultCallback(new DriveContentsResultCallback());
 
-            PlayServicesConnectedEvent?.Invoke(this, new EventArgs());
+            PlayServicesConnectedEvent?.Invoke(this, new PlayServicesConnectedEventArgs { IsSuccess= true });
 	    }
 
 	    public void OnConnectionSuspended(int cause)
@@ -143,7 +151,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
                 Logger.Debug("Google Play Services connection failure has no resolution, showing error dialog");
                 GoogleApiAvailability.Instance.GetErrorDialog(_activity, result.ErrorCode, 0).Show();
 
-                PlayServicesConnectedEvent?.Invoke(this, new EventArgs());
+                PlayServicesConnectedEvent?.Invoke(this, new PlayServicesConnectedEventArgs { IsSuccess = false });
                 return;
             }
 
@@ -152,7 +160,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
                 result.StartResolutionForResult(_activity, RequestCodeResolution);
             } catch(IntentSender.SendIntentException ex) {
                 Logger.Error("Exception while starting resolution activity!", ex);
-                PlayServicesConnectedEvent?.Invoke(this, new EventArgs());
+                PlayServicesConnectedEvent?.Invoke(this, new PlayServicesConnectedEventArgs { IsSuccess = false });
             }
 	    }
     }

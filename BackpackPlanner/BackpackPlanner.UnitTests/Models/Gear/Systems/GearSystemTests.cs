@@ -14,13 +14,9 @@
    limitations under the License.
 */
 
-using System.Threading.Tasks;
-
 using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-using SQLite.Net.Async;
 
 using TypeMock.ArrangeActAssert;
 
@@ -33,7 +29,7 @@ namespace EnergonSoftware.BackpackPlanner.UnitTests.Models.Gear.Systems
         public void GearSystem_Id_Default()
         {
             // Arrange
-            GearSystem gearSystem = new GearSystem();
+            GearSystem gearSystem = new GearSystem(MockUtil.FakeSettings());
 
             // Act
 
@@ -46,12 +42,12 @@ namespace EnergonSoftware.BackpackPlanner.UnitTests.Models.Gear.Systems
         public void GearSystem_Equals_NegativeId_NotEqual()
         {
             // Arrange
-            GearSystem gearSystem1 = new GearSystem
+            GearSystem gearSystem1 = new GearSystem(MockUtil.FakeSettings())
             {
                 GearSystemId = -1
             };
 
-            GearSystem gearSystem2 = new GearSystem
+            GearSystem gearSystem2 = new GearSystem(MockUtil.FakeSettings())
             {
                 GearSystemId = -1
             };
@@ -67,12 +63,12 @@ namespace EnergonSoftware.BackpackPlanner.UnitTests.Models.Gear.Systems
         public void GearSystem_Equals_ZeroId_NotEqual()
         {
             // Arrange
-            GearSystem gearSystem1 = new GearSystem
+            GearSystem gearSystem1 = new GearSystem(MockUtil.FakeSettings())
             {
                 GearSystemId = 0
             };
 
-            GearSystem gearSystem2 = new GearSystem
+            GearSystem gearSystem2 = new GearSystem(MockUtil.FakeSettings())
             {
                 GearSystemId = 0
             };
@@ -88,12 +84,12 @@ namespace EnergonSoftware.BackpackPlanner.UnitTests.Models.Gear.Systems
         public void GearSystem_Equals_NotEqual()
         {
             // Arrange
-            GearSystem gearSystem1 = new GearSystem
+            GearSystem gearSystem1 = new GearSystem(MockUtil.FakeSettings())
             {
                 GearSystemId = 1
             };
 
-            GearSystem gearSystem2 = new GearSystem
+            GearSystem gearSystem2 = new GearSystem(MockUtil.FakeSettings())
             {
                 GearSystemId = 2
             };
@@ -109,12 +105,12 @@ namespace EnergonSoftware.BackpackPlanner.UnitTests.Models.Gear.Systems
         public void GearSystem_Equals_Equal()
         {
             // Arrange
-            GearSystem gearSystem1 = new GearSystem
+            GearSystem gearSystem1 = new GearSystem(MockUtil.FakeSettings())
             {
                 GearSystemId = 1
             };
 
-            GearSystem gearSystem2 = new GearSystem()
+            GearSystem gearSystem2 = new GearSystem(MockUtil.FakeSettings())
             {
                 GearSystemId = 1
             };

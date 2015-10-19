@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
+using EnergonSoftware.BackpackPlanner.Settings;
 
 using SQLite.Net.Async;
 using SQLite.Net.Attributes;
@@ -100,6 +101,14 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries
 
         [Ignore]
         public int TripPlanCount => TripPlans?.Count ?? 0;
+
+        public TripItinerary()
+        {
+        }
+
+        public TripItinerary(BackpackPlannerSettings settings) : base(settings)
+        {
+        }
 
         public override bool Equals(object obj)
         {

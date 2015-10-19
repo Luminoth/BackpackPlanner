@@ -19,13 +19,14 @@ using System.Linq;
 
 using Android.Views;
 using Android.Widget;
+
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 using EnergonSoftware.BackpackPlanner.Models;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 {
-    public abstract class BaseListAdapter<T> : Android.Support.V7.Widget.RecyclerView.Adapter where T: DatabaseItem
+    public abstract class BaseListAdapter<T> : Android.Support.V7.Widget.RecyclerView.Adapter where T: DatabaseItem, new()
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(BaseListAdapter<T>));
 
@@ -110,17 +111,16 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
         {
             Logger.Debug("Sort items event!");
 
-            // TODO: could/would this be made clearer somehow by using args.Id?
-            SortItemsByPosition(args.Position);
+            FilterAndSortItems();
         }
 
         protected abstract void SortItemsByPosition(int position);
 
         public void FilterItemsEventHandler(object sender, Android.Support.V7.Widget.SearchView.QueryTextChangeEventArgs args)
         {
-            Logger.Debug("Filter items vent!");
+            Logger.Debug("Filter items event!");
 
-            FilterItems(args.NewText);
+            FilterAndSortItems();
         }
 
         protected abstract void FilterItems(string text);

@@ -15,6 +15,7 @@
 */
 
 using System;
+
 using EnergonSoftware.BackpackPlanner.Settings;
 using EnergonSoftware.BackpackPlanner.Units.Units;
 
@@ -67,7 +68,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Personal
             set
             {
                 _name = value;
-                BackpackPlannerState.Instance.Settings.SettingChanged(this, new SettingsChangedEventArgs
+                _settings.SettingChanged(this, new SettingsChangedEventArgs
                     {
                         PreferenceKey = NamePreferenceKey
                     }
@@ -90,7 +91,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Personal
             set
             {
                 _dateOfBirth = value;
-                BackpackPlannerState.Instance.Settings.SettingChanged(this, new SettingsChangedEventArgs
+                _settings.SettingChanged(this, new SettingsChangedEventArgs
                     {
                         PreferenceKey = DateOfBirthPreferenceKey
                     }
@@ -113,7 +114,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Personal
             set
             {
                 _userSex = value;
-                BackpackPlannerState.Instance.Settings.SettingChanged(this, new SettingsChangedEventArgs
+                _settings.SettingChanged(this, new SettingsChangedEventArgs
                     {
                         PreferenceKey = UserSexPreferenceKey
                     }
@@ -136,7 +137,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Personal
             set
             {
                 _heightInCm = value < 0 ? 0 : value;
-                BackpackPlannerState.Instance.Settings.SettingChanged(this, new SettingsChangedEventArgs
+                _settings.SettingChanged(this, new SettingsChangedEventArgs
                     {
                         PreferenceKey = HeightPreferenceKey
                     }
@@ -152,8 +153,8 @@ namespace EnergonSoftware.BackpackPlanner.Models.Personal
         /// </value>
         public double HeightInUnits
         {
-            get { return BackpackPlannerState.Instance.Settings.Units.LengthFromCentimeters(HeightInCm); }
-            set { HeightInCm = (int)BackpackPlannerState.Instance.Settings.Units.CentimetersFromLength(value); }
+            get { return _settings.Units.LengthFromCentimeters(HeightInCm); }
+            set { HeightInCm = (int)_settings.Units.CentimetersFromLength(value); }
         }
 
         private int _weightInGrams;
@@ -171,7 +172,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Personal
             set
             {
                 _weightInGrams = value < 0 ? 0 : value;
-                BackpackPlannerState.Instance.Settings.SettingChanged(this, new SettingsChangedEventArgs
+                _settings.SettingChanged(this, new SettingsChangedEventArgs
                     {
                         PreferenceKey = WeightPreferenceKey
                     }
@@ -187,8 +188,19 @@ namespace EnergonSoftware.BackpackPlanner.Models.Personal
         /// </value>
         public double WeightInUnits
         {
-            get { return BackpackPlannerState.Instance.Settings.Units.WeightFromGrams(WeightInGrams); }
-            set { WeightInGrams = (int)BackpackPlannerState.Instance.Settings.Units.GramsFromWeight(value); }
+            get { return _settings.Units.WeightFromGrams(WeightInGrams); }
+            set { WeightInGrams = (int)_settings.Units.GramsFromWeight(value); }
+        }
+
+        private readonly BackpackPlannerSettings _settings;
+
+        public PersonalInformation(BackpackPlannerSettings settings)
+        {
+            if(null == settings) {
+                throw new ArgumentNullException(nameof(settings));
+            }
+
+            _settings = settings;
         }
     }
 }

@@ -24,6 +24,7 @@ using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
 using EnergonSoftware.BackpackPlanner.Models.Meals;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries;
+using EnergonSoftware.BackpackPlanner.Settings;
 
 using SQLite.Net.Async;
 using SQLite.Net.Attributes;
@@ -185,6 +186,14 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
         /// </value>
         [MaxLength(1024)]
         public string Note { get; set; } = string.Empty;
+
+        public TripPlan()
+        {
+        }
+
+        public TripPlan(BackpackPlannerSettings settings) : base(settings)
+        {
+        }
 
         public override bool Equals(object obj)
         {

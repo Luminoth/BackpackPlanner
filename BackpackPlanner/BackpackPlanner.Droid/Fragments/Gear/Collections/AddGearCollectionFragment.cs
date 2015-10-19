@@ -30,7 +30,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
 
         protected override void OnDoDataExchange()
         {
-            Item = new GearCollection
+            Item = new GearCollection(BaseActivity.BackpackPlannerState.Settings)
             {
             };
         }

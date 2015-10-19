@@ -21,6 +21,7 @@ using Android.Runtime;
 using Android.Views;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
+using EnergonSoftware.BackpackPlanner.Droid.Activities;
 using EnergonSoftware.BackpackPlanner.Droid.Util;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
@@ -31,6 +32,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
     public abstract class BaseFragment : Android.Support.V4.App.Fragment
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(BaseFragment));
+
+        public BaseActivity BaseActivity => (BaseActivity)Activity;
 
         protected abstract int LayoutResource { get; }
 

@@ -14,13 +14,9 @@
    limitations under the License.
 */
 
-using System.Threading.Tasks;
-
 using EnergonSoftware.BackpackPlanner.Models.Gear.Collections;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-using SQLite.Net.Async;
 
 using TypeMock.ArrangeActAssert;
 
@@ -33,7 +29,7 @@ namespace EnergonSoftware.BackpackPlanner.UnitTests.Models.Gear.Collections
         public void GearCollection_Id_Default()
         {
             // Arrange
-            GearCollection gearCollection = new GearCollection();
+            GearCollection gearCollection = new GearCollection(MockUtil.FakeSettings());
 
             // Act
 
@@ -46,12 +42,12 @@ namespace EnergonSoftware.BackpackPlanner.UnitTests.Models.Gear.Collections
         public void GearCollection_Equals_NegativeId_NotEqual()
         {
             // Arrange
-            GearCollection gearCollection1 = new GearCollection
+            GearCollection gearCollection1 = new GearCollection(MockUtil.FakeSettings())
             {
                 GearCollectionId = -1
             };
 
-            GearCollection gearCollection2 = new GearCollection
+            GearCollection gearCollection2 = new GearCollection(MockUtil.FakeSettings())
             {
                 GearCollectionId = -1
             };
@@ -67,12 +63,12 @@ namespace EnergonSoftware.BackpackPlanner.UnitTests.Models.Gear.Collections
         public void GearCollection_Equals_ZeroId_NotEqual()
         {
             // Arrange
-            GearCollection gearCollection1 = new GearCollection
+            GearCollection gearCollection1 = new GearCollection(MockUtil.FakeSettings())
             {
                 GearCollectionId = 0
             };
 
-            GearCollection gearCollection2 = new GearCollection
+            GearCollection gearCollection2 = new GearCollection(MockUtil.FakeSettings())
             {
                 GearCollectionId = 0
             };
@@ -88,12 +84,12 @@ namespace EnergonSoftware.BackpackPlanner.UnitTests.Models.Gear.Collections
         public void GearCollection_Equals_NotEqual()
         {
             // Arrange
-            GearCollection gearCollection1 = new GearCollection
+            GearCollection gearCollection1 = new GearCollection(MockUtil.FakeSettings())
             {
                 GearCollectionId = 1
             };
 
-            GearCollection gearCollection2 = new GearCollection
+            GearCollection gearCollection2 = new GearCollection(MockUtil.FakeSettings())
             {
                 GearCollectionId = 2
             };
@@ -109,12 +105,12 @@ namespace EnergonSoftware.BackpackPlanner.UnitTests.Models.Gear.Collections
         public void GearCollection_Equals_Equal()
         {
             // Arrange
-            GearCollection gearCollection1 = new GearCollection
+            GearCollection gearCollection1 = new GearCollection(MockUtil.FakeSettings())
             {
                 GearCollectionId = 1
             };
 
-            GearCollection gearCollection2 = new GearCollection()
+            GearCollection gearCollection2 = new GearCollection(MockUtil.FakeSettings())
             {
                 GearCollectionId = 1
             };

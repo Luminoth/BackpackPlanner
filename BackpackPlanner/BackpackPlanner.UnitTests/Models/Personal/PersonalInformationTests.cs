@@ -27,7 +27,7 @@ namespace EnergonSoftware.BackpackPlanner.UnitTests.Models.Personal
         public void PersonalInformation_Sex_Default()
         {
             // Arrange
-            PersonalInformation personalInformation = new PersonalInformation();
+            PersonalInformation personalInformation = new PersonalInformation(MockUtil.FakeSettings());
 
             // Act
 
@@ -40,7 +40,7 @@ namespace EnergonSoftware.BackpackPlanner.UnitTests.Models.Personal
         public void PersonalInformation_HeightInCm_Default()
         {
             // Arrange
-            PersonalInformation personalInformation = new PersonalInformation();
+            PersonalInformation personalInformation = new PersonalInformation(MockUtil.FakeSettings());
 
             // Act
 
@@ -52,7 +52,7 @@ namespace EnergonSoftware.BackpackPlanner.UnitTests.Models.Personal
         public void PersonalInformation_HeightInCm_Negative()
         {
             // Arrange
-            PersonalInformation personalInformation = new PersonalInformation();
+            PersonalInformation personalInformation = new PersonalInformation(MockUtil.FakeSettings());
 
             // Act
             personalInformation.HeightInCm = -1;
@@ -67,7 +67,7 @@ namespace EnergonSoftware.BackpackPlanner.UnitTests.Models.Personal
         public void PersonalInformation_WeightInGrams_Default()
         {
             // Arrange
-            PersonalInformation personalInformation = new PersonalInformation();
+            PersonalInformation personalInformation = new PersonalInformation(MockUtil.FakeSettings());
 
             // Act
 
@@ -79,7 +79,7 @@ namespace EnergonSoftware.BackpackPlanner.UnitTests.Models.Personal
         public void PersonalInformation_WeightInGrams_Negative()
         {
             // Arrange
-            PersonalInformation personalInformation = new PersonalInformation();
+            PersonalInformation personalInformation = new PersonalInformation(MockUtil.FakeSettings());
 
             // Act
             personalInformation.WeightInGrams = -1;

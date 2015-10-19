@@ -17,7 +17,9 @@
 using System;
 using System.Threading.Tasks;
 
+using EnergonSoftware.BackpackPlanner.Core.Database;
 using EnergonSoftware.BackpackPlanner.Models;
+using EnergonSoftware.BackpackPlanner.Settings;
 
 namespace EnergonSoftware.BackpackPlanner.Actions
 {
@@ -37,13 +39,11 @@ namespace EnergonSoftware.BackpackPlanner.Actions
             Item = item;
         }
 
-        public async override Task DoActionAsync()
+        public async override Task DoActionAsync(DatabaseState databaseState, BackpackPlannerSettings settings)
         {
-            while(!BackpackPlannerState.Instance.DatabaseState.IsInitialized) {
-                await Task.Delay(1).ConfigureAwait(false);
-            }
+            await ValidateDatabaseStateAsync(databaseState).ConfigureAwait(false);
 
-            await DatabaseItem.SaveItemAsync(Item).ConfigureAwait(false);
+            await DatabaseItem.SaveItemAsync(databaseState, Item).ConfigureAwait(false);
         }
     }
 }

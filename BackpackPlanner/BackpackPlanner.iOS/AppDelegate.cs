@@ -14,12 +14,7 @@
    limitations under the License.
 */
 
-using System;
-using System.Threading.Tasks;
-using EnergonSoftware.BackpackPlanner.Core.Database;
 using Foundation;
-using HockeyApp;
-using SQLite.Net.Platform.XamarinIOS;
 using UIKit;
 
 namespace EnergonSoftware.BackpackPlanner.iOS
@@ -29,18 +24,24 @@ namespace EnergonSoftware.BackpackPlanner.iOS
 	[Register("AppDelegate")]
 	public class AppDelegate : UIApplicationDelegate
 	{
-        private const string HockeyAppAppId = "YOUR-HOCKEYAPP-APPID";
-
-		// class-level declarations
-
 		public override UIWindow Window { get; set; }
+
+        //private BackpackPlannerState _backpackPlannerState;
 
 		public override bool FinishedLaunching (UIApplication application, NSDictionary launchOptions)
 		{
-            InitHockeyApp();
+            /*CustomLogger.PlatformLogger = new IOSLogger();
 
-            BackpackPlannerState.Instance.DatabaseState.ConnectAsync(Environment.GetFolderPath(Environment.SpecialFolder.Personal), DatabaseState.DatabaseName).Wait();
-            BackpackPlannerState.Instance.DatabaseState.InitDatabaseAsync().Wait();
+            _backpackPlannerState = new BackpackPlannerState(
+                new HockeyAppManager(),
+                new PlayServicesManager(),
+                new SQLitePlatformIOS(),
+            );
+
+            _backpackPlannerState.InitAsync().Wait();
+
+            _backpackPlannerState.DatabaseState.ConnectAsync(Environment.GetFolderPath(Environment.SpecialFolder.Personal), DatabaseState.DatabaseName).Wait();
+            _backpackPlannerState.DatabaseState.InitDatabaseAsync(_backpackPlannerState.Settings).Wait();*/
 
 			// Override point for customization after application launch.
 			// If not required for your application you can safely delete this method
@@ -77,31 +78,5 @@ namespace EnergonSoftware.BackpackPlanner.iOS
 		{
 			// Called when the application is about to terminate. Save data, if needed. See also DidEnterBackground.
 		}
-
-        private void InitHockeyApp()
-        {
-            //We MUST wrap our setup in this block to wire up
-            // Mono's SIGSEGV and SIGBUS signals
-            Setup.EnableCustomCrashReporting(() => {
-
-                //Get the shared instance
-                BITHockeyManager manager = BITHockeyManager.SharedHockeyManager;
-
-                //Configure it to use our APP_ID
-                manager.Configure(HockeyAppAppId);
-
-                //Start the manager
-                manager.StartManager();
-
-                //Authenticate (there are other authentication options)
-                manager.Authenticator.AuthenticateInstallation();
-
-                //Rethrow any unhandled .NET exceptions as native iOS 
-                // exceptions so the stack traces appear nicely in HockeyApp
-                AppDomain.CurrentDomain.UnhandledException += (sender, args) => Setup.ThrowExceptionAsNative(args.ExceptionObject);
-
-                TaskScheduler.UnobservedTaskException += (sender, args) => Setup.ThrowExceptionAsNative(args.Exception);
-            });
-        }
 	}
 }

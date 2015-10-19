@@ -72,7 +72,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
                     _textViewMakeModel.Text = makeModel;
                 }
 
-                _textViewWeight.Text = $"{ListItem.WeightInUnits} {BackpackPlannerState.Instance.Settings.Units.GetSmallWeightString()}";
+                _textViewWeight.Text = $"{ListItem.WeightInUnits} {Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString()}";
 
                 string formattedCost = ListItem.CostInCurrency.ToString("C", CultureInfo.CurrentCulture);
                 _textViewCost.Text = $"{formattedCost} (cost per weight)";

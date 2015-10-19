@@ -37,6 +37,9 @@
     <string name="title_connect_google_play_services">Connect Google Play Services</string>
     <string name="label_connect_google_play_services">Connect Google Play Services, yeah?</string>
 
+    <string name="title_connecting_google_play_services">Connecting Google Play Services</string>
+    <string name="label_connecting_google_play_services">Connecting Google Play Services, please wait...</string>
+
     <!-- Delete confirmations -->
 
     <string name="title_delete_confirmation_gear_item">Are you sure?</string>
@@ -179,9 +182,9 @@
 
     <!-- Settings -->
 
-    <string name="title_google_play_services">Connect to Google Play Services</string>
-    <string name="label_google_play_services">Connect to Google Play Services</string>
-    <string name="summary_google_play_services">Connect to Google Play Services</string>
+    <string name="title_google_play_services">Google Play Services</string>
+    <string name="label_google_play_services">Google Play Services</string>
+    <string name="summary_google_play_services">Connect to Google Play Services?</string>
 
     <string name="title_personal_information">Personal Information</string>
 

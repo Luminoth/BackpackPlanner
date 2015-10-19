@@ -27,65 +27,68 @@ using EnergonSoftware.BackpackPlanner.Units.Units;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Util
 {
-    // note that for whatever reason settings are always stored as strings
-    // even if you say PutBoolean or PutFloat or whatever
+    // TODO: try to encapsulate this better in the planner library
+    // so that it's easier to read/save settings without duplicating
+    // a bunch of code (do like "readInt" or something at the platform level)
     public static class SettingsUtil
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(SettingsUtil));
 
         // TODO: make use of the key parameter to avoid touching everything
-        public static void UpdateFromSharedPreferences(ISharedPreferences sharedPreferences, string key)
+        public static void UpdateFromSharedPreferences(BackpackPlannerState backpackPlannerState, ISharedPreferences sharedPreferences, string key)
         {
+            Logger.Debug($"Updating settings from shared preferences (key={key})...");
+
             // TODO: put these in an UpdateMetaSettingsFromSharedPreferences() method
 
-            BackpackPlannerState.Instance.Settings.MetaSettings.FirstRun = Convert.ToBoolean(sharedPreferences.GetString(
+            backpackPlannerState.Settings.MetaSettings.FirstRun = sharedPreferences.GetBoolean(
                 MetaSettings.FirstRunPreferenceKey,
-                BackpackPlannerState.Instance.Settings.MetaSettings.FirstRun.ToString()));
+                backpackPlannerState.Settings.MetaSettings.FirstRun);
 
             // TODO: put these in an UpdateSettingsFromSharedPreferences() method
 
-            BackpackPlannerState.Instance.Settings.ConnectGooglePlayServices = sharedPreferences.GetBoolean(
+            backpackPlannerState.Settings.ConnectGooglePlayServices = sharedPreferences.GetBoolean(
                 BackpackPlannerSettings.ConnectGooglePlayServicesPreferenceKey,
-                BackpackPlannerState.Instance.Settings.ConnectGooglePlayServices);
+                backpackPlannerState.Settings.ConnectGooglePlayServices);
 
             // NOTE: have to read the unit system/currency settings first in order
             // to properly interpret the rest of the settings
 
             string unitSystemPreference = sharedPreferences.GetString(
                 BackpackPlannerSettings.UnitSystemPreferenceKey,
-                BackpackPlannerState.Instance.Settings.Units.ToString());
+                backpackPlannerState.Settings.Units.ToString());
 
             UnitSystem unitSystem;
             if(Enum.TryParse(unitSystemPreference, out unitSystem)) {
-                BackpackPlannerState.Instance.Settings.Units = unitSystem;
+                backpackPlannerState.Settings.Units = unitSystem;
             } else {
                 Logger.Error("Error parsing unit system preference!");
             }
 
             string currencyPreference = sharedPreferences.GetString(
                 BackpackPlannerSettings.CurrencyPreferenceKey,
-                BackpackPlannerState.Instance.Settings.Currency.ToString());
+                backpackPlannerState.Settings.Currency.ToString());
 
             Currency currency;
             if(Enum.TryParse(currencyPreference, out currency)) {
-                BackpackPlannerState.Instance.Settings.Currency = currency;
+                backpackPlannerState.Settings.Currency = currency;
             } else {
                 Logger.Error("Error parsing currency preference!");
             }
 
             // TODO: put these in an UpdatePersonalInformationFromSharedPreferences() method
 
-            BackpackPlannerState.Instance.PersonalInformation.Name = sharedPreferences.GetString(
+            backpackPlannerState.PersonalInformation.Name = sharedPreferences.GetString(
                 PersonalInformation.NamePreferenceKey,
-                BackpackPlannerState.Instance.PersonalInformation.Name);
+                backpackPlannerState.PersonalInformation.Name);
 
             string birthDatePreference = sharedPreferences.GetString(
                 PersonalInformation.DateOfBirthPreferenceKey,
-                BackpackPlannerState.Instance.PersonalInformation.DateOfBirth?.ToString() ?? string.Empty);
+                backpackPlannerState.PersonalInformation.DateOfBirth?.ToString() ?? string.Empty);
 
             if(!string.IsNullOrWhiteSpace(birthDatePreference)) {
                 try {
-                    BackpackPlannerState.Instance.PersonalInformation.DateOfBirth = Convert.ToDateTime(birthDatePreference);
+                    backpackPlannerState.PersonalInformation.DateOfBirth = Convert.ToDateTime(birthDatePreference);
                 } catch(FormatException) {
                     Logger.Error("Error parsing date of birth preference!");
                 }
@@ -93,46 +96,48 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 
             string userSexPreference = sharedPreferences.GetString(
                 PersonalInformation.UserSexPreferenceKey,
-                BackpackPlannerState.Instance.PersonalInformation.Sex.ToString());
+                backpackPlannerState.PersonalInformation.Sex.ToString());
 
             UserSex userSex;
             if(Enum.TryParse(userSexPreference, out userSex)) {
-                BackpackPlannerState.Instance.PersonalInformation.Sex = userSex;
+                backpackPlannerState.PersonalInformation.Sex = userSex;
             } else {
                 Logger.Error("Error parsing user sex preference!");
             }
 
-            BackpackPlannerState.Instance.PersonalInformation.HeightInUnits = Convert.ToSingle(sharedPreferences.GetString(
+            backpackPlannerState.PersonalInformation.HeightInUnits = Convert.ToSingle(sharedPreferences.GetString(
                 PersonalInformation.HeightPreferenceKey,
-                BackpackPlannerState.Instance.PersonalInformation.HeightInUnits.ToString(CultureInfo.InvariantCulture)));
+                backpackPlannerState.PersonalInformation.HeightInUnits.ToString(CultureInfo.InvariantCulture)));
 
-            BackpackPlannerState.Instance.PersonalInformation.WeightInUnits = Convert.ToSingle(sharedPreferences.GetString(
+            backpackPlannerState.PersonalInformation.WeightInUnits = Convert.ToSingle(sharedPreferences.GetString(
                 PersonalInformation.WeightPreferenceKey,
-                BackpackPlannerState.Instance.PersonalInformation.WeightInUnits.ToString(CultureInfo.InvariantCulture)));
+                backpackPlannerState.PersonalInformation.WeightInUnits.ToString(CultureInfo.InvariantCulture)));
         }
 
         // TODO: make use of the key parameter to avoid touching everything
-        public static void SaveToSharedPreferences(ISharedPreferences sharedPreferences, string key)
+        public static void SaveToSharedPreferences(BackpackPlannerState backpackPlannerState, ISharedPreferences sharedPreferences, string key)
         {
+            Logger.Debug($"Saving settings to shared preferences (key={key})...");
+
             ISharedPreferencesEditor sharedPreferencesEditor = sharedPreferences.Edit();
 
             // TODO: put these in a SaveMetaSettingsToSharedPreferences() method
 
-            sharedPreferencesEditor.PutString(MetaSettings.FirstRunPreferenceKey, BackpackPlannerState.Instance.Settings.MetaSettings.FirstRun.ToString());
+            sharedPreferencesEditor.PutBoolean(MetaSettings.FirstRunPreferenceKey, backpackPlannerState.Settings.MetaSettings.FirstRun);
 
             // TODO: put these in a SaveSettingsToSharedPreferences() method
 
-            sharedPreferencesEditor.PutBoolean(BackpackPlannerSettings.ConnectGooglePlayServicesPreferenceKey, BackpackPlannerState.Instance.Settings.ConnectGooglePlayServices);
-            sharedPreferencesEditor.PutString(BackpackPlannerSettings.UnitSystemPreferenceKey, BackpackPlannerState.Instance.Settings.Units.ToString());
-            sharedPreferencesEditor.PutString(BackpackPlannerSettings.CurrencyPreferenceKey, BackpackPlannerState.Instance.Settings.Currency.ToString());
+            sharedPreferencesEditor.PutBoolean(BackpackPlannerSettings.ConnectGooglePlayServicesPreferenceKey, backpackPlannerState.Settings.ConnectGooglePlayServices);
+            sharedPreferencesEditor.PutString(BackpackPlannerSettings.UnitSystemPreferenceKey, backpackPlannerState.Settings.Units.ToString());
+            sharedPreferencesEditor.PutString(BackpackPlannerSettings.CurrencyPreferenceKey, backpackPlannerState.Settings.Currency.ToString());
 
             // TODO: put these in a SavePersonalInformationToSharedPreferences() method
 
-            sharedPreferencesEditor.PutString(PersonalInformation.NamePreferenceKey, BackpackPlannerState.Instance.PersonalInformation.Name);
-            sharedPreferencesEditor.PutString(PersonalInformation.DateOfBirthPreferenceKey, BackpackPlannerState.Instance.PersonalInformation.DateOfBirth?.ToString() ?? string.Empty);
-            sharedPreferencesEditor.PutString(PersonalInformation.UserSexPreferenceKey, BackpackPlannerState.Instance.PersonalInformation.Sex.ToString());
-            sharedPreferencesEditor.PutString(PersonalInformation.HeightPreferenceKey, BackpackPlannerState.Instance.PersonalInformation.HeightInUnits.ToString(CultureInfo.InvariantCulture));
-            sharedPreferencesEditor.PutString(PersonalInformation.WeightPreferenceKey, BackpackPlannerState.Instance.PersonalInformation.WeightInUnits.ToString(CultureInfo.InvariantCulture));
+            sharedPreferencesEditor.PutString(PersonalInformation.NamePreferenceKey, backpackPlannerState.PersonalInformation.Name);
+            sharedPreferencesEditor.PutString(PersonalInformation.DateOfBirthPreferenceKey, backpackPlannerState.PersonalInformation.DateOfBirth?.ToString() ?? string.Empty);
+            sharedPreferencesEditor.PutString(PersonalInformation.UserSexPreferenceKey, backpackPlannerState.PersonalInformation.Sex.ToString());
+            sharedPreferencesEditor.PutString(PersonalInformation.HeightPreferenceKey, backpackPlannerState.PersonalInformation.HeightInUnits.ToString(CultureInfo.InvariantCulture));
+            sharedPreferencesEditor.PutString(PersonalInformation.WeightPreferenceKey, backpackPlannerState.PersonalInformation.WeightInUnits.ToString(CultureInfo.InvariantCulture));
 
             sharedPreferencesEditor.Commit();
         }

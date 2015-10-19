@@ -21,12 +21,18 @@ using Android.Content;
 using Android.OS;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
+using EnergonSoftware.BackpackPlanner.Droid.Logging;
+using EnergonSoftware.BackpackPlanner.Droid.Util;
+
+using SQLite.Net.Platform.XamarinAndroid;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 {
     public class BaseActivity : Android.Support.V7.App.AppCompatActivity
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(BaseActivity));
+
+        public BackpackPlannerState BackpackPlannerState { get; private set; }
 
         private readonly Stopwatch _startupStopwatch = new Stopwatch();
 
@@ -40,47 +46,81 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 
             _startupStopwatch.Start();
 
-            if(null != BackpackPlannerState.Instance.PlatformPlayServices) {
-                ((GooglePlayServicesManager)BackpackPlannerState.Instance.PlatformPlayServices).Init(this);
-            }
+            CustomLogger.PlatformLogger = new DroidLogger();
+
+            BackpackPlannerState = new BackpackPlannerState(
+                new HockeyAppManager(this),
+                new PlayServicesManager(this),
+                new SQLitePlatformAndroid()
+            );
+
+            BackpackPlannerState.InitAsync(
+                (sender, args) => {
+                    SettingsUtil.SaveToSharedPreferences(BackpackPlannerState, Android.Support.V7.Preferences.PreferenceManager.GetDefaultSharedPreferences(this), args.PreferenceKey);
+                }
+            ).Wait();
         }
 
         protected override void OnDestroy()
         {
             base.OnDestroy();
 
-            BackpackPlannerState.Instance.PlatformPlayServices.Destroy();
+            BackpackPlannerState.DestroyAsync().Wait();
         }
 
         protected override void OnStart()
         {
             base.OnStart();
 
+            Logger.Debug($"OnStart - {GetType()}");
+
             if(_startupStopwatch.IsRunning) {
                 Logger.Debug($"Time to Activity.Start(): {_startupStopwatch.ElapsedMilliseconds}ms");
             }
+        }
+
+        protected override void OnStop()
+        {
+            base.OnStop();
+
+            Logger.Debug($"OnStop - {GetType()}");
+
+            BackpackPlannerState.PlatformPlayServicesManager.DisconnectAsync().Wait();
         }
 
         protected override void OnResume()
         {
             base.OnResume();
 
+            Logger.Debug($"OnResume - {GetType()}");
+
+            LoadPreferences();
+
             if(_startupStopwatch.IsRunning) {
-                Logger.Debug($"Time to Activity.OnResume(): {_startupStopwatch.ElapsedMilliseconds}ms");
+                Logger.Debug($"Time to Activity.OnResume() finish: {_startupStopwatch.ElapsedMilliseconds}ms");
             }
             _startupStopwatch.Stop();
         }
 
-	    protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+        protected override void OnPause()
+        {
+            base.OnPause();
+
+            Logger.Debug($"OnPause - {GetType()}");
+
+            BackpackPlannerState.DatabaseState.DisconnectAsync().Wait();
+        }
+
+        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
 	    {
             base.OnActivityResult(requestCode, resultCode, data);
 
             switch(requestCode)
             {
-            case GooglePlayServicesManager.RequestCodeResolution:
+            case PlayServicesManager.RequestCodeResolution:
                 if(Result.Ok == resultCode) {
-                    Logger.Info("Got Ok result code...");
-                    BackpackPlannerState.Instance.PlatformPlayServices.Connect();
+                    Logger.Info("Got Google Play Services Ok result code...");
+                    BackpackPlannerState.PlatformPlayServicesManager.ConnectAsync().Wait();
                 }
                 break;
             }
@@ -90,6 +130,15 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
         {
             Toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(Toolbar);
+        }
+
+        private void LoadPreferences()
+        {
+            Logger.Debug("Setting default preferences...");
+            Android.Support.V7.Preferences.PreferenceManager.SetDefaultValues(this, Resource.Xml.settings, false);
+
+            Logger.Debug("Loading preferences...");
+            SettingsUtil.UpdateFromSharedPreferences(BackpackPlannerState, Android.Support.V7.Preferences.PreferenceManager.GetDefaultSharedPreferences(this), null);
         }
     }
 }

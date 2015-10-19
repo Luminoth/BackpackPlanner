@@ -18,7 +18,6 @@ using System;
 using System.Linq;
 
 using Android.Views;
-using Android.Widget;
 
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries;

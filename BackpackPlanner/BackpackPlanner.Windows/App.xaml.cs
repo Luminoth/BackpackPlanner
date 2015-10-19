@@ -15,14 +15,10 @@
 */
 
 using System;
-
-using EnergonSoftware.BackpackPlanner.Core.Database;
-
-using HockeyApp;
+using System.Threading.Tasks;
 
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -34,7 +30,7 @@ namespace EnergonSoftware.BackpackPlanner.Windows
     /// </summary>
     sealed partial class App
     {
-        private const string HockeyAppAppId = "555fd9c1dfd5151312f39bf6c704827b";
+        //private BackpackPlannerState _backpackPlannerState;
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -49,7 +45,7 @@ namespace EnergonSoftware.BackpackPlanner.Windows
             InitializeComponent();
             Suspending += OnSuspending;
 
-            HockeyClient.Current.Configure(HockeyAppAppId);
+            //CustomLogger.PlatformLogger = new WindowsLogger();
         }
 
         /// <summary>
@@ -93,14 +89,17 @@ namespace EnergonSoftware.BackpackPlanner.Windows
             // Ensure the current window is active
             Window.Current.Activate();
 
-            await HockeyClient.Current.SendCrashesAsync();
+            /*_backpackPlannerState = new BackpackPlannerState(
+                new HockeyAppManager(),
+                new PlayServicesManager(),
+                new SQLitePlatformWinRT()
+            );
 
-#if WINDOWS_PHONE_APP
-            await HockeyClient.Current.CheckForAppUpdateAsync();
-#endif
+            await _backpackPlannerState.InitAsync().ConfigureAwait(false);
 
-            await BackpackPlannerState.Instance.DatabaseState.ConnectAsync(ApplicationData.Current.LocalFolder.Path, DatabaseState.DatabaseName);
-            await BackpackPlannerState.Instance.DatabaseState.InitDatabaseAsync();
+            await _backpackPlannerState.DatabaseState.ConnectAsync(ApplicationData.Current.LocalFolder.Path, DatabaseState.DatabaseName).ConfigureAwait(false);
+            await _backpackPlannerState.DatabaseState.InitDatabaseAsync(_backpackPlannerState.Settings).ConfigureAwait(false);*/
+await Task.Delay(0).ConfigureAwait(false);
         }
 
         /// <summary>

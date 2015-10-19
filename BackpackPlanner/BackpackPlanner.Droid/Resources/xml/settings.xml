@@ -4,7 +4,6 @@
         android:title="@string/title_personal_information">
         <SwitchPreference
             android:title="@string/label_google_play_services"
-            android:dialogTitle="@string/title_google_play_services"
             android:summary="@string/summary_google_play_services"
             android:key="connectGooglePlayServices"
             android:defaultValue="false" />

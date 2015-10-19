@@ -28,6 +28,7 @@ using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
 using EnergonSoftware.BackpackPlanner.Models.Meals;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
+using EnergonSoftware.BackpackPlanner.Settings;
 
 using SQLite.Net;
 using SQLite.Net.Interop;
@@ -126,71 +127,91 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
         }
 
         /// <summary>
-        /// Initializes the database.
+        /// Disconnects from the database.
         /// </summary>
-        public async Task InitDatabaseAsync()
+        public async Task DisconnectAsync()
         {
-            IsInitialized = false;
-            IsInitializing = true;
-
-            try {
-                Logger.Info("Initializing database...");
-
-                DatabaseVersion newVersion = new DatabaseVersion
-                {
-                    Version = CurrentDatabaseVersion
-                };
-                DatabaseVersion oldVersion;
-
-                await Connection.LockAsync().ConfigureAwait(false);
-                try {
-                    var databaseVersionTableInfo = Connection.Connection.GetTableInfo("DatabaseVersion");
-                    if(!databaseVersionTableInfo.Any()) {
-                        Logger.Debug("Creating a new database...");
-                        await DatabaseVersion.CreateTablesAsync(Connection.AsyncConnection).ConfigureAwait(false);
-                    }
-
-                    oldVersion = await DatabaseVersion.GetAsync(Connection.AsyncConnection).ConfigureAwait(false);
-                    if(null == oldVersion) {
-                        Logger.Debug("DatabaseVersion.Get returned null!?!");
-                        throw new InvalidOperationException("DatabaseVersion.Get returned null!?!");
-                    }
-                    Logger.Debug($"Old database version: {oldVersion.Version}, current database version: {CurrentDatabaseVersion}");
-
-                    // TODO: find a way to make this transactional
-                    // so that we can roll it back on error and avoid updating the db version
-                    await GearItem.InitDatabaseAsync(Connection.AsyncConnection, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
-                    await GearSystem.InitDatabaseAsync(Connection.AsyncConnection, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
-                    await GearCollection.InitDatabaseAsync(Connection.AsyncConnection, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
-                    await Meal.InitDatabaseAsync(Connection.AsyncConnection, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
-                    await TripItinerary.InitDatabaseAsync(Connection.AsyncConnection, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
-                    await TripPlan.InitDatabaseAsync(Connection.AsyncConnection, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
-
-                    newVersion.DatabaseVersionId = oldVersion.DatabaseVersionId;
-                    await DatabaseVersion.UpdateAsync(Connection.AsyncConnection, newVersion).ConfigureAwait(false);
-                } finally {
-                    Connection.Release();
-                }
-
-                if(oldVersion.Version < 1) {
-                    await PopulateInitialDatabaseAsync().ConfigureAwait(false);
-                }
-            } finally {
-                IsInitialized = true;
-                IsInitializing = false;
+            if(!Connection.IsConnected) {
+                return;
             }
+
+            await Connection.CloseAsync().ConfigureAwait(false);
         }
 
-        private static async Task PopulateInitialDatabaseAsync()
+        /// <summary>
+        /// Initializes the database.
+        /// </summary>
+        public async Task InitDatabaseAsync(BackpackPlannerSettings settings)
+        {
+            if(IsInitialized || IsInitializing) {
+                return;
+            }
+
+            IsInitializing = true;
+
+            Logger.Info("Initializing database...");
+
+            DatabaseVersion newVersion = new DatabaseVersion
+            {
+                Version = CurrentDatabaseVersion
+            };
+            DatabaseVersion oldVersion;
+
+            await Connection.LockAsync().ConfigureAwait(false);
+            try {
+                var databaseVersionTableInfo = Connection.Connection.GetTableInfo("DatabaseVersion");
+                if(!databaseVersionTableInfo.Any()) {
+                    Logger.Debug("Creating a new database...");
+                    await DatabaseVersion.CreateTablesAsync(Connection.AsyncConnection).ConfigureAwait(false);
+                }
+
+                oldVersion = await DatabaseVersion.GetAsync(Connection.AsyncConnection).ConfigureAwait(false);
+                if(null == oldVersion) {
+                    Logger.Debug("DatabaseVersion.Get returned null!?!");
+                    throw new InvalidOperationException("DatabaseVersion.Get returned null!?!");
+                }
+                Logger.Debug($"Old database version: {oldVersion.Version}, current database version: {CurrentDatabaseVersion}");
+
+                // TODO: find a way to make this transactional
+                // so that we can roll it back on error and avoid updating the db version
+                await GearItem.InitDatabaseAsync(Connection.AsyncConnection, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
+                await GearSystem.InitDatabaseAsync(Connection.AsyncConnection, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
+                await GearCollection.InitDatabaseAsync(Connection.AsyncConnection, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
+                await Meal.InitDatabaseAsync(Connection.AsyncConnection, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
+                await TripItinerary.InitDatabaseAsync(Connection.AsyncConnection, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
+                await TripPlan.InitDatabaseAsync(Connection.AsyncConnection, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
+
+                newVersion.DatabaseVersionId = oldVersion.DatabaseVersionId;
+                await DatabaseVersion.UpdateAsync(Connection.AsyncConnection, newVersion).ConfigureAwait(false);
+            } finally {
+                Connection.Release();
+            }
+
+            // finish initialization in a background task because
+            // populating the database can take a while
+            Task task = Task.Run(async () => {
+                if(oldVersion.Version < 1) {
+                    // NOTE: this is the only thing that
+                    // requires the settings parameter
+                    await PopulateInitialDatabaseAsync(settings).ConfigureAwait(false);
+                }
+
+                IsInitialized = true;
+                IsInitializing = false;
+            });
+            task.NoOp();
+        }
+
+        private async Task PopulateInitialDatabaseAsync(BackpackPlannerSettings settings)
         {
 #if DEBUG
             Logger.Debug("Populating test data, this will take a while...");
 
 #region Test Gear Items
             Logger.Debug("Inserting test gear items...");
-            await DatabaseItem.InsertItemsAsync(new List<GearItem>
+            await DatabaseItem.InsertItemsAsync(this, new List<GearItem>
                 {
-                    new GearItem
+                    new GearItem(settings)
                     {
                         Name = "Alcohol Stove",
                         Make = "Zelph's Stoveworks",
@@ -199,7 +220,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
                         WeightInGrams = 19,
                         CostInUSDP = 1300,
                     },
-                    new GearItem
+                    new GearItem(settings)
                     {
                         Name = "Backpack",
                         Make = "ULA",
@@ -209,7 +230,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
                         CostInUSDP = 22500,
                         Note = "Medium torso (18\" - 21\"). Medium hipbelt (34\" - 38\"). J-Curve shoulder strap. Aluminum stay removed. Includes hanging s-biner \"Ahhh\" and water shoe carabiner. 39L main body. Max 15 pound base weight, 30-35 pack weight."
                     },
-                    new GearItem
+                    new GearItem(settings)
                     {
                         Name = "Hammock",
                         Make = "Aaron Erbe",
@@ -218,7 +239,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
                         CostInUSDP = 0,
                         Note = "Includes adjustable ridge line and 2x whoopie slings from whoopieslings.com, and bishop bag."
                     },
-                    new GearItem
+                    new GearItem(settings)
                     {
                         Name = "Head Lamp",
                         Make = "Petzl",
@@ -226,7 +247,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
                         WeightInGrams = 79,
                         CostInUSDP = 2995
                     },
-                    new GearItem
+                    new GearItem(settings)
                     {
                         Name = "Kilt",
                         Make = "Utilikilt",
@@ -237,7 +258,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
                         CostInUSDP = 33000,
                         Note = "100% cotton. Cargo pockets removed (3.8 ounces each)."
                     },
-                    new GearItem
+                    new GearItem(settings)
                     {
                         Name = "New Underquilt",
                         Make = "Arrowhead Equipment",
@@ -247,7 +268,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
                         CostInUSDP = 7500,
                         Note = "6oz APEX Climashield synthetic"
                     },
-                    new GearItem
+                    new GearItem(settings)
                     {
                         Name = "Old Underquilt",
                         Make = "Aaron Erbe",
@@ -256,7 +277,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
                         CostInUSDP = 0,
                         Note = "Synthetic material. Need to have Aaron or Joe possibly remove some material from the overstuff collars to get the size and weight down on this."
                     },
-                    new GearItem
+                    new GearItem(settings)
                     {
                         Name = "Overquilt",
                         Make = "Arrowhead Equipment",
@@ -266,7 +287,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
                         CostInUSDP = 17900,
                         Note = "6oz APEX Climashield synthetic"
                     },
-                    new GearItem
+                    new GearItem(settings)
                     {
                         Name = "Toilet Paper",
                         IsConsumable = true,
@@ -275,7 +296,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
                         CostInUSDP = 1,
                         Note = "Can't have too much!"
                     },
-                    new GearItem
+                    new GearItem(settings)
                     {
                         Name = "Tree Straps",
                         Url = "http://shop.whoopieslings.com/Tree-Huggers-TH.htm",
@@ -283,12 +304,12 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
                         CostInUSDP = 1200,
                         Note = "12'x1\". Includes dutch buckle and titanium dutch clip (max 300 pounds)."
                     },
-                    new GearItem
+                    new GearItem(settings)
                     {
                         Name = "5g Water Jug",
                         Carried = GearCarried.NotCarried
                     },
-                    new GearItem
+                    new GearItem(settings)
                     {
                         Name = "Wind Screen",
                         Make = "Trail Designs",
@@ -303,45 +324,45 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
 
 #region Test Gear Systems
             Logger.Debug("Inserting test gear systems...");
-            await DatabaseItem.InsertItemsAsync(new List<GearSystem>
+            await DatabaseItem.InsertItemsAsync(this, new List<GearSystem>
                 {
-                    new GearSystem
+                    new GearSystem(settings)
                     {
                         Name = "One"
                     },
-                    new GearSystem
+                    new GearSystem(settings)
                     {
                         Name = "Two"
                     },
-                    new GearSystem
+                    new GearSystem(settings)
                     {
                         Name = "Three"
                     },
-                    new GearSystem
+                    new GearSystem(settings)
                     {
                         Name = "Four"
                     },
-                    new GearSystem
+                    new GearSystem(settings)
                     {
                         Name = "Five"
                     },
-                    new GearSystem
+                    new GearSystem(settings)
                     {
                         Name = "Six"
                     },
-                    new GearSystem
+                    new GearSystem(settings)
                     {
                         Name = "Seven"
                     },
-                    new GearSystem
+                    new GearSystem(settings)
                     {
                         Name = "Eight"
                     },
-                    new GearSystem
+                    new GearSystem(settings)
                     {
                         Name = "Nine"
                     },
-                    new GearSystem
+                    new GearSystem(settings)
                     {
                         Name = "Ten"
                     }
@@ -351,45 +372,45 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
 
 #region Test Gear Collections
             Logger.Debug("Inserting test gear collections...");
-            await DatabaseItem.InsertItemsAsync(new List<GearCollection>
+            await DatabaseItem.InsertItemsAsync(this, new List<GearCollection>
                 {
-                    new GearCollection
+                    new GearCollection(settings)
                     {
                         Name = "One"
                     },
-                    new GearCollection
+                    new GearCollection(settings)
                     {
                         Name = "Two"
                     },
-                    new GearCollection
+                    new GearCollection(settings)
                     {
                         Name = "Three"
                     },
-                    new GearCollection
+                    new GearCollection(settings)
                     {
                         Name = "Four"
                     },
-                    new GearCollection
+                    new GearCollection(settings)
                     {
                         Name = "Five"
                     },
-                    new GearCollection
+                    new GearCollection(settings)
                     {
                         Name = "Six"
                     },
-                    new GearCollection
+                    new GearCollection(settings)
                     {
                         Name = "Seven"
                     },
-                    new GearCollection
+                    new GearCollection(settings)
                     {
                         Name = "Eight"
                     },
-                    new GearCollection
+                    new GearCollection(settings)
                     {
                         Name = "Nine"
                     },
-                    new GearCollection
+                    new GearCollection(settings)
                     {
                         Name = "Ten"
                     }
@@ -399,9 +420,9 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
 
 #region Test Meals
             Logger.Debug("Inserting test meals...");
-            await DatabaseItem.InsertItemsAsync(new List<Meal>
+            await DatabaseItem.InsertItemsAsync(this, new List<Meal>
                 {
-                    new Meal
+                    new Meal(settings)
                     {
                         Name = "One",
                         MealTime = MealTime.Dinner,
@@ -412,7 +433,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
                         WeightInGrams = 1,
                         CostInUSDP = 20
                     },
-                    new Meal
+                    new Meal(settings)
                     {
                         Name = "Two",
                         MealTime = MealTime.Dinner,
@@ -423,7 +444,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
                         WeightInGrams = 2,
                         CostInUSDP = 19
                     },
-                    new Meal
+                    new Meal(settings)
                     {
                         Name = "Three",
                         MealTime = MealTime.Dinner,
@@ -434,7 +455,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
                         WeightInGrams = 3,
                         CostInUSDP = 18
                     },
-                    new Meal
+                    new Meal(settings)
                     {
                         Name = "Four",
                         MealTime = MealTime.Dinner,
@@ -445,7 +466,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
                         WeightInGrams = 4,
                         CostInUSDP = 17
                     },
-                    new Meal
+                    new Meal(settings)
                     {
                         Name = "Five",
                         MealTime = MealTime.Dinner,
@@ -456,7 +477,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
                         WeightInGrams = 5,
                         CostInUSDP = 16
                     },
-                    new Meal
+                    new Meal(settings)
                     {
                         Name = "Six",
                         MealTime = MealTime.Dinner,
@@ -467,7 +488,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
                         WeightInGrams = 6,
                         CostInUSDP = 15
                     },
-                    new Meal
+                    new Meal(settings)
                     {
                         Name = "Seven",
                         MealTime = MealTime.Dinner,
@@ -478,7 +499,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
                         WeightInGrams = 7,
                         CostInUSDP = 14
                     },
-                    new Meal
+                    new Meal(settings)
                     {
                         Name = "Eight",
                         MealTime = MealTime.Dinner,
@@ -489,7 +510,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
                         WeightInGrams = 8,
                         CostInUSDP = 13
                     },
-                    new Meal
+                    new Meal(settings)
                     {
                         Name = "Nine",
                         MealTime = MealTime.Dinner,
@@ -500,7 +521,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
                         WeightInGrams = 9,
                         CostInUSDP = 12
                     },
-                    new Meal
+                    new Meal(settings)
                     {
                         Name = "Ten",
                         MealTime = MealTime.Dinner,
@@ -517,45 +538,45 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
 
 #region Test Trip Itineraries
             Logger.Debug("Inserting test trip itineraries...");
-            await DatabaseItem.InsertItemsAsync(new List<TripItinerary>
+            await DatabaseItem.InsertItemsAsync(this, new List<TripItinerary>
                 {
-                    new TripItinerary
+                    new TripItinerary(settings)
                     {
                         Name = "One"
                     },
-                    new TripItinerary
+                    new TripItinerary(settings)
                     {
                         Name = "Two"
                     },
-                    new TripItinerary
+                    new TripItinerary(settings)
                     {
                         Name = "Three"
                     },
-                    new TripItinerary
+                    new TripItinerary(settings)
                     {
                         Name = "Four"
                     },
-                    new TripItinerary
+                    new TripItinerary(settings)
                     {
                         Name = "Five"
                     },
-                    new TripItinerary
+                    new TripItinerary(settings)
                     {
                         Name = "Six"
                     },
-                    new TripItinerary
+                    new TripItinerary(settings)
                     {
                         Name = "Seven"
                     },
-                    new TripItinerary
+                    new TripItinerary(settings)
                     {
                         Name = "Eight"
                     },
-                    new TripItinerary
+                    new TripItinerary(settings)
                     {
                         Name = "Nine"
                     },
-                    new TripItinerary
+                    new TripItinerary(settings)
                     {
                         Name = "Ten"
                     }
@@ -565,45 +586,45 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
 
 #region Test Trip Plans
             Logger.Debug("Inserting test trip plans...");
-            await DatabaseItem.InsertItemsAsync(new List<TripPlan>
+            await DatabaseItem.InsertItemsAsync(this, new List<TripPlan>
                 {
-                    new TripPlan
+                    new TripPlan(settings)
                     {
                         Name = "One"
                     },
-                    new TripPlan
+                    new TripPlan(settings)
                     {
                         Name = "Two"
                     },
-                    new TripPlan
+                    new TripPlan(settings)
                     {
                         Name = "Three"
                     },
-                    new TripPlan
+                    new TripPlan(settings)
                     {
                         Name = "Four"
                     },
-                    new TripPlan
+                    new TripPlan(settings)
                     {
                         Name = "Five"
                     },
-                    new TripPlan
+                    new TripPlan(settings)
                     {
                         Name = "Six"
                     },
-                    new TripPlan
+                    new TripPlan(settings)
                     {
                         Name = "Seven"
                     },
-                    new TripPlan
+                    new TripPlan(settings)
                     {
                         Name = "Eight"
                     },
-                    new TripPlan
+                    new TripPlan(settings)
                     {
                         Name = "Nine"
                     },
-                    new TripPlan
+                    new TripPlan(settings)
                     {
                         Name = "Ten"
                     }

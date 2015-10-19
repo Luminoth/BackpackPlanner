@@ -15,8 +15,10 @@
 */
 
 using System;
+using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Core.Database;
+using EnergonSoftware.BackpackPlanner.Core.HockeyApp;
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Core.PlayServices;
 using EnergonSoftware.BackpackPlanner.Models.Personal;
@@ -34,22 +36,6 @@ namespace EnergonSoftware.BackpackPlanner
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(BackpackPlannerState));
 
         /// <summary>
-        /// Gets the singleton instance.
-        /// </summary>
-        /// <value>
-        /// The singleton instance.
-        /// </value>
-        public static readonly BackpackPlannerState Instance = new BackpackPlannerState();
-
-        /// <summary>
-        /// Gets the platform logger.
-        /// </summary>
-        /// <value>
-        /// The platform logger.
-        /// </value>
-        public ILogger PlatformLogger { get; private set; } = new DiagnosticsLogger();
-
-        /// <summary>
         /// Gets the library settings.
         /// </summary>
         /// <value>
@@ -63,7 +49,7 @@ namespace EnergonSoftware.BackpackPlanner
         /// <value>
         /// The user's personal information.
         /// </value>
-        public PersonalInformation PersonalInformation { get; set; } = new PersonalInformation();
+        public PersonalInformation PersonalInformation { get; private set; }
 
         /// <summary>
         /// Gets the database state.
@@ -74,12 +60,20 @@ namespace EnergonSoftware.BackpackPlanner
         public DatabaseState DatabaseState { get; } = new DatabaseState();
 
         /// <summary>
+        /// Gets the platform HockeyApp manager.
+        /// </summary>
+        /// <value>
+        /// The platform HockeyApp manager.
+        /// </value>
+        public IHockeyAppManager PlatformHockeyAppManager { get; }
+
+        /// <summary>
         /// Gets the platform google play services interface.
         /// </summary>
         /// <value>
         /// The platform google play services interface.
         /// </value>
-        public IPlayServices PlatformPlayServices { get; private set; }
+        public IPlayServicesManager PlatformPlayServicesManager { get; }
 
 #region Dispose
         public void Dispose()
@@ -97,41 +91,63 @@ namespace EnergonSoftware.BackpackPlanner
         #endregion
 
         /// <summary>
-        /// Initializes the platform-specific dependencies.
+        /// Initializes a new instance of the <see cref="BackpackPlannerState" /> class.
         /// </summary>
-        /// <param name="platformLogger">The platform logger.</param>
-        /// <param name="platformPlayServices">The platform google play services interface.</param>
+        /// <param name="platformHockeyAppManager">The platform HockeyApp manager.</param>
+        /// <param name="platformPlayServicesManager">The platform google play services manager.</param>
         /// <param name="sqlitePlatform">The SQLite platform.</param>
-        /// <param name="settingsChangedEventHandler">The settings changed event handler.</param>
-        public void InitPlatform(ILogger platformLogger, IPlayServices platformPlayServices, ISQLitePlatform sqlitePlatform, EventHandler<SettingsChangedEventArgs> settingsChangedEventHandler)
+        public BackpackPlannerState(IHockeyAppManager platformHockeyAppManager, IPlayServicesManager platformPlayServicesManager, ISQLitePlatform sqlitePlatform)
         {
-            if(null == platformLogger) {
-                throw new ArgumentNullException(nameof(platformLogger));
+            if(null == platformHockeyAppManager) {
+                throw new ArgumentNullException(nameof(platformHockeyAppManager));
             }
 
-            if(null == platformPlayServices) {
-                throw new ArgumentNullException(nameof(platformLogger));
+            if(null == platformPlayServicesManager) {
+                throw new ArgumentNullException(nameof(platformPlayServicesManager));
             }
 
             if(null == sqlitePlatform) {
                 throw new ArgumentNullException(nameof(sqlitePlatform));
             }
 
-            Logger.Debug("Initializing platform state...");
-
-            PlatformLogger = platformLogger;
-
-            PlatformPlayServices = platformPlayServices;
+            PlatformHockeyAppManager = platformHockeyAppManager;
 
             DatabaseState.SQLitePlatform = sqlitePlatform;
 
-            if(null != settingsChangedEventHandler) {
-                Settings.SettingsChangedEvent += settingsChangedEventHandler;
-            }
+            PlatformPlayServicesManager = platformPlayServicesManager;
+
+            PersonalInformation = new PersonalInformation(Settings);
         }
 
-        private BackpackPlannerState()
+        /// <summary>
+        /// Initializes the dependency state.
+        /// </summary>
+        /// <param name="settingsChangedEventHandler">The settings changed event handler.</param>
+        public async Task InitAsync(EventHandler<SettingsChangedEventArgs> settingsChangedEventHandler = null)
         {
+            Logger.Debug("Initializing platform state...");
+
+            await PlatformHockeyAppManager.InitAsync().ConfigureAwait(false);
+
+            Settings.SettingsChangedEvent += settingsChangedEventHandler;
+
+            await PlatformPlayServicesManager.InitAsync().ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Destroys the dependency state.
+        /// </summary>
+        public async Task DestroyAsync()
+        {
+            Logger.Debug("Destroying platform state...");
+
+            await PlatformPlayServicesManager.DestroyAsync().ConfigureAwait(false);
+
+            await DatabaseState.DisconnectAsync().ConfigureAwait(false);
+
+            Settings.ResetSettingsChangedEvent();
+
+            await PlatformHockeyAppManager.DestroyAsync().ConfigureAwait(false);
         }
     }
 }

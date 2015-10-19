@@ -22,6 +22,7 @@ using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
+using EnergonSoftware.BackpackPlanner.Settings;
 using EnergonSoftware.BackpackPlanner.Units.Currency;
 using EnergonSoftware.BackpackPlanner.Units.Units;
 
@@ -178,8 +179,8 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Items
         [Ignore]
         public double WeightInUnits
         {
-            get { return BackpackPlannerState.Instance.Settings.Units.WeightFromGrams(WeightInGrams); }
-            set { _weightInGrams = (int)BackpackPlannerState.Instance.Settings.Units.GramsFromWeight(value); }
+            get { return Settings?.Units.WeightFromGrams(WeightInGrams) ?? WeightInGrams; }
+            set { _weightInGrams = (int)(Settings?.Units.GramsFromWeight(value) ?? value); }
         }
 
         // ReSharper disable once InconsistentNaming
@@ -208,8 +209,8 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Items
         [Ignore]
         public double CostInCurrency
         {
-            get { return BackpackPlannerState.Instance.Settings.Currency.CurrencyFromUSDP(CostInUSDP); }
-            set { _costInUSDP = (int)BackpackPlannerState.Instance.Settings.Currency.USDPFromCurrency(value); }
+            get { return Settings?.Currency.CurrencyFromUSDP(CostInUSDP) ?? CostInUSDP; }
+            set { _costInUSDP = (int)(Settings?.Currency.USDPFromCurrency(value) ?? value); }
         }
 
         /// <summary>
@@ -238,6 +239,14 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Items
 
         [Ignore]
         public int TripPlanCount => TripPlans?.Count ?? 0;
+
+        public GearItem()
+        {
+        }
+
+        public GearItem(BackpackPlannerSettings settings) : base(settings)
+        {
+        }
 
         public override bool Equals(object obj)
         {

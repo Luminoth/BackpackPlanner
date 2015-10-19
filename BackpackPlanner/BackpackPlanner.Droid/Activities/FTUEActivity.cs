@@ -19,6 +19,7 @@ using System;
 using Android.App;
 using Android.OS;
 
+using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.FTUE;
 using EnergonSoftware.BackpackPlanner.Droid.Util;
 
@@ -28,6 +29,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
     // ReSharper disable once InconsistentNaming
     public sealed class FTUEActivity : BaseActivity
     {
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(FTUEActivity));
+
         // ReSharper disable once InconsistentNaming
         private sealed class FTUEPagerAdapter : Android.Support.V4.App.FragmentPagerAdapter
         {
@@ -80,14 +83,29 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
         // ReSharper disable once InconsistentNaming
         public void FinishFTUE()
         {
+            Logger.Debug("Finishing FTUE...");
+
+            // prompt the user to connect to Google Play Services
             DialogUtil.ShowYesNoDialog(this, Resource.String.label_connect_google_play_services, Resource.String.title_connect_google_play_services,
                 (sender, args) => {
-                    BackpackPlannerState.Instance.Settings.ConnectGooglePlayServices = true;
-                    StartActivity(typeof(BackpackPlannerActivity));
-                    Finish();
+                    Logger.Debug("User accepted Google Play Services");
+                    BackpackPlannerState.Settings.ConnectGooglePlayServices = true;
+
+                    // try to connect now to get all of the confirmations out of the way
+                    ProgressDialog dialog = DialogUtil.ShowProgressDialog(this, Resource.String.label_connecting_google_play_services, false);
+                    BackpackPlannerState.PlatformPlayServicesManager.PlayServicesConnectedEvent += (s, a) => {
+                        Logger.Debug("Google Play Services connected, finishing activity...");
+                        dialog.Dismiss();
+
+                        StartActivity(typeof(BackpackPlannerActivity));
+                        Finish();
+                    };
+                    BackpackPlannerState.PlatformPlayServicesManager.ConnectAsync().Wait();
                 },
                 (sender, args) => {
-                    BackpackPlannerState.Instance.Settings.ConnectGooglePlayServices = false;
+                    Logger.Debug("User declined Google Play Services");
+                    BackpackPlannerState.Settings.ConnectGooglePlayServices = false;
+
                     StartActivity(typeof(BackpackPlannerActivity));
                     Finish();
                 }

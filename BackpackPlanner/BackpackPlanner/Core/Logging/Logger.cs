@@ -65,6 +65,24 @@ namespace EnergonSoftware.BackpackPlanner.Core.Logging
     /// </summary>
     public sealed class CustomLogger : ILogger
     {
+        private static ILogger _platformLogger = new DiagnosticsLogger();
+
+        /// <summary>
+        /// Gets the platform logger.
+        /// </summary>
+        /// <value>
+        /// The platform logger.
+        /// </value>
+        public static ILogger PlatformLogger
+        {
+            get { return _platformLogger; }
+
+            set
+            {
+                _platformLogger = value ?? new DiagnosticsLogger();
+            }
+        }
+
         private static readonly object CacheLock = new object();
         
         private static readonly Dictionary<Type, CustomLogger> LoggerCache = new Dictionary<Type, CustomLogger>();
@@ -96,45 +114,45 @@ namespace EnergonSoftware.BackpackPlanner.Core.Logging
         public void Debug(string message)
         {
 #if DEBUG
-            BackpackPlannerState.Instance.PlatformLogger.Debug(BuildMessage("DEBUG", message));
+            PlatformLogger.Debug(BuildMessage("DEBUG", message));
 #endif
         }
 
         public void Debug(string message, Exception ex)
         {
 #if DEBUG
-            BackpackPlannerState.Instance.PlatformLogger.Debug(BuildMessage("DEBUG", message), ex);
+            PlatformLogger.Debug(BuildMessage("DEBUG", message), ex);
 #endif
         }
 
         public void Info(string message)
         {
-            BackpackPlannerState.Instance.PlatformLogger.Debug(BuildMessage("INFO", message));
+            PlatformLogger.Debug(BuildMessage("INFO", message));
         }
 
         public void Info(string message, Exception ex)
         {
-            BackpackPlannerState.Instance.PlatformLogger.Debug(BuildMessage("INFO", message), ex);
+            PlatformLogger.Debug(BuildMessage("INFO", message), ex);
         }
 
         public void Warn(string message)
         {
-            BackpackPlannerState.Instance.PlatformLogger.Debug(BuildMessage("WARNING", message));
+            PlatformLogger.Debug(BuildMessage("WARNING", message));
         }
 
         public void Warn(string message, Exception ex)
         {
-            BackpackPlannerState.Instance.PlatformLogger.Debug(BuildMessage("WARNING", message), ex);
+            PlatformLogger.Debug(BuildMessage("WARNING", message), ex);
         }
 
         public void Error(string message)
         {
-            BackpackPlannerState.Instance.PlatformLogger.Debug(BuildMessage("ERROR", message));
+            PlatformLogger.Debug(BuildMessage("ERROR", message));
         }
 
         public void Error(string message, Exception ex)
         {
-            BackpackPlannerState.Instance.PlatformLogger.Debug(BuildMessage("ERROR", message), ex);
+            PlatformLogger.Debug(BuildMessage("ERROR", message), ex);
         }
     }
 }

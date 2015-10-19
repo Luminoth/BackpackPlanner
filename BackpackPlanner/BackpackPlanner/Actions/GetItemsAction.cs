@@ -14,19 +14,19 @@
    limitations under the License.
 */
 
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading.Tasks;
 
+using EnergonSoftware.BackpackPlanner.Core.Database;
 using EnergonSoftware.BackpackPlanner.Models;
+using EnergonSoftware.BackpackPlanner.Settings;
 
 namespace EnergonSoftware.BackpackPlanner.Actions
 {
     /// <summary>
     /// Gets all items.
     /// </summary>
-    public class GetItemsAction<T> : Action where T: DatabaseItem
+    public class GetItemsAction<T> : Action where T: DatabaseItem, new()
     {
         /// <summary>
         /// Gets or sets the item to add.
@@ -36,13 +36,11 @@ namespace EnergonSoftware.BackpackPlanner.Actions
         /// </value>
         public List<T> Items { get; private set; } = new List<T>();
 
-        public async override Task DoActionAsync()
+        public async override Task DoActionAsync(DatabaseState databaseState, BackpackPlannerSettings settings)
         {
-            while(!BackpackPlannerState.Instance.DatabaseState.IsInitialized) {
-                await Task.Delay(1).ConfigureAwait(false);
-            }
+            await ValidateDatabaseStateAsync(databaseState).ConfigureAwait(false);
 
-            Items = await DatabaseItem.GetItemsAsync<T>().ConfigureAwait(false);
+            Items = await DatabaseItem.GetItemsAsync<T>(databaseState, settings).ConfigureAwait(false);
         }
     }
 }

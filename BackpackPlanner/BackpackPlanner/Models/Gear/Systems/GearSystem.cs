@@ -22,6 +22,7 @@ using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
+using EnergonSoftware.BackpackPlanner.Settings;
 
 using SQLite.Net.Async;
 using SQLite.Net.Attributes;
@@ -122,6 +123,14 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Systems
 
         [Ignore]
         public int TripPlanCount => TripPlans?.Count ?? 0;
+
+        public GearSystem()
+        {
+        }
+
+        public GearSystem(BackpackPlannerSettings settings) : base(settings)
+        {
+        }
 
         public override bool Equals(object obj)
         {

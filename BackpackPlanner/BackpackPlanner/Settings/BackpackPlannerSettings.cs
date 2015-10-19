@@ -41,7 +41,7 @@ namespace EnergonSoftware.BackpackPlanner.Settings
         /// The currency preference key
         /// </summary>
         public const string CurrencyPreferenceKey = "currency";
-        #endregion
+#endregion
 
 #region Events
         /// <summary>
@@ -213,6 +213,14 @@ namespace EnergonSoftware.BackpackPlanner.Settings
         public void SettingChanged(object sender, SettingsChangedEventArgs args)
         {
             SettingsChangedEvent?.Invoke(sender, args);
+        }
+
+        /// <summary>
+        /// Resets the settings changed event.
+        /// </summary>
+        public void ResetSettingsChangedEvent()
+        {
+            SettingsChangedEvent = null;
         }
     }
 }

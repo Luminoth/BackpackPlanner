@@ -64,7 +64,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
                 _toolbar.Title = ListItem.Name;
 
                 _textViewServings.Text = $"{ListItem.ServingCount} serving(s) of {ListItem.MealTime}";
-                _textViewWeight.Text = $"{ListItem.WeightInUnits} {BackpackPlannerState.Instance.Settings.Units.GetSmallWeightString()}";
+                _textViewWeight.Text = $"{ListItem.WeightInUnits} {Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString()}";
 
                 string formattedCost = ListItem.CostInCurrency.ToString("C", CultureInfo.CurrentCulture);
                 _textViewCost.Text = $"{formattedCost} (cost per weight)";

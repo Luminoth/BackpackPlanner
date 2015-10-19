@@ -17,48 +17,79 @@
 using System;
 using System.Threading.Tasks;
 
+using EnergonSoftware.BackpackPlanner.Core.Database;
+using EnergonSoftware.BackpackPlanner.Settings;
+
 namespace EnergonSoftware.BackpackPlanner.Actions
 {
     /// <summary>
     /// 
     /// </summary>
+    // TODO: rename this so it doesn't conflict with System.Action
     public abstract class Action
     {
         /// <summary>
         /// Does the action.
         /// </summary>
-        public abstract Task DoActionAsync();
+        /// <param name="databaseState">State of the database.</param>
+        /// <param name="settings">The settings.</param>
+        public abstract Task DoActionAsync(DatabaseState databaseState, BackpackPlannerSettings settings);
 
         /// <summary>
         /// Does the action in a background task.
         /// </summary>
-        public void DoActionInBackground(Action<Action> actionFinishedCallback)
+        /// <param name="databaseState">State of the database.</param>
+        /// <param name="settings">The settings.</param>
+        /// <param name="actionFinishedCallback">The action finished callback.</param>
+        public void DoActionInBackground(DatabaseState databaseState, BackpackPlannerSettings settings, Action<Action> actionFinishedCallback)
         {
-            Task.Run(async () => {
-                    await DoActionAsync().ConfigureAwait(false);
-                    actionFinishedCallback?.Invoke(this);
-                }
+            Task.Run(async () =>
+            {
+                await DoActionAsync(databaseState, settings).ConfigureAwait(false);
+                actionFinishedCallback?.Invoke(this);
+            }
             );
         }
 
         /// <summary>
         /// Undoes the action.
         /// </summary>
-        public virtual Task UndoActionAsync()
+        /// <param name="databaseState">State of the database.</param>
+        /// <param name="settings">The settings.</param>
+        public async virtual Task UndoActionAsync(DatabaseState databaseState, BackpackPlannerSettings settings)
         {
-            throw new NotImplementedException();
+            await ValidateDatabaseStateAsync(databaseState).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Undoes the action in a background task.
         /// </summary>
-        public void UndoActionInBackground(Action<Action> actionFinishedCallback)
+        /// <param name="databaseState">State of the database.</param>
+        /// <param name="settings">The settings.</param>
+        /// <param name="actionFinishedCallback">The action finished callback.</param>
+        public void UndoActionInBackground(DatabaseState databaseState, BackpackPlannerSettings settings, Action<Action> actionFinishedCallback)
         {
-            Task.Run(async () => {
-                    await UndoActionAsync().ConfigureAwait(false);
-                    actionFinishedCallback?.Invoke(this);
-                }
+            Task.Run(async () =>
+            {
+                await UndoActionAsync(databaseState, settings).ConfigureAwait(false);
+                actionFinishedCallback?.Invoke(this);
+            }
             );
+        }
+
+        /// <summary>
+        /// Validates the database state.
+        /// </summary>
+        /// <param name="databaseState">The database state.</param>
+        protected async Task ValidateDatabaseStateAsync(DatabaseState databaseState)
+        {
+            if(null == databaseState) {
+                throw new ArgumentNullException(nameof(databaseState));
+            }
+
+            while(!databaseState.IsInitialized) {
+                await Task.Delay(1).ConfigureAwait(false);
+            }
         }
     }
 }

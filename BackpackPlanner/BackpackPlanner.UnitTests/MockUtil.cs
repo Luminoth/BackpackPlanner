@@ -20,6 +20,7 @@ using SQLite.Net;
 using SQLite.Net.Async;
 
 using EnergonSoftware.BackpackPlanner.Core.Database;
+using EnergonSoftware.BackpackPlanner.Settings;
 
 using TypeMock.ArrangeActAssert;
 
@@ -58,6 +59,12 @@ namespace EnergonSoftware.BackpackPlanner.UnitTests
             Isolate.WhenCalled(() => fakePlannerState.DatabaseState.Connection).WillReturn(fakeDbConnection);
 
             return fakeAsyncSQLiteConnection;
+        }
+
+        public static BackpackPlannerSettings FakeSettings()
+        {
+            BackpackPlannerSettings fakeSettings = Isolate.Fake.Instance<BackpackPlannerSettings>(Members.CallOriginal);
+            return fakeSettings;
         }
     }
 }

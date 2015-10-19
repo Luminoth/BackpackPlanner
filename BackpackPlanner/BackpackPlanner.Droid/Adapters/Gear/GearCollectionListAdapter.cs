@@ -67,7 +67,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
 
                 _textViewSystems.Text = $"{ListItem.GearSystemCount} system(s)";
                 _textViewItems.Text = $"{ListItem.GearItemCount} item(s) (some total)";
-                /*_textViewWeight.Text = $"{ListItem.WeightInUnits} {BackpackPlannerState.Instance.Settings.Units.GetSmallWeightString()}";
+                /*_textViewWeight.Text = $"{ListItem.WeightInUnits} {Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString()}";
 
                 string formattedCost = ListItem.CostInCurrency.ToString("C", CultureInfo.CurrentCulture);
                 _textViewCost.Text = $"{formattedCost} (cost per weight)";*/

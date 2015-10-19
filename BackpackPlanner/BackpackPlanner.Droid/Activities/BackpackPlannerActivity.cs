@@ -14,16 +14,12 @@
    limitations under the License.
 */
 
-using System.Diagnostics;
-using System.Threading.Tasks;
-
 using Android.App;
 using Android.Content.Res;
 using Android.OS;
 using Android.Views;
 
 using EnergonSoftware.BackpackPlanner.Core.Database;
-using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items;
@@ -38,8 +34,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
     [Activity(Label = "@string/app_name")]
     public sealed class BackpackPlannerActivity : BaseActivity, View.IOnClickListener
     {
-        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(BackpackPlannerActivity));
-
 #region Controls
         private readonly NavigationDrawerManager _navigationDrawerManager = new NavigationDrawerManager();
 #endregion
@@ -60,8 +54,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             // create the navigation drawer
             _navigationDrawerManager.Create(this, Toolbar, savedInstanceState);
             _navigationDrawerManager.Toggle.ToolbarNavigationClickListener = this;
-            _navigationDrawerManager.HeaderText.Text = !string.IsNullOrWhiteSpace(BackpackPlannerState.Instance.PersonalInformation.Name)
-                    ? BackpackPlannerState.Instance.PersonalInformation.Name
+            _navigationDrawerManager.HeaderText.Text = !string.IsNullOrWhiteSpace(BackpackPlannerState.PersonalInformation.Name)
+                    ? BackpackPlannerState.PersonalInformation.Name
                     : Resources.GetString(Resource.String.app_name);
 
 #if !DEBUG
@@ -101,42 +95,24 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
         {
             base.OnStart();
 
-            // TODO: encapsulate this better
-            if(BackpackPlannerState.Instance.Settings.ConnectGooglePlayServices) {
-                BackpackPlannerState.Instance.PlatformPlayServices.Connect();
+            // TODO: encapsulate this in the base activity
+
+            if(BackpackPlannerState.Settings.ConnectGooglePlayServices) {
+                BackpackPlannerState.PlatformPlayServicesManager.ConnectAsync().Wait();
             }
         }
-
-	    protected override void OnStop()
-	    {
-	        base.OnStop();
-
-            BackpackPlannerState.Instance.PlatformPlayServices.Disconnect();
-	    }
 
 	    protected override void OnResume()
 	    {
 	        base.OnResume();
 
-            BackpackPlannerState.Instance.DatabaseState.ConnectAsync(
+            // TODO: encapsulate this in the base activity
+
+            BackpackPlannerState.DatabaseState.ConnectAsync(
                 System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal),
                 DatabaseState.DatabaseName).Wait();
 
-            // TODO: put this in some sort of "InitDatabaseInBackground" method
-            // that runs it in a thread for us
-            Task.Run(async () => {
-                Stopwatch stopwatch = Stopwatch.StartNew();
-                await BackpackPlannerState.Instance.DatabaseState.InitDatabaseAsync().ConfigureAwait(false);
-                stopwatch.Stop();
-                Logger.Debug($"Database init took {stopwatch.ElapsedMilliseconds}ms");
-            });
-	    }
-
-	    protected override void OnPause()
-	    {
-	        base.OnPause();
-
-            BackpackPlannerState.Instance.DatabaseState.Connection.CloseAsync().Wait();
+            BackpackPlannerState.DatabaseState.InitDatabaseAsync(BackpackPlannerState.Settings).Wait();
 	    }
 
 	    public override void OnConfigurationChanged(Configuration newConfig)

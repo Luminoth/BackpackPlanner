@@ -14,13 +14,9 @@
    limitations under the License.
 */
 
-using System.Threading.Tasks;
-
 using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-using SQLite.Net.Async;
 
 using TypeMock.ArrangeActAssert;
 
@@ -33,7 +29,7 @@ namespace EnergonSoftware.BackpackPlanner.UnitTests.Models.Gear.Items
         public void GearItem_Id_Default()
         {
             // Arrange
-            GearItem gearItem = new GearItem();
+            GearItem gearItem = new GearItem(MockUtil.FakeSettings());
 
             // Act
 
@@ -45,7 +41,7 @@ namespace EnergonSoftware.BackpackPlanner.UnitTests.Models.Gear.Items
         public void GearItem_Carried_Default()
         {
             // Arrange
-            GearItem gearItem = new GearItem();
+            GearItem gearItem = new GearItem(MockUtil.FakeSettings());
 
             // Act
 
@@ -57,7 +53,7 @@ namespace EnergonSoftware.BackpackPlanner.UnitTests.Models.Gear.Items
         public void GearItem_IsConsumable_Default()
         {
             // Arrange
-            GearItem gearItem = new GearItem();
+            GearItem gearItem = new GearItem(MockUtil.FakeSettings());
 
             // Act
 
@@ -70,7 +66,7 @@ namespace EnergonSoftware.BackpackPlanner.UnitTests.Models.Gear.Items
         public void GearItem_ConsumedPerDay_Default()
         {
             // Arrange
-            GearItem gearItem = new GearItem();
+            GearItem gearItem = new GearItem(MockUtil.FakeSettings());
 
             // Act
 
@@ -82,7 +78,7 @@ namespace EnergonSoftware.BackpackPlanner.UnitTests.Models.Gear.Items
         public void GearItem_ConsumedPerDay_Negative()
         {
             // Arrange
-            GearItem gearItem = new GearItem();
+            GearItem gearItem = new GearItem(MockUtil.FakeSettings());
 
             // Act
             gearItem.ConsumedPerDay = -1;
@@ -95,7 +91,7 @@ namespace EnergonSoftware.BackpackPlanner.UnitTests.Models.Gear.Items
         public void GearItem_ConsumedPerDay_Zero()
         {
             // Arrange
-            GearItem gearItem = new GearItem();
+            GearItem gearItem = new GearItem(MockUtil.FakeSettings());
 
             // Act
             gearItem.ConsumedPerDay = 0;
@@ -110,7 +106,7 @@ namespace EnergonSoftware.BackpackPlanner.UnitTests.Models.Gear.Items
         public void GearItem_CostInUSDP_Default()
         {
             // Arrange
-            GearItem gearItem = new GearItem();
+            GearItem gearItem = new GearItem(MockUtil.FakeSettings());
 
             // Act
 
@@ -122,7 +118,7 @@ namespace EnergonSoftware.BackpackPlanner.UnitTests.Models.Gear.Items
         public void GearItem_CostInUSDP_Negative()
         {
             // Arrange
-            GearItem gearItem = new GearItem();
+            GearItem gearItem = new GearItem(MockUtil.FakeSettings());
 
             // Act
             gearItem.CostInUSDP = -1;
@@ -137,7 +133,7 @@ namespace EnergonSoftware.BackpackPlanner.UnitTests.Models.Gear.Items
         public void GearItem_WeightInGrams_Default()
         {
             // Arrange
-            GearItem gearItem = new GearItem();
+            GearItem gearItem = new GearItem(MockUtil.FakeSettings());
 
             // Act
 
@@ -149,7 +145,7 @@ namespace EnergonSoftware.BackpackPlanner.UnitTests.Models.Gear.Items
         public void GearItem_WeightInGrams_Negative()
         {
             // Arrange
-            GearItem gearItem = new GearItem();
+            GearItem gearItem = new GearItem(MockUtil.FakeSettings());
 
             // Act
             gearItem.WeightInGrams = -1;
@@ -164,12 +160,12 @@ namespace EnergonSoftware.BackpackPlanner.UnitTests.Models.Gear.Items
         public void GearItem_Equals_NegativeId_NotEqual()
         {
             // Arrange
-            GearItem gearItem1 = new GearItem
+            GearItem gearItem1 = new GearItem(MockUtil.FakeSettings())
             {
                 GearItemId = -1
             };
 
-            GearItem gearItem2 = new GearItem
+            GearItem gearItem2 = new GearItem(MockUtil.FakeSettings())
             {
                 GearItemId = -1
             };
@@ -185,12 +181,12 @@ namespace EnergonSoftware.BackpackPlanner.UnitTests.Models.Gear.Items
         public void GearItem_Equals_ZeroId_NotEqual()
         {
             // Arrange
-            GearItem gearItem1 = new GearItem
+            GearItem gearItem1 = new GearItem(MockUtil.FakeSettings())
             {
                 GearItemId = 0
             };
 
-            GearItem gearItem2 = new GearItem
+            GearItem gearItem2 = new GearItem(MockUtil.FakeSettings())
             {
                 GearItemId = 0
             };
@@ -206,12 +202,12 @@ namespace EnergonSoftware.BackpackPlanner.UnitTests.Models.Gear.Items
         public void GearItem_Equals_NotEqual()
         {
             // Arrange
-            GearItem gearItem1 = new GearItem
+            GearItem gearItem1 = new GearItem(MockUtil.FakeSettings())
             {
                 GearItemId = 1
             };
 
-            GearItem gearItem2 = new GearItem
+            GearItem gearItem2 = new GearItem(MockUtil.FakeSettings())
             {
                 GearItemId = 2
             };
@@ -227,12 +223,12 @@ namespace EnergonSoftware.BackpackPlanner.UnitTests.Models.Gear.Items
         public void GearItem_Equals_Equal()
         {
             // Arrange
-            GearItem gearItem1 = new GearItem
+            GearItem gearItem1 = new GearItem(MockUtil.FakeSettings())
             {
                 GearItemId = 1
             };
 
-            GearItem gearItem2 = new GearItem
+            GearItem gearItem2 = new GearItem(MockUtil.FakeSettings())
             {
                 GearItemId = 1
             };

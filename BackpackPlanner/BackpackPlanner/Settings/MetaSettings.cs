@@ -54,6 +54,7 @@ namespace EnergonSoftware.BackpackPlanner.Settings
         // TODO: this should be an interface that
         // has the "SettingChanged" event rather than
         // something specific to this application
+        // also, this name sucks...
         private readonly BackpackPlannerSettings _settingsChangedObj;
 
         /// <summary>

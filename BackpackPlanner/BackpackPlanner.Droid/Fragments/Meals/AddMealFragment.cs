@@ -30,7 +30,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
 
         protected override void OnDoDataExchange()
         {
-            Item = new Meal
+            Item = new Meal(BaseActivity.BackpackPlannerState.Settings)
             {
             };
         }

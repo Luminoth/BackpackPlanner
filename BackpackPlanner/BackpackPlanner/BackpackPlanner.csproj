@@ -46,7 +46,10 @@
     <Compile Include="Core\Database\DatabaseConnection.cs" />
     <Compile Include="Core\Database\DatabaseStateChangedEventArgs.cs" />
     <Compile Include="Core\Database\SQLiteDatabaseConnection.cs" />
-    <Compile Include="Core\PlayServices\PlayServices.cs" />
+    <Compile Include="Core\HockeyApp\HockeyAppManager.cs" />
+    <Compile Include="Core\ObjectExtensions.cs" />
+    <Compile Include="Core\PlayServices\PlayServicesConnectedEventArgs.cs" />
+    <Compile Include="Core\PlayServices\PlayServicesManager.cs" />
     <Compile Include="Core\Database\DatabaseState.cs" />
     <Compile Include="Models\DatabaseItem.cs" />
     <Compile Include="Settings\MetaSettings.cs" />
