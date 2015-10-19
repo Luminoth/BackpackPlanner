@@ -35,7 +35,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid
         IGoogleApiClientConnectionCallbacks, IGoogleApiClientOnConnectionFailedListener
     {
         // error resolution
-        public const int RequestCodeResolution = 9001;
+        public const int RequestCodeResolveError = 9001;
+
+        private const string StateResolvingError = "play_services_manager_resolving_error";
 
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(PlayServicesManager));
 
@@ -59,6 +61,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
         }
 
         public event EventHandler<PlayServicesConnectedEventArgs> PlayServicesConnectedEvent;
+
+        public bool IsResolvingError { get; private set; }
 
         // TODO: this should go in the base class to time the lifecycle
         private readonly Stopwatch _connectStopwatch = new Stopwatch();
@@ -147,20 +151,55 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             _connectStopwatch.Stop();
             Logger.Warn($"Google Play Services connection failed after {_connectStopwatch.ElapsedMilliseconds}ms: {result}");
 
+            if(IsResolvingError) {
+                return;
+            }
+
             if(!result.HasResolution) {
-                Logger.Debug("Google Play Services connection failure has no resolution, showing error dialog");
+                Logger.Debug("Google Play Services connection failure has no resolution, showing error dialog...");
+// TODO: if the error here is service missing, bad things happen (as per the emulator behavior)
+                IsResolvingError = true;
                 GoogleApiAvailability.Instance.GetErrorDialog(_activity, result.ErrorCode, 0).Show();
+                IsResolvingError = false;
 
                 PlayServicesConnectedEvent?.Invoke(this, new PlayServicesConnectedEventArgs { IsSuccess = false });
                 return;
             }
 
             try {
+                IsResolvingError = true;
+
                 Logger.Debug("Starting Google Play Services connection failure resolution activity...");
-                result.StartResolutionForResult(_activity, RequestCodeResolution);
-            } catch(IntentSender.SendIntentException ex) {
-                Logger.Error("Exception while starting resolution activity!", ex);
-                PlayServicesConnectedEvent?.Invoke(this, new PlayServicesConnectedEventArgs { IsSuccess = false });
+                result.StartResolutionForResult(_activity, RequestCodeResolveError);
+            } catch(IntentSender.SendIntentException) {
+                Logger.Error("Exception while starting resolution activity, retrying connection...");
+                ConnectAsync().Wait();
+            }
+	    }
+
+        public void OnCreate(Bundle savedInstanceState)
+        {
+            if(null != savedInstanceState) {
+                IsResolvingError = savedInstanceState.GetBoolean(StateResolvingError, false);
+            }
+        }
+
+        public void OnSaveInstanceState(Bundle outState)
+        {
+            outState.PutBoolean(StateResolvingError, IsResolvingError);
+        }
+
+        public void OnActivityResult(int requestCode, Result resultCode, Intent data)
+	    {
+            switch(requestCode)
+            {
+            case RequestCodeResolveError:
+                IsResolvingError = false;
+                if(Result.Ok == resultCode) {
+                    Logger.Info("Got Google Play Services Ok result code, retrying connection...");
+                    ConnectAsync().Wait();
+                }
+                break;
             }
 	    }
     }

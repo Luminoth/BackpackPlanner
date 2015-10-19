@@ -58,7 +58,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
             InitDrawer(toolbar);
 
             if(null != savedInstanceState) {
-                _selectedMenuItemResId = savedInstanceState.GetInt(StateSelectedResId);
+                _selectedMenuItemResId = savedInstanceState.GetInt(StateSelectedResId, -1);
             }
         }
 

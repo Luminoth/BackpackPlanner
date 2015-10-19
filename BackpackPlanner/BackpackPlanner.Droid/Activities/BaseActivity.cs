@@ -59,6 +59,15 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
                     SettingsUtil.SaveToSharedPreferences(BackpackPlannerState, Android.Support.V7.Preferences.PreferenceManager.GetDefaultSharedPreferences(this), args.PreferenceKey);
                 }
             ).Wait();
+
+             ((PlayServicesManager)BackpackPlannerState.PlatformPlayServicesManager).OnCreate(savedInstanceState);
+        }
+
+        protected override void OnSaveInstanceState(Bundle outState)
+        {
+            base.OnSaveInstanceState(outState);
+
+             ((PlayServicesManager)BackpackPlannerState.PlatformPlayServicesManager).OnSaveInstanceState(outState);
         }
 
         protected override void OnDestroy()
@@ -115,15 +124,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 	    {
             base.OnActivityResult(requestCode, resultCode, data);
 
-            switch(requestCode)
-            {
-            case PlayServicesManager.RequestCodeResolution:
-                if(Result.Ok == resultCode) {
-                    Logger.Info("Got Google Play Services Ok result code...");
-                    BackpackPlannerState.PlatformPlayServicesManager.ConnectAsync().Wait();
-                }
-                break;
-            }
+            ((PlayServicesManager)BackpackPlannerState.PlatformPlayServicesManager).OnActivityResult(requestCode, resultCode, data);
 	    }
 
         protected void InitToolbar()

@@ -67,9 +67,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
             Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(activity);
             return builder.SetMessage(messageResId)
                 .SetTitle(titleResId)
-// TODO: these resources show OK/Cancel, so we need to use our own yes/no resources :(
-                .SetPositiveButton(Android.Resource.String.Yes, yesEventHandler ?? ((sender, args) => { }))
-                .SetNegativeButton(Android.Resource.String.No, noEventHandler ?? ((sender, args) => { }))
+                .SetPositiveButton(Resource.String.label_yes, yesEventHandler ?? ((sender, args) => { }))
+                .SetNegativeButton(Resource.String.label_no, noEventHandler ?? ((sender, args) => { }))
                 .Show();
         }
     }

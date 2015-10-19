@@ -94,7 +94,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
                     // try to connect now to get all of the confirmations out of the way
                     ProgressDialog dialog = DialogUtil.ShowProgressDialog(this, Resource.String.label_connecting_google_play_services, false);
                     BackpackPlannerState.PlatformPlayServicesManager.PlayServicesConnectedEvent += (s, a) => {
-                        Logger.Debug("Google Play Services connected, finishing activity...");
+                        Logger.Debug($"Google Play Services connected (success: {a.IsSuccess}), finishing activity...");
                         dialog.Dismiss();
 
                         StartActivity(typeof(BackpackPlannerActivity));
