@@ -28,10 +28,26 @@ namespace EnergonSoftware.BackpackPlanner.Actions
     /// </summary>
     public class DeleteItemAction<T> : Action where T: DatabaseItem
     {
+        /// <summary>
+        /// Gets the item to delete.
+        /// </summary>
+        /// <value>
+        /// The item to delete.
+        /// </value>
         public T Item { get; }
 
+        /// <summary>
+        /// Gets a value indicating whether the item was deleted or not.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if the item was deleted; otherwise, <c>false</c>.
+        /// </value>
         public bool IsItemDeleted { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DeleteItemAction{T}"/> class.
+        /// </summary>
+        /// <param name="item">The item to delete.</param>
         public DeleteItemAction(T item)
         {
             if(null == item) {

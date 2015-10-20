@@ -21,6 +21,7 @@ using EnergonSoftware.BackpackPlanner.Core.Database;
 using EnergonSoftware.BackpackPlanner.Core.HockeyApp;
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Core.PlayServices;
+using EnergonSoftware.BackpackPlanner.Core.Settings;
 using EnergonSoftware.BackpackPlanner.Models.Personal;
 using EnergonSoftware.BackpackPlanner.Settings;
 
@@ -41,7 +42,7 @@ namespace EnergonSoftware.BackpackPlanner
         /// <value>
         /// The library settings.
         /// </value>
-        public BackpackPlannerSettings Settings { get; } = new BackpackPlannerSettings();
+        public BackpackPlannerSettings Settings { get; }
 
         /// <summary>
         /// Gets or sets the user's personal information.
@@ -49,7 +50,7 @@ namespace EnergonSoftware.BackpackPlanner
         /// <value>
         /// The user's personal information.
         /// </value>
-        public PersonalInformation PersonalInformation { get; private set; }
+        public PersonalInformation PersonalInformation { get; }
 
         /// <summary>
         /// Gets the database state.
@@ -75,6 +76,14 @@ namespace EnergonSoftware.BackpackPlanner
         /// </value>
         public IPlayServicesManager PlatformPlayServicesManager { get; }
 
+        /// <summary>
+        /// Gets the platform settings manager.
+        /// </summary>
+        /// <value>
+        /// The platform settings manager.
+        /// </value>
+        public SettingsManager PlatformSettingsManager { get; }
+
 #region Dispose
         public void Dispose()
         {
@@ -94,12 +103,17 @@ namespace EnergonSoftware.BackpackPlanner
         /// Initializes a new instance of the <see cref="BackpackPlannerState" /> class.
         /// </summary>
         /// <param name="platformHockeyAppManager">The platform HockeyApp manager.</param>
+        /// <param name="platformSettingsManager">The platform settings manager.</param>
         /// <param name="platformPlayServicesManager">The platform google play services manager.</param>
         /// <param name="sqlitePlatform">The SQLite platform.</param>
-        public BackpackPlannerState(IHockeyAppManager platformHockeyAppManager, IPlayServicesManager platformPlayServicesManager, ISQLitePlatform sqlitePlatform)
+        public BackpackPlannerState(IHockeyAppManager platformHockeyAppManager, SettingsManager platformSettingsManager, IPlayServicesManager platformPlayServicesManager, ISQLitePlatform sqlitePlatform)
         {
             if(null == platformHockeyAppManager) {
                 throw new ArgumentNullException(nameof(platformHockeyAppManager));
+            }
+
+            if(null == platformSettingsManager) {
+                throw new ArgumentNullException(nameof(platformSettingsManager));
             }
 
             if(null == platformPlayServicesManager) {
@@ -112,24 +126,24 @@ namespace EnergonSoftware.BackpackPlanner
 
             PlatformHockeyAppManager = platformHockeyAppManager;
 
+            PlatformSettingsManager = platformSettingsManager;
+            Settings = new BackpackPlannerSettings(PlatformSettingsManager);
+
             DatabaseState.SQLitePlatform = sqlitePlatform;
 
             PlatformPlayServicesManager = platformPlayServicesManager;
 
-            PersonalInformation = new PersonalInformation(Settings);
+            PersonalInformation = new PersonalInformation(PlatformSettingsManager, Settings);
         }
 
         /// <summary>
         /// Initializes the dependency state.
         /// </summary>
-        /// <param name="settingsChangedEventHandler">The settings changed event handler.</param>
-        public async Task InitAsync(EventHandler<SettingsChangedEventArgs> settingsChangedEventHandler = null)
+        public async Task InitAsync()
         {
             Logger.Debug("Initializing platform state...");
 
             await PlatformHockeyAppManager.InitAsync().ConfigureAwait(false);
-
-            Settings.SettingsChangedEvent += settingsChangedEventHandler;
 
             await PlatformPlayServicesManager.InitAsync().ConfigureAwait(false);
         }
@@ -144,8 +158,6 @@ namespace EnergonSoftware.BackpackPlanner
             await PlatformPlayServicesManager.DestroyAsync().ConfigureAwait(false);
 
             await DatabaseState.DisconnectAsync().ConfigureAwait(false);
-
-            Settings.ResetSettingsChangedEvent();
 
             await PlatformHockeyAppManager.DestroyAsync().ConfigureAwait(false);
         }

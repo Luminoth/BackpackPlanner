@@ -20,7 +20,6 @@ using Android.Content;
 using Android.OS;
 
 using EnergonSoftware.BackpackPlanner.Droid.Activities;
-using EnergonSoftware.BackpackPlanner.Droid.Util;
 using EnergonSoftware.BackpackPlanner.Models.Personal;
 using EnergonSoftware.BackpackPlanner.Settings;
 using EnergonSoftware.BackpackPlanner.Units.Units;
@@ -152,7 +151,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         public void OnSharedPreferenceChanged(ISharedPreferences sharedPreferences, string key)
         {
-            SettingsUtil.UpdateFromSharedPreferences(BaseActivity.BackpackPlannerState, sharedPreferences, key);
+            BaseActivity.BackpackPlannerState.PlatformSettingsManager.UpdateFromPreferences(key, BaseActivity.BackpackPlannerState.Settings, BaseActivity.BackpackPlannerState.PersonalInformation);
 
 // TODO: if the connect google play services setting is switched from off to on
 // we need to do the connection here

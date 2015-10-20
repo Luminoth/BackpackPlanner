@@ -51,9 +51,9 @@
     <Compile Include="Core\PlayServices\PlayServicesConnectedEventArgs.cs" />
     <Compile Include="Core\PlayServices\PlayServicesManager.cs" />
     <Compile Include="Core\Database\DatabaseState.cs" />
+    <Compile Include="Core\Settings\SettingsManager.cs" />
     <Compile Include="Models\DatabaseItem.cs" />
     <Compile Include="Settings\MetaSettings.cs" />
-    <Compile Include="Settings\SettingsChangedEventArgs.cs" />
     <Compile Include="Units\Currency\Currency.cs" />
     <Compile Include="Settings\BackpackPlannerSettings.cs" />
     <Compile Include="Core\Logging\DiagnosticsLogger.cs" />

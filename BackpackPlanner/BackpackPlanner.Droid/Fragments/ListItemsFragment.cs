@@ -101,15 +101,15 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             action.DoActionInBackground(BaseActivity.BackpackPlannerState.DatabaseState, BaseActivity.BackpackPlannerState.Settings,
                 a => {
                     Activity.RunOnUiThread(() => {
-                            Logger.Debug($"Read {action.Items.Count} items...");
+                        Logger.Debug($"Read {action.Items.Count} items...");
 
-                            ListItems.Clear();  // is this unnecessary?
-                            ListItems.AddRange(action.Items);
+                        ListItems.Clear();  // is this unnecessary?
+                        ListItems.AddRange(action.Items);
 
-                            Adapter.ListItems = ListItems;
-                            UpdateView();
+                        Adapter.ListItems = ListItems;
+                        UpdateView();
 
-                            progressDialog.Dismiss();
+                        progressDialog.Dismiss();
                     });
                 }
             );

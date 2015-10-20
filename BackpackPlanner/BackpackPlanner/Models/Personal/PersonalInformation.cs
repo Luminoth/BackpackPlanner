@@ -16,6 +16,7 @@
 
 using System;
 
+using EnergonSoftware.BackpackPlanner.Core.Settings;
 using EnergonSoftware.BackpackPlanner.Settings;
 using EnergonSoftware.BackpackPlanner.Units.Units;
 
@@ -68,15 +69,11 @@ namespace EnergonSoftware.BackpackPlanner.Models.Personal
             set
             {
                 _name = value;
-                _settings.SettingChanged(this, new SettingsChangedEventArgs
-                    {
-                        PreferenceKey = NamePreferenceKey
-                    }
-                );
+                _settingsManager?.PutString(NamePreferenceKey, _name);
             }
         }
 
-        private DateTime? _dateOfBirth = null;
+        private DateTime? _dateOfBirth;
 
         /// <summary>
         /// Gets or sets the user's date of birth.
@@ -91,11 +88,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Personal
             set
             {
                 _dateOfBirth = value;
-                _settings.SettingChanged(this, new SettingsChangedEventArgs
-                    {
-                        PreferenceKey = DateOfBirthPreferenceKey
-                    }
-                );
+                _settingsManager?.PutString(DateOfBirthPreferenceKey, _dateOfBirth?.ToString() ?? string.Empty);
             }
         }
 
@@ -114,11 +107,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Personal
             set
             {
                 _userSex = value;
-                _settings.SettingChanged(this, new SettingsChangedEventArgs
-                    {
-                        PreferenceKey = UserSexPreferenceKey
-                    }
-                );
+                _settingsManager?.PutString(UserSexPreferenceKey, _userSex.ToString());
             }
         }
 
@@ -137,11 +126,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Personal
             set
             {
                 _heightInCm = value < 0 ? 0 : value;
-                _settings.SettingChanged(this, new SettingsChangedEventArgs
-                    {
-                        PreferenceKey = HeightPreferenceKey
-                    }
-                );
+                _settingsManager?.PutInt(HeightPreferenceKey, _heightInCm);
             }
         }
 
@@ -153,8 +138,8 @@ namespace EnergonSoftware.BackpackPlanner.Models.Personal
         /// </value>
         public double HeightInUnits
         {
-            get { return _settings.Units.LengthFromCentimeters(HeightInCm); }
-            set { HeightInCm = (int)_settings.Units.CentimetersFromLength(value); }
+            get { return _settings?.Units.LengthFromCentimeters(HeightInCm) ?? HeightInCm; }
+            set { HeightInCm = (int)(_settings?.Units.CentimetersFromLength(value) ?? value); }
         }
 
         private int _weightInGrams;
@@ -172,11 +157,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Personal
             set
             {
                 _weightInGrams = value < 0 ? 0 : value;
-                _settings.SettingChanged(this, new SettingsChangedEventArgs
-                    {
-                        PreferenceKey = WeightPreferenceKey
-                    }
-                );
+                _settingsManager?.PutInt(WeightPreferenceKey, _weightInGrams);
             }
         }
 
@@ -188,18 +169,21 @@ namespace EnergonSoftware.BackpackPlanner.Models.Personal
         /// </value>
         public double WeightInUnits
         {
-            get { return _settings.Units.WeightFromGrams(WeightInGrams); }
-            set { WeightInGrams = (int)_settings.Units.GramsFromWeight(value); }
+            get { return _settings?.Units.WeightFromGrams(WeightInGrams) ?? WeightInGrams; }
+            set { WeightInGrams = (int)(_settings?.Units.GramsFromWeight(value) ?? WeightInGrams); }
         }
+
+        private readonly SettingsManager _settingsManager;
 
         private readonly BackpackPlannerSettings _settings;
 
-        public PersonalInformation(BackpackPlannerSettings settings)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PersonalInformation"/> class.
+        /// </summary>
+        /// <param name="settingsManager">The settings manager.</param>
+        public PersonalInformation(SettingsManager settingsManager, BackpackPlannerSettings settings)
         {
-            if(null == settings) {
-                throw new ArgumentNullException(nameof(settings));
-            }
-
+            _settingsManager = settingsManager;
             _settings = settings;
         }
     }

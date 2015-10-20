@@ -28,8 +28,18 @@ namespace EnergonSoftware.BackpackPlanner.Actions
     /// </summary>
     public class AddItemAction<T> : Action where T: DatabaseItem
     {
+        /// <summary>
+        /// Gets the item to add.
+        /// </summary>
+        /// <value>
+        /// The item to add.
+        /// </value>
         public T Item { get; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AddItemAction{T}"/> class.
+        /// </summary>
+        /// <param name="item">The item to add.</param>
         public AddItemAction(T item)
         {
             if(null == item) {

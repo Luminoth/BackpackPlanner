@@ -22,7 +22,6 @@ using Android.OS;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Droid.Logging;
-using EnergonSoftware.BackpackPlanner.Droid.Util;
 
 using SQLite.Net.Platform.XamarinAndroid;
 
@@ -50,24 +49,20 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 
             BackpackPlannerState = new BackpackPlannerState(
                 new HockeyAppManager(this),
+                new DroidSettingsManager(Android.Support.V7.Preferences.PreferenceManager.GetDefaultSharedPreferences(this)),
                 new PlayServicesManager(this),
                 new SQLitePlatformAndroid()
             );
+            BackpackPlannerState.InitAsync().Wait();
 
-            BackpackPlannerState.InitAsync(
-                (sender, args) => {
-                    SettingsUtil.SaveToSharedPreferences(BackpackPlannerState, Android.Support.V7.Preferences.PreferenceManager.GetDefaultSharedPreferences(this), args.PreferenceKey);
-                }
-            ).Wait();
-
-             ((PlayServicesManager)BackpackPlannerState.PlatformPlayServicesManager).OnCreate(savedInstanceState);
+            ((PlayServicesManager)BackpackPlannerState.PlatformPlayServicesManager).OnCreate(savedInstanceState);
         }
 
         protected override void OnSaveInstanceState(Bundle outState)
         {
             base.OnSaveInstanceState(outState);
 
-             ((PlayServicesManager)BackpackPlannerState.PlatformPlayServicesManager).OnSaveInstanceState(outState);
+            ((PlayServicesManager)BackpackPlannerState.PlatformPlayServicesManager).OnSaveInstanceState(outState);
         }
 
         protected override void OnDestroy()
@@ -139,7 +134,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             Android.Support.V7.Preferences.PreferenceManager.SetDefaultValues(this, Resource.Xml.settings, false);
 
             Logger.Debug("Loading preferences...");
-            SettingsUtil.UpdateFromSharedPreferences(BackpackPlannerState, Android.Support.V7.Preferences.PreferenceManager.GetDefaultSharedPreferences(this), null);
+            BackpackPlannerState.PlatformSettingsManager.Load(BackpackPlannerState.Settings, BackpackPlannerState.PersonalInformation);
         }
     }
 }

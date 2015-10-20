@@ -28,8 +28,18 @@ namespace EnergonSoftware.BackpackPlanner.Actions
     /// </summary>
     public class SaveItemAction<T> : Action where T: DatabaseItem
     {
+        /// <summary>
+        /// Gets the item to save.
+        /// </summary>
+        /// <value>
+        /// The item to save.
+        /// </value>
         public T Item { get; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SaveItemAction{T}"/> class.
+        /// </summary>
+        /// <param name="item">The item to save.</param>
         public SaveItemAction(T item)
         {
             if(null == item) {

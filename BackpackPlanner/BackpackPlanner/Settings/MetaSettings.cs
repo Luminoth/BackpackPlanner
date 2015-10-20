@@ -14,6 +14,8 @@
    limitations under the License.
 */
 
+using EnergonSoftware.BackpackPlanner.Core.Settings;
+
 namespace EnergonSoftware.BackpackPlanner.Settings
 {
     /// <summary>
@@ -43,27 +45,19 @@ namespace EnergonSoftware.BackpackPlanner.Settings
             set
             {
                 _firstRun = value;
-                _settingsChangedObj.SettingChanged(this, new SettingsChangedEventArgs
-                    {
-                        PreferenceKey = FirstRunPreferenceKey
-                    }
-                );
+                _settingsManager?.PutBoolean(FirstRunPreferenceKey, _firstRun);
             }
         }
 
-        // TODO: this should be an interface that
-        // has the "SettingChanged" event rather than
-        // something specific to this application
-        // also, this name sucks...
-        private readonly BackpackPlannerSettings _settingsChangedObj;
+        private readonly SettingsManager _settingsManager;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MetaSettings"/> class.
+        /// Initializes a new instance of the <see cref="MetaSettings" /> class.
         /// </summary>
-        /// <param name="settingsChangedObj">The settings changed object.</param>
-        public MetaSettings(BackpackPlannerSettings settingsChangedObj)
+        /// <param name="settingsManager">The settings manager.</param>
+        public MetaSettings(SettingsManager settingsManager)
         {
-            _settingsChangedObj = settingsChangedObj;
+            _settingsManager = settingsManager;
         }
     }
 }

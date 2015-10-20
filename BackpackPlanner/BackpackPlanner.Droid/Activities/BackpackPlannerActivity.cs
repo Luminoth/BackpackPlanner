@@ -54,6 +54,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             // create the navigation drawer
             _navigationDrawerManager.Create(this, Toolbar, savedInstanceState);
             _navigationDrawerManager.Toggle.ToolbarNavigationClickListener = this;
+
+            // TODO: this doesn't seem to actually work
             _navigationDrawerManager.HeaderText.Text = !string.IsNullOrWhiteSpace(BackpackPlannerState.PersonalInformation.Name)
                     ? BackpackPlannerState.PersonalInformation.Name
                     : Resources.GetString(Resource.String.app_name);

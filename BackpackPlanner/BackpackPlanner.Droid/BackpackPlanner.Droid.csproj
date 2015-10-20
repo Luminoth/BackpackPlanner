@@ -193,6 +193,7 @@
     <Compile Include="PlayServicesManager.cs" />
     <Compile Include="HockeyAppManager.cs" />
     <Compile Include="Logging\DroidLogger.cs" />
+    <Compile Include="DroidSettingsManager.cs" />
     <Compile Include="Util\CircleViewPagerIndicator.cs" />
     <Compile Include="Util\DialogUtil.cs" />
     <Compile Include="Util\DrawerToggle.cs" />
@@ -203,7 +204,6 @@
     <Compile Include="Util\DrawerToggleEventArgs.cs" />
     <Compile Include="Util\FragmentTransitionUtil.cs" />
     <Compile Include="Util\NavigationDrawerManager.cs" />
-    <Compile Include="Util\SettingsUtil.cs" />
     <Compile Include="Util\SnackbarUtil.cs" />
     <Compile Include="Util\ViewPagerIndicator.cs" />
   </ItemGroup>

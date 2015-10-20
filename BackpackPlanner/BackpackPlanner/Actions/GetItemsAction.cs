@@ -29,10 +29,10 @@ namespace EnergonSoftware.BackpackPlanner.Actions
     public class GetItemsAction<T> : Action where T: DatabaseItem, new()
     {
         /// <summary>
-        /// Gets or sets the item to add.
+        /// Gets the items.
         /// </summary>
         /// <value>
-        /// The item to add.
+        /// The items.
         /// </value>
         public List<T> Items { get; private set; } = new List<T>();
 

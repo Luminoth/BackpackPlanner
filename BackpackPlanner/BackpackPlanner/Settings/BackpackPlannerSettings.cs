@@ -14,8 +14,7 @@
    limitations under the License.
 */
 
-using System;
-
+using EnergonSoftware.BackpackPlanner.Core.Settings;
 using EnergonSoftware.BackpackPlanner.Units.Currency;
 using EnergonSoftware.BackpackPlanner.Units.Units;
 
@@ -43,13 +42,6 @@ namespace EnergonSoftware.BackpackPlanner.Settings
         public const string CurrencyPreferenceKey = "currency";
 #endregion
 
-#region Events
-        /// <summary>
-        /// Occurs when a setting is changed.
-        /// </summary>
-        public event EventHandler<SettingsChangedEventArgs> SettingsChangedEvent;
-#endregion
-
         /// <summary>
         /// Gets the meta settings.
         /// </summary>
@@ -73,11 +65,7 @@ namespace EnergonSoftware.BackpackPlanner.Settings
             set
             {
                 _connectGooglePlayServices = value;
-                SettingChanged(this, new SettingsChangedEventArgs
-                    {
-                        PreferenceKey = ConnectGooglePlayServicesPreferenceKey
-                    }
-                );
+                _settingsManager?.PutBoolean(ConnectGooglePlayServicesPreferenceKey, _connectGooglePlayServices);
             }
         }
 
@@ -96,11 +84,7 @@ namespace EnergonSoftware.BackpackPlanner.Settings
             set
             {
                 _units = value;
-                SettingChanged(this, new SettingsChangedEventArgs
-                    {
-                        PreferenceKey = UnitSystemPreferenceKey
-                    }
-                );
+                _settingsManager?.PutString(UnitSystemPreferenceKey, _units.ToString());
             }
         }
 
@@ -119,11 +103,7 @@ namespace EnergonSoftware.BackpackPlanner.Settings
             set
             {
                 _currency = value;
-                SettingChanged(this, new SettingsChangedEventArgs
-                    {
-                        PreferenceKey = CurrencyPreferenceKey
-                    }
-                );
+                _settingsManager?.PutString(CurrencyPreferenceKey, _currency.ToString());
             }
         }
 
@@ -195,32 +175,19 @@ namespace EnergonSoftware.BackpackPlanner.Settings
         /// 9000 grams is about 20 pounds.
         /// </remarks>
         public int LightweightClassMaxWeightInGrams { get; } = 9000;
-        #endregion
+#endregion
+
+        private readonly SettingsManager _settingsManager;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BackpackPlannerSettings" /> class.
         /// </summary>
-        public BackpackPlannerSettings()
+        /// <param name="settingsManager">The settings manager.</param>
+        public BackpackPlannerSettings(SettingsManager settingsManager)
         {
-            MetaSettings = new MetaSettings(this);
-        }
+            _settingsManager = settingsManager;
 
-        /// <summary>
-        /// Notifies that a setting has changed.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="args">The <see cref="EnergonSoftware.BackpackPlanner.Settings.SettingsChangedEventArgs" /> instance containing the event data.</param>
-        public void SettingChanged(object sender, SettingsChangedEventArgs args)
-        {
-            SettingsChangedEvent?.Invoke(sender, args);
-        }
-
-        /// <summary>
-        /// Resets the settings changed event.
-        /// </summary>
-        public void ResetSettingsChangedEvent()
-        {
-            SettingsChangedEvent = null;
+            MetaSettings = new MetaSettings(_settingsManager);
         }
     }
 }
