@@ -14,6 +14,7 @@
    limitations under the License.
 */
 
+using System;
 using System.Globalization;
 
 using Android.OS;
@@ -86,10 +87,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
             _gearItemConsumedEditText.EditText.Text = Item.ConsumedPerDay.ToString();
 
             _gearItemWeightEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.view_gear_item_weight);
-            _gearItemWeightEditText.EditText.Text = Item.WeightInUnits.ToString("N2", CultureInfo.InvariantCulture);
+            _gearItemWeightEditText.EditText.Text = Item.WeightInUnits.ToString("N0", CultureInfo.InvariantCulture);
 
             _gearItemCostEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.view_gear_item_cost);
-            _gearItemCostEditText.EditText.Text = Item.CostInCurrency.ToString("N2", CultureInfo.InvariantCulture);
+            _gearItemCostEditText.EditText.Text = Item.CostInCurrency.ToString("N0", CultureInfo.InvariantCulture);
 
             _gearItemNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.view_gear_item_note);
             _gearItemNoteEditText.EditText.Text = Item.Note;
@@ -110,11 +111,39 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
 
         protected override void OnDoDataExchange()
         {
+            Item.Name = _gearItemNameEditText.EditText.Text;
+            Item.Make = _gearItemMakeEditText.EditText.Text;
+            Item.Model = _gearItemModelEditText.EditText.Text;
+            Item.Url = _gearItemWebsiteEditText.EditText.Text;
+            Item.WeightInUnits = Convert.ToDouble(_gearItemWeightEditText.EditText.Text);
+            Item.CostInCurrency = Convert.ToDouble(_gearItemCostEditText.EditText.Text);
+            Item.Note = _gearItemNoteEditText.EditText.Text;
+
+            int carriedSelectionResId = _gearItemCarriedRadioGroup.CheckedRadioButtonId;
+            switch(carriedSelectionResId)
+            {
+            case Resource.Id.add_gear_item_carried_carried:
+                Item.Carried = GearCarried.Carried;
+                break;
+            case Resource.Id.add_gear_item_carried_worn:
+                Item.Carried = GearCarried.Worn;
+                break;
+            case Resource.Id.add_gear_item_carried_not_carried:
+                Item.Carried = GearCarried.NotCarried;
+                break;
+            }
         }
 
         protected override bool OnValidate()
         {
-            return true;
+            bool valid = true;
+
+            if(string.IsNullOrWhiteSpace(_gearItemNameEditText.EditText.Text)) {
+                _gearItemNameEditText.EditText.Error = "A name is required!";
+                valid = false;                
+            }
+
+            return valid;
         }
     }
 }

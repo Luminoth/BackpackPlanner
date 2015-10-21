@@ -38,6 +38,15 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             Title = Resources.GetString(Resource.String.app_name);
 		}
 
+	    protected override void OnDestroy()
+	    {
+	        base.OnDestroy();
+
+            if(((HockeyAppManager)BackpackPlannerState.PlatformHockeyAppManager).HasNewCrashes(this)) {
+                Logger.Warn("Hockey app has new crashes, probably leaking the dialog!");
+            }
+	    }
+
 	    protected override void OnResume()
 	    {
 	        base.OnResume();

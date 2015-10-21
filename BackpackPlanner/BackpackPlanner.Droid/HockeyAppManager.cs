@@ -39,17 +39,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
         public bool IsInitialized { get { return _isInitialized; } private set { _isInitialized = value; } }
 
-        private readonly Activity _activity;
-
-        public HockeyAppManager(Activity activity)
-        {
-            if(null == activity) {
-                throw new ArgumentNullException(nameof(activity));
-            }
-
-            _activity = activity;
-        }
-
         public async Task InitAsync()
         {
             if(IsInitialized) {
@@ -59,45 +48,78 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
             Logger.Info("Initializing HockeyApp...");
 
-            // Register the crash manager before Initializing the trace writer
-            CrashManager.Register(_activity, AppId); 
-
-            // Register to with the Update Manager
-            UpdateManager.Register(_activity, AppId);
-
-            // Register the Feedback Manager
-            FeedbackManager.Register(_activity, AppId);
-
-            // Initialize the Trace Writer
             TraceWriter.Initialize();
 
-            // Wire up Unhandled Expcetion handler from Android
-            AndroidEnvironment.UnhandledExceptionRaiser += (sender, args) => {
-                // Use the trace writer to log exceptions so HockeyApp finds them
-                TraceWriter.WriteTrace(args.Exception);
-                args.Handled = true;
-            };
-
-            // Wire up the .NET Unhandled Exception handler
-            AppDomain.CurrentDomain.UnhandledException += (sender, args) => TraceWriter.WriteTrace(args.ExceptionObject);
-
-            // Wire up the unobserved task exception handler
-            TaskScheduler.UnobservedTaskException += (sender, args) => TraceWriter.WriteTrace(args.Exception);
+            AndroidEnvironment.UnhandledExceptionRaiser += OnUnhandledExceptionRaised;
+            AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
+            TaskScheduler.UnobservedTaskException += OnUnobservedTaskException;
 
             await Task.Delay(0).ConfigureAwait(false);
 
             IsInitialized = true;
         }
 
+        public void OnCreate(Activity activity)
+        {
+            UpdateManager.Register(activity, AppId);
+        }
+
+        public void OnDestroy()
+        {
+            UpdateManager.Unregister();
+        }
+
+        public void OnResume(Activity activity)
+        {
+            Tracking.StartUsage(activity);
+            CrashManager.Register(activity, AppId);
+        }
+
+        public void OnPause(Activity activity)
+        {
+            UpdateManager.Unregister();
+            Tracking.StopUsage(activity);
+        }
+
+        public bool HasNewCrashes(Activity activity)
+        {
+            return 1 == CrashManager.HasStackTraces(new Java.Lang.Ref.WeakReference(activity));
+        }
+
         public async Task DestroyAsync()
         {
+            TaskScheduler.UnobservedTaskException -= OnUnobservedTaskException;
+            AppDomain.CurrentDomain.UnhandledException -= OnUnhandledException;
+            AndroidEnvironment.UnhandledExceptionRaiser -= OnUnhandledExceptionRaised;
+
             await Task.Delay(0).ConfigureAwait(false);
         }
 
         public void ShowFeedback()
         {
+            throw new NotImplementedException();
+        }
+
+        public void ShowFeedback(Activity activity)
+        {
+            FeedbackManager.Register(activity, AppId);
             /*Logger.Debug("Showing feedback activity");
-            FeedbackManager.ShowFeedbackActivity(_activity);*/
+            FeedbackManager.ShowFeedbackActivity(activity);*/
+        }
+
+        private void OnUnhandledExceptionRaised(object sender, RaiseThrowableEventArgs args)
+        {
+            TraceWriter.WriteTrace(args.Exception);
+            args.Handled = true;
+        }
+
+        private void OnUnhandledException(object sender, UnhandledExceptionEventArgs args)
+        {
+            TraceWriter.WriteTrace(args.ExceptionObject);
+        }
+
+        private void OnUnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs args)
+        {
         }
     }
 }

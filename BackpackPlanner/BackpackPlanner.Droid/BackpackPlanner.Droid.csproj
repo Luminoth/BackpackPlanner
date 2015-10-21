@@ -218,7 +218,6 @@
     <AndroidResource Include="Resources\layout\fragment_ftue_meals.axml" />
     <AndroidResource Include="Resources\layout\fragment_ftue_trips.axml" />
     <AndroidResource Include="Resources\layout\fragment_debug.axml" />
-    <AndroidResource Include="Resources\layout\fragment_item_list.axml" />
     <ProguardConfiguration Include="proguard.cfg" />
     <None Include="README.md" />
     <None Include="Resources\AboutResources.txt" />
