@@ -14,6 +14,9 @@
    limitations under the License.
 */
 
+using Android.OS;
+using Android.Views;
+
 using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
@@ -28,16 +31,38 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 
         protected override bool HasSearchView => false;
 
+#region Controls
+        private Android.Support.Design.Widget.TextInputLayout _gearSystemNameEditText;
+        private Android.Support.Design.Widget.TextInputLayout _gearSystemNoteEditText;
+#endregion
+
+        public override void OnViewCreated(View view, Bundle savedInstanceState)
+        {
+            base.OnViewCreated(view, savedInstanceState);
+
+            _gearSystemNameEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.add_gear_system_name);
+            _gearSystemNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.add_gear_system_note);
+        }
+
         protected override void OnDoDataExchange()
         {
             Item = new GearSystem(BaseActivity.BackpackPlannerState.Settings)
             {
+                Name = _gearSystemNameEditText.EditText.Text,
+                Note = _gearSystemNoteEditText.EditText.Text
             };
         }
 
         protected override bool OnValidate()
         {
-            return true;
+            bool valid = true;
+
+            if(string.IsNullOrWhiteSpace(_gearSystemNameEditText.EditText.Text)) {
+                _gearSystemNameEditText.EditText.Error = "A name is required!";
+                valid = false;                
+            }
+
+            return valid;
         }
     }
 }
