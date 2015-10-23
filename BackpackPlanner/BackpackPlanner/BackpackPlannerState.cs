@@ -94,10 +94,10 @@ namespace EnergonSoftware.BackpackPlanner
         private void Dispose(bool disposing)
         {
             if(disposing) {
-                DatabaseState.Dispose();
+                DatabaseState?.Dispose();
             }
         }
-        #endregion
+#endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BackpackPlannerState" /> class.

@@ -27,6 +27,8 @@ namespace EnergonSoftware.BackpackPlanner.Core.Settings
     /// <summary>
     /// Platform settings manager
     /// </summary>
+    // TODO: this should be split into a core interface
+    // and a non-core abstract class that implements load/update
     public abstract class SettingsManager
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(SettingsManager));

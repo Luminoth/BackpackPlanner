@@ -178,9 +178,10 @@ namespace EnergonSoftware.BackpackPlanner.Models.Personal
         private readonly BackpackPlannerSettings _settings;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PersonalInformation"/> class.
+        /// Initializes a new instance of the <see cref="PersonalInformation" /> class.
         /// </summary>
         /// <param name="settingsManager">The settings manager.</param>
+        /// <param name="settings">The settings.</param>
         public PersonalInformation(SettingsManager settingsManager, BackpackPlannerSettings settings)
         {
             _settingsManager = settingsManager;

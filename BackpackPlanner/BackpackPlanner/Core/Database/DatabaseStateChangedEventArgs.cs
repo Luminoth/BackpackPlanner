@@ -21,6 +21,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
     /// <summary>
     /// 
     /// </summary>
+    // TODO: this doesn't belong in core
     public class DatabaseStateChangedEventArgs : EventArgs
     {
     }

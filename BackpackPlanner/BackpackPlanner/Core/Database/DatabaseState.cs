@@ -38,7 +38,8 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
     /// <summary>
     /// 
     /// </summary>
-    public class DatabaseState : IDisposable
+    // TODO: this doesn't belong in core
+    public sealed class DatabaseState : IDisposable
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(DatabaseState));
 
@@ -99,7 +100,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
         private void Dispose(bool disposing)
         {
             if(disposing) {
-                Connection.Dispose();
+                Connection?.Dispose();
             }
         }
 #endregion

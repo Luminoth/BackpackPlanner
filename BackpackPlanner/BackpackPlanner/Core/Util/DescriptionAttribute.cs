@@ -30,7 +30,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Util
         /// <value>
         /// The description.
         /// </value>
-        public string Description { get; set; }
+        public string Description { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DescriptionAttribute"/> class.
