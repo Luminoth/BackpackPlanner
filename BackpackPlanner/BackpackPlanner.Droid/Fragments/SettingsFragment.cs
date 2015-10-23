@@ -43,6 +43,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         public override void OnCreatePreferences(Bundle savedInstanceState, string rootKey)
         {
+            // TODO: this is now crashing... ugh
             AddPreferencesFromResource(Resource.Xml.settings);
 
 // TODO: remove any of these that are unused

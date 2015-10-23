@@ -2416,6 +2416,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0c0044
 			public const int activity_chooser_view_content = 2131492932;
 			
+			// aapt resource value: 0x7f0c0075
+			public const int add_gear_collection_name = 2131492981;
+			
+			// aapt resource value: 0x7f0c0076
+			public const int add_gear_collection_note = 2131492982;
+			
 			// aapt resource value: 0x7f0c007c
 			public const int add_gear_item_carried = 2131492988;
 			
@@ -2685,12 +2691,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			
 			// aapt resource value: 0x7f0c0071
 			public const int ftue_pager = 2131492977;
-			
-			// aapt resource value: 0x7f0c0075
-			public const int gear_collection_name = 2131492981;
-			
-			// aapt resource value: 0x7f0c0076
-			public const int gear_collection_note = 2131492982;
 			
 			// aapt resource value: 0x7f0c0099
 			public const int gear_collections_layout = 2131493017;
@@ -3702,8 +3702,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f07000f
 			public const int common_android_wear_update_title = 2131165199;
 			
-			// aapt resource value: 0x7f07001f
-			public const int common_google_play_services_api_unavailable_text = 2131165215;
+			// aapt resource value: 0x7f07001d
+			public const int common_google_play_services_api_unavailable_text = 2131165213;
 			
 			// aapt resource value: 0x7f07000d
 			public const int common_google_play_services_enable_button = 2131165197;
@@ -3750,11 +3750,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f070002
 			public const int common_google_play_services_notification_ticker = 2131165186;
 			
-			// aapt resource value: 0x7f070021
-			public const int common_google_play_services_sign_in_failed_text = 2131165217;
+			// aapt resource value: 0x7f07001f
+			public const int common_google_play_services_sign_in_failed_text = 2131165215;
 			
-			// aapt resource value: 0x7f070020
-			public const int common_google_play_services_sign_in_failed_title = 2131165216;
+			// aapt resource value: 0x7f07001e
+			public const int common_google_play_services_sign_in_failed_title = 2131165214;
 			
 			// aapt resource value: 0x7f070018
 			public const int common_google_play_services_unknown_issue = 2131165208;
@@ -3780,14 +3780,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f070012
 			public const int common_google_play_services_updating_title = 2131165202;
 			
-			// aapt resource value: 0x7f07001e
-			public const int common_open_on_phone = 2131165214;
-			
 			// aapt resource value: 0x7f07001c
-			public const int common_signin_button_text = 2131165212;
+			public const int common_open_on_phone = 2131165212;
 			
-			// aapt resource value: 0x7f07001d
-			public const int common_signin_button_text_long = 2131165213;
+			// aapt resource value: 0x7f070020
+			public const int common_signin_button_text = 2131165216;
+			
+			// aapt resource value: 0x7f070021
+			public const int common_signin_button_text_long = 2131165217;
 			
 			// aapt resource value: 0x7f07005c
 			public const int confirm_delete_gear_collection = 2131165276;

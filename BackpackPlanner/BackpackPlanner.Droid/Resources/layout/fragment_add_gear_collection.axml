@@ -11,7 +11,7 @@
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/gear_collection_name">
+            android:id="@+id/add_gear_collection_name">
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/gear_collection_note">
+            android:id="@+id/add_gear_collection_note">
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

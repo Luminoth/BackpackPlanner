@@ -31,7 +31,7 @@ using EnergonSoftware.BackpackPlanner.Droid.Util;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 {
-    [Activity(Label = "@string/app_name")]
+    [Activity(Label = "@string/app_name", Exported = true)]
     public sealed class BackpackPlannerActivity : BaseActivity, View.IOnClickListener
     {
 #region Controls
