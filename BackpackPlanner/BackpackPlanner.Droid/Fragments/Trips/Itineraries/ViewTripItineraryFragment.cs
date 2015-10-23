@@ -14,6 +14,9 @@
    limitations under the License.
 */
 
+using Android.OS;
+using Android.Views;
+
 using EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries
@@ -28,13 +31,38 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries
 
         protected override bool HasSearchView => false;
 
+#region Controls
+        private Android.Support.Design.Widget.TextInputLayout _tripItineraryNameEditText;
+        private Android.Support.Design.Widget.TextInputLayout _tripItineraryNoteEditText;
+#endregion
+
+        public override void OnViewCreated(View view, Bundle savedInstanceState)
+        {
+            base.OnViewCreated(view, savedInstanceState);
+
+            _tripItineraryNameEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.view_trip_itinerary_name);
+            _tripItineraryNameEditText.EditText.Text = Item.Name;
+
+            _tripItineraryNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.view_trip_itinerary_note);
+            _tripItineraryNoteEditText.EditText.Text = Item.Note;
+        }
+
         protected override void OnDoDataExchange()
         {
+            Item.Name = _tripItineraryNameEditText.EditText.Text;
+            Item.Note = _tripItineraryNoteEditText.EditText.Text;
         }
 
         protected override bool OnValidate()
         {
-            return true;
+            bool valid = true;
+
+            if(string.IsNullOrWhiteSpace(_tripItineraryNameEditText.EditText.Text)) {
+                _tripItineraryNameEditText.EditText.Error = "A name is required!";
+                valid = false;                
+            }
+
+            return valid;
         }
     }
 }

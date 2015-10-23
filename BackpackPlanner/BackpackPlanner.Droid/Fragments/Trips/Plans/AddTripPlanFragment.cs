@@ -14,6 +14,9 @@
    limitations under the License.
 */
 
+using Android.OS;
+using Android.Views;
+
 using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
@@ -22,22 +25,44 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
     {
         protected override int LayoutResource => Resource.Layout.fragment_add_trip_plan;
 
-        protected override int TitleResource => Resource.String.title_add_trip_itinerary;
+        protected override int TitleResource => Resource.String.title_add_trip_plan;
 
         protected override int AddItemResource => Resource.Id.button_add_trip_plan;
 
         protected override bool HasSearchView => false;
 
+#region Controls
+        private Android.Support.Design.Widget.TextInputLayout _tripPlanNameEditText;
+        private Android.Support.Design.Widget.TextInputLayout _tripPlanNoteEditText;
+#endregion
+
+        public override void OnViewCreated(View view, Bundle savedInstanceState)
+        {
+            base.OnViewCreated(view, savedInstanceState);
+
+            _tripPlanNameEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.add_trip_plan_name);
+            _tripPlanNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.add_trip_plan_note);
+        }
+
         protected override void OnDoDataExchange()
         {
             Item = new TripPlan(BaseActivity.BackpackPlannerState.Settings)
             {
+                Name = _tripPlanNameEditText.EditText.Text,
+                Note = _tripPlanNoteEditText.EditText.Text
             };
         }
 
         protected override bool OnValidate()
         {
-            return true;
+            bool valid = true;
+
+            if(string.IsNullOrWhiteSpace(_tripPlanNameEditText.EditText.Text)) {
+                _tripPlanNameEditText.EditText.Error = "A name is required!";
+                valid = false;                
+            }
+
+            return valid;
         }
     }
 }
