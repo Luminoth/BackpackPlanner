@@ -32,7 +32,7 @@ using EnergonSoftware.BackpackPlanner.Core.PlayServices;
 namespace EnergonSoftware.BackpackPlanner.Droid
 {
     public sealed class PlayServicesManager : Java.Lang.Object, IPlayServicesManager,
-        IGoogleApiClientConnectionCallbacks, IGoogleApiClientOnConnectionFailedListener
+        GoogleApiClient.IConnectionCallbacks, GoogleApiClient.IOnConnectionFailedListener
     {
         // error resolution
         public const int RequestCodeResolveError = 9001;
@@ -71,7 +71,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
         private readonly Activity _activity;
 
-        private IGoogleApiClient _googleClientApi;
+        private GoogleApiClient _googleClientApi;
 
         public PlayServicesManager(Activity activity)
         {
@@ -86,7 +86,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
         {
             if(null == _googleClientApi) {
                 Logger.Debug("Building Google API Client...");
-                _googleClientApi = new GoogleApiClientBuilder(_activity)
+                _googleClientApi = new GoogleApiClient.Builder(_activity)
                     .AddApi(DriveClass.API)
                     .AddScope(DriveClass.ScopeFile)
                     .AddScope(DriveClass.ScopeAppfolder)
