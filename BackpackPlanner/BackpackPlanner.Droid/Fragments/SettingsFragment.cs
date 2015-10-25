@@ -31,11 +31,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         public BaseActivity BaseActivity => (BaseActivity)Activity;
 
 #region Controls
-        private Android.Support.V7.Preferences.EditTextPreference _namePreference;
+        /*private Android.Support.V7.Preferences.EditTextPreference _namePreference;
         private Android.Support.V7.Preferences.EditTextPreference _birthDatePreference;
         private Android.Support.V7.Preferences.ListPreference _userSexPreference;
         private Android.Support.V7.Preferences.EditTextPreference _heightPreference;
-        private Android.Support.V7.Preferences.EditTextPreference _weightPreference;
+        private Android.Support.V7.Preferences.EditTextPreference _weightPreference;*/
 
         private Android.Support.V7.Preferences.ListPreference _unitSystemPreference;
         //private Android.Support.V7.Preferences.ListPreference _currencyPreference;
@@ -48,11 +48,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
 // TODO: remove any of these that are unused
 
-            _namePreference = (Android.Support.V7.Preferences.EditTextPreference)FindPreference(PersonalInformation.NamePreferenceKey);
+            /*_namePreference = (Android.Support.V7.Preferences.EditTextPreference)FindPreference(PersonalInformation.NamePreferenceKey);
             _birthDatePreference = (Android.Support.V7.Preferences.EditTextPreference)FindPreference(PersonalInformation.DateOfBirthPreferenceKey);
             _userSexPreference = (Android.Support.V7.Preferences.ListPreference)FindPreference(PersonalInformation.UserSexPreferenceKey);
             _heightPreference = (Android.Support.V7.Preferences.EditTextPreference)FindPreference(PersonalInformation.HeightPreferenceKey);
-            _weightPreference = (Android.Support.V7.Preferences.EditTextPreference)FindPreference(PersonalInformation.WeightPreferenceKey);
+            _weightPreference = (Android.Support.V7.Preferences.EditTextPreference)FindPreference(PersonalInformation.WeightPreferenceKey);*/
 
             _unitSystemPreference = (Android.Support.V7.Preferences.ListPreference)FindPreference(BackpackPlannerSettings.UnitSystemPreferenceKey);
             //_currencyPreference = (Android.Support.V7.Preferences.ListPreference)FindPreference(BackpackPlannerSettings.CurrencyPreferenceKey);
@@ -78,7 +78,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         }
 
 #region Labels
-        private void SetHeightLabel()
+        /*private void SetHeightLabel()
         {
             _heightPreference.DialogTitle = _heightPreference.Title = Resources.GetString(Resource.String.label_height)
                 + " " + BaseActivity.BackpackPlannerState.Settings.Units.GetSmallLengthString();
@@ -88,11 +88,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         {
             _weightPreference.DialogTitle = _weightPreference.Title = Resources.GetString(Resource.String.label_weight)
                 + " " + BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString();
-        }
+        }*/
 #endregion
 
 #region Summaries
-        private void SetNameSummary()
+        /*private void SetNameSummary()
         {
             _namePreference.Summary = string.IsNullOrWhiteSpace(BaseActivity.BackpackPlannerState.PersonalInformation.Name)
                 ? Resources.GetString(Resource.String.summary_name)
@@ -119,35 +119,35 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         {
             _weightPreference.Summary = BaseActivity.BackpackPlannerState.PersonalInformation.WeightInUnits.ToString("N0", CultureInfo.InvariantCulture)
                 + " " + BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString();
-        }
+        }*/
 
         private void SetUnitSystemSummary()
         {
             _unitSystemPreference.Summary = BaseActivity.BackpackPlannerState.Settings.Units.ToString();
         }
 
-        private void SetCurrencySummary()
+        /*private void SetCurrencySummary()
         {
-            //_currencyPreference.Summary = BaseActivity.BackpackPlannerState.Settings.Currency.ToString();
-        }
+            _currencyPreference.Summary = BaseActivity.BackpackPlannerState.Settings.Currency.ToString();
+        }*/
 #endregion
 
         private void UpdateLabels()
         {
-            SetHeightLabel();
-            SetWeightLabel();
+            /*SetHeightLabel();
+            SetWeightLabel();*/
         }
 
         private void UpdateSummaries()
         {
-            SetNameSummary();
+            /*SetNameSummary();
             SetBirthDateSummary();
             SetUserSexSummary();
             SetHeightSummary();
-            SetWeightSummary();
+            SetWeightSummary();*/
 
             SetUnitSystemSummary();
-            SetCurrencySummary();
+            //SetCurrencySummary();
         }
 
         public void OnSharedPreferenceChanged(ISharedPreferences sharedPreferences, string key)

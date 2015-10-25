@@ -42,6 +42,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(PlayServicesManager));
 
 // https://developers.google.com/drive/android/java-client
+// https://www.youtube.com/watch?v=UiTHG_yl-jA
 
         // TODO: continue with this
         private class DriveContentsResultCallback : Java.Lang.Object, IResultCallback
@@ -58,7 +59,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
 // https://developers.google.com/drive/android/appfolder
 
-                Logger.Debug("Got a Google Drive contents result!");
+                Logger.Debug("Got a Google Drive contents result: " + contentsResult.Status.IsSuccess);
 	        }
         }
 

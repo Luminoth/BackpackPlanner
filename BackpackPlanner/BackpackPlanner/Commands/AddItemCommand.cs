@@ -14,33 +14,46 @@
    limitations under the License.
 */
 
-using System.Collections.Generic;
+using System;
 using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Core.Database;
 using EnergonSoftware.BackpackPlanner.Models;
 using EnergonSoftware.BackpackPlanner.Settings;
 
-namespace EnergonSoftware.BackpackPlanner.Actions
+namespace EnergonSoftware.BackpackPlanner.Commands
 {
     /// <summary>
-    /// Gets all items.
+    /// Adds an item.
     /// </summary>
-    public class GetItemsAction<T> : Action where T: DatabaseItem, new()
+    public class AddItemCommand<T> : Command where T: DatabaseItem
     {
         /// <summary>
-        /// Gets the items.
+        /// Gets the item to add.
         /// </summary>
         /// <value>
-        /// The items.
+        /// The item to add.
         /// </value>
-        public List<T> Items { get; private set; } = new List<T>();
+        public T Item { get; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AddItemCommand{T}"/> class.
+        /// </summary>
+        /// <param name="item">The item to add.</param>
+        public AddItemCommand(T item)
+        {
+            if(null == item) {
+                throw new ArgumentNullException(nameof(item));
+            }
+
+            Item = item;
+        }
 
         public async override Task DoActionAsync(DatabaseState databaseState, BackpackPlannerSettings settings)
         {
             await ValidateDatabaseStateAsync(databaseState).ConfigureAwait(false);
 
-            Items = await DatabaseItem.GetItemsAsync<T>(databaseState, settings).ConfigureAwait(false);
+            await DatabaseItem.SaveItemAsync(databaseState, Item).ConfigureAwait(false);
         }
     }
 }

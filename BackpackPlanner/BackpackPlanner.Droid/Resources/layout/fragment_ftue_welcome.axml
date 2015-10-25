@@ -6,14 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".FTUEActivity">
     <TextView
-        android:text="Welcome to the FTUE!"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="@string/label_ftue_welcome" />
     <Button
         android:id="@+id/button_ftue_skip"
-        android:text="Skip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:text="@string/label_ftue_skip"
         android:textColor="@android:color/white" />
 </LinearLayout>

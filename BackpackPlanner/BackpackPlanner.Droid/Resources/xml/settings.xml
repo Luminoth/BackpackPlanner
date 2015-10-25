@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
-    <PreferenceCategory
+    <!--<PreferenceCategory
         android:title="@string/title_personal_information">
         <SwitchPreference
             android:title="@string/label_google_play_services"
@@ -46,7 +46,7 @@
             android:summary="@string/summary_weight"
             android:inputType="number"
             android:defaultValue="0" />
-    </PreferenceCategory>
+    </PreferenceCategory>-->
     <PreferenceCategory
         android:title="@string/title_units">
         <ListPreference

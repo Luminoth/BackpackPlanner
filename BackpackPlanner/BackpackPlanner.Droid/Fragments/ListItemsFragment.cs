@@ -21,7 +21,7 @@ using Android.OS;
 using Android.Views;
 using Android.Widget;
 
-using EnergonSoftware.BackpackPlanner.Actions;
+using EnergonSoftware.BackpackPlanner.Commands;
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters;
 using EnergonSoftware.BackpackPlanner.Droid.Util;
@@ -97,14 +97,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
             ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_loading_items, false);
 
-            var action = new GetItemsAction<T>();
-            action.DoActionInBackground(BaseActivity.BackpackPlannerState.DatabaseState, BaseActivity.BackpackPlannerState.Settings,
+            var command = new GetItemsCommand<T>();
+            command.DoActionInBackground(BaseActivity.BackpackPlannerState.DatabaseState, BaseActivity.BackpackPlannerState.Settings,
                 a => {
                     Activity.RunOnUiThread(() => {
-                        Logger.Debug($"Read {action.Items.Count} items...");
+                        Logger.Debug($"Read {command.Items.Count} items...");
 
                         ListItems.Clear();  // is this unnecessary?
-                        ListItems.AddRange(action.Items);
+                        ListItems.AddRange(command.Items);
 
                         Adapter.ListItems = ListItems;
                         UpdateView();
@@ -135,9 +135,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             DialogUtil.ShowOkCancelDialog(Activity, DeleteItemConfirmationTextResource, DeleteItemConfirmationTitleResource,
                 (sender, args) => {
                     // TODO: do in background
-                    var action = new DeleteItemAction<T>(item);
-                    action.DoActionAsync(BaseActivity.BackpackPlannerState.DatabaseState, BaseActivity.BackpackPlannerState.Settings).Wait();
-                    if(!action.IsItemDeleted) {
+                    var command = new DeleteItemCommand<T>(item);
+                    command.DoActionAsync(BaseActivity.BackpackPlannerState.DatabaseState, BaseActivity.BackpackPlannerState.Settings).Wait();
+                    if(!command.IsItemDeleted) {
                         // TODO: error!
                         return;
                     }
@@ -150,7 +150,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                     SnackbarUtil.ShowUndoSnackbar(View, Resource.String.label_deleted_item, Android.Support.Design.Widget.Snackbar.LengthLong,
                         view => {
                             // TODO: do in background
-                            action.UndoActionAsync(BaseActivity.BackpackPlannerState.DatabaseState, BaseActivity.BackpackPlannerState.Settings).Wait();
+                            command.UndoActionAsync(BaseActivity.BackpackPlannerState.DatabaseState, BaseActivity.BackpackPlannerState.Settings).Wait();
 
                             Adapter.AddItem(item);
 

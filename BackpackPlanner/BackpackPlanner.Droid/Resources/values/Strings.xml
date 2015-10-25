@@ -37,8 +37,8 @@
     <string name="title_loading_items">Loading Items</string>
     <string name="label_loading_items">Loading items, this may take a moment...</string>
 
-    <string name="title_connect_google_play_services">Connect Google Play Services</string>
-    <string name="label_connect_google_play_services">Connect Google Play Services, yeah?</string>
+    <string name="title_connect_google_play_services">Connect to Google Play Services?</string>
+    <string name="label_connect_google_play_services">Backpacking Planner can take advantage of Google Play Services to sync your data (some day). Would you like to allow this?</string>
 
     <string name="title_connecting_google_play_services">Connecting Google Play Services</string>
     <string name="label_connecting_google_play_services">Connecting Google Play Services, please wait...</string>
@@ -229,4 +229,17 @@
 
     <string name="label_reset_ftue">Reset FTUE</string>
     <string name="label_reset_database">Reset Database</string>
+
+    <!-- FTUE -->
+    <string name="label_ftue_welcome">Welcome to the backpacking planner! This is the FTUE that will eventually help new users understand how to use it!</string>
+    <string name="label_ftue_skip">Skip</string>
+
+    <string name="label_ftue_gear">This page will be all about gear items, collections, and systems and how to use them!</string>
+
+    <string name="label_ftue_meals">This page will be all about meals and how to use them!</string>
+
+    <string name="label_ftue_trips">This page will be all about trip itineraries and plans and how to use them!</string>
+
+    <string name="label_ftue_final">This is the final fragment that will remind you to be safe and have fun!</string>
+    <string name="label_ftue_finish">Got it!</string>
 </resources>

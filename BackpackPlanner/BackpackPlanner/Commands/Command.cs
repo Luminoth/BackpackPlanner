@@ -20,13 +20,12 @@ using System.Threading.Tasks;
 using EnergonSoftware.BackpackPlanner.Core.Database;
 using EnergonSoftware.BackpackPlanner.Settings;
 
-namespace EnergonSoftware.BackpackPlanner.Actions
+namespace EnergonSoftware.BackpackPlanner.Commands
 {
     /// <summary>
     /// 
     /// </summary>
-    // TODO: rename this so it doesn't conflict with System.Action
-    public abstract class Action
+    public abstract class Command
     {
         /// <summary>
         /// Does the action.
@@ -41,13 +40,13 @@ namespace EnergonSoftware.BackpackPlanner.Actions
         /// <param name="databaseState">State of the database.</param>
         /// <param name="settings">The settings.</param>
         /// <param name="actionFinishedCallback">The action finished callback.</param>
-        public void DoActionInBackground(DatabaseState databaseState, BackpackPlannerSettings settings, Action<Action> actionFinishedCallback)
+        public void DoActionInBackground(DatabaseState databaseState, BackpackPlannerSettings settings, Action<Command> actionFinishedCallback)
         {
             Task.Run(async () =>
-            {
-                await DoActionAsync(databaseState, settings).ConfigureAwait(false);
-                actionFinishedCallback?.Invoke(this);
-            }
+                {
+                    await DoActionAsync(databaseState, settings).ConfigureAwait(false);
+                    actionFinishedCallback?.Invoke(this);
+                }
             );
         }
 
@@ -67,13 +66,13 @@ namespace EnergonSoftware.BackpackPlanner.Actions
         /// <param name="databaseState">State of the database.</param>
         /// <param name="settings">The settings.</param>
         /// <param name="actionFinishedCallback">The action finished callback.</param>
-        public void UndoActionInBackground(DatabaseState databaseState, BackpackPlannerSettings settings, Action<Action> actionFinishedCallback)
+        public void UndoActionInBackground(DatabaseState databaseState, BackpackPlannerSettings settings, Action<Command> actionFinishedCallback)
         {
             Task.Run(async () =>
-            {
-                await UndoActionAsync(databaseState, settings).ConfigureAwait(false);
-                actionFinishedCallback?.Invoke(this);
-            }
+                {
+                    await UndoActionAsync(databaseState, settings).ConfigureAwait(false);
+                    actionFinishedCallback?.Invoke(this);
+                }
             );
         }
 

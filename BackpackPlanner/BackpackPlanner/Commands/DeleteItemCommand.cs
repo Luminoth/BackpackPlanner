@@ -21,39 +21,60 @@ using EnergonSoftware.BackpackPlanner.Core.Database;
 using EnergonSoftware.BackpackPlanner.Models;
 using EnergonSoftware.BackpackPlanner.Settings;
 
-namespace EnergonSoftware.BackpackPlanner.Actions
+namespace EnergonSoftware.BackpackPlanner.Commands
 {
     /// <summary>
-    /// Adds an item.
+    /// Deletes an item.
     /// </summary>
-    public class AddItemAction<T> : Action where T: DatabaseItem
+    public class DeleteItemCommand<T> : Command where T: DatabaseItem
     {
         /// <summary>
-        /// Gets the item to add.
+        /// Gets the item to delete.
         /// </summary>
         /// <value>
-        /// The item to add.
+        /// The item to delete.
         /// </value>
         public T Item { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AddItemAction{T}"/> class.
+        /// Gets a value indicating whether the item was deleted or not.
         /// </summary>
-        /// <param name="item">The item to add.</param>
-        public AddItemAction(T item)
+        /// <value>
+        /// <c>true</c> if the item was deleted; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsItemDeleted { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DeleteItemAction{T}"/> class.
+        /// </summary>
+        /// <param name="item">The item to delete.</param>
+        public DeleteItemCommand(T item)
         {
             if(null == item) {
                 throw new ArgumentNullException(nameof(item));
             }
 
             Item = item;
-        }
+        } 
 
         public async override Task DoActionAsync(DatabaseState databaseState, BackpackPlannerSettings settings)
         {
             await ValidateDatabaseStateAsync(databaseState).ConfigureAwait(false);
 
+            int count = await DatabaseItem.DeleteItemAsync(databaseState, Item).ConfigureAwait(false);
+
+// TODO: how do we save "undo" state? maybe in the item itself?
+
+            IsItemDeleted = count > 0;
+        }
+
+        public async override Task UndoActionAsync(DatabaseState databaseState, BackpackPlannerSettings settings)
+        {
+            await ValidateDatabaseStateAsync(databaseState).ConfigureAwait(false);
+
             await DatabaseItem.SaveItemAsync(databaseState, Item).ConfigureAwait(false);
+
+// TODO: how do we load "undo" state? maybe in the item itself?
         }
     }
 }

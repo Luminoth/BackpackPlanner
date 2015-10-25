@@ -3876,6 +3876,27 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0700ca
 			public const int label_feedback = 2131165386;
 			
+			// aapt resource value: 0x7f0700d2
+			public const int label_ftue_final = 2131165394;
+			
+			// aapt resource value: 0x7f0700d3
+			public const int label_ftue_finish = 2131165395;
+			
+			// aapt resource value: 0x7f0700cf
+			public const int label_ftue_gear = 2131165391;
+			
+			// aapt resource value: 0x7f0700d0
+			public const int label_ftue_meals = 2131165392;
+			
+			// aapt resource value: 0x7f0700ce
+			public const int label_ftue_skip = 2131165390;
+			
+			// aapt resource value: 0x7f0700d1
+			public const int label_ftue_trips = 2131165393;
+			
+			// aapt resource value: 0x7f0700cd
+			public const int label_ftue_welcome = 2131165389;
+			
 			// aapt resource value: 0x7f07009a
 			public const int label_gear_collection_name = 2131165338;
 			

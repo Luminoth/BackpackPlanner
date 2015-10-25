@@ -18,7 +18,7 @@ using Android.OS;
 using Android.Views;
 using Android.Widget;
 
-using EnergonSoftware.BackpackPlanner.Actions;
+using EnergonSoftware.BackpackPlanner.Commands;
 using EnergonSoftware.BackpackPlanner.Droid.Util;
 using EnergonSoftware.BackpackPlanner.Models;
 
@@ -40,8 +40,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                     return;
                 }
 
-                Action action = new SaveItemAction<T>(Item);
-                action.DoActionAsync(BaseActivity.BackpackPlannerState.DatabaseState, BaseActivity.BackpackPlannerState.Settings).Wait();
+                var command = new SaveItemCommand<T>(Item);
+                command.DoActionAsync(BaseActivity.BackpackPlannerState.DatabaseState, BaseActivity.BackpackPlannerState.Settings).Wait();
 
                 SnackbarUtil.ShowSnackbar(View, Resource.String.label_saved_item, Android.Support.Design.Widget.Snackbar.LengthShort);
 
