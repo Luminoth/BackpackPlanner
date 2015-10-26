@@ -20,7 +20,7 @@
             android:minHeight="?attr/actionBarSize"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             android:background="?attr/colorPrimary"
-            card_view:title="Gear Item Name" />
+            card_view:title="@string/label_view_gear_item_name" />
         <TextView
             android:id="@+id/view_gear_item_make_model"
             style="@style/Base.TextAppearance.AppCompat.Body1"
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:background="@color/primary"
             android:padding="16dp"
-            android:text="Make Model" />
+            android:text="@string/label_view_gear_item_make_model" />
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
@@ -38,12 +38,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:text="0 weights" />
+            android:text="@string/label_view_gear_item_weight" />
         <TextView
             android:id="@+id/view_gear_item_cost"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:text="$0 ($0 per weights)" />
+            android:text="@string/label_view_gear_item_cost" />
     </LinearLayout>
 </android.support.v7.widget.CardView>

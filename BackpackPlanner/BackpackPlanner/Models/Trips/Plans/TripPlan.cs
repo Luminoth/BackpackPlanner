@@ -112,6 +112,9 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
         /// </value>
         public DateTime EndDate { get; set; } = new DateTime();
 
+        [Ignore]
+        public int Days => (StartDate - EndDate).Days;
+
         /// <summary>
         /// Gets or sets the trip itinerary identifier.
         /// </summary>
@@ -193,6 +196,54 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
 
         public TripPlan(BackpackPlannerSettings settings) : base(settings)
         {
+        }
+
+        public int GetTotalGearItemCount()
+        {
+            // TODO: calculate this
+            return 0;
+        }
+
+        public int GetTotalCalories()
+        {
+            // TODO: calculate this
+            return 0;
+        }
+
+        public float GetWeightInUnits()
+        {
+            // TODO: calculate this
+            return 0.0f;
+        }
+
+        public float GetCostInCurrency()
+        {
+            // TODO: calculate this
+            return 0.0f;
+        }
+
+        public float GetCostPerWeightInCurrency()
+        {
+            // TODO: calculate this
+            return 0.0f;
+        }
+
+        public float GetBaseWeightInUnits()
+        {
+            // TODO: calculate this
+            return 0.0f;
+        }
+
+        public float GetPackWeightInUnits()
+        {
+            // TODO: calculate this
+            return 0.0f;
+        }
+
+        public float GetSkinOutWeightInUnits()
+        {
+            // TODO: calculate this
+            return 0.0f;
         }
 
         public override bool Equals(object obj)

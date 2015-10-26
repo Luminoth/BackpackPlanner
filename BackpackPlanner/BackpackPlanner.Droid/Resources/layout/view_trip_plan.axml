@@ -20,7 +20,7 @@
             android:minHeight="?attr/actionBarSize"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             android:background="?attr/colorPrimary"
-            card_view:title="Trip Plan Name" />
+            card_view:title="@string/label_view_trip_plan_name" />
         <TextView
             android:id="@+id/view_trip_plan_days"
             style="@style/Base.TextAppearance.AppCompat.Body1"
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:background="@color/primary"
-            android:text="0 day(s)" />
+            android:text="@string/label_view_trip_plan_days" />
         <TextView
             android:id="@+id/view_trip_plan_meals"
             style="@style/Base.TextAppearance.AppCompat.Body1"
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:background="@color/primary"
-            android:text="0 meal(s) (0 total calories)" />
+            android:text="@string/label_view_trip_plan_meals" />
         <TextView
             android:id="@+id/view_trip_plan_collections"
             style="@style/Base.TextAppearance.AppCompat.Body1"
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:background="@color/primary"
-            android:text="0 collection(s)" />
+            android:text="@string/label_view_trip_plan_collections" />
         <TextView
             android:id="@+id/view_trip_plan_systems"
             style="@style/Base.TextAppearance.AppCompat.Body1"
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:background="@color/primary"
-            android:text="0 system(s)" />
+            android:text="@string/label_view_trip_plan_systems" />
         <TextView
             android:id="@+id/view_trip_plan_items"
             style="@style/Base.TextAppearance.AppCompat.Body1"
@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:background="@color/primary"
-            android:text="0 item(s) (0 total)" />
+            android:text="@string/label_view_trip_plan_items" />
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
@@ -70,24 +70,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:text="Base Weight: 0 weights" />
+            android:text="@string/label_view_trip_plan_base_weight" />
         <TextView
             android:id="@+id/view_trip_plan_pack_weight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:text="Pack Weight: 0 weights" />
+            android:text="@string/label_view_trip_plan_pack_weight" />
         <TextView
             android:id="@+id/view_trip_plan_skinout_weight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:text="Skin-out Weight: 0 weights" />
+            android:text="@string/label_view_trip_plan_skinout_weight" />
         <TextView
             android:id="@+id/view_trip_plan_cost"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:text="$0 ($0 per weights)" />
+            android:text="@string/label_view_trip_plan_cost" />
     </LinearLayout>
 </android.support.v7.widget.CardView>

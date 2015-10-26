@@ -24,7 +24,7 @@ using Android.Widget;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Collections;
-using EnergonSoftware.BackpackPlanner.Units;
+using EnergonSoftware.BackpackPlanner.Units.Units;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
 {
@@ -65,12 +65,24 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
             {
                 _toolbar.Title = ListItem.Name;
 
-                _textViewSystems.Text = $"{ListItem.GearSystemCount} system(s)";
-                _textViewItems.Text = $"{ListItem.GearItemCount} item(s) (some total)";
-                /*_textViewWeight.Text = $"{ListItem.WeightInUnits} {Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString()}";
+                _textViewSystems.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_gear_collection_systems),
+                    ListItem.GearSystemCount
+                );
 
-                string formattedCost = ListItem.CostInCurrency.ToString("C", CultureInfo.CurrentCulture);
-                _textViewCost.Text = $"{formattedCost} (cost per weight)";*/
+                _textViewItems.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_gear_collection_items),
+                    ListItem.GearItemCount, ListItem.GetTotalGearItemCount()
+                );
+
+                int weightInUnits = (int)ListItem.GetWeightInUnits();
+                _textViewWeight.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_gear_collection_weight),
+                    weightInUnits, Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(weightInUnits != 1)
+                );
+
+                string formattedCost = ListItem.GetCostInCurrency().ToString("C", CultureInfo.CurrentCulture);
+                string formattedCostPerWeight = ListItem.GetCostPerWeightInCurrency().ToString("C", CultureInfo.CurrentCulture);
+                _textViewCost.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_gear_collection_cost),
+                    formattedCost, formattedCostPerWeight, Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(false)
+                );
             }
         }
 

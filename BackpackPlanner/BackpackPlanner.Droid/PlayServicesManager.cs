@@ -43,6 +43,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
 // https://developers.google.com/drive/android/java-client
 // https://www.youtube.com/watch?v=UiTHG_yl-jA
+// https://github.com/athingunique/Drive-Database-Sync
 
         // TODO: continue with this
         private class DriveContentsResultCallback : Java.Lang.Object, IResultCallback
@@ -59,7 +60,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
 // https://developers.google.com/drive/android/appfolder
 
-                Logger.Debug("Got a Google Drive contents result: " + contentsResult.Status.IsSuccess);
+                Logger.Debug($"Got a Google Drive contents result: {contentsResult.Status.IsSuccess}");
 	        }
         }
 

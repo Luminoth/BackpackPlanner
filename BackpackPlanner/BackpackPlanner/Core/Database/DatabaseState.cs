@@ -437,7 +437,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
                     new Meal(settings)
                     {
                         Name = "Two",
-                        MealTime = MealTime.Dinner,
+                        MealTime = MealTime.Lunch,
                         ServingCount = 1,
                         Calories = 50,
                         ProteinInGrams = 1,
@@ -448,7 +448,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
                     new Meal(settings)
                     {
                         Name = "Three",
-                        MealTime = MealTime.Dinner,
+                        MealTime = MealTime.Breakfast,
                         ServingCount = 1,
                         Calories = 50,
                         ProteinInGrams = 1,
@@ -459,7 +459,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
                     new Meal(settings)
                     {
                         Name = "Four",
-                        MealTime = MealTime.Dinner,
+                        MealTime = MealTime.Drink,
                         ServingCount = 1,
                         Calories = 50,
                         ProteinInGrams = 1,
@@ -470,7 +470,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
                     new Meal(settings)
                     {
                         Name = "Five",
-                        MealTime = MealTime.Dinner,
+                        MealTime = MealTime.Snack,
                         ServingCount = 1,
                         Calories = 50,
                         ProteinInGrams = 1,
@@ -481,7 +481,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
                     new Meal(settings)
                     {
                         Name = "Six",
-                        MealTime = MealTime.Dinner,
+                        MealTime = MealTime.Other,
                         ServingCount = 1,
                         Calories = 50,
                         ProteinInGrams = 1,
@@ -492,7 +492,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
                     new Meal(settings)
                     {
                         Name = "Seven",
-                        MealTime = MealTime.Dinner,
+                        MealTime = MealTime.Breakfast,
                         ServingCount = 1,
                         Calories = 50,
                         ProteinInGrams = 1,
@@ -503,7 +503,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
                     new Meal(settings)
                     {
                         Name = "Eight",
-                        MealTime = MealTime.Dinner,
+                        MealTime = MealTime.Lunch,
                         ServingCount = 1,
                         Calories = 50,
                         ProteinInGrams = 1,
@@ -525,7 +525,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
                     new Meal(settings)
                     {
                         Name = "Ten",
-                        MealTime = MealTime.Dinner,
+                        MealTime = MealTime.Snack,
                         ServingCount = 1,
                         Calories = 50,
                         ProteinInGrams = 1,

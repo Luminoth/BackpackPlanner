@@ -48,7 +48,7 @@ namespace EnergonSoftware.BackpackPlanner.Units.Units
         /// <param name="centimeters">The centimeters.</param>
         /// <returns>The unit system length from the given centimeters</returns>
         /// <exception cref="System.InvalidOperationException">Invalid unit system!</exception>
-        public static double LengthFromCentimeters(this UnitSystem unitSystem, int centimeters)
+        public static float LengthFromCentimeters(this UnitSystem unitSystem, int centimeters)
         {
             switch(unitSystem)
             {
@@ -68,12 +68,12 @@ namespace EnergonSoftware.BackpackPlanner.Units.Units
         /// <param name="length">The unit system length.</param>
         /// <returns>The centimeters from the given unit system length</returns>
         /// <exception cref="System.InvalidOperationException">Invalid unit system!</exception>
-        public static double CentimetersFromLength(this UnitSystem unitSystem, double length)
+        public static int CentimetersFromLength(this UnitSystem unitSystem, float length)
         {
             switch(unitSystem)
             {
             case UnitSystem.Metric:
-                return length;
+                return (int)length;
             case UnitSystem.UnitedStates:
                 return UnitConversion.InchesToCentimeters(length);
             default:

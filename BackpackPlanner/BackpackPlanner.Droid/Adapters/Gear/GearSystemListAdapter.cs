@@ -24,7 +24,7 @@ using Android.Widget;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
-using EnergonSoftware.BackpackPlanner.Units;
+using EnergonSoftware.BackpackPlanner.Units.Units;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
 {
@@ -63,11 +63,20 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
             {
                 _toolbar.Title = ListItem.Name;
 
-                _textViewItems.Text = $"{ListItem.GearItemCount} item(s)";
-                /*_textViewWeight.Text = $"{ListItem.WeightInUnits} {Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString()}";
+                _textViewItems.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_gear_system_items),
+                    ListItem.GearItemCount
+                );
 
-                string formattedCost = ListItem.CostInCurrency.ToString("C", CultureInfo.CurrentCulture);
-                _textViewCost.Text = $"{formattedCost} (cost per weight)";*/
+                int weightInUnits = (int)ListItem.GetWeightInUnits();
+                _textViewWeight.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_gear_system_weight),
+                    weightInUnits, Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(weightInUnits != 1)
+                );
+
+                string formattedCost = ListItem.GetCostInCurrency().ToString("C", CultureInfo.CurrentCulture);
+                string formattedCostPerWeight = ListItem.GetCostPerWeightInCurrency().ToString("C", CultureInfo.CurrentCulture);
+                _textViewCost.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_gear_system_cost),
+                    formattedCost, formattedCostPerWeight, Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(false)
+                );
             }
         }
 

@@ -177,7 +177,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Items
         /// The weight of this gear item in weight units.
         /// </value>
         [Ignore]
-        public double WeightInUnits
+        public float WeightInUnits
         {
             get { return Settings?.Units.WeightFromGrams(WeightInGrams) ?? WeightInGrams; }
             set { _weightInGrams = (int)(Settings?.Units.GramsFromWeight(value) ?? value); }
@@ -207,11 +207,14 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Items
         /// The cost of this gear item in currency units.
         /// </value>
         [Ignore]
-        public double CostInCurrency
+        public float CostInCurrency
         {
             get { return Settings?.Currency.CurrencyFromUSDP(CostInUSDP) ?? CostInUSDP; }
             set { _costInUSDP = (int)(Settings?.Currency.USDPFromCurrency(value) ?? value); }
         }
+
+        [Ignore]
+        public float CostPerWeightInCurrency => 0.0f == WeightInUnits ? 0.0f : CostInCurrency / WeightInUnits;
 
         /// <summary>
         /// Gets or sets the gear item note.

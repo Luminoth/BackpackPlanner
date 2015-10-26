@@ -137,6 +137,12 @@ namespace EnergonSoftware.BackpackPlanner.Models.Meals
             set { _calories = value < 0 ? 0 : value; }
         }
 
+        [Ignore]
+        public float CaloriesPerServing => Calories / (float)ServingCount;
+
+        [Ignore]
+        public float CaloriesPerWeight => Calories / WeightInUnits;
+
         private int _proteinInGrams = 0;
 
         /// <summary>
@@ -152,6 +158,9 @@ namespace EnergonSoftware.BackpackPlanner.Models.Meals
             set { _proteinInGrams = value < 0 ? 0 : value; }
         }
 
+        [Ignore]
+        public float ProteinPerServing => ProteinInGrams / (float)ServingCount;
+
         private int _fiberInGrams = 0;
 
         /// <summary>
@@ -166,6 +175,9 @@ namespace EnergonSoftware.BackpackPlanner.Models.Meals
             get { return _fiberInGrams; }
             set { _fiberInGrams = value < 0 ? 0 : value; }
         }
+
+        [Ignore]
+        public float FiberPerServing => FiberInGrams / (float)ServingCount;
 
         private int _weightInGrams;
 
@@ -189,11 +201,14 @@ namespace EnergonSoftware.BackpackPlanner.Models.Meals
         /// The weight of this meal in weight units.
         /// </value>
         [Ignore]
-        public double WeightInUnits
+        public float WeightInUnits
         {
             get { return Settings?.Units.WeightFromGrams(WeightInGrams) ?? WeightInGrams; }
             set { _weightInGrams = (int)(Settings?.Units.GramsFromWeight(value) ?? value); }
         }
+
+        [Ignore]
+        public float WeightInUnitsPerServing => WeightInUnits / ServingCount;
 
         // ReSharper disable once InconsistentNaming
         private int _costInUSDP;
@@ -219,11 +234,14 @@ namespace EnergonSoftware.BackpackPlanner.Models.Meals
         /// The cost of this meal in currency units.
         /// </value>
         [Ignore]
-        public double CostInCurrency
+        public float CostInCurrency
         {
             get { return Settings?.Currency.CurrencyFromUSDP(CostInUSDP) ?? CostInUSDP; }
             set { _costInUSDP = (int)(Settings?.Currency.USDPFromCurrency(value) ?? value); }
         }
+
+        [Ignore]
+        public float CostPerWeightInCurrency => 0.0f == WeightInUnits ? 0.0f : CostInCurrency / WeightInUnits;
 
         /// <summary>
         /// Gets or sets the meal note.

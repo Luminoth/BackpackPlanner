@@ -63,7 +63,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
             {
                 _toolbar.Title = ListItem.Name;
 
-                string makeModel = $"{ListItem.Make} {ListItem.Model}";
+                string makeModel = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_gear_item_make_model),
+                    ListItem.Make, ListItem.Model
+                );
+
                 if(string.IsNullOrWhiteSpace(makeModel)) {
                     _textViewMakeModel.Visibility = ViewStates.Gone;
                     _textViewMakeModel.Text = string.Empty;
@@ -72,10 +75,16 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
                     _textViewMakeModel.Text = makeModel;
                 }
 
-                _textViewWeight.Text = $"{ListItem.WeightInUnits} {Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString()}";
+                int weightInUnits = (int)ListItem.WeightInUnits;
+                _textViewWeight.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_gear_item_weight),
+                    weightInUnits, Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(weightInUnits != 1)
+                );
 
                 string formattedCost = ListItem.CostInCurrency.ToString("C", CultureInfo.CurrentCulture);
-                _textViewCost.Text = $"{formattedCost} (cost per weight)";
+                string formattedCostPerWeight = ListItem.CostPerWeightInCurrency.ToString("C", CultureInfo.CurrentCulture);
+                _textViewCost.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_gear_item_cost),
+                    formattedCost, formattedCostPerWeight, Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(false)
+                );
             }
         }
 

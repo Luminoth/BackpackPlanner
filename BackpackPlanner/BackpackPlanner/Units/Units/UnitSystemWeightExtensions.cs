@@ -28,14 +28,14 @@ namespace EnergonSoftware.BackpackPlanner.Units.Units
         /// </summary>
         /// <param name="unitSystem">The unit system.</param>
         /// <returns>The small weight string for the unit system</returns>
-        public static string GetSmallWeightString(this UnitSystem unitSystem)
+        public static string GetSmallWeightString(this UnitSystem unitSystem, bool plural)
         {
             switch(unitSystem)
             {
             case UnitSystem.Metric:
-                return "grams";
+                return plural ? "grams" : "gram";
             case UnitSystem.UnitedStates:
-                return "ounces";
+                return plural ? "ounces" : "ounce";
             default:
                 throw new InvalidOperationException("Invalid unit system!");
             }
@@ -48,7 +48,7 @@ namespace EnergonSoftware.BackpackPlanner.Units.Units
         /// <param name="grams">The grams.</param>
         /// <returns>The unit system weight from the given grams</returns>
         /// <exception cref="System.InvalidOperationException">Invalid unit system!</exception>
-        public static double WeightFromGrams(this UnitSystem unitSystem, int grams)
+        public static float WeightFromGrams(this UnitSystem unitSystem, int grams)
         {
             switch(unitSystem)
             {
@@ -68,12 +68,12 @@ namespace EnergonSoftware.BackpackPlanner.Units.Units
         /// <param name="weight">The unit system weight.</param>
         /// <returns>The grams from the given unit system weight</returns>
         /// <exception cref="System.InvalidOperationException">Invalid unit system!</exception>
-        public static double GramsFromWeight(this UnitSystem unitSystem, double weight)
+        public static int GramsFromWeight(this UnitSystem unitSystem, float weight)
         {
             switch(unitSystem)
             {
             case UnitSystem.Metric:
-                return weight;
+                return (int)weight;
             case UnitSystem.UnitedStates:
                 return UnitConversion.OuncesToGrams(weight);
             default:

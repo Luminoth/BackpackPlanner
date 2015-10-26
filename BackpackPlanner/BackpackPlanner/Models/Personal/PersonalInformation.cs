@@ -136,7 +136,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Personal
         /// <value>
         /// The user's height in length units.
         /// </value>
-        public double HeightInUnits
+        public float HeightInUnits
         {
             get { return _settings?.Units.LengthFromCentimeters(HeightInCm) ?? HeightInCm; }
             set { HeightInCm = (int)(_settings?.Units.CentimetersFromLength(value) ?? value); }
@@ -167,7 +167,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Personal
         /// <value>
         /// The user's weight in weight units.
         /// </value>
-        public double WeightInUnits
+        public float WeightInUnits
         {
             get { return _settings?.Units.WeightFromGrams(WeightInGrams) ?? WeightInGrams; }
             set { WeightInGrams = (int)(_settings?.Units.GramsFromWeight(value) ?? WeightInGrams); }

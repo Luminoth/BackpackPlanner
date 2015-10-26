@@ -27,9 +27,9 @@ namespace EnergonSoftware.BackpackPlanner.Units.Units
         /// </summary>
         /// <param name="grams">The grams.</param>
         /// <returns>The grams in ounces</returns>
-        public static double GramsToOunces(int grams)
+        public static float GramsToOunces(int grams)
         {
-            return grams * 0.035274;
+            return grams * 0.035274f;
         }
 
         /// <summary>
@@ -37,9 +37,9 @@ namespace EnergonSoftware.BackpackPlanner.Units.Units
         /// </summary>
         /// <param name="ounces">The ounces.</param>
         /// <returns>The ounces in grams</returns>
-        public static double OuncesToGrams(double ounces)
+        public static int OuncesToGrams(float ounces)
         {
-            return ounces * 28.3495;
+            return (int)(ounces * 28.3495f);
         }
 #endregion
 
@@ -49,9 +49,9 @@ namespace EnergonSoftware.BackpackPlanner.Units.Units
         /// </summary>
         /// <param name="centimeters">The centimeters.</param>
         /// <returns>The centimeters in inches</returns>
-        public static double CentimetersToInches(int centimeters)
+        public static float CentimetersToInches(int centimeters)
         {
-            return centimeters * 0.393701;
+            return centimeters * 0.393701f;
         }
 
         /// <summary>
@@ -59,9 +59,9 @@ namespace EnergonSoftware.BackpackPlanner.Units.Units
         /// </summary>
         /// <param name="inches">The inches.</param>
         /// <returns>The inches in centimeters</returns>
-        public static double InchesToCentimeters(double inches)
+        public static int InchesToCentimeters(float inches)
         {
-            return inches * 2.54;
+            return (int)(inches * 2.54f);
         }
     }
 #endregion

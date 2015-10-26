@@ -24,7 +24,7 @@ using Android.Widget;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
-using EnergonSoftware.BackpackPlanner.Units;
+using EnergonSoftware.BackpackPlanner.Units.Units;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips
 {
@@ -41,6 +41,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips
             private readonly TextView _textViewCollections;
             private readonly TextView _textViewSystems;
             private readonly TextView _textViewItems;
+            private readonly TextView _textViewBaseWeight;
+            private readonly TextView _textViewPackWeight;
+            private readonly TextView _textViewSkinOutWeight;
             private readonly TextView _textViewCost;
 
             public TripPlanViewHolder(View itemView, BaseListAdapter<TripPlan> adapter) : base(itemView, adapter)
@@ -54,6 +57,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips
                 _textViewCollections = itemView.FindViewById<TextView>(Resource.Id.view_trip_plan_collections);
                 _textViewSystems = itemView.FindViewById<TextView>(Resource.Id.view_trip_plan_systems);
                 _textViewItems = itemView.FindViewById<TextView>(Resource.Id.view_trip_plan_items);
+                _textViewBaseWeight = itemView.FindViewById<TextView>(Resource.Id.view_trip_plan_base_weight);
+                _textViewPackWeight = itemView.FindViewById<TextView>(Resource.Id.view_trip_plan_pack_weight);
+                _textViewSkinOutWeight = itemView.FindViewById<TextView>(Resource.Id.view_trip_plan_skinout_weight);
                 _textViewCost = itemView.FindViewById<TextView>(Resource.Id.view_trip_plan_cost);
             }
 
@@ -69,14 +75,46 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips
             {
                 _toolbar.Title = ListItem.Name;
 
-                //_textViewDays.Text = $"{ListItem.Days} day(s)";
-                _textViewCollections.Text = $"{ListItem.MealCount} meal(s)";
-                _textViewCollections.Text = $"{ListItem.GearCollectionCount} collection(s)";
-                _textViewSystems.Text = $"{ListItem.GearSystemCount} system(s)";
-                _textViewItems.Text = $"{ListItem.GearItemCount} item(s) (some total)";
+                _textViewDays.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_trip_plan_days),
+                    ListItem.Days
+                );
 
-                /*string formattedCost = ListItem.CostInCurrency.ToString("C", CultureInfo.CurrentCulture);
-                _textViewCost.Text = $"{formattedCost} (cost per weight)";*/
+                _textViewMeals.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_trip_plan_meals),
+                    ListItem.MealCount, ListItem.GetTotalCalories()
+                );
+
+                _textViewCollections.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_trip_plan_collections),
+                    ListItem.GearSystemCount
+                );
+
+                _textViewSystems.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_trip_plan_systems),
+                    ListItem.GearSystemCount
+                );
+
+                _textViewItems.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_trip_plan_items),
+                    ListItem.GearItemCount, ListItem.GetTotalGearItemCount()
+                );
+
+                int weightInUnits = (int)ListItem.GetBaseWeightInUnits();
+                _textViewBaseWeight.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_trip_plan_base_weight),
+                    weightInUnits, Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(weightInUnits != 1)
+                );
+
+                weightInUnits = (int)ListItem.GetBaseWeightInUnits();
+                _textViewPackWeight.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_trip_plan_pack_weight),
+                    weightInUnits, Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(weightInUnits != 1)
+                );
+
+                weightInUnits = (int)ListItem.GetSkinOutWeightInUnits();
+                _textViewSkinOutWeight.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_trip_plan_skinout_weight),
+                    weightInUnits, Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(weightInUnits != 1)
+                );
+
+                string formattedCost = ListItem.GetCostInCurrency().ToString("C", CultureInfo.CurrentCulture);
+                string formattedCostPerWeight = ListItem.GetCostPerWeightInCurrency().ToString("C", CultureInfo.CurrentCulture);
+                _textViewCost.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_trip_plan_cost),
+                    formattedCost, formattedCostPerWeight, Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(false)
+                );
             }
         }
 

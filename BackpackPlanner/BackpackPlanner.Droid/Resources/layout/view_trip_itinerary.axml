@@ -20,7 +20,7 @@
             android:minHeight="?attr/actionBarSize"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             android:background="?attr/colorPrimary"
-            card_view:title="Trip Itinerary Name" />
+            card_view:title="@string/label_view_trip_itinerary_name" />
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"

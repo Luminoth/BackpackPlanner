@@ -80,14 +80,16 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 #region Labels
         /*private void SetHeightLabel()
         {
-            _heightPreference.DialogTitle = _heightPreference.Title = Resources.GetString(Resource.String.label_height)
-                + " " + BaseActivity.BackpackPlannerState.Settings.Units.GetSmallLengthString();
+            _heightPreference.DialogTitle = _heightPreference.Title = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_height),
+                BaseActivity.BackpackPlannerState.Settings.Units.GetSmallLengthString()
+            );
         }
 
         private void SetWeightLabel()
         {
-            _weightPreference.DialogTitle = _weightPreference.Title = Resources.GetString(Resource.String.label_weight)
-                + " " + BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString();
+            _weightPreference.DialogTitle = _weightPreference.Title = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_weight),
+                BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(true)
+            );
         }*/
 #endregion
 
@@ -111,12 +113,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         private void SetHeightSummary()
         {
+            // TODO: make this a resource
             _heightPreference.Summary = BaseActivity.BackpackPlannerState.PersonalInformation.HeightInUnits.ToString("N0", CultureInfo.InvariantCulture)
                 + " " + BaseActivity.BackpackPlannerState.Settings.Units.GetSmallLengthString();
         }
 
         private void SetWeightSummary()
         {
+            // TODO: make this a resource
             _weightPreference.Summary = BaseActivity.BackpackPlannerState.PersonalInformation.WeightInUnits.ToString("N0", CultureInfo.InvariantCulture)
                 + " " + BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString();
         }*/

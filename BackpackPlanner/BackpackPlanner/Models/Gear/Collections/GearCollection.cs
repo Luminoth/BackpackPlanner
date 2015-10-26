@@ -139,6 +139,30 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Collections
         {
         }
 
+        public int GetTotalGearItemCount()
+        {
+            // TODO: calculate this
+            return 0;
+        }
+
+        public float GetWeightInUnits()
+        {
+            // TODO: calculate this
+            return 0.0f;
+        }
+
+        public float GetCostInCurrency()
+        {
+            // TODO: calculate this
+            return 0.0f;
+        }
+
+        public float GetCostPerWeightInCurrency()
+        {
+            // TODO: calculate this
+            return 0.0f;
+        }
+
         public override bool Equals(object obj)
         {
             if(GearCollectionId < 1) {

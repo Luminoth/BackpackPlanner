@@ -121,12 +121,17 @@
     <string name="item_gear_item_worn">Worn</string>
     <string name="label_gear_item_consumable">Consumable</string>
     <string name="label_gear_item_consumed">Consumed per day</string>
-    <string name="label_gear_item_weight">Weight in</string>
-    <string name="label_gear_item_cost">Cost in</string>
+    <string name="label_gear_item_weight">Weight in %1$s</string>
+    <string name="label_gear_item_cost">Cost in %1$s</string>
     <string name="label_gear_item_note">Note</string>
 
     <string name="label_add_gear_item">Add Gear Item</string>
     <string name="label_save_gear_item">Save Gear Item</string>
+
+    <string name="label_view_gear_item_name">Gear Item</string>
+    <string name="label_view_gear_item_make_model">%1$s %2$s</string>
+    <string name="label_view_gear_item_weight">%1$d %2$s</string>
+    <string name="label_view_gear_item_cost">%1$s (%2$s per %3$s)</string>
 
     <!-- Gear Systems -->
 
@@ -139,6 +144,11 @@
     <string name="label_add_gear_system">Add Gear System</string>
     <string name="label_save_gear_system">Save Gear System</string>
 
+    <string name="label_view_gear_system_name">Gear System</string>
+    <string name="label_view_gear_system_items">%1$d item(s)</string>
+    <string name="label_view_gear_system_weight">%1$d %2$s</string>
+    <string name="label_view_gear_system_cost">%1$s (%2$s per %3$s)</string>
+
     <!-- Gear Collections -->
 
     <string name="label_what_gear_collection">What is a gear collection?</string>
@@ -149,6 +159,12 @@
 
     <string name="label_add_gear_collection">Add Gear Collection</string>
     <string name="label_save_gear_collection">Save Gear Collection</string>
+
+    <string name="label_view_gear_collection_name">Gear Collection</string>
+    <string name="label_view_gear_collection_systems">%1$d system(s)</string>
+    <string name="label_view_gear_collection_items">%1$d item(s) (%2$d total)</string>
+    <string name="label_view_gear_collection_weight">%1$d %2$s</string>
+    <string name="label_view_gear_collection_cost">%1$s (%2$s per %3$s)</string>
 
     <!-- Meals -->
 
@@ -161,6 +177,16 @@
     <string name="label_add_meal">Add Meal</string>
     <string name="label_save_meal">Save Meal</string>
 
+    <string name="label_view_meal_name">Meal</string>
+    <string name="label_view_meal_servings">%1$d serving(s) of %2$s</string>
+    <string name="label_view_meal_weight_per_serving">%1$d %2$s per serving</string>
+    <string name="label_view_meal_calories_per_serving">%1$d calories per serving</string>
+    <string name="label_view_meal_protein_per_serving">%1$dg protein per serving</string>
+    <string name="label_view_meal_fiber_per_serving">%1$dg fiber per serving</string>
+    <string name="label_view_meal_weight">%1$d %2$s</string>
+    <string name="label_view_meal_calories">%1$d calories per %2$s</string>
+    <string name="label_view_meal_cost">%1$s (%2$s per %3$s)</string>
+
     <!-- Trip Itineraries -->
 
     <string name="label_what_trip_itinerary">What is a trip itinerary?</string>
@@ -172,6 +198,8 @@
     <string name="label_add_trip_itinerary">Add Trip Itinerary</string>
     <string name="label_save_trip_itinerary">Save Trip Itinerary</string>
 
+    <string name="label_view_trip_itinerary_name">Trip Itinerary</string>
+
     <!-- Trip Plans -->
 
     <string name="label_what_trip_plan">What is a trip plan?</string>
@@ -182,6 +210,17 @@
 
     <string name="label_add_trip_plan">Add Trip Plan</string>
     <string name="label_save_trip_plan">Save Trip Plan</string>
+
+    <string name="label_view_trip_plan_name">Trip Plan</string>
+    <string name="label_view_trip_plan_days">%1$d day(s)</string>
+    <string name="label_view_trip_plan_meals">%1$d meal(s) (%2$d total calories)</string>
+    <string name="label_view_trip_plan_collections">%1$d collection(s)</string>
+    <string name="label_view_trip_plan_systems">%1$d system(s)</string>
+    <string name="label_view_trip_plan_items">%1$d item(s) (%2$d total)</string>
+    <string name="label_view_trip_plan_base_weight">Base Weight: %1$d %2$s</string>
+    <string name="label_view_trip_plan_pack_weight">Pack Weight: %1$d %2$s</string>
+    <string name="label_view_trip_plan_skinout_weight">Skin-out Weight: %1$d %2$s</string>
+    <string name="label_view_trip_plan_cost">%1$s (%2$s per %3$s)</string>
 
     <!-- Settings -->
 
@@ -203,13 +242,13 @@
     <string name="label_user_sex">Your sex</string>
     <string name="summary_user_sex">Select your sex</string>
 
-    <string name="title_height">Your height in</string>
-    <string name="label_height">Your height in</string>
-    <string name="summary_height">Enter your height in units</string>
+    <string name="title_height">Your height in %1$s</string>
+    <string name="label_height">Your height in %1$s</string>
+    <string name="summary_height">Enter your height in %1$s</string>
 
-    <string name="title_weight">Your weight in</string>
-    <string name="label_weight">Your weight in</string>
-    <string name="summary_weight">Enter your weight in units</string>
+    <string name="title_weight">Your weight in %1$s</string>
+    <string name="label_weight">Your weight in %1$s</string>
+    <string name="summary_weight">Enter your weight in %1$s</string>
 
     <string name="title_units">Unit Settings</string>
 

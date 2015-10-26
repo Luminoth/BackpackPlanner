@@ -27,9 +27,9 @@ namespace EnergonSoftware.BackpackPlanner.Units.Currency
         /// <param name="usdp">The USDP value.</param>
         /// <returns>The USDP in USD</returns>
         // ReSharper disable once InconsistentNaming
-        public static double USDPToUSD(int usdp)
+        public static float USDPToUSD(int usdp)
         {
-            return usdp * 0.01;
+            return usdp * 0.01f;
         }
 
         /// <summary>
@@ -38,9 +38,9 @@ namespace EnergonSoftware.BackpackPlanner.Units.Currency
         /// <param name="usd">The USD value.</param>
         /// <returns>The USD in USDP</returns>
         // ReSharper disable once InconsistentNaming
-        public static double USDToUSDP(double usd)
+        public static int USDToUSDP(float usd)
         {
-            return usd * 100.0;
+            return (int)(usd * 100.0f);
         }
     }
 }

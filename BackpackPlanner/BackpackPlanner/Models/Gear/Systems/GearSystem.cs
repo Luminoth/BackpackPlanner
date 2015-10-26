@@ -124,6 +124,24 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Systems
         [Ignore]
         public int TripPlanCount => TripPlans?.Count ?? 0;
 
+        public float GetWeightInUnits()
+        {
+            // TODO: calculate this
+            return 0.0f;
+        }
+
+        public float GetCostInCurrency()
+        {
+            // TODO: calculate this
+            return 0.0f;
+        }
+
+        public float GetCostPerWeightInCurrency()
+        {
+            // TODO: calculate this
+            return 0.0f;
+        }
+
         public GearSystem()
         {
         }
