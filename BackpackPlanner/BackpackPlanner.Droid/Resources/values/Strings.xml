@@ -172,6 +172,14 @@
     <string name="label_no_meals">You have no meals! Try adding one!</string>
 
     <string name="label_meal_name">Name</string>
+    <string name="label_meal_website">Website</string>
+    <string name="label_meal_mealtime">Meal</string>
+    <string name="label_meal_servings">Servings</string>
+    <string name="label_meal_weight">Weight in %1$s</string>
+    <string name="label_meal_cost">Cost in %1$s</string>
+    <string name="label_meal_calories">Calories</string>
+    <string name="label_meal_protein">Protein in grams</string>
+    <string name="label_meal_fiber">Fiber in grams</string>
     <string name="label_meal_note">Note</string>
 
     <string name="label_add_meal">Add Meal</string>

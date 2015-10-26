@@ -15,7 +15,6 @@
 */
 
 using System;
-using System.Globalization;
 
 using Android.OS;
 using Android.Views;
@@ -87,10 +86,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
             _gearItemConsumedEditText.EditText.Text = Item.ConsumedPerDay.ToString();
 
             _gearItemWeightEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.view_gear_item_weight);
-            _gearItemWeightEditText.EditText.Text = Item.WeightInUnits.ToString("N0", CultureInfo.InvariantCulture);
+            _gearItemWeightEditText.EditText.Text = ((int)Item.WeightInUnits).ToString();
 
             _gearItemCostEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.view_gear_item_cost);
-            _gearItemCostEditText.EditText.Text = Item.CostInCurrency.ToString("N0", CultureInfo.InvariantCulture);
+            _gearItemCostEditText.EditText.Text = ((int)Item.CostInCurrency).ToString();
 
             _gearItemNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.view_gear_item_note);
             _gearItemNoteEditText.EditText.Text = Item.Note;

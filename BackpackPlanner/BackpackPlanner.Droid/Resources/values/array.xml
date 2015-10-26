@@ -61,4 +61,13 @@
     <string-array name="currency">
         <item>UnitedStatesDollar</item>
     </string-array>
+
+    <string-array name="meal_mealtime">
+        <item>Other</item>
+        <item>Drink</item>
+        <item>Breakfast</item>
+        <item>Lunch</item>
+        <item>Dinner</item>
+        <item>Snack</item>
+    </string-array>
 </resources>

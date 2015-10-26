@@ -14,8 +14,6 @@
    limitations under the License.
 */
 
-using System.Globalization;
-
 using Android.Content;
 using Android.OS;
 
@@ -114,14 +112,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         private void SetHeightSummary()
         {
             // TODO: make this a resource
-            _heightPreference.Summary = BaseActivity.BackpackPlannerState.PersonalInformation.HeightInUnits.ToString("N0", CultureInfo.InvariantCulture)
+            _heightPreference.Summary = ((int)BaseActivity.BackpackPlannerState.PersonalInformation.HeightInUnits).ToString()
                 + " " + BaseActivity.BackpackPlannerState.Settings.Units.GetSmallLengthString();
         }
 
         private void SetWeightSummary()
         {
             // TODO: make this a resource
-            _weightPreference.Summary = BaseActivity.BackpackPlannerState.PersonalInformation.WeightInUnits.ToString("N0", CultureInfo.InvariantCulture)
+            _weightPreference.Summary = ((int)BaseActivity.BackpackPlannerState.PersonalInformation.WeightInUnits).ToString()
                 + " " + BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString();
         }*/
 
