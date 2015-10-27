@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+
 using Android.App;
 
 // Information about this assembly is defined by the following attributes.
