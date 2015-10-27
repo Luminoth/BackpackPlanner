@@ -25,6 +25,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusableInTouchMode="false"
                 android:hint="@string/label_trip_plan_startdate"
                 android:inputType="date" />
         </android.support.design.widget.TextInputLayout>
@@ -35,6 +36,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusableInTouchMode="false"
                 android:hint="@string/label_trip_plan_enddate"
                 android:inputType="date" />
         </android.support.design.widget.TextInputLayout>
