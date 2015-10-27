@@ -29,6 +29,11 @@ namespace EnergonSoftware.BackpackPlanner.Models.Personal
     {
 #region Preference Keys
         /// <summary>
+        /// The main preference key
+        /// </summary>
+        public const string PreferenceKey = "personalInformation";
+
+        /// <summary>
         /// The name preference key
         /// </summary>
         public const string NamePreferenceKey = "personalInformationName";

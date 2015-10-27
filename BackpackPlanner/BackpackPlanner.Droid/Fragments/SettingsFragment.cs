@@ -14,6 +14,8 @@
    limitations under the License.
 */
 
+using System.Globalization;
+
 using Android.Content;
 using Android.OS;
 
@@ -29,31 +31,38 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         public BaseActivity BaseActivity => (BaseActivity)Activity;
 
 #region Controls
-        /*private Android.Support.V7.Preferences.EditTextPreference _namePreference;
+        private Android.Support.V7.Preferences.PreferenceCategory _personalInformationCategory;
+        private Android.Support.V7.Preferences.EditTextPreference _namePreference;
         private Android.Support.V7.Preferences.EditTextPreference _birthDatePreference;
         private Android.Support.V7.Preferences.ListPreference _userSexPreference;
         private Android.Support.V7.Preferences.EditTextPreference _heightPreference;
-        private Android.Support.V7.Preferences.EditTextPreference _weightPreference;*/
+        private Android.Support.V7.Preferences.EditTextPreference _weightPreference;
 
         private Android.Support.V7.Preferences.ListPreference _unitSystemPreference;
-        //private Android.Support.V7.Preferences.ListPreference _currencyPreference;
+        private Android.Support.V7.Preferences.ListPreference _currencyPreference;
 #endregion
 
         public override void OnCreatePreferences(Bundle savedInstanceState, string rootKey)
         {
-            // TODO: this is now crashing... ugh
+            // TODO: ugh, this is crashing again
             AddPreferencesFromResource(Resource.Xml.settings);
 
 // TODO: remove any of these that are unused
 
-            /*_namePreference = (Android.Support.V7.Preferences.EditTextPreference)FindPreference(PersonalInformation.NamePreferenceKey);
+            _personalInformationCategory = (Android.Support.V7.Preferences.PreferenceCategory)FindPreference(PersonalInformation.PreferenceKey);
+            _namePreference = (Android.Support.V7.Preferences.EditTextPreference)FindPreference(PersonalInformation.NamePreferenceKey);
             _birthDatePreference = (Android.Support.V7.Preferences.EditTextPreference)FindPreference(PersonalInformation.DateOfBirthPreferenceKey);
             _userSexPreference = (Android.Support.V7.Preferences.ListPreference)FindPreference(PersonalInformation.UserSexPreferenceKey);
             _heightPreference = (Android.Support.V7.Preferences.EditTextPreference)FindPreference(PersonalInformation.HeightPreferenceKey);
-            _weightPreference = (Android.Support.V7.Preferences.EditTextPreference)FindPreference(PersonalInformation.WeightPreferenceKey);*/
+            _weightPreference = (Android.Support.V7.Preferences.EditTextPreference)FindPreference(PersonalInformation.WeightPreferenceKey);
 
             _unitSystemPreference = (Android.Support.V7.Preferences.ListPreference)FindPreference(BackpackPlannerSettings.UnitSystemPreferenceKey);
-            //_currencyPreference = (Android.Support.V7.Preferences.ListPreference)FindPreference(BackpackPlannerSettings.CurrencyPreferenceKey);
+            _currencyPreference = (Android.Support.V7.Preferences.ListPreference)FindPreference(BackpackPlannerSettings.CurrencyPreferenceKey);
+
+#if !DEBUG
+            PreferenceScreen.RemovePreference(_personalInformationCategory);
+            PreferenceScreen.RemovePreference(_currencyPreference);
+#endif
 
             UpdateLabels();
             UpdateSummaries();
@@ -76,7 +85,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         }
 
 #region Labels
-        /*private void SetHeightLabel()
+        private void SetHeightLabel()
         {
             _heightPreference.DialogTitle = _heightPreference.Title = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_height),
                 BaseActivity.BackpackPlannerState.Settings.Units.GetSmallLengthString()
@@ -88,11 +97,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             _weightPreference.DialogTitle = _weightPreference.Title = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_weight),
                 BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(true)
             );
-        }*/
+        }
 #endregion
 
 #region Summaries
-        /*private void SetNameSummary()
+        private void SetNameSummary()
         {
             _namePreference.Summary = string.IsNullOrWhiteSpace(BaseActivity.BackpackPlannerState.PersonalInformation.Name)
                 ? Resources.GetString(Resource.String.summary_name)
@@ -112,44 +121,44 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         private void SetHeightSummary()
         {
             // TODO: make this a resource
-            _heightPreference.Summary = ((int)BaseActivity.BackpackPlannerState.PersonalInformation.HeightInUnits).ToString()
+            _heightPreference.Summary = ((int)BaseActivity.BackpackPlannerState.PersonalInformation.HeightInUnits)
                 + " " + BaseActivity.BackpackPlannerState.Settings.Units.GetSmallLengthString();
         }
 
         private void SetWeightSummary()
         {
             // TODO: make this a resource
-            _weightPreference.Summary = ((int)BaseActivity.BackpackPlannerState.PersonalInformation.WeightInUnits).ToString()
-                + " " + BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString();
-        }*/
+            _weightPreference.Summary = ((int)BaseActivity.BackpackPlannerState.PersonalInformation.WeightInUnits)
+                + " " + BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(true);
+        }
 
         private void SetUnitSystemSummary()
         {
             _unitSystemPreference.Summary = BaseActivity.BackpackPlannerState.Settings.Units.ToString();
         }
 
-        /*private void SetCurrencySummary()
+        private void SetCurrencySummary()
         {
             _currencyPreference.Summary = BaseActivity.BackpackPlannerState.Settings.Currency.ToString();
-        }*/
+        }
 #endregion
 
         private void UpdateLabels()
         {
-            /*SetHeightLabel();
-            SetWeightLabel();*/
+            SetHeightLabel();
+            SetWeightLabel();
         }
 
         private void UpdateSummaries()
         {
-            /*SetNameSummary();
+            SetNameSummary();
             SetBirthDateSummary();
             SetUserSexSummary();
             SetHeightSummary();
-            SetWeightSummary();*/
+            SetWeightSummary();
 
             SetUnitSystemSummary();
-            //SetCurrencySummary();
+            SetCurrencySummary();
         }
 
         public void OnSharedPreferenceChanged(ISharedPreferences sharedPreferences, string key)
