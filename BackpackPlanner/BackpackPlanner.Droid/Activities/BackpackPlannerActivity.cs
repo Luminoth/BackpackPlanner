@@ -143,6 +143,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 
 	    public void OnClick(View view)
         {
+            // TODO: this needs to verify the view that's being clicked => if(view == blah) ...
             // this handles the toolbar button press on stacked fragments
             OnBackPressed();
         }

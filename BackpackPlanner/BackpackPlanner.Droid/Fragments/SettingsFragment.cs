@@ -40,6 +40,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         private Android.Support.V7.Preferences.EditTextPreference _heightPreference;
         private Android.Support.V7.Preferences.EditTextPreference _weightPreference;
 
+        private Android.Support.V7.Preferences.PreferenceCategory _unitsCategory;
         private Android.Support.V7.Preferences.ListPreference _unitSystemPreference;
         private Android.Support.V7.Preferences.ListPreference _currencyPreference;
 #endregion
@@ -73,12 +74,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             _heightPreference = (Android.Support.V7.Preferences.EditTextPreference)FindPreference(PersonalInformation.HeightPreferenceKey);
             _weightPreference = (Android.Support.V7.Preferences.EditTextPreference)FindPreference(PersonalInformation.WeightPreferenceKey);
 
+            _unitsCategory = (Android.Support.V7.Preferences.PreferenceCategory)FindPreference(BackpackPlannerSettings.UnitsPreferenceKey);
             _unitSystemPreference = (Android.Support.V7.Preferences.ListPreference)FindPreference(BackpackPlannerSettings.UnitSystemPreferenceKey);
             _currencyPreference = (Android.Support.V7.Preferences.ListPreference)FindPreference(BackpackPlannerSettings.CurrencyPreferenceKey);
 
 #if !DEBUG
             PreferenceScreen.RemovePreference(_personalInformationCategory);
-            PreferenceScreen.RemovePreference(_currencyPreference);
+            _unitsCategory.RemovePreference(_currencyPreference);
 #endif
 
             UpdateLabels();
