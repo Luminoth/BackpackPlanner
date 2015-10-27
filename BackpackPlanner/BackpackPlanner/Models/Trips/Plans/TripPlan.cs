@@ -102,7 +102,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
         /// <value>
         /// The start date of the trip plan.
         /// </value>
-        public DateTime StartDate { get; set; } = new DateTime();
+        public DateTime StartDate { get; set; } = DateTime.Now;
 
         /// <summary>
         /// Gets or sets the end date of the trip plan.
@@ -110,7 +110,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
         /// <value>
         /// The end date of the trip plan.
         /// </value>
-        public DateTime EndDate { get; set; } = new DateTime();
+        public DateTime EndDate { get; set; } = DateTime.Now;
 
         [Ignore]
         public int Days => (StartDate - EndDate).Days;

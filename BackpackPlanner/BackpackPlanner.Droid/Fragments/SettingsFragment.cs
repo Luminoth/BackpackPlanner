@@ -14,12 +14,14 @@
    limitations under the License.
 */
 
+using System;
 using System.Globalization;
 
 using Android.Content;
 using Android.OS;
 
 using EnergonSoftware.BackpackPlanner.Droid.Activities;
+using EnergonSoftware.BackpackPlanner.Droid.Fragments.Util;
 using EnergonSoftware.BackpackPlanner.Models.Personal;
 using EnergonSoftware.BackpackPlanner.Settings;
 using EnergonSoftware.BackpackPlanner.Units.Units;
@@ -51,7 +53,22 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
             _personalInformationCategory = (Android.Support.V7.Preferences.PreferenceCategory)FindPreference(PersonalInformation.PreferenceKey);
             _namePreference = (Android.Support.V7.Preferences.EditTextPreference)FindPreference(PersonalInformation.NamePreferenceKey);
+
             _birthDatePreference = (Android.Support.V7.Preferences.EditTextPreference)FindPreference(PersonalInformation.DateOfBirthPreferenceKey);
+            _birthDatePreference.PreferenceClick += (sender, args) => {
+                DateTime dateTime = DateTime.Now;
+                try {
+                    dateTime = Convert.ToDateTime(_birthDatePreference.Text);
+                } catch(FormatException) {
+                }
+
+                DatePickerFragment picker = new DatePickerFragment(dateTime);
+                picker.DateSetEvent += (s, a) => {
+                    _birthDatePreference.Text = a.Date.ToString("yyyy-MM-dd", CultureInfo.CurrentCulture);
+                };
+                picker.Show(Activity.SupportFragmentManager, null);
+            };
+
             _userSexPreference = (Android.Support.V7.Preferences.ListPreference)FindPreference(PersonalInformation.UserSexPreferenceKey);
             _heightPreference = (Android.Support.V7.Preferences.EditTextPreference)FindPreference(PersonalInformation.HeightPreferenceKey);
             _weightPreference = (Android.Support.V7.Preferences.EditTextPreference)FindPreference(PersonalInformation.WeightPreferenceKey);

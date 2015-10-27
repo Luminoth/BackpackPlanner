@@ -14,15 +14,22 @@
    limitations under the License.
 */
 
+using System;
+using System.Globalization;
+
 using Android.OS;
 using Android.Views;
 
+using EnergonSoftware.BackpackPlanner.Core.Logging;
+using EnergonSoftware.BackpackPlanner.Droid.Fragments.Util;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
 {
     public class ViewTripPlanFragment : ViewItemFragment<TripPlan>
     {
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(ViewTripPlanFragment));
+
         protected override int LayoutResource => Resource.Layout.fragment_view_trip_plan;
 
         protected override int TitleResource => Resource.String.title_view_trip_plan;
@@ -33,6 +40,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
 
 #region Controls
         private Android.Support.Design.Widget.TextInputLayout _tripPlanNameEditText;
+        private Android.Support.Design.Widget.TextInputLayout _tripPlanStartDateText;
+        private Android.Support.Design.Widget.TextInputLayout _tripPlanEndDateText;
         private Android.Support.Design.Widget.TextInputLayout _tripPlanNoteEditText;
 #endregion
 
@@ -43,6 +52,38 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
             _tripPlanNameEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.view_trip_plan_name);
             _tripPlanNameEditText.EditText.Text = Item.Name;
 
+            _tripPlanStartDateText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.view_trip_plan_startdate);
+            _tripPlanStartDateText.EditText.Text = Item.StartDate.ToString("yyyy-MM-dd", CultureInfo.CurrentCulture);
+            _tripPlanStartDateText.EditText.Click += (sender, args) => {
+                DateTime dateTime = DateTime.Now;
+                try {
+                    dateTime = Convert.ToDateTime(_tripPlanStartDateText.EditText.Text);
+                } catch(FormatException) {
+                }
+
+                DatePickerFragment picker = new DatePickerFragment(dateTime);
+                picker.DateSetEvent += (s, a) => {
+                    _tripPlanStartDateText.EditText.Text = a.Date.ToString("yyyy-MM-dd", CultureInfo.CurrentCulture);
+                };
+                picker.Show(Activity.SupportFragmentManager, null);
+            };
+
+            _tripPlanEndDateText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.view_trip_plan_enddate);
+            _tripPlanEndDateText.EditText.Text = Item.EndDate.ToString("yyyy-MM-dd", CultureInfo.CurrentCulture);
+            _tripPlanEndDateText.EditText.Click += (sender, args) => {
+                DateTime dateTime = DateTime.Now;
+                try {
+                    dateTime = Convert.ToDateTime(_tripPlanEndDateText.EditText.Text);
+                } catch(FormatException) {
+                }
+
+                DatePickerFragment picker = new DatePickerFragment(dateTime);
+                picker.DateSetEvent += (s, a) => {
+                    _tripPlanEndDateText.EditText.Text = a.Date.ToString("yyyy-MM-dd", CultureInfo.CurrentCulture);
+                };
+                picker.Show(Activity.SupportFragmentManager, null);
+            };
+
             _tripPlanNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.view_trip_plan_note);
             _tripPlanNoteEditText.EditText.Text = Item.Note;
         }
@@ -50,6 +91,19 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
         protected override void OnDoDataExchange()
         {
             Item.Name = _tripPlanNameEditText.EditText.Text;
+
+            try {
+                Item.StartDate = Convert.ToDateTime(_tripPlanStartDateText.EditText.Text);
+            } catch(FormatException) {
+                Logger.Error("Error parsing start date!");
+            }
+
+            try {
+                Item.EndDate = Convert.ToDateTime(_tripPlanEndDateText.EditText.Text);
+            } catch(FormatException) {
+                Logger.Error("Error parsing end date!");
+            }
+
             Item.Note = _tripPlanNoteEditText.EditText.Text;
         }
 

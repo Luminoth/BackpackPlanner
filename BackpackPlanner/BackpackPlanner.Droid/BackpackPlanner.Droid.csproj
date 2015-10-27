@@ -193,6 +193,8 @@
     <Compile Include="Fragments\Trips\Itineraries\TripItinerariesFragment.cs" />
     <Compile Include="Fragments\Trips\Plans\TripPlansFragment.cs" />
     <Compile Include="Fragments\RecyclerFragment.cs" />
+    <Compile Include="Fragments\Util\DatePickerFragment.cs" />
+    <Compile Include="Fragments\Util\DateSetEventArgs.cs" />
     <Compile Include="Fragments\ViewItemFragment.cs" />
     <Compile Include="PlayServicesManager.cs" />
     <Compile Include="HockeyAppManager.cs" />

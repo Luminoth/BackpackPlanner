@@ -214,6 +214,8 @@
     <string name="label_no_trip_plans">You have no trip plans! Try adding one!</string>
 
     <string name="label_trip_plan_name">Name</string>
+    <string name="label_trip_plan_startdate">Start Date</string>
+    <string name="label_trip_plan_enddate">End Date</string>
     <string name="label_trip_plan_note">Note</string>
 
     <string name="label_add_trip_plan">Add Trip Plan</string>
