@@ -24,18 +24,6 @@ namespace EnergonSoftware.BackpackPlanner.Models.Meals
     public enum MealTime
     {
         /// <summary>
-        /// Some other meal type
-        /// </summary>
-        [Description("Other")]
-        Other,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Description("Drink")]
-        Drink,
-
-        /// <summary>
         /// The breakfast meal time
         /// </summary>
         [Description("Breakfast")]
@@ -57,6 +45,18 @@ namespace EnergonSoftware.BackpackPlanner.Models.Meals
         /// The snack meal time
         /// </summary>
         [Description("Snack")]
-        Snack
+        Snack,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Description("Drink")]
+        Drink,
+
+        /// <summary>
+        /// Some other meal type
+        /// </summary>
+        [Description("Other")]
+        Other
     }
 }

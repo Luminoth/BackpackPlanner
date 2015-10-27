@@ -63,11 +63,11 @@
     </string-array>
 
     <string-array name="meal_mealtime">
-        <item>Other</item>
-        <item>Drink</item>
         <item>Breakfast</item>
         <item>Lunch</item>
         <item>Dinner</item>
         <item>Snack</item>
+        <item>Drink</item>
+        <item>Other</item>
     </string-array>
 </resources>
