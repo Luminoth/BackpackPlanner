@@ -1,4 +1,4 @@
-/*
+﻿/*
    Copyright 2015 Shane Lillie
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,54 +16,51 @@
 
 using System;
 
-using Android.Util;
-
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 
-namespace EnergonSoftware.BackpackPlanner.Droid.Logging
+namespace EnergonSoftware.BackpackPlanner.Windows.Logging
 {
-    internal sealed class DroidLogger : ILogger
+    // TODO: this should use something better than System.Diagnostics
+    internal sealed class WindowsLogger : ILogger
     {
-        public const string LogTag = "BackpackPlanner.Droid";
-
         public void Debug(string message)
         {
-            Log.Debug(LogTag, message);
+            System.Diagnostics.Debug.WriteLine(message);
         }
 
         public void Debug(string message, Exception ex)
         {
-            Log.Debug(LogTag, message, ex);
+            System.Diagnostics.Debug.WriteLine(message, ex);
         }
 
         public void Info(string message)
         {
-            Log.Info(LogTag, message);
+            System.Diagnostics.Debug.WriteLine(message);
         }
 
         public void Info(string message, Exception ex)
         {
-            Log.Info(LogTag, message, ex);
+            System.Diagnostics.Debug.WriteLine(message, ex);
         }
 
         public void Warn(string message)
         {
-            Log.Warn(LogTag, message);
+            System.Diagnostics.Debug.WriteLine(message);
         }
 
         public void Warn(string message, Exception ex)
         {
-            Log.Warn(LogTag, message, ex);
+            System.Diagnostics.Debug.WriteLine(message, ex);
         }
 
         public void Error(string message)
         {
-            Log.Error(LogTag, message);
+            System.Diagnostics.Debug.WriteLine(message);
         }
 
         public void Error(string message, Exception ex)
         {
-            Log.Error(LogTag, message, ex);
+            System.Diagnostics.Debug.WriteLine(message, ex);
         }
     }
 }

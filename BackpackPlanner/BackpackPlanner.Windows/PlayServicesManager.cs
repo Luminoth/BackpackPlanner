@@ -14,45 +14,38 @@
    limitations under the License.
 */
 
+using System;
 using System.Threading.Tasks;
 
-using EnergonSoftware.BackpackPlanner.Core.HockeyApp;
-
-using HockeyApp;
+using EnergonSoftware.BackpackPlanner.Core.PlayServices;
 
 namespace EnergonSoftware.BackpackPlanner.Windows
 {
-    public class HockeyAppManager : IHockeyAppManager
+    // TODO: write this
+    internal sealed class PlayServicesManager : IPlayServicesManager
     {
-        public string AppId => "555fd9c1dfd5151312f39bf6c704827b";
-
-        public bool IsInitialized { get; private set; }
+#region Events
+        public event EventHandler<PlayServicesConnectedEventArgs> PlayServicesConnectedEvent;
+#endregion
 
         public async Task InitAsync()
         {
-            if(IsInitialized) {
-                return;
-            }
-
-            HockeyClient.Current.Configure(AppId);
-
-            await HockeyClient.Current.SendCrashesAsync();
-
-#if WINDOWS_PHONE_APP
-            await HockeyClient.Current.CheckForAppUpdateAsync();
-#endif
-
-            IsInitialized = true;
+await Task.Delay(0).ConfigureAwait(false);
         }
 
         public async Task DestroyAsync()
         {
-            await Task.Delay(0).ConfigureAwait(false);
+await Task.Delay(0).ConfigureAwait(false);
         }
 
-        public void ShowFeedback()
+        public async Task ConnectAsync()
         {
-            HockeyClient.Current.ShowFeedback();
+await Task.Delay(0).ConfigureAwait(false);
+        }
+
+        public async Task DisconnectAsync()
+        {
+await Task.Delay(0).ConfigureAwait(false);
         }
     }
 }

@@ -31,7 +31,7 @@ using EnergonSoftware.BackpackPlanner.Core.PlayServices;
 
 namespace EnergonSoftware.BackpackPlanner.Droid
 {
-    public sealed class PlayServicesManager : Java.Lang.Object, IPlayServicesManager,
+    internal sealed class PlayServicesManager : Java.Lang.Object, IPlayServicesManager,
         GoogleApiClient.IConnectionCallbacks, GoogleApiClient.IOnConnectionFailedListener
     {
         // error resolution
@@ -64,7 +64,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 	        }
         }
 
+#region Events
         public event EventHandler<PlayServicesConnectedEventArgs> PlayServicesConnectedEvent;
+#endregion
 
         public bool IsResolvingError { get; private set; }
 

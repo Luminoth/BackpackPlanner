@@ -72,7 +72,7 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// <value>
         /// The database version identifier.
         /// </value>
-        [PrimaryKey, AutoIncrement]
+        [PrimaryKey, AutoIncrement, Column("_id")]
         public int DatabaseVersionId { get; set; } = -1;
 
         /// <summary>

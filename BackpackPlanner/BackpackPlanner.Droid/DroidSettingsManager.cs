@@ -23,7 +23,7 @@ using EnergonSoftware.BackpackPlanner.Core.Settings;
 
 namespace EnergonSoftware.BackpackPlanner.Droid
 {
-    public class DroidSettingsManager : SettingsManager
+    internal sealed class DroidSettingsManager : SettingsManager
     {
         private readonly ISharedPreferences _sharedPreferences;
 
