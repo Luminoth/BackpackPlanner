@@ -37,14 +37,6 @@ namespace EnergonSoftware.BackpackPlanner.Commands
         public T Item { get; }
 
         /// <summary>
-        /// Gets a value indicating whether the item was deleted or not.
-        /// </summary>
-        /// <value>
-        /// <c>true</c> if the item was deleted; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsItemDeleted { get; private set; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="DeleteItemAction{T}"/> class.
         /// </summary>
         /// <param name="item">The item to delete.</param>
@@ -61,20 +53,18 @@ namespace EnergonSoftware.BackpackPlanner.Commands
         {
             await ValidateDatabaseStateAsync(databaseState).ConfigureAwait(false);
 
-            int count = await DatabaseItem.DeleteItemAsync(databaseState, Item).ConfigureAwait(false);
+            Item.IsDeleted = true;
 
-// TODO: how do we save "undo" state? maybe in the item itself?
-
-            IsItemDeleted = count > 0;
+            await DatabaseItem.SaveItemAsync(databaseState, Item).ConfigureAwait(false);
         }
 
         public async override Task UndoActionAsync(DatabaseState databaseState, BackpackPlannerSettings settings)
         {
             await ValidateDatabaseStateAsync(databaseState).ConfigureAwait(false);
 
-            await DatabaseItem.SaveItemAsync(databaseState, Item).ConfigureAwait(false);
+            Item.IsDeleted = false;
 
-// TODO: how do we load "undo" state? maybe in the item itself?
+            await DatabaseItem.SaveItemAsync(databaseState, Item).ConfigureAwait(false);
         }
     }
 }

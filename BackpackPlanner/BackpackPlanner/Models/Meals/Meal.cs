@@ -71,6 +71,10 @@ namespace EnergonSoftware.BackpackPlanner.Models.Meals
         [Ignore]
         public override int Id { get { return MealId; } set { MealId = value; } }
 
+        public override DateTime LastUpdated { get; set; } = DateTime.Now;
+
+        public override bool IsDeleted { get; set; }
+
         /// <summary>
         /// Gets or sets the meal identifier.
         /// </summary>

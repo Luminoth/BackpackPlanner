@@ -19,7 +19,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-using EnergonSoftware.BackpackPlanner.Core.Database;
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Settings;
 
@@ -58,8 +57,9 @@ namespace EnergonSoftware.BackpackPlanner.Models
                 Logger.Debug($"Reading all {typeof(T)}s from the database...");
 
                 Stopwatch stopWatch = Stopwatch.StartNew();
-                var items = await databaseState.Connection.AsyncConnection.GetAllWithChildrenAsync<T>().ConfigureAwait(false);
+                var items = await (from x in databaseState.Connection.AsyncConnection.Table<T>() where !x.IsDeleted select x).ToListAsync().ConfigureAwait(false);
                 foreach(T item in items) {
+                    await databaseState.Connection.AsyncConnection.GetChildrenAsync(item).ConfigureAwait(false);
                     item.Settings = settings;
                 }
                 stopWatch.Stop();
@@ -96,8 +96,14 @@ namespace EnergonSoftware.BackpackPlanner.Models
                 Logger.Debug($"Reading a {typeof(T)} with Id={itemId} from the database...");
 
                 Stopwatch stopWatch = Stopwatch.StartNew();
-                T item = await databaseState.Connection.AsyncConnection.GetWithChildrenAsync<T>(itemId).ConfigureAwait(false);
+                T item = await (from x in databaseState.Connection.AsyncConnection.Table<T>() where !x.IsDeleted && x.Id == itemId select x).FirstOrDefaultAsync().ConfigureAwait(false);
+                if(null == item) {
+                    return null;
+                }
+
+                await databaseState.Connection.AsyncConnection.GetChildrenAsync(item).ConfigureAwait(false);
                 item.Settings = settings;
+
                 stopWatch.Stop();
                 Logger.Debug($"Database read took {stopWatch.ElapsedMilliseconds}ms");
 
@@ -121,6 +127,10 @@ namespace EnergonSoftware.BackpackPlanner.Models
 
             await databaseState.Connection.LockAsync().ConfigureAwait(false);
             try {
+                foreach(T item in items) {
+                    item.LastUpdated = DateTime.Now;
+                }
+
                 Logger.Debug($"Inserting {items.Count} new {typeof(T)}s into the database...");
                 await databaseState.Connection.AsyncConnection.InsertAllWithChildrenAsync(items).ConfigureAwait(false);
             } finally {
@@ -137,6 +147,10 @@ namespace EnergonSoftware.BackpackPlanner.Models
 
             await databaseState.Connection.LockAsync().ConfigureAwait(false);
             try {
+                foreach(T item in items) {
+                    item.LastUpdate = DateTime.Now;
+                }
+
                 Logger.Debug($"Updating {items.Count} new {typeof(T)}s into the database...");
                 await databaseState.Connection.AsyncConnection.UpdateAllWithChildrenAsync(items).ConfigureAwait(false);
             } finally {
@@ -158,6 +172,8 @@ namespace EnergonSoftware.BackpackPlanner.Models
 
             await databaseState.Connection.LockAsync().ConfigureAwait(false);
             try {
+                item.LastUpdated = DateTime.Now;
+
                 if(item.Id <= 0) {
                     Logger.Debug($"Inserting a new {typeof(T)} into the database...");
                     await databaseState.Connection.AsyncConnection.InsertWithChildrenAsync(item).ConfigureAwait(false);
@@ -176,30 +192,8 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// </summary>
         /// <typeparam name="T">The type of the item to delete</typeparam>
         /// <param name="databaseState">State of the database.</param>
-        /// <param name="item">The item.</param>
         /// <returns>The number of items deleted?</returns>
-        public static async Task<int> DeleteItemAsync<T>(DatabaseState databaseState, T item) where T: DatabaseItem
-        {
-            if(null == databaseState) {
-                throw new ArgumentNullException(nameof(databaseState));
-            }
-
-            await databaseState.Connection.LockAsync().ConfigureAwait(false);
-            try {
-                Logger.Debug($"Deleting the {typeof(T)} with Id={item.Id} from the database...");
-                return await databaseState.Connection.AsyncConnection.DeleteAsync(item).ConfigureAwait(false);
-            } finally {
-                databaseState.Connection.Release();
-            }
-        }
-
-        /// <summary>
-        /// Deletes all items from the database.
-        /// </summary>
-        /// <typeparam name="T">The type of item to delete</typeparam>
-        /// <param name="databaseState">State of the database.</param>
-        /// <returns>The number of items deleted?</returns>
-        public static async Task<int> DeleteAllItemsAsync<T>(DatabaseState databaseState) where T: DatabaseItem
+        /*public static async Task<int> DeleteAllItemsAsync<T>(DatabaseState databaseState) where T: DatabaseItem
         {
             if(null == databaseState) {
                 throw new ArgumentNullException(nameof(databaseState));
@@ -212,7 +206,7 @@ namespace EnergonSoftware.BackpackPlanner.Models
             } finally {
                 databaseState.Connection.Release();
             }
-        }
+        }*/
 
         /// <summary>
         /// Gets the item identifier.
@@ -221,6 +215,22 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// The item identifier.
         /// </value>
         public abstract int Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the last update timestamp.
+        /// </summary>
+        /// <value>
+        /// The last update timestamp.
+        /// </value>
+        public abstract DateTime LastUpdated { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this item is deleted.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this item is deleted; otherwise, <c>false</c>.
+        /// </value>
+        public abstract bool IsDeleted { get; set; }
 
         /// <summary>
         /// Gets the planner settings.

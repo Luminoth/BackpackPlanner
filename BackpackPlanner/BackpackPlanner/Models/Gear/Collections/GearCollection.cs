@@ -74,6 +74,10 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Collections
         [Ignore]
         public override int Id { get { return GearCollectionId; } set { GearCollectionId = value; } }
 
+        public override DateTime LastUpdated { get; set; } = DateTime.Now;
+
+        public override bool IsDeleted { get; set; }
+
         /// <summary>
         /// Gets or sets the gear collection identifier.
         /// </summary>

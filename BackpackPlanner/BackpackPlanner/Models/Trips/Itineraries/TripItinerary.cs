@@ -69,6 +69,10 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries
         [Ignore]
         public override int Id { get { return TripItineraryId; } set { TripItineraryId = value; } }
 
+        public override DateTime LastUpdated { get; set; } = DateTime.Now;
+
+        public override bool IsDeleted { get; set; }
+
         /// <summary>
         /// Gets or sets the trip itinerary identifier.
         /// </summary>

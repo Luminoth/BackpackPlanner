@@ -17,7 +17,6 @@
 using System;
 using System.Threading.Tasks;
 
-using EnergonSoftware.BackpackPlanner.Core.Database;
 using EnergonSoftware.BackpackPlanner.Models;
 using EnergonSoftware.BackpackPlanner.Settings;
 

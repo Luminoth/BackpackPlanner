@@ -20,6 +20,8 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
+using EnergonSoftware.BackpackPlanner.Core;
+using EnergonSoftware.BackpackPlanner.Core.Database;
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Models;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Collections;
@@ -33,12 +35,11 @@ using EnergonSoftware.BackpackPlanner.Settings;
 using SQLite.Net;
 using SQLite.Net.Interop;
 
-namespace EnergonSoftware.BackpackPlanner.Core.Database
+namespace EnergonSoftware.BackpackPlanner
 {
     /// <summary>
     /// 
     /// </summary>
-    // TODO: this doesn't belong in core
     public sealed class DatabaseState : IDisposable
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(DatabaseState));

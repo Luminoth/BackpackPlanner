@@ -137,10 +137,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                     // TODO: do in background
                     var command = new DeleteItemCommand<T>(item);
                     command.DoActionAsync(BaseActivity.BackpackPlannerState.DatabaseState, BaseActivity.BackpackPlannerState.Settings).Wait();
-                    if(!command.IsItemDeleted) {
-                        // TODO: error!
-                        return;
-                    }
 
                     Adapter.RemoveItem(item);
 

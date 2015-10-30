@@ -73,6 +73,10 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Systems
         [Ignore]
         public override int Id { get { return GearSystemId; } set { GearSystemId = value; } }
 
+        public override DateTime LastUpdated { get; set; } = DateTime.Now;
+
+        public override bool IsDeleted { get; set; }
+
         /// <summary>
         /// Gets or sets the gear system identifier.
         /// </summary>
