@@ -36,7 +36,11 @@ namespace EnergonSoftware.BackpackPlanner.Windows
     /// </summary>
     sealed partial class App
     {
-        private BackpackPlannerState _backpackPlannerState;
+        public static App CurrentApp => (App)Current;
+
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(App));
+
+        public BackpackPlannerState BackpackPlannerState { get; }
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -53,6 +57,13 @@ namespace EnergonSoftware.BackpackPlanner.Windows
             Suspending += OnSuspending;
 
             CustomLogger.PlatformLogger = new WindowsLogger();
+
+            BackpackPlannerState = new BackpackPlannerState(
+                new HockeyAppManager(),
+                new WindowsSettingsManager(),
+                new PlayServicesManager(),
+                new SQLitePlatformWinRT()
+            );
         }
 
         /// <summary>
@@ -72,7 +83,7 @@ namespace EnergonSoftware.BackpackPlanner.Windows
 
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
-            if(rootFrame == null) {
+            if(null == rootFrame) {
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
 
@@ -84,28 +95,32 @@ namespace EnergonSoftware.BackpackPlanner.Windows
 
                 // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
+
+                LoadPreferences();
             }
 
-            if(rootFrame.Content == null) {
+            if(null == rootFrame.Content) {
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
-                rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                if(CurrentApp.BackpackPlannerState.Settings.MetaSettings.FirstRun) {
+                    Logger.Debug("Starting FTUE...");
+    // TODO: FTUE page
+                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                } else {
+                    Logger.Debug("Starting main activity...");
+                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                }
+                BackpackPlannerState.Settings.MetaSettings.FirstRun = false;
             }
 
             // Ensure the current window is active
             Window.Current.Activate();
 
-            _backpackPlannerState = new BackpackPlannerState(
-                new HockeyAppManager(),
-                new WindowsSettingsManager(),
-                new PlayServicesManager(),
-                new SQLitePlatformWinRT()
-            );
-            await _backpackPlannerState.InitAsync().ConfigureAwait(false);
+            await BackpackPlannerState.InitAsync().ConfigureAwait(false);
 
-            await _backpackPlannerState.DatabaseState.ConnectAsync(ApplicationData.Current.LocalFolder.Path, DatabaseState.DatabaseName).ConfigureAwait(false);
-            await _backpackPlannerState.DatabaseState.InitDatabaseAsync(_backpackPlannerState.Settings).ConfigureAwait(false);
+            await BackpackPlannerState.DatabaseState.ConnectAsync(ApplicationData.Current.LocalFolder.Path, DatabaseState.DatabaseName).ConfigureAwait(false);
+            await BackpackPlannerState.DatabaseState.InitDatabaseAsync(BackpackPlannerState.Settings).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -131,6 +146,12 @@ namespace EnergonSoftware.BackpackPlanner.Windows
 
             //TODO: Save application state and stop any background activity
             deferral.Complete();
+        }
+
+        private void LoadPreferences()
+        {
+            Logger.Debug("Loading preferences...");
+            BackpackPlannerState.PlatformSettingsManager.Load(BackpackPlannerState.Settings, BackpackPlannerState.PersonalInformation);
         }
     }
 }
