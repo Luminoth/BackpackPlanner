@@ -24,7 +24,7 @@ namespace EnergonSoftware.BackpackPlanner.Windows
 {
     public class HockeyAppManager : IHockeyAppManager
     {
-        public string AppId => "555fd9c1dfd5151312f39bf6c704827b";
+        public string AppId => "4a1fe69d1c8a49f08ed3de584e44f0fe";
 
         public bool IsInitialized { get; private set; }
 

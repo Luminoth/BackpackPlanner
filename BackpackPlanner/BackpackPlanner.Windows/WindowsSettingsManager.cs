@@ -14,6 +14,10 @@
    limitations under the License.
 */
 
+using System;
+
+using Windows.Storage;
+
 using EnergonSoftware.BackpackPlanner.Core.Settings;
 
 namespace EnergonSoftware.BackpackPlanner.Windows
@@ -24,40 +28,72 @@ namespace EnergonSoftware.BackpackPlanner.Windows
 #region Get
         public override string GetString(string key, string defaultValue)
         {
-            return defaultValue;
+            object obj;
+            return ApplicationData.Current.LocalSettings.Values.TryGetValue(key, out obj) ? obj.ToString() : defaultValue;
         }
 
         public override int GetInt(string key, int defaultValue)
         {
-            return defaultValue;
+            object obj;
+            if(!ApplicationData.Current.LocalSettings.Values.TryGetValue(key, out obj)) {
+                return defaultValue;;
+            }
+
+            try {
+                return Convert.ToInt32(obj);
+            } catch(FormatException) {
+                return defaultValue;
+            }
         }
 
         public override float GetFloat(string key, float defaultValue)
         {
-            return defaultValue;
+            object obj;
+            if(!ApplicationData.Current.LocalSettings.Values.TryGetValue(key, out obj)) {
+                return defaultValue;;
+            }
+
+            try {
+                return Convert.ToSingle(obj);
+            } catch(FormatException) {
+                return defaultValue;
+            }
         }
 
         public override bool GetBoolean(string key, bool defaultValue)
         {
-            return defaultValue;
+            object obj;
+            if(!ApplicationData.Current.LocalSettings.Values.TryGetValue(key, out obj)) {
+                return defaultValue;;
+            }
+
+            try {
+                return Convert.ToBoolean(obj);
+            } catch(FormatException) {
+                return defaultValue;
+            }
         }
 #endregion
 
 #region Put
         public override void PutString(string key, string value)
         {
+            ApplicationData.Current.LocalSettings.Values[key] = value;
         }
 
         public override void PutInt(string key, int value)
         {
+            ApplicationData.Current.LocalSettings.Values[key] = value;
         }
 
         public override void PutFloat(string key, float value)
         {
+            ApplicationData.Current.LocalSettings.Values[key] = value;
         }
 
         public override void PutBoolean(string key, bool value)
         {
+            ApplicationData.Current.LocalSettings.Values[key] = value;
         }
 #endregion
     }

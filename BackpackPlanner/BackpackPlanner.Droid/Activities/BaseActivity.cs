@@ -102,6 +102,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 
             ((HockeyAppManager)BackpackPlannerState.PlatformHockeyAppManager).OnResume(this);
 
+            // TODO: why is this in OnResume() and not OnCreate() ?
             LoadPreferences();
 
             if(_startupStopwatch.IsRunning) {
