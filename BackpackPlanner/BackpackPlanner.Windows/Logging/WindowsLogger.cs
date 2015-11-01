@@ -16,51 +16,83 @@
 
 using System;
 
+using Windows.Foundation.Diagnostics;
+
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 
 namespace EnergonSoftware.BackpackPlanner.Windows.Logging
 {
-    // TODO: this should use something better than System.Diagnostics
-    internal sealed class WindowsLogger : ILogger
+    internal sealed class WindowsLogger : ILogger, IDisposable
     {
+        private readonly ILoggingChannel _channel;
+        private readonly ILoggingSession _session;
+
+        public WindowsLogger()
+        {
+            _channel = new LoggingChannel("BackpackPlannerChannel", null);
+            _session = new LoggingSession("BackpackPlannerSession");
+
+            _session.AddLoggingChannel(_channel);
+        }
+
+#region Dispose
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if(disposing) {
+                _channel.Dispose();
+                _session.Dispose();
+            }
+        }
+#endregion
+
         public void Debug(string message)
         {
-            System.Diagnostics.Debug.WriteLine(message);
+            _channel.LogMessage(message, LoggingLevel.Verbose);
         }
 
         public void Debug(string message, Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine(message, ex);
+            // TODO
+            _channel.LogMessage(message, LoggingLevel.Verbose);
         }
 
         public void Info(string message)
         {
-            System.Diagnostics.Debug.WriteLine(message);
+            _channel.LogMessage(message, LoggingLevel.Information);
         }
 
         public void Info(string message, Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine(message, ex);
+            // TODO
+            _channel.LogMessage(message, LoggingLevel.Information);
         }
 
         public void Warn(string message)
         {
-            System.Diagnostics.Debug.WriteLine(message);
+            _channel.LogMessage(message, LoggingLevel.Warning);
         }
 
         public void Warn(string message, Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine(message, ex);
+            // TODO
+            _channel.LogMessage(message, LoggingLevel.Warning);
         }
 
         public void Error(string message)
         {
-            System.Diagnostics.Debug.WriteLine(message);
+            _channel.LogMessage(message, LoggingLevel.Error);
         }
 
         public void Error(string message, Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine(message, ex);
+            // TODO
+            _channel.LogMessage(message, LoggingLevel.Error);
         }
     }
 }

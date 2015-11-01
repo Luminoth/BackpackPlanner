@@ -34,7 +34,7 @@ namespace EnergonSoftware.BackpackPlanner.Windows
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
-    sealed partial class App
+    public sealed partial class App : IDisposable
     {
         public static App CurrentApp => (App)Current;
 
@@ -66,6 +66,21 @@ namespace EnergonSoftware.BackpackPlanner.Windows
             );
         }
 
+#region Dispose
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if(disposing) {
+                BackpackPlannerState.Dispose();
+            }
+        }
+#endregion
+
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
@@ -79,43 +94,7 @@ namespace EnergonSoftware.BackpackPlanner.Windows
             }
 #endif
 
-            Frame rootFrame = Window.Current.Content as Frame;
-
-            // Do not repeat app initialization when the Window already has content,
-            // just ensure that the window is active
-            if(null == rootFrame) {
-                // Create a Frame to act as the navigation context and navigate to the first page
-                rootFrame = new Frame();
-
-                rootFrame.NavigationFailed += OnNavigationFailed;
-
-                if(e.PreviousExecutionState == ApplicationExecutionState.Terminated) {
-                    //TODO: Load state from previously suspended application
-                }
-
-                // Place the frame in the current Window
-                Window.Current.Content = rootFrame;
-
-                LoadPreferences();
-            }
-
-            if(null == rootFrame.Content) {
-                // When the navigation stack isn't restored navigate to the first page,
-                // configuring the new page by passing required information as a navigation
-                // parameter
-                if(CurrentApp.BackpackPlannerState.Settings.MetaSettings.FirstRun) {
-                    Logger.Debug("Starting FTUE...");
-    // TODO: FTUE page
-                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
-                } else {
-                    Logger.Debug("Starting main activity...");
-                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
-                }
-                BackpackPlannerState.Settings.MetaSettings.FirstRun = false;
-            }
-
-            // Ensure the current window is active
-            Window.Current.Activate();
+            InitWindow(e);
 
             await BackpackPlannerState.InitAsync().ConfigureAwait(false);
 
@@ -142,10 +121,46 @@ namespace EnergonSoftware.BackpackPlanner.Windows
         /// <param name="e">Details about the suspend request.</param>
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
-            var deferral = e.SuspendingOperation.GetDeferral();
+            SuspendingDeferral deferral = e.SuspendingOperation.GetDeferral();
 
-            //TODO: Save application state and stop any background activity
+            // TODO: Save application state and stop any background activity
+
             deferral.Complete();
+        }
+
+        private void InitWindow(LaunchActivatedEventArgs e)
+        {
+            Frame rootFrame = Window.Current.Content as Frame ?? InitNewInstance(e);
+            if(null == rootFrame.Content) {
+                if(CurrentApp.BackpackPlannerState.Settings.MetaSettings.FirstRun) {
+                    Logger.Debug("Starting FTUE...");
+                    rootFrame.Navigate(typeof(FTUEPage), e.Arguments);
+                } else {
+                    Logger.Debug("Starting main activity...");
+                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                }
+                BackpackPlannerState.Settings.MetaSettings.FirstRun = false;
+            }
+            Window.Current.Activate();
+        }
+
+        private Frame InitNewInstance(LaunchActivatedEventArgs e)
+        {
+            Logger.Debug("Initializing new instance...");
+
+            Frame rootFrame = new Frame();
+            rootFrame.NavigationFailed += OnNavigationFailed;
+
+            if(e.PreviousExecutionState == ApplicationExecutionState.Terminated) {
+                //TODO: Load state from previously suspended application
+            }
+
+            // Place the frame in the current Window
+            Window.Current.Content = rootFrame;
+
+            LoadPreferences();
+
+            return rootFrame;
         }
 
         private void LoadPreferences()

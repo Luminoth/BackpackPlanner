@@ -14,13 +14,21 @@
    limitations under the License.
 */
 
+using Windows.UI.Xaml;
+
 namespace EnergonSoftware.BackpackPlanner.Windows.Pages
 {
-    public sealed partial class MainPage
+    // ReSharper disable once InconsistentNaming
+    public sealed partial class FTUEPage
     {
-        public MainPage()
+        public FTUEPage()
         {
             InitializeComponent();
+        }
+
+        private void SkipButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(MainPage));
         }
     }
 }

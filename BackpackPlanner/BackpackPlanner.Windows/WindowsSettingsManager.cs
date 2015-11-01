@@ -22,7 +22,6 @@ using EnergonSoftware.BackpackPlanner.Core.Settings;
 
 namespace EnergonSoftware.BackpackPlanner.Windows
 {
-    // TODO: write this
     internal sealed class WindowsSettingsManager : SettingsManager
     {
 #region Get
