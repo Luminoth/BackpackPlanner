@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-namespace EnergonSoftware.BackpackPlanner.Windows.Pages.Gear
+namespace EnergonSoftware.BackpackPlanner.Windows.Pages.Gear.Collections
 {
     public sealed partial class GearCollectionsPage
     {

@@ -17,9 +17,12 @@
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-using EnergonSoftware.BackpackPlanner.Windows.Pages.Gear;
+using EnergonSoftware.BackpackPlanner.Windows.Pages.Gear.Collections;
+using EnergonSoftware.BackpackPlanner.Windows.Pages.Gear.Items;
+using EnergonSoftware.BackpackPlanner.Windows.Pages.Gear.Systems;
 using EnergonSoftware.BackpackPlanner.Windows.Pages.Meals;
-using EnergonSoftware.BackpackPlanner.Windows.Pages.Trips;
+using EnergonSoftware.BackpackPlanner.Windows.Pages.Trips.Itineraries;
+using EnergonSoftware.BackpackPlanner.Windows.Pages.Trips.Plans;
 
 namespace EnergonSoftware.BackpackPlanner.Windows.Pages
 {

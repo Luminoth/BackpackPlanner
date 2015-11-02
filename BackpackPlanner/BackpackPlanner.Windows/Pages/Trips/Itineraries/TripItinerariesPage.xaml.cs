@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-namespace EnergonSoftware.BackpackPlanner.Windows.Pages.Trips
+namespace EnergonSoftware.BackpackPlanner.Windows.Pages.Trips.Itineraries
 {
     public sealed partial class TripItinerariesPage
     {

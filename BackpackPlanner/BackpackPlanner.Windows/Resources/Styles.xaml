@@ -14,4 +14,7 @@
     </Style>
     <SolidColorBrush x:Key="BackpackPlannerButtonMouseOverForeground" Color="White" />
 
+<!-- http://marcangers.com/material-design-shadows-in-wpf/ -->
+<!-- http://materialdesigninxaml.net/ -->
+
 </ResourceDictionary>

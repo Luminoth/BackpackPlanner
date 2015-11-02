@@ -109,10 +109,10 @@
     <Compile Include="Pages\DebugPage.xaml.cs">
       <DependentUpon>DebugPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Gear\GearCollectionsPage.xaml.cs">
+    <Compile Include="Pages\Gear\Collections\GearCollectionsPage.xaml.cs">
       <DependentUpon>GearCollectionsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Gear\GearItemsPage.xaml.cs">
+    <Compile Include="Pages\Gear\Items\GearItemsPage.xaml.cs">
       <DependentUpon>GearItemsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="HockeyAppManager.cs" />
@@ -120,7 +120,7 @@
     <Compile Include="Pages\FTUEPage.xaml.cs">
       <DependentUpon>FTUEPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Gear\GearSystemsPage.xaml.cs">
+    <Compile Include="Pages\Gear\Systems\GearSystemsPage.xaml.cs">
       <DependentUpon>GearSystemsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\HelpPage.xaml.cs">
@@ -135,10 +135,10 @@
     <Compile Include="Pages\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Trips\TripItinerariesPage.xaml.cs">
+    <Compile Include="Pages\Trips\Itineraries\TripItinerariesPage.xaml.cs">
       <DependentUpon>TripItinerariesPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Trips\TripPlansPage.xaml.cs">
+    <Compile Include="Pages\Trips\Plans\TripPlansPage.xaml.cs">
       <DependentUpon>TripPlansPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="PlayServicesManager.cs" />
@@ -170,11 +170,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Gear\GearCollectionsPage.xaml">
+    <Page Include="Pages\Gear\Collections\GearCollectionsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Gear\GearItemsPage.xaml">
+    <Page Include="Pages\Gear\Items\GearItemsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -182,7 +182,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Gear\GearSystemsPage.xaml">
+    <Page Include="Pages\Gear\Systems\GearSystemsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -202,11 +202,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Trips\TripItinerariesPage.xaml">
+    <Page Include="Pages\Trips\Itineraries\TripItinerariesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Trips\TripPlansPage.xaml">
+    <Page Include="Pages\Trips\Plans\TripPlansPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

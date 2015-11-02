@@ -36,10 +36,10 @@ namespace EnergonSoftware.BackpackPlanner.Windows
 
             HockeyClient.Current.Configure(AppId);
 
-            await HockeyClient.Current.SendCrashesAsync();
+            await HockeyClient.Current.SendCrashesAsync().ConfigureAwait(false);
 
 #if WINDOWS_PHONE_APP
-            await HockeyClient.Current.CheckForAppUpdateAsync();
+            await HockeyClient.Current.CheckForAppUpdateAsync().ConfigureAwait(false);
 #endif
 
             IsInitialized = true;

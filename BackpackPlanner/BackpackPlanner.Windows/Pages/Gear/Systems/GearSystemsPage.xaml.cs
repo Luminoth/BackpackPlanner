@@ -14,11 +14,11 @@
    limitations under the License.
 */
 
-namespace EnergonSoftware.BackpackPlanner.Windows.Pages.Gear
+namespace EnergonSoftware.BackpackPlanner.Windows.Pages.Gear.Systems
 {
-    public sealed partial class GearItemsPage
+    public sealed partial class GearSystemsPage 
     {
-        public GearItemsPage()
+        public GearSystemsPage()
         {
             InitializeComponent();
         }
