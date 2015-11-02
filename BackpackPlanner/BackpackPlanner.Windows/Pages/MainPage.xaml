@@ -126,6 +126,9 @@
         </SplitView.Pane>
         <SplitView.Content>
             <StackPanel Style="{StaticResource BackpackPlannerPage}">
+                <CommandBar Background="{StaticResource BackpackPlannerPrimary}" VerticalAlignment="Top" HorizontalContentAlignment="Stretch">
+                    <AppBarButton Icon="Find" Label="Search"/>
+                </CommandBar>
                 <Frame Name="ContentFrame" />
             </StackPanel>
         </SplitView.Content>

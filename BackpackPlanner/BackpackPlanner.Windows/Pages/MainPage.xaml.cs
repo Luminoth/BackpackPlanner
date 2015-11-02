@@ -15,8 +15,11 @@
 */
 
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
-using EnergonSoftware.BackpackPlanner.Windows.Frames.Gear;
+using EnergonSoftware.BackpackPlanner.Windows.Pages.Gear;
+using EnergonSoftware.BackpackPlanner.Windows.Pages.Meals;
+using EnergonSoftware.BackpackPlanner.Windows.Pages.Trips;
 
 namespace EnergonSoftware.BackpackPlanner.Windows.Pages
 {
@@ -26,10 +29,17 @@ namespace EnergonSoftware.BackpackPlanner.Windows.Pages
         {
             InitializeComponent();
 
-#if DEBUG
+#if !DEBUG
             NavMenu?.Items?.Remove(TripItinerariesItem);
             NavMenu?.Items?.Remove(DebugItem);
 #endif
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            ContentFrame.Navigate(typeof(GearItemsPage));
         }
 
         private void NavMenuItem_Click(object sender, ItemClickEventArgs e)
@@ -41,26 +51,30 @@ namespace EnergonSoftware.BackpackPlanner.Windows.Pages
 
             if(item.Name == MenuItem.Name) {
                 ContentView.IsPaneOpen = !ContentView.IsPaneOpen;
-            } else if(item.Name == GearItemsMenuItem.Name) {
-// TODO: this crashes!
-                ContentFrame.Navigate(typeof(GearItemsFrame));
-            } else if(item.Name == GearSystemsMenuItem.Name) {
-// TODO
-            } else if(item.Name == GearCollectionsMenuItem.Name) {
-// TODO
-            } else if(item.Name == MealsMenuItem.Name) {
-// TODO
-            } else if(item.Name == TripItinerariesMenuItem.Name) {
-// TODO
-            } else if(item.Name == TripPlansMenuItem.Name) {
-// TODO
-            } else if(item.Name == SettingsMenuItem.Name) {
-// TODO
-            } else if(item.Name == HelpMenuItem.Name) {
-// TODO
-            } else if(item.Name == DebugMenuItem.Name) {
-// TODO
+                return;
             }
+
+            if(item.Name == GearItemsMenuItem.Name) {
+                ContentFrame.Navigate(typeof(GearItemsPage));
+            } else if(item.Name == GearSystemsMenuItem.Name) {
+                ContentFrame.Navigate(typeof(GearSystemsPage));
+            } else if(item.Name == GearCollectionsMenuItem.Name) {
+                ContentFrame.Navigate(typeof(GearCollectionsPage));
+            } else if(item.Name == MealsMenuItem.Name) {
+                ContentFrame.Navigate(typeof(MealsPage));
+            } else if(item.Name == TripItinerariesMenuItem.Name) {
+                ContentFrame.Navigate(typeof(TripItinerariesPage));
+            } else if(item.Name == TripPlansMenuItem.Name) {
+                ContentFrame.Navigate(typeof(TripPlansPage));
+            } else if(item.Name == SettingsMenuItem.Name) {
+                ContentFrame.Navigate(typeof(SettingsPage));
+            } else if(item.Name == HelpMenuItem.Name) {
+                ContentFrame.Navigate(typeof(HelpPage));
+            } else if(item.Name == DebugMenuItem.Name) {
+                ContentFrame.Navigate(typeof(DebugPage));
+            }
+
+            ContentView.IsPaneOpen = false;
         }
     }
 }
