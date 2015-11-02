@@ -14,6 +14,10 @@
    limitations under the License.
 */
 
+using Windows.UI.Xaml.Controls;
+
+using EnergonSoftware.BackpackPlanner.Windows.Frames.Gear;
+
 namespace EnergonSoftware.BackpackPlanner.Windows.Pages
 {
     public sealed partial class MainPage
@@ -21,6 +25,42 @@ namespace EnergonSoftware.BackpackPlanner.Windows.Pages
         public MainPage()
         {
             InitializeComponent();
+
+#if DEBUG
+            NavMenu?.Items?.Remove(TripItinerariesItem);
+            NavMenu?.Items?.Remove(DebugItem);
+#endif
+        }
+
+        private void NavMenuItem_Click(object sender, ItemClickEventArgs e)
+        {
+            Panel item = e.ClickedItem as Panel;
+            if(null == item) {
+                return;
+            }
+
+            if(item.Name == MenuItem.Name) {
+                ContentView.IsPaneOpen = !ContentView.IsPaneOpen;
+            } else if(item.Name == GearItemsMenuItem.Name) {
+// TODO: this crashes!
+                ContentFrame.Navigate(typeof(GearItemsFrame));
+            } else if(item.Name == GearSystemsMenuItem.Name) {
+// TODO
+            } else if(item.Name == GearCollectionsMenuItem.Name) {
+// TODO
+            } else if(item.Name == MealsMenuItem.Name) {
+// TODO
+            } else if(item.Name == TripItinerariesMenuItem.Name) {
+// TODO
+            } else if(item.Name == TripPlansMenuItem.Name) {
+// TODO
+            } else if(item.Name == SettingsMenuItem.Name) {
+// TODO
+            } else if(item.Name == HelpMenuItem.Name) {
+// TODO
+            } else if(item.Name == DebugMenuItem.Name) {
+// TODO
+            }
         }
     }
 }

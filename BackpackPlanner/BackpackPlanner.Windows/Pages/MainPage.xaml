@@ -6,7 +6,128 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <StackPanel Background="{ThemeResource BackpackPlannerPageBackground}">
-        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Text="This is the main page!" />
-    </StackPanel>
+    <SplitView Name="ContentView" DisplayMode="CompactOverlay" CompactPaneLength="48" OpenPaneLength="250">
+        <SplitView.Pane>
+            <ListView Name="NavMenu" Background="{StaticResource BackpackPlannerPrimary}" IsItemClickEnabled="True" ItemClick="NavMenuItem_Click">
+                <ListViewItem>
+                    <Grid Name="MenuItem">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="48" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" FontFamily="Segoe MDL2 Assets" Text="&#xE700;" />
+                        <TextBlock Grid.Column="1" x:Uid="AppName" FontWeight="Bold" />
+                    </Grid>
+                </ListViewItem>
+                <ListViewItem>
+                    <Grid Name="GearItemsMenuItem">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="48" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="GI" />
+                        <TextBlock Grid.Column="1" x:Uid="GearItems" />
+                    </Grid>
+                </ListViewItem>
+                <ListViewItem>
+                    <Grid Name="GearSystemsMenuItem">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="48" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="GS" />
+                        <TextBlock Grid.Column="1" x:Uid="GearSystems" />
+                    </Grid>
+                </ListViewItem>
+                <ListViewItem>
+                    <Grid Name="GearCollectionsMenuItem">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="48" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="GC" />
+                        <TextBlock Grid.Column="1" x:Uid="GearCollections" />
+                    </Grid>
+                </ListViewItem>
+                <ListViewItem></ListViewItem>
+                <ListViewItem>
+                    <Grid Name="MealsMenuItem">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="48" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="M" />
+                        <TextBlock Grid.Column="1" x:Uid="Meals" />
+                    </Grid>
+                </ListViewItem>
+                <ListViewItem></ListViewItem>
+                <ListViewItem Name="TripItinerariesItem">
+                    <Grid Name="TripItinerariesMenuItem">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="48" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="TI" />
+                        <TextBlock Grid.Column="1" x:Uid="TripItineraries" />
+                    </Grid>
+                </ListViewItem>
+                <ListViewItem>
+                    <Grid Name="TripPlansMenuItem">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="48" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="TP" />
+                        <TextBlock Grid.Column="1" x:Uid="TripPlans" />
+                    </Grid>
+                </ListViewItem>
+                <ListViewItem></ListViewItem>
+                <ListViewItem>
+                    <Grid Name="SettingsMenuItem">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="48" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="&#xE713;" FontFamily="Segoe MDL2 Assets" />
+                        <TextBlock Grid.Column="1" x:Uid="Settings" />
+                    </Grid>
+                </ListViewItem>
+                <ListViewItem>
+                    <Grid Name="HelpMenuItem">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="48" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="&#xE897;" FontFamily="Segoe MDL2 Assets" />
+                        <TextBlock Grid.Column="1" x:Uid="Help" />
+                    </Grid>
+                </ListViewItem>
+                <ListViewItem Name="DebugItem">
+                    <Grid Name="DebugMenuItem">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="48" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="D" />
+                        <TextBlock Grid.Column="1" x:Uid="Debug" />
+                    </Grid>
+                </ListViewItem>
+            </ListView>
+        </SplitView.Pane>
+        <SplitView.Content>
+            <StackPanel Style="{StaticResource BackpackPlannerPage}">
+                <Frame Name="ContentFrame" />
+            </StackPanel>
+        </SplitView.Content>
+    </SplitView>
 </Page>

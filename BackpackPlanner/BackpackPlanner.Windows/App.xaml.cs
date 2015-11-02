@@ -31,9 +31,6 @@ using SQLite.Net.Platform.WinRT;
 
 namespace EnergonSoftware.BackpackPlanner.Windows
 {
-    /// <summary>
-    /// Provides application-specific behavior to supplement the default Application class.
-    /// </summary>
     public sealed partial class App : IDisposable
     {
         public static App CurrentApp => (App)Current;
@@ -42,10 +39,6 @@ namespace EnergonSoftware.BackpackPlanner.Windows
 
         public BackpackPlannerState BackpackPlannerState { get; }
 
-        /// <summary>
-        /// Initializes the singleton application object.  This is the first line of authored code
-        /// executed, and as such is the logical equivalent of main() or WinMain().
-        /// </summary>
         public App()
         {
             Microsoft.ApplicationInsights.WindowsAppInitializer.InitializeAsync(
@@ -130,7 +123,11 @@ namespace EnergonSoftware.BackpackPlanner.Windows
 
         private void InitWindow(LaunchActivatedEventArgs e)
         {
-            Frame rootFrame = Window.Current.Content as Frame ?? InitNewInstance(e);
+            Frame rootFrame = Window.Current.Content as Frame ?? NewContentFrame(e);
+            Window.Current.Content = rootFrame;
+
+            LoadPreferences();
+
             if(null == rootFrame.Content) {
                 if(CurrentApp.BackpackPlannerState.Settings.MetaSettings.FirstRun) {
                     Logger.Debug("Starting FTUE...");
@@ -141,12 +138,13 @@ namespace EnergonSoftware.BackpackPlanner.Windows
                 }
                 BackpackPlannerState.Settings.MetaSettings.FirstRun = false;
             }
+
             Window.Current.Activate();
         }
 
-        private Frame InitNewInstance(LaunchActivatedEventArgs e)
+        private Frame NewContentFrame(LaunchActivatedEventArgs e)
         {
-            Logger.Debug("Initializing new instance...");
+            Logger.Debug("Creating new frame...");
 
             Frame rootFrame = new Frame();
             rootFrame.NavigationFailed += OnNavigationFailed;
@@ -154,11 +152,6 @@ namespace EnergonSoftware.BackpackPlanner.Windows
             if(e.PreviousExecutionState == ApplicationExecutionState.Terminated) {
                 //TODO: Load state from previously suspended application
             }
-
-            // Place the frame in the current Window
-            Window.Current.Content = rootFrame;
-
-            LoadPreferences();
 
             return rootFrame;
         }

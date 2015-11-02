@@ -6,8 +6,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <StackPanel Background="{ThemeResource BackpackPlannerPageBackground}">
+    <StackPanel Style="{StaticResource BackpackPlannerPage}">
         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" TextWrapping="Wrap" Text="This is the FTUE page!" />
-        <Button Background="{ThemeResource BackpackPlannerPrimary}" HorizontalAlignment="Center" VerticalAlignment="Top" Content="Skip It!" Click="SkipButton_Click" />
+        <Button x:Uid="FTUESkipButton" Style="{StaticResource BackpackPlannerControl}" HorizontalAlignment="Center" VerticalAlignment="Top" Click="SkipButton_Click" />
     </StackPanel>
 </Page>
