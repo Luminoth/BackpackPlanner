@@ -17,7 +17,7 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Column="0" FontFamily="Segoe MDL2 Assets" Text="&#xE700;" />
-                        <TextBlock Grid.Column="1" x:Uid="AppName" FontWeight="Bold" />
+                        <TextBlock Grid.Column="1" x:Uid="AppName" Text="Backpacking Planner" FontWeight="Bold" />
                     </Grid>
                 </ListViewItem>
                 <ListViewItem>
@@ -28,7 +28,7 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Column="0" Text="GI" />
-                        <TextBlock Grid.Column="1" x:Uid="GearItems" />
+                        <TextBlock Grid.Column="1" x:Uid="GearItems" Text="Gear Items" />
                     </Grid>
                 </ListViewItem>
                 <ListViewItem>
@@ -39,7 +39,7 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Column="0" Text="GS" />
-                        <TextBlock Grid.Column="1" x:Uid="GearSystems" />
+                        <TextBlock Grid.Column="1" x:Uid="GearSystems" Text="Gear Systems" />
                     </Grid>
                 </ListViewItem>
                 <ListViewItem>
@@ -50,7 +50,7 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Column="0" Text="GC" />
-                        <TextBlock Grid.Column="1" x:Uid="GearCollections" />
+                        <TextBlock Grid.Column="1" x:Uid="GearCollections" Text="Gear Collections" />
                     </Grid>
                 </ListViewItem>
                 <ListViewItem></ListViewItem>
@@ -62,7 +62,7 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Column="0" Text="M" />
-                        <TextBlock Grid.Column="1" x:Uid="Meals" />
+                        <TextBlock Grid.Column="1" x:Uid="Meals" Text="Meals" />
                     </Grid>
                 </ListViewItem>
                 <ListViewItem></ListViewItem>
@@ -74,7 +74,7 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Column="0" Text="TI" />
-                        <TextBlock Grid.Column="1" x:Uid="TripItineraries" />
+                        <TextBlock Grid.Column="1" x:Uid="TripItineraries" Text="Trip Itineraries" />
                     </Grid>
                 </ListViewItem>
                 <ListViewItem>
@@ -85,7 +85,7 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Column="0" Text="TP" />
-                        <TextBlock Grid.Column="1" x:Uid="TripPlans" />
+                        <TextBlock Grid.Column="1" x:Uid="TripPlans" Text="Trip Plans" />
                     </Grid>
                 </ListViewItem>
                 <ListViewItem></ListViewItem>
@@ -97,7 +97,7 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Column="0" Text="&#xE713;" FontFamily="Segoe MDL2 Assets" />
-                        <TextBlock Grid.Column="1" x:Uid="Settings" />
+                        <TextBlock Grid.Column="1" x:Uid="Settings" Text="Settings" />
                     </Grid>
                 </ListViewItem>
                 <ListViewItem>
@@ -108,7 +108,7 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Column="0" Text="&#xE897;" FontFamily="Segoe MDL2 Assets" />
-                        <TextBlock Grid.Column="1" x:Uid="Help" />
+                        <TextBlock Grid.Column="1" x:Uid="Help" Text="Help" />
                     </Grid>
                 </ListViewItem>
                 <ListViewItem Name="DebugItem">
@@ -119,7 +119,7 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Column="0" Text="D" />
-                        <TextBlock Grid.Column="1" x:Uid="Debug" />
+                        <TextBlock Grid.Column="1" x:Uid="Debug" Text="Debug" />
                     </Grid>
                 </ListViewItem>
             </ListView>

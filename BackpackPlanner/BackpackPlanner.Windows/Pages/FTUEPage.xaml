@@ -8,6 +8,6 @@
 
     <StackPanel Style="{StaticResource BackpackPlannerPage}">
         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" TextWrapping="Wrap" Text="This is the FTUE page!" />
-        <Button x:Uid="FTUESkipButton" Style="{StaticResource BackpackPlannerControl}" HorizontalAlignment="Center" VerticalAlignment="Top" Click="SkipButton_Click" />
+        <Button x:Uid="FTUESkipButton" Style="{StaticResource BackpackPlannerControl}" HorizontalAlignment="Center" VerticalAlignment="Top" Content="Skip" Click="SkipButton_Click" />
     </StackPanel>
 </Page>

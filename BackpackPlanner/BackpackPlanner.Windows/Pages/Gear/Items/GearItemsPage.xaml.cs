@@ -32,7 +32,7 @@ namespace EnergonSoftware.BackpackPlanner.Windows.Pages.Gear.Items
             InitializeComponent();
         }
 
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
@@ -44,11 +44,13 @@ namespace EnergonSoftware.BackpackPlanner.Windows.Pages.Gear.Items
             Logger.Debug($"Read {command.Items.Count} items...");
             if(command.Items.Count < 1) {
                 NoItems.Visibility = Visibility.Visible;
+                SortBy.Visibility = Visibility.Collapsed;
                 ItemsListView.Visibility = Visibility.Collapsed;
                 return;
             }
 
             NoItems.Visibility = Visibility.Collapsed;
+            SortBy.Visibility = Visibility.Visible;
             ItemsListView.Visibility = Visibility.Visible;
 
             foreach(GearItem item in command.Items) {

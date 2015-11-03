@@ -7,12 +7,34 @@
     mc:Ignorable="d">
 
     <StackPanel Style="{StaticResource BackpackPlannerPage}">
-        <TextBlock x:Uid="NoGearItems" Name="NoItems" />
-        <ListView Name="ItemsListView" Visibility="Collapsed">
-            <StackPanel>
-                <TextBlock Text="{Binding Path=Name}" />
+        <Button Background="Transparent">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="&#xE897;" FontFamily="Segoe MDL2 Assets" />
+                <TextBlock Text="TEXT ME" />
             </StackPanel>
+        </Button>
+        <TextBlock x:Uid="NoGearItems" Name="NoItems" Text="No Gear Items" />
+<TextBlock Name="SortBy" Text="SPINNER HERE" />
+        <ListView Name="ItemsListView" Visibility="Collapsed">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <StackPanel Background="{StaticResource BackpackPlannerPrimary}">
+                            <TextBlock Text="{Binding Path=Name}" />
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Path=Make}" />
+                                <TextBlock Text="{Binding Path=Model}" />
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Path=WeightInUnits}" />
+                            <TextBlock Text="{Binding Path=CostInCurrency}" />
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
         <ProgressRing Name="Progress" RenderTransformOrigin="0.5,5" Visibility="Collapsed" />
+<TextBlock Text="FAB" />
     </StackPanel>
 </Page>
