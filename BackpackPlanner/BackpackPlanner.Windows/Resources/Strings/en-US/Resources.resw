@@ -132,6 +132,9 @@
   <data name="GearItems.Text" xml:space="preserve">
     <value>Gear Items</value>
   </data>
+  <data name="GearItemWeight.Text" xml:space="preserve">
+    <value>{0} {1}</value>
+  </data>
   <data name="GearSystems.Text" xml:space="preserve">
     <value>Gear Systems</value>
   </data>
@@ -152,5 +155,8 @@
   </data>
   <data name="TripPlans.Text" xml:space="preserve">
     <value>Trip Plans</value>
+  </data>
+  <data name="GearItemCost.Text" xml:space="preserve">
+    <value>{0} ({1} per {2})</value>
   </data>
 </root>

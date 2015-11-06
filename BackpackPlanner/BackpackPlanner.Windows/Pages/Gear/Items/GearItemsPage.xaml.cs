@@ -14,50 +14,60 @@
    limitations under the License.
 */
 
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Navigation;
+using System.Globalization;
 
-using EnergonSoftware.BackpackPlanner.Commands;
-using EnergonSoftware.BackpackPlanner.Core.Logging;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+
 using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
+using EnergonSoftware.BackpackPlanner.Units.Units;
+using EnergonSoftware.BackpackPlanner.Windows.Utils;
 
 namespace EnergonSoftware.BackpackPlanner.Windows.Pages.Gear.Items
 {
+    /// <summary>
+    /// Wrapper class to make the generic base concrete for XAML
+    /// </summary>
+    public abstract class GearItemsPageWrapper : ListItemsPage<GearItem>
+    {
+    }
+
     public sealed partial class GearItemsPage
     {
-        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(GearItemsPage));
+        protected override ProgressRing LoadProgressRing => LoadProgress;
+
+        protected override TextBlock NoItemsTextBlock => NoGearItems;
+
+        protected override TextBlock SortByTextBlock => SortBy;
+
+        protected override ListView ItemsListView => GearItemsListView;
 
         public GearItemsPage()
         {
             InitializeComponent();
         }
 
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        protected override void UpdateValues()
         {
-            base.OnNavigatedTo(e);
+            for(int i=0; i<GearItemsListView.Items?.Count; ++i) {
+                GearItem gearItem = (GearItem)GearItemsListView.Items[i];
+                DependencyObject lvi = GearItemsListView.ContainerFromIndex(i);
 
-            Progress.Visibility = Visibility.Visible;
+                TextBlock gearItemWeightText = Util.FindVisualChildByName<TextBlock>(lvi, "GearItemWeight");
+                if(null != gearItemWeightText) {
+                    int weightInUnits = (int)gearItem.WeightInUnits;
+                    gearItemWeightText.Text = string.Format(ResourceLoader.GetString("GearItemWeight/Text"),
+                        weightInUnits, App.CurrentApp.BackpackPlannerState.Settings.Units.GetSmallWeightString(weightInUnits != 1));
+                }
 
-            var command = new GetItemsCommand<GearItem>();
-            await command.DoActionAsync(App.CurrentApp.BackpackPlannerState.DatabaseState, App.CurrentApp.BackpackPlannerState.Settings);
-
-            Logger.Debug($"Read {command.Items.Count} items...");
-            if(command.Items.Count < 1) {
-                NoItems.Visibility = Visibility.Visible;
-                SortBy.Visibility = Visibility.Collapsed;
-                ItemsListView.Visibility = Visibility.Collapsed;
-                return;
+                TextBlock gearItemCostText = Util.FindVisualChildByName<TextBlock>(lvi, "GearItemCost");
+                if(null != gearItemCostText) {
+                    string formattedCost = gearItem.CostInCurrency.ToString("C", CultureInfo.CurrentCulture);
+                    string formattedCostPerWeight = gearItem.CostPerWeightInCurrency.ToString("C", CultureInfo.CurrentCulture);
+                    gearItemCostText.Text = string.Format(ResourceLoader.GetString("GearItemCost/Text"),
+                        formattedCost, formattedCostPerWeight, App.CurrentApp.BackpackPlannerState.Settings.Units.GetSmallWeightString(false));
+                }
             }
-
-            NoItems.Visibility = Visibility.Collapsed;
-            SortBy.Visibility = Visibility.Visible;
-            ItemsListView.Visibility = Visibility.Visible;
-
-            foreach(GearItem item in command.Items) {
-                ItemsListView?.Items?.Add(item);
-            }
-
-            Progress.Visibility = Visibility.Collapsed;
         }
     }
 }

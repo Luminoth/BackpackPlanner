@@ -27,6 +27,7 @@ namespace EnergonSoftware.BackpackPlanner.Units.Units
         /// Gets the small weight string for the unit system.
         /// </summary>
         /// <param name="unitSystem">The unit system.</param>
+        /// <param name="plural">if set to <c>true</c> [plural].</param>
         /// <returns>The small weight string for the unit system</returns>
         public static string GetSmallWeightString(this UnitSystem unitSystem, bool plural)
         {

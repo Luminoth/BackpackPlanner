@@ -1,9 +1,10 @@
-﻿<Page
+﻿<pages:GearItemsPageWrapper
     x:Class="EnergonSoftware.BackpackPlanner.Windows.Pages.Gear.Items.GearItemsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pages="using:EnergonSoftware.BackpackPlanner.Windows.Pages.Gear.Items"
     mc:Ignorable="d">
 
     <StackPanel Style="{StaticResource BackpackPlannerPage}">
@@ -13,9 +14,9 @@
                 <TextBlock Text="TEXT ME" />
             </StackPanel>
         </Button>
-        <TextBlock x:Uid="NoGearItems" Name="NoItems" Text="No Gear Items" />
+        <TextBlock x:Uid="NoGearItems" Name="NoGearItems" Text="No Gear Items" />
 <TextBlock Name="SortBy" Text="SPINNER HERE" />
-        <ListView Name="ItemsListView" Visibility="Collapsed">
+        <ListView Name="GearItemsListView" Visibility="Collapsed">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
@@ -27,14 +28,14 @@
                             </StackPanel>
                         </StackPanel>
                         <StackPanel>
-                            <TextBlock Text="{Binding Path=WeightInUnits}" />
-                            <TextBlock Text="{Binding Path=CostInCurrency}" />
+                            <TextBlock Name="GearItemWeight" />
+                            <TextBlock Name="GearItemCost" />
                         </StackPanel>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <ProgressRing Name="Progress" RenderTransformOrigin="0.5,5" Visibility="Collapsed" />
+        <ProgressRing Name="LoadProgress" RenderTransformOrigin="0.5,5" Visibility="Collapsed" />
 <TextBlock Text="FAB" />
     </StackPanel>
-</Page>
+</pages:GearItemsPageWrapper>

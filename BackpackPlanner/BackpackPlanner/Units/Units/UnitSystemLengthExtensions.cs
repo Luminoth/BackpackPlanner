@@ -27,15 +27,16 @@ namespace EnergonSoftware.BackpackPlanner.Units.Units
         /// Gets the small length string for the unit system.
         /// </summary>
         /// <param name="unitSystem">The unit system.</param>
+        /// <param name="plural">if set to <c>true</c> [plural].</param>
         /// <returns>The small length string for the unit system</returns>
-        public static string GetSmallLengthString(this UnitSystem unitSystem)
+        public static string GetSmallLengthString(this UnitSystem unitSystem, bool plural)
         {
             switch(unitSystem)
             {
             case UnitSystem.Metric:
-                return "centimeters";
+                return plural ? "centimeters" : "centimeter";
             case UnitSystem.UnitedStates:
-                return "inches";
+                return plural ? "inches" : "inch";
             default:
                 throw new InvalidOperationException("Invalid unit system!");
             }

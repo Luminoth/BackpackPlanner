@@ -33,8 +33,8 @@ namespace EnergonSoftware.BackpackPlanner.Windows.Pages
             InitializeComponent();
 
 #if !DEBUG
-            NavMenu?.Items?.Remove(TripItinerariesItem);
-            NavMenu?.Items?.Remove(DebugItem);
+            NavMenu.Items?.Remove(TripItinerariesItem);
+            NavMenu.Items?.Remove(DebugItem);
 #endif
         }
 
