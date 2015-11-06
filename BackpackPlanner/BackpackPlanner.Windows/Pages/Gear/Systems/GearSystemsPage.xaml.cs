@@ -14,13 +14,41 @@
    limitations under the License.
 */
 
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+
+using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
+
 namespace EnergonSoftware.BackpackPlanner.Windows.Pages.Gear.Systems
 {
+    /// <summary>
+    /// Wrapper class to make the generic base concrete for XAML
+    /// </summary>
+    public abstract class GearSystemsPageWrapper : ListItemsPage<GearSystem>
+    {
+    }
+
     public sealed partial class GearSystemsPage 
     {
+        protected override ProgressRing LoadProgressRing => LoadProgress;
+
+        protected override TextBlock NoItemsTextBlock => NoGearSystems;
+
+        protected override TextBlock SortByTextBlock => SortBy;
+
+        protected override ListView ItemsListView => GearSystemsListView;
+
         public GearSystemsPage()
         {
             InitializeComponent();
+        }
+
+        protected override void UpdateValues()
+        {
+            for(int i=0; i<GearSystemsListView.Items?.Count; ++i) {
+                GearSystem gearSystem = (GearSystem)GearSystemsListView.Items[i];
+                DependencyObject lvi = GearSystemsListView.ContainerFromIndex(i);
+            }
         }
     }
 }

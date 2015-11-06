@@ -7,6 +7,7 @@
     mc:Ignorable="d">
 
     <StackPanel Style="{StaticResource BackpackPlannerPage}">
-        <TextBlock Text="Debug" />
+        <Button HorizontalAlignment="Center" Content="Reset FTUE" Click="ResetFTUE_Click" />
+        <Button HorizontalAlignment="Center" Content="Reset Database" Click="ResetDatabase_Click" />
     </StackPanel>
 </Page>

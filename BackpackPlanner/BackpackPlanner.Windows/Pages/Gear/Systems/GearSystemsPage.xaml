@@ -1,12 +1,36 @@
-﻿<Page
+﻿<pages:GearSystemsPageWrapper
     x:Class="EnergonSoftware.BackpackPlanner.Windows.Pages.Gear.Systems.GearSystemsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pages="using:EnergonSoftware.BackpackPlanner.Windows.Pages.Gear.Systems"
     mc:Ignorable="d">
 
     <StackPanel Style="{StaticResource BackpackPlannerPage}">
-        <TextBlock Text="Gear Systems" />
+        <Button Background="Transparent">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="&#xE897;" FontFamily="Segoe MDL2 Assets" />
+                <TextBlock Text="TEXT ME" />
+            </StackPanel>
+        </Button>
+        <TextBlock x:Uid="NoGearSystems" Name="NoGearSystems" Text="No Gear Systems" />
+        <TextBlock Name="SortBy" Text="SPINNER HERE" />
+        <ListView Name="GearSystemsListView" Visibility="Collapsed">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <StackPanel Background="{StaticResource BackpackPlannerPrimary}">
+                            <TextBlock Text="{Binding Path=Name}" />
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Text="MISC" />
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <ProgressRing Name="LoadProgress" RenderTransformOrigin="0.5,5" Visibility="Collapsed" />
+        <TextBlock Text="FAB" />
     </StackPanel>
-</Page>
+</pages:GearSystemsPageWrapper>

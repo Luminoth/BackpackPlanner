@@ -17,7 +17,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using EnergonSoftware.BackpackPlanner.Core.Database;
 using EnergonSoftware.BackpackPlanner.Models;
 using EnergonSoftware.BackpackPlanner.Settings;
 
@@ -36,7 +35,7 @@ namespace EnergonSoftware.BackpackPlanner.Commands
         /// </value>
         public List<T> Items { get; private set; } = new List<T>();
 
-        public async override Task DoActionAsync(DatabaseState databaseState, BackpackPlannerSettings settings)
+        public override async Task DoActionAsync(DatabaseState databaseState, BackpackPlannerSettings settings)
         {
             await ValidateDatabaseStateAsync(databaseState).ConfigureAwait(false);
 

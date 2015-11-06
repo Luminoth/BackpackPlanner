@@ -15,7 +15,7 @@
             </StackPanel>
         </Button>
         <TextBlock x:Uid="NoGearItems" Name="NoGearItems" Text="No Gear Items" />
-<TextBlock Name="SortBy" Text="SPINNER HERE" />
+        <TextBlock Name="SortBy" Text="SPINNER HERE" />
         <ListView Name="GearItemsListView" Visibility="Collapsed">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -36,6 +36,6 @@
             </ListView.ItemTemplate>
         </ListView>
         <ProgressRing Name="LoadProgress" RenderTransformOrigin="0.5,5" Visibility="Collapsed" />
-<TextBlock Text="FAB" />
+        <TextBlock Text="FAB" />
     </StackPanel>
 </pages:GearItemsPageWrapper>

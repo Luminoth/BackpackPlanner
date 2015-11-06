@@ -14,13 +14,31 @@
    limitations under the License.
 */
 
+using Windows.UI.Xaml;
+
+using EnergonSoftware.BackpackPlanner.Core.Logging;
+
 namespace EnergonSoftware.BackpackPlanner.Windows.Pages
 {
     public sealed partial class DebugPage
     {
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(DebugPage));
+
         public DebugPage()
         {
             InitializeComponent();
+        }
+
+        private void ResetFTUE_Click(object sender, RoutedEventArgs e)
+        {
+            Logger.Debug("Resetting FTUE state");
+            App.CurrentApp.BackpackPlannerState.Settings.MetaSettings.FirstRun = true;
+        }
+
+        private void ResetDatabase_Click(object sender, RoutedEventArgs e)
+        {
+            Logger.Debug("Resetting database");
+            // TODO
         }
     }
 }

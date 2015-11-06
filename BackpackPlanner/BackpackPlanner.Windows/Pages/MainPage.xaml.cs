@@ -38,9 +38,13 @@ namespace EnergonSoftware.BackpackPlanner.Windows.Pages
 #endif
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+
+            if(App.CurrentApp.BackpackPlannerState.Settings.ConnectGooglePlayServices) {
+                await App.CurrentApp.BackpackPlannerState.PlatformPlayServicesManager.ConnectAsync();
+            }
 
             ContentFrame.Navigate(typeof(GearItemsPage));
         }

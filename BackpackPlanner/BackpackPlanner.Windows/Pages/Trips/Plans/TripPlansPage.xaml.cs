@@ -14,13 +14,41 @@
    limitations under the License.
 */
 
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+
+using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
+
 namespace EnergonSoftware.BackpackPlanner.Windows.Pages.Trips.Plans
 {
+    /// <summary>
+    /// Wrapper class to make the generic base concrete for XAML
+    /// </summary>
+    public abstract class TripPlansPageWrapper : ListItemsPage<TripPlan>
+    {
+    }
+
     public sealed partial class TripPlansPage
     {
+        protected override ProgressRing LoadProgressRing => LoadProgress;
+
+        protected override TextBlock NoItemsTextBlock => NoTripPlans;
+
+        protected override TextBlock SortByTextBlock => SortBy;
+
+        protected override ListView ItemsListView => TripPlansListView;
+
         public TripPlansPage()
         {
             InitializeComponent();
+        }
+
+        protected override void UpdateValues()
+        {
+            for(int i=0; i<TripPlansListView.Items?.Count; ++i) {
+                TripPlan tripPlan = (TripPlan)TripPlansListView.Items[i];
+                DependencyObject lvi = TripPlansListView.ContainerFromIndex(i);
+            }
         }
     }
 }

@@ -14,13 +14,41 @@
    limitations under the License.
 */
 
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+
+using EnergonSoftware.BackpackPlanner.Models.Meals;
+
 namespace EnergonSoftware.BackpackPlanner.Windows.Pages.Meals
 {
+    /// <summary>
+    /// Wrapper class to make the generic base concrete for XAML
+    /// </summary>
+    public abstract class MealsPageWrapper : ListItemsPage<Meal>
+    {
+    }
+
     public sealed partial class MealsPage
     {
+        protected override ProgressRing LoadProgressRing => LoadProgress;
+
+        protected override TextBlock NoItemsTextBlock => NoMeals;
+
+        protected override TextBlock SortByTextBlock => SortBy;
+
+        protected override ListView ItemsListView => MealsListView;
+
         public MealsPage()
         {
             InitializeComponent();
+        }
+
+        protected override void UpdateValues()
+        {
+            for(int i=0; i<MealsListView.Items?.Count; ++i) {
+                Meal meal = (Meal)MealsListView.Items[i];
+                DependencyObject lvi = MealsListView.ContainerFromIndex(i);
+            }
         }
     }
 }
