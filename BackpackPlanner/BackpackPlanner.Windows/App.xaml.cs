@@ -89,10 +89,10 @@ namespace EnergonSoftware.BackpackPlanner.Windows
 
             InitWindow(e);
 
-            await BackpackPlannerState.InitAsync().ConfigureAwait(false);
+            await BackpackPlannerState.InitAsync();
 
-            await BackpackPlannerState.DatabaseState.ConnectAsync(ApplicationData.Current.LocalFolder.Path, DatabaseState.DatabaseName).ConfigureAwait(false);
-            await BackpackPlannerState.DatabaseState.InitDatabaseAsync(BackpackPlannerState.Settings).ConfigureAwait(false);
+            await BackpackPlannerState.DatabaseState.ConnectAsync(ApplicationData.Current.LocalFolder.Path, DatabaseState.DatabaseName);
+            await BackpackPlannerState.DatabaseState.InitDatabaseAsync(BackpackPlannerState.Settings);
         }
 
         /// <summary>

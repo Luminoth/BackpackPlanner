@@ -99,6 +99,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\google_play_client_secrets.json" />
     <None Include="project.json" />
     <PRIResource Include="Resources\Strings\en-US\Resources.resw" />
   </ItemGroup>

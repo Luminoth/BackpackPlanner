@@ -107,7 +107,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         private void SetHeightLabel()
         {
             _heightPreference.DialogTitle = _heightPreference.Title = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_height),
-                BaseActivity.BackpackPlannerState.Settings.Units.GetSmallLengthString()
+                BaseActivity.BackpackPlannerState.Settings.Units.GetSmallLengthString(true)
             );
         }
 
@@ -141,7 +141,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         {
             // TODO: make this a resource
             _heightPreference.Summary = ((int)BaseActivity.BackpackPlannerState.PersonalInformation.HeightInUnits)
-                + " " + BaseActivity.BackpackPlannerState.Settings.Units.GetSmallLengthString();
+                + " " + BaseActivity.BackpackPlannerState.Settings.Units.GetSmallLengthString(true);
         }
 
         private void SetWeightSummary()

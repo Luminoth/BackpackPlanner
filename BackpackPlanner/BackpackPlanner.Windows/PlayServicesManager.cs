@@ -15,37 +15,77 @@
 */
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
+using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Core.PlayServices;
+
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Drive.v2;
+using Google.Apis.Drive.v2.Data;
+using Google.Apis.Services;
 
 namespace EnergonSoftware.BackpackPlanner.Windows
 {
-    // TODO: write this
     internal sealed class PlayServicesManager : IPlayServicesManager
     {
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(PlayServicesManager));
+
 #region Events
         public event EventHandler<PlayServicesConnectedEventArgs> PlayServicesConnectedEvent;
 #endregion
 
+// https://developers.google.com/api-client-library/dotnet/guide/aaa_oauth
+// http://www.daimto.com/google-drive-api-c/
+
+        private UserCredential _userCredential;
+
+        private DriveService _driveService;
+
         public async Task InitAsync()
         {
-await Task.Delay(0).ConfigureAwait(false);
+            await Task.Delay(0).ConfigureAwait(false);
         }
 
         public async Task DestroyAsync()
         {
-await Task.Delay(0).ConfigureAwait(false);
+            await DisconnectAsync().ConfigureAwait(false);
+
+            _userCredential = null;
+            _driveService = null;
         }
 
         public async Task ConnectAsync()
         {
-await Task.Delay(0).ConfigureAwait(false);
+            try {
+                _userCredential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
+                    new Uri("ms-appx:///Assets/google_play_client_secrets.json"),
+                    new[] { DriveService.Scope.Drive,
+                            DriveService.Scope.DriveFile,
+                            DriveService.Scope.DriveAppdata },
+                    "user",
+                    CancellationToken.None).ConfigureAwait(false);
+
+                _driveService = new DriveService(
+                    new BaseClientService.Initializer
+                    {
+                        HttpClientInitializer = _userCredential,
+                        ApplicationName = "Backpacking Planner"
+                    }
+                );
+
+                AppList appList = await _driveService.Apps.List().ExecuteAsync().ConfigureAwait(false);
+            } catch(Exception ex) {
+                Logger.Error($"Error connecting to Google Services: {ex.Message}", ex);
+                _userCredential = null;
+                _driveService = null;
+            }
         }
 
         public async Task DisconnectAsync()
         {
-await Task.Delay(0).ConfigureAwait(false);
+            await Task.Delay(0).ConfigureAwait(false);
         }
     }
 }
