@@ -99,6 +99,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
                     .Build();
             }
 
+// TODO: is this the bit that prompts for the user's login? if so, can we save it here?
+
             await Task.Delay(0).ConfigureAwait(false);
         }
 
@@ -142,9 +144,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             _connectStopwatch.Stop();
 	        Logger.Info($"Google Play Services connected in {_connectStopwatch.ElapsedMilliseconds}ms!");
 
-            DriveClass.DriveApi.NewDriveContents(_googleClientApi).SetResultCallback(new DriveContentsResultCallback());
+// TODO: ican we save the user's login here?
 
             PlayServicesConnectedEvent?.Invoke(this, new PlayServicesConnectedEventArgs { IsSuccess= true });
+
+DriveClass.DriveApi.NewDriveContents(_googleClientApi).SetResultCallback(new DriveContentsResultCallback());
 	    }
 
 	    public void OnConnectionSuspended(int cause)

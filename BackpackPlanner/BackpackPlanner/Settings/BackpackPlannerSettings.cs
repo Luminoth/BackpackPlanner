@@ -37,6 +37,11 @@ namespace EnergonSoftware.BackpackPlanner.Settings
         public const string ConnectGooglePlayServicesPreferenceKey = "connectGooglePlayServices";
 
         /// <summary>
+        /// The google play services user preference key
+        /// </summary>
+        public const string GooglePlayServicesUserPreferenceKey = "googlePlayServicesUser";
+
+        /// <summary>
         /// The units preference key
         /// </summary>
         public const string UnitsPreferenceKey = "units";
@@ -63,10 +68,10 @@ namespace EnergonSoftware.BackpackPlanner.Settings
         private bool _connectGooglePlayServices;
 
         /// <summary>
-        /// Gets or sets a value indicating whether [connect google play services].
+        /// Gets or sets a value indicating whether or not to connect google play services.
         /// </summary>
         /// <value>
-        /// <c>true</c> if [connect google play services]; otherwise, <c>false</c>.
+        /// <c>true</c> if should connect to google play services; otherwise, <c>false</c>.
         /// </value>
         public bool ConnectGooglePlayServices
         {
@@ -76,6 +81,25 @@ namespace EnergonSoftware.BackpackPlanner.Settings
             {
                 _connectGooglePlayServices = value;
                 _settingsManager?.PutBoolean(ConnectGooglePlayServicesPreferenceKey, _connectGooglePlayServices);
+            }
+        }
+
+        private string _googlePlayServicesUser = string.Empty;
+
+        /// <summary>
+        /// Gets or sets the google play services user.
+        /// </summary>
+        /// <value>
+        /// The google play services user.
+        /// </value>
+        public string GooglePlayServicesUser
+        {
+            get { return _googlePlayServicesUser; }
+
+            set
+            {
+                _googlePlayServicesUser = value ?? string.Empty;
+                _settingsManager?.PutString(GooglePlayServicesUserPreferenceKey, _googlePlayServicesUser);
             }
         }
 

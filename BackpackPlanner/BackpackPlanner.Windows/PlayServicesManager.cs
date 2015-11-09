@@ -36,8 +36,7 @@ namespace EnergonSoftware.BackpackPlanner.Windows
         public event EventHandler<PlayServicesConnectedEventArgs> PlayServicesConnectedEvent;
 #endregion
 
-// https://developers.google.com/api-client-library/dotnet/guide/aaa_oauth
-// http://www.daimto.com/google-drive-api-c/
+// https://developers.google.com/drive/web/appdata
 
         private UserCredential _userCredential;
 
@@ -61,11 +60,17 @@ namespace EnergonSoftware.BackpackPlanner.Windows
             try {
                 _userCredential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
                     new Uri("ms-appx:///Assets/google_play_client_secrets.json"),
-                    new[] { DriveService.Scope.Drive,
-                            DriveService.Scope.DriveFile,
-                            DriveService.Scope.DriveAppdata },
-                    "user",
+                    new[] {
+                        DriveService.Scope.DriveFile,
+                        "https://www.googleapis.com/auth/drive.appfolder" },
+                    App.CurrentApp.BackpackPlannerState.Settings.GooglePlayServicesUser,
                     CancellationToken.None).ConfigureAwait(false);
+                if(null == _userCredential) {
+                    PlayServicesConnectedEvent?.Invoke(this, new PlayServicesConnectedEventArgs { IsSuccess = false });
+                    return;
+                }
+
+                App.CurrentApp.BackpackPlannerState.Settings.GooglePlayServicesUser = _userCredential.UserId;
 
                 _driveService = new DriveService(
                     new BaseClientService.Initializer
@@ -75,11 +80,14 @@ namespace EnergonSoftware.BackpackPlanner.Windows
                     }
                 );
 
-                AppList appList = await _driveService.Apps.List().ExecuteAsync().ConfigureAwait(false);
+                PlayServicesConnectedEvent?.Invoke(this, new PlayServicesConnectedEventArgs { IsSuccess = true });
+
+File appFolder = await _driveService.Files.Get("appfolder").ExecuteAsync();
             } catch(Exception ex) {
                 Logger.Error($"Error connecting to Google Services: {ex.Message}", ex);
                 _userCredential = null;
                 _driveService = null;
+                PlayServicesConnectedEvent?.Invoke(this, new PlayServicesConnectedEventArgs { IsSuccess = false });
             }
         }
 
