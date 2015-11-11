@@ -39,7 +39,7 @@ namespace EnergonSoftware.BackpackPlanner.Commands
         {
             await ValidateDatabaseStateAsync(databaseState).ConfigureAwait(false);
 
-            Items = await DatabaseItem.GetItemsAsync<T>(databaseState, settings).ConfigureAwait(false);
+            Items = await DatabaseItem.GetValidItemsAsync<T>(databaseState, settings).ConfigureAwait(false);
         }
     }
 }

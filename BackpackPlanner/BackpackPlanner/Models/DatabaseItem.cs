@@ -34,7 +34,45 @@ namespace EnergonSoftware.BackpackPlanner.Models
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(DatabaseItem));
 
         /// <summary>
-        /// Gets all of the items from the database.
+        /// Gets all of the not-deleted items from the database.
+        /// </summary>
+        /// <typeparam name="T">The type of item to get</typeparam>
+        /// <param name="databaseState">State of the database.</param>
+        /// <param name="settings">The planner settings.</param>
+        /// <returns>
+        /// All of the not-deleted items from the database
+        /// </returns>
+        public static async Task<List<T>> GetValidItemsAsync<T>(DatabaseState databaseState, BackpackPlannerSettings settings) where T: DatabaseItem, new()
+        {
+            if(null == databaseState) {
+                throw new ArgumentNullException(nameof(databaseState));
+            }
+
+            if(null == settings) {
+                throw new ArgumentNullException(nameof(settings));
+            }
+
+            await databaseState.Connection.LockAsync().ConfigureAwait(false);
+            try {
+                Logger.Debug($"Reading all valid {typeof(T)}s from the database...");
+
+                Stopwatch stopWatch = Stopwatch.StartNew();
+                var items = await (from x in databaseState.Connection.AsyncConnection.Table<T>() where !x.IsDeleted select x).ToListAsync().ConfigureAwait(false);
+                foreach(T item in items) {
+                    await databaseState.Connection.AsyncConnection.GetChildrenAsync(item).ConfigureAwait(false);
+                    item.Settings = settings;
+                }
+                stopWatch.Stop();
+                Logger.Debug($"Database read took {stopWatch.ElapsedMilliseconds}ms");
+
+                return items;
+            } finally {
+                databaseState.Connection.Release();
+            }
+        }
+
+        /// <summary>
+        /// Gets all of the items from the database, including those that have been deleted.
         /// </summary>
         /// <typeparam name="T">The type of item to get</typeparam>
         /// <param name="databaseState">State of the database.</param>
@@ -42,7 +80,7 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// <returns>
         /// All of the items from the database
         /// </returns>
-        public static async Task<List<T>> GetItemsAsync<T>(DatabaseState databaseState, BackpackPlannerSettings settings) where T: DatabaseItem, new()
+        public static async Task<List<T>> GetAllItemsAsync<T>(DatabaseState databaseState, BackpackPlannerSettings settings) where T: DatabaseItem, new()
         {
             if(null == databaseState) {
                 throw new ArgumentNullException(nameof(databaseState));
@@ -57,9 +95,8 @@ namespace EnergonSoftware.BackpackPlanner.Models
                 Logger.Debug($"Reading all {typeof(T)}s from the database...");
 
                 Stopwatch stopWatch = Stopwatch.StartNew();
-                var items = await (from x in databaseState.Connection.AsyncConnection.Table<T>() where !x.IsDeleted select x).ToListAsync().ConfigureAwait(false);
+                var items = await databaseState.Connection.AsyncConnection.GetAllWithChildrenAsync<T>().ConfigureAwait(false);
                 foreach(T item in items) {
-                    await databaseState.Connection.AsyncConnection.GetChildrenAsync(item).ConfigureAwait(false);
                     item.Settings = settings;
                 }
                 stopWatch.Stop();

@@ -41,7 +41,8 @@ namespace EnergonSoftware.BackpackPlanner.Windows.Pages
         // ReSharper disable once InconsistentNaming
         private async void FinishFTUE()
         {
-            MessageDialog dialog = new MessageDialog("test", "test");
+            // TODO: these strings (including the command labels) should come from the resource file
+            MessageDialog dialog = new MessageDialog("Connect to Google Play Services?", "Backpacking Planner can take advantage of Google Play Services to sync your data (some day). Would you like to allow this?");
             dialog.Commands.Add(new UICommand { Label = "Yes", Id = 0 });
             dialog.Commands.Add(new UICommand { Label = "No", Id = 1 });
 
@@ -54,12 +55,9 @@ namespace EnergonSoftware.BackpackPlanner.Windows.Pages
 
                 // try to connect now to get all of the confirmations out of the way
                 // TODO: show progress bar
-                App.CurrentApp.BackpackPlannerState.PlatformPlayServicesManager.PlayServicesConnectedEvent += (s, a) => {
-                    // TODO: don't need this event under windows, so really should add an "IsConnected" to the play services manager
-                    // and then log the result after Connect() finishes
-                    Logger.Debug($"Google Play Services connected (success: {a.IsSuccess}), finishing activity...");
-                };
                 await App.CurrentApp.BackpackPlannerState.PlatformPlayServicesManager.ConnectAsync();
+                // TODO: validate connect success
+                Logger.Debug($"Google Play Services connected, finishing activity...");
                 // TODO: hide progress bar
                 break;
             case 1: // No

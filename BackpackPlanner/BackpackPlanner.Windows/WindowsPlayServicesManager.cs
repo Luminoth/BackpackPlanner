@@ -15,11 +15,13 @@
 */
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Core.PlayServices;
+using EnergonSoftware.BackpackPlanner.Models;
 
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Drive.v2;
@@ -28,13 +30,9 @@ using Google.Apis.Services;
 
 namespace EnergonSoftware.BackpackPlanner.Windows
 {
-    internal sealed class PlayServicesManager : IPlayServicesManager
+    internal sealed class WindowsPlayServicesManager : PlayServicesManager
     {
-        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(PlayServicesManager));
-
-#region Events
-        public event EventHandler<PlayServicesConnectedEventArgs> PlayServicesConnectedEvent;
-#endregion
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(WindowsPlayServicesManager));
 
 // https://developers.google.com/drive/web/appdata
 
@@ -42,20 +40,20 @@ namespace EnergonSoftware.BackpackPlanner.Windows
 
         private DriveService _driveService;
 
-        public async Task InitAsync()
+        public override async Task InitAsync()
         {
             await Task.Delay(0).ConfigureAwait(false);
         }
 
-        public async Task DestroyAsync()
+        public override async Task DestroyAsync()
         {
-            await DisconnectAsync().ConfigureAwait(false);
+            await base.DestroyAsync().ConfigureAwait(false);
 
             _userCredential = null;
             _driveService = null;
         }
 
-        public async Task ConnectAsync()
+        public override async Task ConnectAsync()
         {
             try {
                 _userCredential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
@@ -66,7 +64,7 @@ namespace EnergonSoftware.BackpackPlanner.Windows
                     App.CurrentApp.BackpackPlannerState.Settings.GooglePlayServicesUser,
                     CancellationToken.None).ConfigureAwait(false);
                 if(null == _userCredential) {
-                    PlayServicesConnectedEvent?.Invoke(this, new PlayServicesConnectedEventArgs { IsSuccess = false });
+                    OnConnected(new PlayServicesConnectedEventArgs { IsSuccess = false });
                     return;
                 }
 
@@ -80,20 +78,37 @@ namespace EnergonSoftware.BackpackPlanner.Windows
                     }
                 );
 
-                PlayServicesConnectedEvent?.Invoke(this, new PlayServicesConnectedEventArgs { IsSuccess = true });
-
-File appFolder = await _driveService.Files.Get("appfolder").ExecuteAsync();
+                OnConnected(new PlayServicesConnectedEventArgs { IsSuccess = true });
             } catch(Exception ex) {
                 Logger.Error($"Error connecting to Google Services: {ex.Message}", ex);
+
                 _userCredential = null;
                 _driveService = null;
-                PlayServicesConnectedEvent?.Invoke(this, new PlayServicesConnectedEventArgs { IsSuccess = false });
+
+                OnConnected(new PlayServicesConnectedEventArgs { IsSuccess = false });
             }
         }
 
-        public async Task DisconnectAsync()
+        public override async Task DisconnectAsync()
         {
             await Task.Delay(0).ConfigureAwait(false);
+        }
+
+        protected override async Task<IReadOnlyCollection<DatabaseItem>> ReadItemsAsync()
+        {
+            var items = new List<DatabaseItem>();
+
+            File appFolder = await _driveService.Files.Get("appfolder").ExecuteAsync().ConfigureAwait(false);
+
+// TODO: finish this
+
+            return items;
+        }
+
+        protected override async Task WriteItemsAsync(IReadOnlyCollection<DatabaseItem> items)
+        {
+// TODO
+await Task.Delay(0).ConfigureAwait(false);
         }
     }
 }

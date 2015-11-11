@@ -73,7 +73,7 @@ namespace EnergonSoftware.BackpackPlanner
         /// <value>
         /// The platform google play services interface.
         /// </value>
-        public IPlayServicesManager PlatformPlayServicesManager { get; }
+        public PlayServicesManager PlatformPlayServicesManager { get; }
 
         /// <summary>
         /// Gets the platform settings manager.
@@ -105,7 +105,7 @@ namespace EnergonSoftware.BackpackPlanner
         /// <param name="platformSettingsManager">The platform settings manager.</param>
         /// <param name="platformPlayServicesManager">The platform google play services manager.</param>
         /// <param name="sqlitePlatform">The SQLite platform.</param>
-        public BackpackPlannerState(IHockeyAppManager platformHockeyAppManager, SettingsManager platformSettingsManager, IPlayServicesManager platformPlayServicesManager, ISQLitePlatform sqlitePlatform)
+        public BackpackPlannerState(IHockeyAppManager platformHockeyAppManager, SettingsManager platformSettingsManager, PlayServicesManager platformPlayServicesManager, ISQLitePlatform sqlitePlatform)
         {
             if(null == platformHockeyAppManager) {
                 throw new ArgumentNullException(nameof(platformHockeyAppManager));

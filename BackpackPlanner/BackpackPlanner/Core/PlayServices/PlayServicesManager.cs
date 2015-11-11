@@ -15,7 +15,11 @@
 */
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+
+using EnergonSoftware.BackpackPlanner.Core.Logging;
+using EnergonSoftware.BackpackPlanner.Models;
 
 namespace EnergonSoftware.BackpackPlanner.Core.PlayServices
 {
@@ -24,18 +28,49 @@ namespace EnergonSoftware.BackpackPlanner.Core.PlayServices
     /// </summary>
     /// <remarks>
     /// http://android-developers.blogspot.com/2015/09/google-play-services-81-and-android-60.html
-    /// TODO: make this a base class (tho we need to solve the need to subclass the Java Object class first)
     /// </remarks>
-    public interface IPlayServicesManager
+    public abstract class PlayServicesManager
     {
-        event EventHandler<PlayServicesConnectedEventArgs> PlayServicesConnectedEvent;
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(PlayServicesManager));
 
-        Task InitAsync();
+#region Events
+        public event EventHandler<PlayServicesConnectedEventArgs> PlayServicesConnectedEvent;
+#endregion
 
-        Task DestroyAsync();
+        public abstract Task InitAsync();
 
-        Task ConnectAsync();
+        public virtual async Task DestroyAsync()
+        {
+            await DisconnectAsync().ConfigureAwait(false);
+        }
 
-        Task DisconnectAsync();
+        public abstract Task ConnectAsync();
+
+        public abstract Task DisconnectAsync();
+
+        public void SyncDatabaseInBackground()
+        {
+            Logger.Info("Starting database sync task...");
+            Task.Run(async () => {
+                var items = await ReadItemsAsync().ConfigureAwait(false);
+
+                var updatedItems = new List<DatabaseItem>();
+                foreach(DatabaseItem item in items) {
+                    // TODO: process the item and add it to updatedItems
+                }
+
+                await WriteItemsAsync(updatedItems).ConfigureAwait(false);
+            });
+
+        }
+
+        protected abstract Task<IReadOnlyCollection<DatabaseItem>> ReadItemsAsync();
+
+        protected abstract Task WriteItemsAsync(IReadOnlyCollection<DatabaseItem> items);  
+
+        protected void OnConnected(PlayServicesConnectedEventArgs args)
+        {
+            PlayServicesConnectedEvent?.Invoke(this, args);
+        }
     }
 }

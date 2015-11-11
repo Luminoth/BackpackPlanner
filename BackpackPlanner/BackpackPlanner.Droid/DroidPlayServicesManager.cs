@@ -15,6 +15,7 @@
 */
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -28,11 +29,11 @@ using Android.Runtime;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Core.PlayServices;
+using EnergonSoftware.BackpackPlanner.Models;
 
 namespace EnergonSoftware.BackpackPlanner.Droid
 {
-    internal sealed class PlayServicesManager : Java.Lang.Object, IPlayServicesManager,
-        GoogleApiClient.IConnectionCallbacks, GoogleApiClient.IOnConnectionFailedListener
+    internal sealed class DroidPlayServicesManager : PlayServicesManager
     {
         // error resolution
         public const int RequestCodeResolveError = 9001;
@@ -40,6 +41,34 @@ namespace EnergonSoftware.BackpackPlanner.Droid
         private const string StateResolvingError = "play_services_manager_resolving_error";
 
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(PlayServicesManager));
+
+        // this is necessary because the listener needs to implement
+        // Java.Lang.Object while the manager needs to implement PlayServicesManager
+        private sealed class PlayServicesConnectionListener : Java.Lang.Object,
+            GoogleApiClient.IConnectionCallbacks, GoogleApiClient.IOnConnectionFailedListener
+        {
+            private readonly DroidPlayServicesManager _playServicesManager;
+
+            public PlayServicesConnectionListener(DroidPlayServicesManager playServicesManager)
+            {
+                _playServicesManager = playServicesManager;
+            }
+
+	        public void OnConnected(Bundle connectionHint)
+            {
+                _playServicesManager.OnConnected(connectionHint);
+            }
+
+	        public void OnConnectionSuspended(int cause)
+            {
+                _playServicesManager.OnConnectionSuspended(cause);
+            }
+
+	        public void OnConnectionFailed(ConnectionResult result)
+            {
+                _playServicesManager.OnConnectionFailed(result);
+            }
+        }
 
 // https://developers.google.com/drive/android/java-client
 // https://www.youtube.com/watch?v=UiTHG_yl-jA
@@ -64,10 +93,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 	        }
         }
 
-#region Events
-        public event EventHandler<PlayServicesConnectedEventArgs> PlayServicesConnectedEvent;
-#endregion
-
         public bool IsResolvingError { get; private set; }
 
         // TODO: this should go in the base class to time the lifecycle
@@ -77,16 +102,19 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
         private GoogleApiClient _googleClientApi;
 
-        public PlayServicesManager(Activity activity)
+        private readonly PlayServicesConnectionListener _connectionListener;
+
+        public DroidPlayServicesManager(Activity activity)
         {
             if(null == activity) {
                 throw new ArgumentNullException(nameof(activity));
             }
 
             _activity = activity;
+            _connectionListener = new PlayServicesConnectionListener(this);
         }
 
-        public async Task InitAsync()
+        public override async Task InitAsync()
         {
             if(null == _googleClientApi) {
                 Logger.Debug("Building Google API Client...");
@@ -94,8 +122,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
                     .AddApi(DriveClass.API)
                     .AddScope(DriveClass.ScopeFile)
                     .AddScope(DriveClass.ScopeAppfolder)
-                    .AddConnectionCallbacks(this)
-                    .AddOnConnectionFailedListener(this)
+                    .AddConnectionCallbacks(_connectionListener)
+                    .AddOnConnectionFailedListener(_connectionListener)
                     .Build();
             }
 
@@ -104,14 +132,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             await Task.Delay(0).ConfigureAwait(false);
         }
 
-        public async Task DestroyAsync()
+        public override async Task DestroyAsync()
         {
-            await DisconnectAsync().ConfigureAwait(false);
+            await base.DestroyAsync().ConfigureAwait(false);
 
             _googleClientApi = null;
         }
 
-        public async Task ConnectAsync()
+        public override async Task ConnectAsync()
         {
             await Task.Delay(0).ConfigureAwait(false);
 
@@ -129,7 +157,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             }
         }
 
-        public async Task DisconnectAsync()
+        public override async Task DisconnectAsync()
         {
             await Task.Delay(0).ConfigureAwait(false);
 
@@ -146,9 +174,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
 // TODO: ican we save the user's login here?
 
-            PlayServicesConnectedEvent?.Invoke(this, new PlayServicesConnectedEventArgs { IsSuccess= true });
-
-DriveClass.DriveApi.NewDriveContents(_googleClientApi).SetResultCallback(new DriveContentsResultCallback());
+            OnConnected(new PlayServicesConnectedEventArgs { IsSuccess= true });
 	    }
 
 	    public void OnConnectionSuspended(int cause)
@@ -172,7 +198,7 @@ DriveClass.DriveApi.NewDriveContents(_googleClientApi).SetResultCallback(new Dri
                 GoogleApiAvailability.Instance.GetErrorDialog(_activity, result.ErrorCode, 0).Show();
                 IsResolvingError = false;
 
-                PlayServicesConnectedEvent?.Invoke(this, new PlayServicesConnectedEventArgs { IsSuccess = false });
+                OnConnected(new PlayServicesConnectedEventArgs { IsSuccess = false });
                 return;
             }
 
@@ -212,5 +238,22 @@ DriveClass.DriveApi.NewDriveContents(_googleClientApi).SetResultCallback(new Dri
                 break;
             }
 	    }
+
+        protected override async Task<IReadOnlyCollection<DatabaseItem>> ReadItemsAsync()
+        {
+            var items = new List<DatabaseItem>();
+
+// TODO
+await Task.Delay(0).ConfigureAwait(false);
+DriveClass.DriveApi.NewDriveContents(_googleClientApi).SetResultCallback(new DriveContentsResultCallback());
+
+            return items;
+        }
+
+        protected override async Task WriteItemsAsync(IReadOnlyCollection<DatabaseItem> items)
+        {
+// TODO
+await Task.Delay(0).ConfigureAwait(false);
+        }
     }
 }

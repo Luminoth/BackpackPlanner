@@ -50,20 +50,20 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             BackpackPlannerState = new BackpackPlannerState(
                 new HockeyAppManager(),
                 new DroidSettingsManager(Android.Support.V7.Preferences.PreferenceManager.GetDefaultSharedPreferences(this)),
-                new PlayServicesManager(this),
+                new DroidPlayServicesManager(this),
                 new SQLitePlatformAndroid()
             );
             BackpackPlannerState.InitAsync().Wait();
 
             ((HockeyAppManager)BackpackPlannerState.PlatformHockeyAppManager).OnCreate(this);
-            ((PlayServicesManager)BackpackPlannerState.PlatformPlayServicesManager).OnCreate(savedInstanceState);
+            ((DroidPlayServicesManager)BackpackPlannerState.PlatformPlayServicesManager).OnCreate(savedInstanceState);
         }
 
         protected override void OnSaveInstanceState(Bundle outState)
         {
             base.OnSaveInstanceState(outState);
 
-            ((PlayServicesManager)BackpackPlannerState.PlatformPlayServicesManager).OnSaveInstanceState(outState);
+            ((DroidPlayServicesManager)BackpackPlannerState.PlatformPlayServicesManager).OnSaveInstanceState(outState);
         }
 
         protected override void OnDestroy()
@@ -126,7 +126,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 	    {
             base.OnActivityResult(requestCode, resultCode, data);
 
-            ((PlayServicesManager)BackpackPlannerState.PlatformPlayServicesManager).OnActivityResult(requestCode, resultCode, data);
+            ((DroidPlayServicesManager)BackpackPlannerState.PlatformPlayServicesManager).OnActivityResult(requestCode, resultCode, data);
 	    }
 
         protected void InitToolbar()

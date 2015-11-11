@@ -19,7 +19,6 @@ using Android.Content.Res;
 using Android.OS;
 using Android.Views;
 
-using EnergonSoftware.BackpackPlanner.Core.Database;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items;
@@ -98,18 +97,17 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
         {
             base.OnStart();
 
-            // TODO: encapsulate this in the base activity
-
+            // TODO: encapsulate this in the library
             if(BackpackPlannerState.Settings.ConnectGooglePlayServices) {
+                // TODO: we should show a progress dialog here like we do in the FTUE
                 BackpackPlannerState.PlatformPlayServicesManager.ConnectAsync().Wait();
+                BackpackPlannerState.PlatformPlayServicesManager.SyncDatabaseInBackground();
             }
         }
 
 	    protected override void OnResume()
 	    {
 	        base.OnResume();
-
-            // TODO: encapsulate this in the base activity
 
             BackpackPlannerState.DatabaseState.ConnectAsync(
                 System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal),

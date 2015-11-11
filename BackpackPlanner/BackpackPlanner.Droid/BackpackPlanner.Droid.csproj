@@ -196,7 +196,7 @@
     <Compile Include="Fragments\Util\DatePickerFragment.cs" />
     <Compile Include="Fragments\Util\DateSetEventArgs.cs" />
     <Compile Include="Fragments\ViewItemFragment.cs" />
-    <Compile Include="PlayServicesManager.cs" />
+    <Compile Include="DroidPlayServicesManager.cs" />
     <Compile Include="HockeyAppManager.cs" />
     <Compile Include="Logging\DroidLogger.cs" />
     <Compile Include="DroidSettingsManager.cs" />
