@@ -5,7 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="E_xit" Click="MenuFileExit_Click" />
+            </MenuItem>
+        </Menu>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <ListBox x:Name="listBox" Grid.Row="0"/>
+
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <Button Content="Ok" Width="100"></Button>
+                <Button Content="Cancel" Width="100"></Button>
+            </StackPanel>
+
+        </Grid>
+    </DockPanel>
 </Window>
