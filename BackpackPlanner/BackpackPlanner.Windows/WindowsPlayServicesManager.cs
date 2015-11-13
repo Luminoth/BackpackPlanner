@@ -60,7 +60,8 @@ namespace EnergonSoftware.BackpackPlanner.Windows
                     new Uri("ms-appx:///Assets/google_play_client_secrets.json"),
                     new[] {
                         DriveService.Scope.DriveFile,
-                        "https://www.googleapis.com/auth/drive.appfolder" },
+                        "https://www.googleapis.com/auth/drive.appfolder"
+                    },
                     App.CurrentApp.BackpackPlannerState.Settings.GooglePlayServicesUser,
                     CancellationToken.None).ConfigureAwait(false);
                 if(null == _userCredential) {

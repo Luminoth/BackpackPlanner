@@ -22,5 +22,17 @@ namespace EnergonSoftware.BackpackPlanner.DriveFileExplorer.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string GooglePlayServicesUser {
+            get {
+                return ((string)(this["GooglePlayServicesUser"]));
+            }
+            set {
+                this["GooglePlayServicesUser"] = value;
+            }
+        }
     }
 }
