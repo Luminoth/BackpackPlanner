@@ -17,11 +17,13 @@
         </Menu>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <ListBox x:Name="listBox" Grid.Row="0"/>
+            <TextBlock Grid.Row="0" Text="Drop Files To Upload" />
+
+            <ListBox Name="FileList" Grid.Row="1" AllowDrop="{Binding IsConnected}" Drop="FileList_Drop" />
 
         </Grid>
     </DockPanel>
