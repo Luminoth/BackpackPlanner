@@ -146,12 +146,29 @@ namespace EnergonSoftware.BackpackPlanner.DriveFileExplorer
             Google.Apis.Drive.v2.Data.File body = new Google.Apis.Drive.v2.Data.File
             {
                 Title = Path.GetFileName(filePath),
-                Parents = new List<ParentReference> { new ParentReference { Id = _appFolderId } }
+                Parents = new List<ParentReference> { new ParentReference { Id = _appFolderId } },
+                MimeType = contentType
             };
 
-            var content = System.IO.File.ReadAllBytes(filePath);
-            using(Stream stream = new MemoryStream(content)) {
+            using(Stream stream = new FileStream(filePath, FileMode.Open)) {
                 FilesResource.InsertMediaUpload request = _driveService.Files.Insert(body, stream, contentType);
+                await request.UploadAsync().ConfigureAwait(false);
+                return request.ResponseBody;
+            }
+        }
+
+        public async Task<Google.Apis.Drive.v2.Data.File> UpdateFileInDriveAppFolderAsync(Google.Apis.Drive.v2.Data.File file, string filePath, string contentType)
+        {
+            await InitAppFolderIdAsync().ConfigureAwait(false);
+
+            Logger.Info($"Updating file {file.Id} ({file.Title}) in appfolder: {filePath}...");
+
+            file.Title = Path.GetFileName(filePath);
+            file.MimeType = contentType;
+
+            using(Stream stream = new FileStream(filePath, FileMode.Open)) {
+                FilesResource.UpdateMediaUpload request = _driveService.Files.Update(file, file.Id, stream, contentType);
+                request.NewRevision = true;
                 await request.UploadAsync().ConfigureAwait(false);
                 return request.ResponseBody;
             }

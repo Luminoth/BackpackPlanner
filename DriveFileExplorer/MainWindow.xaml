@@ -45,6 +45,7 @@
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" />
+                        <GridViewColumn Header="Version" DisplayMemberBinding="{Binding Version}" />
                         <GridViewColumn Header="Title" DisplayMemberBinding="{Binding Title}" />
                     </GridView>
                 </ListView.View>
