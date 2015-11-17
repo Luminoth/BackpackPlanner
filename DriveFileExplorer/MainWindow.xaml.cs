@@ -14,15 +14,21 @@
    limitations under the License.
 */
 
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
 using System.Web;
 using System.Windows;
+using System.Windows.Input;
+
+using log4net;
 
 namespace EnergonSoftware.BackpackPlanner.DriveFileExplorer
 {
     public partial class MainWindow
     {
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(MainWindow));
+
         public PlayServicesManager PlayServicesManager { get; }
 
         private readonly ObservableCollection<Google.Apis.Drive.v2.Data.File> _files = new ObservableCollection<Google.Apis.Drive.v2.Data.File>();
@@ -37,6 +43,11 @@ namespace EnergonSoftware.BackpackPlanner.DriveFileExplorer
             FileList.ItemsSource = _files;
         }
 
+        private async void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            await PlayServicesManager.DisconnectAsync();
+        }
+
         private void MenuFileExit_Click(object sender, RoutedEventArgs e)
         {
             Close();
@@ -46,15 +57,15 @@ namespace EnergonSoftware.BackpackPlanner.DriveFileExplorer
         {
             await PlayServicesManager.ConnectAsync();
             if(!PlayServicesManager.IsConnected) {
+                MessageBox.Show("There was an error connecting to Google Services!", "Connection Error", MessageBoxButton.OK);
                 return;
             }
 
             var fileList = await PlayServicesManager.ListDriveAppFolderFilesAsync();
-System.Console.WriteLine($"{fileList.Count} files");
+            Logger.Debug($"Retrieved {fileList.Count} files");
 
             _files.Clear();
             foreach(Google.Apis.Drive.v2.Data.File file in fileList) {
-System.Console.WriteLine($"file: {file.Title}");
                 _files.Add(file);
             }
         }
@@ -65,6 +76,21 @@ System.Console.WriteLine($"file: {file.Title}");
             _files.Clear();
         }
 
+        private async void MenuViewRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            if(!PlayServicesManager.IsConnected) {
+                return;
+            }
+
+            var fileList = await PlayServicesManager.ListDriveAppFolderFilesAsync();
+            Logger.Debug($"Retrieved {fileList.Count} files");
+
+            _files.Clear();
+            foreach(Google.Apis.Drive.v2.Data.File file in fileList) {
+                _files.Add(file);
+            }
+        }
+
         private async void FileList_Drop(object sender, DragEventArgs e)
         {
             if(!e.Data.GetDataPresent(DataFormats.FileDrop)) {
@@ -72,13 +98,85 @@ System.Console.WriteLine($"file: {file.Title}");
             }
 
             var files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            foreach(string file in files) {
-                Google.Apis.Drive.v2.Data.File driveFile = await PlayServicesManager.SaveFileToDriveAppFolderAsync(file, MimeMapping.GetMimeMapping(file));
-                if(null != driveFile) {
-System.Console.WriteLine($"new file: {driveFile.Title}");
+            foreach(string filePath in files) {
+                string fileName = Path.GetFileName(filePath);
+                Google.Apis.Drive.v2.Data.File scratch = _files.FirstOrDefault(x => x.Title == fileName);
+                if(null != scratch) {
+                    MessageBoxResult result = MessageBox.Show($"The file {fileName} already exists, do you wish to replace it?", "Replace File", MessageBoxButton.YesNo);
+                    if(result == MessageBoxResult.No) {
+                        return;
+                    }
+
+Logger.Debug("TODO: replace the file");
+                } else {
+                    Google.Apis.Drive.v2.Data.File driveFile = await PlayServicesManager.SaveFileToDriveAppFolderAsync(filePath, MimeMapping.GetMimeMapping(filePath));
+                    if(null == driveFile) {
+                        MessageBox.Show($"There was an error saving the file {filePath}!", "Save Error", MessageBoxButton.OK);
+                        continue;
+                    }
+
+                    Logger.Debug($"Added new file: {driveFile.Title} ({driveFile.Id})");
                     _files.Add(driveFile);
                 }
             }
+        }
+
+        private async void FileListItem_Download(object sender, RoutedEventArgs e)
+        {
+            Google.Apis.Drive.v2.Data.File selectedFile = _files.ElementAt(FileList.SelectedIndex);
+            if(null == selectedFile) {
+                return;
+            }
+
+            System.Windows.Forms.FolderBrowserDialog dialog = new System.Windows.Forms.FolderBrowserDialog();
+            if(dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK) {
+                return;
+            }
+
+            string filePath = Path.Combine(dialog.SelectedPath, selectedFile.Title);
+            if(File.Exists(filePath)) {
+                MessageBoxResult result = MessageBox.Show($"The file {filePath} already exists, do you wish to replace it?", "Replace File", MessageBoxButton.YesNo);
+                if(result == MessageBoxResult.No) {
+                    return;
+                }
+            }
+
+            using(Stream remoteStream = await PlayServicesManager.DownloadFileFromDriveAppFolderAsync(selectedFile)) {
+                if(null == remoteStream) {
+                    MessageBox.Show("There was an error downloading the file!", "Download Error", MessageBoxButton.OK);
+                    return;
+                }
+
+                using(Stream localStream = new FileStream(filePath, FileMode.Create)) {
+                    await remoteStream.CopyToAsync(localStream);
+                }
+            }
+        }
+
+        private async void FileListItem_Delete(object sender, RoutedEventArgs e)
+        {
+            Google.Apis.Drive.v2.Data.File selectedFile = _files.ElementAt(FileList.SelectedIndex);
+            if(null == selectedFile) {
+                return;
+            }
+
+            MessageBoxResult result = MessageBox.Show($"Are you sure you wish to delete {selectedFile.Title}?", "Confirm Delete", MessageBoxButton.YesNo);
+            if(result == MessageBoxResult.No) {
+                return;
+            }
+
+            await PlayServicesManager.DeleteFileFromDriveAppFolderAsync(selectedFile);
+            _files.Remove(selectedFile);
+        }
+
+        private void FileListItem_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Google.Apis.Drive.v2.Data.File selectedFile = _files.ElementAt(FileList.SelectedIndex);
+            if(null == selectedFile) {
+                return;
+            }
+
+Logger.Debug($"TODO: double click: {selectedFile.Title}");
         }
     }
 }

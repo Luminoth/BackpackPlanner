@@ -46,8 +46,6 @@ namespace EnergonSoftware.BackpackPlanner.DriveFileExplorer
 
         private string _appFolderId;
 
-// http://stackoverflow.com/questions/24386905/how-to-download-file-from-google-drive-in-wpf-installed-application
-
         public async Task ConnectAsync()
         {
             if(IsConnected) {
@@ -120,6 +118,9 @@ namespace EnergonSoftware.BackpackPlanner.DriveFileExplorer
             await Task.Delay(0).ConfigureAwait(false);
         }
 
+#region appfolder Management
+        // https://developers.google.com/drive/web/appdata
+
         public async Task<ICollection<Google.Apis.Drive.v2.Data.File>>  ListDriveAppFolderFilesAsync()
         {
             if(!IsConnected) {
@@ -136,8 +137,6 @@ namespace EnergonSoftware.BackpackPlanner.DriveFileExplorer
             return fileList.Items;
         }
 
-// https://developers.google.com/drive/web/appdata
-
         public async Task<Google.Apis.Drive.v2.Data.File> SaveFileToDriveAppFolderAsync(string filePath, string contentType)
         {
             await InitAppFolderIdAsync().ConfigureAwait(false);
@@ -150,8 +149,6 @@ namespace EnergonSoftware.BackpackPlanner.DriveFileExplorer
                 Parents = new List<ParentReference> { new ParentReference { Id = _appFolderId } }
             };
 
-// TODO: error check this
-
             var content = System.IO.File.ReadAllBytes(filePath);
             using(Stream stream = new MemoryStream(content)) {
                 FilesResource.InsertMediaUpload request = _driveService.Files.Insert(body, stream, contentType);
@@ -160,20 +157,47 @@ namespace EnergonSoftware.BackpackPlanner.DriveFileExplorer
             }
         }
 
+        public async Task<Stream> DownloadFileFromDriveAppFolderAsync(Google.Apis.Drive.v2.Data.File file)
+        {
+            await InitAppFolderIdAsync().ConfigureAwait(false);
+
+            Logger.Info($"Downloading file {file.Id} ({file.Title})...");
+
+            if(string.IsNullOrEmpty(file.DownloadUrl)) {
+                Logger.Error("File download URL is empty!");
+                return null;
+            }
+
+            Logger.Info($"Downloading file {file.Id} ({file.Title}) from {file.DownloadUrl}...");
+            return await _driveService.HttpClient.GetStreamAsync(new Uri(file.DownloadUrl));
+        }
+
+        public async Task DeleteFileFromDriveAppFolderAsync(Google.Apis.Drive.v2.Data.File file)
+        {
+            await InitAppFolderIdAsync().ConfigureAwait(false);
+
+            Logger.Info($"Deleting file {file.Id} ({file.Title})...");
+            await _driveService.Files.Delete(file.Id).ExecuteAsync().ConfigureAwait(false);
+        }
+
         private async Task InitAppFolderIdAsync()
         {
             if(!string.IsNullOrEmpty(_appFolderId)) {
                 return;
             }
 
-            Logger.Debug("Initializing appfolder id...");
+            Logger.Debug("Initializing appfolder Id...");
 
             Google.Apis.Drive.v2.Data.File file = await _driveService.Files.Get("appfolder").ExecuteAsync().ConfigureAwait(false);
-            if(null != file) {
-                _appFolderId = file.Id;
-                Logger.Debug($"appfolder id: {_appFolderId}");
+            if(null == file) {
+                Logger.Error("Unable to get appfolder Id!");
+                return;
             }
+
+            _appFolderId = file.Id;
+            Logger.Debug($"appfolder id: {_appFolderId}");
         }
+#endregion
 
         private void Cleanup()
         {

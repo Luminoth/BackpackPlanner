@@ -4,7 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MainWindow" Height="650" Width="525">
+        Title="MainWindow" Height="650" Width="525"
+        Closing="Window_Closing">
 
     <DockPanel>
         <Menu DockPanel.Dock="Top">
@@ -13,6 +14,9 @@
                 <MenuItem Header="_Disconnect" IsEnabled="{Binding IsConnected}" Click="MenuFileDisconnect_Click" />
                 <Separator />
                 <MenuItem Header="E_xit" Click="MenuFileExit_Click" />
+            </MenuItem>
+            <MenuItem Header="_View">
+                <MenuItem Header="_Refresh" IsEnabled="{Binding IsConnected}" Click="MenuViewRefresh_Click" />
             </MenuItem>
         </Menu>
         <Grid>
@@ -23,7 +27,28 @@
 
             <TextBlock Grid.Row="0" Text="Drop Files To Upload" />
 
-            <ListBox Name="FileList" Grid.Row="1" AllowDrop="{Binding IsConnected}" Drop="FileList_Drop" />
+            <ListView Name="FileList" Grid.Row="1" AllowDrop="{Binding IsConnected}" Drop="FileList_Drop">
+                <ListView.Resources>
+                    <ContextMenu x:Key="FileListMenu">
+                        <MenuItem Header="Download" Click="FileListItem_Download" />
+                        <MenuItem Header="Delete" Click="FileListItem_Delete" />
+                    </ContextMenu>
+                </ListView.Resources>
+
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="ContextMenu" Value="{StaticResource FileListMenu}" />
+                        <EventSetter Event="MouseDoubleClick" Handler="FileListItem_DoubleClick"></EventSetter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" />
+                        <GridViewColumn Header="Title" DisplayMemberBinding="{Binding Title}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
 
         </Grid>
     </DockPanel>
