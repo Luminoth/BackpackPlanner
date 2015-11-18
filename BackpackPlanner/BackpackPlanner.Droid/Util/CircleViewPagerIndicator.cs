@@ -17,7 +17,6 @@
 using Android.Content;
 using Android.Graphics;
 using Android.OS;
-using Android.Support.V4.View;
 using Android.Util;
 using Android.Views;
 
@@ -42,8 +41,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 		private readonly Paint _paintStroke;
 		private readonly Paint _paintFill;
 
-		private ViewPager _viewPager;
-		private ViewPager.IOnPageChangeListener _listener;
+		private Android.Support.V4.View.ViewPager _viewPager;
+		private Android.Support.V4.View.ViewPager.IOnPageChangeListener _listener;
 
 		private int mCurrentPage;
 		private int mSnapPage;
@@ -71,10 +70,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 		{
 			//Load defaults from resources
 			var res = Resources;
-			int defaultPageColor = res.GetColor (Resource.Color.default_circle_indicator_page_color);
-			int defaultFillColor = res.GetColor (Resource.Color.default_circle_indicator_fill_color);
+			int defaultPageColor = Android.Support.V4.Content.ContextCompat.GetColor (context, Resource.Color.default_circle_indicator_page_color);
+			int defaultFillColor = Android.Support.V4.Content.ContextCompat.GetColor (context, Resource.Color.default_circle_indicator_fill_color);
 			int defaultOrientation = res.GetInteger (Resource.Integer.default_circle_indicator_orientation);
-			int defaultStrokeColor = res.GetColor (Resource.Color.default_circle_indicator_stroke_color);
+			int defaultStrokeColor = Android.Support.V4.Content.ContextCompat.GetColor (context, Resource.Color.default_circle_indicator_stroke_color);
 			float defaultStrokeWidth = res.GetDimension (Resource.Dimension.default_circle_indicator_stroke_width);
 			float defaultRadius = res.GetDimension (Resource.Dimension.default_circle_indicator_radius);
 			bool defaultCentered = res.GetBoolean (Resource.Boolean.default_circle_indicator_centered);
@@ -101,7 +100,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 			a.Recycle ();
 			
 			var configuration = ViewConfiguration.Get (context);
-			mTouchSlop = ViewConfigurationCompat.GetScaledPagingTouchSlop (configuration);
+			mTouchSlop = Android.Support.V4.View.ViewConfigurationCompat.GetScaledPagingTouchSlop (configuration);
 			
 		}
 
@@ -298,16 +297,16 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 	
 			var action = ev.Action;
 	
-			switch ((int)action & MotionEventCompat.ActionMask)
+			switch ((int)action & Android.Support.V4.View.MotionEventCompat.ActionMask)
             {
 			case (int) MotionEventActions.Down:
-				mActivePointerId = MotionEventCompat.GetPointerId (ev, 0);
+				mActivePointerId = Android.Support.V4.View.MotionEventCompat.GetPointerId (ev, 0);
 				mLastMotionX = ev.GetX ();
 				break;
 			case (int)MotionEventActions.Move:
                 {
-					int activePointerIndex = MotionEventCompat.FindPointerIndex (ev, mActivePointerId);
-					float x = MotionEventCompat.GetX (ev, activePointerIndex);
+					int activePointerIndex = Android.Support.V4.View.MotionEventCompat.FindPointerIndex (ev, mActivePointerId);
+					float x = Android.Support.V4.View.MotionEventCompat.GetX (ev, activePointerIndex);
 					float deltaX = x - mLastMotionX;
 	
 					if (!mIsDragging) {
@@ -352,21 +351,21 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 					_viewPager.EndFakeDrag ();
                 }
 				break;
-			case MotionEventCompat.ActionPointerDown: {
-					int index = MotionEventCompat.GetActionIndex (ev);
-					float x = MotionEventCompat.GetX (ev, index);
+			case Android.Support.V4.View.MotionEventCompat.ActionPointerDown: {
+					int index = Android.Support.V4.View.MotionEventCompat.GetActionIndex (ev);
+					float x = Android.Support.V4.View.MotionEventCompat.GetX (ev, index);
 					mLastMotionX = x;
-					mActivePointerId = MotionEventCompat.GetPointerId (ev, index);
+					mActivePointerId = Android.Support.V4.View.MotionEventCompat.GetPointerId (ev, index);
 					break;
 				}
-			case MotionEventCompat.ActionPointerUp:
-				int pointerIndex = MotionEventCompat.GetActionIndex (ev);
-				int pointerId = MotionEventCompat.GetPointerId (ev, pointerIndex);
+			case Android.Support.V4.View.MotionEventCompat.ActionPointerUp:
+				int pointerIndex = Android.Support.V4.View.MotionEventCompat.GetActionIndex (ev);
+				int pointerId = Android.Support.V4.View.MotionEventCompat.GetPointerId (ev, pointerIndex);
 				if (pointerId == mActivePointerId) {
 					int newPointerIndex = pointerIndex == 0 ? 1 : 0;
-					mActivePointerId = MotionEventCompat.GetPointerId (ev, newPointerIndex);
+					mActivePointerId = Android.Support.V4.View.MotionEventCompat.GetPointerId (ev, newPointerIndex);
 				}
-				mLastMotionX = MotionEventCompat.GetX (ev, MotionEventCompat.FindPointerIndex (ev, mActivePointerId));
+				mLastMotionX = Android.Support.V4.View.MotionEventCompat.GetX (ev, Android.Support.V4.View.MotionEventCompat.FindPointerIndex (ev, mActivePointerId));
 				break;
 			}
 	
@@ -378,7 +377,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
             return base.PerformClick();
         }
 
-        public void SetViewPager (ViewPager view)
+        public void SetViewPager (Android.Support.V4.View.ViewPager view)
 		{
 			if (view.Adapter == null) {
 				throw new Java.Lang.IllegalStateException ("ViewPager does not have adapter instance.");
@@ -396,7 +395,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 			}
 		}
 		
-		public void SetViewPager (ViewPager view, int initialPosition)
+		public void SetViewPager (Android.Support.V4.View.ViewPager view, int initialPosition)
 		{
 			SetViewPager (view);
 			SetCurrentItem (initialPosition);
@@ -436,7 +435,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 		
 		public void OnPageSelected (int position)
 		{
-			if (mSnap || mScrollState == ViewPager.ScrollStateIdle) {
+			if (mSnap || mScrollState == Android.Support.V4.View.ViewPager.ScrollStateIdle) {
 				mCurrentPage = position;
 				mSnapPage = position;
 				Invalidate ();
@@ -445,7 +444,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 		    _listener?.OnPageSelected (position);
 		}
 		
-		public void SetOnPageChangeListener (ViewPager.IOnPageChangeListener listener)
+		public void SetOnPageChangeListener (Android.Support.V4.View.ViewPager.IOnPageChangeListener listener)
 		{
 			_listener = listener;
 		}

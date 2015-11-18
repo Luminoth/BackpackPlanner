@@ -14,8 +14,6 @@
    limitations under the License.
 */
 
-using Android.Support.V4.View;
-
 namespace EnergonSoftware.BackpackPlanner.Droid.Util
 {
     /// <summary>
@@ -24,14 +22,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
     /// <remarks>
     /// TODO: clean this up
     /// </remarks>
-    public interface IViewPagerIndicator : ViewPager.IOnPageChangeListener
+    public interface IViewPagerIndicator : Android.Support.V4.View.ViewPager.IOnPageChangeListener
     {
 		/**
 	     * Bind the indicator to a ViewPager.
 	     *
 	     * @param view
 	     */
-		void SetViewPager (ViewPager view);
+		void SetViewPager (Android.Support.V4.View.ViewPager view);
 	
 		/**
 	     * Bind the indicator to a ViewPager.
@@ -39,7 +37,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 	     * @param view
 	     * @param initialPosition
 	     */
-		void SetViewPager (ViewPager view, int initialPosition);
+		void SetViewPager (Android.Support.V4.View.ViewPager view, int initialPosition);
 	
 		/**
 	     * <p>Set the current page of both the ViewPager and indicator.</p>
@@ -56,7 +54,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 	     *
 	     * @param listener
 	     */
-		void SetOnPageChangeListener (ViewPager.IOnPageChangeListener listener);
+		void SetOnPageChangeListener (Android.Support.V4.View.ViewPager.IOnPageChangeListener listener);
 	
 		/**
 	     * Notify the indicator that the fragment list has changed.
