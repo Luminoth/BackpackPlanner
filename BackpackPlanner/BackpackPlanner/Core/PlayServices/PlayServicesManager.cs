@@ -32,6 +32,8 @@ namespace EnergonSoftware.BackpackPlanner.Core.PlayServices
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(PlayServicesManager));
 
+        private const string ManifestFileTitle = "BackpackPlanner.manifest";
+
 #region Events
         public event EventHandler<PlayServicesConnectedEventArgs> PlayServicesConnectedEvent;
 #endregion
@@ -50,22 +52,27 @@ namespace EnergonSoftware.BackpackPlanner.Core.PlayServices
         public abstract Task DisconnectAsync();
 
 #region appfolder Management
+        public abstract Task<bool> HasFileInDriveAppFolderAsync(string title);
+
         public abstract Task<bool> SaveFileToDriveAppFolderAsync(string title, string contentType, Stream contentStream);
 
-        public abstract Task<bool> UpdateFileInDriveAppFolderAsync(string fileId, string title, string contentType, Stream contentStream);
+        public abstract Task<bool> UpdateFileInDriveAppFolderAsync(string title, string contentType, Stream contentStream);
 
-        public abstract Task<Stream> DownloadFileFromDriveAppFolderAsync(string fileId);
+        public abstract Task<Stream> DownloadFileFromDriveAppFolderAsync(string title);
 
-        public abstract Task DeleteFileFromDriveAppFolderAsync(string fileId);
+        public abstract Task DeleteFileFromDriveAppFolderAsync(string title);
 #endregion
 
         public void SyncDatabaseInBackground()
         {
             Logger.Info("Starting database sync task...");
-            Task.Run(() => {
-// TODO
+            Task.Run(async () => {
+                if(!await HasFileInDriveAppFolderAsync(ManifestFileTitle)) {
+Logger.Debug($"no such manifest file {ManifestFileTitle}");
+                } else {
+Logger.Debug($"manifest file {ManifestFileTitle} exists!");
+                }
             });
-
         }
 
         protected void OnConnected(PlayServicesConnectedEventArgs args)

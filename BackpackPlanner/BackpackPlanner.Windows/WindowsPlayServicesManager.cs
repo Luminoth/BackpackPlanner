@@ -15,18 +15,15 @@
 */
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Core.PlayServices;
-using EnergonSoftware.BackpackPlanner.Models;
 
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Drive.v2;
-using Google.Apis.Drive.v2.Data;
 using Google.Apis.Services;
 
 namespace EnergonSoftware.BackpackPlanner.Windows
@@ -59,6 +56,7 @@ namespace EnergonSoftware.BackpackPlanner.Windows
         {
             if(IsConnected) {
                 Logger.Info("Google API already connected!");
+                OnConnected(new PlayServicesConnectedEventArgs { IsSuccess= true });
                 return;
             }
 
@@ -112,22 +110,27 @@ namespace EnergonSoftware.BackpackPlanner.Windows
         }
 
 #region appfolder Management
+        public override Task<bool> HasFileInDriveAppFolderAsync(string title)
+        {
+throw new NotImplementedException();
+        }
+
         public override Task<bool> SaveFileToDriveAppFolderAsync(string title, string contentType, Stream contentStream)
         {
 throw new NotImplementedException();
         }
 
-        public override Task<bool> UpdateFileInDriveAppFolderAsync(string fileId, string title, string contentType, Stream contentStream)
+        public override Task<bool> UpdateFileInDriveAppFolderAsync(string title, string contentType, Stream contentStream)
         {
 throw new NotImplementedException();
         }
 
-        public override Task<Stream> DownloadFileFromDriveAppFolderAsync(string fileId)
+        public override Task<Stream> DownloadFileFromDriveAppFolderAsync(string title)
         {
 throw new NotImplementedException();
         }
 
-        public override Task DeleteFileFromDriveAppFolderAsync(string fileId)
+        public override Task DeleteFileFromDriveAppFolderAsync(string title)
         {
 throw new NotImplementedException();
         }

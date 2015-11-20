@@ -19,6 +19,7 @@ using Android.Content.Res;
 using Android.OS;
 using Android.Views;
 
+using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items;
@@ -33,6 +34,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
     [Activity(Label = "@string/app_name", Exported = true)]
     public sealed class BackpackPlannerActivity : BaseActivity, View.IOnClickListener
     {
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(BackpackPlannerActivity));
+
 #region Controls
         private readonly NavigationDrawerManager _navigationDrawerManager = new NavigationDrawerManager();
 #endregion
@@ -97,11 +100,18 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
         {
             base.OnStart();
 
-            // TODO: encapsulate this in the library
+            // TODO: encapsulate this in the library?
             if(BackpackPlannerState.Settings.ConnectGooglePlayServices) {
-                // TODO: we should show a progress dialog here like we do in the FTUE
+                ProgressDialog dialog = DialogUtil.ShowProgressDialog(this, Resource.String.label_connecting_google_play_services, false);
+                BackpackPlannerState.PlatformPlayServicesManager.PlayServicesConnectedEvent += (s, a) => {
+                    Logger.Debug($"Google Play Services connected (success: {a.IsSuccess}), starting sync...");
+                    dialog.Dismiss();
+
+                    BackpackPlannerState.PlatformPlayServicesManager.SyncDatabaseInBackground();
+                };
                 BackpackPlannerState.PlatformPlayServicesManager.ConnectAsync().Wait();
-                BackpackPlannerState.PlatformPlayServicesManager.SyncDatabaseInBackground();
+            } else {
+                Logger.Debug("Google Play Services is not enabled!");
             }
         }
 
