@@ -15,11 +15,10 @@
 */
 
 using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
-using EnergonSoftware.BackpackPlanner.Models;
 
 namespace EnergonSoftware.BackpackPlanner.Core.PlayServices
 {
@@ -37,6 +36,8 @@ namespace EnergonSoftware.BackpackPlanner.Core.PlayServices
         public event EventHandler<PlayServicesConnectedEventArgs> PlayServicesConnectedEvent;
 #endregion
 
+        public abstract bool IsConnected { get; }
+
         public abstract Task InitAsync();
 
         public virtual async Task DestroyAsync()
@@ -48,25 +49,24 @@ namespace EnergonSoftware.BackpackPlanner.Core.PlayServices
 
         public abstract Task DisconnectAsync();
 
+#region appfolder Management
+        public abstract Task<bool> SaveFileToDriveAppFolderAsync(string title, string contentType, Stream contentStream);
+
+        public abstract Task<bool> UpdateFileInDriveAppFolderAsync(string fileId, string title, string contentType, Stream contentStream);
+
+        public abstract Task<Stream> DownloadFileFromDriveAppFolderAsync(string fileId);
+
+        public abstract Task DeleteFileFromDriveAppFolderAsync(string fileId);
+#endregion
+
         public void SyncDatabaseInBackground()
         {
             Logger.Info("Starting database sync task...");
-            Task.Run(async () => {
-                var items = await ReadItemsAsync().ConfigureAwait(false);
-
-                var updatedItems = new List<DatabaseItem>();
-                foreach(DatabaseItem item in items) {
-                    // TODO: process the item and add it to updatedItems
-                }
-
-                await WriteItemsAsync(updatedItems).ConfigureAwait(false);
+            Task.Run(() => {
+// TODO
             });
 
         }
-
-        protected abstract Task<IReadOnlyCollection<DatabaseItem>> ReadItemsAsync();
-
-        protected abstract Task WriteItemsAsync(IReadOnlyCollection<DatabaseItem> items);  
 
         protected void OnConnected(PlayServicesConnectedEventArgs args)
         {

@@ -15,8 +15,8 @@
 */
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 
 using Android.App;
@@ -25,7 +25,6 @@ using Android.Gms.Common;
 using Android.Gms.Common.Apis;
 using Android.Gms.Drive;
 using Android.OS;
-using Android.Runtime;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Core.PlayServices;
@@ -35,12 +34,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 {
     internal sealed class DroidPlayServicesManager : PlayServicesManager
     {
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(PlayServicesManager));
+
         // error resolution
         public const int RequestCodeResolveError = 9001;
 
         private const string StateResolvingError = "play_services_manager_resolving_error";
-
-        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(PlayServicesManager));
 
         // this is necessary because the listener needs to implement
         // Java.Lang.Object while the manager needs to implement PlayServicesManager
@@ -73,29 +72,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 // https://developers.google.com/drive/android/java-client
 // https://www.youtube.com/watch?v=UiTHG_yl-jA
 // https://github.com/athingunique/Drive-Database-Sync
-
-        // TODO: continue with this
-        private class DriveContentsResultCallback : Java.Lang.Object, IResultCallback
-        {
-	        public void OnResult(Java.Lang.Object result)
-	        {
-// TODO: https://github.com/googledrive/android-demos/blob/master/app/src/main/java/com/google/android/gms/drive/sample/demo/CreateFileInAppFolderActivity.java
-                IDriveApiDriveContentsResult contentsResult = result.JavaCast<IDriveApiDriveContentsResult>();
-                if(null == contentsResult) {
-                    // TODO: error
-                    Logger.Error("Null Google Drive content result?");
-                    return;
-                }
-
+// https://github.com/googledrive/android-demos/blob/master/app/src/main/java/com/google/android/gms/drive/sample/demo/CreateFileInAppFolderActivity.java
 // https://developers.google.com/drive/android/appfolder
 
-                Logger.Debug($"Got a Google Drive contents result: {contentsResult.Status.IsSuccess}");
-	        }
-        }
+        public override bool IsConnected => null != _googleClientApi && _googleClientApi.IsConnected;
 
         public bool IsResolvingError { get; private set; }
 
-        // TODO: this should go in the base class to time the lifecycle
         private readonly Stopwatch _connectStopwatch = new Stopwatch();
 
         private readonly Activity _activity;
@@ -148,41 +131,45 @@ namespace EnergonSoftware.BackpackPlanner.Droid
                 return;
             }
 
-            if(_googleClientApi.IsConnected) {
+            if(IsConnected) {
                 Logger.Info("Google API already connected!");
-            } else {
-                Logger.Info("Connecting Google Play Services client...");
-                _connectStopwatch.Start();
-                _googleClientApi.Connect();
+                return;
             }
+
+            Logger.Info("Connecting Google Play Services client...");
+            _connectStopwatch.Start();
+            _googleClientApi.Connect();
         }
 
         public override async Task DisconnectAsync()
         {
             await Task.Delay(0).ConfigureAwait(false);
 
-            if(null != _googleClientApi && _googleClientApi.IsConnected) {
-                Logger.Info("Disonnecting Google Play Services client...");
-                _googleClientApi.Disconnect();
+            if(!IsConnected) {
+                return;
             }
+
+            Logger.Info("Disonnecting Google Play Services client...");
+            _googleClientApi.Disconnect();
         }
 
-	    public void OnConnected(Bundle connectionHint)
+#region Connect Callbacks
+	    private void OnConnected(Bundle connectionHint)
 	    {
             _connectStopwatch.Stop();
 	        Logger.Info($"Google Play Services connected in {_connectStopwatch.ElapsedMilliseconds}ms!");
 
-// TODO: ican we save the user's login here?
+// TODO: can we save the user's login here?
 
             OnConnected(new PlayServicesConnectedEventArgs { IsSuccess= true });
 	    }
 
-	    public void OnConnectionSuspended(int cause)
+	    private void OnConnectionSuspended(int cause)
 	    {
 	        Logger.Info($"Google Play Services suspended: {cause}");
 	    }
 
-	    public void OnConnectionFailed(ConnectionResult result)
+	    private void OnConnectionFailed(ConnectionResult result)
 	    {
             _connectStopwatch.Stop();
             Logger.Warn($"Google Play Services connection failed after {_connectStopwatch.ElapsedMilliseconds}ms: {result}");
@@ -212,7 +199,56 @@ namespace EnergonSoftware.BackpackPlanner.Droid
                 ConnectAsync().Wait();
             }
 	    }
+#endregion
 
+#region appfolder Management
+        public override async Task<bool> SaveFileToDriveAppFolderAsync(string title, string contentType, Stream contentStream)
+        {
+            IDriveApiDriveContentsResult driveContentsResult = await DriveClass.DriveApi.NewDriveContentsAsync(_googleClientApi).ConfigureAwait(false);
+            if(!driveContentsResult.Status.IsSuccess) {
+                Logger.Error($"Failed to get drive contents: {driveContentsResult.Status.StatusMessage}");
+                return false;
+            }
+
+            IDriveContents driveContents = driveContentsResult.DriveContents;
+
+            MetadataChangeSet changeSet = new MetadataChangeSet.Builder()
+                .SetTitle(title)
+                .SetMimeType(contentType)
+                .Build();
+
+            IDriveFolderDriveFileResult driveFileResult = await DriveClass.DriveApi
+                .GetAppFolder(_googleClientApi)
+                .CreateFileAsync(_googleClientApi, changeSet, driveContents).ConfigureAwait(false);
+            if(!driveFileResult.Status.IsSuccess) {
+                Logger.Error($"Failed to get drive contents: {driveFileResult.Status.StatusMessage}");
+                return false;
+            }
+
+            await contentStream.CopyToAsync(driveContents.OutputStream);
+
+            await driveContents.CommitAsync(_googleClientApi, null).ConfigureAwait(false);
+            return true;
+        }
+
+        public override Task<bool> UpdateFileInDriveAppFolderAsync(string fileId, string title, string contentType, Stream contentStream)
+        {
+            //await DriveClass.DriveApi.GetAppFolder(_googleClientApi).QueryChildrenAsync(_googleClientApi, new QueryClass());
+throw new NotImplementedException();
+        }
+
+        public override Task<Stream> DownloadFileFromDriveAppFolderAsync(string fileId)
+        {
+throw new NotImplementedException();
+        }
+
+        public override Task DeleteFileFromDriveAppFolderAsync(string fileId)
+        {
+throw new NotImplementedException();
+        }
+#endregion
+
+#region Activity Lifecycle Hooks
         public void OnCreate(Bundle savedInstanceState)
         {
             if(null != savedInstanceState) {
@@ -238,22 +274,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid
                 break;
             }
 	    }
-
-        protected override async Task<IReadOnlyCollection<DatabaseItem>> ReadItemsAsync()
-        {
-            var items = new List<DatabaseItem>();
-
-// TODO
-await Task.Delay(0).ConfigureAwait(false);
-DriveClass.DriveApi.NewDriveContents(_googleClientApi).SetResultCallback(new DriveContentsResultCallback());
-
-            return items;
-        }
-
-        protected override async Task WriteItemsAsync(IReadOnlyCollection<DatabaseItem> items)
-        {
-// TODO
-await Task.Delay(0).ConfigureAwait(false);
-        }
+#endregion
     }
 }

@@ -8,6 +8,7 @@ The following is necessary to fix Proguard failing:
 * The Jenkins slave MUST run as a non-system user who has a Xamarin account.
 * AOT and LLVM need to be turned off on the Release build or it will fail to build
   * https://forums.xamarin.com/discussion/49180/android-xa5101-platform-library-directory-for-target-arm-and-api-level-23-was-not-found
+* http://developer.android.com/training/permissions/index.html
 
 # Elevations
 

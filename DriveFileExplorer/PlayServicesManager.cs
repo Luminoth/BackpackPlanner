@@ -137,41 +137,37 @@ namespace EnergonSoftware.BackpackPlanner.DriveFileExplorer
             return fileList.Items;
         }
 
-        public async Task<Google.Apis.Drive.v2.Data.File> SaveFileToDriveAppFolderAsync(string filePath, string contentType)
+        public async Task<Google.Apis.Drive.v2.Data.File> SaveFileToDriveAppFolderAsync(string title, string contentType, Stream contentStream)
         {
             await InitAppFolderIdAsync().ConfigureAwait(false);
 
-            Logger.Info($"Saving file to appfolder: {filePath}...");
+            Logger.Info($"Saving file {title} to appfolder...");
 
             Google.Apis.Drive.v2.Data.File body = new Google.Apis.Drive.v2.Data.File
             {
-                Title = Path.GetFileName(filePath),
+                Title = title,
                 Parents = new List<ParentReference> { new ParentReference { Id = _appFolderId } },
                 MimeType = contentType
             };
 
-            using(Stream stream = new FileStream(filePath, FileMode.Open)) {
-                FilesResource.InsertMediaUpload request = _driveService.Files.Insert(body, stream, contentType);
-                await request.UploadAsync().ConfigureAwait(false);
-                return request.ResponseBody;
-            }
+            FilesResource.InsertMediaUpload request = _driveService.Files.Insert(body, contentStream, contentType);
+            await request.UploadAsync().ConfigureAwait(false);
+            return request.ResponseBody;
         }
 
-        public async Task<Google.Apis.Drive.v2.Data.File> UpdateFileInDriveAppFolderAsync(Google.Apis.Drive.v2.Data.File file, string filePath, string contentType)
+        public async Task<Google.Apis.Drive.v2.Data.File> UpdateFileInDriveAppFolderAsync(Google.Apis.Drive.v2.Data.File file, string title, string contentType, Stream contentStream)
         {
             await InitAppFolderIdAsync().ConfigureAwait(false);
 
-            Logger.Info($"Updating file {file.Id} ({file.Title}) in appfolder: {filePath}...");
+            Logger.Info($"Updating file {file.Id} ({file.Title}) in appfolder...");
 
-            file.Title = Path.GetFileName(filePath);
+            file.Title = title;
             file.MimeType = contentType;
 
-            using(Stream stream = new FileStream(filePath, FileMode.Open)) {
-                FilesResource.UpdateMediaUpload request = _driveService.Files.Update(file, file.Id, stream, contentType);
-                request.NewRevision = true;
-                await request.UploadAsync().ConfigureAwait(false);
-                return request.ResponseBody;
-            }
+            FilesResource.UpdateMediaUpload request = _driveService.Files.Update(file, file.Id, contentStream, contentType);
+            request.NewRevision = true;
+            await request.UploadAsync().ConfigureAwait(false);
+            return request.ResponseBody;
         }
 
         public async Task<Stream> DownloadFileFromDriveAppFolderAsync(Google.Apis.Drive.v2.Data.File file)

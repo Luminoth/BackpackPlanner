@@ -16,6 +16,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -34,11 +35,13 @@ namespace EnergonSoftware.BackpackPlanner.Windows
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(WindowsPlayServicesManager));
 
-// https://developers.google.com/drive/web/appdata
+        public override bool IsConnected => null != _driveService;
 
         private UserCredential _userCredential;
 
         private DriveService _driveService;
+
+        private string _appFolderId;
 
         public override async Task InitAsync()
         {
@@ -49,12 +52,18 @@ namespace EnergonSoftware.BackpackPlanner.Windows
         {
             await base.DestroyAsync().ConfigureAwait(false);
 
-            _userCredential = null;
-            _driveService = null;
+            Cleanup();
         }
 
         public override async Task ConnectAsync()
         {
+            if(IsConnected) {
+                Logger.Info("Google API already connected!");
+                return;
+            }
+
+            Logger.Info("Connecting Google Play Services client...");
+
             try {
                 _userCredential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
                     new Uri("ms-appx:///Assets/google_play_client_secrets.json"),
@@ -83,8 +92,7 @@ namespace EnergonSoftware.BackpackPlanner.Windows
             } catch(Exception ex) {
                 Logger.Error($"Error connecting to Google Services: {ex.Message}", ex);
 
-                _userCredential = null;
-                _driveService = null;
+                Cleanup();
 
                 OnConnected(new PlayServicesConnectedEventArgs { IsSuccess = false });
             }
@@ -93,23 +101,61 @@ namespace EnergonSoftware.BackpackPlanner.Windows
         public override async Task DisconnectAsync()
         {
             await Task.Delay(0).ConfigureAwait(false);
+
+            if(!IsConnected) {
+                return;
+            }
+
+            Logger.Info("Disonnecting Google Play Services client...");
+
+            Cleanup();
         }
 
-        protected override async Task<IReadOnlyCollection<DatabaseItem>> ReadItemsAsync()
+#region appfolder Management
+        public override Task<bool> SaveFileToDriveAppFolderAsync(string title, string contentType, Stream contentStream)
         {
-            var items = new List<DatabaseItem>();
-
-            File appFolder = await _driveService.Files.Get("appfolder").ExecuteAsync().ConfigureAwait(false);
-
-// TODO: finish this
-
-            return items;
+throw new NotImplementedException();
         }
 
-        protected override async Task WriteItemsAsync(IReadOnlyCollection<DatabaseItem> items)
+        public override Task<bool> UpdateFileInDriveAppFolderAsync(string fileId, string title, string contentType, Stream contentStream)
         {
-// TODO
-await Task.Delay(0).ConfigureAwait(false);
+throw new NotImplementedException();
+        }
+
+        public override Task<Stream> DownloadFileFromDriveAppFolderAsync(string fileId)
+        {
+throw new NotImplementedException();
+        }
+
+        public override Task DeleteFileFromDriveAppFolderAsync(string fileId)
+        {
+throw new NotImplementedException();
+        }
+
+        private async Task InitAppFolderIdAsync()
+        {
+            if(!string.IsNullOrEmpty(_appFolderId)) {
+                return;
+            }
+
+            Logger.Debug("Initializing appfolder Id...");
+
+            Google.Apis.Drive.v2.Data.File file = await _driveService.Files.Get("appfolder").ExecuteAsync().ConfigureAwait(false);
+            if(null == file) {
+                Logger.Error("Unable to get appfolder Id!");
+                return;
+            }
+
+            _appFolderId = file.Id;
+            Logger.Debug($"appfolder id: {_appFolderId}");
+        }
+#endregion
+
+        private void Cleanup()
+        {
+            _userCredential = null;
+            _driveService = null;
+            _appFolderId = null;
         }
     }
 }

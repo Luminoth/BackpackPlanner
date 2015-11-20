@@ -101,30 +101,33 @@ namespace EnergonSoftware.BackpackPlanner.DriveFileExplorer
             foreach(string filePath in files) {
                 string fileName = Path.GetFileName(filePath);
                 Google.Apis.Drive.v2.Data.File existingDriveFile = _files.FirstOrDefault(x => x.Title == fileName);
-                if(null != existingDriveFile) {
-                    MessageBoxResult result = MessageBox.Show($"The file {fileName} already exists, do you wish to replace it?", "Replace File", MessageBoxButton.YesNo);
-                    if(result == MessageBoxResult.No) {
-                        return;
-                    }
+                using(Stream stream = new FileStream(filePath, FileMode.Open)) {
+                    Google.Apis.Drive.v2.Data.File newDriveFile;
+                    if(null != existingDriveFile) {
+                        MessageBoxResult result = MessageBox.Show($"The file {fileName} already exists, do you wish to replace it?", "Replace File", MessageBoxButton.YesNo);
+                        if(result == MessageBoxResult.No) {
+                            return;
+                        }
 
-                    Google.Apis.Drive.v2.Data.File newDriveFile = await PlayServicesManager.UpdateFileInDriveAppFolderAsync(existingDriveFile, filePath, MimeMapping.GetMimeMapping(filePath));
-                    if(null == newDriveFile) {
-                        MessageBox.Show($"There was an error saving the file {filePath}!", "Save Error", MessageBoxButton.OK);
-                        continue;
-                    }
+                        newDriveFile = await PlayServicesManager.UpdateFileInDriveAppFolderAsync(existingDriveFile, Path.GetFileName(filePath), MimeMapping.GetMimeMapping(filePath), stream);
+                        if(null == newDriveFile) {
+                            MessageBox.Show($"There was an error saving the file {filePath}!", "Save Error", MessageBoxButton.OK);
+                            continue;
+                        }
 
-                    Logger.Debug($"Updated file: {newDriveFile.Title} ({newDriveFile.Id})");
-                    _files.Remove(existingDriveFile);
-                    _files.Add(newDriveFile);
-                } else {
-                    Google.Apis.Drive.v2.Data.File newDriveFile = await PlayServicesManager.SaveFileToDriveAppFolderAsync(filePath, MimeMapping.GetMimeMapping(filePath));
-                    if(null == newDriveFile) {
-                        MessageBox.Show($"There was an error saving the file {filePath}!", "Save Error", MessageBoxButton.OK);
-                        continue;
-                    }
+                        Logger.Debug($"Updated file: {newDriveFile.Title} ({newDriveFile.Id})");
+                        _files.Remove(existingDriveFile);
+                        _files.Add(newDriveFile);
+                    } else {
+                        newDriveFile = await PlayServicesManager.SaveFileToDriveAppFolderAsync(Path.GetFileName(filePath), MimeMapping.GetMimeMapping(filePath), stream);
+                        if(null == newDriveFile) {
+                            MessageBox.Show($"There was an error saving the file {filePath}!", "Save Error", MessageBoxButton.OK);
+                            continue;
+                        }
 
-                    Logger.Debug($"Added new file: {newDriveFile.Title} ({newDriveFile.Id})");
-                    _files.Add(newDriveFile);
+                        Logger.Debug($"Added new file: {newDriveFile.Title} ({newDriveFile.Id})");
+                        _files.Add(newDriveFile);
+                    }
                 }
             }
         }
