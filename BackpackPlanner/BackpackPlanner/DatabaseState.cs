@@ -20,7 +20,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-using EnergonSoftware.BackpackPlanner.Core;
 using EnergonSoftware.BackpackPlanner.Core.Database;
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Models;
@@ -83,14 +82,6 @@ namespace EnergonSoftware.BackpackPlanner
         /// </value>
         public bool IsInitialized { get; private set; }
 
-        /// <summary>
-        /// Gets a value indicating whether the database is being initialized.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if the database is being initialized; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsInitializing { get; private set; }
-
 #region Dispose
         public void Dispose()
         {
@@ -143,13 +134,11 @@ namespace EnergonSoftware.BackpackPlanner
         /// <summary>
         /// Initializes the database.
         /// </summary>
-        public async Task InitDatabaseAsync(BackpackPlannerSettings settings)
+        public async Task InitDatabaseAsync()
         {
-            if(IsInitialized || IsInitializing) {
+            if(IsInitialized) {
                 return;
             }
-
-            IsInitializing = true;
 
             Logger.Info("Initializing database...");
 
@@ -157,7 +146,6 @@ namespace EnergonSoftware.BackpackPlanner
             {
                 Version = CurrentDatabaseVersion
             };
-            DatabaseVersion oldVersion;
 
             await Connection.LockAsync().ConfigureAwait(false);
             try {
@@ -167,7 +155,7 @@ namespace EnergonSoftware.BackpackPlanner
                     await DatabaseVersion.CreateTablesAsync(Connection.AsyncConnection).ConfigureAwait(false);
                 }
 
-                oldVersion = await DatabaseVersion.GetAsync(Connection.AsyncConnection).ConfigureAwait(false);
+                DatabaseVersion oldVersion = await DatabaseVersion.GetAsync(Connection.AsyncConnection).ConfigureAwait(false);
                 if(null == oldVersion) {
                     Logger.Debug("DatabaseVersion.Get returned null!?!");
                     throw new InvalidOperationException("DatabaseVersion.Get returned null!?!");
@@ -189,19 +177,7 @@ namespace EnergonSoftware.BackpackPlanner
                 Connection.Release();
             }
 
-            // finish initialization in a background task because
-            // populating the database can take a while
-            Task task = Task.Run(async () => {
-                if(oldVersion.Version < 1) {
-                    // NOTE: this is the only thing that
-                    // requires the settings parameter
-                    await PopulateInitialDatabaseAsync(settings).ConfigureAwait(false);
-                }
-
-                IsInitialized = true;
-                IsInitializing = false;
-            });
-            task.NoOp();
+            IsInitialized = true;
         }
 
         private async Task PopulateInitialDatabaseAsync(BackpackPlannerSettings settings)

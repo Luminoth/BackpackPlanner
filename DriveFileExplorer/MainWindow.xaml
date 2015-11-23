@@ -46,6 +46,7 @@
                     <GridView>
                         <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" />
                         <GridViewColumn Header="Version" DisplayMemberBinding="{Binding Version}" />
+                        <GridViewColumn Header="Size" DisplayMemberBinding="{Binding FileSize}" />
                         <GridViewColumn Header="Title" DisplayMemberBinding="{Binding Title}" />
                     </GridView>
                 </ListView.View>

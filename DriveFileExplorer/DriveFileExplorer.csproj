@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{281DBEF1-0CAE-4227-93E9-B4DC5D00D9A6}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>EnergonSoftware.BackpackPlanner.DriveFileExplorer</RootNamespace>
     <AssemblyName>DriveFileExplorer</AssemblyName>

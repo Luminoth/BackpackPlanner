@@ -97,7 +97,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
         public override async Task InitAsync()
         {
             if(null == _googleClientApi) {
-                Logger.Debug("Building Google API Client...");
+                Logger.Debug($"{_activity.GetType()} Building Google API Client...");
                 _googleClientApi = new GoogleApiClient.Builder(_activity)
                     .AddApi(DriveClass.API)
                     .AddScope(DriveClass.ScopeFile)
@@ -124,17 +124,17 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             await Task.Delay(0).ConfigureAwait(false);
 
             if(null == _googleClientApi) {
-                Logger.Warn("Google Play Services client is null on connect!");
+                Logger.Warn($"{_activity.GetType()} Google Play Services client is null on connect!");
                 return;
             }
 
             if(IsConnected) {
-                Logger.Info("Google API already connected!");
+                Logger.Info($"{_activity.GetType()} Google API already connected!");
                 OnConnected(new PlayServicesConnectedEventArgs { IsSuccess= true });
                 return;
             }
 
-            Logger.Info("Connecting Google Play Services client...");
+            Logger.Info($"{_activity.GetType()} Connecting Google Play Services client...");
             _connectStopwatch.Start();
             _googleClientApi.Connect();
         }
@@ -147,7 +147,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
                 return;
             }
 
-            Logger.Info("Disonnecting Google Play Services client...");
+            Logger.Info($"{_activity.GetType()} Disonnecting Google Play Services client...");
             _googleClientApi.Disconnect();
         }
 
@@ -155,7 +155,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 	    public void OnConnected(Bundle connectionHint)
 	    {
             _connectStopwatch.Stop();
-	        Logger.Info($"Google Play Services connected in {_connectStopwatch.ElapsedMilliseconds}ms!");
+	        Logger.Info($"{_activity.GetType()} Google Play Services connected in {_connectStopwatch.ElapsedMilliseconds}ms!");
 
 // TODO: can we save the user's login here?
 
@@ -164,20 +164,20 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
 	    public void OnConnectionSuspended(int cause)
 	    {
-	        Logger.Info($"Google Play Services suspended: {cause}");
+	        Logger.Info($"{_activity.GetType()} Google Play Services suspended: {cause}");
 	    }
 
 	    public void OnConnectionFailed(ConnectionResult result)
 	    {
             _connectStopwatch.Stop();
-            Logger.Warn($"Google Play Services connection failed after {_connectStopwatch.ElapsedMilliseconds}ms: {result}");
+            Logger.Warn($"{_activity.GetType()} Google Play Services connection failed after {_connectStopwatch.ElapsedMilliseconds}ms: {result}");
 
             if(IsResolvingError) {
                 return;
             }
 
             if(!result.HasResolution) {
-                Logger.Debug("Google Play Services connection failure has no resolution, showing error dialog...");
+                Logger.Debug($"{_activity.GetType()} Google Play Services connection failure has no resolution, showing error dialog...");
 // TODO: if the error here is service missing, bad things happen (as per the emulator behavior)
                 IsResolvingError = true;
                 GoogleApiAvailability.Instance.GetErrorDialog(_activity, result.ErrorCode, 0).Show();
@@ -190,10 +190,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             try {
                 IsResolvingError = true;
 
-                Logger.Debug("Starting Google Play Services connection failure resolution activity...");
+                Logger.Debug($"{_activity.GetType()} Starting Google Play Services connection failure resolution activity...");
                 result.StartResolutionForResult(_activity, RequestCodeResolveError);
             } catch(IntentSender.SendIntentException) {
-                Logger.Error("Exception while starting resolution activity, retrying connection...");
+                Logger.Error($"{_activity.GetType()} Exception while starting resolution activity, retrying connection...");
                 ConnectAsync().Wait();
             }
 	    }
@@ -215,7 +215,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
                 .GetAppFolder(_googleClientApi)
                 .QueryChildrenAsync(_googleClientApi, query).ConfigureAwait(false);
             if(!metadataBufferResult.Status.IsSuccess) {
-                Logger.Error($"Failed to query drive file: {metadataBufferResult.Status.StatusMessage}");
+                Logger.Error($"{_activity.GetType()} Failed to query drive file: {metadataBufferResult.Status.StatusMessage}");
                 return null;
             }
 
@@ -232,10 +232,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             IDriveApiDriveContentsResult driveContentsResult = await DriveClass.DriveApi
                 .NewDriveContentsAsync(_googleClientApi).ConfigureAwait(false);
             if(!driveContentsResult.Status.IsSuccess) {
-                Logger.Error($"Failed to get drive contents for new appfolder file: {driveContentsResult.Status.StatusMessage}");
+                Logger.Error($"{_activity.GetType()} Failed to get drive contents for new appfolder file: {driveContentsResult.Status.StatusMessage}");
                 return false;
             }
             IDriveContents driveContents = driveContentsResult.DriveContents;
+
+            await contentStream.CopyToAsync(driveContents.OutputStream);
 
             MetadataChangeSet changeSet = new MetadataChangeSet.Builder()
                 .SetTitle(title)
@@ -246,13 +248,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid
                 .GetAppFolder(_googleClientApi)
                 .CreateFileAsync(_googleClientApi, changeSet, driveContents).ConfigureAwait(false);
             if(!driveFileResult.Status.IsSuccess) {
-                Logger.Error($"Failed to create new appfolder file: {driveFileResult.Status.StatusMessage}");
+                Logger.Error($"{_activity.GetType()} Failed to create new appfolder file: {driveFileResult.Status.StatusMessage}");
                 return false;
             }
 
-            await contentStream.CopyToAsync(driveContents.OutputStream);
-
-            await driveContents.CommitAsync(_googleClientApi, null).ConfigureAwait(false);
             return true;
         }
 
@@ -260,14 +259,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid
         {
             Metadata metadata = await QueryFileInDriveAppFolderAsync(title).ConfigureAwait(false);
             if(null == metadata) {
-                Logger.Error($"No such file to update in appfolder: {title}!");
+                Logger.Error($"{_activity.GetType()} No such file to update in appfolder: {title}!");
                 return false;
             }
             IDriveFile driveFile = metadata.DriveId.AsDriveFile();
 
             IDriveApiDriveContentsResult driveContentsResult = await driveFile.OpenAsync(_googleClientApi, DriveFile.ModeWriteOnly, null).ConfigureAwait(false);
             if(!driveContentsResult.Status.IsSuccess) {
-                Logger.Error($"Failed to get drive contents for appfolder file {title}: {driveContentsResult.Status.StatusMessage}");
+                Logger.Error($"{_activity.GetType()} Failed to get drive contents for appfolder file {title}: {driveContentsResult.Status.StatusMessage}");
                 return false;
             }
             IDriveContents driveContents = driveContentsResult.DriveContents;
@@ -280,6 +279,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
         public override Task<Stream> DownloadFileFromDriveAppFolderAsync(string title)
         {
+// http://developer.android.com/guide/topics/data/data-storage.html
+// http://stackoverflow.com/questions/3425906/creating-temporary-files-in-android
 throw new NotImplementedException();
         }
 
@@ -309,7 +310,7 @@ throw new NotImplementedException();
             case RequestCodeResolveError:
                 IsResolvingError = false;
                 if(Result.Ok == resultCode) {
-                    Logger.Info("Got Google Play Services Ok result code, retrying connection...");
+                    Logger.Info($"{_activity.GetType()} Got Google Play Services Ok result code, retrying connection...");
                     ConnectAsync().Wait();
                 }
                 break;

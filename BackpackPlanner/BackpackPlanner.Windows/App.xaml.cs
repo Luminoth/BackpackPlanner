@@ -92,7 +92,7 @@ namespace EnergonSoftware.BackpackPlanner.Windows
             await BackpackPlannerState.InitAsync();
 
             await BackpackPlannerState.DatabaseState.ConnectAsync(ApplicationData.Current.LocalFolder.Path, DatabaseState.DatabaseName);
-            await BackpackPlannerState.DatabaseState.InitDatabaseAsync(BackpackPlannerState.Settings);
+            await BackpackPlannerState.DatabaseState.InitDatabaseAsync();
         }
 
         /// <summary>

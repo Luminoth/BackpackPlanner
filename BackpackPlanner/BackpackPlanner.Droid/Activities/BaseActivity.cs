@@ -53,6 +53,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
                 new DroidPlayServicesManager(this),
                 new SQLitePlatformAndroid()
             );
+
+            LoadPreferences();
+
             BackpackPlannerState.InitAsync().Wait();
 
             ((HockeyAppManager)BackpackPlannerState.PlatformHockeyAppManager).OnCreate(this);
@@ -101,9 +104,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             Logger.Debug($"OnResume - {GetType()}");
 
             ((HockeyAppManager)BackpackPlannerState.PlatformHockeyAppManager).OnResume(this);
-
-            // TODO: why is this in OnResume() and not OnCreate() ?
-            LoadPreferences();
 
             if(_startupStopwatch.IsRunning) {
                 Logger.Debug($"Time to Activity.OnResume() finish: {_startupStopwatch.ElapsedMilliseconds}ms");

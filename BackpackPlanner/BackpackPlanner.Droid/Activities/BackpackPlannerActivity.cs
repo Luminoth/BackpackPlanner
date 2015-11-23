@@ -104,10 +104,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             if(BackpackPlannerState.Settings.ConnectGooglePlayServices) {
                 ProgressDialog dialog = DialogUtil.ShowProgressDialog(this, Resource.String.label_connecting_google_play_services, false);
                 BackpackPlannerState.PlatformPlayServicesManager.PlayServicesConnectedEvent += (s, a) => {
-                    Logger.Debug($"Google Play Services connected (success: {a.IsSuccess}), starting sync...");
+                    Logger.Debug($"Google Play Services connected (success: {a.IsSuccess})!");
                     dialog.Dismiss();
-
-                    BackpackPlannerState.PlatformPlayServicesManager.SyncDatabaseInBackground();
                 };
                 BackpackPlannerState.PlatformPlayServicesManager.ConnectAsync().Wait();
             } else {
@@ -123,7 +121,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
                 System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal),
                 DatabaseState.DatabaseName).Wait();
 
-            BackpackPlannerState.DatabaseState.InitDatabaseAsync(BackpackPlannerState.Settings).Wait();
+            BackpackPlannerState.DatabaseState.InitDatabaseAsync().Wait();
+            BackpackPlannerState.PlatformPlayServicesManager.SyncDatabaseInBackground();
 	    }
 
 	    public override void OnConfigurationChanged(Configuration newConfig)
