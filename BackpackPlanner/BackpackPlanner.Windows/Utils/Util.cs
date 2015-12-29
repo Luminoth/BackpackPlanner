@@ -47,7 +47,7 @@ namespace EnergonSoftware.BackpackPlanner.Windows.Utils
                 }
 
                 tChild = FindVisualChildByName<T>(child, name);
-	            if(null != tChild) {
+                if(null != tChild) {
                     return tChild;
                 }
             }

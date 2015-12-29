@@ -1,4 +1,4 @@
-/*
+﻿/*
    Copyright 2015 Shane Lillie
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,25 +15,28 @@
 */
 
 using System;
+using System.IO;
+using System.Text;
+using System.Threading.Tasks;
 
-using Android.Graphics;
-using Android.Views;
-
-namespace EnergonSoftware.BackpackPlanner.Droid.Util
+namespace EnergonSoftware.BackpackPlanner.Core.PlayServices
 {
-    public static class SnackbarUtil
+    public class PlayServicesLockFile
     {
-        public static void ShowSnackbar(View view, int textResId, int duration)
+        public const string FileTitle = "BackpackPlanner.lock";
+        public const string ContentType = "text/plain";
+
+        public async Task Read(Stream stream)
         {
-            Android.Support.Design.Widget.Snackbar.Make(view, textResId, duration).Show();
+await Task.Delay(0).ConfigureAwait(false);
         }
 
-        public static void ShowUndoSnackbar(View view, int textResId, int duration, Action<View> undoAction)
+        public async Task Write(Stream stream)
         {
-            Android.Support.Design.Widget.Snackbar.Make(view, textResId, duration)
-                .SetAction(Resource.String.label_undo, undoAction)
-                .SetActionTextColor(Color.White)
-                .Show();
+            string content = $"{DateTime.Now}";
+
+            var contentBytes = Encoding.UTF8.GetBytes(content);
+            await stream.WriteAsync(contentBytes, 0, contentBytes.Length).ConfigureAwait(false);
         }
     }
 }

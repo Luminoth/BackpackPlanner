@@ -55,7 +55,7 @@ namespace EnergonSoftware.BackpackPlanner.Commands
         /// </summary>
         /// <param name="databaseState">State of the database.</param>
         /// <param name="settings">The settings.</param>
-        public async virtual Task UndoActionAsync(DatabaseState databaseState, BackpackPlannerSettings settings)
+        public virtual async Task UndoActionAsync(DatabaseState databaseState, BackpackPlannerSettings settings)
         {
             await ValidateDatabaseStateAsync(databaseState).ConfigureAwait(false);
         }

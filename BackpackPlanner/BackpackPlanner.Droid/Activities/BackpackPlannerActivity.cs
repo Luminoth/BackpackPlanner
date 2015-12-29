@@ -44,7 +44,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
         {
             base.OnCreate(savedInstanceState);
 
-			SetContentView(Resource.Layout.activity_backpack_planner);
+            SetContentView(Resource.Layout.activity_backpack_planner);
 
             InitToolbar();
 
@@ -89,12 +89,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             _navigationDrawerManager.SelectInitialItem(Resource.Id.nav_gear_items_fragment);
         }
 
-	    public override void OnPostCreate(Bundle savedInstanceState, PersistableBundle persistentState)
-	    {
-	        base.OnPostCreate(savedInstanceState, persistentState);
+        public override void OnPostCreate(Bundle savedInstanceState, PersistableBundle persistentState)
+        {
+            base.OnPostCreate(savedInstanceState, persistentState);
 
             _navigationDrawerManager.Toggle.SyncState();
-	    }
+        }
 
         protected override void OnStart()
         {
@@ -113,9 +113,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             }
         }
 
-	    protected override void OnResume()
-	    {
-	        base.OnResume();
+        protected override void OnResume()
+        {
+            base.OnResume();
 
             BackpackPlannerState.DatabaseState.ConnectAsync(
                 System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal),
@@ -123,32 +123,32 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 
             BackpackPlannerState.DatabaseState.InitDatabaseAsync().Wait();
             BackpackPlannerState.PlatformPlayServicesManager.SyncDatabaseInBackground();
-	    }
+        }
 
-	    public override void OnConfigurationChanged(Configuration newConfig)
-	    {
-	        base.OnConfigurationChanged(newConfig);
+        public override void OnConfigurationChanged(Configuration newConfig)
+        {
+            base.OnConfigurationChanged(newConfig);
 
             _navigationDrawerManager.OnConfigurationChanged(newConfig);
-	    }
+        }
 
-	    public override bool OnOptionsItemSelected(IMenuItem item)
-	    {
-	        if(_navigationDrawerManager.OnOptionsItemSelected(item)) {
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            if(_navigationDrawerManager.OnOptionsItemSelected(item)) {
                 return true;
             }
 
             return base.OnOptionsItemSelected(item);
-	    }
+        }
 
-	    protected override void OnSaveInstanceState(Bundle outState)
-	    {
-	        base.OnSaveInstanceState(outState);
+        protected override void OnSaveInstanceState(Bundle outState)
+        {
+            base.OnSaveInstanceState(outState);
 
             _navigationDrawerManager.OnSaveInstanceState(outState);
-	    }
+        }
 
-	    public void OnClick(View view)
+        public void OnClick(View view)
         {
             // TODO: this needs to verify the view that's being clicked => if(view == blah) ...
             // this handles the toolbar button press on stacked fragments

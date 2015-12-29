@@ -64,7 +64,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
         {
             base.OnCreate(savedInstanceState);
 
-			SetContentView(Resource.Layout.activity_ftue);
+            SetContentView(Resource.Layout.activity_ftue);
 
             InitToolbar();
 

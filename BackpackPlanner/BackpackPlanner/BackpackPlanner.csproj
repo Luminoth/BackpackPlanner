@@ -48,7 +48,9 @@
     <Compile Include="Core\HockeyApp\HockeyAppManager.cs" />
     <Compile Include="Core\ObjectExtensions.cs" />
     <Compile Include="Core\PlayServices\PlayServicesConnectedEventArgs.cs" />
+    <Compile Include="Core\PlayServices\PlayServicesLockFile.cs" />
     <Compile Include="Core\PlayServices\PlayServicesManager.cs" />
+    <Compile Include="Core\PlayServices\PlayServicesManifest.cs" />
     <Compile Include="DatabaseState.cs" />
     <Compile Include="Core\Settings\SettingsManager.cs" />
     <Compile Include="Models\DatabaseItem.cs" />

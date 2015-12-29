@@ -56,17 +56,17 @@ namespace EnergonSoftware.BackpackPlanner.Droid
                 _playServicesManager = playServicesManager;
             }
 
-	        public void OnConnected(Bundle connectionHint)
+            public void OnConnected(Bundle connectionHint)
             {
                 _playServicesManager.OnConnected(connectionHint);
             }
 
-	        public void OnConnectionSuspended(int cause)
+            public void OnConnectionSuspended(int cause)
             {
                 _playServicesManager.OnConnectionSuspended(cause);
             }
 
-	        public void OnConnectionFailed(ConnectionResult result)
+            public void OnConnectionFailed(ConnectionResult result)
             {
                 _playServicesManager.OnConnectionFailed(result);
             }
@@ -152,23 +152,23 @@ namespace EnergonSoftware.BackpackPlanner.Droid
         }
 
 #region Connect Callbacks
-	    public void OnConnected(Bundle connectionHint)
-	    {
+        public void OnConnected(Bundle connectionHint)
+        {
             _connectStopwatch.Stop();
-	        Logger.Info($"{_activity.GetType()} Google Play Services connected in {_connectStopwatch.ElapsedMilliseconds}ms!");
+            Logger.Info($"{_activity.GetType()} Google Play Services connected in {_connectStopwatch.ElapsedMilliseconds}ms!");
 
 // TODO: can we save the user's login here?
 
             OnConnected(new PlayServicesConnectedEventArgs { IsSuccess= true });
-	    }
+        }
 
-	    public void OnConnectionSuspended(int cause)
-	    {
-	        Logger.Info($"{_activity.GetType()} Google Play Services suspended: {cause}");
-	    }
+        public void OnConnectionSuspended(int cause)
+        {
+            Logger.Info($"{_activity.GetType()} Google Play Services suspended: {cause}");
+        }
 
-	    public void OnConnectionFailed(ConnectionResult result)
-	    {
+        public void OnConnectionFailed(ConnectionResult result)
+        {
             _connectStopwatch.Stop();
             Logger.Warn($"{_activity.GetType()} Google Play Services connection failed after {_connectStopwatch.ElapsedMilliseconds}ms: {result}");
 
@@ -196,7 +196,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
                 Logger.Error($"{_activity.GetType()} Exception while starting resolution activity, retrying connection...");
                 ConnectAsync().Wait();
             }
-	    }
+        }
 #endregion
 
 #region appfolder Management
@@ -304,7 +304,7 @@ throw new NotImplementedException();
         }
 
         public void OnActivityResult(int requestCode, Result resultCode, Intent data)
-	    {
+        {
             switch(requestCode)
             {
             case RequestCodeResolveError:
@@ -315,7 +315,7 @@ throw new NotImplementedException();
                 }
                 break;
             }
-	    }
+        }
 #endregion
     }
 }

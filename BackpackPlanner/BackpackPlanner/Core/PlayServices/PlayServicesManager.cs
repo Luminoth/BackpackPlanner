@@ -16,7 +16,6 @@
 
 using System;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
@@ -33,19 +32,6 @@ namespace EnergonSoftware.BackpackPlanner.Core.PlayServices
     public abstract class PlayServicesManager
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(PlayServicesManager));
-
-        private const string ManifestFileTitle = "BackpackPlanner.manifest";
-        private const string ManifestFileContentType = "text/plain";
-
-        private static async Task WriteManifestFile(Stream stream)
-        {
-            string content = $@"Backpacking Planner
-{DateTime.Now}";
-
-            var contentBytes = Encoding.UTF8.GetBytes(content);
-            Logger.Debug($"Manifest file is {contentBytes.Length} bytes");
-            await stream.WriteAsync(contentBytes, 0, contentBytes.Length).ConfigureAwait(false);
-        }
 
 #region Events
         public event EventHandler<PlayServicesConnectedEventArgs> PlayServicesConnectedEvent;
@@ -84,17 +70,18 @@ namespace EnergonSoftware.BackpackPlanner.Core.PlayServices
 
             Logger.Info("Starting database sync task...");
             Task.Run(async () => {
-                if(!await HasFileInDriveAppFolderAsync(ManifestFileTitle)) {
-Logger.Debug($"no such manifest file {ManifestFileTitle}, creating...");
+                if(!await HasFileInDriveAppFolderAsync(PlayServicesManifest.FileTitle)) {
+Logger.Debug($"no such manifest file {PlayServicesManifest.FileTitle}, creating...");
                     using(Stream stream = new MemoryStream()) {
-                        await WriteManifestFile(stream);
-
+                        PlayServicesManifest manifest = new PlayServicesManifest();
+                        await manifest.Write(stream).ConfigureAwait(false);
                         await stream.FlushAsync().ConfigureAwait(false);
+
                         stream.Position = 0;
-                        await SaveFileToDriveAppFolderAsync(ManifestFileTitle, ManifestFileContentType, stream).ConfigureAwait(false);
+                        await SaveFileToDriveAppFolderAsync(PlayServicesManifest.FileTitle, PlayServicesManifest.ContentType, stream).ConfigureAwait(false);
                     }
                 } else {
-Logger.Debug($"manifest file {ManifestFileTitle} exists!");
+Logger.Debug($"manifest file {PlayServicesManifest.FileTitle} exists!");
                 }
 
                 Logger.Info("Database sync task complete!");
