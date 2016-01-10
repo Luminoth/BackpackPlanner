@@ -163,6 +163,7 @@
     <Compile Include="Adapters\Trips\TripItineraryListAdapter.cs" />
     <Compile Include="Adapters\Trips\TripPlanListAdapter.cs" />
     <Compile Include="Activities\BackpackPlannerActivity.cs" />
+    <Compile Include="DroidDatabaseSyncManager.cs" />
     <Compile Include="Fragments\AddItemFragment.cs" />
     <Compile Include="Fragments\BaseFragment.cs" />
     <Compile Include="Fragments\DataFragment.cs" />

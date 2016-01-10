@@ -122,7 +122,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
                 DatabaseState.DatabaseName).Wait();
 
             BackpackPlannerState.DatabaseState.InitDatabaseAsync().Wait();
-            BackpackPlannerState.PlatformPlayServicesManager.SyncDatabaseInBackground();
+            BackpackPlannerState.PlatformDatabaseSyncManager.SyncDatabaseInBackground(BackpackPlannerState.PlatformPlayServicesManager);
         }
 
         public override void OnConfigurationChanged(Configuration newConfig)

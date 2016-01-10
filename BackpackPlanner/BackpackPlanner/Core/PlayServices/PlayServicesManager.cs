@@ -18,8 +18,6 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 
-using EnergonSoftware.BackpackPlanner.Core.Logging;
-
 namespace EnergonSoftware.BackpackPlanner.Core.PlayServices
 {
     /// <summary>
@@ -31,8 +29,6 @@ namespace EnergonSoftware.BackpackPlanner.Core.PlayServices
     /// </remarks>
     public abstract class PlayServicesManager
     {
-        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(PlayServicesManager));
-
 #region Events
         public event EventHandler<PlayServicesConnectedEventArgs> PlayServicesConnectedEvent;
 #endregion
@@ -61,32 +57,6 @@ namespace EnergonSoftware.BackpackPlanner.Core.PlayServices
 
         public abstract Task DeleteFileFromDriveAppFolderAsync(string title);
 #endregion
-
-        public void SyncDatabaseInBackground()
-        {
-            if(!IsConnected) {
-                return;
-            }
-
-            Logger.Info("Starting database sync task...");
-            Task.Run(async () => {
-                if(!await HasFileInDriveAppFolderAsync(PlayServicesManifest.FileTitle)) {
-Logger.Debug($"no such manifest file {PlayServicesManifest.FileTitle}, creating...");
-                    using(Stream stream = new MemoryStream()) {
-                        PlayServicesManifest manifest = new PlayServicesManifest();
-                        await manifest.Write(stream).ConfigureAwait(false);
-                        await stream.FlushAsync().ConfigureAwait(false);
-
-                        stream.Position = 0;
-                        await SaveFileToDriveAppFolderAsync(PlayServicesManifest.FileTitle, PlayServicesManifest.ContentType, stream).ConfigureAwait(false);
-                    }
-                } else {
-Logger.Debug($"manifest file {PlayServicesManifest.FileTitle} exists!");
-                }
-
-                Logger.Info("Database sync task complete!");
-            });
-        }
 
         protected void OnConnected(PlayServicesConnectedEventArgs args)
         {

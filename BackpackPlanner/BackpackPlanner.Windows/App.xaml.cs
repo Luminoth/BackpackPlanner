@@ -55,6 +55,7 @@ namespace EnergonSoftware.BackpackPlanner.Windows
                 new HockeyAppManager(),
                 new WindowsSettingsManager(),
                 new WindowsPlayServicesManager(),
+                new WindowsDatabaseSyncManager(),
                 new SQLitePlatformWinRT()
             );
         }

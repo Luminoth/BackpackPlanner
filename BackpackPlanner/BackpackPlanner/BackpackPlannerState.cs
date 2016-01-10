@@ -17,6 +17,7 @@
 using System;
 using System.Threading.Tasks;
 
+using EnergonSoftware.BackpackPlanner.Core;
 using EnergonSoftware.BackpackPlanner.Core.HockeyApp;
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Core.PlayServices;
@@ -76,6 +77,14 @@ namespace EnergonSoftware.BackpackPlanner
         public PlayServicesManager PlatformPlayServicesManager { get; }
 
         /// <summary>
+        /// Gets the platform database sync manager.
+        /// </summary>
+        /// <value>
+        /// The platform database sync manager.
+        /// </value>
+        public DatabaseSyncManager PlatformDatabaseSyncManager { get; }
+
+        /// <summary>
         /// Gets the platform settings manager.
         /// </summary>
         /// <value>
@@ -104,8 +113,9 @@ namespace EnergonSoftware.BackpackPlanner
         /// <param name="platformHockeyAppManager">The platform HockeyApp manager.</param>
         /// <param name="platformSettingsManager">The platform settings manager.</param>
         /// <param name="platformPlayServicesManager">The platform google play services manager.</param>
+        /// <param name="platformDatabaseSyncManager">The platform database sync manager.</param>
         /// <param name="sqlitePlatform">The SQLite platform.</param>
-        public BackpackPlannerState(IHockeyAppManager platformHockeyAppManager, SettingsManager platformSettingsManager, PlayServicesManager platformPlayServicesManager, ISQLitePlatform sqlitePlatform)
+        public BackpackPlannerState(IHockeyAppManager platformHockeyAppManager, SettingsManager platformSettingsManager, PlayServicesManager platformPlayServicesManager, DatabaseSyncManager platformDatabaseSyncManager, ISQLitePlatform sqlitePlatform)
         {
             if(null == platformHockeyAppManager) {
                 throw new ArgumentNullException(nameof(platformHockeyAppManager));
@@ -117,6 +127,10 @@ namespace EnergonSoftware.BackpackPlanner
 
             if(null == platformPlayServicesManager) {
                 throw new ArgumentNullException(nameof(platformPlayServicesManager));
+            }
+
+            if(null == platformDatabaseSyncManager) {
+                throw new ArgumentNullException(nameof(platformDatabaseSyncManager));
             }
 
             if(null == sqlitePlatform) {
@@ -131,6 +145,7 @@ namespace EnergonSoftware.BackpackPlanner
             DatabaseState.SQLitePlatform = sqlitePlatform;
 
             PlatformPlayServicesManager = platformPlayServicesManager;
+            PlatformDatabaseSyncManager = platformDatabaseSyncManager;
 
             PersonalInformation = new PersonalInformation(PlatformSettingsManager, Settings);
         }

@@ -14,7 +14,6 @@
    limitations under the License.
 */
 
-using System;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,14 +22,18 @@ using EnergonSoftware.BackpackPlanner.Core.Logging;
 
 namespace EnergonSoftware.BackpackPlanner.Core.PlayServices
 {
-    public class PlayServicesManifest
+// TODO: rename this DatabaseSyncManifest and move it up a level
+    public sealed class PlayServicesManifest
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(PlayServicesManifest));
 
         public const string FileTitle = "BackpackPlanner.manifest";
+
         public const string ContentType = "text/plain";
 
-        public DateTime ManifestDate { get; set; } = DateTime.Now;
+        public int LastSyncTimestampSeconds { get; set; }
+
+        public int LastUpdateTimestampSeconds { get; set; }
 
         public async Task Read(Stream stream)
         {
@@ -40,7 +43,9 @@ await Task.Delay(0).ConfigureAwait(false);
         public async Task Write(Stream stream)
         {
             string content = $@"Backpacking Planner
-{ManifestDate}";
+Last Sync: {LastSyncTimestampSeconds}
+Last Update: {LastUpdateTimestampSeconds}
+";
 
             var contentBytes = Encoding.UTF8.GetBytes(content);
             Logger.Debug($"Manifest file is {contentBytes.Length} bytes");

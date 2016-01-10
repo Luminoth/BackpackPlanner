@@ -51,6 +51,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
                 new HockeyAppManager(),
                 new DroidSettingsManager(Android.Support.V7.Preferences.PreferenceManager.GetDefaultSharedPreferences(this)),
                 new DroidPlayServicesManager(this),
+                new DroidDatabaseSyncManager(),
                 new SQLitePlatformAndroid()
             );
 

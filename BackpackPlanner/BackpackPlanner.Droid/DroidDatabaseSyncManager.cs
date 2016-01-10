@@ -1,5 +1,5 @@
-﻿/*
-   Copyright 2015 Shane Lillie
+/*
+   Copyright 2016 Shane Lillie
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -14,29 +14,30 @@
    limitations under the License.
 */
 
-using System;
-using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace EnergonSoftware.BackpackPlanner.Core.PlayServices
-{
-    public class PlayServicesLockFile
-    {
-        public const string FileTitle = "BackpackPlanner.lock";
-        public const string ContentType = "text/plain";
+using EnergonSoftware.BackpackPlanner.Core;
+using EnergonSoftware.BackpackPlanner.Core.PlayServices;
 
-        public async Task Read(Stream stream)
+namespace EnergonSoftware.BackpackPlanner.Droid
+{
+    public sealed class DroidDatabaseSyncManager : DatabaseSyncManager
+    {
+        protected override async Task<PlayServicesManifest> ReadLocalManifest()
+        {
+await Task.Delay(0).ConfigureAwait(false);
+return null;
+        }
+
+        protected override async Task WriteLocalManifset(PlayServicesManifest localManifest)
         {
 await Task.Delay(0).ConfigureAwait(false);
         }
 
-        public async Task Write(Stream stream)
+        protected override async Task<SyncConflictAction> GetConflictResolutionAction()
         {
-            string content = $"{DateTime.Now}";
-
-            var contentBytes = Encoding.UTF8.GetBytes(content);
-            await stream.WriteAsync(contentBytes, 0, contentBytes.Length).ConfigureAwait(false);
+await Task.Delay(0).ConfigureAwait(false);
+return SyncConflictAction.Nothing;
         }
     }
 }
