@@ -9,6 +9,7 @@ The following is necessary to fix Proguard failing:
   * Set ANDROID_HOME to C:\android-sdk
   * Add %ANDROID_HOME%\tools and %ANDROID_HOME%\platform_tools to the PATH
   * Set PROGUARD_HOME to %ANDROID_HOME%\tools\proguard
+  * Add %PROGUARD_HOME%\bin to the PATH
 * Set Xamarin to use the SDK in C:\android-sdk in Visual Studio
 * May need to build the Release build once with Visual Studio in order for everything to get setup for automatic builds
 * The Jenkins slave MUST run as a non-system user who has a Xamarin account.
