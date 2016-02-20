@@ -10,11 +10,16 @@ The following is necessary to fix Proguard failing:
   * Add %ANDROID_HOME%\tools and %ANDROID_HOME%\platform_tools to the PATH
   * Set PROGUARD_HOME to %ANDROID_HOME%\tools\proguard
   * Add %PROGUARD_HOME%\bin to the PATH
-* Set Xamarin to use the SDK in C:\android-sdk in Visual Studio
+* Set Xamarin to use the SDK in C:\android-sdk in Visual Studio (in Tools -> Options -> Xamarin)
+* Set the Visual Studio Cross Platform Android SDK to be C:\android-sdk (in Tools -> Options -> Cross Platform)
+* On top of this, Jenkins should set /p:AndroidSdkDirectory=C:\android-sdk when building to ensure the correct SDK is used
 * May need to build the Release build once with Visual Studio in order for everything to get setup for automatic builds
 * The Jenkins slave MUST run as a non-system user who has a Xamarin account.
 * AOT and LLVM need to be turned off on the Release build or it will fail to build
   * https://forums.xamarin.com/discussion/49180/android-xa5101-platform-library-directory-for-target-arm-and-api-level-23-was-not-found
+
+# Misc
+
 * http://developer.android.com/training/permissions/index.html
 
 # Elevations
