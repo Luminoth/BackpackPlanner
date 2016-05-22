@@ -41,7 +41,7 @@ module BackpackPlanner.Mockup.Controllers.Gear.Items {
                 gearItem.update($scope.gearItem);
 
                 var updateToast = $mdToast.simple()
-                    .content(`Updated gear item: ${$scope.gearItem.name()}`)
+                    .textContent(`Updated gear item: ${$scope.gearItem.name()}`)
                     .action("OK")
                     .position("bottom left");
 
@@ -63,7 +63,7 @@ module BackpackPlanner.Mockup.Controllers.Gear.Items {
                 var confirm = $mdDialog.confirm()
                     .parent(angular.element(document.body))
                     .title("Delete Gear Item")
-                    .content("Are you sure you wish to delete this gear item?")
+                    .textContent("Are you sure you wish to delete this gear item?")
                     .ok("Yes")
                     .cancel("No")
                     .targetEvent(event);
@@ -71,17 +71,17 @@ module BackpackPlanner.Mockup.Controllers.Gear.Items {
                 var receipt = $mdDialog.alert()
                     .parent(angular.element(document.body))
                     .title("Gear item deleted!")
-                    .content("The gear item has been deleted.")
+                    .textContent("The gear item has been deleted.")
                     .ok("OK")
                     .targetEvent(event);
 
                 var deleteToast = $mdToast.simple()
-                    .content(`Deleted gear item: ${$scope.gearItem.name()}`)
+                    .textContent(`Deleted gear item: ${$scope.gearItem.name()}`)
                     .action("Undo")
                     .position("bottom left");
 
                 var undoDeleteToast = $mdToast.simple()
-                    .content(`Restored gear item: ${$scope.gearItem.name()}`)
+                    .textContent(`Restored gear item: ${$scope.gearItem.name()}`)
                     .action("OK")
                     .position("bottom left");
 

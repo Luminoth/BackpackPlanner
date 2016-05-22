@@ -58,7 +58,7 @@ module BackpackPlanner.Mockup.Controllers.Gear.Systems {
                 gearSystem.update($scope.gearSystem);
 
                 var updateToast = $mdToast.simple()
-                    .content(`Updated gear system: ${$scope.gearSystem.name()}`)
+                    .textContent(`Updated gear system: ${$scope.gearSystem.name()}`)
                     .action("OK")
                     .position("bottom left");
 
@@ -80,7 +80,7 @@ module BackpackPlanner.Mockup.Controllers.Gear.Systems {
                 var confirm = $mdDialog.confirm()
                     .parent(angular.element(document.body))
                     .title("Delete Gear System")
-                    .content("Are you sure you wish to delete this gear system?")
+                    .textContent("Are you sure you wish to delete this gear system?")
                     .ok("Yes")
                     .cancel("No")
                     .targetEvent(event);
@@ -88,17 +88,17 @@ module BackpackPlanner.Mockup.Controllers.Gear.Systems {
                 var receipt = $mdDialog.alert()
                     .parent(angular.element(document.body))
                     .title("Gear system deleted!")
-                    .content("The gear system has been deleted.")
+                    .textContent("The gear system has been deleted.")
                     .ok("OK")
                     .targetEvent(event);
 
                 var deleteToast = $mdToast.simple()
-                    .content(`Deleted gear system: ${$scope.gearSystem.name()}`)
+                    .textContent(`Deleted gear system: ${$scope.gearSystem.name()}`)
                     .action("Undo")
                     .position("bottom left");
 
                 var undoDeleteToast = $mdToast.simple()
-                    .content(`Restored gear system: ${$scope.gearSystem.name()}`)
+                    .textContent(`Restored gear system: ${$scope.gearSystem.name()}`)
                     .action("OK")
                     .position("bottom left");
 

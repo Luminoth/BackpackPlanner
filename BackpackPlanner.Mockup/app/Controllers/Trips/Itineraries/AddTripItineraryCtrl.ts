@@ -21,7 +21,7 @@ module BackpackPlanner.Mockup.Controllers.Trips.Itineraries {
                 AppState.getInstance().getTripState().addTripItinerary($scope.tripItinerary);
 
                 var addToast = $mdToast.simple()
-                    .content(`Added trip itinerary: ${$scope.tripItinerary.name()}`)
+                    .textContent(`Added trip itinerary: ${$scope.tripItinerary.name()}`)
                     .action("OK")
                     .position("bottom left");
 

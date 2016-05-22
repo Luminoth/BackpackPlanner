@@ -21,7 +21,7 @@ module BackpackPlanner.Mockup.Controllers.Meals {
                 AppState.getInstance().getMealState().addMeal($scope.meal);
 
                 var addToast = $mdToast.simple()
-                    .content(`Added meal: ${$scope.meal.name()}`)
+                    .textContent(`Added meal: ${$scope.meal.name()}`)
                     .action("OK")
                     .position("bottom left");
 

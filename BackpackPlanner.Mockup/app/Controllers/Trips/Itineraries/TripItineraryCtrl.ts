@@ -41,7 +41,7 @@ module BackpackPlanner.Mockup.Controllers.Trips.Itineraries {
                 tripItinerary.update($scope.tripItinerary);
 
                 var updateToast = $mdToast.simple()
-                    .content(`Updated gear collection: ${$scope.tripItinerary.name()}`)
+                    .textContent(`Updated gear collection: ${$scope.tripItinerary.name()}`)
                     .action("OK")
                     .position("bottom left");
 
@@ -63,7 +63,7 @@ module BackpackPlanner.Mockup.Controllers.Trips.Itineraries {
                 var confirm = $mdDialog.confirm()
                     .parent(angular.element(document.body))
                     .title("Delete Trip Itinerary")
-                    .content("Are you sure you wish to delete this trip itinerary?")
+                    .textContent("Are you sure you wish to delete this trip itinerary?")
                     .ok("Yes")
                     .cancel("No")
                     .targetEvent(event);
@@ -71,17 +71,17 @@ module BackpackPlanner.Mockup.Controllers.Trips.Itineraries {
                 var receipt = $mdDialog.alert()
                     .parent(angular.element(document.body))
                     .title("Trip itinerary deleted!")
-                    .content("The trip itinerary has been deleted.")
+                    .textContent("The trip itinerary has been deleted.")
                     .ok("OK")
                     .targetEvent(event);
 
                 var deleteToast = $mdToast.simple()
-                    .content(`Deleted trip itinerary: ${$scope.tripItinerary.name()}`)
+                    .textContent(`Deleted trip itinerary: ${$scope.tripItinerary.name()}`)
                     .action("Undo")
                     .position("bottom left");
 
                 var undoDeleteToast = $mdToast.simple()
-                    .content(`Restored trip itinerary: ${$scope.tripItinerary.name()}`)
+                    .textContent(`Restored trip itinerary: ${$scope.tripItinerary.name()}`)
                     .action("OK")
                     .position("bottom left");
 

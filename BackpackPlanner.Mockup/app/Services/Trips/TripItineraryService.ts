@@ -6,7 +6,7 @@ module BackpackPlanner.Mockup.Services.Trips {
     "use strict";
 
     export interface ITripItineraryService extends ng.resource.IResourceClass<Resources.Trips.ITripItineraryResource> {
-        query(): Resources.Trips.ITripItineraryResource[];
+        query: ng.resource.IResourceArrayMethod<Resources.Trips.ITripItineraryResource>;
     }
 
     export function tripItineraryServiceFactory($resource: ng.resource.IResourceService) {

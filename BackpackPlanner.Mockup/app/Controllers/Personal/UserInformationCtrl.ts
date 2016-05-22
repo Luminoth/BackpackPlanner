@@ -32,7 +32,7 @@ module BackpackPlanner.Mockup.Controllers.Personal {
                 AppState.getInstance().getUserInformation().update($scope.userInfo);
 
                 var updateToast = $mdToast.simple()
-                    .content("Updated personal information!")
+                    .textContent("Updated personal information!")
                     .action("OK")
                     .position("bottom left");
 

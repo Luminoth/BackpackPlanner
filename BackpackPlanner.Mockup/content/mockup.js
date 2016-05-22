@@ -143,7 +143,7 @@ var BackpackPlanner;
                         return $q.defer().promise;
                     };
                     return UserInformation;
-                })();
+                }());
                 Personal.UserInformation = UserInformation;
             })(Personal = Models.Personal || (Models.Personal = {}));
         })(Models = Mockup.Models || (Mockup.Models = {}));
@@ -275,7 +275,7 @@ var BackpackPlanner;
                     return $q.defer().promise;
                 };
                 return AppSettings;
-            })();
+            }());
             Models.AppSettings = AppSettings;
         })(Models = Mockup.Models || (Mockup.Models = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
@@ -491,7 +491,7 @@ var BackpackPlanner;
                         return $q.defer().promise;
                     };
                     return Meal;
-                })();
+                }());
                 Meals.Meal = Meal;
                 var MealEntry = (function () {
                     function MealEntry(mealId, count) {
@@ -545,7 +545,7 @@ var BackpackPlanner;
                         return Mockup.convertUSDPToCurrency(this.getCostInUSDP(), /*currency*/ Mockup.AppState.getInstance().getAppSettings().currency());
                     };
                     return MealEntry;
-                })();
+                }());
                 Meals.MealEntry = MealEntry;
             })(Meals = Models.Meals || (Models.Meals = {}));
         })(Models = Mockup.Models || (Mockup.Models = {}));
@@ -642,7 +642,7 @@ var BackpackPlanner;
                         return $q.defer().promise;
                     };
                     return TripItinerary;
-                })();
+                }());
                 Trips.TripItinerary = TripItinerary;
             })(Trips = Models.Trips || (Models.Trips = {}));
         })(Models = Mockup.Models || (Mockup.Models = {}));
@@ -831,7 +831,7 @@ var BackpackPlanner;
                         return $q.defer().promise;
                     };
                     return GearItem;
-                })();
+                }());
                 Gear.GearItem = GearItem;
                 var GearItemEntry = (function () {
                     function GearItemEntry(gearItemId, count) {
@@ -899,7 +899,7 @@ var BackpackPlanner;
                         return Mockup.convertUSDPToCurrency(this.getCostInUSDP(), /*currency*/ Mockup.AppState.getInstance().getAppSettings().currency());
                     };
                     return GearItemEntry;
-                })();
+                }());
                 Gear.GearItemEntry = GearItemEntry;
             })(Gear = Models.Gear || (Models.Gear = {}));
         })(Models = Mockup.Models || (Mockup.Models = {}));
@@ -1142,7 +1142,7 @@ var BackpackPlanner;
                         return $q.defer().promise;
                     };
                     return GearSystem;
-                })();
+                }());
                 Gear.GearSystem = GearSystem;
                 var GearSystemEntry = (function () {
                     function GearSystemEntry(gearSystemId, count) {
@@ -1226,7 +1226,7 @@ var BackpackPlanner;
                         return Mockup.convertUSDPToCurrency(this.getCostInUSDP([]), /*currency*/ Mockup.AppState.getInstance().getAppSettings().currency());
                     };
                     return GearSystemEntry;
-                })();
+                }());
                 Gear.GearSystemEntry = GearSystemEntry;
             })(Gear = Models.Gear || (Models.Gear = {}));
         })(Models = Mockup.Models || (Mockup.Models = {}));
@@ -1922,7 +1922,7 @@ var BackpackPlanner;
                         return $q.defer().promise;
                     };
                     return TripPlan;
-                })();
+                }());
                 Trips.TripPlan = TripPlan;
             })(Trips = Models.Trips || (Models.Trips = {}));
         })(Models = Mockup.Models || (Mockup.Models = {}));
@@ -2251,7 +2251,7 @@ var BackpackPlanner;
             GearState._lastGearSystemId = 0;
             GearState._lastGearCollectionId = 0;
             return GearState;
-        })();
+        }());
         Mockup.GearState = GearState;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
@@ -2342,7 +2342,7 @@ var BackpackPlanner;
             };
             MealState._lastMealId = 0;
             return MealState;
-        })();
+        }());
         Mockup.MealState = MealState;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
@@ -2552,7 +2552,7 @@ var BackpackPlanner;
             TripState._lastTripItineraryId = 0;
             TripState._lastTripPlanId = 0;
             return TripState;
-        })();
+        }());
         Mockup.TripState = TripState;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
@@ -2664,7 +2664,7 @@ var BackpackPlanner;
             /* Singleton */
             AppState._instance = new AppState();
             return AppState;
-        })();
+        }());
         Mockup.AppState = AppState;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
@@ -3043,7 +3043,7 @@ var BackpackPlanner;
                         return $q.defer().promise;
                     };
                     return GearCollection;
-                })();
+                }());
                 Gear.GearCollection = GearCollection;
                 var GearCollectionEntry = (function () {
                     function GearCollectionEntry(gearCollectionId, count) {
@@ -3141,7 +3141,7 @@ var BackpackPlanner;
                         return Mockup.convertUSDPToCurrency(this.getCostInUSDP([]), /*currency*/ Mockup.AppState.getInstance().getAppSettings().currency());
                     };
                     return GearCollectionEntry;
-                })();
+                }());
                 Gear.GearCollectionEntry = GearCollectionEntry;
             })(Gear = Models.Gear || (Models.Gear = {}));
         })(Models = Mockup.Models || (Mockup.Models = {}));
@@ -3177,7 +3177,7 @@ var BackpackPlanner;
                             }
                         };
                         return DeleteGearCollectionAction;
-                    })();
+                    }());
                     Collections.DeleteGearCollectionAction = DeleteGearCollectionAction;
                 })(Collections = Gear.Collections || (Gear.Collections = {}));
             })(Gear = Actions.Gear || (Actions.Gear = {}));
@@ -3226,7 +3226,7 @@ var BackpackPlanner;
                             }
                         };
                         return DeleteGearItemAction;
-                    })();
+                    }());
                     Items.DeleteGearItemAction = DeleteGearItemAction;
                 })(Items = Gear.Items || (Gear.Items = {}));
             })(Gear = Actions.Gear || (Actions.Gear = {}));
@@ -3269,7 +3269,7 @@ var BackpackPlanner;
                             }
                         };
                         return DeleteGearSystemAction;
-                    })();
+                    }());
                     Systems.DeleteGearSystemAction = DeleteGearSystemAction;
                 })(Systems = Gear.Systems || (Gear.Systems = {}));
             })(Gear = Actions.Gear || (Actions.Gear = {}));
@@ -3304,7 +3304,7 @@ var BackpackPlanner;
                         }
                     };
                     return DeleteMealAction;
-                })();
+                }());
                 Meals.DeleteMealAction = DeleteMealAction;
             })(Meals = Actions.Meals || (Actions.Meals = {}));
         })(Actions = Mockup.Actions || (Mockup.Actions = {}));
@@ -3340,7 +3340,7 @@ var BackpackPlanner;
                             }
                         };
                         return DeleteTripItineraryAction;
-                    })();
+                    }());
                     Itineraries.DeleteTripItineraryAction = DeleteTripItineraryAction;
                 })(Itineraries = Trips.Itineraries || (Trips.Itineraries = {}));
             })(Trips = Actions.Trips || (Actions.Trips = {}));
@@ -3371,7 +3371,7 @@ var BackpackPlanner;
                             Mockup.AppState.getInstance().getTripState().addTripPlan(this.TripPlan);
                         };
                         return DeleteTripPlanAction;
-                    })();
+                    }());
                     Plans.DeleteTripPlanAction = DeleteTripPlanAction;
                 })(Plans = Trips.Plans || (Trips.Plans = {}));
             })(Trips = Actions.Trips || (Actions.Trips = {}));
@@ -3603,7 +3603,7 @@ var BackpackPlanner;
                     };
                 }
                 return AppCtrl;
-            })();
+            }());
             Controllers.AppCtrl = AppCtrl;
             AppCtrl.$inject = ["$scope", "$q", "$location", "$anchorScroll",
                 "$mdSidenav", "$mdDialog", "$mdToast",
@@ -3657,7 +3657,7 @@ var BackpackPlanner;
                             $scope.addGearCollection = function () {
                                 Mockup.AppState.getInstance().getGearState().addGearCollection($scope.gearCollection);
                                 var addToast = $mdToast.simple()
-                                    .content("Added gear collection: " + $scope.gearCollection.name())
+                                    .textContent("Added gear collection: " + $scope.gearCollection.name())
                                     .action("OK")
                                     .position("bottom left");
                                 $location.path("/gear/collections");
@@ -3668,7 +3668,7 @@ var BackpackPlanner;
                             };
                         }
                         return AddGearCollectionCtrl;
-                    })();
+                    }());
                     Collections.AddGearCollectionCtrl = AddGearCollectionCtrl;
                     AddGearCollectionCtrl.$inject = ["$scope", "$location", "$mdDialog", "$mdToast"];
                 })(Collections = Gear.Collections || (Gear.Collections = {}));
@@ -3733,7 +3733,7 @@ var BackpackPlanner;
                                 }
                                 gearCollection.update($scope.gearCollection);
                                 var updateToast = $mdToast.simple()
-                                    .content("Updated gear collection: " + $scope.gearCollection.name())
+                                    .textContent("Updated gear collection: " + $scope.gearCollection.name())
                                     .action("OK")
                                     .position("bottom left");
                                 $location.path("/gear/collections");
@@ -3752,22 +3752,22 @@ var BackpackPlanner;
                                 var confirm = $mdDialog.confirm()
                                     .parent(angular.element(document.body))
                                     .title("Delete Gear Collection")
-                                    .content("Are you sure you wish to delete this gear collection?")
+                                    .textContent("Are you sure you wish to delete this gear collection?")
                                     .ok("Yes")
                                     .cancel("No")
                                     .targetEvent(event);
                                 var receipt = $mdDialog.alert()
                                     .parent(angular.element(document.body))
                                     .title("Gear collection deleted!")
-                                    .content("The gear collection has been deleted.")
+                                    .textContent("The gear collection has been deleted.")
                                     .ok("OK")
                                     .targetEvent(event);
                                 var deleteToast = $mdToast.simple()
-                                    .content("Deleted gear collection: " + $scope.gearCollection.name())
+                                    .textContent("Deleted gear collection: " + $scope.gearCollection.name())
                                     .action("Undo")
                                     .position("bottom left");
                                 var undoDeleteToast = $mdToast.simple()
-                                    .content("Restored gear collection: " + $scope.gearCollection.name())
+                                    .textContent("Restored gear collection: " + $scope.gearCollection.name())
                                     .action("OK")
                                     .position("bottom left");
                                 $mdDialog.show(confirm).then(function () {
@@ -3788,7 +3788,7 @@ var BackpackPlanner;
                             };
                         }
                         return GearCollectionCtrl;
-                    })();
+                    }());
                     Collections.GearCollectionCtrl = GearCollectionCtrl;
                     GearCollectionCtrl.$inject = ["$scope", "$routeParams", "$location", "$mdDialog", "$mdToast"];
                 })(Collections = Gear.Collections || (Gear.Collections = {}));
@@ -3830,7 +3830,7 @@ var BackpackPlanner;
                             };
                         }
                         return GearCollectionsCtrl;
-                    })();
+                    }());
                     Collections.GearCollectionsCtrl = GearCollectionsCtrl;
                     GearCollectionsCtrl.$inject = ["$scope", "$mdDialog"];
                 })(Collections = Gear.Collections || (Gear.Collections = {}));
@@ -3858,7 +3858,7 @@ var BackpackPlanner;
                             $scope.addGearItem = function () {
                                 Mockup.AppState.getInstance().getGearState().addGearItem($scope.gearItem);
                                 var addToast = $mdToast.simple()
-                                    .content("Added gear item: " + $scope.gearItem.name())
+                                    .textContent("Added gear item: " + $scope.gearItem.name())
                                     .action("OK")
                                     .position("bottom left");
                                 $location.path("/gear/items");
@@ -3869,7 +3869,7 @@ var BackpackPlanner;
                             };
                         }
                         return AddGearItemCtrl;
-                    })();
+                    }());
                     Items.AddGearItemCtrl = AddGearItemCtrl;
                     AddGearItemCtrl.$inject = ["$scope", "$location", "$mdToast"];
                 })(Items = Gear.Items || (Gear.Items = {}));
@@ -3910,7 +3910,7 @@ var BackpackPlanner;
                                 }
                                 gearItem.update($scope.gearItem);
                                 var updateToast = $mdToast.simple()
-                                    .content("Updated gear item: " + $scope.gearItem.name())
+                                    .textContent("Updated gear item: " + $scope.gearItem.name())
                                     .action("OK")
                                     .position("bottom left");
                                 $location.path("/gear/items");
@@ -3929,22 +3929,22 @@ var BackpackPlanner;
                                 var confirm = $mdDialog.confirm()
                                     .parent(angular.element(document.body))
                                     .title("Delete Gear Item")
-                                    .content("Are you sure you wish to delete this gear item?")
+                                    .textContent("Are you sure you wish to delete this gear item?")
                                     .ok("Yes")
                                     .cancel("No")
                                     .targetEvent(event);
                                 var receipt = $mdDialog.alert()
                                     .parent(angular.element(document.body))
                                     .title("Gear item deleted!")
-                                    .content("The gear item has been deleted.")
+                                    .textContent("The gear item has been deleted.")
                                     .ok("OK")
                                     .targetEvent(event);
                                 var deleteToast = $mdToast.simple()
-                                    .content("Deleted gear item: " + $scope.gearItem.name())
+                                    .textContent("Deleted gear item: " + $scope.gearItem.name())
                                     .action("Undo")
                                     .position("bottom left");
                                 var undoDeleteToast = $mdToast.simple()
-                                    .content("Restored gear item: " + $scope.gearItem.name())
+                                    .textContent("Restored gear item: " + $scope.gearItem.name())
                                     .action("OK")
                                     .position("bottom left");
                                 $mdDialog.show(confirm).then(function () {
@@ -3965,7 +3965,7 @@ var BackpackPlanner;
                             };
                         }
                         return GearItemCtrl;
-                    })();
+                    }());
                     Items.GearItemCtrl = GearItemCtrl;
                     GearItemCtrl.$inject = ["$scope", "$routeParams", "$location", "$mdDialog", "$mdToast"];
                 })(Items = Gear.Items || (Gear.Items = {}));
@@ -4007,7 +4007,7 @@ var BackpackPlanner;
                             };
                         }
                         return GearItemsCtrl;
-                    })();
+                    }());
                     Items.GearItemsCtrl = GearItemsCtrl;
                     GearItemsCtrl.$inject = ["$scope", "$mdDialog"];
                 })(Items = Gear.Items || (Gear.Items = {}));
@@ -4047,7 +4047,7 @@ var BackpackPlanner;
                             $scope.addGearSystem = function () {
                                 Mockup.AppState.getInstance().getGearState().addGearSystem($scope.gearSystem);
                                 var addToast = $mdToast.simple()
-                                    .content("Added gear system: " + $scope.gearSystem.name())
+                                    .textContent("Added gear system: " + $scope.gearSystem.name())
                                     .action("OK")
                                     .position("bottom left");
                                 $location.path("/gear/systems");
@@ -4058,7 +4058,7 @@ var BackpackPlanner;
                             };
                         }
                         return AddGearSystemCtrl;
-                    })();
+                    }());
                     Systems.AddGearSystemCtrl = AddGearSystemCtrl;
                     AddGearSystemCtrl.$inject = ["$scope", "$location", "$mdDialog", "$mdToast"];
                 })(Systems = Gear.Systems || (Gear.Systems = {}));
@@ -4111,7 +4111,7 @@ var BackpackPlanner;
                                 }
                                 gearSystem.update($scope.gearSystem);
                                 var updateToast = $mdToast.simple()
-                                    .content("Updated gear system: " + $scope.gearSystem.name())
+                                    .textContent("Updated gear system: " + $scope.gearSystem.name())
                                     .action("OK")
                                     .position("bottom left");
                                 $location.path("/gear/systems");
@@ -4130,22 +4130,22 @@ var BackpackPlanner;
                                 var confirm = $mdDialog.confirm()
                                     .parent(angular.element(document.body))
                                     .title("Delete Gear System")
-                                    .content("Are you sure you wish to delete this gear system?")
+                                    .textContent("Are you sure you wish to delete this gear system?")
                                     .ok("Yes")
                                     .cancel("No")
                                     .targetEvent(event);
                                 var receipt = $mdDialog.alert()
                                     .parent(angular.element(document.body))
                                     .title("Gear system deleted!")
-                                    .content("The gear system has been deleted.")
+                                    .textContent("The gear system has been deleted.")
                                     .ok("OK")
                                     .targetEvent(event);
                                 var deleteToast = $mdToast.simple()
-                                    .content("Deleted gear system: " + $scope.gearSystem.name())
+                                    .textContent("Deleted gear system: " + $scope.gearSystem.name())
                                     .action("Undo")
                                     .position("bottom left");
                                 var undoDeleteToast = $mdToast.simple()
-                                    .content("Restored gear system: " + $scope.gearSystem.name())
+                                    .textContent("Restored gear system: " + $scope.gearSystem.name())
                                     .action("OK")
                                     .position("bottom left");
                                 $mdDialog.show(confirm).then(function () {
@@ -4166,7 +4166,7 @@ var BackpackPlanner;
                             };
                         }
                         return GearSystemCtrl;
-                    })();
+                    }());
                     Systems.GearSystemCtrl = GearSystemCtrl;
                     GearSystemCtrl.$inject = ["$scope", "$routeParams", "$location", "$mdDialog", "$mdToast"];
                 })(Systems = Gear.Systems || (Gear.Systems = {}));
@@ -4208,7 +4208,7 @@ var BackpackPlanner;
                             };
                         }
                         return GearSystemsCtrl;
-                    })();
+                    }());
                     Systems.GearSystemsCtrl = GearSystemsCtrl;
                     GearSystemsCtrl.$inject = ["$scope", "$mdDialog"];
                 })(Systems = Gear.Systems || (Gear.Systems = {}));
@@ -4248,7 +4248,7 @@ var BackpackPlanner;
                         };
                     }
                     return MealsCtrl;
-                })();
+                }());
                 Meals.MealsCtrl = MealsCtrl;
                 MealsCtrl.$inject = ["$scope", "$mdDialog"];
             })(Meals = Controllers.Meals || (Controllers.Meals = {}));
@@ -4286,7 +4286,7 @@ var BackpackPlanner;
                             }
                             meal.update($scope.meal);
                             var updateToast = $mdToast.simple()
-                                .content("Updated meal: " + $scope.meal.name())
+                                .textContent("Updated meal: " + $scope.meal.name())
                                 .action("OK")
                                 .position("bottom left");
                             $location.path("/meals");
@@ -4305,22 +4305,22 @@ var BackpackPlanner;
                             var confirm = $mdDialog.confirm()
                                 .parent(angular.element(document.body))
                                 .title("Delete Meal")
-                                .content("Are you sure you wish to delete this meal?")
+                                .textContent("Are you sure you wish to delete this meal?")
                                 .ok("Yes")
                                 .cancel("No")
                                 .targetEvent(event);
                             var receipt = $mdDialog.alert()
                                 .parent(angular.element(document.body))
                                 .title("Meal deleted!")
-                                .content("The meal has been deleted.")
+                                .textContent("The meal has been deleted.")
                                 .ok("OK")
                                 .targetEvent(event);
                             var deleteToast = $mdToast.simple()
-                                .content("Deleted meal: " + $scope.meal.name())
+                                .textContent("Deleted meal: " + $scope.meal.name())
                                 .action("Undo")
                                 .position("bottom left");
                             var undoDeleteToast = $mdToast.simple()
-                                .content("Restored meal: " + $scope.meal.name())
+                                .textContent("Restored meal: " + $scope.meal.name())
                                 .action("OK")
                                 .position("bottom left");
                             $mdDialog.show(confirm).then(function () {
@@ -4341,7 +4341,7 @@ var BackpackPlanner;
                         };
                     }
                     return MealCtrl;
-                })();
+                }());
                 Meals.MealCtrl = MealCtrl;
                 MealCtrl.$inject = ["$scope", "$routeParams", "$location", "$mdDialog", "$mdToast"];
             })(Meals = Controllers.Meals || (Controllers.Meals = {}));
@@ -4366,7 +4366,7 @@ var BackpackPlanner;
                         $scope.addMeal = function () {
                             Mockup.AppState.getInstance().getMealState().addMeal($scope.meal);
                             var addToast = $mdToast.simple()
-                                .content("Added meal: " + $scope.meal.name())
+                                .textContent("Added meal: " + $scope.meal.name())
                                 .action("OK")
                                 .position("bottom left");
                             $location.path("/meals");
@@ -4377,7 +4377,7 @@ var BackpackPlanner;
                         };
                     }
                     return AddMealCtrl;
-                })();
+                }());
                 Meals.AddMealCtrl = AddMealCtrl;
                 AddMealCtrl.$inject = ["$scope", "$location", "$mdToast"];
             })(Meals = Controllers.Meals || (Controllers.Meals = {}));
@@ -4418,7 +4418,7 @@ var BackpackPlanner;
                             };
                         }
                         return TripItinerariesCtrl;
-                    })();
+                    }());
                     Itineraries.TripItinerariesCtrl = TripItinerariesCtrl;
                     TripItinerariesCtrl.$inject = ["$scope", "$mdDialog"];
                 })(Itineraries = Trips.Itineraries || (Trips.Itineraries = {}));
@@ -4459,7 +4459,7 @@ var BackpackPlanner;
                                 }
                                 tripItinerary.update($scope.tripItinerary);
                                 var updateToast = $mdToast.simple()
-                                    .content("Updated gear collection: " + $scope.tripItinerary.name())
+                                    .textContent("Updated gear collection: " + $scope.tripItinerary.name())
                                     .action("OK")
                                     .position("bottom left");
                                 $location.path("/trips/itineraries");
@@ -4478,22 +4478,22 @@ var BackpackPlanner;
                                 var confirm = $mdDialog.confirm()
                                     .parent(angular.element(document.body))
                                     .title("Delete Trip Itinerary")
-                                    .content("Are you sure you wish to delete this trip itinerary?")
+                                    .textContent("Are you sure you wish to delete this trip itinerary?")
                                     .ok("Yes")
                                     .cancel("No")
                                     .targetEvent(event);
                                 var receipt = $mdDialog.alert()
                                     .parent(angular.element(document.body))
                                     .title("Trip itinerary deleted!")
-                                    .content("The trip itinerary has been deleted.")
+                                    .textContent("The trip itinerary has been deleted.")
                                     .ok("OK")
                                     .targetEvent(event);
                                 var deleteToast = $mdToast.simple()
-                                    .content("Deleted trip itinerary: " + $scope.tripItinerary.name())
+                                    .textContent("Deleted trip itinerary: " + $scope.tripItinerary.name())
                                     .action("Undo")
                                     .position("bottom left");
                                 var undoDeleteToast = $mdToast.simple()
-                                    .content("Restored trip itinerary: " + $scope.tripItinerary.name())
+                                    .textContent("Restored trip itinerary: " + $scope.tripItinerary.name())
                                     .action("OK")
                                     .position("bottom left");
                                 $mdDialog.show(confirm).then(function () {
@@ -4514,7 +4514,7 @@ var BackpackPlanner;
                             };
                         }
                         return TripItineraryCtrl;
-                    })();
+                    }());
                     Itineraries.TripItineraryCtrl = TripItineraryCtrl;
                     TripItineraryCtrl.$inject = ["$scope", "$routeParams", "$location", "$mdDialog", "$mdToast"];
                 })(Itineraries = Trips.Itineraries || (Trips.Itineraries = {}));
@@ -4542,7 +4542,7 @@ var BackpackPlanner;
                             $scope.addTripItinerary = function () {
                                 Mockup.AppState.getInstance().getTripState().addTripItinerary($scope.tripItinerary);
                                 var addToast = $mdToast.simple()
-                                    .content("Added trip itinerary: " + $scope.tripItinerary.name())
+                                    .textContent("Added trip itinerary: " + $scope.tripItinerary.name())
                                     .action("OK")
                                     .position("bottom left");
                                 $location.path("/trips/itineraries");
@@ -4553,7 +4553,7 @@ var BackpackPlanner;
                             };
                         }
                         return AddTripItineraryCtrl;
-                    })();
+                    }());
                     Itineraries.AddTripItineraryCtrl = AddTripItineraryCtrl;
                     AddTripItineraryCtrl.$inject = ["$scope", "$location", "$mdToast"];
                 })(Itineraries = Trips.Itineraries || (Trips.Itineraries = {}));
@@ -4595,7 +4595,7 @@ var BackpackPlanner;
                             };
                         }
                         return TripPlansCtrl;
-                    })();
+                    }());
                     Plans.TripPlansCtrl = TripPlansCtrl;
                     TripPlansCtrl.$inject = ["$scope", "$mdDialog"];
                 })(Plans = Trips.Plans || (Trips.Plans = {}));
@@ -4684,7 +4684,7 @@ var BackpackPlanner;
                                 }
                                 tripPlan.update($scope.tripPlan);
                                 var updateToast = $mdToast.simple()
-                                    .content("Updated trip plan: " + $scope.tripPlan.name())
+                                    .textContent("Updated trip plan: " + $scope.tripPlan.name())
                                     .action("OK")
                                     .position("bottom left");
                                 $location.path("/trips/plans");
@@ -4703,22 +4703,22 @@ var BackpackPlanner;
                                 var confirm = $mdDialog.confirm()
                                     .parent(angular.element(document.body))
                                     .title("Delete Trip Plan")
-                                    .content("Are you sure you wish to delete this trip plan?")
+                                    .textContent("Are you sure you wish to delete this trip plan?")
                                     .ok("Yes")
                                     .cancel("No")
                                     .targetEvent(event);
                                 var receipt = $mdDialog.alert()
                                     .parent(angular.element(document.body))
                                     .title("Trip plan deleted!")
-                                    .content("The trip plan has been deleted.")
+                                    .textContent("The trip plan has been deleted.")
                                     .ok("OK")
                                     .targetEvent(event);
                                 var deleteToast = $mdToast.simple()
-                                    .content("Deleted trip plan: " + $scope.tripPlan.name())
+                                    .textContent("Deleted trip plan: " + $scope.tripPlan.name())
                                     .action("Undo")
                                     .position("bottom left");
                                 var undoDeleteToast = $mdToast.simple()
-                                    .content("Restored trip plan: " + $scope.tripPlan.name())
+                                    .textContent("Restored trip plan: " + $scope.tripPlan.name())
                                     .action("OK")
                                     .position("bottom left");
                                 $mdDialog.show(confirm).then(function () {
@@ -4739,7 +4739,7 @@ var BackpackPlanner;
                             };
                         }
                         return TripPlanCtrl;
-                    })();
+                    }());
                     Plans.TripPlanCtrl = TripPlanCtrl;
                     TripPlanCtrl.$inject = ["$scope", "$routeParams", "$location", "$mdDialog", "$mdToast"];
                 })(Plans = Trips.Plans || (Trips.Plans = {}));
@@ -4815,7 +4815,7 @@ var BackpackPlanner;
                             $scope.addTripPlan = function () {
                                 Mockup.AppState.getInstance().getTripState().addTripPlan($scope.tripPlan);
                                 var addToast = $mdToast.simple()
-                                    .content("Added trip plan: " + $scope.tripPlan.name())
+                                    .textContent("Added trip plan: " + $scope.tripPlan.name())
                                     .action("OK")
                                     .position("bottom left");
                                 $location.path("/trips/plans");
@@ -4826,7 +4826,7 @@ var BackpackPlanner;
                             };
                         }
                         return AddTripPlanCtrl;
-                    })();
+                    }());
                     Plans.AddTripPlanCtrl = AddTripPlanCtrl;
                     AddTripPlanCtrl.$inject = ["$scope", "$location", "$mdDialog", "$mdToast"];
                 })(Plans = Trips.Plans || (Trips.Plans = {}));
@@ -4860,7 +4860,7 @@ var BackpackPlanner;
                         $scope.saveUserInformation = function () {
                             Mockup.AppState.getInstance().getUserInformation().update($scope.userInfo);
                             var updateToast = $mdToast.simple()
-                                .content("Updated personal information!")
+                                .textContent("Updated personal information!")
                                 .action("OK")
                                 .position("bottom left");
                             $location.path("/personal");
@@ -4871,7 +4871,7 @@ var BackpackPlanner;
                         };
                     }
                     return UserInformationCtrl;
-                })();
+                }());
                 Personal.UserInformationCtrl = UserInformationCtrl;
                 UserInformationCtrl.$inject = ["$scope", "$location", "$mdDialog", "$mdToast"];
             })(Personal = Controllers.Personal || (Controllers.Personal = {}));
@@ -4898,7 +4898,7 @@ var BackpackPlanner;
                     $scope.saveAppSettings = function () {
                         Mockup.AppState.getInstance().getAppSettings().update($scope.appSettings);
                         var updateToast = $mdToast.simple()
-                            .content("Updated application settings!")
+                            .textContent("Updated application settings!")
                             .action("OK")
                             .position("bottom left");
                         $location.path("/settings");
@@ -4914,18 +4914,18 @@ var BackpackPlanner;
                         var confirm = $mdDialog.confirm()
                             .parent(angular.element(document.body))
                             .title("Delete All Gear Items")
-                            .content("Are you sure you wish to delete all gear items? This action cannot be undone.")
+                            .textContent("Are you sure you wish to delete all gear items? This action cannot be undone.")
                             .ok("Yes")
                             .cancel("No")
                             .targetEvent(event);
                         var receipt = $mdDialog.alert()
                             .parent(angular.element(document.body))
                             .title("All gear items deleted!")
-                            .content("All gear items have been deleted.")
+                            .textContent("All gear items have been deleted.")
                             .ok("OK")
                             .targetEvent(event);
                         var deleteToast = $mdToast.simple()
-                            .content("Deleted all gear items")
+                            .textContent("Deleted all gear items")
                             .action("OK")
                             .position("bottom left");
                         $mdDialog.show(confirm).then(function () {
@@ -4939,18 +4939,18 @@ var BackpackPlanner;
                         var confirm = $mdDialog.confirm()
                             .parent(angular.element(document.body))
                             .title("Delete All Gear Systems")
-                            .content("Are you sure you wish to delete all gear systems? This action cannot be undone.")
+                            .textContent("Are you sure you wish to delete all gear systems? This action cannot be undone.")
                             .ok("Yes")
                             .cancel("No")
                             .targetEvent(event);
                         var receipt = $mdDialog.alert()
                             .parent(angular.element(document.body))
                             .title("All gear systems deleted!")
-                            .content("All gear systems have been deleted.")
+                            .textContent("All gear systems have been deleted.")
                             .ok("OK")
                             .targetEvent(event);
                         var deleteToast = $mdToast.simple()
-                            .content("Deleted all gear systems")
+                            .textContent("Deleted all gear systems")
                             .action("OK")
                             .position("bottom left");
                         $mdDialog.show(confirm).then(function () {
@@ -4964,18 +4964,18 @@ var BackpackPlanner;
                         var confirm = $mdDialog.confirm()
                             .parent(angular.element(document.body))
                             .title("Delete All Gear Collections")
-                            .content("Are you sure you wish to delete all gear collections? This action cannot be undone.")
+                            .textContent("Are you sure you wish to delete all gear collections? This action cannot be undone.")
                             .ok("Yes")
                             .cancel("No")
                             .targetEvent(event);
                         var receipt = $mdDialog.alert()
                             .parent(angular.element(document.body))
                             .title("All gear collections deleted!")
-                            .content("All gear collections have been deleted.")
+                            .textContent("All gear collections have been deleted.")
                             .ok("OK")
                             .targetEvent(event);
                         var deleteToast = $mdToast.simple()
-                            .content("Deleted all gear collections")
+                            .textContent("Deleted all gear collections")
                             .action("OK")
                             .position("bottom left");
                         $mdDialog.show(confirm).then(function () {
@@ -4989,18 +4989,18 @@ var BackpackPlanner;
                         var confirm = $mdDialog.confirm()
                             .parent(angular.element(document.body))
                             .title("Delete All Meals")
-                            .content("Are you sure you wish to delete all meals? This action cannot be undone.")
+                            .textContent("Are you sure you wish to delete all meals? This action cannot be undone.")
                             .ok("Yes")
                             .cancel("No")
                             .targetEvent(event);
                         var receipt = $mdDialog.alert()
                             .parent(angular.element(document.body))
                             .title("All meals deleted!")
-                            .content("All meals have been deleted.")
+                            .textContent("All meals have been deleted.")
                             .ok("OK")
                             .targetEvent(event);
                         var deleteToast = $mdToast.simple()
-                            .content("Deleted all meals")
+                            .textContent("Deleted all meals")
                             .action("OK")
                             .position("bottom left");
                         $mdDialog.show(confirm).then(function () {
@@ -5014,18 +5014,18 @@ var BackpackPlanner;
                         var confirm = $mdDialog.confirm()
                             .parent(angular.element(document.body))
                             .title("Delete All Trip Itineraries")
-                            .content("Are you sure you wish to delete all trip itineraries? This action cannot be undone.")
+                            .textContent("Are you sure you wish to delete all trip itineraries? This action cannot be undone.")
                             .ok("Yes")
                             .cancel("No")
                             .targetEvent(event);
                         var receipt = $mdDialog.alert()
                             .parent(angular.element(document.body))
                             .title("All trip itineraries deleted!")
-                            .content("All trip itineraries have been deleted.")
+                            .textContent("All trip itineraries have been deleted.")
                             .ok("OK")
                             .targetEvent(event);
                         var deleteToast = $mdToast.simple()
-                            .content("Deleted all trip itineraries")
+                            .textContent("Deleted all trip itineraries")
                             .action("OK")
                             .position("bottom left");
                         $mdDialog.show(confirm).then(function () {
@@ -5039,18 +5039,18 @@ var BackpackPlanner;
                         var confirm = $mdDialog.confirm()
                             .parent(angular.element(document.body))
                             .title("Delete All Trip Plans")
-                            .content("Are you sure you wish to delete all trip plans? This action cannot be undone.")
+                            .textContent("Are you sure you wish to delete all trip plans? This action cannot be undone.")
                             .ok("Yes")
                             .cancel("No")
                             .targetEvent(event);
                         var receipt = $mdDialog.alert()
                             .parent(angular.element(document.body))
                             .title("All trip plans deleted!")
-                            .content("All trip plans have been deleted.")
+                            .textContent("All trip plans have been deleted.")
                             .ok("OK")
                             .targetEvent(event);
                         var deleteToast = $mdToast.simple()
-                            .content("Deleted all trip plans")
+                            .textContent("Deleted all trip plans")
                             .action("OK")
                             .position("bottom left");
                         $mdDialog.show(confirm).then(function () {
@@ -5064,18 +5064,18 @@ var BackpackPlanner;
                         var confirm = $mdDialog.confirm()
                             .parent(angular.element(document.body))
                             .title("Delete All Data")
-                            .content("Are you sure you wish to delete all data? This action cannot be undone.")
+                            .textContent("Are you sure you wish to delete all data? This action cannot be undone.")
                             .ok("Yes")
                             .cancel("No")
                             .targetEvent(event);
                         var receipt = $mdDialog.alert()
                             .parent(angular.element(document.body))
                             .title("All data deleted!")
-                            .content("All data has been deleted.")
+                            .textContent("All data has been deleted.")
                             .ok("OK")
                             .targetEvent(event);
                         var deleteToast = $mdToast.simple()
-                            .content("Deleted all data")
+                            .textContent("Deleted all data")
                             .action("OK")
                             .position("bottom left");
                         $mdDialog.show(confirm).then(function () {
@@ -5087,7 +5087,7 @@ var BackpackPlanner;
                     };
                 }
                 return AppSettingsCtrl;
-            })();
+            }());
             Controllers.AppSettingsCtrl = AppSettingsCtrl;
             AppSettingsCtrl.$inject = ["$scope", "$location", "$mdDialog", "$mdToast"];
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
@@ -5108,7 +5108,7 @@ var BackpackPlanner;
                 });
             }
             return RootScopeConfig;
-        })();
+        }());
         Mockup.RootScopeConfig = RootScopeConfig;
         ;
         RootScopeConfig.$inject = ["$rootScope"];
@@ -5124,7 +5124,7 @@ var BackpackPlanner;
             function CustomRouteConfig() {
             }
             return CustomRouteConfig;
-        })();
+        }());
         var RouteConfig = (function () {
             function RouteConfig($routeProvider) {
                 $routeProvider.when("/", {
@@ -5259,7 +5259,7 @@ var BackpackPlanner;
                 $routeProvider.when(url, routeConfig);
             };
             return RouteConfig;
-        })();
+        }());
         Mockup.RouteConfig = RouteConfig;
         ;
         RouteConfig.$inject = ["$routeProvider"];
@@ -5298,7 +5298,7 @@ var BackpackPlanner;
                 });
             }
             return ThemeConfig;
-        })();
+        }());
         Mockup.ThemeConfig = ThemeConfig;
         ;
         ThemeConfig.$inject = ["$mdThemingProvider"];
@@ -5436,7 +5436,7 @@ var BackpackPlanner;
                             };
                         }
                         return AddGearItemDlgCtrl;
-                    })();
+                    }());
                     Collections.AddGearItemDlgCtrl = AddGearItemDlgCtrl;
                 })(Collections = Gear.Collections || (Gear.Collections = {}));
             })(Gear = Controllers.Gear || (Controllers.Gear = {}));
@@ -5494,7 +5494,7 @@ var BackpackPlanner;
                             };
                         }
                         return AddGearSystemDlgCtrl;
-                    })();
+                    }());
                     Collections.AddGearSystemDlgCtrl = AddGearSystemDlgCtrl;
                 })(Collections = Gear.Collections || (Gear.Collections = {}));
             })(Gear = Controllers.Gear || (Controllers.Gear = {}));
@@ -5521,7 +5521,7 @@ var BackpackPlanner;
                             };
                         }
                         return WhatIsGearCollectionDlgCtrl;
-                    })();
+                    }());
                     Collections.WhatIsGearCollectionDlgCtrl = WhatIsGearCollectionDlgCtrl;
                 })(Collections = Gear.Collections || (Gear.Collections = {}));
             })(Gear = Controllers.Gear || (Controllers.Gear = {}));
@@ -5548,7 +5548,7 @@ var BackpackPlanner;
                             };
                         }
                         return WhatIsGearItemDlgCtrl;
-                    })();
+                    }());
                     Items.WhatIsGearItemDlgCtrl = WhatIsGearItemDlgCtrl;
                 })(Items = Gear.Items || (Gear.Items = {}));
             })(Gear = Controllers.Gear || (Controllers.Gear = {}));
@@ -5606,7 +5606,7 @@ var BackpackPlanner;
                             };
                         }
                         return AddGearItemDlgCtrl;
-                    })();
+                    }());
                     Systems.AddGearItemDlgCtrl = AddGearItemDlgCtrl;
                 })(Systems = Gear.Systems || (Gear.Systems = {}));
             })(Gear = Controllers.Gear || (Controllers.Gear = {}));
@@ -5633,7 +5633,7 @@ var BackpackPlanner;
                             };
                         }
                         return WhatIsGearSystemDlgCtrl;
-                    })();
+                    }());
                     Systems.WhatIsGearSystemDlgCtrl = WhatIsGearSystemDlgCtrl;
                 })(Systems = Gear.Systems || (Gear.Systems = {}));
             })(Gear = Controllers.Gear || (Controllers.Gear = {}));
@@ -5658,7 +5658,7 @@ var BackpackPlanner;
                         };
                     }
                     return WhatIsMealDlgCtrl;
-                })();
+                }());
                 Meals.WhatIsMealDlgCtrl = WhatIsMealDlgCtrl;
             })(Meals = Controllers.Meals || (Controllers.Meals = {}));
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
@@ -5682,7 +5682,7 @@ var BackpackPlanner;
                         };
                     }
                     return WhatIsPersonalDlgCtrl;
-                })();
+                }());
                 Personal.WhatIsPersonalDlgCtrl = WhatIsPersonalDlgCtrl;
             })(Personal = Controllers.Personal || (Controllers.Personal = {}));
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
@@ -5708,7 +5708,7 @@ var BackpackPlanner;
                             };
                         }
                         return WhatIsTripItineraryDlgCtrl;
-                    })();
+                    }());
                     Itineraries.WhatIsTripItineraryDlgCtrl = WhatIsTripItineraryDlgCtrl;
                 })(Itineraries = Trips.Itineraries || (Trips.Itineraries = {}));
             })(Trips = Controllers.Trips || (Controllers.Trips = {}));
@@ -5766,7 +5766,7 @@ var BackpackPlanner;
                             };
                         }
                         return AddGearCollectionDlgCtrl;
-                    })();
+                    }());
                     Plans.AddGearCollectionDlgCtrl = AddGearCollectionDlgCtrl;
                 })(Plans = Trips.Plans || (Trips.Plans = {}));
             })(Trips = Controllers.Trips || (Controllers.Trips = {}));
@@ -5823,7 +5823,7 @@ var BackpackPlanner;
                             };
                         }
                         return AddGearItemDlgCtrl;
-                    })();
+                    }());
                     Plans.AddGearItemDlgCtrl = AddGearItemDlgCtrl;
                 })(Plans = Trips.Plans || (Trips.Plans = {}));
             })(Trips = Controllers.Trips || (Controllers.Trips = {}));
@@ -5881,7 +5881,7 @@ var BackpackPlanner;
                             };
                         }
                         return AddGearSystemDlgCtrl;
-                    })();
+                    }());
                     Plans.AddGearSystemDlgCtrl = AddGearSystemDlgCtrl;
                 })(Plans = Trips.Plans || (Trips.Plans = {}));
             })(Trips = Controllers.Trips || (Controllers.Trips = {}));
@@ -5938,7 +5938,7 @@ var BackpackPlanner;
                             };
                         }
                         return AddMealDlgCtrl;
-                    })();
+                    }());
                     Plans.AddMealDlgCtrl = AddMealDlgCtrl;
                 })(Plans = Trips.Plans || (Trips.Plans = {}));
             })(Trips = Controllers.Trips || (Controllers.Trips = {}));
@@ -5965,7 +5965,7 @@ var BackpackPlanner;
                             };
                         }
                         return WhatIsTripPlanDlgCtrl;
-                    })();
+                    }());
                     Plans.WhatIsTripPlanDlgCtrl = WhatIsTripPlanDlgCtrl;
                 })(Plans = Trips.Plans || (Trips.Plans = {}));
             })(Trips = Controllers.Trips || (Controllers.Trips = {}));

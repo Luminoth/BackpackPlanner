@@ -6,7 +6,7 @@ module BackpackPlanner.Mockup.Services.Gear {
     "use strict";
 
     export interface IGearSystemService extends ng.resource.IResourceClass<Resources.Gear.IGearSystemResource> {
-        query(): Resources.Gear.IGearSystemResource[];
+        query: ng.resource.IResourceArrayMethod<Resources.Gear.IGearSystemResource>;
     }
 
     export function gearSystemServiceFactory($resource: ng.resource.IResourceService) {

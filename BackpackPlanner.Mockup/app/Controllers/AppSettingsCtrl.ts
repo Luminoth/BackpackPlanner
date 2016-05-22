@@ -43,7 +43,7 @@ module BackpackPlanner.Mockup.Controllers {
                 AppState.getInstance().getAppSettings().update($scope.appSettings);
 
                 var updateToast = $mdToast.simple()
-                    .content("Updated application settings!")
+                    .textContent("Updated application settings!")
                     .action("OK")
                     .position("bottom left");
 
@@ -63,7 +63,7 @@ module BackpackPlanner.Mockup.Controllers {
                 var confirm = $mdDialog.confirm()
                     .parent(angular.element(document.body))
                     .title("Delete All Gear Items")
-                    .content("Are you sure you wish to delete all gear items? This action cannot be undone.")
+                    .textContent("Are you sure you wish to delete all gear items? This action cannot be undone.")
                     .ok("Yes")
                     .cancel("No")
                     .targetEvent(event);
@@ -71,12 +71,12 @@ module BackpackPlanner.Mockup.Controllers {
                 var receipt = $mdDialog.alert()
                     .parent(angular.element(document.body))
                     .title("All gear items deleted!")
-                    .content("All gear items have been deleted.")
+                    .textContent("All gear items have been deleted.")
                     .ok("OK")
                     .targetEvent(event);
 
                 var deleteToast = $mdToast.simple()
-                    .content("Deleted all gear items")
+                    .textContent("Deleted all gear items")
                     .action("OK")
                     .position("bottom left");
 
@@ -93,7 +93,7 @@ module BackpackPlanner.Mockup.Controllers {
                 var confirm = $mdDialog.confirm()
                     .parent(angular.element(document.body))
                     .title("Delete All Gear Systems")
-                    .content("Are you sure you wish to delete all gear systems? This action cannot be undone.")
+                    .textContent("Are you sure you wish to delete all gear systems? This action cannot be undone.")
                     .ok("Yes")
                     .cancel("No")
                     .targetEvent(event);
@@ -101,12 +101,12 @@ module BackpackPlanner.Mockup.Controllers {
                 var receipt = $mdDialog.alert()
                     .parent(angular.element(document.body))
                     .title("All gear systems deleted!")
-                    .content("All gear systems have been deleted.")
+                    .textContent("All gear systems have been deleted.")
                     .ok("OK")
                     .targetEvent(event);
 
                 var deleteToast = $mdToast.simple()
-                    .content("Deleted all gear systems")
+                    .textContent("Deleted all gear systems")
                     .action("OK")
                     .position("bottom left");
 
@@ -123,7 +123,7 @@ module BackpackPlanner.Mockup.Controllers {
                 var confirm = $mdDialog.confirm()
                     .parent(angular.element(document.body))
                     .title("Delete All Gear Collections")
-                    .content("Are you sure you wish to delete all gear collections? This action cannot be undone.")
+                    .textContent("Are you sure you wish to delete all gear collections? This action cannot be undone.")
                     .ok("Yes")
                     .cancel("No")
                     .targetEvent(event);
@@ -131,12 +131,12 @@ module BackpackPlanner.Mockup.Controllers {
                 var receipt = $mdDialog.alert()
                     .parent(angular.element(document.body))
                     .title("All gear collections deleted!")
-                    .content("All gear collections have been deleted.")
+                    .textContent("All gear collections have been deleted.")
                     .ok("OK")
                     .targetEvent(event);
 
                 var deleteToast = $mdToast.simple()
-                    .content("Deleted all gear collections")
+                    .textContent("Deleted all gear collections")
                     .action("OK")
                     .position("bottom left");
 
@@ -153,7 +153,7 @@ module BackpackPlanner.Mockup.Controllers {
                 var confirm = $mdDialog.confirm()
                     .parent(angular.element(document.body))
                     .title("Delete All Meals")
-                    .content("Are you sure you wish to delete all meals? This action cannot be undone.")
+                    .textContent("Are you sure you wish to delete all meals? This action cannot be undone.")
                     .ok("Yes")
                     .cancel("No")
                     .targetEvent(event);
@@ -161,12 +161,12 @@ module BackpackPlanner.Mockup.Controllers {
                 var receipt = $mdDialog.alert()
                     .parent(angular.element(document.body))
                     .title("All meals deleted!")
-                    .content("All meals have been deleted.")
+                    .textContent("All meals have been deleted.")
                     .ok("OK")
                     .targetEvent(event);
 
                 var deleteToast = $mdToast.simple()
-                    .content("Deleted all meals")
+                    .textContent("Deleted all meals")
                     .action("OK")
                     .position("bottom left");
 
@@ -183,7 +183,7 @@ module BackpackPlanner.Mockup.Controllers {
                 var confirm = $mdDialog.confirm()
                     .parent(angular.element(document.body))
                     .title("Delete All Trip Itineraries")
-                    .content("Are you sure you wish to delete all trip itineraries? This action cannot be undone.")
+                    .textContent("Are you sure you wish to delete all trip itineraries? This action cannot be undone.")
                     .ok("Yes")
                     .cancel("No")
                     .targetEvent(event);
@@ -191,12 +191,12 @@ module BackpackPlanner.Mockup.Controllers {
                 var receipt = $mdDialog.alert()
                     .parent(angular.element(document.body))
                     .title("All trip itineraries deleted!")
-                    .content("All trip itineraries have been deleted.")
+                    .textContent("All trip itineraries have been deleted.")
                     .ok("OK")
                     .targetEvent(event);
 
                 var deleteToast = $mdToast.simple()
-                    .content("Deleted all trip itineraries")
+                    .textContent("Deleted all trip itineraries")
                     .action("OK")
                     .position("bottom left");
 
@@ -213,7 +213,7 @@ module BackpackPlanner.Mockup.Controllers {
                 var confirm = $mdDialog.confirm()
                     .parent(angular.element(document.body))
                     .title("Delete All Trip Plans")
-                    .content("Are you sure you wish to delete all trip plans? This action cannot be undone.")
+                    .textContent("Are you sure you wish to delete all trip plans? This action cannot be undone.")
                     .ok("Yes")
                     .cancel("No")
                     .targetEvent(event);
@@ -221,12 +221,12 @@ module BackpackPlanner.Mockup.Controllers {
                 var receipt = $mdDialog.alert()
                     .parent(angular.element(document.body))
                     .title("All trip plans deleted!")
-                    .content("All trip plans have been deleted.")
+                    .textContent("All trip plans have been deleted.")
                     .ok("OK")
                     .targetEvent(event);
 
                 var deleteToast = $mdToast.simple()
-                    .content("Deleted all trip plans")
+                    .textContent("Deleted all trip plans")
                     .action("OK")
                     .position("bottom left");
 
@@ -243,7 +243,7 @@ module BackpackPlanner.Mockup.Controllers {
                 var confirm = $mdDialog.confirm()
                     .parent(angular.element(document.body))
                     .title("Delete All Data")
-                    .content("Are you sure you wish to delete all data? This action cannot be undone.")
+                    .textContent("Are you sure you wish to delete all data? This action cannot be undone.")
                     .ok("Yes")
                     .cancel("No")
                     .targetEvent(event);
@@ -251,12 +251,12 @@ module BackpackPlanner.Mockup.Controllers {
                 var receipt = $mdDialog.alert()
                     .parent(angular.element(document.body))
                     .title("All data deleted!")
-                    .content("All data has been deleted.")
+                    .textContent("All data has been deleted.")
                     .ok("OK")
                     .targetEvent(event);
 
                 var deleteToast = $mdToast.simple()
-                    .content("Deleted all data")
+                    .textContent("Deleted all data")
                     .action("OK")
                     .position("bottom left");
 

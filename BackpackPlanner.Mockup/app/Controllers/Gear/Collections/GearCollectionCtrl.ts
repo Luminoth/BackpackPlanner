@@ -73,7 +73,7 @@ module BackpackPlanner.Mockup.Controllers.Gear.Collections {
                 gearCollection.update($scope.gearCollection);
 
                 var updateToast = $mdToast.simple()
-                    .content(`Updated gear collection: ${$scope.gearCollection.name()}`)
+                    .textContent(`Updated gear collection: ${$scope.gearCollection.name()}`)
                     .action("OK")
                     .position("bottom left");
 
@@ -95,7 +95,7 @@ module BackpackPlanner.Mockup.Controllers.Gear.Collections {
                 var confirm = $mdDialog.confirm()
                     .parent(angular.element(document.body))
                     .title("Delete Gear Collection")
-                    .content("Are you sure you wish to delete this gear collection?")
+                    .textContent("Are you sure you wish to delete this gear collection?")
                     .ok("Yes")
                     .cancel("No")
                     .targetEvent(event);
@@ -103,17 +103,17 @@ module BackpackPlanner.Mockup.Controllers.Gear.Collections {
                 var receipt = $mdDialog.alert()
                     .parent(angular.element(document.body))
                     .title("Gear collection deleted!")
-                    .content("The gear collection has been deleted.")
+                    .textContent("The gear collection has been deleted.")
                     .ok("OK")
                     .targetEvent(event);
 
                 var deleteToast = $mdToast.simple()
-                    .content(`Deleted gear collection: ${$scope.gearCollection.name()}`)
+                    .textContent(`Deleted gear collection: ${$scope.gearCollection.name()}`)
                     .action("Undo")
                     .position("bottom left");
 
                 var undoDeleteToast = $mdToast.simple()
-                    .content(`Restored gear collection: ${$scope.gearCollection.name()}`)
+                    .textContent(`Restored gear collection: ${$scope.gearCollection.name()}`)
                     .action("OK")
                     .position("bottom left");
 

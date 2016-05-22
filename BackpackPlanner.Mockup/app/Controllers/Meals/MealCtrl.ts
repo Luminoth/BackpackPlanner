@@ -41,7 +41,7 @@ module BackpackPlanner.Mockup.Controllers.Meals {
                 meal.update($scope.meal);
 
                 var updateToast = $mdToast.simple()
-                    .content(`Updated meal: ${$scope.meal.name()}`)
+                    .textContent(`Updated meal: ${$scope.meal.name()}`)
                     .action("OK")
                     .position("bottom left");
 
@@ -63,7 +63,7 @@ module BackpackPlanner.Mockup.Controllers.Meals {
                 var confirm = $mdDialog.confirm()
                     .parent(angular.element(document.body))
                     .title("Delete Meal")
-                    .content("Are you sure you wish to delete this meal?")
+                    .textContent("Are you sure you wish to delete this meal?")
                     .ok("Yes")
                     .cancel("No")
                     .targetEvent(event);
@@ -71,17 +71,17 @@ module BackpackPlanner.Mockup.Controllers.Meals {
                 var receipt = $mdDialog.alert()
                     .parent(angular.element(document.body))
                     .title("Meal deleted!")
-                    .content("The meal has been deleted.")
+                    .textContent("The meal has been deleted.")
                     .ok("OK")
                     .targetEvent(event);
 
                 var deleteToast = $mdToast.simple()
-                    .content(`Deleted meal: ${$scope.meal.name()}`)
+                    .textContent(`Deleted meal: ${$scope.meal.name()}`)
                     .action("Undo")
                     .position("bottom left");
 
                 var undoDeleteToast = $mdToast.simple()
-                    .content(`Restored meal: ${$scope.meal.name()}`)
+                    .textContent(`Restored meal: ${$scope.meal.name()}`)
                     .action("OK")
                     .position("bottom left");
 

@@ -54,7 +54,7 @@ module BackpackPlanner.Mockup.Controllers.Gear.Collections {
                 AppState.getInstance().getGearState().addGearCollection($scope.gearCollection);
 
                 var addToast = $mdToast.simple()
-                    .content(`Added gear collection: ${$scope.gearCollection.name()}`)
+                    .textContent(`Added gear collection: ${$scope.gearCollection.name()}`)
                     .action("OK")
                     .position("bottom left");
 

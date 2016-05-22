@@ -6,7 +6,7 @@ module BackpackPlanner.Mockup.Services.Meals {
     "use strict";
 
     export interface IMealService extends ng.resource.IResourceClass<Resources.Meals.IMealResource> {
-        query(): Resources.Meals.IMealResource[];
+        query: ng.resource.IResourceArrayMethod<Resources.Meals.IMealResource>;
     }
 
     export function mealServiceFactory($resource: ng.resource.IResourceService) {

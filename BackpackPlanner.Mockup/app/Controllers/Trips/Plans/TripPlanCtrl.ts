@@ -103,7 +103,7 @@ module BackpackPlanner.Mockup.Controllers.Trips.Plans {
                 tripPlan.update($scope.tripPlan);
 
                 var updateToast = $mdToast.simple()
-                    .content(`Updated trip plan: ${$scope.tripPlan.name()}`)
+                    .textContent(`Updated trip plan: ${$scope.tripPlan.name()}`)
                     .action("OK")
                     .position("bottom left");
 
@@ -125,7 +125,7 @@ module BackpackPlanner.Mockup.Controllers.Trips.Plans {
                 var confirm = $mdDialog.confirm()
                     .parent(angular.element(document.body))
                     .title("Delete Trip Plan")
-                    .content("Are you sure you wish to delete this trip plan?")
+                    .textContent("Are you sure you wish to delete this trip plan?")
                     .ok("Yes")
                     .cancel("No")
                     .targetEvent(event);
@@ -133,17 +133,17 @@ module BackpackPlanner.Mockup.Controllers.Trips.Plans {
                 var receipt = $mdDialog.alert()
                     .parent(angular.element(document.body))
                     .title("Trip plan deleted!")
-                    .content("The trip plan has been deleted.")
+                    .textContent("The trip plan has been deleted.")
                     .ok("OK")
                     .targetEvent(event);
 
                 var deleteToast = $mdToast.simple()
-                    .content(`Deleted trip plan: ${$scope.tripPlan.name()}`)
+                    .textContent(`Deleted trip plan: ${$scope.tripPlan.name()}`)
                     .action("Undo")
                     .position("bottom left");
 
                 var undoDeleteToast = $mdToast.simple()
-                    .content(`Restored trip plan: ${$scope.tripPlan.name()}`)
+                    .textContent(`Restored trip plan: ${$scope.tripPlan.name()}`)
                     .action("OK")
                     .position("bottom left");
 
