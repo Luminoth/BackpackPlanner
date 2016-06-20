@@ -150,6 +150,11 @@ namespace EnergonSoftware.BackpackPlanner
             PersonalInformation = new PersonalInformation(PlatformSettingsManager, Settings);
         }
 
+        ~BackpackPlannerState()
+        {
+            Dispose(false);
+        }
+
         /// <summary>
         /// Initializes the dependency state.
         /// </summary>

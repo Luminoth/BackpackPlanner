@@ -71,6 +71,11 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
         }
 #endregion
 
+        ~SQLiteDatabaseConnection()
+        {
+            Dispose(false);
+        }
+
         public async Task LockAsync()
         {
             await _lock.WaitAsync().ConfigureAwait(false);

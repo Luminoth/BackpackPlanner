@@ -97,6 +97,11 @@ namespace EnergonSoftware.BackpackPlanner
         }
 #endregion
 
+        ~DatabaseState()
+        {
+            Dispose(false);
+        }
+
         /// <summary>
         /// Connects the library database connections.
         /// </summary>
