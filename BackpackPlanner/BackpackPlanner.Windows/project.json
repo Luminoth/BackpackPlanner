@@ -1,12 +1,12 @@
 ﻿{
   "dependencies": {
-    "Google.Apis.Drive.v2": "1.13.1.518",
-    "HockeySDK.Core": "2.2.3",
-    "HockeySDK.WINRT": "2.2.3",
+    "Google.Apis.Drive.v2": "1.16.0.596",
+    "HockeySDK.Core": "4.1.3",
+    "HockeySDK.WINRT": "4.1.3",
     "Microsoft.ApplicationInsights": "2.1.0",
     "Microsoft.ApplicationInsights.PersistenceChannel": "1.2.3",
     "Microsoft.ApplicationInsights.WindowsApps": "1.1.1",
-    "Microsoft.NETCore.UniversalWindowsPlatform": "5.1.0",
+    "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
     "SQLite.Net-PCL": "3.1.1",
     "SQLite.Net.Async-PCL": "3.1.1",
     "SQLite.Net.Core-PCL": "3.1.1"

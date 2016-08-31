@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Core.HockeyApp;
 
-using HockeyApp;
+using Microsoft.HockeyApp;
 
 namespace EnergonSoftware.BackpackPlanner.Windows
 {
