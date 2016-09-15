@@ -60,6 +60,11 @@ namespace EnergonSoftware.BackpackPlanner.Windows
             );
         }
 
+        ~App()
+        {
+            Dispose(false);
+        }
+
 #region Dispose
         public void Dispose()
         {

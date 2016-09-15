@@ -35,6 +35,11 @@ namespace EnergonSoftware.BackpackPlanner.Windows.Logging
             _session.AddLoggingChannel(_channel);
         }
 
+        ~WindowsLogger()
+        {
+            Dispose(false);
+        }
+
 #region Dispose
         public void Dispose()
         {

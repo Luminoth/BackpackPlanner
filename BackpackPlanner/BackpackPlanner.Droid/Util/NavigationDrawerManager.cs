@@ -128,7 +128,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 
             Toggle = new DrawerToggle(_activity, Layout, toolbar, Resource.String.drawer_open, Resource.String.drawer_close);
             Toggle.SyncState();
-            Layout.SetDrawerListener(Toggle);
+            Layout.AddDrawerListener(Toggle);
         }
     }
 }
