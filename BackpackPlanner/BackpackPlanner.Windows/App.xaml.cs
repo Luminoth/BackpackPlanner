@@ -106,7 +106,7 @@ namespace EnergonSoftware.BackpackPlanner.Windows
         /// </summary>
         /// <param name="sender">The Frame which failed navigation</param>
         /// <param name="e">Details about the navigation failure</param>
-        void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
+        private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }
@@ -133,6 +133,10 @@ namespace EnergonSoftware.BackpackPlanner.Windows
             Window.Current.Content = rootFrame;
 
             LoadPreferences();
+
+            if(e.PrelaunchActivated) {
+                return;
+            }
 
             if(null == rootFrame.Content) {
                 if(CurrentApp.BackpackPlannerState.Settings.MetaSettings.FirstRun) {
