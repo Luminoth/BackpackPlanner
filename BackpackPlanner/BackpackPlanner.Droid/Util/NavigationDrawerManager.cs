@@ -40,6 +40,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 
         public Android.Support.Design.Widget.NavigationView NavView { get; private set; }
 
+        private View _header;
+
         public TextView HeaderText { get; private set; }
 
         private Android.Support.V7.App.AppCompatActivity _activity;
@@ -119,7 +121,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
                 NavigationItemSelected?.Invoke(sender, args);
             };
 
-            HeaderText = _activity.FindViewById<TextView>(Resource.Id.navigation_header_text);
+            _header = NavView.GetHeaderView(0);
+
+            HeaderText = _header.FindViewById<TextView>(Resource.Id.navigation_header_text);
         }
 
         private void InitDrawer(Android.Support.V7.Widget.Toolbar toolbar)
