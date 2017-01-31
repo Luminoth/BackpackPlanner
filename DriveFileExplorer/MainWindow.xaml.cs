@@ -31,7 +31,7 @@ namespace EnergonSoftware.BackpackPlanner.DriveFileExplorer
 
         public PlayServicesManager PlayServicesManager { get; }
 
-        private readonly ObservableCollection<Google.Apis.Drive.v2.Data.File> _files = new ObservableCollection<Google.Apis.Drive.v2.Data.File>();
+        private readonly ObservableCollection<Google.Apis.Drive.v3.Data.File> _files = new ObservableCollection<Google.Apis.Drive.v3.Data.File>();
 
         public MainWindow()
         {
@@ -65,7 +65,7 @@ namespace EnergonSoftware.BackpackPlanner.DriveFileExplorer
             Logger.Debug($"Retrieved {fileList.Count} files");
 
             _files.Clear();
-            foreach(Google.Apis.Drive.v2.Data.File file in fileList) {
+            foreach(Google.Apis.Drive.v3.Data.File file in fileList) {
                 _files.Add(file);
             }
         }
@@ -86,7 +86,7 @@ namespace EnergonSoftware.BackpackPlanner.DriveFileExplorer
             Logger.Debug($"Retrieved {fileList.Count} files");
 
             _files.Clear();
-            foreach(Google.Apis.Drive.v2.Data.File file in fileList) {
+            foreach(Google.Apis.Drive.v3.Data.File file in fileList) {
                 _files.Add(file);
             }
         }
@@ -100,9 +100,9 @@ namespace EnergonSoftware.BackpackPlanner.DriveFileExplorer
             var files = (string[])e.Data.GetData(DataFormats.FileDrop);
             foreach(string filePath in files) {
                 string fileName = Path.GetFileName(filePath);
-                Google.Apis.Drive.v2.Data.File existingDriveFile = _files.FirstOrDefault(x => x.Title == fileName);
+                Google.Apis.Drive.v3.Data.File existingDriveFile = _files.FirstOrDefault(x => x.Name == fileName);
                 using(Stream stream = new FileStream(filePath, FileMode.Open)) {
-                    Google.Apis.Drive.v2.Data.File newDriveFile;
+                    Google.Apis.Drive.v3.Data.File newDriveFile;
                     if(null != existingDriveFile) {
                         MessageBoxResult result = MessageBox.Show($"The file {fileName} already exists, do you wish to replace it?", "Replace File", MessageBoxButton.YesNo);
                         if(result == MessageBoxResult.No) {
@@ -115,7 +115,7 @@ namespace EnergonSoftware.BackpackPlanner.DriveFileExplorer
                             continue;
                         }
 
-                        Logger.Debug($"Updated file: {newDriveFile.Title} ({newDriveFile.Id})");
+                        Logger.Debug($"Updated file: {newDriveFile.Name} ({newDriveFile.Id})");
                         _files.Remove(existingDriveFile);
                         _files.Add(newDriveFile);
                     } else {
@@ -125,7 +125,7 @@ namespace EnergonSoftware.BackpackPlanner.DriveFileExplorer
                             continue;
                         }
 
-                        Logger.Debug($"Added new file: {newDriveFile.Title} ({newDriveFile.Id})");
+                        Logger.Debug($"Added new file: {newDriveFile.Name} ({newDriveFile.Id})");
                         _files.Add(newDriveFile);
                     }
                 }
@@ -134,7 +134,7 @@ namespace EnergonSoftware.BackpackPlanner.DriveFileExplorer
 
         private async void FileListItem_Download(object sender, RoutedEventArgs e)
         {
-            Google.Apis.Drive.v2.Data.File selectedFile = _files.ElementAt(FileList.SelectedIndex);
+            Google.Apis.Drive.v3.Data.File selectedFile = _files.ElementAt(FileList.SelectedIndex);
             if(null == selectedFile) {
                 return;
             }
@@ -144,7 +144,7 @@ namespace EnergonSoftware.BackpackPlanner.DriveFileExplorer
                 return;
             }
 
-            string filePath = Path.Combine(dialog.SelectedPath, selectedFile.Title);
+            string filePath = Path.Combine(dialog.SelectedPath, selectedFile.Name);
             if(File.Exists(filePath)) {
                 MessageBoxResult result = MessageBox.Show($"The file {filePath} already exists, do you wish to replace it?", "Replace File", MessageBoxButton.YesNo);
                 if(result == MessageBoxResult.No) {
@@ -166,12 +166,12 @@ namespace EnergonSoftware.BackpackPlanner.DriveFileExplorer
 
         private async void FileListItem_Delete(object sender, RoutedEventArgs e)
         {
-            Google.Apis.Drive.v2.Data.File selectedFile = _files.ElementAt(FileList.SelectedIndex);
+            Google.Apis.Drive.v3.Data.File selectedFile = _files.ElementAt(FileList.SelectedIndex);
             if(null == selectedFile) {
                 return;
             }
 
-            MessageBoxResult result = MessageBox.Show($"Are you sure you wish to delete {selectedFile.Title}?", "Confirm Delete", MessageBoxButton.YesNo);
+            MessageBoxResult result = MessageBox.Show($"Are you sure you wish to delete {selectedFile.Name}?", "Confirm Delete", MessageBoxButton.YesNo);
             if(result == MessageBoxResult.No) {
                 return;
             }
@@ -182,12 +182,12 @@ namespace EnergonSoftware.BackpackPlanner.DriveFileExplorer
 
         private void FileListItem_DoubleClick(object sender, MouseButtonEventArgs e)
         {
-            Google.Apis.Drive.v2.Data.File selectedFile = _files.ElementAt(FileList.SelectedIndex);
+            Google.Apis.Drive.v3.Data.File selectedFile = _files.ElementAt(FileList.SelectedIndex);
             if(null == selectedFile) {
                 return;
             }
 
-Logger.Debug($"TODO: double click: {selectedFile.Title}");
+Logger.Debug($"TODO: double click: {selectedFile.Name}");
         }
     }
 }

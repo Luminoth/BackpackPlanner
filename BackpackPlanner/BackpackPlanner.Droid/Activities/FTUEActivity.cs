@@ -85,31 +85,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
         {
             Logger.Debug("Finishing FTUE...");
 
-            // prompt the user to connect to Google Play Services
-            DialogUtil.ShowYesNoDialog(this, Resource.String.label_connect_google_play_services, Resource.String.title_connect_google_play_services,
-                (sender, args) => {
-                    Logger.Debug("User accepted Google Play Services");
-                    BackpackPlannerState.Settings.ConnectGooglePlayServices = true;
+            // this is a hold-over from before the auto-managed connection
+            // was added to the google play services
+            DroidState.Instance.BackpackPlannerState.Settings.ConnectGooglePlayServices = true;
 
-                    // try to connect now to get all of the confirmations out of the way
-                    ProgressDialog dialog = DialogUtil.ShowProgressDialog(this, Resource.String.label_connecting_google_play_services, false);
-                    BackpackPlannerState.PlatformPlayServicesManager.PlayServicesConnectedEvent += (s, a) => {
-                        Logger.Debug($"Google Play Services connected (success: {a.IsSuccess}), finishing activity...");
-                        dialog.Dismiss();
+            StartActivity(typeof(BackpackPlannerActivity));
 
-                        StartActivity(typeof(BackpackPlannerActivity));
-                        Finish();
-                    };
-                    BackpackPlannerState.PlatformPlayServicesManager.ConnectAsync().Wait();
-                },
-                (sender, args) => {
-                    Logger.Debug("User declined Google Play Services");
-                    BackpackPlannerState.Settings.ConnectGooglePlayServices = false;
-
-                    StartActivity(typeof(BackpackPlannerActivity));
-                    Finish();
-                }
-            );
+            Finish();
         }
     }
 }

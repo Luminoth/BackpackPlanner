@@ -19,7 +19,6 @@ using Android.Content.Res;
 using Android.OS;
 using Android.Views;
 
-using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items;
@@ -34,15 +33,16 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
     [Activity(Label = "@string/app_name", Exported = true)]
     public sealed class BackpackPlannerActivity : BaseActivity, View.IOnClickListener
     {
-        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(BackpackPlannerActivity));
-
 #region Controls
         private readonly NavigationDrawerManager _navigationDrawerManager = new NavigationDrawerManager();
 #endregion
 
+#region Activity Lifecycle
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+
+            ((DroidPlayServicesManager)DroidState.Instance.BackpackPlannerState.PlatformPlayServicesManager).OnCreate(this);
 
             SetContentView(Resource.Layout.activity_backpack_planner);
 
@@ -58,8 +58,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             _navigationDrawerManager.Toggle.ToolbarNavigationClickListener = this;
 
             // TODO: this doesn't seem to actually work
-            _navigationDrawerManager.HeaderText.Text = !string.IsNullOrWhiteSpace(BackpackPlannerState.PersonalInformation.Name)
-                    ? BackpackPlannerState.PersonalInformation.Name
+            _navigationDrawerManager.HeaderText.Text = !string.IsNullOrWhiteSpace(DroidState.Instance.BackpackPlannerState.PersonalInformation.Name)
+                    ? DroidState.Instance.BackpackPlannerState.PersonalInformation.Name
                     : Resources.GetString(Resource.String.app_name);
 
 #if !DEBUG
@@ -96,34 +96,23 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             _navigationDrawerManager.Toggle.SyncState();
         }
 
-        protected override void OnStart()
-        {
-            base.OnStart();
-
-            // TODO: encapsulate this in the library?
-            if(BackpackPlannerState.Settings.ConnectGooglePlayServices) {
-                ProgressDialog dialog = DialogUtil.ShowProgressDialog(this, Resource.String.label_connecting_google_play_services, false);
-                BackpackPlannerState.PlatformPlayServicesManager.PlayServicesConnectedEvent += (s, a) => {
-                    Logger.Debug($"Google Play Services connected (success: {a.IsSuccess})!");
-                    dialog.Dismiss();
-                };
-                BackpackPlannerState.PlatformPlayServicesManager.ConnectAsync().Wait();
-            } else {
-                Logger.Debug("Google Play Services is not enabled!");
-            }
-        }
-
         protected override void OnResume()
         {
             base.OnResume();
 
-            BackpackPlannerState.DatabaseState.ConnectAsync(
-                System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal),
-                DatabaseState.DatabaseName).Wait();
-
-            BackpackPlannerState.DatabaseState.InitDatabaseAsync().Wait();
-            BackpackPlannerState.PlatformDatabaseSyncManager.SyncDatabaseInBackground(BackpackPlannerState.PlatformPlayServicesManager);
+            PermissionRequest request = CheckStoragePermission(PermissionRequest.StoragePermissionRequestCode).Result;
+            request.PermissionGrantedEvent += async (sender, args) => {
+                await DroidState.Instance.InitDatabase().ConfigureAwait(false);
+            };
         }
+
+        protected override void OnSaveInstanceState(Bundle outState)
+        {
+            base.OnSaveInstanceState(outState);
+
+            _navigationDrawerManager.OnSaveInstanceState(outState);
+        }
+#endregion
 
         public override void OnConfigurationChanged(Configuration newConfig)
         {
@@ -139,13 +128,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             }
 
             return base.OnOptionsItemSelected(item);
-        }
-
-        protected override void OnSaveInstanceState(Bundle outState)
-        {
-            base.OnSaveInstanceState(outState);
-
-            _navigationDrawerManager.OnSaveInstanceState(outState);
         }
 
         public void OnClick(View view)

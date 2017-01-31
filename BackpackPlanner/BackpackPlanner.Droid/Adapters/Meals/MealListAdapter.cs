@@ -79,7 +79,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
 
                 int weightInUnitsPerServing = (int)ListItem.WeightInUnitsPerServing;
                 _textViewWeightPerServing.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_meal_weight_per_serving),
-                    weightInUnitsPerServing, Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(weightInUnitsPerServing != 1)
+                    weightInUnitsPerServing, DroidState.Instance.BackpackPlannerState.Settings.Units.GetSmallWeightString(weightInUnitsPerServing != 1)
                 );
 
                 _textViewCaloriesPerServing.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_meal_calories_per_serving),
@@ -96,18 +96,18 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
 
                 int weightInUnits = (int)ListItem.WeightInUnits;
                 _textViewWeight.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_meal_weight),
-                    weightInUnits, Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(weightInUnits != 1)
+                    weightInUnits, DroidState.Instance.BackpackPlannerState.Settings.Units.GetSmallWeightString(weightInUnits != 1)
                 );
 
                 int caloriesPerWeight = (int)ListItem.CaloriesPerWeight;
                 _textViewCalories.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_meal_calories),
-                    caloriesPerWeight, Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(false)
+                    caloriesPerWeight, DroidState.Instance.BackpackPlannerState.Settings.Units.GetSmallWeightString(false)
                 );
 
                 string formattedCost = ListItem.CostInCurrency.ToString("C", CultureInfo.CurrentCulture);
                 string formattedCostPerWeight = ListItem.CostPerWeightInCurrency.ToString("C", CultureInfo.CurrentCulture);
                 _textViewCost.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_meal_cost),
-                    formattedCost, formattedCostPerWeight, Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(false)
+                    formattedCost, formattedCostPerWeight, DroidState.Instance.BackpackPlannerState.Settings.Units.GetSmallWeightString(false)
                 );
             }
         }

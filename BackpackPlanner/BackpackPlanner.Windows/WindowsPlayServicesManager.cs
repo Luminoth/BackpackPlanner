@@ -23,7 +23,7 @@ using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Core.PlayServices;
 
 using Google.Apis.Auth.OAuth2;
-using Google.Apis.Drive.v2;
+using Google.Apis.Drive.v3;
 using Google.Apis.Services;
 
 namespace EnergonSoftware.BackpackPlanner.Windows
@@ -143,7 +143,7 @@ throw new NotImplementedException();
 
             Logger.Debug("Initializing appfolder Id...");
 
-            Google.Apis.Drive.v2.Data.File file = await _driveService.Files.Get("appfolder").ExecuteAsync().ConfigureAwait(false);
+            Google.Apis.Drive.v3.Data.File file = await _driveService.Files.Get("appfolder").ExecuteAsync().ConfigureAwait(false);
             if(null == file) {
                 Logger.Error("Unable to get appfolder Id!");
                 return;

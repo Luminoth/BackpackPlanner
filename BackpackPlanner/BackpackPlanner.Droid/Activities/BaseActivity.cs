@@ -14,16 +14,18 @@
    limitations under the License.
 */
 
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
-using Android.App;
-using Android.Content;
+using Android;
+using Android.Content.PM;
 using Android.OS;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
-using EnergonSoftware.BackpackPlanner.Droid.Logging;
-
-using SQLite.Net.Platform.XamarinAndroid;
+using EnergonSoftware.BackpackPlanner.Core.Util;
+using EnergonSoftware.BackpackPlanner.Droid.Util;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 {
@@ -31,51 +33,22 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(BaseActivity));
 
-        public BackpackPlannerState BackpackPlannerState { get; private set; }
-
         private readonly Stopwatch _startupStopwatch = new Stopwatch();
+
+        private readonly Dictionary<int, PermissionRequest> _permissionRequests = new Dictionary<int, PermissionRequest>();
 
 #region Controls
         public Android.Support.V7.Widget.Toolbar Toolbar { get; private set; }
 #endregion
 
+#region Activity Lifecycle
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
             _startupStopwatch.Start();
 
-            CustomLogger.PlatformLogger = new DroidLogger();
-
-            BackpackPlannerState = new BackpackPlannerState(
-                new HockeyAppManager(),
-                new DroidSettingsManager(Android.Support.V7.Preferences.PreferenceManager.GetDefaultSharedPreferences(this)),
-                new DroidPlayServicesManager(this),
-                new DroidDatabaseSyncManager(),
-                new SQLitePlatformAndroid()
-            );
-
-            LoadPreferences();
-
-            BackpackPlannerState.InitAsync().Wait();
-
-            ((HockeyAppManager)BackpackPlannerState.PlatformHockeyAppManager).OnCreate(this);
-            ((DroidPlayServicesManager)BackpackPlannerState.PlatformPlayServicesManager).OnCreate(savedInstanceState);
-        }
-
-        protected override void OnSaveInstanceState(Bundle outState)
-        {
-            base.OnSaveInstanceState(outState);
-
-            ((DroidPlayServicesManager)BackpackPlannerState.PlatformPlayServicesManager).OnSaveInstanceState(outState);
-        }
-
-        protected override void OnDestroy()
-        {
-            base.OnDestroy();
-
-            ((HockeyAppManager)BackpackPlannerState.PlatformHockeyAppManager).OnDestroy();
-            BackpackPlannerState.DestroyAsync().Wait();
+            DroidState.Instance.OnCreate(this).Wait();
         }
 
         protected override void OnStart()
@@ -89,22 +62,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             }
         }
 
-        protected override void OnStop()
-        {
-            base.OnStop();
-
-            Logger.Debug($"OnStop - {GetType()}");
-
-            BackpackPlannerState.PlatformPlayServicesManager.DisconnectAsync().Wait();
-        }
-
         protected override void OnResume()
         {
             base.OnResume();
 
             Logger.Debug($"OnResume - {GetType()}");
 
-            ((HockeyAppManager)BackpackPlannerState.PlatformHockeyAppManager).OnResume(this);
+            DroidState.Instance.OnResume(this);
 
             if(_startupStopwatch.IsRunning) {
                 Logger.Debug($"Time to Activity.OnResume() finish: {_startupStopwatch.ElapsedMilliseconds}ms");
@@ -118,31 +82,82 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 
             Logger.Debug($"OnPause - {GetType()}");
 
-            BackpackPlannerState.DatabaseState.DisconnectAsync().Wait();
-
-            ((HockeyAppManager)BackpackPlannerState.PlatformHockeyAppManager).OnPause(this);
+            DroidState.Instance.OnPause(this);
         }
+#endregion
 
-        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+#region Permissions
+        // https://developer.android.com/training/permissions/index.html
+
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
         {
-            base.OnActivityResult(requestCode, resultCode, data);
+            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
-            ((DroidPlayServicesManager)BackpackPlannerState.PlatformPlayServicesManager).OnActivityResult(requestCode, resultCode, data);
+            PermissionRequest request = _permissionRequests.GetAndRemove(requestCode);
+            if(null == request) {
+                Logger.Error($"Got request permission result for request code {requestCode} but permission request is missing!");
+                return;
+            }
+
+            if(grantResults.Length > 0 && grantResults[0] == Permission.Granted) {
+                request.NotifyGranted(this);
+            } else {
+                request.NotifyDenied(this);
+            }
         }
+
+        public async Task<PermissionRequest> CheckPermission(string permission, int requestCode, Func<Task> showExplanation=null)
+        {
+            PermissionRequest request;
+
+            if(Permission.Granted == Android.Support.V4.Content.ContextCompat.CheckSelfPermission(this, permission)) {
+                request = new PermissionRequest(requestCode);
+                request.NotifyGranted(this);
+                return request;
+            }
+
+            if(Android.Support.V4.App.ActivityCompat.ShouldShowRequestPermissionRationale(this, permission)) {
+                if(null == showExplanation) {
+                    request = new PermissionRequest(requestCode);
+                    request.NotifyDenied(this);
+                    return request;
+                }
+
+                await showExplanation().ConfigureAwait(false);
+
+                return await CheckPermission(permission, requestCode, null).ConfigureAwait(false);
+            }
+
+            if(_permissionRequests.TryGetValue(requestCode, out request)) {
+                return request;
+            }
+
+            request = new PermissionRequest(requestCode);
+            _permissionRequests.Add(requestCode, request);
+
+            Android.Support.V4.App.ActivityCompat.RequestPermissions(this, new[] { permission }, requestCode);
+
+            return request;
+        }
+
+        public async Task<PermissionRequest> CheckStoragePermission(int requestCode)
+        {
+            PermissionRequest request = await CheckPermission(Manifest.Permission.ReadExternalStorage, requestCode).ConfigureAwait(false);
+            request.PermissionDeniedEvent += (sender, args) => {
+                DialogUtil.ShowOkDialog(this, Resource.String.title_storage_permission, Resource.String.label_storage_permission);
+            };
+
+            if(request.IsDenied) {
+                request.NotifyDenied(this);
+            }
+            return request;
+        }
+#endregion
 
         protected void InitToolbar()
         {
             Toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(Toolbar);
-        }
-
-        private void LoadPreferences()
-        {
-            Logger.Debug("Setting default preferences...");
-            Android.Support.V7.Preferences.PreferenceManager.SetDefaultValues(this, Resource.Xml.settings, false);
-
-            Logger.Debug("Loading preferences...");
-            BackpackPlannerState.PlatformSettingsManager.Load(BackpackPlannerState.Settings, BackpackPlannerState.PersonalInformation);
         }
     }
 }

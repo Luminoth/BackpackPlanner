@@ -1,6 +1,6 @@
 ﻿{
   "dependencies": {
-    "Google.Apis.Drive.v2": "1.16.0.609",
+    "Google.Apis.Drive.v3": "1.16.0.621",
     "HockeySDK.Core": "4.1.4",
     "HockeySDK.WINRT": "4.1.4",
     "Microsoft.ApplicationInsights": "2.1.0",

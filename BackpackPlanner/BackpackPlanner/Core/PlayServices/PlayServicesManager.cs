@@ -27,13 +27,33 @@ namespace EnergonSoftware.BackpackPlanner.Core.PlayServices
     /// http://android-developers.blogspot.com/2015/09/google-play-services-81-and-android-60.html
     /// https://github.com/googledrive/android-demos/tree/master/app/src/main/java/com/google/android/gms/drive/sample/demo
     /// </remarks>
-    public abstract class PlayServicesManager
+    public abstract class PlayServicesManager : IDisposable
     {
 #region Events
         public event EventHandler<PlayServicesConnectedEventArgs> PlayServicesConnectedEvent;
 #endregion
 
         public abstract bool IsConnected { get; }
+
+#region Dispose
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if(disposing) {
+                DestroyAsync().Wait();
+            }
+        }
+#endregion
+
+        ~PlayServicesManager()
+        {
+            Dispose(false);
+        }
 
         public abstract Task InitAsync();
 

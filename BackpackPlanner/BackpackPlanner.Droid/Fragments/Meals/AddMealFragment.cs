@@ -65,17 +65,17 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
             _mealNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.add_meal_note);
 
             _mealWeightEditText.Hint = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_meal_weight),
-                BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(true)
+                DroidState.Instance.BackpackPlannerState.Settings.Units.GetSmallWeightString(true)
             );
 
             _mealCostEditText.Hint = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_meal_cost),
-                BaseActivity.BackpackPlannerState.Settings.Currency.GetCurrencyString()
+                DroidState.Instance.BackpackPlannerState.Settings.Currency.GetCurrencyString()
             );
         }
 
         protected override void OnDoDataExchange()
         {
-            Item = new Meal(BaseActivity.BackpackPlannerState.Settings)
+            Item = new Meal(DroidState.Instance.BackpackPlannerState.Settings)
             {
                 Name = _mealNameEditText.EditText.Text,
                 Url = _mealWebsiteEditText.EditText.Text,

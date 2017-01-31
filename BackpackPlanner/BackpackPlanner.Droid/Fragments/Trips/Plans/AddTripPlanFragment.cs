@@ -88,7 +88,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
 
         protected override void OnDoDataExchange()
         {
-            Item = new TripPlan(BaseActivity.BackpackPlannerState.Settings)
+            Item = new TripPlan(DroidState.Instance.BackpackPlannerState.Settings)
             {
                 Name = _tripPlanNameEditText.EditText.Text,
                 Note = _tripPlanNoteEditText.EditText.Text

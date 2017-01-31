@@ -51,6 +51,7 @@
     <Compile Include="Core\PlayServices\PlayServicesConnectedEventArgs.cs" />
     <Compile Include="Core\PlayServices\PlayServicesManager.cs" />
     <Compile Include="Core\PlayServices\PlayServicesManifest.cs" />
+    <Compile Include="Core\Util\DictionaryExtensions.cs" />
     <Compile Include="DatabaseState.cs" />
     <Compile Include="Core\Settings\SettingsManager.cs" />
     <Compile Include="Models\DatabaseItem.cs" />

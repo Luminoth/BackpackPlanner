@@ -18,6 +18,14 @@
 
     <string name="label_sort">Sort by</string>
 
+    <!-- Errors -->
+
+    <string name="title_accounts_permission">Accounts Permission</string>
+    <string name="label_accounts_permission">Accounts permissions are required for logging into google play services!</string>
+
+    <string name="title_storage_permission">Storage Permission</string>
+    <string name="label_storage_permission">Storage permissions are required for saving and loading data!</string>
+
     <!-- What is a text -->
 
     <string name="what_is_a_gear_item">Lots of text about gear items</string>
@@ -282,6 +290,7 @@
     <!-- FTUE -->
     <string name="label_ftue_welcome">Welcome to the backpacking planner! This is the FTUE that will eventually help new users understand how to use it!</string>
     <string name="label_ftue_skip">Skip</string>
+    <string name="label_ftue_next">Next</string>
 
     <string name="label_ftue_gear">This page will be all about gear items, collections, and systems and how to use them!</string>
 

@@ -15,55 +15,38 @@
 */
 
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-using Android.App;
-using Android.Content;
 using Android.Gms.Common;
 using Android.Gms.Common.Apis;
 using Android.Gms.Drive;
 using Android.Gms.Drive.Query;
-using Android.OS;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Core.PlayServices;
+using EnergonSoftware.BackpackPlanner.Droid.Activities;
 
 namespace EnergonSoftware.BackpackPlanner.Droid
 {
     internal sealed class DroidPlayServicesManager : PlayServicesManager
     {
-        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(PlayServicesManager));
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(DroidPlayServicesManager));
 
-        // error resolution
-        public const int RequestCodeResolveError = 9001;
-
-        private const string StateResolvingError = "play_services_manager_resolving_error";
+        public const int GetAccountsRequestCode = 1000;
 
         // this is necessary because the listener interfaces require implementing
         // Java.Lang.Object while the manager needs to implement PlayServicesManager
         // TODO: this could be made more general-use by adding versions of the interfaces
         // that don't require implementing Java.Lang.Object and hooking into those
-        private sealed class PlayServicesConnectionListener : Java.Lang.Object,
-            GoogleApiClient.IConnectionCallbacks, GoogleApiClient.IOnConnectionFailedListener
+        private sealed class PlayServicesConnectionListener : Java.Lang.Object, GoogleApiClient.IOnConnectionFailedListener
         {
             private readonly DroidPlayServicesManager _playServicesManager;
 
             public PlayServicesConnectionListener(DroidPlayServicesManager playServicesManager)
             {
                 _playServicesManager = playServicesManager;
-            }
-
-            public void OnConnected(Bundle connectionHint)
-            {
-                _playServicesManager.OnConnected(connectionHint);
-            }
-
-            public void OnConnectionSuspended(int cause)
-            {
-                _playServicesManager.OnConnectionSuspended(cause);
             }
 
             public void OnConnectionFailed(ConnectionResult result)
@@ -74,69 +57,48 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
         public override bool IsConnected => null != _googleClientApi && _googleClientApi.IsConnected;
 
-        public bool IsResolvingError { get; private set; }
-
-        private readonly Stopwatch _connectStopwatch = new Stopwatch();
-
-        private readonly Activity _activity;
-
         private GoogleApiClient _googleClientApi;
 
         private readonly PlayServicesConnectionListener _connectionListener;
 
-        public DroidPlayServicesManager(Activity activity)
-        {
-            if(null == activity) {
-                throw new ArgumentNullException(nameof(activity));
-            }
+        private BaseActivity _activity;
 
-            _activity = activity;
+        public DroidPlayServicesManager()
+        {
             _connectionListener = new PlayServicesConnectionListener(this);
         }
 
         public override async Task InitAsync()
         {
+            await Task.Delay(0).ConfigureAwait(false);
+        }
+
+        public void OnCreate(BaseActivity activity)
+        {
             if(null == _googleClientApi) {
+                _activity = activity;
+
                 Logger.Debug($"{_activity.GetType()} Building Google API Client...");
-                _googleClientApi = new GoogleApiClient.Builder(_activity)
+                _googleClientApi = new GoogleApiClient.Builder(activity)
+                    .EnableAutoManage(activity, _connectionListener)
                     .AddApi(DriveClass.API)
                     .AddScope(DriveClass.ScopeFile)
                     .AddScope(DriveClass.ScopeAppfolder)
-                    .AddConnectionCallbacks(_connectionListener)
-                    .AddOnConnectionFailedListener(_connectionListener)
                     .Build();
             }
 
 // TODO: is this the bit that prompts for the user's login? if so, can we save it here?
-
-            await Task.Delay(0).ConfigureAwait(false);
-        }
-
-        public override async Task DestroyAsync()
-        {
-            await base.DestroyAsync().ConfigureAwait(false);
-
-            _googleClientApi = null;
         }
 
         public override async Task ConnectAsync()
         {
             await Task.Delay(0).ConfigureAwait(false);
 
-            if(null == _googleClientApi) {
-                Logger.Warn($"{_activity.GetType()} Google Play Services client is null on connect!");
-                return;
-            }
+            /*Logger.Info("Connecting Google Play Services...");
+            _googleClientApi.Connect();*/
 
-            if(IsConnected) {
-                Logger.Info($"{_activity.GetType()} Google API already connected!");
-                OnConnected(new PlayServicesConnectedEventArgs { IsSuccess= true });
-                return;
-            }
-
-            Logger.Info($"{_activity.GetType()} Connecting Google Play Services client...");
-            _connectStopwatch.Start();
-            _googleClientApi.Connect();
+            // using auto-managed connection, which should have connected in the base OnStart()
+            OnConnected(new PlayServicesConnectedEventArgs { IsSuccess = IsConnected });
         }
 
         public override async Task DisconnectAsync()
@@ -147,57 +109,18 @@ namespace EnergonSoftware.BackpackPlanner.Droid
                 return;
             }
 
-            Logger.Info($"{_activity.GetType()} Disonnecting Google Play Services client...");
-            _googleClientApi.Disconnect();
-        }
-
-#region Connect Callbacks
-        public void OnConnected(Bundle connectionHint)
-        {
-            _connectStopwatch.Stop();
-            Logger.Info($"{_activity.GetType()} Google Play Services connected in {_connectStopwatch.ElapsedMilliseconds}ms!");
-
-// TODO: can we save the user's login here?
-
-            OnConnected(new PlayServicesConnectedEventArgs { IsSuccess= true });
-        }
-
-        public void OnConnectionSuspended(int cause)
-        {
-            Logger.Info($"{_activity.GetType()} Google Play Services suspended: {cause}");
+            /*Logger.Info($"Disconnecting Google Play Services client...");
+            _googleClientApi.Disconnect();*/
         }
 
         public void OnConnectionFailed(ConnectionResult result)
         {
-            _connectStopwatch.Stop();
-            Logger.Warn($"{_activity.GetType()} Google Play Services connection failed after {_connectStopwatch.ElapsedMilliseconds}ms: {result}");
+            // auto-managed connection failures are always unresolvable
+            Logger.Debug("Google Play Services connection failure has no resolution, showing error dialog...");
+            GoogleApiAvailability.Instance.GetErrorDialog(_activity, result.ErrorCode, 0).Show();
 
-            if(IsResolvingError) {
-                return;
-            }
-
-            if(!result.HasResolution) {
-                Logger.Debug($"{_activity.GetType()} Google Play Services connection failure has no resolution, showing error dialog...");
-// TODO: if the error here is service missing, bad things happen (as per the emulator behavior)
-                IsResolvingError = true;
-                GoogleApiAvailability.Instance.GetErrorDialog(_activity, result.ErrorCode, 0).Show();
-                IsResolvingError = false;
-
-                OnConnected(new PlayServicesConnectedEventArgs { IsSuccess = false });
-                return;
-            }
-
-            try {
-                IsResolvingError = true;
-
-                Logger.Debug($"{_activity.GetType()} Starting Google Play Services connection failure resolution activity...");
-                result.StartResolutionForResult(_activity, RequestCodeResolveError);
-            } catch(IntentSender.SendIntentException) {
-                Logger.Error($"{_activity.GetType()} Exception while starting resolution activity, retrying connection...");
-                ConnectAsync().Wait();
-            }
+            OnConnected(new PlayServicesConnectedEventArgs { IsSuccess = false });
         }
-#endregion
 
 #region appfolder Management
 // https://www.youtube.com/watch?v=UiTHG_yl-jA
@@ -287,34 +210,6 @@ throw new NotImplementedException();
         public override Task DeleteFileFromDriveAppFolderAsync(string title)
         {
 throw new NotImplementedException();
-        }
-#endregion
-
-#region Activity Lifecycle Hooks
-        public void OnCreate(Bundle savedInstanceState)
-        {
-            if(null != savedInstanceState) {
-                IsResolvingError = savedInstanceState.GetBoolean(StateResolvingError, false);
-            }
-        }
-
-        public void OnSaveInstanceState(Bundle outState)
-        {
-            outState.PutBoolean(StateResolvingError, IsResolvingError);
-        }
-
-        public void OnActivityResult(int requestCode, Result resultCode, Intent data)
-        {
-            switch(requestCode)
-            {
-            case RequestCodeResolveError:
-                IsResolvingError = false;
-                if(Result.Ok == resultCode) {
-                    Logger.Info($"{_activity.GetType()} Got Google Play Services Ok result code, retrying connection...");
-                    ConnectAsync().Wait();
-                }
-                break;
-            }
         }
 #endregion
     }

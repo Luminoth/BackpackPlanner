@@ -69,13 +69,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
 
                 int weightInUnits = (int)ListItem.GetWeightInUnits();
                 _textViewWeight.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_gear_system_weight),
-                    weightInUnits, Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(weightInUnits != 1)
+                    weightInUnits, DroidState.Instance.BackpackPlannerState.Settings.Units.GetSmallWeightString(weightInUnits != 1)
                 );
 
                 string formattedCost = ListItem.GetCostInCurrency().ToString("C", CultureInfo.CurrentCulture);
                 string formattedCostPerWeight = ListItem.GetCostPerWeightInCurrency().ToString("C", CultureInfo.CurrentCulture);
                 _textViewCost.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_gear_system_cost),
-                    formattedCost, formattedCostPerWeight, Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(false)
+                    formattedCost, formattedCostPerWeight, DroidState.Instance.BackpackPlannerState.Settings.Units.GetSmallWeightString(false)
                 );
             }
         }

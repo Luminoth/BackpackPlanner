@@ -84,11 +84,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
             _mealNoteEditText.EditText.Text = Item.Note;
 
             _mealWeightEditText.Hint = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_meal_weight),
-                BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(true)
+                DroidState.Instance.BackpackPlannerState.Settings.Units.GetSmallWeightString(true)
             );
 
             _mealCostEditText.Hint = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_meal_cost),
-                BaseActivity.BackpackPlannerState.Settings.Currency.GetCurrencyString()
+                DroidState.Instance.BackpackPlannerState.Settings.Currency.GetCurrencyString()
             );
         }
 

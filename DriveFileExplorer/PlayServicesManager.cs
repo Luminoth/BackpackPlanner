@@ -23,8 +23,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Google.Apis.Auth.OAuth2;
-using Google.Apis.Drive.v2;
-using Google.Apis.Drive.v2.Data;
+using Google.Apis.Drive.v3;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
 
@@ -121,10 +120,10 @@ namespace EnergonSoftware.BackpackPlanner.DriveFileExplorer
 #region appfolder Management
         // https://developers.google.com/drive/web/appdata
 
-        public async Task<ICollection<Google.Apis.Drive.v2.Data.File>>  ListDriveAppFolderFilesAsync()
+        public async Task<ICollection<Google.Apis.Drive.v3.Data.File>>  ListDriveAppFolderFilesAsync()
         {
             if(!IsConnected) {
-                return new List<Google.Apis.Drive.v2.Data.File>();
+                return new List<Google.Apis.Drive.v3.Data.File>();
             }
 
             await InitAppFolderIdAsync().ConfigureAwait(false);
@@ -133,63 +132,55 @@ namespace EnergonSoftware.BackpackPlanner.DriveFileExplorer
             FilesResource.ListRequest request = _driveService.Files.List();
             request.Q = $"'{_appFolderId}' in parents";
 
-            FileList fileList = await request.ExecuteAsync().ConfigureAwait(false);
-            return fileList.Items;
+            Google.Apis.Drive.v3.Data.FileList fileList = await request.ExecuteAsync().ConfigureAwait(false);
+            return fileList.Files;
         }
 
-        public async Task<Google.Apis.Drive.v2.Data.File> SaveFileToDriveAppFolderAsync(string title, string contentType, Stream contentStream)
+        public async Task<Google.Apis.Drive.v3.Data.File> SaveFileToDriveAppFolderAsync(string title, string contentType, Stream contentStream)
         {
             await InitAppFolderIdAsync().ConfigureAwait(false);
 
             Logger.Info($"Saving file {title} to appfolder...");
 
-            Google.Apis.Drive.v2.Data.File body = new Google.Apis.Drive.v2.Data.File
+            Google.Apis.Drive.v3.Data.File body = new Google.Apis.Drive.v3.Data.File
             {
-                Title = title,
-                Parents = new List<ParentReference> { new ParentReference { Id = _appFolderId } },
+                Name = title,
+                Parents = new List<string> { _appFolderId },
                 MimeType = contentType
             };
 
-            FilesResource.InsertMediaUpload request = _driveService.Files.Insert(body, contentStream, contentType);
+            FilesResource.CreateMediaUpload request = _driveService.Files.Create(body, contentStream, contentType);
             await request.UploadAsync().ConfigureAwait(false);
             return request.ResponseBody;
         }
 
-        public async Task<Google.Apis.Drive.v2.Data.File> UpdateFileInDriveAppFolderAsync(Google.Apis.Drive.v2.Data.File file, string title, string contentType, Stream contentStream)
+        public async Task<Google.Apis.Drive.v3.Data.File> UpdateFileInDriveAppFolderAsync(Google.Apis.Drive.v3.Data.File file, string title, string contentType, Stream contentStream)
         {
             await InitAppFolderIdAsync().ConfigureAwait(false);
 
-            Logger.Info($"Updating file {file.Id} ({file.Title}) in appfolder...");
+            Logger.Info($"Updating file {file.Id} ({file.Name}) in appfolder...");
 
-            file.Title = title;
+            file.Name = title;
             file.MimeType = contentType;
 
             FilesResource.UpdateMediaUpload request = _driveService.Files.Update(file, file.Id, contentStream, contentType);
-            request.NewRevision = true;
             await request.UploadAsync().ConfigureAwait(false);
             return request.ResponseBody;
         }
 
-        public async Task<Stream> DownloadFileFromDriveAppFolderAsync(Google.Apis.Drive.v2.Data.File file)
+        public async Task<Stream> DownloadFileFromDriveAppFolderAsync(Google.Apis.Drive.v3.Data.File file)
         {
             await InitAppFolderIdAsync().ConfigureAwait(false);
 
-            Logger.Info($"Downloading file {file.Id} ({file.Title})...");
-
-            if(string.IsNullOrEmpty(file.DownloadUrl)) {
-                Logger.Error("File download URL is empty!");
-                return null;
-            }
-
-            Logger.Info($"Downloading file {file.Id} ({file.Title}) from {file.DownloadUrl}...");
-            return await _driveService.HttpClient.GetStreamAsync(new Uri(file.DownloadUrl));
+            Logger.Info($"Downloading file {file.Id} ({file.Name})...");
+            return await _driveService.Files.Get(file.Id).ExecuteAsStreamAsync().ConfigureAwait(false);
         }
 
-        public async Task DeleteFileFromDriveAppFolderAsync(Google.Apis.Drive.v2.Data.File file)
+        public async Task DeleteFileFromDriveAppFolderAsync(Google.Apis.Drive.v3.Data.File file)
         {
             await InitAppFolderIdAsync().ConfigureAwait(false);
 
-            Logger.Info($"Deleting file {file.Id} ({file.Title})...");
+            Logger.Info($"Deleting file {file.Id} ({file.Name})...");
             await _driveService.Files.Delete(file.Id).ExecuteAsync().ConfigureAwait(false);
         }
 
@@ -201,7 +192,7 @@ namespace EnergonSoftware.BackpackPlanner.DriveFileExplorer
 
             Logger.Debug("Initializing appfolder Id...");
 
-            Google.Apis.Drive.v2.Data.File file = await _driveService.Files.Get("appfolder").ExecuteAsync().ConfigureAwait(false);
+            Google.Apis.Drive.v3.Data.File file = await _driveService.Files.Get("appfolder").ExecuteAsync().ConfigureAwait(false);
             if(null == file) {
                 Logger.Error("Unable to get appfolder Id!");
                 return;

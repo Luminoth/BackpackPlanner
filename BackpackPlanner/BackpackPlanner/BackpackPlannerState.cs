@@ -103,6 +103,7 @@ namespace EnergonSoftware.BackpackPlanner
         {
             if(disposing) {
                 DatabaseState?.Dispose();
+                PlatformPlayServicesManager?.Dispose();
             }
         }
 #endregion

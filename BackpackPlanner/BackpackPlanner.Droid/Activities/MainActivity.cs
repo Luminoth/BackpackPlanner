@@ -42,7 +42,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
         {
             base.OnDestroy();
 
-            if(((HockeyAppManager)BackpackPlannerState.PlatformHockeyAppManager).HasNewCrashes(this)) {
+            if(((HockeyAppManager)DroidState.Instance.BackpackPlannerState.PlatformHockeyAppManager).HasNewCrashes(this)) {
                 Logger.Warn("Hockey app has new crashes, probably leaking the dialog!");
             }
         }
@@ -51,14 +51,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
         {
             base.OnResume();
 
-            if(BackpackPlannerState.Settings.MetaSettings.FirstRun) {
+            if(DroidState.Instance.BackpackPlannerState.Settings.MetaSettings.FirstRun) {
                 Logger.Debug("Starting FTUE...");
                 StartActivity(typeof(FTUEActivity));
             } else {
                 Logger.Debug("Starting main activity...");
                 StartActivity(typeof(BackpackPlannerActivity));
             }
-            BackpackPlannerState.Settings.MetaSettings.FirstRun = false;
+            DroidState.Instance.BackpackPlannerState.Settings.MetaSettings.FirstRun = false;
 
             Finish();
         }

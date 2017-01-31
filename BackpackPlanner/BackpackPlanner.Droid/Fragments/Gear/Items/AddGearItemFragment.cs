@@ -69,17 +69,17 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
             };
 
             _gearItemWeightEditText.Hint = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_gear_item_weight),
-                BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(true)
+                DroidState.Instance.BackpackPlannerState.Settings.Units.GetSmallWeightString(true)
             );
 
             _gearItemCostEditText.Hint = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_gear_item_cost),
-                BaseActivity.BackpackPlannerState.Settings.Currency.GetCurrencyString()
+                DroidState.Instance.BackpackPlannerState.Settings.Currency.GetCurrencyString()
             );
         }
 
         protected override void OnDoDataExchange()
         {
-            Item = new GearItem(BaseActivity.BackpackPlannerState.Settings)
+            Item = new GearItem(DroidState.Instance.BackpackPlannerState.Settings)
             {
                 Name = _gearItemNameEditText.EditText.Text,
                 Make = _gearItemMakeEditText.EditText.Text,
