@@ -1,5 +1,5 @@
 ///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../scripts/typings/angular-material/index.d.ts" />
 
 ///<reference path="../../Models/AppSettings.ts" />
 

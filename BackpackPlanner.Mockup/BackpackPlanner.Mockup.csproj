@@ -165,7 +165,7 @@
     <TypeScriptCompile Include="app\UnitConversion.ts" />
     <None Include="data\trips\itineraries.json" />
     <None Include="data\trips\plans.json" />
-    <TypeScriptCompile Include="Scripts\typings\angular-material\angular-material.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angular-material\index.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-animate.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-component-router.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-cookies.d.ts" />

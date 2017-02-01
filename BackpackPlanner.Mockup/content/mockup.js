@@ -3495,7 +3495,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../scripts/typings/angular-material/index.d.ts" />
 ///<reference path="../Models/Gear/GearItem.ts" />
 ///<reference path="../Models/Gear/GearSystem.ts" />
 ///<reference path="../Models/Gear/GearCollection.ts" />
@@ -3614,7 +3614,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
 ///<reference path="../../AppCtrl.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
@@ -3677,7 +3677,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
 ///<reference path="../../../../scripts/typings/angularjs/angular-route.d.ts" />
 ///<reference path="../../AppCtrl.ts" />
 var BackpackPlanner;
@@ -3797,7 +3797,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
 ///<reference path="../../AppCtrl.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
@@ -3839,7 +3839,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
 ///<reference path="../../AppCtrl.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
@@ -3878,7 +3878,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
 ///<reference path="../../../../scripts/typings/angularjs/angular-route.d.ts" />
 ///<reference path="../../AppCtrl.ts" />
 var BackpackPlanner;
@@ -3974,7 +3974,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
 ///<reference path="../../AppCtrl.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
@@ -4016,7 +4016,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
 ///<reference path="../../AppCtrl.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
@@ -4067,7 +4067,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
 ///<reference path="../../../../scripts/typings/angularjs/angular-route.d.ts" />
 ///<reference path="../../AppCtrl.ts" />
 var BackpackPlanner;
@@ -4175,7 +4175,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
 ///<reference path="../../AppCtrl.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
@@ -4217,7 +4217,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../scripts/typings/angular-material/index.d.ts" />
 ///<reference path="../AppCtrl.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
@@ -4256,7 +4256,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../scripts/typings/angular-material/index.d.ts" />
 ///<reference path="../../../scripts/typings/angularjs/angular-route.d.ts" />
 ///<reference path="../AppCtrl.ts" />
 var BackpackPlanner;
@@ -4349,7 +4349,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../scripts/typings/angular-material/index.d.ts" />
 ///<reference path="../AppCtrl.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
@@ -4385,7 +4385,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
 ///<reference path="../../AppCtrl.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
@@ -4427,7 +4427,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
 ///<reference path="../../../../scripts/typings/angularjs/angular-route.d.ts" />
 ///<reference path="../../AppCtrl.ts" />
 var BackpackPlanner;
@@ -4523,7 +4523,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
 ///<reference path="../../AppCtrl.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
@@ -4562,7 +4562,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
 ///<reference path="../../AppCtrl.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
@@ -4604,7 +4604,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
 ///<reference path="../../../../scripts/typings/angularjs/angular-route.d.ts" />
 ///<reference path="../../AppCtrl.ts" />
 var BackpackPlanner;
@@ -4748,7 +4748,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
 ///<reference path="../../AppCtrl.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
@@ -4835,7 +4835,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../scripts/typings/angular-material/index.d.ts" />
 ///<reference path="../../Models/AppSettings.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
@@ -4879,7 +4879,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../scripts/typings/angular-material/index.d.ts" />
 ///<reference path="../Models/AppSettings.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
@@ -5265,7 +5265,7 @@ var BackpackPlanner;
         RouteConfig.$inject = ["$routeProvider"];
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../Scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../Scripts/typings/angular-material/index.d.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -5386,7 +5386,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
 ///<reference path="../../../AppState.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
@@ -5444,7 +5444,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
 ///<reference path="../../../AppState.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
@@ -5502,7 +5502,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -5529,7 +5529,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -5556,7 +5556,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
 ///<reference path="../../../AppState.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
@@ -5614,7 +5614,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -5641,7 +5641,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../scripts/typings/angular-material/index.d.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -5665,7 +5665,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../scripts/typings/angular-material/index.d.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -5689,7 +5689,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -5716,7 +5716,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
 ///<reference path="../../../AppState.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
@@ -5774,7 +5774,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
 ///<reference path="../../../AppState.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
@@ -5831,7 +5831,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
 ///<reference path="../../../AppState.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
@@ -5889,7 +5889,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
 ///<reference path="../../../AppState.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
@@ -5946,7 +5946,7 @@ var BackpackPlanner;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
 ///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/angular-material.d.ts" />
+///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
