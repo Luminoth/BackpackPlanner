@@ -3,6 +3,7 @@
 The following is necessary to fix Proguard failing:
 
 * Ensure that Jenkins is running as a local user, not the system user!
+* Install JDK 1.8
 * Install Android Studio
 * mklink /j C:\android-sdk "<path to Android SDK>"
   * This should be from the Android Studio installation, not Visual Studio/Xamarin
@@ -10,9 +11,12 @@ The following is necessary to fix Proguard failing:
   * Set ANDROID_HOME to C:\android-sdk
   * Add %ANDROID_HOME%\tools and %ANDROID_HOME%\platform_tools to the PATH
   * Set PROGUARD_HOME to %ANDROID_HOME%\tools\proguard
+    ** This should be the most current proguard, so that might need to be downloaded and copied over
   * Add %PROGUARD_HOME%\bin to the PATH
 * Set Xamarin to use the SDK in C:\android-sdk in Visual Studio (in Tools -> Options -> Xamarin)
+* Set Xamarin to use the JDK 1.8 in Visual Studio (in Tools -> Options -> Xamarin)
 * Set the Visual Studio Cross Platform Android SDK to be C:\android-sdk (in Tools -> Options -> Cross Platform)
+* Set the Visual Studio Cross Platform JDK to be 1.8 (in Tools -> Options -> Cross Platform)
 * On top of this, Jenkins should set /p:AndroidSdkDirectory=C:\android-sdk when building to ensure the correct SDK is used
 * May need to build the Release build once with Visual Studio in order for everything to get setup for automatic builds
 * The Jenkins slave MUST run as a non-system user who has a Xamarin account.
