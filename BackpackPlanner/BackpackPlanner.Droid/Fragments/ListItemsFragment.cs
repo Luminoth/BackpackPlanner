@@ -96,7 +96,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         {
             base.OnResume();
 
-            PermissionRequest request = BaseActivity.CheckStoragePermission(PermissionRequest.StoragePermissionRequestCode).Result;
+            PermissionRequest request = BaseActivity.CheckStoragePermission(PermissionRequest.PermissionRequestCode.Storage).Result;
             request.PermissionGrantedEvent += (sender, args) => {
                 ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_loading_items, false);
 
@@ -117,6 +117,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                     }
                 );
             };
+            request.Notify(this);
         }
 
         public override void OnPause()

@@ -36,7 +36,7 @@ namespace EnergonSoftware.BackpackPlanner.Commands
         public T Item { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DeleteItemAction{T}"/> class.
+        /// Initializes a new instance of the <see cref="DeleteItemCommand{T}"/> class.
         /// </summary>
         /// <param name="item">The item to delete.</param>
         public DeleteItemCommand(T item)

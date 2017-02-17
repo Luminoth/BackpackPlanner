@@ -100,10 +100,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
         {
             base.OnResume();
 
-            PermissionRequest request = CheckStoragePermission(PermissionRequest.StoragePermissionRequestCode).Result;
+            PermissionRequest request = CheckStoragePermission(PermissionRequest.PermissionRequestCode.Storage).Result;
             request.PermissionGrantedEvent += async (sender, args) => {
                 await DroidState.Instance.InitDatabase().ConfigureAwait(false);
             };
+            request.Notify(this);
         }
 
         protected override void OnSaveInstanceState(Bundle outState)

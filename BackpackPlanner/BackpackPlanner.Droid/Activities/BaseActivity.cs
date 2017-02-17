@@ -35,7 +35,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 
         private readonly Stopwatch _startupStopwatch = new Stopwatch();
 
-        private readonly Dictionary<int, PermissionRequest> _permissionRequests = new Dictionary<int, PermissionRequest>();
+        private readonly Dictionary<PermissionRequest.PermissionRequestCode, PermissionRequest> _permissionRequests = new Dictionary<PermissionRequest.PermissionRequestCode, PermissionRequest>();
 
 #region Controls
         public Android.Support.V7.Widget.Toolbar Toolbar { get; private set; }
@@ -88,68 +88,99 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 
 #region Permissions
         // https://developer.android.com/training/permissions/index.html
+        // https://developer.android.com/training/permissions/requesting.html
 
+        /// <summary>
+        /// Permission request callback
+        /// </summary>
+        /// <param name="requestCode">The request code.</param>
+        /// <param name="permissions">The permissions.</param>
+        /// <param name="grantResults">The grant results.</param>
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
         {
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
-            PermissionRequest request = _permissionRequests.GetAndRemove(requestCode);
+            PermissionRequest request = _permissionRequests.GetAndRemove((PermissionRequest.PermissionRequestCode)requestCode);
             if(null == request) {
                 Logger.Error($"Got request permission result for request code {requestCode} but permission request is missing!");
                 return;
             }
 
             if(grantResults.Length > 0 && grantResults[0] == Permission.Granted) {
-                request.NotifyGranted(this);
+                request.SetState(PermissionRequest.PermissionRequestState.Granted);
             } else {
-                request.NotifyDenied(this);
+                request.SetState(PermissionRequest.PermissionRequestState.Denied);
             }
+            request.Notify(this);
         }
 
-        public async Task<PermissionRequest> CheckPermission(string permission, int requestCode, Func<Task> showExplanation=null)
+
+        /// <summary>
+        /// Checks for the given permission.
+        /// </summary>
+        /// <param name="permission">The permission.</param>
+        /// <param name="requestCode">The request code.</param>
+        /// <param name="showExplanation">Callback to show explanation.</param>
+        /// <returns>The permission request</returns>
+        /// <remarks>
+        /// Caller must Notify() on the returned request
+        /// </remarks>
+        public async Task<PermissionRequest> CheckPermission(string permission, PermissionRequest.PermissionRequestCode requestCode, Func<Task> showExplanation=null)
         {
             PermissionRequest request;
 
+            // permission already granted
             if(Permission.Granted == Android.Support.V4.Content.ContextCompat.CheckSelfPermission(this, permission)) {
                 request = new PermissionRequest(requestCode);
-                request.NotifyGranted(this);
+                request.SetState(PermissionRequest.PermissionRequestState.Granted);
                 return request;
             }
 
+            // need to show rationale first? only happens if permission is denied
             if(Android.Support.V4.App.ActivityCompat.ShouldShowRequestPermissionRationale(this, permission)) {
                 if(null == showExplanation) {
+                    // no rationale to show, so the request is denied
                     request = new PermissionRequest(requestCode);
-                    request.NotifyDenied(this);
+                    request.SetState(PermissionRequest.PermissionRequestState.Denied);
                     return request;
                 }
 
+                // wait for the user to get on board
                 await showExplanation().ConfigureAwait(false);
 
+                // re-check the permission (with no explanation this time)
                 return await CheckPermission(permission, requestCode, null).ConfigureAwait(false);
             }
 
+            // look for an existing request to return
             if(_permissionRequests.TryGetValue(requestCode, out request)) {
                 return request;
             }
 
+            // create a new request
             request = new PermissionRequest(requestCode);
             _permissionRequests.Add(requestCode, request);
 
-            Android.Support.V4.App.ActivityCompat.RequestPermissions(this, new[] { permission }, requestCode);
+            Android.Support.V4.App.ActivityCompat.RequestPermissions(this, new[] { permission }, (int)requestCode);
+            request.SetState(PermissionRequest.PermissionRequestState.Requested);
 
             return request;
         }
 
-        public async Task<PermissionRequest> CheckStoragePermission(int requestCode)
+        /// <summary>
+        /// Checks for the READ_EXTERNAL_STORAGE permission.
+        /// </summary>
+        /// <param name="requestCode">The request code.</param>
+        /// <returns>The permission request</returns>
+        /// <remarks>
+        /// Caller must Notify() on the returned request
+        /// </remarks>
+        public async Task<PermissionRequest> CheckStoragePermission(PermissionRequest.PermissionRequestCode requestCode)
         {
             PermissionRequest request = await CheckPermission(Manifest.Permission.ReadExternalStorage, requestCode).ConfigureAwait(false);
             request.PermissionDeniedEvent += (sender, args) => {
                 DialogUtil.ShowOkDialog(this, Resource.String.title_storage_permission, Resource.String.label_storage_permission);
             };
-
-            if(request.IsDenied) {
-                request.NotifyDenied(this);
-            }
             return request;
         }
 #endregion

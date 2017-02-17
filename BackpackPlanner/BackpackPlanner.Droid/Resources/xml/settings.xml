@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory
+    <!--<PreferenceCategory
         android:key="googlePlayServices"
         android:title="@string/title_google_play_services">
         <SwitchPreference
@@ -8,7 +8,7 @@
             android:title="@string/label_google_play_services"
             android:summary="@string/summary_google_play_services"
             android:defaultValue="false" />
-    </PreferenceCategory>
+    </PreferenceCategory>-->
     <PreferenceCategory
         android:key="personalInformation"
         android:title="@string/title_personal_information">

@@ -75,7 +75,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
         public void OnCreate(BaseActivity activity)
         {
-            if(null == _googleClientApi) {
+            if(IsEnabled && null == _googleClientApi) {
                 _activity = activity;
 
                 Logger.Debug($"{_activity.GetType()} Building Google API Client...");
@@ -95,7 +95,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             await Task.Delay(0).ConfigureAwait(false);
 
             /*Logger.Info("Connecting Google Play Services...");
-            _googleClientApi.Connect();*/
+            if(null != _googleClientApi) {
+                _googleClientApi.Connect();
+            }*/
 
             // using auto-managed connection, which should have connected in the base OnStart()
             OnConnected(new PlayServicesConnectedEventArgs { IsSuccess = IsConnected });
@@ -110,7 +112,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             }
 
             /*Logger.Info($"Disconnecting Google Play Services client...");
-            _googleClientApi.Disconnect();*/
+            if(null != _googleClientApi) {
+                _googleClientApi.Disconnect();
+            }*/
         }
 
         public void OnConnectionFailed(ConnectionResult result)
@@ -130,6 +134,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid
         // https://developers.google.com/drive/android/queries
         private async Task<Metadata> QueryFileInDriveAppFolderAsync(string title)
         {
+            if(!IsConnected) {
+                return null;
+            }
+
             QueryClass query = new QueryClass.Builder()
                 .AddFilter(Filters.Eq(SearchableField.Title, title))
                 .Build();
@@ -152,6 +160,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
         public override async Task<bool> SaveFileToDriveAppFolderAsync(string title, string contentType, Stream contentStream)
         {
+            if(!IsConnected) {
+                return false;
+            }
+
             IDriveApiDriveContentsResult driveContentsResult = await DriveClass.DriveApi
                 .NewDriveContentsAsync(_googleClientApi).ConfigureAwait(false);
             if(!driveContentsResult.Status.IsSuccess) {
@@ -180,6 +192,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
         public override async Task<bool> UpdateFileInDriveAppFolderAsync(string title, string contentType, Stream contentStream)
         {
+            if(!IsConnected) {
+                return false;
+            }
+
             Metadata metadata = await QueryFileInDriveAppFolderAsync(title).ConfigureAwait(false);
             if(null == metadata) {
                 Logger.Error($"{_activity.GetType()} No such file to update in appfolder: {title}!");
@@ -200,15 +216,27 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             return true;
         }
 
-        public override Task<Stream> DownloadFileFromDriveAppFolderAsync(string title)
+        public override async Task<Stream> DownloadFileFromDriveAppFolderAsync(string title)
         {
+            if(!IsConnected) {
+                return null;
+            }
+
+await Task.Delay(0).ConfigureAwait(false);
+
 // http://developer.android.com/guide/topics/data/data-storage.html
 // http://stackoverflow.com/questions/3425906/creating-temporary-files-in-android
 throw new NotImplementedException();
         }
 
-        public override Task DeleteFileFromDriveAppFolderAsync(string title)
+        public override async Task DeleteFileFromDriveAppFolderAsync(string title)
         {
+            if(!IsConnected) {
+                return;
+            }
+
+await Task.Delay(0).ConfigureAwait(false);
+
 throw new NotImplementedException();
         }
 #endregion

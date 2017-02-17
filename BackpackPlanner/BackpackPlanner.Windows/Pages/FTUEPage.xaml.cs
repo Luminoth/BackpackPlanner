@@ -15,6 +15,7 @@
 */
 
 using System;
+using System.Threading.Tasks;
 
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -41,12 +42,23 @@ namespace EnergonSoftware.BackpackPlanner.Windows.Pages
         // ReSharper disable once InconsistentNaming
         private async void FinishFTUE()
         {
+            await ConnectGooglePlayServices().ConfigureAwait(false);
+
+            Frame.Navigate(typeof(MainPage));
+        }
+
+        private async Task ConnectGooglePlayServices()
+        {
+            if(!App.CurrentApp.BackpackPlannerState.PlatformPlayServicesManager.IsEnabled) {
+                return;
+            }
+
             // TODO: these strings (including the command labels) should come from the resource file
             MessageDialog dialog = new MessageDialog("Connect to Google Play Services?", "Backpacking Planner can take advantage of Google Play Services to sync your data (some day). Would you like to allow this?");
             dialog.Commands.Add(new UICommand { Label = "Yes", Id = 0 });
             dialog.Commands.Add(new UICommand { Label = "No", Id = 1 });
 
-            IUICommand result = await dialog.ShowAsync().AsTask();
+            IUICommand result = await dialog.ShowAsync().AsTask().ConfigureAwait(false);
             switch((int)result.Id)
             {
             case 0: // Yes
@@ -55,7 +67,7 @@ namespace EnergonSoftware.BackpackPlanner.Windows.Pages
 
                 // try to connect now to get all of the confirmations out of the way
                 // TODO: show progress bar
-                await App.CurrentApp.BackpackPlannerState.PlatformPlayServicesManager.ConnectAsync();
+                await App.CurrentApp.BackpackPlannerState.PlatformPlayServicesManager.ConnectAsync().ConfigureAwait(false);
                 // TODO: validate connect success
                 Logger.Debug($"Google Play Services connected, finishing activity...");
                 // TODO: hide progress bar
@@ -65,8 +77,6 @@ namespace EnergonSoftware.BackpackPlanner.Windows.Pages
                 App.CurrentApp.BackpackPlannerState.Settings.ConnectGooglePlayServices = false;
                 break;
             }
-
-            Frame.Navigate(typeof(MainPage));
         }
     }
 }

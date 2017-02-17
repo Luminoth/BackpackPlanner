@@ -22,24 +22,54 @@ using EnergonSoftware.BackpackPlanner.Core.Logging;
 
 namespace EnergonSoftware.BackpackPlanner.Core.PlayServices
 {
-// TODO: rename this DatabaseSyncManifest and move it up a level
+    /// <summary>
+    /// The Google Play Services manifest file.
+    /// </summary>
+    // TODO: rename this DatabaseSyncManifest and move it up a level
     public sealed class PlayServicesManifest
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(PlayServicesManifest));
 
+        /// <summary>
+        /// The file title
+        /// </summary>
         public const string FileTitle = "BackpackPlanner.manifest";
 
+        /// <summary>
+        /// The file content type
+        /// </summary>
         public const string ContentType = "text/plain";
 
+        /// <summary>
+        /// Gets or sets the last synchronize timestamp in seconds.
+        /// </summary>
+        /// <value>
+        /// The last synchronize timestamp in seconds.
+        /// </value>
         public int LastSyncTimestampSeconds { get; set; }
 
+        /// <summary>
+        /// Gets or sets the last update timestamp in seconds.
+        /// </summary>
+        /// <value>
+        /// The last update timestamp in seconds.
+        /// </value>
         public int LastUpdateTimestampSeconds { get; set; }
 
+        /// <summary>
+        /// Reads the manifest from the specified stream.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        // TODO: implement this
         public async Task Read(Stream stream)
         {
 await Task.Delay(0).ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Writes the manifest to the specified stream.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
         public async Task Write(Stream stream)
         {
             string content = $@"Backpacking Planner

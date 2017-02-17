@@ -26,6 +26,7 @@ The following is necessary to fix Proguard failing:
 # Misc
 
 * http://developer.android.com/training/permissions/index.html
+* https://theconfuzedsourcecode.wordpress.com/2017/01/03/is-your-visual-studio-stuck-at-emulator-is-already-running/
 
 # Elevations
 
