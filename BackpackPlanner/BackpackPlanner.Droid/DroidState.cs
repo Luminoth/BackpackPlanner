@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Droid.Activities;
 using EnergonSoftware.BackpackPlanner.Droid.Logging;
+using EnergonSoftware.BackpackPlanner.Droid.Permissions;
 
 using SQLite.Net.Platform.XamarinAndroid;
 
@@ -35,6 +36,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
         public BackpackPlannerState BackpackPlannerState { get; private set; }
 
+
+        public DroidPermissionRequestFactory PermissionRequestFactory { get; private set; }
+
         private bool _preferencesLoaded;
 
         /// <summary>
@@ -48,6 +52,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid
                 CustomLogger.PlatformLogger = new DroidLogger();
             }
 
+            if(null == PermissionRequestFactory) {
+                PermissionRequestFactory = new DroidPermissionRequestFactory(activity);
+            }
+
             if(null == BackpackPlannerState) {
                 BackpackPlannerState = new BackpackPlannerState(
                     new HockeyAppManager(),
@@ -55,7 +63,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
                     new DroidPlayServicesManager(),
                     new DroidDatabaseSyncManager(),
                     //new SQLitePlatformAndroid()
-                    new SQLitePlatformAndroidN()
+                    new SQLitePlatformAndroidN(),
+                    PermissionRequestFactory
                 );
 
                 await BackpackPlannerState.InitAsync().ConfigureAwait(false);

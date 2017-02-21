@@ -34,23 +34,53 @@ namespace EnergonSoftware.BackpackPlanner.Core.Permissions
         /// </remarks>
         public enum PermissionType
         {
-            Calendar = 1001,
+            ReadCalendar = 1001,
+
+            WriteCalendar,
 
             Camera,
 
-            Contacts,
+            ReadContacts,
 
-            Location,
+            WriteContacts,
 
-            Microphone,
+            GetAccounts,
 
-            Phone,
+            FineLocation,
 
-            Sensors,
+            CoarseLocation,
 
-            SMS,
+            RecordAudio,
 
-            Storage
+            ReadPhoneState,
+
+            CallPhone,
+
+            ReadCallLog,
+
+            WriteCallLog,
+
+            AddVoiceMail,
+
+            UseSip,
+
+            ProcessOutgoingCalls,
+
+            BodySensors,
+
+            SendSMS,
+
+            ReceiveSMS,
+
+            ReadSMS,
+
+            ReceiveWapPush,
+
+            ReceiveMMS,
+
+            ReadStorage,
+
+            WriteStorage
         }
 
 #region Events

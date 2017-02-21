@@ -27,6 +27,7 @@ using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans;
+using EnergonSoftware.BackpackPlanner.Droid.Permissions;
 using EnergonSoftware.BackpackPlanner.Droid.Util;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Activities
@@ -103,11 +104,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
         {
             base.OnResume();
 
-            CheckReadStoragePermission(async (sender, args) =>
+            DroidPermissionRequest readStoragePermissionRequest = DroidState.Instance.PermissionRequestFactory.CreateReadStoragePermissionRequest();
+            readStoragePermissionRequest.PermissionGrantedEvent += async (sender, args) =>
             {
                 Logger.Info("Storage permission granted, initializing database...");
                 await DroidState.Instance.InitDatabase().ConfigureAwait(false);
-            }).Wait();
+            };
+            readStoragePermissionRequest.Request(DroidState.Instance.BackpackPlannerState);
         }
 
         protected override void OnSaveInstanceState(Bundle outState)

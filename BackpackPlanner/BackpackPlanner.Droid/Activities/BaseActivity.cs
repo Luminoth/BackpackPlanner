@@ -18,14 +18,12 @@ using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-using Android;
 using Android.Content.PM;
 using Android.OS;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Core.Permissions;
 using EnergonSoftware.BackpackPlanner.Droid.Permissions;
-using EnergonSoftware.BackpackPlanner.Droid.Util;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 {
@@ -141,20 +139,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 
             // request the permission
             Android.Support.V4.App.ActivityCompat.RequestPermissions(this, new[] { permissionRequest.Permission }, (int)permissionRequest.Type);
-        }
-
-        /// <summary>
-        /// Checks for the READ_EXTERNAL_STORAGE permission.
-        /// </summary>
-        public async Task CheckReadStoragePermission(EventHandler<EventArgs> permissionGrantedEventHandler, Func<Task> showExplanation=null)
-        {
-            DroidPermissionRequest permissionRequest = new DroidPermissionRequest(this, Manifest.Permission.ReadExternalStorage, PermissionRequest.PermissionType.Storage);
-            permissionRequest.PermissionGrantedEvent += permissionGrantedEventHandler;
-            permissionRequest.PermissionDeniedEvent += (sender, args) => {
-                DialogUtil.ShowOkDialog(this, Resource.String.title_storage_permission, Resource.String.label_storage_permission);
-            };
-
-            await CheckPermission(permissionRequest, showExplanation).ConfigureAwait(false);
         }
 #endregion
 

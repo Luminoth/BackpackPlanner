@@ -62,6 +62,7 @@ namespace EnergonSoftware.BackpackPlanner
         /// </value>
         public DatabaseState DatabaseState { get; } = new DatabaseState();
 
+#region Platform DI
         /// <summary>
         /// Gets the platform HockeyApp manager.
         /// </summary>
@@ -94,6 +95,9 @@ namespace EnergonSoftware.BackpackPlanner
         /// </value>
         public SettingsManager PlatformSettingsManager { get; }
 
+        public PermissionRequestFactory PlatformPermissionRequestFactory { get; }
+#endregion
+
         private readonly Dictionary<PermissionRequest.PermissionType, List<PermissionRequest>> _permissionRequests = new Dictionary<PermissionRequest.PermissionType, List<PermissionRequest>>();
 
 #region Dispose
@@ -120,7 +124,7 @@ namespace EnergonSoftware.BackpackPlanner
         /// <param name="platformPlayServicesManager">The platform google play services manager.</param>
         /// <param name="platformDatabaseSyncManager">The platform database sync manager.</param>
         /// <param name="sqlitePlatform">The SQLite platform.</param>
-        public BackpackPlannerState(IHockeyAppManager platformHockeyAppManager, SettingsManager platformSettingsManager, PlayServicesManager platformPlayServicesManager, DatabaseSyncManager platformDatabaseSyncManager, ISQLitePlatform sqlitePlatform)
+        public BackpackPlannerState(IHockeyAppManager platformHockeyAppManager, SettingsManager platformSettingsManager, PlayServicesManager platformPlayServicesManager, DatabaseSyncManager platformDatabaseSyncManager, ISQLitePlatform sqlitePlatform, PermissionRequestFactory platformPermissionRequestFactory)
         {
             if(null == platformHockeyAppManager) {
                 throw new ArgumentNullException(nameof(platformHockeyAppManager));
@@ -142,6 +146,10 @@ namespace EnergonSoftware.BackpackPlanner
                 throw new ArgumentNullException(nameof(sqlitePlatform));
             }
 
+            if(null == platformPermissionRequestFactory) {
+                throw new ArgumentNullException(nameof(platformPermissionRequestFactory));
+            }
+
             PlatformHockeyAppManager = platformHockeyAppManager;
 
             PlatformSettingsManager = platformSettingsManager;
@@ -151,6 +159,8 @@ namespace EnergonSoftware.BackpackPlanner
 
             PlatformPlayServicesManager = platformPlayServicesManager;
             PlatformDatabaseSyncManager = platformDatabaseSyncManager;
+
+            PlatformPermissionRequestFactory = platformPermissionRequestFactory;
 
             PersonalInformation = new PersonalInformation(PlatformSettingsManager, Settings);
         }

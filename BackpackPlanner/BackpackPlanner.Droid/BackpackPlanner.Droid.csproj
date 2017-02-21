@@ -269,6 +269,7 @@
     <Compile Include="Logging\DroidLogger.cs" />
     <Compile Include="DroidSettingsManager.cs" />
     <Compile Include="Permissions\DroidPermissionRequest.cs" />
+    <Compile Include="Permissions\DroidPermissionRequestFactory.cs" />
     <Compile Include="Util\CircleViewPagerIndicator.cs" />
     <Compile Include="Util\DialogUtil.cs" />
     <Compile Include="Util\DrawerToggle.cs" />
