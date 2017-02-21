@@ -55,6 +55,7 @@
     <Compile Include="DatabaseState.cs" />
     <Compile Include="Core\Settings\SettingsManager.cs" />
     <Compile Include="Models\DatabaseItem.cs" />
+    <Compile Include="Core\Permissions\PermissionRequest.cs" />
     <Compile Include="Settings\MetaSettings.cs" />
     <Compile Include="Units\Currency\Currency.cs" />
     <Compile Include="Settings\BackpackPlannerSettings.cs" />

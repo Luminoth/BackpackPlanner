@@ -19,6 +19,7 @@ using Android.Content.Res;
 using Android.OS;
 using Android.Views;
 
+using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items;
@@ -33,6 +34,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
     [Activity(Label = "@string/app_name", Exported = true)]
     public sealed class BackpackPlannerActivity : BaseActivity, View.IOnClickListener
     {
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(BackpackPlannerActivity));
+
 #region Controls
         private readonly NavigationDrawerManager _navigationDrawerManager = new NavigationDrawerManager();
 #endregion
@@ -100,11 +103,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
         {
             base.OnResume();
 
-            PermissionRequest request = CheckStoragePermission(PermissionRequest.PermissionRequestCode.Storage).Result;
-            request.PermissionGrantedEvent += async (sender, args) => {
+            CheckReadStoragePermission(async (sender, args) =>
+            {
+                Logger.Info("Storage permission granted, initializing database...");
                 await DroidState.Instance.InitDatabase().ConfigureAwait(false);
-            };
-            request.Notify(this);
+            }).Wait();
         }
 
         protected override void OnSaveInstanceState(Bundle outState)

@@ -15,11 +15,13 @@
 */
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Core;
 using EnergonSoftware.BackpackPlanner.Core.HockeyApp;
 using EnergonSoftware.BackpackPlanner.Core.Logging;
+using EnergonSoftware.BackpackPlanner.Core.Permissions;
 using EnergonSoftware.BackpackPlanner.Core.PlayServices;
 using EnergonSoftware.BackpackPlanner.Core.Settings;
 using EnergonSoftware.BackpackPlanner.Models.Personal;
@@ -91,6 +93,8 @@ namespace EnergonSoftware.BackpackPlanner
         /// The platform settings manager.
         /// </value>
         public SettingsManager PlatformSettingsManager { get; }
+
+        private readonly Dictionary<PermissionRequest.PermissionType, List<PermissionRequest>> _permissionRequests = new Dictionary<PermissionRequest.PermissionType, List<PermissionRequest>>();
 
 #region Dispose
         public void Dispose()
@@ -181,5 +185,34 @@ namespace EnergonSoftware.BackpackPlanner
 
             await PlatformHockeyAppManager.DestroyAsync().ConfigureAwait(false);
         }
+
+#region Permissions
+        public void AddPermissionRequest(PermissionRequest permissionRequest)
+        {
+            Logger.Debug($"Adding request for permission type {permissionRequest.Type}...");
+
+            List<PermissionRequest> requests;
+            if(!_permissionRequests.TryGetValue(permissionRequest.Type, out requests)) {
+                requests = new List<PermissionRequest>();
+                _permissionRequests.Add(permissionRequest.Type, requests);
+            }
+            requests.Add(permissionRequest);
+        }
+
+        public void NotifyPermissionRequests(PermissionRequest.PermissionType permissionType, bool granted)
+        {
+            List<PermissionRequest> requests;
+            if(!_permissionRequests.TryGetValue(permissionType, out requests)) {
+                return;
+            }
+
+            Logger.Debug($"Notifying for permission type {permissionType}: {granted}");
+
+            foreach(PermissionRequest request in requests) {
+                request.Notify(granted);
+            }
+            requests.Clear();
+        }
+#endregion
     }
 }

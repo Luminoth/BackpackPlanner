@@ -54,7 +54,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
                     new DroidSettingsManager(Android.Support.V7.Preferences.PreferenceManager.GetDefaultSharedPreferences(activity)),
                     new DroidPlayServicesManager(),
                     new DroidDatabaseSyncManager(),
-                    new SQLitePlatformAndroid()
+                    //new SQLitePlatformAndroid()
+                    new SQLitePlatformAndroidN()
                 );
 
                 await BackpackPlannerState.InitAsync().ConfigureAwait(false);

@@ -22,6 +22,7 @@ using Android.Views;
 
 using Java.Interop;
 
+// TODO: can this be replaced with something based on this: https://developer.android.com/training/animation/screen-slide.html ?
 namespace EnergonSoftware.BackpackPlanner.Droid.Util
 {
     /// <summary>
@@ -100,7 +101,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
             a.Recycle ();
             
             var configuration = ViewConfiguration.Get (context);
-            mTouchSlop = Android.Support.V4.View.ViewConfigurationCompat.GetScaledPagingTouchSlop (configuration);
+            mTouchSlop = configuration.ScaledPagingTouchSlop;
             
         }
 
@@ -300,13 +301,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
             switch ((int)action & Android.Support.V4.View.MotionEventCompat.ActionMask)
             {
             case (int) MotionEventActions.Down:
-                mActivePointerId = Android.Support.V4.View.MotionEventCompat.GetPointerId (ev, 0);
+                mActivePointerId = ev.GetPointerId (0);
                 mLastMotionX = ev.GetX ();
                 break;
             case (int)MotionEventActions.Move:
                 {
-                    int activePointerIndex = Android.Support.V4.View.MotionEventCompat.FindPointerIndex (ev, mActivePointerId);
-                    float x = Android.Support.V4.View.MotionEventCompat.GetX (ev, activePointerIndex);
+                    int activePointerIndex = ev.FindPointerIndex (mActivePointerId);
+                    float x = ev.GetX (activePointerIndex);
                     float deltaX = x - mLastMotionX;
     
                     if (!mIsDragging) {
@@ -353,19 +354,19 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
                 break;
             case Android.Support.V4.View.MotionEventCompat.ActionPointerDown: {
                     int index = Android.Support.V4.View.MotionEventCompat.GetActionIndex (ev);
-                    float x = Android.Support.V4.View.MotionEventCompat.GetX (ev, index);
+                    float x = ev.GetX (index);
                     mLastMotionX = x;
-                    mActivePointerId = Android.Support.V4.View.MotionEventCompat.GetPointerId (ev, index);
+                    mActivePointerId = ev.GetPointerId (index);
                     break;
                 }
             case Android.Support.V4.View.MotionEventCompat.ActionPointerUp:
                 int pointerIndex = Android.Support.V4.View.MotionEventCompat.GetActionIndex (ev);
-                int pointerId = Android.Support.V4.View.MotionEventCompat.GetPointerId (ev, pointerIndex);
+                int pointerId = ev.GetPointerId (pointerIndex);
                 if (pointerId == mActivePointerId) {
                     int newPointerIndex = pointerIndex == 0 ? 1 : 0;
-                    mActivePointerId = Android.Support.V4.View.MotionEventCompat.GetPointerId (ev, newPointerIndex);
+                    mActivePointerId = ev.GetPointerId (newPointerIndex);
                 }
-                mLastMotionX = Android.Support.V4.View.MotionEventCompat.GetX (ev, Android.Support.V4.View.MotionEventCompat.FindPointerIndex (ev, mActivePointerId));
+                mLastMotionX = ev.GetX (ev.FindPointerIndex (mActivePointerId));
                 break;
             }
     
