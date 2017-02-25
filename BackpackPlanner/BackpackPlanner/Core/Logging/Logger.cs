@@ -100,59 +100,66 @@ namespace EnergonSoftware.BackpackPlanner.Core.Logging
                     return logger;
                 }
 
-                logger = new CustomLogger();
+                logger = new CustomLogger(type);
                 LoggerCache.Add(type, logger);
                 return logger;
             }
         }
 
-        private static string BuildMessage(string level, string message)
+        private static string BuildMessage(Type type, string level, string message)
         {
-            return $"{DateTime.Now} {level}: {message}";
+            return $"{DateTime.Now} [{type.Name}] {level}: {message}";
         }
+
+        private readonly Type _type;
 
         public void Debug(string message)
         {
 #if DEBUG
-            PlatformLogger.Debug(BuildMessage("DEBUG", message));
+            PlatformLogger.Debug(BuildMessage(_type, "DEBUG", message));
 #endif
         }
 
         public void Debug(string message, Exception ex)
         {
 #if DEBUG
-            PlatformLogger.Debug(BuildMessage("DEBUG", message), ex);
+            PlatformLogger.Debug(BuildMessage(_type, "DEBUG", message), ex);
 #endif
         }
 
         public void Info(string message)
         {
-            PlatformLogger.Debug(BuildMessage("INFO", message));
+            PlatformLogger.Debug(BuildMessage(_type, "INFO", message));
         }
 
         public void Info(string message, Exception ex)
         {
-            PlatformLogger.Debug(BuildMessage("INFO", message), ex);
+            PlatformLogger.Debug(BuildMessage(_type, "INFO", message), ex);
         }
 
         public void Warn(string message)
         {
-            PlatformLogger.Debug(BuildMessage("WARNING", message));
+            PlatformLogger.Debug(BuildMessage(_type, "WARNING", message));
         }
 
         public void Warn(string message, Exception ex)
         {
-            PlatformLogger.Debug(BuildMessage("WARNING", message), ex);
+            PlatformLogger.Debug(BuildMessage(_type, "WARNING", message), ex);
         }
 
         public void Error(string message)
         {
-            PlatformLogger.Debug(BuildMessage("ERROR", message));
+            PlatformLogger.Debug(BuildMessage(_type, "ERROR", message));
         }
 
         public void Error(string message, Exception ex)
         {
-            PlatformLogger.Debug(BuildMessage("ERROR", message), ex);
+            PlatformLogger.Debug(BuildMessage(_type, "ERROR", message), ex);
+        }
+
+        public CustomLogger(Type type)
+        {
+            _type = type;
         }
     }
 }

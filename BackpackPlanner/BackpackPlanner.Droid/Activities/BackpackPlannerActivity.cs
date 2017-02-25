@@ -100,17 +100,20 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             _navigationDrawerManager.Toggle.SyncState();
         }
 
-        protected override void OnResume()
+        protected override void OnStart()
         {
-            base.OnResume();
+            base.OnStart();
 
-            DroidPermissionRequest readStoragePermissionRequest = DroidState.Instance.PermissionRequestFactory.CreateReadStoragePermissionRequest();
-            readStoragePermissionRequest.PermissionGrantedEvent += async (sender, args) =>
+            DroidPermissionRequest writeStoragePermissionRequest = DroidState.Instance.PermissionRequestFactory.CreateWriteStoragePermissionRequest();
+            writeStoragePermissionRequest.PermissionGrantedEvent += async (sender, args) =>
             {
+// TODO: what if the db calls just inherintly called this?
+// and then we can get rid of this whole permission check
+// and init call timing problem maybe goes away?
                 Logger.Info("Storage permission granted, initializing database...");
                 await DroidState.Instance.InitDatabase().ConfigureAwait(false);
             };
-            readStoragePermissionRequest.Request(DroidState.Instance.BackpackPlannerState);
+            writeStoragePermissionRequest.Request(DroidState.Instance.BackpackPlannerState);
         }
 
         protected override void OnSaveInstanceState(Bundle outState)

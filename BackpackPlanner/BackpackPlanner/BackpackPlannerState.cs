@@ -16,6 +16,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Core;
@@ -98,7 +99,7 @@ namespace EnergonSoftware.BackpackPlanner
         public PermissionRequestFactory PlatformPermissionRequestFactory { get; }
 #endregion
 
-        private readonly Dictionary<PermissionRequest.PermissionType, List<PermissionRequest>> _permissionRequests = new Dictionary<PermissionRequest.PermissionType, List<PermissionRequest>>();
+        private readonly Dictionary<string, List<PermissionRequest>> _permissionRequests = new Dictionary<string, List<PermissionRequest>>();
 
 #region Dispose
         public void Dispose()
@@ -197,26 +198,43 @@ namespace EnergonSoftware.BackpackPlanner
         }
 
 #region Permissions
+        /// <summary>
+        /// Adds a permission request.
+        /// </summary>
+        /// <param name="permissionRequest">The permission request.</param>
+        /// <returns>True if the permission is new, false if it was added to an existin grequest.</returns>
         public void AddPermissionRequest(PermissionRequest permissionRequest)
         {
-            Logger.Debug($"Adding request for permission type {permissionRequest.Type}...");
+            Logger.Debug($"Adding request for permission {permissionRequest.Permission}...");
 
             List<PermissionRequest> requests;
-            if(!_permissionRequests.TryGetValue(permissionRequest.Type, out requests)) {
+            if(!_permissionRequests.TryGetValue(permissionRequest.Permission, out requests)) {
                 requests = new List<PermissionRequest>();
-                _permissionRequests.Add(permissionRequest.Type, requests);
+                _permissionRequests.Add(permissionRequest.Permission, requests);
             }
+
             requests.Add(permissionRequest);
         }
 
-        public void NotifyPermissionRequests(PermissionRequest.PermissionType permissionType, bool granted)
+        public int RemovePermissionRequests(Predicate<PermissionRequest> match)
+        {
+            return _permissionRequests.Sum(requests => requests.Value.RemoveAll(match));
+        }
+
+        /// <summary>
+        /// Notifies that a permission request has completed.
+        /// </summary>
+        /// <param name="permission">The permission.</param>
+        /// <param name="granted">if set to <c>true</c> the permission was granted, otherwise it was denied.</param>
+        public void NotifyPermissionRequests(string permission, bool granted)
         {
             List<PermissionRequest> requests;
-            if(!_permissionRequests.TryGetValue(permissionType, out requests)) {
+            if(!_permissionRequests.TryGetValue(permission, out requests)) {
+                Logger.Warn($"Attempt to notify for permission {permission}, which does not exist!");
                 return;
             }
 
-            Logger.Debug($"Notifying for permission type {permissionType}: {granted}");
+            Logger.Debug($"Notifying for permission {permission}: {granted}");
 
             foreach(PermissionRequest request in requests) {
                 request.Notify(granted);

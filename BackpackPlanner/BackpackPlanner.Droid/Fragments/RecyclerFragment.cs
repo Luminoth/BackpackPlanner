@@ -32,6 +32,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
+            base.OnViewCreated(view, savedInstanceState);
+
             Layout = view.FindViewById<Android.Support.V7.Widget.RecyclerView>(ListLayoutResource);
 
             LayoutManager = new Android.Support.V7.Widget.LinearLayoutManager(Activity);

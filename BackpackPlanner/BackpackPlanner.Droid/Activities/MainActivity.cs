@@ -40,11 +40,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 
         protected override void OnDestroy()
         {
-            base.OnDestroy();
-
             if(((HockeyAppManager)DroidState.Instance.BackpackPlannerState.PlatformHockeyAppManager).HasNewCrashes(this)) {
                 Logger.Warn("Hockey app has new crashes, probably leaking the dialog!");
             }
+
+            base.OnDestroy();
         }
 
         protected override void OnResume()

@@ -23,84 +23,13 @@ namespace EnergonSoftware.BackpackPlanner.Core.Permissions
     /// </summary>
     public abstract class PermissionRequest
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>
-        /// based on the Android dangerous permission list
-        /// https://developer.android.com/guide/topics/permissions/requesting.html#normal-dangerous
-        /// TODO: if there are other system-level permissions
-        /// to request, they should be added here
-        /// </remarks>
-        public enum PermissionType
-        {
-            ReadCalendar = 1001,
-
-            WriteCalendar,
-
-            Camera,
-
-            ReadContacts,
-
-            WriteContacts,
-
-            GetAccounts,
-
-            FineLocation,
-
-            CoarseLocation,
-
-            RecordAudio,
-
-            ReadPhoneState,
-
-            CallPhone,
-
-            ReadCallLog,
-
-            WriteCallLog,
-
-            AddVoiceMail,
-
-            UseSip,
-
-            ProcessOutgoingCalls,
-
-            BodySensors,
-
-            SendSMS,
-
-            ReceiveSMS,
-
-            ReadSMS,
-
-            ReceiveWapPush,
-
-            ReceiveMMS,
-
-            ReadStorage,
-
-            WriteStorage
-        }
-
 #region Events
         public event EventHandler<EventArgs> PermissionGrantedEvent;
 
         public event EventHandler<EventArgs> PermissionDeniedEvent;
 #endregion
 
-        /// <summary>
-        /// Gets the permission type.
-        /// </summary>
-        /// <value>
-        /// The permission type.
-        /// </value>
-        public PermissionType Type { get; }
-
-        protected PermissionRequest(PermissionType permissionType)
-        {
-            Type = permissionType;
-        }
+        public abstract string Permission { get; }
 
         /// <summary>
         /// Requests the specified permission type.

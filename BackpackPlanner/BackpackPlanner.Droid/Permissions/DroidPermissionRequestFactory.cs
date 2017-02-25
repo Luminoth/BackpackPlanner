@@ -14,6 +14,8 @@
    limitations under the License.
 */
 
+using Android;
+
 using EnergonSoftware.BackpackPlanner.Core.Permissions;
 using EnergonSoftware.BackpackPlanner.Droid.Activities;
 using EnergonSoftware.BackpackPlanner.Droid.Util;
@@ -29,9 +31,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Permissions
             _activity = activity;
         }
 
-        public override PermissionRequest Create(PermissionRequest.PermissionType permissionType)
+        public override PermissionRequest Create(string permission)
         {
-            return new DroidPermissionRequest(_activity, permissionType);
+            return new DroidPermissionRequest(_activity, permission);
         }
 
         /// <summary>
@@ -39,7 +41,20 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Permissions
         /// </summary>
         public DroidPermissionRequest CreateReadStoragePermissionRequest()
         {
-            DroidPermissionRequest permissionRequest = (DroidPermissionRequest)Create(PermissionRequest.PermissionType.ReadStorage);
+            DroidPermissionRequest permissionRequest = (DroidPermissionRequest)Create(Manifest.Permission.ReadExternalStorage);
+            permissionRequest.PermissionDeniedEvent += (sender, args) => {
+// TODO: fill this out better to try and explain why we need this and then to ask for permission again (with a yes/no or ok/cancel box)
+                DialogUtil.ShowOkDialog(_activity, Resource.String.title_storage_permission, Resource.String.label_storage_permission);
+            };
+            return permissionRequest;
+        }
+
+        /// <summary>
+        /// Checks for the WRITE_EXTERNAL_STORAGE permission.
+        /// </summary>
+        public DroidPermissionRequest CreateWriteStoragePermissionRequest()
+        {
+            DroidPermissionRequest permissionRequest = (DroidPermissionRequest)Create(Manifest.Permission.WriteExternalStorage);
             permissionRequest.PermissionDeniedEvent += (sender, args) => {
 // TODO: fill this out better to try and explain why we need this and then to ask for permission again (with a yes/no or ok/cancel box)
                 DialogUtil.ShowOkDialog(_activity, Resource.String.title_storage_permission, Resource.String.label_storage_permission);

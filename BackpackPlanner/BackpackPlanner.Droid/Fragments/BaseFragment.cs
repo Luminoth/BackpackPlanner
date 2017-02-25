@@ -14,6 +14,8 @@
    limitations under the License.
 */
 
+#define DEBUG_LIFECYCLE
+
 using System.Diagnostics;
 
 using Android.OS;
@@ -33,6 +35,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(BaseFragment));
 
+#if DEBUG_LIFECYCLE
+        private readonly Stopwatch _startupStopwatch = new Stopwatch();
+#endif
+
         public BaseActivity BaseActivity => (BaseActivity)Activity;
 
         protected abstract int LayoutResource { get; }
@@ -41,16 +47,74 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         protected abstract bool HasSearchView { get; }
 
-        private readonly Stopwatch _startupStopwatch = new Stopwatch();
-
         public Android.Support.V7.Widget.SearchView FilterView { get; private set; }
 
+#region Fragment Lifecycle
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
+#if DEBUG_LIFECYCLE
+            Logger.Debug($"OnCreate - {GetType()}");
+
             _startupStopwatch.Start();
+#endif
         }
+
+        public override void OnDestroy()
+        {
+#if DEBUG_LIFECYCLE
+            Logger.Debug($"OnDestroy - {GetType()}");
+#endif
+
+            base.OnDestroy();
+        }
+
+        public override void OnStart()
+        {
+            base.OnStart();
+
+#if DEBUG_LIFECYCLE
+            Logger.Debug($"OnStart - {GetType()}");
+
+            if(_startupStopwatch.IsRunning) {
+                Logger.Debug($"Time to Fragment.Start(): {_startupStopwatch.ElapsedMilliseconds}ms");
+            }
+#endif
+        }
+
+        public override void OnStop()
+        {
+#if DEBUG_LIFECYCLE
+            Logger.Debug($"OnStop - {GetType()}");
+#endif
+
+            base.OnStop();
+        }
+
+        public override void OnResume()
+        {
+            base.OnResume();
+
+#if DEBUG_LIFECYCLE
+            if(_startupStopwatch.IsRunning) {
+                Logger.Debug($"Time to Fragment.OnResume(): {_startupStopwatch.ElapsedMilliseconds}ms");
+            }
+            _startupStopwatch.Stop();
+#endif
+
+            Activity.Title = Resources.GetString(TitleResource);
+        }
+
+        public override void OnPause()
+        {
+#if DEBUG_LIFECYCLE
+            Logger.Debug($"OnPause - {GetType()}");
+#endif
+
+            base.OnPause();
+        }
+#endregion
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
@@ -74,27 +138,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
             // TODO: let the subclasses set this up
             FilterView.QueryHint = Resources.GetString(Resource.String.search_hint);
-        }
-
-        public override void OnStart()
-        {
-            base.OnStart();
-
-            if(_startupStopwatch.IsRunning) {
-                Logger.Debug($"Time to Fragment.Start(): {_startupStopwatch.ElapsedMilliseconds}ms");
-            }
-        }
-
-        public override void OnResume()
-        {
-            base.OnResume();
-
-            Activity.Title = Resources.GetString(TitleResource);
-
-            if(_startupStopwatch.IsRunning) {
-                Logger.Debug($"Time to Fragment.OnResume(): {_startupStopwatch.ElapsedMilliseconds}ms");
-            }
-            _startupStopwatch.Stop();
         }
 
         public void TransitionToFragment(int frameResId, Android.Support.V4.App.Fragment fragment, string tags)

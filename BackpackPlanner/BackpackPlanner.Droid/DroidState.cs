@@ -36,6 +36,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
         public BackpackPlannerState BackpackPlannerState { get; private set; }
 
+// TODO: hold easy access references to more of the platform specific modules here
+// that way all of the weird casting everywhere can go away
 
         public DroidPermissionRequestFactory PermissionRequestFactory { get; private set; }
 
