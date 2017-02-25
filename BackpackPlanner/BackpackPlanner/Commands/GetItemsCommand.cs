@@ -37,6 +37,7 @@ namespace EnergonSoftware.BackpackPlanner.Commands
 
         public override async Task DoActionAsync(DatabaseState databaseState, BackpackPlannerSettings settings)
         {
+// TODO: this is where we need to check permission
             await ValidateDatabaseStateAsync(databaseState).ConfigureAwait(false);
 
             Items = await DatabaseItem.GetValidItemsAsync<T>(databaseState, settings).ConfigureAwait(false);
