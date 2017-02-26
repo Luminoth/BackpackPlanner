@@ -4,6 +4,7 @@ The following is necessary to fix Proguard failing:
 
 * Ensure that Jenkins is running as a local user, not the system user!
 * Install JDK 1.8
+  * Set JAVA_HOME and add %JAVA_HOME%\bin to the PATH
 * Install Android Studio
 * mklink /j C:\android-sdk "<path to Android SDK>"
   * This should be from the Android Studio installation, not Visual Studio/Xamarin
