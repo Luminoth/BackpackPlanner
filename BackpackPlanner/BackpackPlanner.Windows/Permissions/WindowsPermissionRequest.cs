@@ -20,11 +20,9 @@ namespace EnergonSoftware.BackpackPlanner.Windows.Permissions
 {
     public sealed class WindowsPermissionRequest : PermissionRequest
     {
-        public override string Permission { get; }
-
-        public WindowsPermissionRequest(string permission)
+        public WindowsPermissionRequest(PermissionType permission)
+            : base(permission)
         {
-            Permission = permission;
         }
 
         public override void Request(BackpackPlannerState state)

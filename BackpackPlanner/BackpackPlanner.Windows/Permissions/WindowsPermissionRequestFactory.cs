@@ -20,7 +20,7 @@ namespace EnergonSoftware.BackpackPlanner.Windows.Permissions
 {
     public sealed class WindowsPermissionRequestFactory : PermissionRequestFactory
     {
-        public override PermissionRequest Create(string permission)
+        public override PermissionRequest Create(PermissionRequest.PermissionType permission)
         {
             return new WindowsPermissionRequest(permission);
         }
