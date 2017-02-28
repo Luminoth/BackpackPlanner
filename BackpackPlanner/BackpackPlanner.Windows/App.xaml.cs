@@ -26,6 +26,7 @@ using Windows.UI.Xaml.Navigation;
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Windows.Logging;
 using EnergonSoftware.BackpackPlanner.Windows.Pages;
+using EnergonSoftware.BackpackPlanner.Windows.Permissions;
 
 using SQLite.Net.Platform.WinRT;
 
@@ -56,7 +57,8 @@ namespace EnergonSoftware.BackpackPlanner.Windows
                 new WindowsSettingsManager(),
                 new WindowsPlayServicesManager(),
                 new WindowsDatabaseSyncManager(),
-                new SQLitePlatformWinRT()
+                new SQLitePlatformWinRT(),
+                new WindowsPermissionRequestFactory()
             );
         }
 

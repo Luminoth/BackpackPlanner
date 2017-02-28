@@ -147,6 +147,8 @@
     <Compile Include="Pages\Trips\Plans\TripPlansPage.xaml.cs">
       <DependentUpon>TripPlansPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Permissions\WindowsPermissionRequest.cs" />
+    <Compile Include="Permissions\WindowsPermissionRequestFactory.cs" />
     <Compile Include="WindowsDatabaseSyncManager.cs" />
     <Compile Include="WindowsPlayServicesManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
