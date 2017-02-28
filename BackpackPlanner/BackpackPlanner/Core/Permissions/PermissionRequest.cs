@@ -23,13 +23,26 @@ namespace EnergonSoftware.BackpackPlanner.Core.Permissions
     /// </summary>
     public abstract class PermissionRequest
     {
+        public enum PermissionType
+        {
+            Invalid = -1,
+
+            ReadStorage = 1,
+            WriteStorage
+        }
+
 #region Events
         public event EventHandler<EventArgs> PermissionGrantedEvent;
 
         public event EventHandler<EventArgs> PermissionDeniedEvent;
 #endregion
 
-        public abstract string Permission { get; }
+        public PermissionType Permission { get; }
+
+        protected PermissionRequest(PermissionType permission)
+        {
+            Permission = permission;
+        }
 
         /// <summary>
         /// Requests the specified permission type.

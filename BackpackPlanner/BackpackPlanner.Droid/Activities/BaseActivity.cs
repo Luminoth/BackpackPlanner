@@ -130,7 +130,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             Logger.Info($"Got permission result for request code {requestCode}");
-            DroidState.Instance.BackpackPlannerState.NotifyPermissionRequests(DroidPermissionRequest.GetPermissionForRequestCode((DroidPermissionRequest.PermissionRequestCode)requestCode), grantResults.Length > 0 && grantResults[0] == Permission.Granted);
+            DroidState.Instance.BackpackPlannerState.NotifyPermissionRequests(DroidPermissionRequest.GetPermissionForDroidRequestCode((DroidPermissionRequest.DroidPermissionRequestCode)requestCode), grantResults.Length > 0 && grantResults[0] == Permission.Granted);
         }
 
         /// <summary>
@@ -147,14 +147,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             Logger.Info($"Checking permission {permissionRequest.Permission}...");
 
             // permission already granted
-            if(Permission.Granted == Android.Support.V4.Content.ContextCompat.CheckSelfPermission(this, permissionRequest.Permission)) {
+            if(Permission.Granted == Android.Support.V4.Content.ContextCompat.CheckSelfPermission(this, permissionRequest.DroidPermission)) {
                 Logger.Info("Permission already granted, notifying...");
                 permissionRequest.Notify(true);
                 return;
             }
 
             // need to show rationale first? only happens if permission is denied
-            if(Android.Support.V4.App.ActivityCompat.ShouldShowRequestPermissionRationale(this, permissionRequest.Permission)) {
+            if(Android.Support.V4.App.ActivityCompat.ShouldShowRequestPermissionRationale(this, permissionRequest.DroidPermission)) {
                 Logger.Info("Permission rationale required...");
 
                 if(null == showExplanation) {
@@ -176,7 +176,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             }
 
             Logger.Info($"Requesting permission {permissionRequest.Permission} using request code {permissionRequest.RequestCode}...");
-            Android.Support.V4.App.ActivityCompat.RequestPermissions(this, new[] { permissionRequest.Permission }, permissionRequest.RequestCode);
+            Android.Support.V4.App.ActivityCompat.RequestPermissions(this, new[] { permissionRequest.DroidPermission }, permissionRequest.RequestCode);
             DroidState.Instance.BackpackPlannerState.AddPermissionRequest(permissionRequest);
         }
 #endregion

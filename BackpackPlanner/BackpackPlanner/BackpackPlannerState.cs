@@ -99,7 +99,7 @@ namespace EnergonSoftware.BackpackPlanner
         public PermissionRequestFactory PlatformPermissionRequestFactory { get; }
 #endregion
 
-        private readonly Dictionary<string, List<PermissionRequest>> _permissionRequests = new Dictionary<string, List<PermissionRequest>>();
+        private readonly Dictionary<PermissionRequest.PermissionType, List<PermissionRequest>> _permissionRequests = new Dictionary<PermissionRequest.PermissionType, List<PermissionRequest>>();
 
 #region Dispose
         public void Dispose()
@@ -226,7 +226,7 @@ namespace EnergonSoftware.BackpackPlanner
         /// </summary>
         /// <param name="permission">The permission.</param>
         /// <param name="granted">if set to <c>true</c> the permission was granted, otherwise it was denied.</param>
-        public void NotifyPermissionRequests(string permission, bool granted)
+        public void NotifyPermissionRequests(PermissionRequest.PermissionType permission, bool granted)
         {
             List<PermissionRequest> requests;
             if(!_permissionRequests.TryGetValue(permission, out requests)) {

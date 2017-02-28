@@ -31,7 +31,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Permissions
         // values here must be under 16 bits
         // http://stackoverflow.com/questions/33331073/android-what-to-choose-for-requestcode-values
         // https://android.googlesource.com/platform/frameworks/support/+/86f3b80ddf7f9aa5c5b7afe77217cb75632d62a2%5E%21/#F0
-        public enum PermissionRequestCode
+        public enum DroidPermissionRequestCode
         {
             Invalid = -1,
 
@@ -68,125 +68,149 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Permissions
             WriteStorage
         }
 
-        public static PermissionRequestCode GetRequestCodeForPermission(string permissionGroup)
+        private static string GetDroidPermissionForPermission(PermissionType permission)
         {
-            switch(permissionGroup)
+            switch(permission)
             {
-            case Manifest.Permission.ReadCalendar:
-                return PermissionRequestCode.ReadCalendar;
-            case Manifest.Permission.WriteCalendar:
-                return PermissionRequestCode.WriteCalendar;
-            case Manifest.Permission.Camera:
-                return PermissionRequestCode.Camera;
-            case Manifest.Permission.ReadContacts:
-                return PermissionRequestCode.ReadContacts;
-            case Manifest.Permission.WriteContacts:
-                return PermissionRequestCode.WriteContacts;
-            case Manifest.Permission.GetAccounts:
-                return PermissionRequestCode.GetAccounts;
-            case Manifest.Permission.AccessFineLocation:
-                return PermissionRequestCode.FineLocation;
-            case Manifest.Permission.AccessCoarseLocation:
-                return PermissionRequestCode.CoarseLocation;
-            case Manifest.Permission.RecordAudio:
-                return PermissionRequestCode.RecordAudio;
-            case Manifest.Permission.ReadPhoneState:
-                return PermissionRequestCode.ReadPhoneState;
-            case Manifest.Permission.CallPhone:
-                return PermissionRequestCode.CallPhone;
-            case Manifest.Permission.ReadCallLog:
-                return PermissionRequestCode.ReadCallLog;
-            case Manifest.Permission.WriteCallLog:
-                return PermissionRequestCode.WriteCallLog;
-            case Manifest.Permission.AddVoicemail:
-                return PermissionRequestCode.AddVoicemail;
-            case Manifest.Permission.UseSip:
-                return PermissionRequestCode.UseSIP;
-            case Manifest.Permission.ProcessOutgoingCalls:
-                return PermissionRequestCode.ProcessOutgoingCalls;
-            case Manifest.Permission.BodySensors:
-                return PermissionRequestCode.BodySensors;
-            case Manifest.Permission.SendSms:
-                return PermissionRequestCode.SendSMS;
-            case Manifest.Permission.ReceiveSms:
-                return PermissionRequestCode.ReceiveSMS;
-            case Manifest.Permission.ReadSms:
-                return PermissionRequestCode.ReadSMS;
-            case Manifest.Permission.ReceiveMms:
-                return PermissionRequestCode.ReceiveMMS;
-            case Manifest.Permission.ReadExternalStorage:
-                return PermissionRequestCode.ReadStorage;
-            case Manifest.Permission.WriteExternalStorage:
-                return PermissionRequestCode.WriteStorage;
-            }
-            return PermissionRequestCode.Invalid;
-        }
-
-        public static string GetPermissionForRequestCode(PermissionRequestCode requestCode)
-        {
-            switch(requestCode)
-            {
-            case PermissionRequestCode.ReadCalendar:
-                return Manifest.Permission.ReadCalendar;
-            case PermissionRequestCode.WriteCalendar:
-                return Manifest.Permission.WriteCalendar;
-            case PermissionRequestCode.Camera:
-                return Manifest.Permission.Camera;
-            case PermissionRequestCode.ReadContacts:
-                return Manifest.Permission.ReadContacts;
-            case PermissionRequestCode.WriteContacts:
-                return Manifest.Permission.WriteContacts;
-            case PermissionRequestCode.GetAccounts:
-                return Manifest.Permission.GetAccounts;
-            case PermissionRequestCode.FineLocation:
-                return Manifest.Permission.AccessFineLocation;
-            case PermissionRequestCode.CoarseLocation:
-                return Manifest.Permission.AccessCoarseLocation;
-            case PermissionRequestCode.RecordAudio:
-                return Manifest.Permission.RecordAudio;
-            case PermissionRequestCode.ReadPhoneState:
-                return Manifest.Permission.ReadPhoneState;
-            case PermissionRequestCode.CallPhone:
-                return Manifest.Permission.CallPhone;
-            case PermissionRequestCode.ReadCallLog:
-                return Manifest.Permission.ReadCallLog;
-            case PermissionRequestCode.WriteCallLog:
-                return Manifest.Permission.WriteCallLog;
-            case PermissionRequestCode.AddVoicemail:
-                return Manifest.Permission.AddVoicemail;
-            case PermissionRequestCode.UseSIP:
-                return Manifest.Permission.UseSip;
-            case PermissionRequestCode.ProcessOutgoingCalls:
-                return Manifest.Permission.ProcessOutgoingCalls;
-            case PermissionRequestCode.BodySensors:
-                return Manifest.Permission.BodySensors;
-            case PermissionRequestCode.SendSMS:
-                return Manifest.Permission.SendSms;
-            case PermissionRequestCode.ReceiveSMS:
-                return Manifest.Permission.ReceiveSms;
-            case PermissionRequestCode.ReadSMS:
-                return Manifest.Permission.ReadSms;
-            case PermissionRequestCode.ReceiveMMS:
-                return Manifest.Permission.ReceiveMms;
-            case PermissionRequestCode.ReadStorage:
+            case PermissionType.ReadStorage:
                 return Manifest.Permission.ReadExternalStorage;
-            case PermissionRequestCode.WriteStorage:
+            case PermissionType.WriteStorage:
                 return Manifest.Permission.WriteExternalStorage;
             }
             return string.Empty;
         }
 
-        public override string Permission { get; }
+        public static PermissionType GetPermissionForDroidRequestCode(DroidPermissionRequestCode requestCode)
+        {
+            switch(requestCode)
+            {
+            case DroidPermissionRequestCode.ReadStorage:
+                return PermissionType.ReadStorage;
+            case DroidPermissionRequestCode.WriteStorage:
+                return PermissionType.WriteStorage;
+            }
+            return PermissionType.Invalid;
+        }
 
+        private static DroidPermissionRequestCode GetRequestCodeForDroidPermission(string droidPermission)
+        {
+            switch(droidPermission)
+            {
+            case Manifest.Permission.ReadCalendar:
+                return DroidPermissionRequestCode.ReadCalendar;
+            case Manifest.Permission.WriteCalendar:
+                return DroidPermissionRequestCode.WriteCalendar;
+            case Manifest.Permission.Camera:
+                return DroidPermissionRequestCode.Camera;
+            case Manifest.Permission.ReadContacts:
+                return DroidPermissionRequestCode.ReadContacts;
+            case Manifest.Permission.WriteContacts:
+                return DroidPermissionRequestCode.WriteContacts;
+            case Manifest.Permission.GetAccounts:
+                return DroidPermissionRequestCode.GetAccounts;
+            case Manifest.Permission.AccessFineLocation:
+                return DroidPermissionRequestCode.FineLocation;
+            case Manifest.Permission.AccessCoarseLocation:
+                return DroidPermissionRequestCode.CoarseLocation;
+            case Manifest.Permission.RecordAudio:
+                return DroidPermissionRequestCode.RecordAudio;
+            case Manifest.Permission.ReadPhoneState:
+                return DroidPermissionRequestCode.ReadPhoneState;
+            case Manifest.Permission.CallPhone:
+                return DroidPermissionRequestCode.CallPhone;
+            case Manifest.Permission.ReadCallLog:
+                return DroidPermissionRequestCode.ReadCallLog;
+            case Manifest.Permission.WriteCallLog:
+                return DroidPermissionRequestCode.WriteCallLog;
+            case Manifest.Permission.AddVoicemail:
+                return DroidPermissionRequestCode.AddVoicemail;
+            case Manifest.Permission.UseSip:
+                return DroidPermissionRequestCode.UseSIP;
+            case Manifest.Permission.ProcessOutgoingCalls:
+                return DroidPermissionRequestCode.ProcessOutgoingCalls;
+            case Manifest.Permission.BodySensors:
+                return DroidPermissionRequestCode.BodySensors;
+            case Manifest.Permission.SendSms:
+                return DroidPermissionRequestCode.SendSMS;
+            case Manifest.Permission.ReceiveSms:
+                return DroidPermissionRequestCode.ReceiveSMS;
+            case Manifest.Permission.ReadSms:
+                return DroidPermissionRequestCode.ReadSMS;
+            case Manifest.Permission.ReceiveMms:
+                return DroidPermissionRequestCode.ReceiveMMS;
+            case Manifest.Permission.ReadExternalStorage:
+                return DroidPermissionRequestCode.ReadStorage;
+            case Manifest.Permission.WriteExternalStorage:
+                return DroidPermissionRequestCode.WriteStorage;
+            }
+            return DroidPermissionRequestCode.Invalid;
+        }
+
+        public static string GetDroidPermissionForRequestCode(DroidPermissionRequestCode requestCode)
+        {
+            switch(requestCode)
+            {
+            case DroidPermissionRequestCode.ReadCalendar:
+                return Manifest.Permission.ReadCalendar;
+            case DroidPermissionRequestCode.WriteCalendar:
+                return Manifest.Permission.WriteCalendar;
+            case DroidPermissionRequestCode.Camera:
+                return Manifest.Permission.Camera;
+            case DroidPermissionRequestCode.ReadContacts:
+                return Manifest.Permission.ReadContacts;
+            case DroidPermissionRequestCode.WriteContacts:
+                return Manifest.Permission.WriteContacts;
+            case DroidPermissionRequestCode.GetAccounts:
+                return Manifest.Permission.GetAccounts;
+            case DroidPermissionRequestCode.FineLocation:
+                return Manifest.Permission.AccessFineLocation;
+            case DroidPermissionRequestCode.CoarseLocation:
+                return Manifest.Permission.AccessCoarseLocation;
+            case DroidPermissionRequestCode.RecordAudio:
+                return Manifest.Permission.RecordAudio;
+            case DroidPermissionRequestCode.ReadPhoneState:
+                return Manifest.Permission.ReadPhoneState;
+            case DroidPermissionRequestCode.CallPhone:
+                return Manifest.Permission.CallPhone;
+            case DroidPermissionRequestCode.ReadCallLog:
+                return Manifest.Permission.ReadCallLog;
+            case DroidPermissionRequestCode.WriteCallLog:
+                return Manifest.Permission.WriteCallLog;
+            case DroidPermissionRequestCode.AddVoicemail:
+                return Manifest.Permission.AddVoicemail;
+            case DroidPermissionRequestCode.UseSIP:
+                return Manifest.Permission.UseSip;
+            case DroidPermissionRequestCode.ProcessOutgoingCalls:
+                return Manifest.Permission.ProcessOutgoingCalls;
+            case DroidPermissionRequestCode.BodySensors:
+                return Manifest.Permission.BodySensors;
+            case DroidPermissionRequestCode.SendSMS:
+                return Manifest.Permission.SendSms;
+            case DroidPermissionRequestCode.ReceiveSMS:
+                return Manifest.Permission.ReceiveSms;
+            case DroidPermissionRequestCode.ReadSMS:
+                return Manifest.Permission.ReadSms;
+            case DroidPermissionRequestCode.ReceiveMMS:
+                return Manifest.Permission.ReceiveMms;
+            case DroidPermissionRequestCode.ReadStorage:
+                return Manifest.Permission.ReadExternalStorage;
+            case DroidPermissionRequestCode.WriteStorage:
+                return Manifest.Permission.WriteExternalStorage;
+            }
+            return string.Empty;
+        }
+
+        public string DroidPermission { get; }
 
         public BaseActivity Activity { get; }
 
         public int RequestCode { get; }
 
-        public DroidPermissionRequest(BaseActivity activity, string permission)
+        public DroidPermissionRequest(BaseActivity activity, PermissionType permission)
+            : base(permission)
         {
-            Permission = permission;
-            RequestCode = (int)GetRequestCodeForPermission(Permission);
+            DroidPermission = GetDroidPermissionForPermission(permission);
+            RequestCode = (int)GetRequestCodeForDroidPermission(DroidPermission);
 
             Activity = activity;
         }

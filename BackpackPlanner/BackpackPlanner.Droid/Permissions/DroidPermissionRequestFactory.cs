@@ -14,8 +14,6 @@
    limitations under the License.
 */
 
-using Android;
-
 using EnergonSoftware.BackpackPlanner.Core.Permissions;
 using EnergonSoftware.BackpackPlanner.Droid.Activities;
 using EnergonSoftware.BackpackPlanner.Droid.Util;
@@ -31,7 +29,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Permissions
             _activity = activity;
         }
 
-        public override PermissionRequest Create(string permission)
+        public override PermissionRequest Create(PermissionRequest.PermissionType permission)
         {
             return new DroidPermissionRequest(_activity, permission);
         }
@@ -41,7 +39,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Permissions
         /// </summary>
         public DroidPermissionRequest CreateReadStoragePermissionRequest()
         {
-            DroidPermissionRequest permissionRequest = (DroidPermissionRequest)Create(Manifest.Permission.ReadExternalStorage);
+            DroidPermissionRequest permissionRequest = (DroidPermissionRequest)Create(PermissionRequest.PermissionType.ReadStorage);
             permissionRequest.PermissionDeniedEvent += (sender, args) => {
 // TODO: fill this out better to try and explain why we need this and then to ask for permission again (with a yes/no or ok/cancel box)
                 DialogUtil.ShowOkDialog(_activity, Resource.String.title_storage_permission, Resource.String.label_storage_permission);
@@ -54,7 +52,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Permissions
         /// </summary>
         public DroidPermissionRequest CreateWriteStoragePermissionRequest()
         {
-            DroidPermissionRequest permissionRequest = (DroidPermissionRequest)Create(Manifest.Permission.WriteExternalStorage);
+            DroidPermissionRequest permissionRequest = (DroidPermissionRequest)Create(PermissionRequest.PermissionType.WriteStorage);
             permissionRequest.PermissionDeniedEvent += (sender, args) => {
 // TODO: fill this out better to try and explain why we need this and then to ask for permission again (with a yes/no or ok/cancel box)
                 DialogUtil.ShowOkDialog(_activity, Resource.String.title_storage_permission, Resource.String.label_storage_permission);
