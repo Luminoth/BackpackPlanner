@@ -92,9 +92,9 @@ namespace EnergonSoftware.BackpackPlanner.Core.Settings
                 Logger.Error("Error parsing user sex preference!");
             }
 
-            personalInformation.HeightInUnits = GetFloat(PersonalInformation.HeightPreferenceKey, (float)personalInformation.HeightInUnits);
+            personalInformation.HeightInUnits = GetFloat(PersonalInformation.HeightPreferenceKey, personalInformation.HeightInUnits);
 
-            personalInformation.WeightInUnits = GetFloat(PersonalInformation.WeightPreferenceKey, (float)personalInformation.WeightInUnits);
+            personalInformation.WeightInUnits = GetFloat(PersonalInformation.WeightPreferenceKey, personalInformation.WeightInUnits);
         }
 
         /// <summary>
@@ -161,10 +161,10 @@ namespace EnergonSoftware.BackpackPlanner.Core.Settings
                 }
                 break;
             case PersonalInformation.HeightPreferenceKey:
-                personalInformation.HeightInUnits = GetFloat(PersonalInformation.HeightPreferenceKey, (float)personalInformation.HeightInUnits);
+                personalInformation.HeightInUnits = GetFloat(PersonalInformation.HeightPreferenceKey, personalInformation.HeightInUnits);
                 break;
             case PersonalInformation.WeightPreferenceKey:
-                personalInformation.WeightInUnits = GetFloat(PersonalInformation.WeightPreferenceKey, (float)personalInformation.WeightInUnits);
+                personalInformation.WeightInUnits = GetFloat(PersonalInformation.WeightPreferenceKey, personalInformation.WeightInUnits);
                 break;
             default:
                 Logger.Warn($"Unhandled preference key: {key}");
