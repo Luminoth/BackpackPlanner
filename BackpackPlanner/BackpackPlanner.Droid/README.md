@@ -10,10 +10,11 @@ The following is necessary to fix Proguard failing:
   * This should be from the Android Studio installation, not Visual Studio/Xamarin
    * C:\Users\<username>\AppData\Local\Android\sdk
   * Set ANDROID_HOME to C:\android-sdk
-  * Add %ANDROID_HOME%\tools and %ANDROID_HOME%\platform_tools to the PATH
+  * Add %ANDROID_HOME%\tools and %ANDROID_HOME%\platform-tools to the PATH
   * Set PROGUARD_HOME to %ANDROID_HOME%\tools\proguard
     ** This should be the most current proguard, so that might need to be downloaded and copied over
       *** Even for debug builds, this should be the latest proguard
+      *** The android specific proguard files (proguard-*.txt) should be copied from the SDK proguard to the latest proguard
   * Add %PROGUARD_HOME%\bin to the PATH
 * Set Xamarin to use the SDK in C:\android-sdk in Visual Studio (in Tools -> Options -> Xamarin)
 * Set Xamarin to use the JDK 1.8 in Visual Studio (in Tools -> Options -> Xamarin)
