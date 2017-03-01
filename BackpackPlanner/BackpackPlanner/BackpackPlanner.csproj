@@ -43,7 +43,6 @@
     <Compile Include="Commands\GetItemsCommand.cs" />
     <Compile Include="Commands\SaveItemCommand.cs" />
     <Compile Include="BackpackPlannerState.cs" />
-    <Compile Include="Core\DatabaseSyncManager.cs" />
     <Compile Include="Core\Database\DatabaseConnection.cs" />
     <Compile Include="Core\Database\SQLiteDatabaseConnection.cs" />
     <Compile Include="Core\HockeyApp\HockeyAppManager.cs" />
@@ -53,7 +52,6 @@
     <Compile Include="Core\Permissions\PermissionRequestFactory.cs" />
     <Compile Include="Core\PlayServices\PlayServicesConnectedEventArgs.cs" />
     <Compile Include="Core\PlayServices\PlayServicesManager.cs" />
-    <Compile Include="Core\PlayServices\PlayServicesManifest.cs" />
     <Compile Include="Core\Util\DictionaryExtensions.cs" />
     <Compile Include="DatabaseState.cs" />
     <Compile Include="Core\Settings\SettingsManager.cs" />

@@ -245,7 +245,6 @@
     <Compile Include="Adapters\Trips\TripPlanListAdapter.cs" />
     <Compile Include="Activities\BackpackPlannerActivity.cs" />
     <Compile Include="DroidState.cs" />
-    <Compile Include="DroidDatabaseSyncManager.cs" />
     <Compile Include="Fragments\AddItemFragment.cs" />
     <Compile Include="Fragments\BaseFragment.cs" />
     <Compile Include="Fragments\DataFragment.cs" />

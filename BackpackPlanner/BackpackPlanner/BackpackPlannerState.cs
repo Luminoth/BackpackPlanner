@@ -78,14 +78,6 @@ namespace EnergonSoftware.BackpackPlanner
         public PlayServicesManager PlatformPlayServicesManager { get; }
 
         /// <summary>
-        /// Gets the platform database sync manager.
-        /// </summary>
-        /// <value>
-        /// The platform database sync manager.
-        /// </value>
-        public DatabaseSyncManager PlatformDatabaseSyncManager { get; }
-
-        /// <summary>
         /// Gets the platform settings manager.
         /// </summary>
         /// <value>
@@ -93,6 +85,12 @@ namespace EnergonSoftware.BackpackPlanner
         /// </value>
         public SettingsManager PlatformSettingsManager { get; }
 
+        /// <summary>
+        /// Gets the platform permission request factory.
+        /// </summary>
+        /// <value>
+        /// The platform permission request factory.
+        /// </value>
         public PermissionRequestFactory PlatformPermissionRequestFactory { get; }
 #endregion
 
@@ -118,10 +116,9 @@ namespace EnergonSoftware.BackpackPlanner
         /// <param name="platformHockeyAppManager">The platform HockeyApp manager.</param>
         /// <param name="platformSettingsManager">The platform settings manager.</param>
         /// <param name="platformPlayServicesManager">The platform google play services manager.</param>
-        /// <param name="platformDatabaseSyncManager">The platform database sync manager.</param>
         /// <param name="sqlitePlatform">The SQLite platform.</param>
-        public BackpackPlannerState(IHockeyAppManager platformHockeyAppManager, SettingsManager platformSettingsManager, PlayServicesManager platformPlayServicesManager, DatabaseSyncManager platformDatabaseSyncManager, ISQLitePlatform sqlitePlatform, PermissionRequestFactory platformPermissionRequestFactory)
         /// <param name="platformPermissionRequestFactory">The platform permission request factory.</param>
+        public BackpackPlannerState(IHockeyAppManager platformHockeyAppManager, SettingsManager platformSettingsManager, PlayServicesManager platformPlayServicesManager, ISQLitePlatform sqlitePlatform, PermissionRequestFactory platformPermissionRequestFactory)
         {
             if(null == platformHockeyAppManager) {
                 throw new ArgumentNullException(nameof(platformHockeyAppManager));
@@ -133,10 +130,6 @@ namespace EnergonSoftware.BackpackPlanner
 
             if(null == platformPlayServicesManager) {
                 throw new ArgumentNullException(nameof(platformPlayServicesManager));
-            }
-
-            if(null == platformDatabaseSyncManager) {
-                throw new ArgumentNullException(nameof(platformDatabaseSyncManager));
             }
 
             if(null == sqlitePlatform) {
@@ -155,7 +148,6 @@ namespace EnergonSoftware.BackpackPlanner
             DatabaseState.SQLitePlatform = sqlitePlatform;
 
             PlatformPlayServicesManager = platformPlayServicesManager;
-            PlatformDatabaseSyncManager = platformDatabaseSyncManager;
 
             PlatformPermissionRequestFactory = platformPermissionRequestFactory;
 
