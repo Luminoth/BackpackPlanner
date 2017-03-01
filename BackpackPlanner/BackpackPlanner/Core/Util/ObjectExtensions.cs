@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-namespace EnergonSoftware.BackpackPlanner.Core
+namespace EnergonSoftware.BackpackPlanner.Core.Util
 {
     /// <summary>
     /// System.Object extensions
