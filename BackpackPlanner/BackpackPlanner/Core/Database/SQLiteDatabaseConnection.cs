@@ -93,9 +93,8 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
             _lock.Release();
         }
 
-        public async Task ConnectAsync(BackpackPlannerState state)
+        public Task ConnectAsync(BackpackPlannerState state)
         {
-            await Task.Delay(0).ConfigureAwait(false);
             throw new NotImplementedException();
         }
 
