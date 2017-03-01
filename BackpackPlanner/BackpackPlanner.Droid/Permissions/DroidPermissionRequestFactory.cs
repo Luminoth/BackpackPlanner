@@ -34,6 +34,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Permissions
             return new DroidPermissionRequest(_activity, permission);
         }
 
+/*
         /// <summary>
         /// Checks for the READ_EXTERNAL_STORAGE permission.
         /// </summary>
@@ -59,5 +60,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Permissions
             };
             return permissionRequest;
         }
+*/
     }
 }

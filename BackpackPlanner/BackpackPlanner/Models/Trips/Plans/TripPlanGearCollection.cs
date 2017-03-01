@@ -16,9 +16,9 @@
 
 using System.Threading.Tasks;
 
+using EnergonSoftware.BackpackPlanner.Core.Permissions;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Collections;
 
-using SQLite.Net.Async;
 using SQLiteNetExtensions.Attributes;
 
 namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
@@ -31,10 +31,12 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
         /// <summary>
         /// Creates the database tables.
         /// </summary>
-        /// <param name="asyncDbConnection">The asynchronous database connection.</param>
-        public static async Task CreateTablesAsync(SQLiteAsyncConnection asyncDbConnection)
+        /// <param name="state">The system state.</param>
+        public static async Task CreateTablesAsync(BackpackPlannerState state)
         {
-            await asyncDbConnection.CreateTableAsync<TripPlanGearCollection>().ConfigureAwait(false);
+            await PermissionHelper.CheckWritePermission(state).ConfigureAwait(false);
+
+            await state.DatabaseState.Connection.AsyncConnection.CreateTableAsync<TripPlanGearCollection>().ConfigureAwait(false);
         }
 
         /// <summary>

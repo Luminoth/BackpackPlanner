@@ -17,8 +17,6 @@
 using System;
 using System.Threading.Tasks;
 
-using EnergonSoftware.BackpackPlanner.Settings;
-
 namespace EnergonSoftware.BackpackPlanner.Commands
 {
     /// <summary>
@@ -29,21 +27,22 @@ namespace EnergonSoftware.BackpackPlanner.Commands
         /// <summary>
         /// Does the action.
         /// </summary>
-        /// <param name="databaseState">State of the database.</param>
-        /// <param name="settings">The settings.</param>
-        public abstract Task DoActionAsync(DatabaseState databaseState, BackpackPlannerSettings settings);
+        /// <param name="state">The system state.</param>
+        public virtual async Task DoActionAsync(BackpackPlannerState state)
+        {
+            await Task.Delay(0).ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Does the action in a background task.
         /// </summary>
-        /// <param name="databaseState">State of the database.</param>
-        /// <param name="settings">The settings.</param>
+        /// <param name="state">The system state.</param>
         /// <param name="actionFinishedCallback">The action finished callback.</param>
-        public void DoActionInBackground(DatabaseState databaseState, BackpackPlannerSettings settings, Action<Command> actionFinishedCallback)
+        public void DoActionInBackground(BackpackPlannerState state, Action<Command> actionFinishedCallback)
         {
             Task.Run(async () =>
                 {
-                    await DoActionAsync(databaseState, settings).ConfigureAwait(false);
+                    await DoActionAsync(state).ConfigureAwait(false);
                     actionFinishedCallback?.Invoke(this);
                 }
             );
@@ -52,42 +51,25 @@ namespace EnergonSoftware.BackpackPlanner.Commands
         /// <summary>
         /// Undoes the action.
         /// </summary>
-        /// <param name="databaseState">State of the database.</param>
-        /// <param name="settings">The settings.</param>
-        public virtual async Task UndoActionAsync(DatabaseState databaseState, BackpackPlannerSettings settings)
+        /// <param name="state">The system state.</param>
+        public virtual async Task UndoActionAsync(BackpackPlannerState state)
         {
-            await ValidateDatabaseStateAsync(databaseState).ConfigureAwait(false);
+            await Task.Delay(0).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Undoes the action in a background task.
         /// </summary>
-        /// <param name="databaseState">State of the database.</param>
-        /// <param name="settings">The settings.</param>
+        /// <param name="state">The system state.</param>
         /// <param name="actionFinishedCallback">The action finished callback.</param>
-        public void UndoActionInBackground(DatabaseState databaseState, BackpackPlannerSettings settings, Action<Command> actionFinishedCallback)
+        public void UndoActionInBackground(BackpackPlannerState state, Action<Command> actionFinishedCallback)
         {
             Task.Run(async () =>
                 {
-                    await UndoActionAsync(databaseState, settings).ConfigureAwait(false);
+                    await UndoActionAsync(state).ConfigureAwait(false);
                     actionFinishedCallback?.Invoke(this);
                 }
             );
-        }
-
-        /// <summary>
-        /// Validates the database state.
-        /// </summary>
-        /// <param name="databaseState">The database state.</param>
-        protected async Task ValidateDatabaseStateAsync(DatabaseState databaseState)
-        {
-            if(null == databaseState) {
-                throw new ArgumentNullException(nameof(databaseState));
-            }
-
-            while(!databaseState.IsInitialized) {
-                await Task.Delay(1).ConfigureAwait(false);
-            }
         }
     }
 }

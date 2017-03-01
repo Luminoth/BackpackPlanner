@@ -94,12 +94,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             }
 
             await BackpackPlannerState.DatabaseState.ConnectAsync(
+                BackpackPlannerState,
                 System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal),
                 DatabaseState.DatabaseName).ConfigureAwait(false);
 
-            await BackpackPlannerState.DatabaseState.InitDatabaseAsync().ConfigureAwait(false);
-
-            BackpackPlannerState.PlatformDatabaseSyncManager.SyncDatabaseInBackground(BackpackPlannerState.PlatformPlayServicesManager);
+            await BackpackPlannerState.DatabaseState.InitDatabaseAsync(BackpackPlannerState).ConfigureAwait(false);
         }
 
         private void LoadPreferences(BaseActivity activity)

@@ -80,18 +80,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Permissions
             return string.Empty;
         }
 
-        public static PermissionType GetPermissionForDroidRequestCode(DroidPermissionRequestCode requestCode)
-        {
-            switch(requestCode)
-            {
-            case DroidPermissionRequestCode.ReadStorage:
-                return PermissionType.ReadStorage;
-            case DroidPermissionRequestCode.WriteStorage:
-                return PermissionType.WriteStorage;
-            }
-            return PermissionType.Invalid;
-        }
-
         private static DroidPermissionRequestCode GetRequestCodeForDroidPermission(string droidPermission)
         {
             switch(droidPermission)
@@ -146,83 +134,55 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Permissions
             return DroidPermissionRequestCode.Invalid;
         }
 
-        public static string GetDroidPermissionForRequestCode(DroidPermissionRequestCode requestCode)
-        {
-            switch(requestCode)
-            {
-            case DroidPermissionRequestCode.ReadCalendar:
-                return Manifest.Permission.ReadCalendar;
-            case DroidPermissionRequestCode.WriteCalendar:
-                return Manifest.Permission.WriteCalendar;
-            case DroidPermissionRequestCode.Camera:
-                return Manifest.Permission.Camera;
-            case DroidPermissionRequestCode.ReadContacts:
-                return Manifest.Permission.ReadContacts;
-            case DroidPermissionRequestCode.WriteContacts:
-                return Manifest.Permission.WriteContacts;
-            case DroidPermissionRequestCode.GetAccounts:
-                return Manifest.Permission.GetAccounts;
-            case DroidPermissionRequestCode.FineLocation:
-                return Manifest.Permission.AccessFineLocation;
-            case DroidPermissionRequestCode.CoarseLocation:
-                return Manifest.Permission.AccessCoarseLocation;
-            case DroidPermissionRequestCode.RecordAudio:
-                return Manifest.Permission.RecordAudio;
-            case DroidPermissionRequestCode.ReadPhoneState:
-                return Manifest.Permission.ReadPhoneState;
-            case DroidPermissionRequestCode.CallPhone:
-                return Manifest.Permission.CallPhone;
-            case DroidPermissionRequestCode.ReadCallLog:
-                return Manifest.Permission.ReadCallLog;
-            case DroidPermissionRequestCode.WriteCallLog:
-                return Manifest.Permission.WriteCallLog;
-            case DroidPermissionRequestCode.AddVoicemail:
-                return Manifest.Permission.AddVoicemail;
-            case DroidPermissionRequestCode.UseSIP:
-                return Manifest.Permission.UseSip;
-            case DroidPermissionRequestCode.ProcessOutgoingCalls:
-                return Manifest.Permission.ProcessOutgoingCalls;
-            case DroidPermissionRequestCode.BodySensors:
-                return Manifest.Permission.BodySensors;
-            case DroidPermissionRequestCode.SendSMS:
-                return Manifest.Permission.SendSms;
-            case DroidPermissionRequestCode.ReceiveSMS:
-                return Manifest.Permission.ReceiveSms;
-            case DroidPermissionRequestCode.ReadSMS:
-                return Manifest.Permission.ReadSms;
-            case DroidPermissionRequestCode.ReceiveMMS:
-                return Manifest.Permission.ReceiveMms;
-            case DroidPermissionRequestCode.ReadStorage:
-                return Manifest.Permission.ReadExternalStorage;
-            case DroidPermissionRequestCode.WriteStorage:
-                return Manifest.Permission.WriteExternalStorage;
-            }
-            return string.Empty;
-        }
-
         public string DroidPermission { get; }
 
         public BaseActivity Activity { get; }
 
-        public int RequestCode { get; }
+        public DroidPermissionRequestCode RequestCode { get; }
+
+        private bool _isGranted;
+
+        private bool _isNotified;
 
         public DroidPermissionRequest(BaseActivity activity, PermissionType permission)
             : base(permission)
         {
             DroidPermission = GetDroidPermissionForPermission(permission);
-            RequestCode = (int)GetRequestCodeForDroidPermission(DroidPermission);
+            RequestCode = GetRequestCodeForDroidPermission(DroidPermission);
 
             Activity = activity;
         }
 
-        public override async void Request(BackpackPlannerState state)
+        public override Task<bool> Request(BackpackPlannerState state)
         {
-            await Activity.CheckPermission(this).ConfigureAwait(false);
+            return Task.Run(async () =>
+                {
+                    await Activity.CheckPermission(this).ConfigureAwait(false);
+                    while(!_isNotified) {
+                        await Task.Delay(1).ConfigureAwait(false);
+                    }
+                    return _isGranted;
+                }
+            );
         }
 
-        public async void Request(BackpackPlannerState state, Func<Task> showExplanation)
+        public Task<bool> Request(BackpackPlannerState state, Func<Task> showExplanation)
         {
-            await Activity.CheckPermission(this, showExplanation).ConfigureAwait(false);
+            return Task.Run(async () =>
+                {
+                    await Activity.CheckPermission(this, showExplanation).ConfigureAwait(false);
+                    while(!_isNotified) {
+                        await Task.Delay(1).ConfigureAwait(false);
+                    }
+                    return _isGranted;
+                }
+            );
+        }
+
+        public void Notify(bool granted)
+        {
+            _isGranted = granted;
+            _isNotified = true;
         }
     }
 }

@@ -19,12 +19,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
+using EnergonSoftware.BackpackPlanner.Core.Permissions;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
 using EnergonSoftware.BackpackPlanner.Settings;
 using EnergonSoftware.BackpackPlanner.Units.Currency;
 using EnergonSoftware.BackpackPlanner.Units.Units;
 
-using SQLite.Net.Async;
 using SQLite.Net.Attributes;
 using SQLiteNetExtensions.Attributes;
 
@@ -40,17 +40,15 @@ namespace EnergonSoftware.BackpackPlanner.Models.Meals
         /// <summary>
         /// Initializes the meal tables in the database.
         /// </summary>
-        /// <param name="asyncDbConnection">The asynchronous database connection.</param>
+        /// <param name="state">The system state.</param>
         /// <param name="oldVersion">The old database version.</param>
         /// <param name="newVersion">The new database version.</param>
         /// <remarks>
         /// The connection should be thread locked
         /// </remarks>
-        public static async Task InitDatabaseAsync(SQLiteAsyncConnection asyncDbConnection, int oldVersion, int newVersion)
+        public static async Task InitDatabaseAsync(BackpackPlannerState state, int oldVersion, int newVersion)
         {
-            if(null == asyncDbConnection) {
-                throw new ArgumentNullException(nameof(asyncDbConnection));
-            }
+            ValidateState(state);
             
             if(oldVersion >= newVersion) {
                 Logger.Debug("Database versions match, nothing to do for meal cache update...");
@@ -59,13 +57,15 @@ namespace EnergonSoftware.BackpackPlanner.Models.Meals
 
             if(oldVersion < 2 && newVersion >= 2) {
                 Logger.Debug("Creating meal cache tables...");
-                await CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
+                await CreateTablesAsync(state).ConfigureAwait(false);
             }
         }
 
-        private static async Task CreateTablesAsync(SQLiteAsyncConnection asyncDbConnection)
+        private static async Task CreateTablesAsync(BackpackPlannerState state)
         {
-            await asyncDbConnection.CreateTableAsync<Meal>().ConfigureAwait(false);
+            await PermissionHelper.CheckWritePermission(state).ConfigureAwait(false);
+
+            await state.DatabaseState.Connection.AsyncConnection.CreateTableAsync<Meal>().ConfigureAwait(false);
         }
 
         [Ignore]

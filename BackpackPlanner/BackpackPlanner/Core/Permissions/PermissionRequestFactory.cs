@@ -16,8 +16,16 @@
 
 namespace EnergonSoftware.BackpackPlanner.Core.Permissions
 {
+    /// <summary>
+    /// Factory for creating new PermissionRequest objects
+    /// </summary>
     public abstract class PermissionRequestFactory
     {
+        /// <summary>
+        /// Creates a request for the specified permission.
+        /// </summary>
+        /// <param name="permission">The permission.</param>
+        /// <returns>A PermissionRequest for the specified permission</returns>
         public abstract PermissionRequest Create(PermissionRequest.PermissionType permission);
     }
 }

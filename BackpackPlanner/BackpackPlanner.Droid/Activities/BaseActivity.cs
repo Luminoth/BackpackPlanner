@@ -17,7 +17,9 @@
 #define DEBUG_LIFECYCLE
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Android.Content.PM;
@@ -40,6 +42,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
         public Android.Support.V7.Widget.Toolbar Toolbar { get; private set; }
 #endregion
 
+        private readonly Dictionary<DroidPermissionRequest.DroidPermissionRequestCode, List<DroidPermissionRequest>> _permissionRequests = new Dictionary<DroidPermissionRequest.DroidPermissionRequestCode, List<DroidPermissionRequest>>();
+
 #region Activity Lifecycle
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -60,7 +64,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             Logger.Debug($"OnDestroy - {GetType()}");
 #endif
 
-            DroidState.Instance.BackpackPlannerState.RemovePermissionRequests(x => this == ((DroidPermissionRequest)x).Activity);
+            // remove waiting permission requests
+            foreach(var kvp in _permissionRequests) {
+                kvp.Value.RemoveAll(x => this == x.Activity);
+            }
 
             base.OnDestroy();
         }
@@ -129,8 +136,21 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
         {
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
-            Logger.Info($"Got permission result for request code {requestCode}");
-            DroidState.Instance.BackpackPlannerState.NotifyPermissionRequests(DroidPermissionRequest.GetPermissionForDroidRequestCode((DroidPermissionRequest.DroidPermissionRequestCode)requestCode), grantResults.Length > 0 && grantResults[0] == Permission.Granted);
+            DroidPermissionRequest.DroidPermissionRequestCode droidRequestCode = (DroidPermissionRequest.DroidPermissionRequestCode)requestCode;
+            bool granted = grantResults.Length > 0 && grantResults[0] == Permission.Granted;
+
+            Logger.Info($"Got permission result for request code {droidRequestCode}: {granted}");
+
+            List<DroidPermissionRequest> requests;
+            if(!_permissionRequests.TryGetValue(droidRequestCode, out requests)) {
+                Logger.Warn($"Attempt to notify for request code {droidRequestCode}, which does not exist!");
+                return;
+            }
+
+            foreach(DroidPermissionRequest request in requests) {
+                request.Notify(granted);
+            }
+            requests.Clear();
         }
 
         /// <summary>
@@ -144,7 +164,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
         /// </remarks>
         public async Task CheckPermission(DroidPermissionRequest permissionRequest, Func<Task> showExplanation=null)
         {
-            Logger.Info($"Checking permission {permissionRequest.Permission}...");
+            Logger.Info($"Checking permission {permissionRequest.Permission} (DroidPermission={permissionRequest.DroidPermission}, RequestCode={permissionRequest.RequestCode})...");
 
             // permission already granted
             if(Permission.Granted == Android.Support.V4.Content.ContextCompat.CheckSelfPermission(this, permissionRequest.DroidPermission)) {
@@ -175,9 +195,18 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
                 return;
             }
 
-            Logger.Info($"Requesting permission {permissionRequest.Permission} using request code {permissionRequest.RequestCode}...");
-            Android.Support.V4.App.ActivityCompat.RequestPermissions(this, new[] { permissionRequest.DroidPermission }, permissionRequest.RequestCode);
-            DroidState.Instance.BackpackPlannerState.AddPermissionRequest(permissionRequest);
+            List<DroidPermissionRequest> requests;
+            if(!_permissionRequests.TryGetValue(permissionRequest.RequestCode, out requests)) {
+                requests = new List<DroidPermissionRequest>();
+                _permissionRequests.Add(permissionRequest.RequestCode, requests);
+            }
+
+            if(!requests.Any()) {
+                Logger.Info($"Requesting permission {permissionRequest.Permission} ({permissionRequest.DroidPermission}) using request code {(int)permissionRequest.RequestCode}...");
+                Android.Support.V4.App.ActivityCompat.RequestPermissions(this, new[] { permissionRequest.DroidPermission }, (int)permissionRequest.RequestCode);
+            }
+
+            requests.Add(permissionRequest);
         }
 #endregion
 

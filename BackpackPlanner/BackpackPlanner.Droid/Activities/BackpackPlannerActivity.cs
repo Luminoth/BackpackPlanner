@@ -27,7 +27,6 @@ using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans;
-using EnergonSoftware.BackpackPlanner.Droid.Permissions;
 using EnergonSoftware.BackpackPlanner.Droid.Util;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Activities
@@ -104,16 +103,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
         {
             base.OnStart();
 
-            DroidPermissionRequest writeStoragePermissionRequest = DroidState.Instance.PermissionRequestFactory.CreateWriteStoragePermissionRequest();
-            writeStoragePermissionRequest.PermissionGrantedEvent += async (sender, args) =>
-            {
 // TODO: what if the db calls just inherintly called this?
-// and then we can get rid of this whole permission check
-// and init call timing problem maybe goes away?
-                Logger.Info("Storage permission granted, initializing database...");
-                await DroidState.Instance.InitDatabase().ConfigureAwait(false);
-            };
-            writeStoragePermissionRequest.Request(DroidState.Instance.BackpackPlannerState);
+            DroidState.Instance.InitDatabase().Wait();
         }
 
         protected override void OnSaveInstanceState(Bundle outState)

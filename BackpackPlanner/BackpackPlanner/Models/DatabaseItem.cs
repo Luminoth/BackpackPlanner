@@ -20,6 +20,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
+using EnergonSoftware.BackpackPlanner.Core.Permissions;
 using EnergonSoftware.BackpackPlanner.Settings;
 
 using SQLiteNetExtensionsAsync.Extensions;
@@ -34,40 +35,68 @@ namespace EnergonSoftware.BackpackPlanner.Models
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(DatabaseItem));
 
         /// <summary>
+        /// Validates the state to ensure it can be used for database operations.
+        /// </summary>
+        /// <param name="state">The state.</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// </exception>
+        protected static void ValidateState(BackpackPlannerState state)
+        {
+            if(null == state) {
+                throw new ArgumentNullException(nameof(state));
+            }
+
+            if(null == state.DatabaseState) {
+                throw new ArgumentNullException(nameof(state.DatabaseState));
+            }
+
+            if(null == state.DatabaseState.Connection) {
+                throw new ArgumentNullException(nameof(state.DatabaseState.Connection));
+            }
+
+            if(null == state.DatabaseState.Connection.AsyncConnection) {
+                throw new ArgumentNullException(nameof(state.DatabaseState.Connection.AsyncConnection));
+            }
+
+            if(null == state.PlatformPermissionRequestFactory) {
+                throw new ArgumentNullException(nameof(state.PlatformPermissionRequestFactory));
+            }
+
+            if(null == state.Settings) {
+                throw new ArgumentNullException(nameof(state.Settings));
+            }
+        }
+
+        /// <summary>
         /// Gets all of the not-deleted items from the database.
         /// </summary>
         /// <typeparam name="T">The type of item to get</typeparam>
-        /// <param name="databaseState">State of the database.</param>
-        /// <param name="settings">The planner settings.</param>
+        /// <param name="state">The system state.</param>
         /// <returns>
         /// All of the not-deleted items from the database
         /// </returns>
-        public static async Task<List<T>> GetValidItemsAsync<T>(DatabaseState databaseState, BackpackPlannerSettings settings) where T: DatabaseItem, new()
+        public static async Task<List<T>> GetValidItemsAsync<T>(BackpackPlannerState state) where T: DatabaseItem, new()
         {
-            if(null == databaseState) {
-                throw new ArgumentNullException(nameof(databaseState));
-            }
+            ValidateState(state);
 
-            if(null == settings) {
-                throw new ArgumentNullException(nameof(settings));
-            }
+            await PermissionHelper.CheckReadPermission(state).ConfigureAwait(false);
 
-            await databaseState.Connection.LockAsync().ConfigureAwait(false);
+            await state.DatabaseState.Connection.LockAsync().ConfigureAwait(false);
             try {
                 Logger.Debug($"Reading all valid {typeof(T)}s from the database...");
 
                 Stopwatch stopWatch = Stopwatch.StartNew();
-                var items = await (from x in databaseState.Connection.AsyncConnection.Table<T>() where !x.IsDeleted select x).ToListAsync().ConfigureAwait(false);
+                var items = await (from x in state.DatabaseState.Connection.AsyncConnection.Table<T>() where !x.IsDeleted select x).ToListAsync().ConfigureAwait(false);
                 foreach(T item in items) {
-                    await databaseState.Connection.AsyncConnection.GetChildrenAsync(item).ConfigureAwait(false);
-                    item.Settings = settings;
+                    await state.DatabaseState.Connection.AsyncConnection.GetChildrenAsync(item).ConfigureAwait(false);
+                    item.Settings = state.Settings;
                 }
                 stopWatch.Stop();
                 Logger.Debug($"Database read took {stopWatch.ElapsedMilliseconds}ms");
 
                 return items;
             } finally {
-                databaseState.Connection.Release();
+                state.DatabaseState.Connection.Release();
             }
         }
 
@@ -75,36 +104,31 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// Gets all of the items from the database, including those that have been deleted.
         /// </summary>
         /// <typeparam name="T">The type of item to get</typeparam>
-        /// <param name="databaseState">State of the database.</param>
-        /// <param name="settings">The planner settings.</param>
+        /// <param name="state">The system state.</param>
         /// <returns>
         /// All of the items from the database
         /// </returns>
-        public static async Task<List<T>> GetAllItemsAsync<T>(DatabaseState databaseState, BackpackPlannerSettings settings) where T: DatabaseItem, new()
+        public static async Task<List<T>> GetAllItemsAsync<T>(BackpackPlannerState state) where T: DatabaseItem, new()
         {
-            if(null == databaseState) {
-                throw new ArgumentNullException(nameof(databaseState));
-            }
+            ValidateState(state);
 
-            if(null == settings) {
-                throw new ArgumentNullException(nameof(settings));
-            }
+            await PermissionHelper.CheckReadPermission(state).ConfigureAwait(false);
 
-            await databaseState.Connection.LockAsync().ConfigureAwait(false);
+            await state.DatabaseState.Connection.LockAsync().ConfigureAwait(false);
             try {
                 Logger.Debug($"Reading all {typeof(T)}s from the database...");
 
                 Stopwatch stopWatch = Stopwatch.StartNew();
-                var items = await databaseState.Connection.AsyncConnection.GetAllWithChildrenAsync<T>().ConfigureAwait(false);
+                var items = await state.DatabaseState.Connection.AsyncConnection.GetAllWithChildrenAsync<T>().ConfigureAwait(false);
                 foreach(T item in items) {
-                    item.Settings = settings;
+                    item.Settings = state.Settings;
                 }
                 stopWatch.Stop();
                 Logger.Debug($"Database read took {stopWatch.ElapsedMilliseconds}ms");
 
                 return items;
             } finally {
-                databaseState.Connection.Release();
+                state.DatabaseState.Connection.Release();
             }
         }
 
@@ -112,41 +136,36 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// Gets a single item from the database.
         /// </summary>
         /// <typeparam name="T">The type of item to get</typeparam>
-        /// <param name="databaseState">State of the database.</param>
-        /// <param name="settings">The settings.</param>
+        /// <param name="state">The system state.</param>
         /// <param name="itemId">The item identifier.</param>
         /// <returns>
         /// A single item from the database
         /// </returns>
-        public static async Task<T> GetItemAsync<T>(DatabaseState databaseState, BackpackPlannerSettings settings, int itemId) where T: DatabaseItem, new()
+        public static async Task<T> GetItemAsync<T>(BackpackPlannerState state, int itemId) where T: DatabaseItem, new()
         {
-            if(null == databaseState) {
-                throw new ArgumentNullException(nameof(databaseState));
-            }
+            ValidateState(state);
 
-            if(null == settings) {
-                throw new ArgumentNullException(nameof(settings));
-            }
+            await PermissionHelper.CheckReadPermission(state).ConfigureAwait(false);
 
-            await databaseState.Connection.LockAsync().ConfigureAwait(false);
+            await state.DatabaseState.Connection.LockAsync().ConfigureAwait(false);
             try {
                 Logger.Debug($"Reading a {typeof(T)} with Id={itemId} from the database...");
 
                 Stopwatch stopWatch = Stopwatch.StartNew();
-                T item = await (from x in databaseState.Connection.AsyncConnection.Table<T>() where !x.IsDeleted && x.Id == itemId select x).FirstOrDefaultAsync().ConfigureAwait(false);
+                T item = await (from x in state.DatabaseState.Connection.AsyncConnection.Table<T>() where !x.IsDeleted && x.Id == itemId select x).FirstOrDefaultAsync().ConfigureAwait(false);
                 if(null == item) {
                     return null;
                 }
 
-                await databaseState.Connection.AsyncConnection.GetChildrenAsync(item).ConfigureAwait(false);
-                item.Settings = settings;
+                await state.DatabaseState.Connection.AsyncConnection.GetChildrenAsync(item).ConfigureAwait(false);
+                item.Settings = state.Settings;
 
                 stopWatch.Stop();
                 Logger.Debug($"Database read took {stopWatch.ElapsedMilliseconds}ms");
 
                 return item;
             } finally {
-                databaseState.Connection.Release();
+                state.DatabaseState.Connection.Release();
             }
         }
 
@@ -154,44 +173,44 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// Inserts a list of items.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="databaseState">State of the database.</param>
+        /// <param name="state">The system state.</param>
         /// <param name="items">The items.</param>
-        public static async Task InsertItemsAsync<T>(DatabaseState databaseState, List<T> items) where T: DatabaseItem
+        public static async Task InsertItemsAsync<T>(BackpackPlannerState state, List<T> items) where T: DatabaseItem
         {
-            if(null == databaseState) {
-                throw new ArgumentNullException(nameof(databaseState));
-            }
+            ValidateState(state);
 
-            await databaseState.Connection.LockAsync().ConfigureAwait(false);
+            await PermissionHelper.CheckWritePermission(state).ConfigureAwait(false);
+
+            await state.DatabaseState.Connection.LockAsync().ConfigureAwait(false);
             try {
                 foreach(T item in items) {
                     item.LastUpdated = DateTime.Now;
                 }
 
                 Logger.Debug($"Inserting {items.Count} new {typeof(T)}s into the database...");
-                await databaseState.Connection.AsyncConnection.InsertAllWithChildrenAsync(items).ConfigureAwait(false);
+                await state.DatabaseState.Connection.AsyncConnection.InsertAllWithChildrenAsync(items).ConfigureAwait(false);
             } finally {
-                databaseState.Connection.Release();
+                state.DatabaseState.Connection.Release();
             }
         }
 
         // TODO: no UpdateAllWithChildrenAsync() method?
-        /*public static async Task UpdateItemsAsync<T>(DatabaseState databaseState, List<T> items) where T: DatabaseItem
+        /*public static async Task UpdateItemsAsync<T>(BackpackPlannerState state, List<T> items) where T: DatabaseItem
         {
-            if(null == databaseState) {
-                throw new ArgumentNullException(nameof(databaseState));
-            }
+            ValidateState(state);
 
-            await databaseState.Connection.LockAsync().ConfigureAwait(false);
+            await PermissionHelper.CheckWritePermission(state).ConfigureAwait(false);
+
+            await state.DatabaseState.Connection.LockAsync().ConfigureAwait(false);
             try {
                 foreach(T item in items) {
-                    item.LastUpdate = DateTime.Now;
+                    item.LastUpdated = DateTime.Now;
                 }
 
                 Logger.Debug($"Updating {items.Count} new {typeof(T)}s into the database...");
-                await databaseState.Connection.AsyncConnection.UpdateAllWithChildrenAsync(items).ConfigureAwait(false);
+                await state.DatabaseState.Connection.AsyncConnection.UpdateAllWithChildrenAsync(items).ConfigureAwait(false);
             } finally {
-                databaseState.Connection.Release();
+                state.DatabaseState.Connection.Release();
             }
         }*/
 
@@ -199,28 +218,28 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// Saves an item in the database.
         /// </summary>
         /// <typeparam name="T">The type of the item to save</typeparam>
-        /// <param name="databaseState">State of the database.</param>
+        /// <param name="state">The system state.</param>
         /// <param name="item">The item.</param>
-        public static async Task SaveItemAsync<T>(DatabaseState databaseState, T item) where T: DatabaseItem
+        public static async Task SaveItemAsync<T>(BackpackPlannerState state, T item) where T: DatabaseItem
         {
-            if(null == databaseState) {
-                throw new ArgumentNullException(nameof(databaseState));
-            }
+            ValidateState(state);
 
-            await databaseState.Connection.LockAsync().ConfigureAwait(false);
+            await PermissionHelper.CheckWritePermission(state).ConfigureAwait(false);
+
+            await state.DatabaseState.Connection.LockAsync().ConfigureAwait(false);
             try {
                 item.LastUpdated = DateTime.Now;
 
                 if(item.Id <= 0) {
                     Logger.Debug($"Inserting a new {typeof(T)} into the database...");
-                    await databaseState.Connection.AsyncConnection.InsertWithChildrenAsync(item).ConfigureAwait(false);
+                    await state.DatabaseState.Connection.AsyncConnection.InsertWithChildrenAsync(item).ConfigureAwait(false);
                     Logger.Debug($"The inserted {typeof(T)}'s Id={item.Id}");
                 } else {
                     Logger.Debug($"Updating the {typeof(T)} with Id={item.Id} in the database...");
-                    await databaseState.Connection.AsyncConnection.UpdateWithChildrenAsync(item).ConfigureAwait(false);
+                    await state.DatabaseState.Connection.AsyncConnection.UpdateWithChildrenAsync(item).ConfigureAwait(false);
                 }
             } finally {
-                databaseState.Connection.Release();
+                state.DatabaseState.Connection.Release();
             }
         }
 
@@ -228,20 +247,20 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// Deletes an item from the database.
         /// </summary>
         /// <typeparam name="T">The type of the item to delete</typeparam>
-        /// <param name="databaseState">State of the database.</param>
+        /// <param name="state">The system state.</param>
         /// <returns>The number of items deleted?</returns>
-        /*public static async Task<int> DeleteAllItemsAsync<T>(DatabaseState databaseState) where T: DatabaseItem
+        /*public static async Task<int> DeleteAllItemsAsync<T>(BackpackPlannerState state) where T: DatabaseItem
         {
-            if(null == databaseState) {
-                throw new ArgumentNullException(nameof(databaseState));
-            }
+            ValidateState(state);
 
-            await databaseState.Connection.LockAsync().ConfigureAwait(false);
+            await PermissionHelper.CheckWritePermission(state).ConfigureAwait(false);
+
+            await state.DatabaseState.Connection.LockAsync().ConfigureAwait(false);
             try {
                 Logger.Debug($"Deleting all {typeof(T)}s from the database...");
-                return await databaseState.Connection.AsyncConnection.DeleteAllAsync<T>().ConfigureAwait(false);
+                return await state.DatabaseState.Connection.AsyncConnection.DeleteAllAsync<T>().ConfigureAwait(false);
             } finally {
-                databaseState.Connection.Release();
+                state.DatabaseState.Connection.Release();
             }
         }*/
 

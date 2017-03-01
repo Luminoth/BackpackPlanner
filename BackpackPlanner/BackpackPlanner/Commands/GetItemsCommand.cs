@@ -18,7 +18,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Models;
-using EnergonSoftware.BackpackPlanner.Settings;
 
 namespace EnergonSoftware.BackpackPlanner.Commands
 {
@@ -35,12 +34,11 @@ namespace EnergonSoftware.BackpackPlanner.Commands
         /// </value>
         public List<T> Items { get; private set; } = new List<T>();
 
-        public override async Task DoActionAsync(DatabaseState databaseState, BackpackPlannerSettings settings)
+        public override async Task DoActionAsync(BackpackPlannerState state)
         {
-// TODO: this is where we need to check permission
-            await ValidateDatabaseStateAsync(databaseState).ConfigureAwait(false);
+            await base.DoActionAsync(state).ConfigureAwait(false);
 
-            Items = await DatabaseItem.GetValidItemsAsync<T>(databaseState, settings).ConfigureAwait(false);
+            Items = await DatabaseItem.GetValidItemsAsync<T>(state).ConfigureAwait(false);
         }
     }
 }

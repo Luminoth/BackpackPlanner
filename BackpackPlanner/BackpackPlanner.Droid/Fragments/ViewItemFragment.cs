@@ -41,7 +41,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                 }
 
                 var command = new SaveItemCommand<T>(Item);
-                command.DoActionAsync(DroidState.Instance.BackpackPlannerState.DatabaseState, DroidState.Instance.BackpackPlannerState.Settings).Wait();
+                command.DoActionAsync(DroidState.Instance.BackpackPlannerState).Wait();
 
                 SnackbarUtil.ShowSnackbar(View, Resource.String.label_saved_item, Android.Support.Design.Widget.Snackbar.LengthShort);
 

@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-using System;
+using System.Threading.Tasks;
 
 namespace EnergonSoftware.BackpackPlanner.Core.Permissions
 {
@@ -23,6 +23,9 @@ namespace EnergonSoftware.BackpackPlanner.Core.Permissions
     /// </summary>
     public abstract class PermissionRequest
     {
+        /// <summary>
+        /// Abstracted permission types that we need to be able to request.
+        /// </summary>
         public enum PermissionType
         {
             Invalid = -1,
@@ -31,14 +34,18 @@ namespace EnergonSoftware.BackpackPlanner.Core.Permissions
             WriteStorage
         }
 
-#region Events
-        public event EventHandler<EventArgs> PermissionGrantedEvent;
-
-        public event EventHandler<EventArgs> PermissionDeniedEvent;
-#endregion
-
+        /// <summary>
+        /// Gets the permission being requested.
+        /// </summary>
+        /// <value>
+        /// The permission being requested.
+        /// </value>
         public PermissionType Permission { get; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PermissionRequest"/> class.
+        /// </summary>
+        /// <param name="permission">The permission to request.</param>
         protected PermissionRequest(PermissionType permission)
         {
             Permission = permission;
@@ -48,29 +55,6 @@ namespace EnergonSoftware.BackpackPlanner.Core.Permissions
         /// Requests the specified permission type.
         /// </summary>
         /// <param name="state">Application state.</param>
-        public abstract void Request(BackpackPlannerState state);
-
-        /// <summary>
-        /// Notifies listeners that the permission request has completed.
-        /// </summary>
-        /// <param name="granted">Whether or not the permission was granted.</param>
-        public void Notify(bool granted)
-        {
-            if(granted) {
-                NotifyGranted();
-            } else {
-                NotifyDenied();
-            }
-        }
-
-        private void NotifyGranted()
-        {
-            PermissionGrantedEvent?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void NotifyDenied()
-        {
-            PermissionDeniedEvent?.Invoke(this, EventArgs.Empty);
-        }
+        public abstract Task<bool> Request(BackpackPlannerState state);
     }
 }

@@ -19,12 +19,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
+using EnergonSoftware.BackpackPlanner.Core.Permissions;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
 using EnergonSoftware.BackpackPlanner.Settings;
 
-using SQLite.Net.Async;
 using SQLite.Net.Attributes;
 using SQLiteNetExtensions.Attributes;
 
@@ -40,17 +40,15 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Systems
         /// <summary>
         /// Initializes the gear system tables in the database.
         /// </summary>
-        /// <param name="asyncDbConnection">The asynchronous database connection.</param>
+        /// <param name="state">The system state.</param>
         /// <param name="oldVersion">The old database version.</param>
         /// <param name="newVersion">The new database version.</param>
         /// <remarks>
         /// The connection should be thread locked.
         /// </remarks>
-        public static async Task InitDatabaseAsync(SQLiteAsyncConnection asyncDbConnection, int oldVersion, int newVersion)
+        public static async Task InitDatabaseAsync(BackpackPlannerState state, int oldVersion, int newVersion)
         {
-            if(null == asyncDbConnection) {
-                throw new ArgumentNullException(nameof(asyncDbConnection));
-            }
+            ValidateState(state);
 
             if(oldVersion >= newVersion) {
                 Logger.Debug("Database versions match, nothing to do for gear system tables...");
@@ -59,15 +57,17 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Systems
 
             if(oldVersion < 1 && newVersion >= 1) {
                 Logger.Debug("Creating gear system tables...");
-                await CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
+                await CreateTablesAsync(state).ConfigureAwait(false);
             }
         }
 
-        private static async Task CreateTablesAsync(SQLiteAsyncConnection asyncDbConnection)
+        private static async Task CreateTablesAsync(BackpackPlannerState state)
         {
-            await asyncDbConnection.CreateTableAsync<GearSystem>().ConfigureAwait(false);
+            await PermissionHelper.CheckWritePermission(state).ConfigureAwait(false);
 
-            await GearSystemGearItem.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
+            await state.DatabaseState.Connection.AsyncConnection.CreateTableAsync<GearSystem>().ConfigureAwait(false);
+
+            await GearSystemGearItem.CreateTablesAsync(state).ConfigureAwait(false);
         }
 
         [Ignore]

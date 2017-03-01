@@ -15,11 +15,8 @@
 */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
-using EnergonSoftware.BackpackPlanner.Core;
 using EnergonSoftware.BackpackPlanner.Core.HockeyApp;
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Core.Permissions;
@@ -99,8 +96,6 @@ namespace EnergonSoftware.BackpackPlanner
         public PermissionRequestFactory PlatformPermissionRequestFactory { get; }
 #endregion
 
-        private readonly Dictionary<PermissionRequest.PermissionType, List<PermissionRequest>> _permissionRequests = new Dictionary<PermissionRequest.PermissionType, List<PermissionRequest>>();
-
 #region Dispose
         public void Dispose()
         {
@@ -126,6 +121,7 @@ namespace EnergonSoftware.BackpackPlanner
         /// <param name="platformDatabaseSyncManager">The platform database sync manager.</param>
         /// <param name="sqlitePlatform">The SQLite platform.</param>
         public BackpackPlannerState(IHockeyAppManager platformHockeyAppManager, SettingsManager platformSettingsManager, PlayServicesManager platformPlayServicesManager, DatabaseSyncManager platformDatabaseSyncManager, ISQLitePlatform sqlitePlatform, PermissionRequestFactory platformPermissionRequestFactory)
+        /// <param name="platformPermissionRequestFactory">The platform permission request factory.</param>
         {
             if(null == platformHockeyAppManager) {
                 throw new ArgumentNullException(nameof(platformHockeyAppManager));
@@ -196,51 +192,5 @@ namespace EnergonSoftware.BackpackPlanner
 
             await PlatformHockeyAppManager.DestroyAsync().ConfigureAwait(false);
         }
-
-#region Permissions
-        /// <summary>
-        /// Adds a permission request.
-        /// </summary>
-        /// <param name="permissionRequest">The permission request.</param>
-        /// <returns>True if the permission is new, false if it was added to an existin grequest.</returns>
-        public void AddPermissionRequest(PermissionRequest permissionRequest)
-        {
-            Logger.Debug($"Adding request for permission {permissionRequest.Permission}...");
-
-            List<PermissionRequest> requests;
-            if(!_permissionRequests.TryGetValue(permissionRequest.Permission, out requests)) {
-                requests = new List<PermissionRequest>();
-                _permissionRequests.Add(permissionRequest.Permission, requests);
-            }
-
-            requests.Add(permissionRequest);
-        }
-
-        public int RemovePermissionRequests(Predicate<PermissionRequest> match)
-        {
-            return _permissionRequests.Sum(requests => requests.Value.RemoveAll(match));
-        }
-
-        /// <summary>
-        /// Notifies that a permission request has completed.
-        /// </summary>
-        /// <param name="permission">The permission.</param>
-        /// <param name="granted">if set to <c>true</c> the permission was granted, otherwise it was denied.</param>
-        public void NotifyPermissionRequests(PermissionRequest.PermissionType permission, bool granted)
-        {
-            List<PermissionRequest> requests;
-            if(!_permissionRequests.TryGetValue(permission, out requests)) {
-                Logger.Warn($"Attempt to notify for permission {permission}, which does not exist!");
-                return;
-            }
-
-            Logger.Debug($"Notifying for permission {permission}: {granted}");
-
-            foreach(PermissionRequest request in requests) {
-                request.Notify(granted);
-            }
-            requests.Clear();
-        }
-#endregion
     }
 }

@@ -23,8 +23,8 @@ using Android.Widget;
 
 using EnergonSoftware.BackpackPlanner.Commands;
 using EnergonSoftware.BackpackPlanner.Core.Logging;
+using EnergonSoftware.BackpackPlanner.Core.Permissions;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters;
-using EnergonSoftware.BackpackPlanner.Droid.Permissions;
 using EnergonSoftware.BackpackPlanner.Droid.Util;
 using EnergonSoftware.BackpackPlanner.Models;
 
@@ -96,30 +96,24 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         {
             base.OnResume();
 
-            DroidPermissionRequest readStoragePermissionRequest = DroidState.Instance.PermissionRequestFactory.CreateReadStoragePermissionRequest();
-            readStoragePermissionRequest.PermissionGrantedEvent += (sender, args) =>
-            {
-                Logger.Info("Storage permission granted, listing items...");
-                ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_loading_items, false);
+            ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_loading_items, false);
 
-                var command = new GetItemsCommand<T>();
-                command.DoActionInBackground(DroidState.Instance.BackpackPlannerState.DatabaseState, DroidState.Instance.BackpackPlannerState.Settings,
-                    a => {
-                        Activity.RunOnUiThread(() => {
-                            Logger.Debug($"Read {command.Items.Count} items...");
+            var command = new GetItemsCommand<T>();
+            command.DoActionInBackground(DroidState.Instance.BackpackPlannerState,
+                a => {
+                    Activity.RunOnUiThread(() => {
+                        Logger.Debug($"Read {command.Items.Count} items...");
 
-                            ListItems.Clear();  // is this unnecessary?
-                            ListItems.AddRange(command.Items); 
+                        ListItems.Clear();  // is this unnecessary?
+                        ListItems.AddRange(command.Items); 
 
-                            Adapter.ListItems = ListItems;
-                            UpdateView();
+                        Adapter.ListItems = ListItems;
+                        UpdateView();
 
-                            progressDialog.Dismiss();
-                        });
-                    }
-                );
-            };
-            readStoragePermissionRequest.Request(DroidState.Instance.BackpackPlannerState);
+                        progressDialog.Dismiss();
+                    });
+                }
+            );
         }
 
         public override void OnPause()
@@ -141,9 +135,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         {
             DialogUtil.ShowOkCancelDialog(Activity, DeleteItemConfirmationTextResource, DeleteItemConfirmationTitleResource,
                 (sender, args) => {
-                    // TODO: do in background
                     var command = new DeleteItemCommand<T>(item);
-                    command.DoActionAsync(DroidState.Instance.BackpackPlannerState.DatabaseState, DroidState.Instance.BackpackPlannerState.Settings).Wait();
+                    command.DoActionAsync(DroidState.Instance.BackpackPlannerState).Wait();
 
                     Adapter.RemoveItem(item);
 
@@ -152,8 +145,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
                     SnackbarUtil.ShowUndoSnackbar(View, Resource.String.label_deleted_item, Android.Support.Design.Widget.Snackbar.LengthLong,
                         view => {
-                            // TODO: do in background
-                            command.UndoActionAsync(DroidState.Instance.BackpackPlannerState.DatabaseState, DroidState.Instance.BackpackPlannerState.Settings).Wait();
+                            command.UndoActionAsync(DroidState.Instance.BackpackPlannerState).Wait();
 
                             Adapter.AddItem(item);
 

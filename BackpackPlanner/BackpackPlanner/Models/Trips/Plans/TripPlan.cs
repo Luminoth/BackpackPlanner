@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
+using EnergonSoftware.BackpackPlanner.Core.Permissions;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
@@ -26,7 +27,6 @@ using EnergonSoftware.BackpackPlanner.Models.Meals;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries;
 using EnergonSoftware.BackpackPlanner.Settings;
 
-using SQLite.Net.Async;
 using SQLite.Net.Attributes;
 using SQLiteNetExtensions.Attributes;
 
@@ -42,17 +42,15 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
         /// <summary>
         /// Initializes the trip plans tables in the database.
         /// </summary>
-        /// <param name="asyncDbConnection">The asynchronous database connection.</param>
+        /// <param name="state">The system state.</param>
         /// <param name="oldVersion">The old database version.</param>
         /// <param name="newVersion">The new database version.</param>
         /// <remarks>
         /// The connection should be thread locked
         /// </remarks>
-        public static async Task InitDatabaseAsync(SQLiteAsyncConnection asyncDbConnection, int oldVersion, int newVersion)
+        public static async Task InitDatabaseAsync(BackpackPlannerState state, int oldVersion, int newVersion)
         {
-            if(null == asyncDbConnection) {
-                throw new ArgumentNullException(nameof(asyncDbConnection));
-            }
+            ValidateState(state);
             
             if(oldVersion >= newVersion) {
                 Logger.Debug("Database versions match, nothing to do for trip plan tables...");
@@ -61,18 +59,20 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
 
             if(oldVersion < 2 && newVersion >= 2) {
                 Logger.Debug("Creating trip plan tables...");
-                await CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
+                await CreateTablesAsync(state).ConfigureAwait(false);
             }
         }
 
-        private static async Task CreateTablesAsync(SQLiteAsyncConnection asyncDbConnection)
+        private static async Task CreateTablesAsync(BackpackPlannerState state)
         {
-            await asyncDbConnection.CreateTableAsync<TripPlan>().ConfigureAwait(false);
+            await PermissionHelper.CheckWritePermission(state).ConfigureAwait(false);
 
-            await TripPlanGearCollection.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
-            await TripPlanGearSystem.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
-            await TripPlanGearItem.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
-            await TripPlanMeal.CreateTablesAsync(asyncDbConnection).ConfigureAwait(false);
+            await state.DatabaseState.Connection.AsyncConnection.CreateTableAsync<TripPlan>().ConfigureAwait(false);
+
+            await TripPlanGearCollection.CreateTablesAsync(state).ConfigureAwait(false);
+            await TripPlanGearSystem.CreateTablesAsync(state).ConfigureAwait(false);
+            await TripPlanGearItem.CreateTablesAsync(state).ConfigureAwait(false);
+            await TripPlanMeal.CreateTablesAsync(state).ConfigureAwait(false);
         }
 
         [Ignore]

@@ -19,6 +19,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
+using EnergonSoftware.BackpackPlanner.Core.Permissions;
 
 using SQLite.Net;
 using SQLite.Net.Async;
@@ -36,6 +37,12 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
 
         private readonly SemaphoreSlim _lock = new SemaphoreSlim(1);
 
+        /// <summary>
+        /// Gets a value indicating whether the connection is connected.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if the connection is connected; otherwise, <c>false</c>.
+        /// </value>
         public bool IsConnected => null != Connection;
 
         /// <summary>
@@ -86,7 +93,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
             _lock.Release();
         }
 
-        public async Task ConnectAsync()
+        public async Task ConnectAsync(BackpackPlannerState state)
         {
             await Task.Delay(0).ConfigureAwait(false);
             throw new NotImplementedException();
@@ -95,18 +102,23 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
         /// <summary>
         /// Connects to the database.
         /// </summary>
+        /// <param name="state">The system state.</param>
         /// <param name="sqlitePlatform">The sqlite platform.</param>
         /// <param name="connectionString">The connection string.</param>
-        public async Task ConnectAsync(ISQLitePlatform sqlitePlatform, SQLiteConnectionString connectionString)
+        public async Task ConnectAsync(BackpackPlannerState state, ISQLitePlatform sqlitePlatform, SQLiteConnectionString connectionString)
         {
             if(IsConnected) {
                 throw new InvalidOperationException("Database connection already connected!");
             }
 
+            _connectionString = connectionString;
+
+            if(!await state.PlatformPermissionRequestFactory.Create(PermissionRequest.PermissionType.WriteStorage).Request(state).ConfigureAwait(false)) {
+                throw new PermissionDeniedException(PermissionRequest.PermissionType.WriteStorage, "Could not connect to database: Permission denied!");
+            }
+
             await LockAsync().ConfigureAwait(false);
             try {
-                _connectionString = connectionString;
-
                 Logger.Debug($"Opening connection to database {_connectionString.ConnectionString}...");
                 Connection = new SQLiteConnectionWithLock(sqlitePlatform, connectionString);
                 AsyncConnection = new SQLiteAsyncConnection(() => Connection);

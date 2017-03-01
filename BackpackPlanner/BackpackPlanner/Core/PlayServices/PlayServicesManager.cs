@@ -18,6 +18,8 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 
+// TODO: permission checks?
+
 namespace EnergonSoftware.BackpackPlanner.Core.PlayServices
 {
     /// <summary>

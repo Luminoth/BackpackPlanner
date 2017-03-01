@@ -14,11 +14,12 @@
    limitations under the License.
 */
 
+using System;
 using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
+using EnergonSoftware.BackpackPlanner.Core.Permissions;
 
-using SQLite.Net.Async;
 using SQLite.Net.Attributes;
 using SQLiteNetExtensionsAsync.Extensions;
 
@@ -31,39 +32,74 @@ namespace EnergonSoftware.BackpackPlanner.Models
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(DatabaseVersion));
 
+        private static void ValidateState(BackpackPlannerState state)
+        {
+            if(null == state) {
+                throw new ArgumentNullException(nameof(state));
+            }
+
+            if(null == state.DatabaseState) {
+                throw new ArgumentNullException(nameof(state.DatabaseState));
+            }
+
+            if(null == state.DatabaseState.Connection) {
+                throw new ArgumentNullException(nameof(state.DatabaseState.Connection));
+            }
+
+            if(null == state.DatabaseState.Connection.AsyncConnection) {
+                throw new ArgumentNullException(nameof(state.DatabaseState.Connection.AsyncConnection));
+            }
+
+            if(null == state.PlatformPermissionRequestFactory) {
+                throw new ArgumentNullException(nameof(state.PlatformPermissionRequestFactory));
+            }
+        }
+
         /// <summary>
         /// Creates the database tables.
         /// </summary>
-        /// <param name="asyncDbConnection">The asynchronous database connection.</param>
+        /// <param name="state">The system state.</param>
         /// <remarks>
         /// This will insert the initial version entry.
         /// </remarks>
-        public static async Task CreateTablesAsync(SQLiteAsyncConnection asyncDbConnection)
+        public static async Task CreateTablesAsync(BackpackPlannerState state)
         {
-            await asyncDbConnection.CreateTableAsync<DatabaseVersion>().ConfigureAwait(false);
+            ValidateState(state);
+
+            await PermissionHelper.CheckWritePermission(state).ConfigureAwait(false);
+
+            await state.DatabaseState.Connection.AsyncConnection.CreateTableAsync<DatabaseVersion>().ConfigureAwait(false);
 
             // sets the version to -1 (we haven't built the database yet!)
-            await asyncDbConnection.InsertAsync(new DatabaseVersion()).ConfigureAwait(false);
+            await state.DatabaseState.Connection.AsyncConnection.InsertAsync(new DatabaseVersion()).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the database version entry.
         /// </summary>
-        /// <param name="asyncDbConnection">The asynchronous database connection.</param>
-        public static async Task<DatabaseVersion> GetAsync(SQLiteAsyncConnection asyncDbConnection)
+        /// <param name="state">The system state.</param>
+        public static async Task<DatabaseVersion> GetAsync(BackpackPlannerState state)
         {
-            return await asyncDbConnection.Table<DatabaseVersion>().FirstOrDefaultAsync().ConfigureAwait(false);
+            ValidateState(state);
+
+            await PermissionHelper.CheckReadPermission(state).ConfigureAwait(false);
+
+            return await state.DatabaseState.Connection.AsyncConnection.Table<DatabaseVersion>().FirstOrDefaultAsync().ConfigureAwait(false);
         }
 
         /// <summary>
         /// Updates the database version.
         /// </summary>
-        /// <param name="asyncDbConnection">The asynchronous database connection.</param>
+        /// <param name="state">The system state.</param>
         /// <param name="databaseVersion">The current database version.</param>
-        public static async Task UpdateAsync(SQLiteAsyncConnection asyncDbConnection, DatabaseVersion databaseVersion)
+        public static async Task UpdateAsync(BackpackPlannerState state, DatabaseVersion databaseVersion)
         {
+            ValidateState(state);
+
+            await PermissionHelper.CheckWritePermission(state).ConfigureAwait(false);
+
             Logger.Debug($"Updating database version to {databaseVersion.Version}...");
-            await asyncDbConnection.UpdateWithChildrenAsync(databaseVersion).ConfigureAwait(false);
+            await state.DatabaseState.Connection.AsyncConnection.UpdateWithChildrenAsync(databaseVersion).ConfigureAwait(false);
         }
 
         /// <summary>

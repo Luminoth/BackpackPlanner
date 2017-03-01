@@ -49,7 +49,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
         /// <summary>
         /// Connects to the database.
         /// </summary>
-        Task ConnectAsync();
+        Task ConnectAsync(BackpackPlannerState state);
 
         /// <summary>
         /// Closes the connection.
