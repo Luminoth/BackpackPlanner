@@ -16,6 +16,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EnergonSoftware.BackpackPlanner.Core.Logging
 {
@@ -108,7 +109,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Logging
 
         private static string BuildMessage(Type type, string level, string message)
         {
-            return $"{DateTime.Now} [{type.Name}] {level}: {message}";
+            return $"{DateTime.Now} [{TaskScheduler.Current.Id}] {type.Name} {level}: {message}";
         }
 
         private readonly Type _type;
