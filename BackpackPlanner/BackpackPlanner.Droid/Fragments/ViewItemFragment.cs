@@ -41,11 +41,16 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                 }
 
                 var command = new SaveItemCommand<T>(Item);
-                command.DoActionAsync(DroidState.Instance.BackpackPlannerState).Wait();
+                command.DoActionInBackground(DroidState.Instance.BackpackPlannerState,
+                    a => {
+                        Activity.RunOnUiThread(() =>
+                        {
+                            SnackbarUtil.ShowSnackbar(View, Resource.String.label_saved_item, Android.Support.Design.Widget.Snackbar.LengthShort);
 
-                SnackbarUtil.ShowSnackbar(View, Resource.String.label_saved_item, Android.Support.Design.Widget.Snackbar.LengthShort);
-
-                Activity.SupportFragmentManager.PopBackStack();
+                            Activity.SupportFragmentManager.PopBackStack();
+                        });
+                    }
+                );
             };
         }
     }

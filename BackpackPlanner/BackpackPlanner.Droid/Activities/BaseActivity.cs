@@ -55,7 +55,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             _startupStopwatch.Start();
 #endif
 
-            DroidState.Instance.OnCreate(this).Wait();
+            Task.Run(async () => await DroidState.Instance.OnCreate(this).ConfigureAwait(false));
         }
 
         protected override void OnDestroy()
