@@ -19,7 +19,6 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
-using EnergonSoftware.BackpackPlanner.Core.Permissions;
 
 using SQLite.Net;
 using SQLite.Net.Async;
@@ -111,10 +110,6 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
             }
 
             _connectionString = connectionString;
-
-            if(!await state.PlatformPermissionRequestFactory.Create(PermissionRequest.PermissionType.WriteStorage).Request(state).ConfigureAwait(false)) {
-                throw new PermissionDeniedException(PermissionRequest.PermissionType.WriteStorage, "Could not connect to database: Permission denied!");
-            }
 
             await LockAsync().ConfigureAwait(false);
             try {

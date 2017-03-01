@@ -18,7 +18,6 @@ using System;
 using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
-using EnergonSoftware.BackpackPlanner.Core.Permissions;
 
 using SQLite.Net.Attributes;
 using SQLiteNetExtensionsAsync.Extensions;
@@ -66,8 +65,6 @@ namespace EnergonSoftware.BackpackPlanner.Models
         {
             ValidateState(state);
 
-            await PermissionHelper.CheckWritePermission(state).ConfigureAwait(false);
-
             await state.DatabaseState.Connection.AsyncConnection.CreateTableAsync<DatabaseVersion>().ConfigureAwait(false);
 
             // sets the version to -1 (we haven't built the database yet!)
@@ -82,8 +79,6 @@ namespace EnergonSoftware.BackpackPlanner.Models
         {
             ValidateState(state);
 
-            await PermissionHelper.CheckReadPermission(state).ConfigureAwait(false);
-
             return await state.DatabaseState.Connection.AsyncConnection.Table<DatabaseVersion>().FirstOrDefaultAsync().ConfigureAwait(false);
         }
 
@@ -95,8 +90,6 @@ namespace EnergonSoftware.BackpackPlanner.Models
         public static async Task UpdateAsync(BackpackPlannerState state, DatabaseVersion databaseVersion)
         {
             ValidateState(state);
-
-            await PermissionHelper.CheckWritePermission(state).ConfigureAwait(false);
 
             Logger.Debug($"Updating database version to {databaseVersion.Version}...");
             await state.DatabaseState.Connection.AsyncConnection.UpdateWithChildrenAsync(databaseVersion).ConfigureAwait(false);

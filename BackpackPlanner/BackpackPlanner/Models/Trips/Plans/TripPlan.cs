@@ -19,7 +19,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
-using EnergonSoftware.BackpackPlanner.Core.Permissions;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
@@ -65,8 +64,6 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
 
         private static async Task CreateTablesAsync(BackpackPlannerState state)
         {
-            await PermissionHelper.CheckWritePermission(state).ConfigureAwait(false);
-
             await state.DatabaseState.Connection.AsyncConnection.CreateTableAsync<TripPlan>().ConfigureAwait(false);
 
             await TripPlanGearCollection.CreateTablesAsync(state).ConfigureAwait(false);

@@ -22,7 +22,6 @@ using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Core.Database;
 using EnergonSoftware.BackpackPlanner.Core.Logging;
-using EnergonSoftware.BackpackPlanner.Core.Permissions;
 using EnergonSoftware.BackpackPlanner.Models;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
@@ -146,9 +145,6 @@ namespace EnergonSoftware.BackpackPlanner
             if(IsInitialized) {
                 return;
             }
-
-            await PermissionHelper.CheckReadPermission(state).ConfigureAwait(false);
-            await PermissionHelper.CheckWritePermission(state).ConfigureAwait(false);
 
             Logger.Info("Initializing database...");
 

@@ -16,7 +16,6 @@
 
 using System.Threading.Tasks;
 
-using EnergonSoftware.BackpackPlanner.Core.Permissions;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
 
 using SQLiteNetExtensions.Attributes;
@@ -34,8 +33,6 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
         /// <param name="state">The system state.</param>
         public static async Task CreateTablesAsync(BackpackPlannerState state)
         {
-            await PermissionHelper.CheckWritePermission(state).ConfigureAwait(false);
-
             await state.DatabaseState.Connection.AsyncConnection.CreateTableAsync<TripPlanGearSystem>().ConfigureAwait(false);
         }
 

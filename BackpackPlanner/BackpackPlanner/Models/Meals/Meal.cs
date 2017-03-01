@@ -19,7 +19,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
-using EnergonSoftware.BackpackPlanner.Core.Permissions;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
 using EnergonSoftware.BackpackPlanner.Settings;
 using EnergonSoftware.BackpackPlanner.Units.Currency;
@@ -63,8 +62,6 @@ namespace EnergonSoftware.BackpackPlanner.Models.Meals
 
         private static async Task CreateTablesAsync(BackpackPlannerState state)
         {
-            await PermissionHelper.CheckWritePermission(state).ConfigureAwait(false);
-
             await state.DatabaseState.Connection.AsyncConnection.CreateTableAsync<Meal>().ConfigureAwait(false);
         }
 

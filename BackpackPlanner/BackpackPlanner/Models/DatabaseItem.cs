@@ -20,7 +20,6 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
-using EnergonSoftware.BackpackPlanner.Core.Permissions;
 using EnergonSoftware.BackpackPlanner.Settings;
 
 using SQLiteNetExtensionsAsync.Extensions;
@@ -79,8 +78,6 @@ namespace EnergonSoftware.BackpackPlanner.Models
         {
             ValidateState(state);
 
-            await PermissionHelper.CheckReadPermission(state).ConfigureAwait(false);
-
             await state.DatabaseState.Connection.LockAsync().ConfigureAwait(false);
             try {
                 Logger.Debug($"Reading all valid {typeof(T)}s from the database...");
@@ -112,8 +109,6 @@ namespace EnergonSoftware.BackpackPlanner.Models
         {
             ValidateState(state);
 
-            await PermissionHelper.CheckReadPermission(state).ConfigureAwait(false);
-
             await state.DatabaseState.Connection.LockAsync().ConfigureAwait(false);
             try {
                 Logger.Debug($"Reading all {typeof(T)}s from the database...");
@@ -144,8 +139,6 @@ namespace EnergonSoftware.BackpackPlanner.Models
         public static async Task<T> GetItemAsync<T>(BackpackPlannerState state, int itemId) where T: DatabaseItem, new()
         {
             ValidateState(state);
-
-            await PermissionHelper.CheckReadPermission(state).ConfigureAwait(false);
 
             await state.DatabaseState.Connection.LockAsync().ConfigureAwait(false);
             try {
@@ -179,8 +172,6 @@ namespace EnergonSoftware.BackpackPlanner.Models
         {
             ValidateState(state);
 
-            await PermissionHelper.CheckWritePermission(state).ConfigureAwait(false);
-
             await state.DatabaseState.Connection.LockAsync().ConfigureAwait(false);
             try {
                 foreach(T item in items) {
@@ -198,8 +189,6 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /*public static async Task UpdateItemsAsync<T>(BackpackPlannerState state, List<T> items) where T: DatabaseItem
         {
             ValidateState(state);
-
-            await PermissionHelper.CheckWritePermission(state).ConfigureAwait(false);
 
             await state.DatabaseState.Connection.LockAsync().ConfigureAwait(false);
             try {
@@ -223,8 +212,6 @@ namespace EnergonSoftware.BackpackPlanner.Models
         public static async Task SaveItemAsync<T>(BackpackPlannerState state, T item) where T: DatabaseItem
         {
             ValidateState(state);
-
-            await PermissionHelper.CheckWritePermission(state).ConfigureAwait(false);
 
             await state.DatabaseState.Connection.LockAsync().ConfigureAwait(false);
             try {
@@ -252,8 +239,6 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /*public static async Task<int> DeleteAllItemsAsync<T>(BackpackPlannerState state) where T: DatabaseItem
         {
             ValidateState(state);
-
-            await PermissionHelper.CheckWritePermission(state).ConfigureAwait(false);
 
             await state.DatabaseState.Connection.LockAsync().ConfigureAwait(false);
             try {
