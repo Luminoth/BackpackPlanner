@@ -56,7 +56,6 @@ namespace EnergonSoftware.BackpackPlanner.Windows
                 new HockeyAppManager(),
                 new WindowsSettingsManager(),
                 new WindowsPlayServicesManager(),
-                new WindowsDatabaseSyncManager(),
                 new SQLitePlatformWinRT(),
                 new WindowsPermissionRequestFactory()
             );
@@ -99,8 +98,8 @@ namespace EnergonSoftware.BackpackPlanner.Windows
 
             await BackpackPlannerState.InitAsync();
 
-            await BackpackPlannerState.DatabaseState.ConnectAsync(ApplicationData.Current.LocalFolder.Path, DatabaseState.DatabaseName);
-            await BackpackPlannerState.DatabaseState.InitDatabaseAsync();
+            await BackpackPlannerState.DatabaseState.ConnectAsync(BackpackPlannerState, ApplicationData.Current.LocalFolder.Path, DatabaseState.DatabaseName);
+            await BackpackPlannerState.DatabaseState.InitDatabaseAsync(BackpackPlannerState);
         }
 
         /// <summary>

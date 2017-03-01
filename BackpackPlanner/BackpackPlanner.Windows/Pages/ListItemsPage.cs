@@ -43,7 +43,7 @@ namespace EnergonSoftware.BackpackPlanner.Windows.Pages
             LoadProgressRing.Visibility = Visibility.Visible;
 
             var command = new GetItemsCommand<T>();
-            await command.DoActionAsync(App.CurrentApp.BackpackPlannerState.DatabaseState, App.CurrentApp.BackpackPlannerState.Settings);
+            await command.DoActionAsync(App.CurrentApp.BackpackPlannerState);
 
             Logger.Debug($"Read {command.Items.Count} items...");
             if(command.Items.Count < 1) {

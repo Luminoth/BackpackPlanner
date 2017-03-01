@@ -42,10 +42,8 @@ namespace EnergonSoftware.BackpackPlanner.Windows.Pages
         {
             base.OnNavigatedTo(e);
 
-            // TODO: this should be encapsulated in the library
             if(App.CurrentApp.BackpackPlannerState.PlatformPlayServicesManager.IsEnabled && App.CurrentApp.BackpackPlannerState.Settings.ConnectGooglePlayServices) {
                 await App.CurrentApp.BackpackPlannerState.PlatformPlayServicesManager.ConnectAsync();
-                App.CurrentApp.BackpackPlannerState.PlatformDatabaseSyncManager.SyncDatabaseInBackground(App.CurrentApp.BackpackPlannerState.PlatformPlayServicesManager);
             }
 
             ContentFrame.Navigate(typeof(GearItemsPage));

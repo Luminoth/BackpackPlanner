@@ -14,6 +14,8 @@
    limitations under the License.
 */
 
+using System.Threading.Tasks;
+
 using EnergonSoftware.BackpackPlanner.Core.Permissions;
 
 namespace EnergonSoftware.BackpackPlanner.Windows.Permissions
@@ -25,8 +27,9 @@ namespace EnergonSoftware.BackpackPlanner.Windows.Permissions
         {
         }
 
-        public override void Request(BackpackPlannerState state)
+        public override Task<bool> Request(BackpackPlannerState state)
         {
+            return Task.FromResult(true);
         }
     }
 }
