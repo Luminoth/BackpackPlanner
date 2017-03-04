@@ -17,13 +17,13 @@
 using System.Collections.Generic;
 
 using Android.App;
+using Android.Content;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
 
 using EnergonSoftware.BackpackPlanner.Commands;
 using EnergonSoftware.BackpackPlanner.Core.Logging;
-using EnergonSoftware.BackpackPlanner.Core.Permissions;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters;
 using EnergonSoftware.BackpackPlanner.Droid.Util;
 using EnergonSoftware.BackpackPlanner.Models;
@@ -109,10 +109,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
                     Activity.RunOnUiThread(() =>
                     {
+                        progressDialog.Dismiss();
+
                         Adapter.ListItems = ListItems;
                         UpdateView();
-
-                        progressDialog.Dismiss();
                     });
                 }
             );
@@ -136,40 +136,51 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         public void DeleteItem(T item)
         {
             DialogUtil.ShowOkCancelDialog(Activity, DeleteItemConfirmationTextResource, DeleteItemConfirmationTitleResource,
-                (sender, args) => {
-                    var command = new DeleteItemCommand<T>(item);
-                    command.DoActionInBackground(DroidState.Instance.BackpackPlannerState,
-                        a =>
-                        {
-                            ListItems.Remove(item);
+                (sender, args) => DeleteItemEventHandler(sender, args, item));
+        }
 
-                            Activity.RunOnUiThread(() => {
-                                Adapter.RemoveItem(item);
+        private void DeleteItemEventHandler(object sender, DialogClickEventArgs args, T item)
+        {
+            ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_deleting_item, false);
 
-                                UpdateView();
+            var command = new DeleteItemCommand<T>(item);
+            command.DoActionInBackground(DroidState.Instance.BackpackPlannerState,
+                a =>
+                {
+                    ListItems.Remove(item);
 
-                                SnackbarUtil.ShowUndoSnackbar(View, Resource.String.label_deleted_item, Android.Support.Design.Widget.Snackbar.LengthLong,
-                                    view =>
-                                    {
-                                        command.UndoActionInBackground(DroidState.Instance.BackpackPlannerState,
-                                            b =>
-                                            {
-                                                ListItems.Add(item);
+                    Activity.RunOnUiThread(() => {
+                        progressDialog.Dismiss();
 
-                                                Activity.RunOnUiThread(() => {
-                                                    Adapter.AddItem(item);
+                        Adapter.RemoveItem(item);
 
-                                                    UpdateView();
+                        UpdateView();
 
-                                                    SnackbarUtil.ShowSnackbar(view, Resource.String.label_deleted_item_undo, Android.Support.Design.Widget.Snackbar.LengthShort);
-                                                });
-                                            }
-                                        );
-                                    }
-                                );
-                            });
-                        }
-                    );
+                        SnackbarUtil.ShowUndoSnackbar(View, Resource.String.label_deleted_item, Android.Support.Design.Widget.Snackbar.LengthLong,
+                            view => UndoDeleteItemEventHandler(view, command));
+                    });
+                }
+            );
+        }
+
+        private void UndoDeleteItemEventHandler(View view, DeleteItemCommand<T> command)
+        {
+            ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_deleted_item_undoing, false);
+
+            command.UndoActionInBackground(DroidState.Instance.BackpackPlannerState,
+                a =>
+                {
+                    ListItems.Add(command.Item);
+
+                    Activity.RunOnUiThread(() => {
+                        progressDialog.Dismiss();
+
+                        Adapter.AddItem(command.Item);
+
+                        UpdateView();
+
+                        SnackbarUtil.ShowSnackbar(view, Resource.String.label_deleted_item_undone, Android.Support.Design.Widget.Snackbar.LengthShort);
+                    });
                 }
             );
         }

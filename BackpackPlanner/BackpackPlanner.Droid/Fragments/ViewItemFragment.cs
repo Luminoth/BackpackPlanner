@@ -14,6 +14,7 @@
    limitations under the License.
 */
 
+using Android.App;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
@@ -40,11 +41,16 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                     return;
                 }
 
+                ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_saving_item, false);
+
                 var command = new SaveItemCommand<T>(Item);
                 command.DoActionInBackground(DroidState.Instance.BackpackPlannerState,
-                    a => {
+                    a =>
+                    {
                         Activity.RunOnUiThread(() =>
                         {
+                            progressDialog.Dismiss();
+
                             SnackbarUtil.ShowSnackbar(View, Resource.String.label_saved_item, Android.Support.Design.Widget.Snackbar.LengthShort);
 
                             Activity.SupportFragmentManager.PopBackStack();

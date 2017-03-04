@@ -14,7 +14,9 @@
    limitations under the License.
 */
 
+#if DEBUG
 #define DEBUG_LIFECYCLE
+#endif
 
 using System;
 using System.Collections.Generic;
@@ -164,6 +166,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
         /// </remarks>
         public async Task CheckPermission(DroidPermissionRequest permissionRequest, Func<Task> showExplanation=null)
         {
+            // TODO: does this  need to be forced onto the UI thread?
+
             Logger.Info($"Checking permission {permissionRequest.Permission} (DroidPermission={permissionRequest.DroidPermission}, RequestCode={permissionRequest.RequestCode})...");
 
             // permission already granted

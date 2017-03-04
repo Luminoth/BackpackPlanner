@@ -18,14 +18,6 @@
 
     <string name="label_sort">Sort by</string>
 
-    <!-- Errors -->
-
-    <string name="title_accounts_permission">Accounts Permission</string>
-    <string name="label_accounts_permission">Accounts permissions are required for logging into google play services!</string>
-
-    <string name="title_storage_permission">Storage Permission</string>
-    <string name="label_storage_permission">Storage permissions are required for saving and loading data!</string>
-
     <!-- What is a text -->
 
     <string name="what_is_a_gear_item">Lots of text about gear items</string>
@@ -39,17 +31,6 @@
     <string name="what_is_a_trip_itinerary">Lots of text about trip itineraries</string>
 
     <string name="what_is_a_trip_plan">Lots of text about trip plans</string>
-
-    <!-- General messages -->
-
-    <string name="title_loading_items">Loading Items</string>
-    <string name="label_loading_items">Loading items, this may take a moment...</string>
-
-    <string name="title_connect_google_play_services">Connect to Google Play Services?</string>
-    <string name="label_connect_google_play_services">Backpacking Planner can take advantage of Google Play Services to sync your data (some day). Would you like to allow this?</string>
-
-    <string name="title_connecting_google_play_services">Connecting Google Play Services</string>
-    <string name="label_connecting_google_play_services">Connecting Google Play Services, please wait...</string>
 
     <!-- Delete confirmations -->
 
@@ -109,11 +90,25 @@
 
     <!-- Actions -->
 
+    <string name="label_loading_items">Loading items, this may take a moment...</string>
+
+    <string name="label_adding_item">Adding item, this may take a moment...</string>
     <string name="label_added_item">Added an item!</string>
+
+    <string name="label_deleting_item">Deleting item, this may take a moment...</string>
+    <string name="label_deleted_item">Deleted an item!</string>
+
+    <string name="label_deleted_item_undoing">Restoring item, this may take a moment...</string>
+    <string name="label_deleted_item_undone">Restored an item!</string>
+
+    <string name="label_saving_item">Saving item, this may take a moment...</string>
     <string name="label_saved_item">Saved an item!</string>
 
-    <string name="label_deleted_item">Deleted an item!</string>
-    <string name="label_deleted_item_undo">Undeleted an item!</string>
+    <string name="title_connect_google_play_services">Connect to Google Play Services?</string>
+    <string name="label_connect_google_play_services">Backpacking Planner can take advantage of Google Play Services to sync your data (some day). Would you like to allow this?</string>
+
+    <string name="title_connecting_google_play_services">Connecting Google Play Services</string>
+    <string name="label_connecting_google_play_services">Connecting Google Play Services, please wait...</string>
 
     <!-- Gear Items -->
 
