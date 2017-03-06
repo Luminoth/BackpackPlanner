@@ -12,35 +12,35 @@
     <PreferenceCategory
         android:key="personalInformation"
         android:title="@string/title_personal_information">
-        <EditTextPreference
+        <!--<EditTextPreference
             android:key="personalInformationName"
             android:title="@string/label_name"
             android:dialogTitle="@string/title_name"
             android:summary="@string/summary_name"
             android:inputType="text|textCapWords"
-            android:defaultValue="" />
-        <EditTextPreference
+            android:defaultValue="" />-->
+        <!--<EditTextPreference
             android:key="personalInformationBirthdate"
             android:title="@string/label_birthdate"
             android:dialogTitle="@string/title_birthdate"
             android:summary="@string/summary_birthdate"
             android:inputType="date"
-            android:defaultValue="" />
-        <ListPreference
+            android:defaultValue="" />-->
+        <!--<ListPreference
             android:key="personalInformationSex"
             android:title="@string/label_user_sex"
             android:dialogTitle="@string/title_user_sex"
             android:summary="@string/summary_user_sex"
             android:entries="@array/user_sex"
             android:entryValues="@array/user_sex"
-            android:defaultValue="Undeclared" />
-        <EditTextPreference
+            android:defaultValue="Undeclared" />-->
+        <!--<EditTextPreference
             android:key="personalInformationHeight"
             android:title="@string/label_height"
             android:dialogTitle="@string/title_height"
             android:summary="@string/summary_height"
             android:inputType="number"
-            android:defaultValue="0" />
+            android:defaultValue="0" />-->
         <EditTextPreference
             android:key="personalInformationWeight"
             android:title="@string/label_weight"

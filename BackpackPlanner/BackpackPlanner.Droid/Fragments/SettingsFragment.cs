@@ -34,10 +34,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
 #region Controls
         private Android.Support.V7.Preferences.PreferenceCategory _personalInformationCategory;
-        private Android.Support.V7.Preferences.EditTextPreference _namePreference;
-        private Android.Support.V7.Preferences.EditTextPreference _birthDatePreference;
-        private Android.Support.V7.Preferences.ListPreference _userSexPreference;
-        private Android.Support.V7.Preferences.EditTextPreference _heightPreference;
+        //private Android.Support.V7.Preferences.EditTextPreference _namePreference;
+        //private Android.Support.V7.Preferences.EditTextPreference _birthDatePreference;
+        //private Android.Support.V7.Preferences.ListPreference _userSexPreference;
+        //private Android.Support.V7.Preferences.EditTextPreference _heightPreference;
         private Android.Support.V7.Preferences.EditTextPreference _weightPreference;
 
         private Android.Support.V7.Preferences.PreferenceCategory _unitsCategory;
@@ -53,10 +53,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 // TODO: remove any of these that are unused
 
             _personalInformationCategory = (Android.Support.V7.Preferences.PreferenceCategory)FindPreference(PersonalInformation.PreferenceKey);
-            _namePreference = (Android.Support.V7.Preferences.EditTextPreference)FindPreference(PersonalInformation.NamePreferenceKey);
+            //_namePreference = (Android.Support.V7.Preferences.EditTextPreference)FindPreference(PersonalInformation.NamePreferenceKey);
 
-            _birthDatePreference = (Android.Support.V7.Preferences.EditTextPreference)FindPreference(PersonalInformation.DateOfBirthPreferenceKey);
-            _birthDatePreference.PreferenceClick += (sender, args) => {
+            //_birthDatePreference = (Android.Support.V7.Preferences.EditTextPreference)FindPreference(PersonalInformation.DateOfBirthPreferenceKey);
+            /*_birthDatePreference.PreferenceClick += (sender, args) => {
                 DateTime dateTime = DateTime.Now;
                 try {
                     dateTime = Convert.ToDateTime(_birthDatePreference.Text);
@@ -68,10 +68,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                     _birthDatePreference.Text = a.Date.ToString("yyyy-MM-dd", CultureInfo.CurrentCulture);
                 };
                 picker.Show(Activity.SupportFragmentManager, null);
-            };
+            };*/
 
-            _userSexPreference = (Android.Support.V7.Preferences.ListPreference)FindPreference(PersonalInformation.UserSexPreferenceKey);
-            _heightPreference = (Android.Support.V7.Preferences.EditTextPreference)FindPreference(PersonalInformation.HeightPreferenceKey);
+            //_userSexPreference = (Android.Support.V7.Preferences.ListPreference)FindPreference(PersonalInformation.UserSexPreferenceKey);
+            //_heightPreference = (Android.Support.V7.Preferences.EditTextPreference)FindPreference(PersonalInformation.HeightPreferenceKey);
             _weightPreference = (Android.Support.V7.Preferences.EditTextPreference)FindPreference(PersonalInformation.WeightPreferenceKey);
 
             _unitsCategory = (Android.Support.V7.Preferences.PreferenceCategory)FindPreference(BackpackPlannerSettings.UnitsPreferenceKey);
@@ -104,12 +104,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         }
 
 #region Labels
-        private void SetHeightLabel()
+        /*private void SetHeightLabel()
         {
             _heightPreference.DialogTitle = _heightPreference.Title = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_height),
                 DroidState.Instance.BackpackPlannerState.Settings.Units.GetSmallLengthString(true)
             );
-        }
+        }*/
 
         private void SetWeightLabel()
         {
@@ -120,29 +120,29 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 #endregion
 
 #region Summaries
-        private void SetNameSummary()
+        /*private void SetNameSummary()
         {
             _namePreference.Summary = string.IsNullOrWhiteSpace(DroidState.Instance.BackpackPlannerState.PersonalInformation.Name)
                 ? Resources.GetString(Resource.String.summary_name)
                 : DroidState.Instance.BackpackPlannerState.PersonalInformation.Name;
-        }
+        }*/
 
-        private void SetBirthDateSummary()
+        /*private void SetBirthDateSummary()
         {
             _birthDatePreference.Summary = DroidState.Instance.BackpackPlannerState.PersonalInformation.DateOfBirth?.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) ?? Resources.GetString(Resource.String.summary_birthdate);
-        }
+        }*/
 
-        private void SetUserSexSummary()
+        /*private void SetUserSexSummary()
         {
             _userSexPreference.Summary = DroidState.Instance.BackpackPlannerState.PersonalInformation.Sex.ToString();
-        }
+        }*/
 
-        private void SetHeightSummary()
+        /*private void SetHeightSummary()
         {
             // TODO: make this a resource
             _heightPreference.Summary = ((int)DroidState.Instance.BackpackPlannerState.PersonalInformation.HeightInUnits)
                 + " " + DroidState.Instance.BackpackPlannerState.Settings.Units.GetSmallLengthString(true);
-        }
+        }*/
 
         private void SetWeightSummary()
         {
@@ -164,16 +164,16 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         private void UpdateLabels()
         {
-            SetHeightLabel();
+            //SetHeightLabel();
             SetWeightLabel();
         }
 
         private void UpdateSummaries()
         {
-            SetNameSummary();
-            SetBirthDateSummary();
-            SetUserSexSummary();
-            SetHeightSummary();
+            //SetNameSummary();
+            //SetBirthDateSummary();
+            //SetUserSexSummary();
+            //SetHeightSummary();
             SetWeightSummary();
 
             SetUnitSystemSummary();
