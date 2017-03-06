@@ -53,6 +53,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         protected abstract int AddItemResource { get; }
 
+        protected override bool HasSearchView => true;
+
+        protected override bool CanExport => true;
+
         public int ItemCount => ListItems.Count;
 
         protected readonly List<T> ListItems = new List<T>();

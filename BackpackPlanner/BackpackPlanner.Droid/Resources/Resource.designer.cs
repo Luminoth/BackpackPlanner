@@ -4328,13 +4328,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			public const int options_menu = 2131755013;
 			
 			// aapt resource value: 0x7f100006
-			public const int options_menu_nosearch = 2131755014;
+			public const int trip_itinerary_menu = 2131755014;
 			
 			// aapt resource value: 0x7f100007
-			public const int trip_itinerary_menu = 2131755015;
-			
-			// aapt resource value: 0x7f100008
-			public const int trip_plan_menu = 2131755016;
+			public const int trip_plan_menu = 2131755015;
 			
 			static Menu()
 			{

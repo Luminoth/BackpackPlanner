@@ -36,8 +36,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
 
         protected override int SaveItemResource => Resource.Id.button_save_trip_plan;
 
-        protected override bool HasSearchView => false;
-
 #region Controls
         private Android.Support.Design.Widget.TextInputLayout _tripPlanNameEditText;
         private Android.Support.Design.Widget.TextInputLayout _tripPlanStartDateText;

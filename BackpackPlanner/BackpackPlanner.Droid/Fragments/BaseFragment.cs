@@ -49,6 +49,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         protected abstract bool HasSearchView { get; }
 
+        protected abstract bool CanExport { get; }
+
         public Android.Support.V7.Widget.SearchView FilterView { get; private set; }
 
 #region Fragment Lifecycle
@@ -128,10 +130,21 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         {
             base.OnCreateOptionsMenu(menu, inflater);
 
-// TODO: we also probably need a way to exclude the share/export item
+            inflater.Inflate(Resource.Menu.options_menu, menu);
 
-            inflater.Inflate(HasSearchView ? Resource.Menu.options_menu : Resource.Menu.options_menu_nosearch, menu);
+            if(HasSearchView) {
+                CreateSearchView(menu);
+            } else {
+                menu.RemoveItem(Resource.Id.action_search);
+            }
 
+            if(!CanExport) {
+                menu.RemoveItem(Resource.Id.action_export);
+            }
+        }
+
+        private void CreateSearchView(IMenu menu)
+        {
             IMenuItem searchItem = menu.FindItem(Resource.Id.action_search);
             if(null == searchItem) {
                 return;

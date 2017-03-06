@@ -42,8 +42,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries
 
         protected override int SortItemsResource => Resource.Id.trip_itineraries_sort;
 
-        protected override bool HasSearchView => true;
-
         protected override int AddItemResource => Resource.Id.fab_add_trip_itinerary;
 
         protected override Android.Support.V4.App.Fragment CreateAddItemFragment()

@@ -34,8 +34,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
 
         protected override int AddItemResource => Resource.Id.button_add_gear_item;
 
-        protected override bool HasSearchView => false;
-
 #region Controls
         private Android.Support.Design.Widget.TextInputLayout _gearItemNameEditText;
         private Android.Support.Design.Widget.TextInputLayout _gearItemMakeEditText;

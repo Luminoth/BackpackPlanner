@@ -535,9 +535,6 @@
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_search.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\menu\options_menu_nosearch.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\menu\gear_collection_menu.xml" />
   </ItemGroup>
   <ItemGroup>

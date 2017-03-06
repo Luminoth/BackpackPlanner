@@ -42,8 +42,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
 
         protected override int SortItemsResource => Resource.Id.meals_sort;
 
-        protected override bool HasSearchView => true;
-
         protected override int AddItemResource => Resource.Id.fab_add_meal;
 
         protected override Android.Support.V4.App.Fragment CreateAddItemFragment()

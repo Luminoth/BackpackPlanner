@@ -44,8 +44,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
 
         protected override int AddItemResource => Resource.Id.fab_add_gear_collection;
 
-        protected override bool HasSearchView => true;
-
         protected override Android.Support.V4.App.Fragment CreateAddItemFragment()
         {
             return new AddGearCollectionFragment();

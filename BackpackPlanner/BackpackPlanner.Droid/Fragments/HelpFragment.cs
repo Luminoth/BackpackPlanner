@@ -28,6 +28,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         protected override bool HasSearchView => false;
 
+        protected override bool CanExport => false;
+
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
             base.OnViewCreated(view, savedInstanceState);

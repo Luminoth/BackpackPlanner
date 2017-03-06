@@ -42,8 +42,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
 
         protected override int SortItemsResource => Resource.Id.gear_items_sort;
 
-        protected override bool HasSearchView => true;
-
         protected override int AddItemResource => Resource.Id.fab_add_gear_item;
 
         protected override Android.Support.V4.App.Fragment CreateAddItemFragment()
