@@ -33,7 +33,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.FTUE
         {
             base.OnViewCreated(view, savedInstanceState);
 
-            Button skipButton = view.FindViewById<Button>(Resource.Id.button_ftue_next);
+            Button skipButton = view.FindViewById<Button>(Resource.Id.button_ftue_skip);
             skipButton.Click += (sender, args) => {
                 ((FTUEActivity)Activity).FinishFTUE();
             };

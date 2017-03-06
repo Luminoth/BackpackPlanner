@@ -17,12 +17,14 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:gravity="center">
         <Button
-            android:id="@+id/button_ftue_next"
+            android:id="@+id/button_ftue_skip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_ftue_next"
+            android:text="@string/label_ftue_skip"
+            android:layout_gravity="center_horizontal"
             android:textColor="@android:color/white" />
     </LinearLayout>
 </RelativeLayout>
