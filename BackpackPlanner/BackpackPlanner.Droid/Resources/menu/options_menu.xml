@@ -4,6 +4,10 @@
     <item android:id="@+id/action_search"
         android:title="@string/label_search"
         android:icon="@drawable/ic_search"
-        app:showAsAction="collapseActionView|ifRoom"
+        app:showAsAction="collapseActionView|always"
         app:actionViewClass="android.support.v7.widget.SearchView" />
+    <item android:id="@+id/action_export"
+        android:title="@string/label_export"
+        android:icon="@drawable/ic_share"
+        app:showAsAction="never" />
 </menu>

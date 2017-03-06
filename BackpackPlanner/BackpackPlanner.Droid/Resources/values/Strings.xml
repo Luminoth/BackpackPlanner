@@ -14,6 +14,7 @@
     <string name="label_reset">Reset</string>
 
     <string name="label_search">Search</string>
+    <string name="label_export">Export/Share</string>
     <string name="search_hint">Filter by name...</string>
 
     <string name="label_sort">Sort by</string>

@@ -128,6 +128,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         {
             base.OnCreateOptionsMenu(menu, inflater);
 
+// TODO: we also probably need a way to exclude the share/export item
+
             inflater.Inflate(HasSearchView ? Resource.Menu.options_menu : Resource.Menu.options_menu_nosearch, menu);
 
             IMenuItem searchItem = menu.FindItem(Resource.Id.action_search);
