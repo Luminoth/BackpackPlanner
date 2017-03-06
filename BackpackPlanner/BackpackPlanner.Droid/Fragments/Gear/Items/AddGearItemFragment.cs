@@ -26,7 +26,7 @@ using EnergonSoftware.BackpackPlanner.Units.Units;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
 {
-    public class AddGearItemFragment : AddItemFragment<GearItem>
+    public sealed class AddGearItemFragment : AddItemFragment<GearItem>
     {
         protected override int LayoutResource => Resource.Layout.fragment_add_gear_item;
 

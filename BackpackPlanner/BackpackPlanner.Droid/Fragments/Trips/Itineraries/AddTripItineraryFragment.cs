@@ -21,7 +21,7 @@ using EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries
 {
-    public class AddTripItineraryFragment : AddItemFragment<TripItinerary>
+    public sealed class AddTripItineraryFragment : AddItemFragment<TripItinerary>
     {
         protected override int LayoutResource => Resource.Layout.fragment_add_trip_itinerary;
 

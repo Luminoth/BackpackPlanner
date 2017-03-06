@@ -20,7 +20,7 @@ using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
 {
-    public class GearItemsFragment : ListItemsFragment<GearItem>
+    public sealed class GearItemsFragment : ListItemsFragment<GearItem>
     {
         protected override int LayoutResource => Resource.Layout.fragment_gear_items;
 

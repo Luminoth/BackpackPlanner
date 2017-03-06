@@ -28,9 +28,9 @@ using EnergonSoftware.BackpackPlanner.Units.Units;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
 {
-    public class MealListAdapter : BaseListAdapter<Meal>
+    public sealed class MealListAdapter : BaseListAdapter<Meal>
     {
-        private class MealViewHolder : BaseViewHolder
+        private sealed class MealViewHolder : BaseViewHolder
         {
             protected override int DeleteActionResourceId => Resource.Id.action_delete_meal;
 

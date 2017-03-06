@@ -22,7 +22,7 @@ using EnergonSoftware.BackpackPlanner.Core.Logging;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 {
-    public class DebugFragment : BaseFragment
+    public sealed class DebugFragment : BaseFragment
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(DebugFragment));
 

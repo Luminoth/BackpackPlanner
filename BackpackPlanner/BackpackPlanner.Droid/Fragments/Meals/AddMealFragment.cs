@@ -26,7 +26,7 @@ using EnergonSoftware.BackpackPlanner.Units.Units;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
 {
-    public class AddMealFragment : AddItemFragment<Meal>
+    public sealed class AddMealFragment : AddItemFragment<Meal>
     {
         protected override int LayoutResource => Resource.Layout.fragment_add_meal;
 

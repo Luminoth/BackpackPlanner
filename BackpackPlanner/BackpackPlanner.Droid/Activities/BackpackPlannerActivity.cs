@@ -21,7 +21,6 @@ using Android.Content.Res;
 using Android.OS;
 using Android.Views;
 
-using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items;
@@ -140,7 +139,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 
         private void SelectDrawerItem(IMenuItem menuItem)
         {
-            // this solves the problem of checking more than one item
+            // this solves the problem of checking more than one item (TODO: not anymore apparently!)
             // in the list across groups even when checkableBehavior is single on each group
             // TODO: the problem with this solution is that it requires an update
             // any time a new group is added to the menu, and that's maybe not so good

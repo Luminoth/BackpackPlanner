@@ -20,7 +20,7 @@ using EnergonSoftware.BackpackPlanner.Models.Meals;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
 {
-    public class MealsFragment : ListItemsFragment<Meal>
+    public sealed class MealsFragment : ListItemsFragment<Meal>
     {
         protected override int LayoutResource => Resource.Layout.fragment_meals;
 

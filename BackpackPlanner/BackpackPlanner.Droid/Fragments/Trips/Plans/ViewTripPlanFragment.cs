@@ -26,7 +26,7 @@ using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
 {
-    public class ViewTripPlanFragment : ViewItemFragment<TripPlan>
+    public sealed class ViewTripPlanFragment : ViewItemFragment<TripPlan>
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(ViewTripPlanFragment));
 

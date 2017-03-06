@@ -21,7 +21,7 @@ using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 {
-    public class ViewGearSystemFragment : ViewItemFragment<GearSystem>
+    public sealed class ViewGearSystemFragment : ViewItemFragment<GearSystem>
     {
         protected override int LayoutResource => Resource.Layout.fragment_view_gear_system;
 

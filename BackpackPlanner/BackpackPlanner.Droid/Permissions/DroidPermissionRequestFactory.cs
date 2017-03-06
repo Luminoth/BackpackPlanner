@@ -34,6 +34,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Permissions
             return new DroidPermissionRequest(_activity, permission);
         }
 
+// TODO: revisit this at some point to re-integrate the permission denied event handling
+
 /*
         /// <summary>
         /// Checks for the READ_EXTERNAL_STORAGE permission.

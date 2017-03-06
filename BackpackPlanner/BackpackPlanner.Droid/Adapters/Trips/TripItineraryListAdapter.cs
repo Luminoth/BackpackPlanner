@@ -25,9 +25,9 @@ using EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips
 {
-    public class TripItineraryListAdapter : BaseListAdapter<TripItinerary>
+    public sealed class TripItineraryListAdapter : BaseListAdapter<TripItinerary>
     {
-        private class TripItineraryViewHolder : BaseViewHolder
+        private sealed class TripItineraryViewHolder : BaseViewHolder
         {
             protected override int DeleteActionResourceId => Resource.Id.action_delete_trip_itinerary;
 

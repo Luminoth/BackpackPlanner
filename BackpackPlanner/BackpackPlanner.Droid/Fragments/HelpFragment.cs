@@ -20,7 +20,7 @@ using Android.Widget;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 {
-    public class HelpFragment : BaseFragment
+    public sealed class HelpFragment : BaseFragment
     {
         protected override int LayoutResource => Resource.Layout.fragment_help;
 

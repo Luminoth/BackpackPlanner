@@ -26,7 +26,7 @@ using EnergonSoftware.BackpackPlanner.Units.Units;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
 {
-    public class ViewMealFragment : ViewItemFragment<Meal>
+    public sealed class ViewMealFragment : ViewItemFragment<Meal>
     {
         protected override int LayoutResource => Resource.Layout.fragment_view_meal;
 

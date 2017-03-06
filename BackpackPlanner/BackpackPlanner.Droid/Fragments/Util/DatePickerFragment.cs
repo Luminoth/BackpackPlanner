@@ -29,7 +29,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Util
     /// <remarks>
     /// http://developer.android.com/guide/topics/ui/controls/pickers.html#DatePicker
     /// </remarks>
-    public class DatePickerFragment : Android.Support.V4.App.DialogFragment, DatePickerDialog.IOnDateSetListener
+    public sealed class DatePickerFragment : Android.Support.V4.App.DialogFragment, DatePickerDialog.IOnDateSetListener
     {
 #region Events
         public event EventHandler<DateSetEventArgs> DateSetEvent;

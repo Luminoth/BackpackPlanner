@@ -28,9 +28,9 @@ using EnergonSoftware.BackpackPlanner.Units.Units;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
 {
-    public class GearSystemListAdapter : BaseListAdapter<GearSystem>
+    public sealed class GearSystemListAdapter : BaseListAdapter<GearSystem>
     {
-        private class GearSystemViewHolder : BaseViewHolder
+        private sealed class GearSystemViewHolder : BaseViewHolder
         {
             protected override int DeleteActionResourceId => Resource.Id.action_delete_gear_system;
 
