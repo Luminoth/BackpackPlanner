@@ -74,6 +74,14 @@ namespace EnergonSoftware.BackpackPlanner
         public ISQLitePlatform SQLitePlatform { get; set; }
 
         /// <summary>
+        /// Gets a value indicating whether the database is initializing.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if the database is initializing; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsInitializing { get; private set; }
+
+        /// <summary>
         /// Gets a value indicating whether the database is initialized.
         /// </summary>
         /// <value>
@@ -146,15 +154,17 @@ namespace EnergonSoftware.BackpackPlanner
                 return;
             }
 
-            Logger.Info("Initializing database...");
-
             DatabaseVersion newVersion = new DatabaseVersion
             {
                 Version = CurrentDatabaseVersion
             };
 
+            Logger.Info("Initializing database...");
+
             await Connection.LockAsync().ConfigureAwait(false);
             try {
+                IsInitializing = true;
+
                 var databaseVersionTableInfo = Connection.Connection.GetTableInfo("DatabaseVersion");
                 if(!databaseVersionTableInfo.Any()) {
                     Logger.Debug("Creating a new database...");
@@ -179,7 +189,13 @@ namespace EnergonSoftware.BackpackPlanner
 
                 newVersion.DatabaseVersionId = oldVersion.DatabaseVersionId;
                 await DatabaseVersion.UpdateAsync(state, newVersion).ConfigureAwait(false);
+
+                /*if(oldVersion.Version < 1) {
+                    await PopulateInitialDatabaseAsync(state).ConfigureAwait(false);
+                }*/
             } finally {
+                IsInitializing = false;
+
                 Connection.Release();
             }
 

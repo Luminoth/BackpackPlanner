@@ -44,6 +44,7 @@
     <Compile Include="Commands\SaveItemCommand.cs" />
     <Compile Include="BackpackPlannerState.cs" />
     <Compile Include="Core\Database\DatabaseConnection.cs" />
+    <Compile Include="Core\Database\DatabaseException.cs" />
     <Compile Include="Core\Database\SQLiteDatabaseConnection.cs" />
     <Compile Include="Core\HockeyApp\HockeyAppManager.cs" />
     <Compile Include="Core\Permissions\PermissionDeniedException.cs" />

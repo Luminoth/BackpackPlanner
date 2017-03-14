@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
+using EnergonSoftware.BackpackPlanner.Core.Database;
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Settings;
 
@@ -39,7 +40,7 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// <param name="state">The state.</param>
         /// <exception cref="System.ArgumentNullException">
         /// </exception>
-        protected static void ValidateState(BackpackPlannerState state)
+        protected static async Task ValidateState(BackpackPlannerState state)
         {
             if(null == state) {
                 throw new ArgumentNullException(nameof(state));
@@ -64,6 +65,16 @@ namespace EnergonSoftware.BackpackPlanner.Models
             if(null == state.Settings) {
                 throw new ArgumentNullException(nameof(state.Settings));
             }
+
+            if(!state.DatabaseState.IsInitializing && !state.DatabaseState.IsInitialized) {
+                throw new DatabaseException("Database not initialized!");
+            }
+
+            Logger.Info($"Awaiting database initialization: {!state.DatabaseState.IsInitializing}");
+            while(state.DatabaseState.IsInitializing) {
+                await Task.Delay(1).ConfigureAwait(false);
+            }
+            Logger.Debug("Database initialized!");
         }
 
         /// <summary>
@@ -76,7 +87,7 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// </returns>
         public static async Task<List<T>> GetValidItemsAsync<T>(BackpackPlannerState state) where T: DatabaseItem, new()
         {
-            ValidateState(state);
+            await ValidateState(state).ConfigureAwait(false);
 
             await state.DatabaseState.Connection.LockAsync().ConfigureAwait(false);
             try {
@@ -107,7 +118,7 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// </returns>
         public static async Task<List<T>> GetAllItemsAsync<T>(BackpackPlannerState state) where T: DatabaseItem, new()
         {
-            ValidateState(state);
+            await ValidateState(state).ConfigureAwait(false);
 
             await state.DatabaseState.Connection.LockAsync().ConfigureAwait(false);
             try {
@@ -138,7 +149,7 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// </returns>
         public static async Task<T> GetItemAsync<T>(BackpackPlannerState state, int itemId) where T: DatabaseItem, new()
         {
-            ValidateState(state);
+            await ValidateState(state).ConfigureAwait(false);
 
             await state.DatabaseState.Connection.LockAsync().ConfigureAwait(false);
             try {
@@ -170,7 +181,7 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// <param name="items">The items.</param>
         public static async Task InsertItemsAsync<T>(BackpackPlannerState state, List<T> items) where T: DatabaseItem
         {
-            ValidateState(state);
+            await ValidateState(state).ConfigureAwait(false);
 
             await state.DatabaseState.Connection.LockAsync().ConfigureAwait(false);
             try {
@@ -188,7 +199,7 @@ namespace EnergonSoftware.BackpackPlanner.Models
         // TODO: no UpdateAllWithChildrenAsync() method?
         /*public static async Task UpdateItemsAsync<T>(BackpackPlannerState state, List<T> items) where T: DatabaseItem
         {
-            ValidateState(state);
+            await ValidateState(state).ConfigureAwait(false);
 
             await state.DatabaseState.Connection.LockAsync().ConfigureAwait(false);
             try {
@@ -211,7 +222,7 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// <param name="item">The item.</param>
         public static async Task SaveItemAsync<T>(BackpackPlannerState state, T item) where T: DatabaseItem
         {
-            ValidateState(state);
+            await ValidateState(state).ConfigureAwait(false);
 
             await state.DatabaseState.Connection.LockAsync().ConfigureAwait(false);
             try {
@@ -238,7 +249,7 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// <returns>The number of items deleted?</returns>
         /*public static async Task<int> DeleteAllItemsAsync<T>(BackpackPlannerState state) where T: DatabaseItem
         {
-            ValidateState(state);
+            await ValidateState(state).ConfigureAwait(false);
 
             await state.DatabaseState.Connection.LockAsync().ConfigureAwait(false);
             try {
