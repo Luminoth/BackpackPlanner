@@ -87,7 +87,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
             Button whatIsAButton = view.FindViewById<Button>(WhatIsAnItemButtonResource);
             whatIsAButton.Click += (sender, args) => {
-                DialogUtil.ShowOkDialog(Activity, WhatIsAnItemTextResource, WhatIsAnItemTitleResource);
+                DialogUtil.ShowOkAlert(Activity, WhatIsAnItemTextResource, WhatIsAnItemTitleResource);
             };
 
             Android.Support.Design.Widget.FloatingActionButton addItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(AddItemResource);
@@ -138,7 +138,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         public void DeleteItem(T item)
         {
-            DialogUtil.ShowOkCancelDialog(Activity, DeleteItemConfirmationTextResource, DeleteItemConfirmationTitleResource,
+            DialogUtil.ShowOkCancelAlert(Activity, DeleteItemConfirmationTextResource, DeleteItemConfirmationTitleResource,
                 (sender, args) => DeleteItemEventHandler(sender, args, item));
         }
 

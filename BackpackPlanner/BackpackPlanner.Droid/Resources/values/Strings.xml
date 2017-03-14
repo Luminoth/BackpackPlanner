@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">Backpacking Planner</string>
+    <string name="app_name">Backpacking Planner</string>
 
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
@@ -113,6 +113,8 @@
 
     <!-- Gear Items -->
 
+    <string name="label_gear_items">Gear Items</string>
+
     <string name="label_what_gear_item">What is a gear item?</string>
     <string name="label_no_gear_items">You have no gear items! Try adding one!</string>
 
@@ -130,6 +132,7 @@
     <string name="label_gear_item_note">Note</string>
 
     <string name="label_add_gear_item">Add Gear Item</string>
+    <string name="label_add_gear_items">Add Gear Items</string>
     <string name="label_save_gear_item">Save Gear Item</string>
 
     <string name="label_view_gear_item_name">Gear Item</string>
@@ -139,13 +142,17 @@
 
     <!-- Gear Systems -->
 
+    <string name="label_gear_systems">Gear Systems</string>
+
     <string name="label_what_gear_system">What is a gear system?</string>
     <string name="label_no_gear_systems">You have no gear systems! Try adding one!</string>
 
     <string name="label_gear_system_name">Name</string>
+    <string name="label_no_gear_items_system">You have no gear items in this system! Try adding one!</string>
     <string name="label_gear_system_note">Note</string>
 
     <string name="label_add_gear_system">Add Gear System</string>
+    <string name="label_add_gear_systems">Add Gear Systems</string>
     <string name="label_save_gear_system">Save Gear System</string>
 
     <string name="label_view_gear_system_name">Gear System</string>
@@ -155,13 +162,18 @@
 
     <!-- Gear Collections -->
 
+    <string name="label_gear_collections">Gear Collections</string>
+
     <string name="label_what_gear_collection">What is a gear collection?</string>
     <string name="label_no_gear_collections">You have no gear collections! Try adding one!</string>
 
     <string name="label_gear_collection_name">Name</string>
+    <string name="label_no_gear_systems_collection">You have no gear systems in this collection! Try adding one!</string>
+    <string name="label_no_gear_items_collection">You have no gear items in this collection! Try adding one!</string>
     <string name="label_gear_collection_note">Note</string>
 
     <string name="label_add_gear_collection">Add Gear Collection</string>
+    <string name="label_add_gear_collections">Add Gear Collections</string>
     <string name="label_save_gear_collection">Save Gear Collection</string>
 
     <string name="label_view_gear_collection_name">Gear Collection</string>
@@ -171,6 +183,8 @@
     <string name="label_view_gear_collection_cost">%1$s (%2$s per %3$s)</string>
 
     <!-- Meals -->
+
+    <string name="label_meals">Meals</string>
 
     <string name="label_what_meal">What is a meal?</string>
     <string name="label_no_meals">You have no meals! Try adding one!</string>
@@ -187,6 +201,7 @@
     <string name="label_meal_note">Note</string>
 
     <string name="label_add_meal">Add Meal</string>
+    <string name="label_add_meals">Add Meals</string>
     <string name="label_save_meal">Save Meal</string>
 
     <string name="label_view_meal_name">Meal</string>
@@ -201,6 +216,8 @@
 
     <!-- Trip Itineraries -->
 
+    <string name="label_trip_itineraries">Trip Itineraries</string>
+
     <string name="label_what_trip_itinerary">What is a trip itinerary?</string>
     <string name="label_no_trip_itineraries">You have no trip itineraries! Try adding one!</string>
 
@@ -208,11 +225,14 @@
     <string name="label_trip_itinerary_note">Note</string>
 
     <string name="label_add_trip_itinerary">Add Trip Itinerary</string>
+    <string name="label_add_trip_itineraries">Add Trip Itineraries</string>
     <string name="label_save_trip_itinerary">Save Trip Itinerary</string>
 
     <string name="label_view_trip_itinerary_name">Trip Itinerary</string>
 
     <!-- Trip Plans -->
+
+    <string name="label_trip_plans">Trip Plans</string>
 
     <string name="label_what_trip_plan">What is a trip plan?</string>
     <string name="label_no_trip_plans">You have no trip plans! Try adding one!</string>
@@ -220,9 +240,14 @@
     <string name="label_trip_plan_name">Name</string>
     <string name="label_trip_plan_startdate">Start Date</string>
     <string name="label_trip_plan_enddate">End Date</string>
+    <string name="label_no_gear_collections_trip_plan">You have no gear collections in this plan! Try adding one!</string>
+    <string name="label_no_gear_systems_trip_plan">You have no gear systems in this plan! Try adding one!</string>
+    <string name="label_no_gear_items_trip_plan">You have no gear items in this plan! Try adding one!</string>
+    <string name="label_no_meals_trip_plan">You have no meals in this plan! Try adding one!</string>
     <string name="label_trip_plan_note">Note</string>
 
     <string name="label_add_trip_plan">Add Trip Plan</string>
+    <string name="label_add_trip_plans">Add Trip Plans</string>
     <string name="label_save_trip_plan">Save Trip Plan</string>
 
     <string name="label_view_trip_plan_name">Trip Plan</string>

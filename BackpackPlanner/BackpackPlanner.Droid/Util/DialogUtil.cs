@@ -18,6 +18,7 @@ using System;
 
 using Android.App;
 using Android.Content;
+using Android.Widget;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Util
 {
@@ -35,7 +36,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
             return dialog;
         }
 
-        public static Android.Support.V7.App.AlertDialog ShowDialog(Activity activity, int messageResId, int titleResId)
+// TODO: swap setting the title/message on these (title first, then message)
+
+        public static Android.Support.V7.App.AlertDialog ShowAlert(Activity activity, int messageResId, int titleResId)
         {
             Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(activity);
             return builder.SetMessage(messageResId)
@@ -43,7 +46,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
                 .Show();
         }
 
-        public static Android.Support.V7.App.AlertDialog ShowOkDialog(Activity activity, int messageResId, int titleResId, EventHandler<DialogClickEventArgs> okEventHandler=null)
+        public static Android.Support.V7.App.AlertDialog ShowOkAlert(Activity activity, int messageResId, int titleResId, EventHandler<DialogClickEventArgs> okEventHandler=null)
         {
             Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(activity);
             return builder.SetMessage(messageResId)
@@ -52,7 +55,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
                 .Show();
         }
 
-        public static Android.Support.V7.App.AlertDialog ShowOkCancelDialog(Activity activity, int messageResId, int titleResId, EventHandler<DialogClickEventArgs> okEventHandler=null, EventHandler<DialogClickEventArgs> cancelEventHandler=null)
+        public static Android.Support.V7.App.AlertDialog ShowOkCancelAlert(Activity activity, int messageResId, int titleResId, EventHandler<DialogClickEventArgs> okEventHandler=null, EventHandler<DialogClickEventArgs> cancelEventHandler=null)
         {
             Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(activity);
             return builder.SetMessage(messageResId)
@@ -62,7 +65,17 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
                 .Show();
         }
 
-        public static Android.Support.V7.App.AlertDialog ShowYesNoDialog(Activity activity, int messageResId, int titleResId, EventHandler<DialogClickEventArgs> yesEventHandler=null, EventHandler<DialogClickEventArgs> noEventHandler=null)
+        public static Android.Support.V7.App.AlertDialog ShowOkCancelAlert(Activity activity, int titleResId, IListAdapter adapter, EventHandler<DialogClickEventArgs> itemClickEventHandler=null, EventHandler<DialogClickEventArgs> okEventHandler=null, EventHandler<DialogClickEventArgs> cancelEventHandler=null)
+        {
+            Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(activity);
+            return builder.SetTitle(titleResId)
+                .SetAdapter(adapter, itemClickEventHandler ?? ((sender, args) => { }))
+                .SetPositiveButton(Android.Resource.String.Ok, okEventHandler ?? ((sender, args) => { }))
+                .SetNegativeButton(Android.Resource.String.Cancel, cancelEventHandler ?? ((sender, args) => { }))
+                .Show();
+        }
+
+        public static Android.Support.V7.App.AlertDialog ShowYesNoAlert(Activity activity, int messageResId, int titleResId, EventHandler<DialogClickEventArgs> yesEventHandler=null, EventHandler<DialogClickEventArgs> noEventHandler=null)
         {
             Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(activity);
             return builder.SetMessage(messageResId)

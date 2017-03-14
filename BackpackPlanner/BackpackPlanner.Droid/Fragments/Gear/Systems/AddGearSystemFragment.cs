@@ -16,7 +16,9 @@
 
 using Android.OS;
 using Android.Views;
+using Android.Widget;
 
+using EnergonSoftware.BackpackPlanner.Droid.Util;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
@@ -40,6 +42,21 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 
             _gearSystemNameEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.add_gear_system_name);
             _gearSystemNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.add_gear_system_note);
+
+            var gearItemAdapter = new ArrayAdapter<string>(Activity, Resource.Layout.select_dialog_singlechoice_material);
+
+// TODO: add items and add filtering
+
+// http://androidcodeon.blogspot.com/2016/04/custom-listview-alertdialog-with-filter.html
+// http://stackoverflow.com/questions/25077998/custom-listview-in-an-alert-dialog-with-buttons
+// http://stackoverflow.com/questions/6263464/how-to-filter-text-in-alert-dialog-box
+// http://stackoverflow.com/questions/4040999/searching-within-alertdialog
+// http://www.androidbegin.com/tutorial/android-search-listview-using-filter/
+
+            Android.Support.Design.Widget.FloatingActionButton addGearItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(Resource.Id.fab_add_gear_item);
+            addGearItemButton.Click += (sender, args) => {
+                DialogUtil.ShowOkCancelAlert(Activity, Resource.String.label_add_gear_items, gearItemAdapter);
+            };
         }
 
         protected override void OnDoDataExchange()
