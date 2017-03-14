@@ -47,9 +47,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
                 ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_adding_item, false);
 
-                var command = new AddItemCommand<T>(Item);
-                command.DoActionInBackground(DroidState.Instance.BackpackPlannerState,
-                    a =>
+                new AddItemCommand<T>(Item).DoActionInBackground(DroidState.Instance.BackpackPlannerState,
+                    command =>
                     {
                         Activity.RunOnUiThread(() =>
                         {

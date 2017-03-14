@@ -102,9 +102,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
             ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_loading_items, false);
 
-            var command = new GetItemsCommand<T>();
-            command.DoActionInBackground(DroidState.Instance.BackpackPlannerState,
-                a =>
+            new GetItemsCommand<T>().DoActionInBackground(DroidState.Instance.BackpackPlannerState,
+                command =>
                 {
                     Logger.Debug($"Read {command.Items.Count} items...");
 
@@ -147,9 +146,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         {
             ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_deleting_item, false);
 
-            var command = new DeleteItemCommand<T>(item);
-            command.DoActionInBackground(DroidState.Instance.BackpackPlannerState,
-                a =>
+            new DeleteItemCommand<T>(item).DoActionInBackground(DroidState.Instance.BackpackPlannerState,
+                command =>
                 {
                     ListItems.Remove(item);
 
@@ -174,12 +172,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             command.UndoActionInBackground(DroidState.Instance.BackpackPlannerState,
                 a =>
                 {
-                    ListItems.Add(command.Item);
+                    ListItems.Add(a.Item);
 
                     Activity.RunOnUiThread(() => {
                         progressDialog.Dismiss();
 
-                        Adapter.AddItem(command.Item);
+                        Adapter.AddItem(a.Item);
 
                         UpdateView();
 

@@ -22,7 +22,7 @@ namespace EnergonSoftware.BackpackPlanner.Commands
     /// <summary>
     /// 
     /// </summary>
-    public abstract class Command
+    public abstract class Command<T> where T: Command<T>
     {
         /// <summary>
         /// Does the action.
@@ -38,12 +38,12 @@ namespace EnergonSoftware.BackpackPlanner.Commands
         /// </summary>
         /// <param name="state">The system state.</param>
         /// <param name="actionFinishedCallback">The action finished callback.</param>
-        public void DoActionInBackground(BackpackPlannerState state, Action<Command> actionFinishedCallback)
+        public void DoActionInBackground(BackpackPlannerState state, Action<T> actionFinishedCallback)
         {
             Task.Run(async () =>
                 {
                     await DoActionAsync(state).ConfigureAwait(false);
-                    actionFinishedCallback?.Invoke(this);
+                    actionFinishedCallback?.Invoke((T)this);
                 }
             );
         }
@@ -62,12 +62,12 @@ namespace EnergonSoftware.BackpackPlanner.Commands
         /// </summary>
         /// <param name="state">The system state.</param>
         /// <param name="actionFinishedCallback">The action finished callback.</param>
-        public void UndoActionInBackground(BackpackPlannerState state, Action<Command> actionFinishedCallback)
+        public void UndoActionInBackground(BackpackPlannerState state, Action<T> actionFinishedCallback)
         {
             Task.Run(async () =>
                 {
                     await UndoActionAsync(state).ConfigureAwait(false);
-                    actionFinishedCallback?.Invoke(this);
+                    actionFinishedCallback?.Invoke((T)this);
                 }
             );
         }

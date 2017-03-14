@@ -24,7 +24,7 @@ namespace EnergonSoftware.BackpackPlanner.Commands
     /// <summary>
     /// Adds an item.
     /// </summary>
-    public class AddItemCommand<T> : Command where T: DatabaseItem
+    public class AddItemCommand<T> : Command<AddItemCommand<T>> where T: DatabaseItem
     {
         /// <summary>
         /// Gets the item to add.

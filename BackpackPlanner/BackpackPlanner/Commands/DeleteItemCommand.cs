@@ -24,7 +24,7 @@ namespace EnergonSoftware.BackpackPlanner.Commands
     /// <summary>
     /// Deletes an item.
     /// </summary>
-    public class DeleteItemCommand<T> : Command where T: DatabaseItem
+    public class DeleteItemCommand<T> : Command<DeleteItemCommand<T>> where T: DatabaseItem
     {
         /// <summary>
         /// Gets the item to delete.

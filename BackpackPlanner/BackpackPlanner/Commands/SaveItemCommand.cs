@@ -24,7 +24,7 @@ namespace EnergonSoftware.BackpackPlanner.Commands
     /// <summary>
     /// Saves an item.
     /// </summary>
-    public class SaveItemCommand<T> : Command where T: DatabaseItem
+    public class SaveItemCommand<T> : Command<SaveItemCommand<T>> where T: DatabaseItem
     {
         /// <summary>
         /// Gets the item to save.
