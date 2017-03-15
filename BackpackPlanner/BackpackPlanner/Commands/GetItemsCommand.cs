@@ -14,6 +14,7 @@
    limitations under the License.
 */
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -24,7 +25,7 @@ namespace EnergonSoftware.BackpackPlanner.Commands
     /// <summary>
     /// Gets all items.
     /// </summary>
-    public class GetItemsCommand<T> : Command<GetItemsCommand<T>> where T: DatabaseItem, new()
+    public class GetItemsCommand<T> : Command<GetItemsCommand<T>> where T: DatabaseItem
     {
         /// <summary>
         /// Gets the items.
@@ -34,11 +35,24 @@ namespace EnergonSoftware.BackpackPlanner.Commands
         /// </value>
         public List<T> Items { get; private set; } = new List<T>();
 
+        /// <summary>
+        /// Gets or sets the item filter.
+        /// </summary>
+        /// <value>
+        /// The item filter.
+        /// </value>
+        public Predicate<T> Filter { get; set; }
+
+        public GetItemsCommand(Predicate<T> filter=null)
+        {
+            Filter = filter;
+        }
+
         public override async Task DoActionAsync(BackpackPlannerState state)
         {
             await base.DoActionAsync(state).ConfigureAwait(false);
 
-            Items = await DatabaseItem.GetValidItemsAsync<T>(state).ConfigureAwait(false);
+            Items = await DatabaseItem.GetValidItemsAsync<T>(state, Filter).ConfigureAwait(false);
         }
     }
 }
