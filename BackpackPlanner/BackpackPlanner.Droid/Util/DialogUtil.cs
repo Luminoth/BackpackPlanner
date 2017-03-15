@@ -24,7 +24,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 {
     public static class DialogUtil
     {
-        public static ProgressDialog ShowProgressDialog(Activity activity, int messageResId, /*int titleResId,*/ bool allowCancel, ProgressDialogStyle style=ProgressDialogStyle.Spinner)
+        public static ProgressDialog ShowProgressDialog(Activity activity, int messageResId, /*int titleResId,*/ bool allowCancel, bool indeterminate, ProgressDialogStyle style=ProgressDialogStyle.Spinner)
         {
             ProgressDialog dialog = new ProgressDialog(activity);
             dialog.SetProgressStyle(style);
@@ -32,6 +32,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
             dialog.SetMessage(activity.Resources.GetString(messageResId));
             dialog.SetCancelable(allowCancel);
             dialog.SetCanceledOnTouchOutside(allowCancel);
+            dialog.Indeterminate = indeterminate;
             dialog.Show();
             return dialog;
         }

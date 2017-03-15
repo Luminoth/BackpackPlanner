@@ -40,7 +40,7 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// <param name="state">The state.</param>
         /// <exception cref="System.ArgumentNullException">
         /// </exception>
-        protected static async Task ValidateState(BackpackPlannerState state)
+        protected static void ValidateState(BackpackPlannerState state)
         {
             if(null == state) {
                 throw new ArgumentNullException(nameof(state));

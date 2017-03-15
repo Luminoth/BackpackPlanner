@@ -45,7 +45,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                     return;
                 }
 
-                ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_saving_item, false);
+                ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_saving_item, false, true);
 
                 new SaveItemCommand<T>(Item).DoActionInBackground(DroidState.Instance.BackpackPlannerState,
                     command =>

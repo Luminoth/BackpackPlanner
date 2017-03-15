@@ -144,14 +144,15 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         private void DeleteItemEventHandler(object sender, DialogClickEventArgs args, T item)
         {
-            ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_deleting_item, false);
+            ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_deleting_item, false, true);
 
             new DeleteItemCommand<T>(item).DoActionInBackground(DroidState.Instance.BackpackPlannerState,
                 command =>
                 {
                     ListItems.Remove(item);
 
-                    Activity.RunOnUiThread(() => {
+                    Activity.RunOnUiThread(() =>
+                    {
                         progressDialog.Dismiss();
 
                         Adapter.RemoveItem(item);
@@ -167,14 +168,15 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         private void UndoDeleteItemEventHandler(View view, DeleteItemCommand<T> command)
         {
-            ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_deleted_item_undoing, false);
+            ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_deleted_item_undoing, false, true);
 
             command.UndoActionInBackground(DroidState.Instance.BackpackPlannerState,
                 a =>
                 {
                     ListItems.Add(a.Item);
 
-                    Activity.RunOnUiThread(() => {
+                    Activity.RunOnUiThread(() =>
+                    {
                         progressDialog.Dismiss();
 
                         Adapter.AddItem(a.Item);
