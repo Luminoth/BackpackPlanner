@@ -14,17 +14,27 @@
    limitations under the License.
 */
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+using Android.App;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
 
+using EnergonSoftware.BackpackPlanner.Commands;
+using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Droid.Util;
+using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 {
     public sealed class AddGearSystemFragment : AddItemFragment<GearSystem>
     {
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(AddGearSystemFragment));
+
         protected override int LayoutResource => Resource.Layout.fragment_add_gear_system;
 
         protected override int TitleResource => Resource.String.title_add_gear_system;
@@ -33,6 +43,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 
 #region Controls
         private Android.Support.Design.Widget.TextInputLayout _gearSystemNameEditText;
+
+        private TextView _noGearItemsTextView;
+        private TextView _noGearItemsAddedTextView;
+        private ListView _gearItemsListView;
+        private Android.Support.Design.Widget.FloatingActionButton _addGearItemButton;
+
         private Android.Support.Design.Widget.TextInputLayout _gearSystemNoteEditText;
 #endregion
 
@@ -43,9 +59,57 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
             _gearSystemNameEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.add_gear_system_name);
             _gearSystemNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.add_gear_system_note);
 
-            var gearItemAdapter = new ArrayAdapter<string>(Activity, Resource.Layout.select_dialog_singlechoice_material);
+            _noGearItemsTextView = View.FindViewById<TextView>(Resource.Id.no_gear_items);
+            _noGearItemsAddedTextView = View.FindViewById<TextView>(Resource.Id.no_gear_items_added);
 
-// TODO: add items and add filtering
+            _gearItemsListView = View.FindViewById<ListView>(Resource.Id.gear_items_list);
+
+            _addGearItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(Resource.Id.fab_add_gear_item);
+            _addGearItemButton.Click += AddGearItemButtonClickEventHandler;
+        }
+
+        public override void OnResume()
+        {
+            base.OnResume();
+
+            new CountItemsCommand<GearItem>().DoActionInBackground(DroidState.Instance.BackpackPlannerState,
+                command =>
+                {
+                    Activity.RunOnUiThread(() =>
+                    {
+                        bool hasItems = command.Count > 0;
+
+                        ViewStates noItemsState = hasItems ? ViewStates.Gone : ViewStates.Visible;
+                        ViewStates hasItemsState = hasItems ? ViewStates.Visible : ViewStates.Gone;
+
+                        _noGearItemsTextView.Visibility = noItemsState;
+                        _noGearItemsAddedTextView.Visibility =  hasItemsState;
+                        _gearItemsListView.Visibility = hasItemsState;
+                        _addGearItemButton.Visibility = hasItemsState;
+                    });
+                }
+            );
+        }
+
+        private void AddGearItemButtonClickEventHandler(object sender, EventArgs args)
+        {
+            ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_loading_items, false, true);
+
+            new GetItemsCommand<GearItem>().DoActionInBackground(DroidState.Instance.BackpackPlannerState,
+                command =>
+                {
+                    Logger.Debug($"Read {command.Items.Count} items...");
+
+                    Activity.RunOnUiThread(() =>
+                    {
+                        progressDialog.Dismiss();
+
+                        var items = (from x in command.Items select x.Name).ToArray();
+
+                        var selectedItems = new bool[items.Length];
+                        // TODO: set this based on what's already selected
+
+// TODO: add filtering
 
 // http://androidcodeon.blogspot.com/2016/04/custom-listview-alertdialog-with-filter.html
 // http://stackoverflow.com/questions/25077998/custom-listview-in-an-alert-dialog-with-buttons
@@ -53,10 +117,15 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 // http://stackoverflow.com/questions/4040999/searching-within-alertdialog
 // http://www.androidbegin.com/tutorial/android-search-listview-using-filter/
 
-            Android.Support.Design.Widget.FloatingActionButton addGearItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(Resource.Id.fab_add_gear_item);
-            addGearItemButton.Click += (sender, args) => {
-                DialogUtil.ShowOkCancelAlert(Activity, Resource.String.label_add_gear_items, gearItemAdapter);
-            };
+                        DialogUtil.ShowMultiChoiceAlert(Activity, Resource.String.label_add_gear_items, items, selectedItems,
+                            (a, b) =>
+                            {
+                                selectedItems[b.Which] = b.IsChecked;
+                                // TODO: update the adapter
+                            });
+                    });
+                }
+            );
         }
 
         protected override void OnDoDataExchange()

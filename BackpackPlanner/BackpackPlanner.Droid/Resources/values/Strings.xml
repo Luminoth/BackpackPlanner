@@ -91,6 +91,8 @@
 
     <!-- Actions -->
 
+    <string name="label_initializing_database">Waiting for database to initialize, this may take a moment...</string>
+
     <string name="label_loading_items">Loading items, this may take a moment...</string>
 
     <string name="label_adding_item">Adding item, this may take a moment...</string>

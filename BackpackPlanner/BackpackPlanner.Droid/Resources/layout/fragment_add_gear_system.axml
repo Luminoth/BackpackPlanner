@@ -26,9 +26,20 @@
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/no_gear_items"
-            android:text="@string/label_no_gear_items_system"
+            android:text="@string/label_no_gear_items"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/no_gear_items_added"
+            android:text="@string/label_no_gear_items_system"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+        <ListView
+            android:id="@+id/gear_items_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_add_gear_item"
             android:layout_width="wrap_content"
@@ -36,7 +47,8 @@
             android:layout_gravity="center_horizontal"
             android:elevation="15dp"
             android:layout_margin="16dp"
-            android:src="@drawable/ic_add" />
+            android:src="@drawable/ic_add"
+            android:visibility="gone" />
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
