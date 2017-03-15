@@ -15,6 +15,7 @@
 */
 
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 using Android.App;
 using Android.Content;
@@ -100,7 +101,45 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         {
             base.OnResume();
 
-            ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_loading_items, false);
+            ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_initializing_database, false, true);
+
+            Task.Run(async () =>
+            {
+// TODO: should this error if the database hasn't even started initializing? eg - initializing AND initialized are false
+
+                Logger.Info($"{typeof(T)} awaiting database initialization: {DroidState.Instance.BackpackPlannerState.DatabaseState.IsInitializing}");
+                while(DroidState.Instance.BackpackPlannerState.DatabaseState.IsInitializing) {
+                    await Task.Delay(1).ConfigureAwait(false);
+                }
+                Logger.Debug("Database initialized!");
+
+                Activity.RunOnUiThread(() =>
+                {
+                    progressDialog.Dismiss();
+
+                    PopulateList();
+                });
+            });
+        }
+
+        public override void OnPause()
+        {
+            base.OnPause();
+
+            Logger.Debug("Clearing item list for pause...");
+            ListItems.Clear();
+        }
+
+        public override void OnCreateOptionsMenu(IMenu menu, MenuInflater inflater)
+        {
+            base.OnCreateOptionsMenu(menu, inflater);
+
+            FilterView.QueryTextChange += Adapter.FilterItemsEventHandler;
+        }
+
+        protected void PopulateList()
+        {
+            ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_loading_items, false, true);
 
             new GetItemsCommand<T>().DoActionInBackground(DroidState.Instance.BackpackPlannerState,
                 command =>
@@ -119,21 +158,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                     });
                 }
             );
-        }
-
-        public override void OnPause()
-        {
-            base.OnPause();
-
-            Logger.Debug("Clearing item list for pause...");
-            ListItems.Clear();
-        }
-
-        public override void OnCreateOptionsMenu(IMenu menu, MenuInflater inflater)
-        {
-            base.OnCreateOptionsMenu(menu, inflater);
-
-            FilterView.QueryTextChange += Adapter.FilterItemsEventHandler;
         }
 
         public void DeleteItem(T item)
