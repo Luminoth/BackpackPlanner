@@ -39,6 +39,7 @@
   <ItemGroup>
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\AddItemCommand.cs" />
+    <Compile Include="Commands\CountItemsCommand.cs" />
     <Compile Include="Commands\DeleteItemCommand.cs" />
     <Compile Include="Commands\GetItemsCommand.cs" />
     <Compile Include="Commands\SaveItemCommand.cs" />
