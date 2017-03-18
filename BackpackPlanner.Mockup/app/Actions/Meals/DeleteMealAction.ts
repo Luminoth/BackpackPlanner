@@ -1,8 +1,8 @@
-///<reference path="../../Models/Meals/Meal.ts"/>
+/// <reference path="../../Models/Meals/Meal.ts"/>
 
-///<reference path="../Command.ts"/>
+/// <reference path="../Command.ts"/>
 
-///<reference path="../../AppState.ts"/>
+/// <reference path="../../AppState.ts"/>
 
 module BackpackPlanner.Mockup.Actions.Meals {
     "use strict";

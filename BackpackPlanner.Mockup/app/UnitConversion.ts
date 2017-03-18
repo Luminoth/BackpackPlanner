@@ -1,4 +1,4 @@
-///<reference path="Models/AppSettings.ts"/>
+/// <reference path="Models/AppSettings.ts"/>
 
 module BackpackPlanner.Mockup {
     "use strict";

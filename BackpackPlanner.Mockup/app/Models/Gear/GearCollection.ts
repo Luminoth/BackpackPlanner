@@ -1,13 +1,13 @@
-﻿///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../scripts/typings/underscore/underscore.d.ts" />
+﻿/// <reference path="../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../scripts/typings/underscore/underscore.d.ts" />
 
-///<reference path="../../Resources/Gear/GearCollectionResource.ts"/>
+/// <reference path="../../Resources/Gear/GearCollectionResource.ts"/>
 
-///<reference path="../../AppState.ts"/>
+/// <reference path="../../AppState.ts"/>
 
-///<reference path="../Entry.ts"/>
-///<reference path="GearItem.ts"/>
-///<reference path="GearSystem.ts"/>
+/// <reference path="../Entry.ts"/>
+/// <reference path="GearItem.ts"/>
+/// <reference path="GearSystem.ts"/>
 
 module BackpackPlanner.Mockup.Models.Gear {
     "use strict";

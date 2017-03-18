@@ -8,7 +8,7 @@ var BackpackPlanner;
         })(Actions = Mockup.Actions || (Mockup.Actions = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
+/// <reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -22,8 +22,8 @@ var BackpackPlanner;
         })(Resources = Mockup.Resources || (Mockup.Resources = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
-///<reference path="GearItemResource.ts" />
+/// <reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
+/// <reference path="GearItemResource.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -37,9 +37,9 @@ var BackpackPlanner;
         })(Resources = Mockup.Resources || (Mockup.Resources = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
-///<reference path="GearSystemResource.ts" />
-///<reference path="GearItemResource.ts" />
+/// <reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
+/// <reference path="GearSystemResource.ts" />
+/// <reference path="GearItemResource.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -53,8 +53,8 @@ var BackpackPlanner;
         })(Resources = Mockup.Resources || (Mockup.Resources = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
-///<reference path="../../Models/Personal/UserInformation.ts" />
+/// <reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
+/// <reference path="../../Models/Personal/UserInformation.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -68,7 +68,7 @@ var BackpackPlanner;
         })(Resources = Mockup.Resources || (Mockup.Resources = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../Resources/Personal/UserInformationResource.ts"/>
+/// <reference path="../../Resources/Personal/UserInformationResource.ts"/>
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -78,8 +78,8 @@ var BackpackPlanner;
             var Personal;
             (function (Personal) {
                 "use strict";
-                var UserInformation = (function () {
-                    function UserInformation() {
+                class UserInformation {
+                    constructor() {
                         this._firstName = "";
                         this._lastName = "";
                         this._birthDate = new Date();
@@ -87,48 +87,48 @@ var BackpackPlanner;
                         this._heightInCm = 0;
                         this._weightInGrams = 0;
                     }
-                    UserInformation.prototype.firstName = function (firstName) {
+                    firstName(firstName) {
                         return arguments.length
                             ? (this._firstName = firstName)
                             : this._firstName;
-                    };
-                    UserInformation.prototype.lastName = function (lastName) {
+                    }
+                    lastName(lastName) {
                         return arguments.length
                             ? (this._lastName = lastName)
                             : this._lastName;
-                    };
-                    UserInformation.prototype.birthDate = function (birthDate) {
+                    }
+                    birthDate(birthDate) {
                         return arguments.length
                             ? (this._birthDate = birthDate)
                             : this._birthDate;
-                    };
-                    UserInformation.prototype.sex = function (sex) {
+                    }
+                    sex(sex) {
                         return arguments.length
                             ? (this._sex = sex)
                             : this._sex;
-                    };
+                    }
                     /* Height/Weight */
-                    UserInformation.prototype.heightInUnits = function (height) {
+                    heightInUnits(height) {
                         return arguments.length
                             ? (this._heightInCm = Mockup.convertUnitsToCentimeters(height, Mockup.AppState.getInstance().getAppSettings().units()))
                             : parseFloat(Mockup.convertCentimetersToUnits(this._heightInCm, Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
-                    };
-                    UserInformation.prototype.weightInUnits = function (weight) {
+                    }
+                    weightInUnits(weight) {
                         return arguments.length
                             ? (this._weightInGrams = Mockup.convertUnitsToGrams(weight, Mockup.AppState.getInstance().getAppSettings().units()))
                             : parseFloat(Mockup.convertGramsToUnits(this._weightInGrams, Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
-                    };
+                    }
                     /* Load/Save */
-                    UserInformation.prototype.update = function (userInformation) {
+                    update(userInformation) {
                         this._firstName = userInformation._firstName;
                         this._lastName = userInformation._lastName;
                         this._birthDate = userInformation._birthDate;
                         this._sex = userInformation._sex;
                         this._heightInCm = userInformation._heightInCm;
                         this._weightInGrams = userInformation._weightInGrams;
-                    };
-                    UserInformation.prototype.loadFromDevice = function ($q, userInfoResource) {
-                        var deferred = $q.defer();
+                    }
+                    loadFromDevice($q, userInfoResource) {
+                        const deferred = $q.defer();
                         this._firstName = userInfoResource.FirstName;
                         this._lastName = userInfoResource.LastName;
                         this._birthDate = new Date(userInfoResource.BirthDate);
@@ -137,20 +137,19 @@ var BackpackPlanner;
                         this._weightInGrams = userInfoResource.WeightInGrams;
                         deferred.resolve(this);
                         return deferred.promise;
-                    };
-                    UserInformation.prototype.saveToDevice = function ($q) {
+                    }
+                    saveToDevice($q) {
                         alert("UserInformation.saveToDevice");
                         return $q.defer().promise;
-                    };
-                    return UserInformation;
-                }());
+                    }
+                }
                 Personal.UserInformation = UserInformation;
             })(Personal = Models.Personal || (Models.Personal = {}));
         })(Models = Mockup.Models || (Mockup.Models = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../scripts/typings/angularjs/angular-resource.d.ts" />
-///<reference path="../Models/AppSettings.ts" />
+/// <reference path="../../scripts/typings/angularjs/angular-resource.d.ts" />
+/// <reference path="../Models/AppSettings.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -161,8 +160,8 @@ var BackpackPlanner;
         })(Resources = Mockup.Resources || (Mockup.Resources = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../Resources/AppSettingsResource.ts"/>
+/// <reference path="../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../Resources/AppSettingsResource.ts"/>
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -170,8 +169,8 @@ var BackpackPlanner;
         var Models;
         (function (Models) {
             "use strict";
-            var AppSettings = (function () {
-                function AppSettings() {
+            class AppSettings {
+                constructor() {
                     this._units = "Metric";
                     this._currency = "USD";
                     // weight classes
@@ -183,33 +182,33 @@ var BackpackPlanner;
                     this._mediumCategoryMaxWeightInGrams = 1360;
                     this._heavyCategoryMaxWeightInGrams = 2270;
                 }
-                AppSettings.prototype.units = function (units) {
+                units(units) {
                     return arguments.length
                         ? (this._units = units)
                         : this._units;
-                };
-                AppSettings.prototype.currency = function (currency) {
+                }
+                currency(currency) {
                     return arguments.length
                         ? (this._currency = currency)
                         : this._currency;
-                };
-                AppSettings.prototype.getUltralightMaxWeightInGrams = function () {
+                }
+                getUltralightMaxWeightInGrams() {
                     return this._ultralightClassMaxWeightInGrams;
-                };
-                AppSettings.prototype.ultralightMaxWeightInUnits = function (weight) {
+                }
+                ultralightMaxWeightInUnits(weight) {
                     return arguments.length
                         ? (this._ultralightClassMaxWeightInGrams = Mockup.convertUnitsToGrams(weight, Mockup.AppState.getInstance().getAppSettings().units()))
                         : parseFloat(Mockup.convertGramsToUnits(this._ultralightClassMaxWeightInGrams, Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
-                };
-                AppSettings.prototype.getLightweightMaxWeightInGrams = function () {
+                }
+                getLightweightMaxWeightInGrams() {
                     return this._lightweightClassMaxWeightInGrams;
-                };
-                AppSettings.prototype.lightweightMaxWeightInUnits = function (weight) {
+                }
+                lightweightMaxWeightInUnits(weight) {
                     return arguments.length
                         ? (this._lightweightClassMaxWeightInGrams = Mockup.convertUnitsToGrams(weight, Mockup.AppState.getInstance().getAppSettings().units()))
                         : parseFloat(Mockup.convertGramsToUnits(this._lightweightClassMaxWeightInGrams, Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
-                };
-                AppSettings.prototype.resetToDefaults = function () {
+                }
+                resetToDefaults() {
                     this._units = "Metric";
                     this._currency = "USD";
                     this._ultralightClassMaxWeightInGrams = 4500;
@@ -218,8 +217,8 @@ var BackpackPlanner;
                     this._lightCategoryMaxWeightInGrams = 450;
                     this._mediumCategoryMaxWeightInGrams = 1360;
                     this._heavyCategoryMaxWeightInGrams = 2270;
-                };
-                AppSettings.prototype.getWeightClass = function (weightInGrams) {
+                }
+                getWeightClass(weightInGrams) {
                     if (weightInGrams < this._ultralightClassMaxWeightInGrams) {
                         return "Ultralight";
                     }
@@ -227,8 +226,8 @@ var BackpackPlanner;
                         return "Lightweight";
                     }
                     return "Traditional";
-                };
-                AppSettings.prototype.getWeightCategory = function (weightInGrams) {
+                }
+                getWeightCategory(weightInGrams) {
                     if (weightInGrams <= 0) {
                         return "None";
                     }
@@ -245,9 +244,9 @@ var BackpackPlanner;
                         return "Heavy";
                     }
                     return "ExtraHeavy";
-                };
+                }
                 /* Load/Save */
-                AppSettings.prototype.update = function (appSettings) {
+                update(appSettings) {
                     this._units = appSettings._units;
                     this._currency = appSettings._currency;
                     this._ultralightClassMaxWeightInGrams = appSettings._ultralightClassMaxWeightInGrams;
@@ -256,9 +255,9 @@ var BackpackPlanner;
                     this._lightCategoryMaxWeightInGrams = appSettings._lightCategoryMaxWeightInGrams;
                     this._mediumCategoryMaxWeightInGrams = appSettings._mediumCategoryMaxWeightInGrams;
                     this._heavyCategoryMaxWeightInGrams = appSettings._heavyCategoryMaxWeightInGrams;
-                };
-                AppSettings.prototype.loadFromDevice = function ($q, appSettingsResource) {
-                    var deferred = $q.defer();
+                }
+                loadFromDevice($q, appSettingsResource) {
+                    const deferred = $q.defer();
                     this._units = appSettingsResource.Units;
                     this._currency = appSettingsResource.Currency;
                     this._ultralightClassMaxWeightInGrams = appSettingsResource.UltralightClassMaxWeightInGrams;
@@ -269,19 +268,18 @@ var BackpackPlanner;
                     this._heavyCategoryMaxWeightInGrams = appSettingsResource.HeavyCategoryMaxWeightInGrams;
                     deferred.resolve(this);
                     return deferred.promise;
-                };
-                AppSettings.prototype.saveToDevice = function ($q) {
+                }
+                saveToDevice($q) {
                     alert("AppSettings.saveToDevice");
                     return $q.defer().promise;
-                };
-                return AppSettings;
-            }());
+                }
+            }
             Models.AppSettings = AppSettings;
         })(Models = Mockup.Models || (Mockup.Models = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
-///<reference path="../../Resources/Gear/GearCollectionResource.ts" />
+/// <reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
+/// <reference path="../../Resources/Gear/GearCollectionResource.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -301,8 +299,8 @@ var BackpackPlanner;
         })(Services = Mockup.Services || (Mockup.Services = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
-///<reference path="../../Resources/Gear/GearItemResource.ts" />
+/// <reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
+/// <reference path="../../Resources/Gear/GearItemResource.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -322,8 +320,8 @@ var BackpackPlanner;
         })(Services = Mockup.Services || (Mockup.Services = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
-///<reference path="../../Resources/Gear/GearSystemResource.ts" />
+/// <reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
+/// <reference path="../../Resources/Gear/GearSystemResource.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -353,10 +351,10 @@ var BackpackPlanner;
         })(Models = Mockup.Models || (Mockup.Models = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
-//<reference path="../../Resources/Meals/MealResource.ts"/>
-///<reference path="../../AppState.ts"/>
-///<reference path="../Entry.ts"/>
+/// <reference path="../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../Resources/Meals/MealResource.ts"/>
+/// <reference path="../../AppState.ts"/>
+/// <reference path="../Entry.ts"/>
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -366,8 +364,8 @@ var BackpackPlanner;
             var Meals;
             (function (Meals) {
                 "use strict";
-                var Meal = (function () {
-                    function Meal() {
+                class Meal {
+                    constructor() {
                         this._id = -1;
                         this._name = "";
                         this._url = "";
@@ -380,85 +378,81 @@ var BackpackPlanner;
                         this._fiberInGrams = 0;
                         this._note = "";
                     }
-                    Object.defineProperty(Meal.prototype, "Id", {
-                        get: function () {
-                            return this._id;
-                        },
-                        set: function (id) {
-                            this._id = id;
-                        },
-                        enumerable: true,
-                        configurable: true
-                    });
-                    Meal.prototype.name = function (name) {
+                    get Id() {
+                        return this._id;
+                    }
+                    set Id(id) {
+                        this._id = id;
+                    }
+                    name(name) {
                         return arguments.length
                             ? (this._name = name)
                             : this._name;
-                    };
-                    Meal.prototype.url = function (url) {
+                    }
+                    url(url) {
                         return arguments.length
                             ? (this._url = url)
                             : this._url;
-                    };
-                    Meal.prototype.meal = function (meal) {
+                    }
+                    meal(meal) {
                         return arguments.length
                             ? (this._meal = meal)
                             : this._meal;
-                    };
-                    Meal.prototype.servingCount = function (servingCount) {
+                    }
+                    servingCount(servingCount) {
                         return arguments.length
                             ? (this._servingCount = servingCount)
                             : this._servingCount;
-                    };
-                    Meal.prototype.calories = function (calories) {
+                    }
+                    calories(calories) {
                         return arguments.length
                             ? (this._calories = calories)
                             : this._calories;
-                    };
-                    Meal.prototype.getCaloriesPerWeightUnit = function () {
+                    }
+                    getCaloriesPerWeightUnit() {
                         return 0 == this._calories ? 0 : this._calories / this.weightInUnits();
-                    };
-                    Meal.prototype.proteinInGrams = function (proteinInGrams) {
+                    }
+                    proteinInGrams(proteinInGrams) {
                         return arguments.length
                             ? (this._proteinInGrams = proteinInGrams)
                             : this._proteinInGrams;
-                    };
-                    Meal.prototype.fiberInGrams = function (fiberInGrams) {
+                    }
+                    fiberInGrams(fiberInGrams) {
                         return arguments.length
                             ? (this._fiberInGrams = fiberInGrams)
                             : this._fiberInGrams;
-                    };
-                    Meal.prototype.note = function (note) {
+                    }
+                    note(note) {
                         return arguments.length
                             ? (this._note = note)
                             : this._note;
-                    };
+                    }
                     /* Weight/Cost */
-                    Meal.prototype.getWeightInGrams = function () {
+                    getWeightInGrams() {
                         return this._weightInGrams;
-                    };
-                    Meal.prototype.weightInUnits = function (weight) {
+                    }
+                    weightInUnits(weight) {
                         return arguments.length
                             ? (this._weightInGrams = Mockup.convertUnitsToGrams(weight, Mockup.AppState.getInstance().getAppSettings().units()))
                             : parseFloat(Mockup.convertGramsToUnits(this._weightInGrams, Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
-                    };
-                    Meal.prototype.getCostInUSDP = function () {
+                    }
+                    getCostInUSDP() {
                         return this._costInUSDP;
-                    };
-                    Meal.prototype.costInCurrency = function (cost) {
+                    }
+                    costInCurrency(cost) {
                         return arguments.length
                             ? (this._costInUSDP = Mockup.convertCurrencyToUSDP(cost, Mockup.AppState.getInstance().getAppSettings().currency()))
                             : Mockup.convertUSDPToCurrency(this._costInUSDP, Mockup.AppState.getInstance().getAppSettings().currency());
-                    };
-                    Meal.prototype.getCostPerUnitInCurrency = function () {
-                        var weightInUnits = Mockup.convertGramsToUnits(this._weightInGrams, /*units*/ Mockup.AppState.getInstance().getAppSettings().units());
-                        var costInCurrency = Mockup.convertUSDPToCurrency(this._costInUSDP, /*currency*/ Mockup.AppState.getInstance().getAppSettings().currency());
+                    }
+                    getCostPerUnitInCurrency() {
+                        const weightInUnits = Mockup.convertGramsToUnits(this._weightInGrams, /*units*/ Mockup.AppState.getInstance().getAppSettings().units());
+                        const costInCurrency = Mockup.convertUSDPToCurrency(this._costInUSDP, /*currency*/ Mockup.AppState.getInstance().getAppSettings().currency());
                         return 0 == weightInUnits
                             ? costInCurrency
                             : costInCurrency / weightInUnits;
-                    };
+                    }
                     /* Load/Save */
-                    Meal.prototype.update = function (meal) {
+                    update(meal) {
                         this._name = meal._name;
                         this._url = meal._url;
                         this._meal = meal._meal;
@@ -469,9 +463,9 @@ var BackpackPlanner;
                         this._proteinInGrams = meal._proteinInGrams;
                         this._fiberInGrams = meal._fiberInGrams;
                         this._note = meal._note;
-                    };
-                    Meal.prototype.loadFromDevice = function ($q, mealResource) {
-                        var deferred = $q.defer();
+                    }
+                    loadFromDevice($q, mealResource) {
+                        const deferred = $q.defer();
                         this._id = mealResource.Id;
                         this._name = mealResource.Name;
                         this._url = mealResource.Url;
@@ -485,16 +479,15 @@ var BackpackPlanner;
                         this._note = mealResource.Note;
                         deferred.resolve(this);
                         return deferred.promise;
-                    };
-                    Meal.prototype.saveToDevice = function ($q) {
+                    }
+                    saveToDevice($q) {
                         alert("Meal.saveToDevice");
                         return $q.defer().promise;
-                    };
-                    return Meal;
-                }());
+                    }
+                }
                 Meals.Meal = Meal;
-                var MealEntry = (function () {
-                    function MealEntry(mealId, count) {
+                class MealEntry {
+                    constructor(mealId, count) {
                         this._mealId = -1;
                         this._count = 1;
                         this._mealId = mealId;
@@ -502,57 +495,56 @@ var BackpackPlanner;
                             this._count = count;
                         }
                     }
-                    MealEntry.prototype.getMealId = function () {
+                    getMealId() {
                         return this._mealId;
-                    };
-                    MealEntry.prototype.count = function (count) {
+                    }
+                    count(count) {
                         return arguments.length
                             ? (this._count = count)
                             : this._count;
-                    };
-                    MealEntry.prototype.getName = function () {
-                        var meal = Mockup.AppState.getInstance().getMealState().getMealById(this._mealId);
+                    }
+                    getName() {
+                        const meal = Mockup.AppState.getInstance().getMealState().getMealById(this._mealId);
                         if (!meal) {
                             return "";
                         }
                         return meal.name();
-                    };
-                    MealEntry.prototype.getCalories = function () {
-                        var meal = Mockup.AppState.getInstance().getMealState().getMealById(this._mealId);
+                    }
+                    getCalories() {
+                        const meal = Mockup.AppState.getInstance().getMealState().getMealById(this._mealId);
                         if (!meal) {
                             return 0;
                         }
                         return this._count * meal.calories();
-                    };
-                    MealEntry.prototype.getTotalWeightInGrams = function () {
-                        var meal = Mockup.AppState.getInstance().getMealState().getMealById(this._mealId);
+                    }
+                    getTotalWeightInGrams() {
+                        const meal = Mockup.AppState.getInstance().getMealState().getMealById(this._mealId);
                         if (!meal) {
                             return 0;
                         }
                         return this._count * meal.getWeightInGrams();
-                    };
-                    MealEntry.prototype.getTotalWeightInUnits = function () {
+                    }
+                    getTotalWeightInUnits() {
                         return parseFloat(Mockup.convertGramsToUnits(this.getTotalWeightInGrams(), /*units*/ Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
-                    };
-                    MealEntry.prototype.getCostInUSDP = function () {
-                        var meal = Mockup.AppState.getInstance().getMealState().getMealById(this._mealId);
+                    }
+                    getCostInUSDP() {
+                        const meal = Mockup.AppState.getInstance().getMealState().getMealById(this._mealId);
                         if (!meal) {
                             return 0;
                         }
                         return this._count * meal.getCostInUSDP();
-                    };
-                    MealEntry.prototype.getCostInCurrency = function () {
+                    }
+                    getCostInCurrency() {
                         return Mockup.convertUSDPToCurrency(this.getCostInUSDP(), /*currency*/ Mockup.AppState.getInstance().getAppSettings().currency());
-                    };
-                    return MealEntry;
-                }());
+                    }
+                }
                 Meals.MealEntry = MealEntry;
             })(Meals = Models.Meals || (Models.Meals = {}));
         })(Models = Mockup.Models || (Mockup.Models = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
-///<reference path="../../Models/Meals/Meal.ts" />
+/// <reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
+/// <reference path="../../Models/Meals/Meal.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -566,8 +558,8 @@ var BackpackPlanner;
         })(Resources = Mockup.Resources || (Mockup.Resources = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
-///<reference path="../../Resources/Meals/MealResource.ts" />
+/// <reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
+/// <reference path="../../Resources/Meals/MealResource.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -587,8 +579,8 @@ var BackpackPlanner;
         })(Services = Mockup.Services || (Mockup.Services = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
-//<reference path="../../Resources/Trips/TripItineraryResource.ts"/>
+/// <reference path="../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../Resources/Trips/TripItineraryResource.ts"/>
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -598,58 +590,53 @@ var BackpackPlanner;
             var Trips;
             (function (Trips) {
                 "use strict";
-                var TripItinerary = (function () {
-                    function TripItinerary() {
+                class TripItinerary {
+                    constructor() {
                         this._id = -1;
                         this._name = "";
                         this._note = "";
                     }
-                    Object.defineProperty(TripItinerary.prototype, "Id", {
-                        get: function () {
-                            return this._id;
-                        },
-                        set: function (id) {
-                            this._id = id;
-                        },
-                        enumerable: true,
-                        configurable: true
-                    });
-                    TripItinerary.prototype.name = function (name) {
+                    get Id() {
+                        return this._id;
+                    }
+                    set Id(id) {
+                        this._id = id;
+                    }
+                    name(name) {
                         return arguments.length
                             ? (this._name = name)
                             : this._name;
-                    };
-                    TripItinerary.prototype.note = function (note) {
+                    }
+                    note(note) {
                         return arguments.length
                             ? (this._note = note)
                             : this._note;
-                    };
+                    }
                     /* Load/Save */
-                    TripItinerary.prototype.update = function (tripItinerary) {
+                    update(tripItinerary) {
                         this._name = tripItinerary._name;
                         this._note = tripItinerary._note;
-                    };
-                    TripItinerary.prototype.loadFromDevice = function ($q, tripItineraryResource) {
-                        var deferred = $q.defer();
+                    }
+                    loadFromDevice($q, tripItineraryResource) {
+                        const deferred = $q.defer();
                         this._id = tripItineraryResource.Id;
                         this._name = tripItineraryResource.Name;
                         this._note = tripItineraryResource.Note;
                         deferred.resolve(this);
                         return deferred.promise;
-                    };
-                    TripItinerary.prototype.saveToDevice = function ($q) {
+                    }
+                    saveToDevice($q) {
                         alert("TripItinerary.saveToDevice");
                         return $q.defer().promise;
-                    };
-                    return TripItinerary;
-                }());
+                    }
+                }
                 Trips.TripItinerary = TripItinerary;
             })(Trips = Models.Trips || (Models.Trips = {}));
         })(Models = Mockup.Models || (Mockup.Models = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
-///<reference path="../../Models/Trips/TripItinerary.ts" />
+/// <reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
+/// <reference path="../../Models/Trips/TripItinerary.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -663,8 +650,8 @@ var BackpackPlanner;
         })(Resources = Mockup.Resources || (Mockup.Resources = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
-///<reference path="../../Resources/Trips/TripItineraryResource.ts" />
+/// <reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
+/// <reference path="../../Resources/Trips/TripItineraryResource.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -684,10 +671,10 @@ var BackpackPlanner;
         })(Services = Mockup.Services || (Mockup.Services = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../Resources/Gear/GearItemResource.ts"/>
-///<reference path="../../AppState.ts"/>
-///<reference path="../Entry.ts"/>
+/// <reference path="../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../Resources/Gear/GearItemResource.ts"/>
+/// <reference path="../../AppState.ts"/>
+/// <reference path="../Entry.ts"/>
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -697,8 +684,8 @@ var BackpackPlanner;
             var Gear;
             (function (Gear) {
                 "use strict";
-                var GearItem = (function () {
-                    function GearItem() {
+                class GearItem {
+                    constructor() {
                         this._id = -1;
                         this._name = "";
                         this._url = "";
@@ -711,94 +698,90 @@ var BackpackPlanner;
                         this._consumedPerDay = 1;
                         this._note = "";
                     }
-                    Object.defineProperty(GearItem.prototype, "Id", {
-                        get: function () {
-                            return this._id;
-                        },
-                        set: function (id) {
-                            this._id = id;
-                        },
-                        enumerable: true,
-                        configurable: true
-                    });
-                    GearItem.prototype.name = function (name) {
+                    get Id() {
+                        return this._id;
+                    }
+                    set Id(id) {
+                        this._id = id;
+                    }
+                    name(name) {
                         return arguments.length
                             ? (this._name = name)
                             : this._name;
-                    };
-                    GearItem.prototype.url = function (url) {
+                    }
+                    url(url) {
                         return arguments.length
                             ? (this._url = url)
                             : this._url;
-                    };
-                    GearItem.prototype.make = function (make) {
+                    }
+                    make(make) {
                         return arguments.length
                             ? (this._make = make)
                             : this._make;
-                    };
-                    GearItem.prototype.model = function (model) {
+                    }
+                    model(model) {
                         return arguments.length
                             ? (this._model = model)
                             : this._model;
-                    };
-                    GearItem.prototype.carried = function (carried) {
+                    }
+                    carried(carried) {
                         return arguments.length
                             ? (this._carried = carried)
                             : this._carried;
-                    };
-                    GearItem.prototype.isCarried = function () {
+                    }
+                    isCarried() {
                         return "NotCarried" != this._carried;
-                    };
-                    GearItem.prototype.isWorn = function () {
+                    }
+                    isWorn() {
                         return "Worn" == this._carried;
-                    };
-                    GearItem.prototype.isConsumable = function (isConsumable) {
+                    }
+                    isConsumable(isConsumable) {
                         return arguments.length
                             ? (this._isConsumable = isConsumable)
                             : this._isConsumable;
-                    };
-                    GearItem.prototype.consumedPerDay = function (consumedPerDay) {
+                    }
+                    consumedPerDay(consumedPerDay) {
                         return arguments.length
                             ? (this._consumedPerDay = consumedPerDay)
                             : this._consumedPerDay;
-                    };
-                    GearItem.prototype.note = function (note) {
+                    }
+                    note(note) {
                         return arguments.length
                             ? (this._note = note)
                             : this._note;
-                    };
+                    }
                     /* Weight/Cost */
-                    GearItem.prototype.getWeightCategory = function () {
+                    getWeightCategory() {
                         if (!this.isCarried()) {
                             return "None";
                         }
                         return Mockup.AppState.getInstance().getAppSettings().getWeightCategory(this._weightInGrams);
-                    };
-                    GearItem.prototype.getWeightInGrams = function () {
+                    }
+                    getWeightInGrams() {
                         return this._weightInGrams;
-                    };
-                    GearItem.prototype.weightInUnits = function (weight) {
+                    }
+                    weightInUnits(weight) {
                         return arguments.length
                             ? (this._weightInGrams = Mockup.convertUnitsToGrams(weight, Mockup.AppState.getInstance().getAppSettings().units()))
                             : parseFloat(Mockup.convertGramsToUnits(this._weightInGrams, Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
-                    };
-                    GearItem.prototype.getCostInUSDP = function () {
+                    }
+                    getCostInUSDP() {
                         return this._costInUSDP;
-                    };
-                    GearItem.prototype.costInCurrency = function (cost) {
+                    }
+                    costInCurrency(cost) {
                         return arguments.length
                             ? (this._costInUSDP = Mockup.convertCurrencyToUSDP(cost, Mockup.AppState.getInstance().getAppSettings().currency()))
                             : Mockup.convertUSDPToCurrency(this._costInUSDP, Mockup.AppState.getInstance().getAppSettings().currency());
-                    };
-                    GearItem.prototype.getCostPerUnitInCurrency = function () {
-                        var weightInUnits = Mockup.convertGramsToUnits(this._weightInGrams, /*units*/ Mockup.AppState.getInstance().getAppSettings().units());
-                        var costInCurrency = Mockup.convertUSDPToCurrency(this._costInUSDP, /*currency*/ Mockup.AppState.getInstance().getAppSettings().currency());
+                    }
+                    getCostPerUnitInCurrency() {
+                        const weightInUnits = Mockup.convertGramsToUnits(this._weightInGrams, /*units*/ Mockup.AppState.getInstance().getAppSettings().units());
+                        const costInCurrency = Mockup.convertUSDPToCurrency(this._costInUSDP, /*currency*/ Mockup.AppState.getInstance().getAppSettings().currency());
                         return 0 == weightInUnits
                             ? costInCurrency
                             : costInCurrency / weightInUnits;
-                    };
+                    }
                     /* Load/Save */
-                    GearItem.prototype.update = function (gearItem) {
+                    update(gearItem) {
                         this._name = gearItem._name;
                         this._url = gearItem._url;
                         this._make = gearItem._make;
@@ -809,9 +792,9 @@ var BackpackPlanner;
                         this._isConsumable = gearItem._isConsumable;
                         this._consumedPerDay = gearItem._consumedPerDay;
                         this._note = gearItem._note;
-                    };
-                    GearItem.prototype.loadFromDevice = function ($q, gearItemResource) {
-                        var deferred = $q.defer();
+                    }
+                    loadFromDevice($q, gearItemResource) {
+                        const deferred = $q.defer();
                         this._id = gearItemResource.Id;
                         this._name = gearItemResource.Name;
                         this._url = gearItemResource.Url;
@@ -825,16 +808,15 @@ var BackpackPlanner;
                         this._note = gearItemResource.Note;
                         deferred.resolve(this);
                         return deferred.promise;
-                    };
-                    GearItem.prototype.saveToDevice = function ($q) {
+                    }
+                    saveToDevice($q) {
                         alert("GearItem.saveToDevice");
                         return $q.defer().promise;
-                    };
-                    return GearItem;
-                }());
+                    }
+                }
                 Gear.GearItem = GearItem;
-                var GearItemEntry = (function () {
-                    function GearItemEntry(gearItemId, count) {
+                class GearItemEntry {
+                    constructor(gearItemId, count) {
                         this._gearItemId = -1;
                         this._count = 1;
                         this._gearItemId = gearItemId;
@@ -842,75 +824,74 @@ var BackpackPlanner;
                             this._count = count;
                         }
                     }
-                    GearItemEntry.prototype.getGearItemId = function () {
+                    getGearItemId() {
                         return this._gearItemId;
-                    };
-                    GearItemEntry.prototype.count = function (count) {
+                    }
+                    count(count) {
                         return arguments.length
                             ? (this._count = count)
                             : this._count;
-                    };
-                    GearItemEntry.prototype.getName = function () {
-                        var gearItem = Mockup.AppState.getInstance().getGearState().getGearItemById(this._gearItemId);
+                    }
+                    getName() {
+                        const gearItem = Mockup.AppState.getInstance().getGearState().getGearItemById(this._gearItemId);
                         if (!gearItem) {
                             return "";
                         }
                         return gearItem.name();
-                    };
-                    GearItemEntry.prototype.isCarried = function () {
-                        var gearItem = Mockup.AppState.getInstance().getGearState().getGearItemById(this._gearItemId);
+                    }
+                    isCarried() {
+                        const gearItem = Mockup.AppState.getInstance().getGearState().getGearItemById(this._gearItemId);
                         if (!gearItem) {
                             return false;
                         }
                         return gearItem.isCarried();
-                    };
-                    GearItemEntry.prototype.isWorn = function () {
-                        var gearItem = Mockup.AppState.getInstance().getGearState().getGearItemById(this._gearItemId);
+                    }
+                    isWorn() {
+                        const gearItem = Mockup.AppState.getInstance().getGearState().getGearItemById(this._gearItemId);
                         if (!gearItem) {
                             return false;
                         }
                         return gearItem.isWorn();
-                    };
-                    GearItemEntry.prototype.isConsumable = function () {
-                        var gearItem = Mockup.AppState.getInstance().getGearState().getGearItemById(this._gearItemId);
+                    }
+                    isConsumable() {
+                        const gearItem = Mockup.AppState.getInstance().getGearState().getGearItemById(this._gearItemId);
                         if (!gearItem) {
                             return false;
                         }
                         return gearItem.isConsumable();
-                    };
-                    GearItemEntry.prototype.getTotalWeightInGrams = function () {
-                        var gearItem = Mockup.AppState.getInstance().getGearState().getGearItemById(this._gearItemId);
+                    }
+                    getTotalWeightInGrams() {
+                        const gearItem = Mockup.AppState.getInstance().getGearState().getGearItemById(this._gearItemId);
                         if (!gearItem) {
                             return 0;
                         }
                         return this._count * gearItem.getWeightInGrams();
-                    };
-                    GearItemEntry.prototype.getTotalWeightInUnits = function () {
+                    }
+                    getTotalWeightInUnits() {
                         return parseFloat(Mockup.convertGramsToUnits(this.getTotalWeightInGrams(), /*units*/ Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
-                    };
-                    GearItemEntry.prototype.getCostInUSDP = function () {
-                        var gearItem = Mockup.AppState.getInstance().getGearState().getGearItemById(this._gearItemId);
+                    }
+                    getCostInUSDP() {
+                        const gearItem = Mockup.AppState.getInstance().getGearState().getGearItemById(this._gearItemId);
                         if (!gearItem) {
                             return 0;
                         }
                         return this._count * gearItem.getCostInUSDP();
-                    };
-                    GearItemEntry.prototype.getCostInCurrency = function () {
+                    }
+                    getCostInCurrency() {
                         return Mockup.convertUSDPToCurrency(this.getCostInUSDP(), /*currency*/ Mockup.AppState.getInstance().getAppSettings().currency());
-                    };
-                    return GearItemEntry;
-                }());
+                    }
+                }
                 Gear.GearItemEntry = GearItemEntry;
             })(Gear = Models.Gear || (Models.Gear = {}));
         })(Models = Mockup.Models || (Mockup.Models = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../scripts/typings/underscore/underscore.d.ts" />
-///<reference path="../../Resources/Gear/GearSystemResource.ts"/>
-///<reference path="../../AppState.ts"/>
-///<reference path="../Entry.ts"/>
-///<reference path="GearItem.ts"/>
+/// <reference path="../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../scripts/typings/underscore/underscore.d.ts" />
+/// <reference path="../../Resources/Gear/GearSystemResource.ts"/>
+/// <reference path="../../AppState.ts"/>
+/// <reference path="../Entry.ts"/>
+/// <reference path="GearItem.ts"/>
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -920,44 +901,40 @@ var BackpackPlanner;
             var Gear;
             (function (Gear) {
                 "use strict";
-                var GearSystem = (function () {
-                    function GearSystem() {
+                class GearSystem {
+                    constructor() {
                         this._id = -1;
                         this._name = "";
                         this._note = "";
                         this._gearItems = [];
                     }
-                    Object.defineProperty(GearSystem.prototype, "Id", {
-                        get: function () {
-                            return this._id;
-                        },
-                        set: function (id) {
-                            this._id = id;
-                        },
-                        enumerable: true,
-                        configurable: true
-                    });
-                    GearSystem.prototype.name = function (name) {
+                    get Id() {
+                        return this._id;
+                    }
+                    set Id(id) {
+                        this._id = id;
+                    }
+                    name(name) {
                         return arguments.length
                             ? (this._name = name)
                             : this._name;
-                    };
-                    GearSystem.prototype.note = function (note) {
+                    }
+                    note(note) {
                         return arguments.length
                             ? (this._note = note)
                             : this._note;
-                    };
+                    }
                     /* Gear Items */
-                    GearSystem.prototype.getGearItems = function () {
+                    getGearItems() {
                         return this._gearItems;
-                    };
-                    GearSystem.prototype.getGearItemCount = function (visitedGearItems) {
+                    }
+                    getGearItemCount(visitedGearItems) {
                         if (!visitedGearItems) {
                             visitedGearItems = [];
                         }
-                        var count = 0;
-                        for (var i = 0; i < this._gearItems.length; ++i) {
-                            var gearItemEntry = this._gearItems[i];
+                        let count = 0;
+                        for (let i = 0; i < this._gearItems.length; ++i) {
+                            const gearItemEntry = this._gearItems[i];
                             if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
                                 continue;
                             }
@@ -965,48 +942,48 @@ var BackpackPlanner;
                             count += gearItemEntry.count();
                         }
                         return count;
-                    };
-                    GearSystem.prototype.getGearItemEntryIndexById = function (gearItemId) {
-                        return _.findIndex(this._gearItems, function (gearItemEntry) {
+                    }
+                    getGearItemEntryIndexById(gearItemId) {
+                        return _.findIndex(this._gearItems, (gearItemEntry) => {
                             return gearItemEntry.getGearItemId() == gearItemId;
                         });
-                    };
-                    GearSystem.prototype.containsGearItemById = function (gearItemId) {
-                        return undefined != _.find(this._gearItems, function (gearSystemEntry) {
+                    }
+                    containsGearItemById(gearItemId) {
+                        return undefined != _.find(this._gearItems, (gearSystemEntry) => {
                             return gearSystemEntry.getGearItemId() == gearItemId;
                         });
-                    };
-                    GearSystem.prototype.addGearItem = function (gearItem) {
+                    }
+                    addGearItem(gearItem) {
                         if (this.containsGearItemById(gearItem.Id)) {
                             throw "The system already contains this item!";
                         }
                         this._gearItems.push(new Gear.GearItemEntry(gearItem.Id));
-                    };
-                    GearSystem.prototype.addGearItemEntry = function (gearItemId, count) {
+                    }
+                    addGearItemEntry(gearItemId, count) {
                         if (this.containsGearItemById(gearItemId)) {
                             throw "The system already contains this item!";
                         }
                         this._gearItems.push(new Gear.GearItemEntry(gearItemId, count));
-                    };
-                    GearSystem.prototype.removeGearItemById = function (gearItemId) {
-                        var idx = this.getGearItemEntryIndexById(gearItemId);
+                    }
+                    removeGearItemById(gearItemId) {
+                        const idx = this.getGearItemEntryIndexById(gearItemId);
                         if (idx < 0) {
                             return false;
                         }
                         this._gearItems.splice(idx, 1);
                         return true;
-                    };
-                    GearSystem.prototype.removeAllGearItems = function () {
+                    }
+                    removeAllGearItems() {
                         this._gearItems = [];
-                    };
+                    }
                     /* Weight/Cost */
-                    GearSystem.prototype.getTotalWeightInGrams = function (visitedGearItems) {
+                    getTotalWeightInGrams(visitedGearItems) {
                         if (!visitedGearItems) {
                             visitedGearItems = [];
                         }
-                        var weightInGrams = 0;
-                        for (var i = 0; i < this._gearItems.length; ++i) {
-                            var gearItemEntry = this._gearItems[i];
+                        let weightInGrams = 0;
+                        for (let i = 0; i < this._gearItems.length; ++i) {
+                            const gearItemEntry = this._gearItems[i];
                             if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
                                 continue;
                             }
@@ -1014,17 +991,17 @@ var BackpackPlanner;
                             weightInGrams += gearItemEntry.getTotalWeightInGrams();
                         }
                         return weightInGrams;
-                    };
-                    GearSystem.prototype.getTotalWeightInUnits = function () {
+                    }
+                    getTotalWeightInUnits() {
                         return parseFloat(Mockup.convertGramsToUnits(this.getTotalWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
-                    };
-                    GearSystem.prototype.getBaseWeightInGrams = function (visitedGearItems) {
+                    }
+                    getBaseWeightInGrams(visitedGearItems) {
                         if (!visitedGearItems) {
                             visitedGearItems = [];
                         }
-                        var weightInGrams = 0;
-                        for (var i = 0; i < this._gearItems.length; ++i) {
-                            var gearItemEntry = this._gearItems[i];
+                        let weightInGrams = 0;
+                        for (let i = 0; i < this._gearItems.length; ++i) {
+                            const gearItemEntry = this._gearItems[i];
                             if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
                                 continue;
                             }
@@ -1035,17 +1012,17 @@ var BackpackPlanner;
                             }
                         }
                         return weightInGrams;
-                    };
-                    GearSystem.prototype.getBaseWeightInUnits = function () {
+                    }
+                    getBaseWeightInUnits() {
                         return parseFloat(Mockup.convertGramsToUnits(this.getBaseWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
-                    };
-                    GearSystem.prototype.getPackWeightInGrams = function (visitedGearItems) {
+                    }
+                    getPackWeightInGrams(visitedGearItems) {
                         if (!visitedGearItems) {
                             visitedGearItems = [];
                         }
-                        var weightInGrams = 0;
-                        for (var i = 0; i < this._gearItems.length; ++i) {
-                            var gearItemEntry = this._gearItems[i];
+                        let weightInGrams = 0;
+                        for (let i = 0; i < this._gearItems.length; ++i) {
+                            const gearItemEntry = this._gearItems[i];
                             if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
                                 continue;
                             }
@@ -1056,18 +1033,18 @@ var BackpackPlanner;
                             }
                         }
                         return weightInGrams;
-                    };
-                    GearSystem.prototype.getPackWeightInUnits = function () {
+                    }
+                    getPackWeightInUnits() {
                         return parseFloat(Mockup.convertGramsToUnits(this.getPackWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
-                    };
-                    GearSystem.prototype.getSkinOutWeightInGrams = function (visitedGearItems) {
+                    }
+                    getSkinOutWeightInGrams(visitedGearItems) {
                         if (!visitedGearItems) {
                             visitedGearItems = [];
                         }
-                        var packWeightInGrams = this.getPackWeightInGrams(visitedGearItems);
-                        var weightInGrams = 0;
-                        for (var i = 0; i < this._gearItems.length; ++i) {
-                            var gearItemEntry = this._gearItems[i];
+                        const packWeightInGrams = this.getPackWeightInGrams(visitedGearItems);
+                        let weightInGrams = 0;
+                        for (let i = 0; i < this._gearItems.length; ++i) {
+                            const gearItemEntry = this._gearItems[i];
                             if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
                                 continue;
                             }
@@ -1078,17 +1055,17 @@ var BackpackPlanner;
                             }
                         }
                         return packWeightInGrams + weightInGrams;
-                    };
-                    GearSystem.prototype.getSkinOutWeightInUnits = function () {
+                    }
+                    getSkinOutWeightInUnits() {
                         return parseFloat(Mockup.convertGramsToUnits(this.getSkinOutWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
-                    };
-                    GearSystem.prototype.getCostInUSDP = function (visitedGearItems) {
+                    }
+                    getCostInUSDP(visitedGearItems) {
                         if (!visitedGearItems) {
                             visitedGearItems = [];
                         }
-                        var costInUSDP = 0;
-                        for (var i = 0; i < this._gearItems.length; ++i) {
-                            var gearItemEntry = this._gearItems[i];
+                        let costInUSDP = 0;
+                        for (let i = 0; i < this._gearItems.length; ++i) {
+                            const gearItemEntry = this._gearItems[i];
                             if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
                                 continue;
                             }
@@ -1096,38 +1073,38 @@ var BackpackPlanner;
                             costInUSDP += gearItemEntry.getCostInUSDP();
                         }
                         return costInUSDP;
-                    };
-                    GearSystem.prototype.getCostInCurrency = function () {
+                    }
+                    getCostInCurrency() {
                         return Mockup.convertUSDPToCurrency(this.getCostInUSDP([]), /*currency*/ Mockup.AppState.getInstance().getAppSettings().currency());
-                    };
-                    GearSystem.prototype.getCostPerUnitInCurrency = function () {
-                        var weightInUnits = Mockup.convertGramsToUnits(this.getTotalWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units());
-                        var costInCurrency = Mockup.convertUSDPToCurrency(this.getCostInUSDP([]), /*currency*/ Mockup.AppState.getInstance().getAppSettings().currency());
+                    }
+                    getCostPerUnitInCurrency() {
+                        const weightInUnits = Mockup.convertGramsToUnits(this.getTotalWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units());
+                        const costInCurrency = Mockup.convertUSDPToCurrency(this.getCostInUSDP([]), /*currency*/ Mockup.AppState.getInstance().getAppSettings().currency());
                         return 0 == weightInUnits
                             ? costInCurrency
                             : costInCurrency / weightInUnits;
-                    };
+                    }
                     /* Load/Save */
-                    GearSystem.prototype.update = function (gearSystem) {
+                    update(gearSystem) {
                         this._name = gearSystem._name;
                         this._note = gearSystem._note;
                         this._gearItems = [];
-                        for (var i = 0; i < gearSystem._gearItems.length; ++i) {
-                            var gearItemEntry = gearSystem._gearItems[i];
+                        for (let i = 0; i < gearSystem._gearItems.length; ++i) {
+                            const gearItemEntry = gearSystem._gearItems[i];
                             try {
                                 this.addGearItemEntry(gearItemEntry.getGearItemId(), gearItemEntry.count());
                             }
                             catch (error) {
                             }
                         }
-                    };
-                    GearSystem.prototype.loadFromDevice = function ($q, gearSystemResource) {
-                        var deferred = $q.defer();
+                    }
+                    loadFromDevice($q, gearSystemResource) {
+                        const deferred = $q.defer();
                         this._id = gearSystemResource.Id;
                         this._name = gearSystemResource.Name;
                         this._note = gearSystemResource.Note;
-                        for (var i = 0; i < gearSystemResource.GearItems.length; ++i) {
-                            var gearItemEntry = gearSystemResource.GearItems[i];
+                        for (let i = 0; i < gearSystemResource.GearItems.length; ++i) {
+                            const gearItemEntry = gearSystemResource.GearItems[i];
                             try {
                                 this.addGearItemEntry(gearItemEntry.GearItemId, gearItemEntry.Count);
                             }
@@ -1136,16 +1113,15 @@ var BackpackPlanner;
                         }
                         deferred.resolve(this);
                         return deferred.promise;
-                    };
-                    GearSystem.prototype.saveToDevice = function ($q) {
+                    }
+                    saveToDevice($q) {
                         alert("GearSystem.saveToDevice");
                         return $q.defer().promise;
-                    };
-                    return GearSystem;
-                }());
+                    }
+                }
                 Gear.GearSystem = GearSystem;
-                var GearSystemEntry = (function () {
-                    function GearSystemEntry(gearSystemId, count) {
+                class GearSystemEntry {
+                    constructor(gearSystemId, count) {
                         this._gearSystemId = -1;
                         this._count = 1;
                         this._gearSystemId = gearSystemId;
@@ -1153,94 +1129,93 @@ var BackpackPlanner;
                             this._count = count;
                         }
                     }
-                    GearSystemEntry.prototype.getGearSystemId = function () {
+                    getGearSystemId() {
                         return this._gearSystemId;
-                    };
-                    GearSystemEntry.prototype.count = function (count) {
+                    }
+                    count(count) {
                         return arguments.length
                             ? (this._count = count)
                             : this._count;
-                    };
-                    GearSystemEntry.prototype.getName = function () {
-                        var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(this._gearSystemId);
+                    }
+                    getName() {
+                        const gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(this._gearSystemId);
                         if (!gearSystem) {
                             return "";
                         }
                         return gearSystem.name();
-                    };
-                    GearSystemEntry.prototype.getGearItemCount = function (visitedGearItems) {
-                        var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(this._gearSystemId);
+                    }
+                    getGearItemCount(visitedGearItems) {
+                        const gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(this._gearSystemId);
                         if (!gearSystem) {
                             return 0;
                         }
                         return this._count * gearSystem.getGearItemCount(visitedGearItems);
-                    };
-                    GearSystemEntry.prototype.getTotalWeightInGrams = function (visitedGearItems) {
-                        var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(this._gearSystemId);
+                    }
+                    getTotalWeightInGrams(visitedGearItems) {
+                        const gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(this._gearSystemId);
                         if (!gearSystem) {
                             return 0;
                         }
                         return this._count * gearSystem.getTotalWeightInGrams(visitedGearItems);
-                    };
-                    GearSystemEntry.prototype.getTotalWeightInUnits = function () {
+                    }
+                    getTotalWeightInUnits() {
                         return parseFloat(Mockup.convertGramsToUnits(this.getTotalWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
-                    };
-                    GearSystemEntry.prototype.getBaseWeightInGrams = function (visitedGearItems) {
-                        var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(this._gearSystemId);
+                    }
+                    getBaseWeightInGrams(visitedGearItems) {
+                        const gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(this._gearSystemId);
                         if (!gearSystem) {
                             return 0;
                         }
                         return this._count * gearSystem.getBaseWeightInGrams(visitedGearItems);
-                    };
-                    GearSystemEntry.prototype.getBaseWeightInUnits = function () {
+                    }
+                    getBaseWeightInUnits() {
                         return parseFloat(Mockup.convertGramsToUnits(this.getBaseWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
-                    };
-                    GearSystemEntry.prototype.getPackWeightInGrams = function (visitedGearItems) {
-                        var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(this._gearSystemId);
+                    }
+                    getPackWeightInGrams(visitedGearItems) {
+                        const gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(this._gearSystemId);
                         if (!gearSystem) {
                             return 0;
                         }
                         return this._count * gearSystem.getPackWeightInGrams(visitedGearItems);
-                    };
-                    GearSystemEntry.prototype.getPackWeightInUnits = function () {
+                    }
+                    getPackWeightInUnits() {
                         return parseFloat(Mockup.convertGramsToUnits(this.getPackWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
-                    };
-                    GearSystemEntry.prototype.getSkinOutWeightInGrams = function (visitedGearItems) {
-                        var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(this._gearSystemId);
+                    }
+                    getSkinOutWeightInGrams(visitedGearItems) {
+                        const gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(this._gearSystemId);
                         if (!gearSystem) {
                             return 0;
                         }
                         return this._count * gearSystem.getSkinOutWeightInGrams(visitedGearItems);
-                    };
-                    GearSystemEntry.prototype.getSkinOutWeightInUnits = function () {
+                    }
+                    getSkinOutWeightInUnits() {
                         return parseFloat(Mockup.convertGramsToUnits(this.getSkinOutWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
-                    };
-                    GearSystemEntry.prototype.getCostInUSDP = function (visitedGearItems) {
-                        var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(this._gearSystemId);
+                    }
+                    getCostInUSDP(visitedGearItems) {
+                        const gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(this._gearSystemId);
                         if (!gearSystem) {
                             return 0;
                         }
                         return this._count * gearSystem.getCostInUSDP(visitedGearItems);
-                    };
-                    GearSystemEntry.prototype.getCostInCurrency = function () {
+                    }
+                    getCostInCurrency() {
                         return Mockup.convertUSDPToCurrency(this.getCostInUSDP([]), /*currency*/ Mockup.AppState.getInstance().getAppSettings().currency());
-                    };
-                    return GearSystemEntry;
-                }());
+                    }
+                }
                 Gear.GearSystemEntry = GearSystemEntry;
             })(Gear = Models.Gear || (Models.Gear = {}));
         })(Models = Mockup.Models || (Mockup.Models = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../scripts/typings/underscore/underscore.d.ts" />
-//<reference path="../../Resources/Trips/TripPlanResource.ts"/>
-///<reference path="../../AppState.ts"/>
-///<reference path="../Gear/GearCollection.ts"/>
-///<reference path="../Gear/GearItem.ts"/>
-///<reference path="../Gear/GearSystem.ts"/>
-///<reference path="../Meals/Meal.ts"/>
-///<reference path="TripItinerary.ts"/>
+/// <reference path="../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../scripts/typings/underscore/underscore.d.ts" />
+/// <reference path="../../Resources/Trips/TripPlanResource.ts"/>
+/// <reference path="../../AppState.ts"/>
+/// <reference path="../Gear/GearCollection.ts"/>
+/// <reference path="../Gear/GearItem.ts"/>
+/// <reference path="../Gear/GearSystem.ts"/>
+/// <reference path="../Meals/Meal.ts"/>
+/// <reference path="TripItinerary.ts"/>
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -1250,8 +1225,8 @@ var BackpackPlanner;
             var Trips;
             (function (Trips) {
                 "use strict";
-                var TripPlan = (function () {
-                    function TripPlan() {
+                class TripPlan {
+                    constructor() {
                         this._id = -1;
                         this._name = "";
                         this._startDate = new Date();
@@ -1263,64 +1238,60 @@ var BackpackPlanner;
                         this._gearItems = [];
                         this._meals = [];
                     }
-                    Object.defineProperty(TripPlan.prototype, "Id", {
-                        get: function () {
-                            return this._id;
-                        },
-                        set: function (id) {
-                            this._id = id;
-                        },
-                        enumerable: true,
-                        configurable: true
-                    });
-                    TripPlan.prototype.name = function (name) {
+                    get Id() {
+                        return this._id;
+                    }
+                    set Id(id) {
+                        this._id = id;
+                    }
+                    name(name) {
                         return arguments.length
                             ? (this._name = name)
                             : this._name;
-                    };
-                    TripPlan.prototype.startDate = function (startDate) {
+                    }
+                    startDate(startDate) {
                         return arguments.length
                             ? (this._startDate = startDate)
                             : this._startDate;
-                    };
-                    TripPlan.prototype.endDate = function (endDate) {
+                    }
+                    endDate(endDate) {
                         return arguments.length
                             ? (this._endDate = endDate)
                             : this._endDate;
-                    };
-                    TripPlan.prototype.getTripItineraryName = function () {
+                    }
+                    getTripItineraryName() {
                         if (this._tripItineraryId < 1) {
                             return "No trip itinerary";
                         }
-                        var tripItinerary = Mockup.AppState.getInstance().getTripState().getTripItineraryById(this._tripItineraryId);
+                        const tripItinerary = Mockup.AppState.getInstance().getTripState().getTripItineraryById(this._tripItineraryId);
                         if (!tripItinerary) {
                             return "Could not find trip itinerary";
                         }
                         return tripItinerary.name();
-                    };
-                    TripPlan.prototype.tripItineraryId = function (tripItineraryId) {
+                    }
+                    tripItineraryId(tripItineraryId) {
                         return arguments.length
                             ? (this._tripItineraryId = tripItineraryId)
                             : this._tripItineraryId;
-                    };
-                    TripPlan.prototype.note = function (note) {
+                    }
+                    note(note) {
                         return arguments.length
                             ? (this._note = note)
                             : this._note;
-                    };
-                    TripPlan.prototype.getTotalGearItemCount = function () {
-                        var visitedGearItems = [];
-                        var count = 0;
-                        for (var i = 0; i < this._gearCollections.length; ++i) {
-                            var gearCollectionEntry = this._gearCollections[i];
+                    }
+                    getTotalGearItemCount() {
+                        const visitedGearItems = [];
+                        let count = 0;
+                        for (let i = 0; i < this._gearCollections.length; ++i) {
+                            const gearCollectionEntry = this._gearCollections[i];
                             count += gearCollectionEntry.getGearItemCount(visitedGearItems);
                         }
-                        for (var i = 0; i < this._gearSystems.length; ++i) {
-                            var gearSystemEntry = this._gearSystems[i];
+                        for (let i = 0; i < this._gearSystems.length; ++i) {
+                            const gearSystemEntry = this._gearSystems[i];
                             count += gearSystemEntry.getGearItemCount(visitedGearItems);
                         }
-                        for (var i = 0; i < this._gearItems.length; ++i) {
-                            var gearItemEntry = this._gearItems[i];
+                        for (let i = 0; i < this._gearItems.length; ++i) {
+                            const gearItemEntry = this._gearItems[i];
                             if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
                                 continue;
                             }
@@ -1328,12 +1299,12 @@ var BackpackPlanner;
                             count += gearItemEntry.count();
                         }
                         return count;
-                    };
-                    TripPlan.prototype.getTotalCalories = function () {
-                        var visitedMeals = [];
-                        var calories = 0;
-                        for (var i = 0; i < this._meals.length; ++i) {
-                            var mealEntry = this._meals[i];
+                    }
+                    getTotalCalories() {
+                        const visitedMeals = [];
+                        let calories = 0;
+                        for (let i = 0; i < this._meals.length; ++i) {
+                            const mealEntry = this._meals[i];
                             if (_.contains(visitedMeals, mealEntry.getMealId())) {
                                 continue;
                             }
@@ -1341,18 +1312,18 @@ var BackpackPlanner;
                             calories += mealEntry.getCalories();
                         }
                         return calories;
-                    };
+                    }
                     /* Gear Collections */
-                    TripPlan.prototype.getGearCollections = function () {
+                    getGearCollections() {
                         return this._gearCollections;
-                    };
-                    TripPlan.prototype.getGearCollectionCount = function (visitedGearCollections) {
+                    }
+                    getGearCollectionCount(visitedGearCollections) {
                         if (!visitedGearCollections) {
                             visitedGearCollections = [];
                         }
-                        var count = 0;
-                        for (var i = 0; i < this._gearCollections.length; ++i) {
-                            var gearCollectionEntry = this._gearCollections[i];
+                        let count = 0;
+                        for (let i = 0; i < this._gearCollections.length; ++i) {
+                            const gearCollectionEntry = this._gearCollections[i];
                             if (_.contains(visitedGearCollections, gearCollectionEntry.getGearCollectionId())) {
                                 continue;
                             }
@@ -1360,42 +1331,42 @@ var BackpackPlanner;
                             count += gearCollectionEntry.count();
                         }
                         return count;
-                    };
-                    TripPlan.prototype.getGearCollectionEntryIndexById = function (gearCollectionId) {
-                        return _.findIndex(this._gearCollections, function (gearCollectionEntry) {
+                    }
+                    getGearCollectionEntryIndexById(gearCollectionId) {
+                        return _.findIndex(this._gearCollections, (gearCollectionEntry) => {
                             return gearCollectionEntry.getGearCollectionId() == gearCollectionId;
                         });
-                    };
-                    TripPlan.prototype.containsGearCollectionById = function (gearCollectionId) {
-                        return undefined != _.find(this._gearCollections, function (gearCollectionEntry) {
+                    }
+                    containsGearCollectionById(gearCollectionId) {
+                        return undefined != _.find(this._gearCollections, (gearCollectionEntry) => {
                             return gearCollectionEntry.getGearCollectionId() == gearCollectionId;
                         });
-                    };
-                    TripPlan.prototype.containsGearCollectionSystems = function (gearCollection) {
-                        var gearSystems = gearCollection.getGearSystems();
-                        for (var i = 0; i < gearSystems.length; ++i) {
-                            var gearSystemEntry = gearSystems[i];
+                    }
+                    containsGearCollectionSystems(gearCollection) {
+                        const gearSystems = gearCollection.getGearSystems();
+                        for (let i = 0; i < gearSystems.length; ++i) {
+                            const gearSystemEntry = gearSystems[i];
                             if (this.containsGearSystemById(gearSystemEntry.getGearSystemId())) {
                                 return true;
                             }
-                            var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(gearSystemEntry.getGearSystemId());
+                            const gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(gearSystemEntry.getGearSystemId());
                             if (gearSystem && this.containsGearSystemItems(gearSystem)) {
                                 return true;
                             }
                         }
                         return false;
-                    };
-                    TripPlan.prototype.containsGearCollectionItems = function (gearCollection) {
-                        var gearItems = gearCollection.getGearItems();
-                        for (var i = 0; i < gearItems.length; ++i) {
-                            var gearItemEntry = gearItems[i];
+                    }
+                    containsGearCollectionItems(gearCollection) {
+                        const gearItems = gearCollection.getGearItems();
+                        for (let i = 0; i < gearItems.length; ++i) {
+                            const gearItemEntry = gearItems[i];
                             if (this.containsGearItemById(gearItemEntry.getGearItemId())) {
                                 return true;
                             }
                         }
                         return false;
-                    };
-                    TripPlan.prototype.addGearCollection = function (gearCollection) {
+                    }
+                    addGearCollection(gearCollection) {
                         if (this.containsGearCollectionById(gearCollection.Id)) {
                             throw "The plan already contains this collection!";
                         }
@@ -1406,8 +1377,8 @@ var BackpackPlanner;
                             throw "The plan already contains items from this collection!";
                         }
                         this._gearCollections.push(new Models.Gear.GearCollectionEntry(gearCollection.Id));
-                    };
-                    TripPlan.prototype.addGearCollectionEntry = function (gearCollectionId, count) {
+                    }
+                    addGearCollectionEntry(gearCollectionId, count) {
                         if (this.containsGearCollectionById(gearCollectionId)) {
                             throw "The plan already contains this collection!";
                         }
@@ -1425,29 +1396,29 @@ var BackpackPlanner;
                             throw "The plan already contains items from this collection!";
                         }*/
                         this._gearCollections.push(new Models.Gear.GearCollectionEntry(gearCollectionId, count));
-                    };
-                    TripPlan.prototype.removeGearCollectionById = function (gearCollectionId) {
-                        var idx = this.getGearCollectionEntryIndexById(gearCollectionId);
+                    }
+                    removeGearCollectionById(gearCollectionId) {
+                        const idx = this.getGearCollectionEntryIndexById(gearCollectionId);
                         if (idx < 0) {
                             return false;
                         }
                         this._gearCollections.splice(idx, 1);
                         return true;
-                    };
-                    TripPlan.prototype.removeAllGearCollections = function () {
+                    }
+                    removeAllGearCollections() {
                         this._gearCollections = [];
-                    };
+                    }
                     /* Gear Systems */
-                    TripPlan.prototype.getGearSystems = function () {
+                    getGearSystems() {
                         return this._gearSystems;
-                    };
-                    TripPlan.prototype.getGearSystemCount = function (visitedGearSystems) {
+                    }
+                    getGearSystemCount(visitedGearSystems) {
                         if (!visitedGearSystems) {
                             visitedGearSystems = [];
                         }
-                        var count = 0;
-                        for (var i = 0; i < this._gearSystems.length; ++i) {
-                            var gearSystemEntry = this._gearSystems[i];
+                        let count = 0;
+                        for (let i = 0; i < this._gearSystems.length; ++i) {
+                            const gearSystemEntry = this._gearSystems[i];
                             if (_.contains(visitedGearSystems, gearSystemEntry.getGearSystemId())) {
                                 continue;
                             }
@@ -1455,15 +1426,15 @@ var BackpackPlanner;
                             count += gearSystemEntry.count();
                         }
                         return count;
-                    };
-                    TripPlan.prototype.getGearSystemEntryIndexById = function (gearSystemId) {
-                        return _.findIndex(this._gearSystems, function (gearSystemEntry) {
+                    }
+                    getGearSystemEntryIndexById(gearSystemId) {
+                        return _.findIndex(this._gearSystems, (gearSystemEntry) => {
                             return gearSystemEntry.getGearSystemId() == gearSystemId;
                         });
-                    };
-                    TripPlan.prototype.containsGearSystemById = function (gearSystemId) {
-                        if (_.find(this._gearCollections, function (gearCollectionEntry) {
-                            var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(gearCollectionEntry.getGearCollectionId());
+                    }
+                    containsGearSystemById(gearSystemId) {
+                        if (_.find(this._gearCollections, (gearCollectionEntry) => {
+                            const gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(gearCollectionEntry.getGearCollectionId());
                             if (!gearCollection) {
                                 return false;
                             }
@@ -1471,21 +1442,21 @@ var BackpackPlanner;
                         })) {
                             return true;
                         }
-                        return undefined != _.find(this._gearSystems, function (gearSystemEntry) {
+                        return undefined != _.find(this._gearSystems, (gearSystemEntry) => {
                             return gearSystemEntry.getGearSystemId() == gearSystemId;
                         });
-                    };
-                    TripPlan.prototype.containsGearSystemItems = function (gearSystem) {
-                        var gearItems = gearSystem.getGearItems();
-                        for (var i = 0; i < gearItems.length; ++i) {
-                            var gearItemEntry = gearItems[i];
+                    }
+                    containsGearSystemItems(gearSystem) {
+                        const gearItems = gearSystem.getGearItems();
+                        for (let i = 0; i < gearItems.length; ++i) {
+                            const gearItemEntry = gearItems[i];
                             if (this.containsGearItemById(gearItemEntry.getGearItemId())) {
                                 return true;
                             }
                         }
                         return false;
-                    };
-                    TripPlan.prototype.addGearSystem = function (gearSystem) {
+                    }
+                    addGearSystem(gearSystem) {
                         if (this.containsGearSystemById(gearSystem.Id)) {
                             throw "The plan already contains this system!";
                         }
@@ -1493,8 +1464,8 @@ var BackpackPlanner;
                             throw "The plan already contains items from this system!";
                         }
                         this._gearSystems.push(new Models.Gear.GearSystemEntry(gearSystem.Id));
-                    };
-                    TripPlan.prototype.addGearSystemEntry = function (gearSystemId, count) {
+                    }
+                    addGearSystemEntry(gearSystemId, count) {
                         if (this.containsGearSystemById(gearSystemId)) {
                             throw "The plan already contains this system!";
                         }
@@ -1507,29 +1478,29 @@ var BackpackPlanner;
                             throw "The plan already contains items from this system!";
                         }*/
                         this._gearSystems.push(new Models.Gear.GearSystemEntry(gearSystemId, count));
-                    };
-                    TripPlan.prototype.removeGearSystemById = function (gearSystemId) {
-                        var idx = this.getGearSystemEntryIndexById(gearSystemId);
+                    }
+                    removeGearSystemById(gearSystemId) {
+                        const idx = this.getGearSystemEntryIndexById(gearSystemId);
                         if (idx < 0) {
                             return false;
                         }
                         this._gearSystems.splice(idx, 1);
                         return true;
-                    };
-                    TripPlan.prototype.removeAllGearSystems = function () {
+                    }
+                    removeAllGearSystems() {
                         this._gearSystems = [];
-                    };
+                    }
                     /* Gear Items */
-                    TripPlan.prototype.getGearItems = function () {
+                    getGearItems() {
                         return this._gearItems;
-                    };
-                    TripPlan.prototype.getGearItemCount = function (visitedGearItems) {
+                    }
+                    getGearItemCount(visitedGearItems) {
                         if (!visitedGearItems) {
                             visitedGearItems = [];
                         }
-                        var count = 0;
-                        for (var i = 0; i < this._gearItems.length; ++i) {
-                            var gearItemEntry = this._gearItems[i];
+                        let count = 0;
+                        for (let i = 0; i < this._gearItems.length; ++i) {
+                            const gearItemEntry = this._gearItems[i];
                             if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
                                 continue;
                             }
@@ -1537,15 +1508,15 @@ var BackpackPlanner;
                             count += gearItemEntry.count();
                         }
                         return count;
-                    };
-                    TripPlan.prototype.getGearItemEntryIndexById = function (gearItemId) {
-                        return _.findIndex(this._gearItems, function (gearItemEntry) {
+                    }
+                    getGearItemEntryIndexById(gearItemId) {
+                        return _.findIndex(this._gearItems, (gearItemEntry) => {
                             return gearItemEntry.getGearItemId() == gearItemId;
                         });
-                    };
-                    TripPlan.prototype.containsGearItemById = function (gearItemId) {
-                        if (_.find(this._gearCollections, function (gearCollectionEntry) {
-                            var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(gearCollectionEntry.getGearCollectionId());
+                    }
+                    containsGearItemById(gearItemId) {
+                        if (_.find(this._gearCollections, (gearCollectionEntry) => {
+                            const gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(gearCollectionEntry.getGearCollectionId());
                             if (!gearCollection) {
                                 return false;
                             }
@@ -1553,8 +1524,8 @@ var BackpackPlanner;
                         })) {
                             return true;
                         }
-                        if (_.find(this._gearSystems, function (gearSystemEntry) {
-                            var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(gearSystemEntry.getGearSystemId());
+                        if (_.find(this._gearSystems, (gearSystemEntry) => {
+                            const gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(gearSystemEntry.getGearSystemId());
                             if (!gearSystem) {
                                 return false;
                             }
@@ -1562,42 +1533,42 @@ var BackpackPlanner;
                         })) {
                             return true;
                         }
-                        return undefined != _.find(this._gearItems, function (gearItemEntry) {
+                        return undefined != _.find(this._gearItems, (gearItemEntry) => {
                             return gearItemEntry.getGearItemId() == gearItemId;
                         });
-                    };
-                    TripPlan.prototype.addGearItem = function (gearItem) {
+                    }
+                    addGearItem(gearItem) {
                         if (this.containsGearItemById(gearItem.Id)) {
                             throw "The plan already contains this item!";
                         }
                         this._gearItems.push(new Models.Gear.GearItemEntry(gearItem.Id));
-                    };
-                    TripPlan.prototype.addGearItemEntry = function (gearItemId, count) {
+                    }
+                    addGearItemEntry(gearItemId, count) {
                         if (this.containsGearItemById(gearItemId)) {
                             throw "The plan already contains this item!";
                         }
                         this._gearItems.push(new Models.Gear.GearItemEntry(gearItemId, count));
-                    };
-                    TripPlan.prototype.removeGearItemById = function (gearItemId) {
-                        var idx = this.getGearItemEntryIndexById(gearItemId);
+                    }
+                    removeGearItemById(gearItemId) {
+                        const idx = this.getGearItemEntryIndexById(gearItemId);
                         if (idx < 0) {
                             return false;
                         }
                         this._gearItems.splice(idx, 1);
                         return true;
-                    };
-                    TripPlan.prototype.removeAllGearItems = function () {
+                    }
+                    removeAllGearItems() {
                         this._gearItems = [];
-                    };
+                    }
                     /* Meals */
-                    TripPlan.prototype.getMeals = function () {
+                    getMeals() {
                         return this._meals;
-                    };
-                    TripPlan.prototype.getMealCount = function () {
-                        var visitedMeals = [];
-                        var count = 0;
-                        for (var i = 0; i < this._meals.length; ++i) {
-                            var mealEntry = this._meals[i];
+                    }
+                    getMealCount() {
+                        const visitedMeals = [];
+                        let count = 0;
+                        for (let i = 0; i < this._meals.length; ++i) {
+                            const mealEntry = this._meals[i];
                             if (_.contains(visitedMeals, mealEntry.getMealId())) {
                                 continue;
                             }
@@ -1605,70 +1576,70 @@ var BackpackPlanner;
                             count += mealEntry.count();
                         }
                         return count;
-                    };
-                    TripPlan.prototype.getMealEntryIndexById = function (mealId) {
-                        return _.findIndex(this._meals, function (mealEntry) {
+                    }
+                    getMealEntryIndexById(mealId) {
+                        return _.findIndex(this._meals, (mealEntry) => {
                             return mealEntry.getMealId() == mealId;
                         });
-                    };
-                    TripPlan.prototype.containsMealById = function (mealId) {
-                        return undefined != _.find(this._meals, function (mealEntry) {
+                    }
+                    containsMealById(mealId) {
+                        return undefined != _.find(this._meals, (mealEntry) => {
                             return mealEntry.getMealId() == mealId;
                         });
-                    };
-                    TripPlan.prototype.addMeal = function (meal) {
+                    }
+                    addMeal(meal) {
                         if (this.containsMealById(meal.Id)) {
                             return false;
                         }
                         this._meals.push(new Models.Meals.MealEntry(meal.Id));
                         return true;
-                    };
-                    TripPlan.prototype.addMealEntry = function (mealId, count) {
+                    }
+                    addMealEntry(mealId, count) {
                         if (this.containsMealById(mealId)) {
                             throw "The plan already contains this meal!";
                         }
                         this._meals.push(new Models.Meals.MealEntry(mealId, count));
-                    };
-                    TripPlan.prototype.removeMealById = function (mealId) {
-                        var idx = this.getMealEntryIndexById(mealId);
+                    }
+                    removeMealById(mealId) {
+                        const idx = this.getMealEntryIndexById(mealId);
                         if (idx < 0) {
                             throw "The plan already contains this meal!";
                         }
                         this._meals.splice(idx, 1);
-                    };
-                    TripPlan.prototype.removeAllMeals = function () {
+                    }
+                    removeAllMeals() {
                         this._meals = [];
-                    };
+                    }
                     /* Weight/Cost */
-                    TripPlan.prototype.getWeightClass = function () {
+                    getWeightClass() {
                         return Mockup.AppState.getInstance().getAppSettings().getWeightClass(this.getBaseWeightInGrams([]));
-                    };
-                    TripPlan.prototype.getTotalWeightInGrams = function (visitedGearItems, visitedMeals) {
+                    }
+                    getTotalWeightInGrams(visitedGearItems, visitedMeals) {
                         if (!visitedGearItems) {
                             visitedGearItems = [];
                         }
                         if (!visitedMeals) {
                             visitedMeals = [];
                         }
-                        var weightInGrams = 0;
-                        for (var i = 0; i < this._gearCollections.length; ++i) {
-                            var gearCollectionEntry = this._gearCollections[i];
+                        let weightInGrams = 0;
+                        for (let i = 0; i < this._gearCollections.length; ++i) {
+                            const gearCollectionEntry = this._gearCollections[i];
                             weightInGrams += gearCollectionEntry.getTotalWeightInGrams(visitedGearItems);
                         }
-                        for (var i = 0; i < this._gearSystems.length; ++i) {
-                            var gearSystemEntry = this._gearSystems[i];
+                        for (let i = 0; i < this._gearSystems.length; ++i) {
+                            const gearSystemEntry = this._gearSystems[i];
                             weightInGrams += gearSystemEntry.getTotalWeightInGrams(visitedGearItems);
                         }
-                        for (var i = 0; i < this._gearItems.length; ++i) {
-                            var gearItemEntry = this._gearItems[i];
+                        for (let i = 0; i < this._gearItems.length; ++i) {
+                            const gearItemEntry = this._gearItems[i];
                             if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
                                 continue;
                             }
                             visitedGearItems.push(gearItemEntry.getGearItemId());
                             weightInGrams += gearItemEntry.getTotalWeightInGrams();
                         }
-                        for (var i = 0; i < this._meals.length; ++i) {
-                            var mealEntry = this._meals[i];
+                        for (let i = 0; i < this._meals.length; ++i) {
+                            const mealEntry = this._meals[i];
                             if (_.contains(visitedMeals, mealEntry.getMealId())) {
                                 continue;
                             }
@@ -1676,25 +1647,25 @@ var BackpackPlanner;
                             weightInGrams += mealEntry.getTotalWeightInGrams();
                         }
                         return weightInGrams;
-                    };
-                    TripPlan.prototype.getTotalWeightInUnits = function () {
+                    }
+                    getTotalWeightInUnits() {
                         return Mockup.convertGramsToUnits(this.getTotalWeightInGrams([], []), /*units*/ Mockup.AppState.getInstance().getAppSettings().units());
-                    };
-                    TripPlan.prototype.getBaseWeightInGrams = function (visitedGearItems) {
+                    }
+                    getBaseWeightInGrams(visitedGearItems) {
                         if (!visitedGearItems) {
                             visitedGearItems = [];
                         }
-                        var weightInGrams = 0;
-                        for (var i = 0; i < this._gearCollections.length; ++i) {
-                            var gearCollectionEntry = this._gearCollections[i];
+                        let weightInGrams = 0;
+                        for (let i = 0; i < this._gearCollections.length; ++i) {
+                            const gearCollectionEntry = this._gearCollections[i];
                             weightInGrams += gearCollectionEntry.getBaseWeightInGrams(visitedGearItems);
                         }
-                        for (var i = 0; i < this._gearSystems.length; ++i) {
-                            var gearSystemEntry = this._gearSystems[i];
+                        for (let i = 0; i < this._gearSystems.length; ++i) {
+                            const gearSystemEntry = this._gearSystems[i];
                             weightInGrams += gearSystemEntry.getBaseWeightInGrams(visitedGearItems);
                         }
-                        for (var i = 0; i < this._gearItems.length; ++i) {
-                            var gearItemEntry = this._gearItems[i];
+                        for (let i = 0; i < this._gearItems.length; ++i) {
+                            const gearItemEntry = this._gearItems[i];
                             if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
                                 continue;
                             }
@@ -1705,28 +1676,28 @@ var BackpackPlanner;
                             }
                         }
                         return weightInGrams;
-                    };
-                    TripPlan.prototype.getBaseWeightInUnits = function () {
+                    }
+                    getBaseWeightInUnits() {
                         return Mockup.convertGramsToUnits(this.getBaseWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units());
-                    };
-                    TripPlan.prototype.getPackWeightInGrams = function (visitedGearItems, visitedMeals) {
+                    }
+                    getPackWeightInGrams(visitedGearItems, visitedMeals) {
                         if (!visitedGearItems) {
                             visitedGearItems = [];
                         }
                         if (!visitedMeals) {
                             visitedMeals = [];
                         }
-                        var weightInGrams = 0;
-                        for (var i = 0; i < this._gearCollections.length; ++i) {
-                            var gearCollectionEntry = this._gearCollections[i];
+                        let weightInGrams = 0;
+                        for (let i = 0; i < this._gearCollections.length; ++i) {
+                            const gearCollectionEntry = this._gearCollections[i];
                             weightInGrams += gearCollectionEntry.getPackWeightInGrams(visitedGearItems);
                         }
-                        for (var i = 0; i < this._gearSystems.length; ++i) {
-                            var gearSystemEntry = this._gearSystems[i];
+                        for (let i = 0; i < this._gearSystems.length; ++i) {
+                            const gearSystemEntry = this._gearSystems[i];
                             weightInGrams += gearSystemEntry.getPackWeightInGrams(visitedGearItems);
                         }
-                        for (var i = 0; i < this._gearItems.length; ++i) {
-                            var gearItemEntry = this._gearItems[i];
+                        for (let i = 0; i < this._gearItems.length; ++i) {
+                            const gearItemEntry = this._gearItems[i];
                             if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
                                 continue;
                             }
@@ -1736,8 +1707,8 @@ var BackpackPlanner;
                                 weightInGrams += gearItemEntry.getTotalWeightInGrams();
                             }
                         }
-                        for (var i = 0; i < this._meals.length; ++i) {
-                            var mealEntry = this._meals[i];
+                        for (let i = 0; i < this._meals.length; ++i) {
+                            const mealEntry = this._meals[i];
                             if (_.contains(visitedMeals, mealEntry.getMealId())) {
                                 continue;
                             }
@@ -1745,28 +1716,28 @@ var BackpackPlanner;
                             weightInGrams += mealEntry.getTotalWeightInGrams();
                         }
                         return weightInGrams;
-                    };
-                    TripPlan.prototype.getPackWeightInUnits = function () {
+                    }
+                    getPackWeightInUnits() {
                         return Mockup.convertGramsToUnits(this.getPackWeightInGrams([], []), /*units*/ Mockup.AppState.getInstance().getAppSettings().units());
-                    };
-                    TripPlan.prototype.getSkinOutWeightInGrams = function (visitedGearItems, visitedMeals) {
+                    }
+                    getSkinOutWeightInGrams(visitedGearItems, visitedMeals) {
                         if (!visitedGearItems) {
                             visitedGearItems = [];
                         }
                         if (!visitedMeals) {
                             visitedMeals = [];
                         }
-                        var weightInGrams = 0;
-                        for (var i = 0; i < this._gearCollections.length; ++i) {
-                            var gearCollectionEntry = this._gearCollections[i];
+                        let weightInGrams = 0;
+                        for (let i = 0; i < this._gearCollections.length; ++i) {
+                            const gearCollectionEntry = this._gearCollections[i];
                             weightInGrams += gearCollectionEntry.getSkinOutWeightInGrams(visitedGearItems);
                         }
-                        for (var i = 0; i < this._gearSystems.length; ++i) {
-                            var gearSystemEntry = this._gearSystems[i];
+                        for (let i = 0; i < this._gearSystems.length; ++i) {
+                            const gearSystemEntry = this._gearSystems[i];
                             weightInGrams += gearSystemEntry.getSkinOutWeightInGrams(visitedGearItems);
                         }
-                        for (var i = 0; i < this._gearItems.length; ++i) {
-                            var gearItemEntry = this._gearItems[i];
+                        for (let i = 0; i < this._gearItems.length; ++i) {
+                            const gearItemEntry = this._gearItems[i];
                             if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
                                 continue;
                             }
@@ -1776,8 +1747,8 @@ var BackpackPlanner;
                                 weightInGrams += gearItemEntry.getTotalWeightInGrams();
                             }
                         }
-                        for (var i = 0; i < this._meals.length; ++i) {
-                            var mealEntry = this._meals[i];
+                        for (let i = 0; i < this._meals.length; ++i) {
+                            const mealEntry = this._meals[i];
                             if (_.contains(visitedMeals, mealEntry.getMealId())) {
                                 continue;
                             }
@@ -1785,33 +1756,33 @@ var BackpackPlanner;
                             weightInGrams += mealEntry.getTotalWeightInGrams();
                         }
                         return weightInGrams;
-                    };
-                    TripPlan.prototype.getSkinOutWeightInUnits = function () {
+                    }
+                    getSkinOutWeightInUnits() {
                         return Mockup.convertGramsToUnits(this.getSkinOutWeightInGrams([], []), /*units*/ Mockup.AppState.getInstance().getAppSettings().units());
-                    };
-                    TripPlan.prototype.getCostInUSDP = function (visitedGearItems, visitedMeals) {
+                    }
+                    getCostInUSDP(visitedGearItems, visitedMeals) {
                         if (!visitedGearItems) {
                             visitedGearItems = [];
                         }
-                        var costInUSDP = 0;
-                        for (var i = 0; i < this._gearCollections.length; ++i) {
-                            var gearCollectionEntry = this._gearCollections[i];
+                        let costInUSDP = 0;
+                        for (let i = 0; i < this._gearCollections.length; ++i) {
+                            const gearCollectionEntry = this._gearCollections[i];
                             costInUSDP += gearCollectionEntry.getCostInUSDP(visitedGearItems);
                         }
-                        for (var i = 0; i < this._gearSystems.length; ++i) {
-                            var gearSystemEntry = this._gearSystems[i];
+                        for (let i = 0; i < this._gearSystems.length; ++i) {
+                            const gearSystemEntry = this._gearSystems[i];
                             costInUSDP += gearSystemEntry.getCostInUSDP(visitedGearItems);
                         }
-                        for (var i = 0; i < this._gearItems.length; ++i) {
-                            var gearItemEntry = this._gearItems[i];
+                        for (let i = 0; i < this._gearItems.length; ++i) {
+                            const gearItemEntry = this._gearItems[i];
                             if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
                                 continue;
                             }
                             visitedGearItems.push(gearItemEntry.getGearItemId());
                             costInUSDP += gearItemEntry.getCostInUSDP();
                         }
-                        for (var i = 0; i < this._meals.length; ++i) {
-                            var mealEntry = this._meals[i];
+                        for (let i = 0; i < this._meals.length; ++i) {
+                            const mealEntry = this._meals[i];
                             if (_.contains(visitedMeals, mealEntry.getMealId())) {
                                 continue;
                             }
@@ -1819,27 +1790,27 @@ var BackpackPlanner;
                             costInUSDP += mealEntry.getCostInUSDP();
                         }
                         return costInUSDP;
-                    };
-                    TripPlan.prototype.getCostInCurrency = function () {
+                    }
+                    getCostInCurrency() {
                         return Mockup.convertUSDPToCurrency(this.getCostInUSDP([], []), /*currency*/ Mockup.AppState.getInstance().getAppSettings().currency());
-                    };
-                    TripPlan.prototype.getCostPerUnitInCurrency = function () {
-                        var weightInUnits = Mockup.convertGramsToUnits(this.getTotalWeightInGrams([], []), Mockup.AppState.getInstance().getAppSettings().units());
-                        var costInCurrency = Mockup.convertUSDPToCurrency(this.getCostInUSDP([], []), Mockup.AppState.getInstance().getAppSettings().currency());
+                    }
+                    getCostPerUnitInCurrency() {
+                        const weightInUnits = Mockup.convertGramsToUnits(this.getTotalWeightInGrams([], []), Mockup.AppState.getInstance().getAppSettings().units());
+                        const costInCurrency = Mockup.convertUSDPToCurrency(this.getCostInUSDP([], []), Mockup.AppState.getInstance().getAppSettings().currency());
                         return 0 == weightInUnits
                             ? costInCurrency
                             : costInCurrency / weightInUnits;
-                    };
+                    }
                     /* Load/Save */
-                    TripPlan.prototype.update = function (tripPlan) {
+                    update(tripPlan) {
                         this._name = tripPlan._name;
                         this._startDate = this._startDate;
                         this._endDate = this._endDate;
                         this._tripItineraryId = tripPlan._tripItineraryId;
                         this._note = tripPlan._note;
                         this._gearCollections = [];
-                        for (var i = 0; i < tripPlan._gearCollections.length; ++i) {
-                            var gearCollectionEntry = tripPlan._gearCollections[i];
+                        for (let i = 0; i < tripPlan._gearCollections.length; ++i) {
+                            const gearCollectionEntry = tripPlan._gearCollections[i];
                             try {
                                 this.addGearCollectionEntry(gearCollectionEntry.getGearCollectionId(), gearCollectionEntry.count());
                             }
@@ -1847,8 +1818,8 @@ var BackpackPlanner;
                             }
                         }
                         this._gearSystems = [];
-                        for (var i = 0; i < tripPlan._gearSystems.length; ++i) {
-                            var gearSystemEntry = tripPlan._gearSystems[i];
+                        for (let i = 0; i < tripPlan._gearSystems.length; ++i) {
+                            const gearSystemEntry = tripPlan._gearSystems[i];
                             try {
                                 this.addGearSystemEntry(gearSystemEntry.getGearSystemId(), gearSystemEntry.count());
                             }
@@ -1856,8 +1827,8 @@ var BackpackPlanner;
                             }
                         }
                         this._gearItems = [];
-                        for (var i = 0; i < tripPlan._gearItems.length; ++i) {
-                            var gearItemEntry = tripPlan._gearItems[i];
+                        for (let i = 0; i < tripPlan._gearItems.length; ++i) {
+                            const gearItemEntry = tripPlan._gearItems[i];
                             try {
                                 this.addGearItemEntry(gearItemEntry.getGearItemId(), gearItemEntry.count());
                             }
@@ -1865,49 +1836,49 @@ var BackpackPlanner;
                             }
                         }
                         this._meals = [];
-                        for (var i = 0; i < tripPlan._meals.length; ++i) {
-                            var mealEntry = tripPlan._meals[i];
+                        for (let i = 0; i < tripPlan._meals.length; ++i) {
+                            const mealEntry = tripPlan._meals[i];
                             try {
                                 this.addMealEntry(mealEntry.getMealId(), mealEntry.count());
                             }
                             catch (error) {
                             }
                         }
-                    };
-                    TripPlan.prototype.loadFromDevice = function ($q, tripPlanResource) {
-                        var deferred = $q.defer();
+                    }
+                    loadFromDevice($q, tripPlanResource) {
+                        const deferred = $q.defer();
                         this._id = tripPlanResource.Id;
                         this._name = tripPlanResource.Name;
                         this._startDate = new Date(tripPlanResource.StartDate);
                         this._endDate = new Date(tripPlanResource.EndDate);
                         this._tripItineraryId = tripPlanResource.TripItineraryId;
                         this._note = tripPlanResource.Note;
-                        for (var i = 0; i < tripPlanResource.GearCollections.length; ++i) {
-                            var gearCollectionEntry = tripPlanResource.GearCollections[i];
+                        for (let i = 0; i < tripPlanResource.GearCollections.length; ++i) {
+                            const gearCollectionEntry = tripPlanResource.GearCollections[i];
                             try {
                                 this.addGearCollectionEntry(gearCollectionEntry.GearCollectionId, gearCollectionEntry.Count);
                             }
                             catch (error) {
                             }
                         }
-                        for (var i = 0; i < tripPlanResource.GearSystems.length; ++i) {
-                            var gearSystemEntry = tripPlanResource.GearSystems[i];
+                        for (let i = 0; i < tripPlanResource.GearSystems.length; ++i) {
+                            const gearSystemEntry = tripPlanResource.GearSystems[i];
                             try {
                                 this.addGearSystemEntry(gearSystemEntry.GearSystemId, gearSystemEntry.Count);
                             }
                             catch (error) {
                             }
                         }
-                        for (var i = 0; i < tripPlanResource.GearItems.length; ++i) {
-                            var gearItemEntry = tripPlanResource.GearItems[i];
+                        for (let i = 0; i < tripPlanResource.GearItems.length; ++i) {
+                            const gearItemEntry = tripPlanResource.GearItems[i];
                             try {
                                 this.addGearItemEntry(gearItemEntry.GearItemId, gearItemEntry.Count);
                             }
                             catch (error) {
                             }
                         }
-                        for (var i = 0; i < tripPlanResource.Meals.length; ++i) {
-                            var mealEntry = tripPlanResource.Meals[i];
+                        for (let i = 0; i < tripPlanResource.Meals.length; ++i) {
+                            const mealEntry = tripPlanResource.Meals[i];
                             try {
                                 this.addMealEntry(mealEntry.MealId, mealEntry.Count);
                             }
@@ -1916,20 +1887,19 @@ var BackpackPlanner;
                         }
                         deferred.resolve(this);
                         return deferred.promise;
-                    };
-                    TripPlan.prototype.saveToDevice = function ($q) {
+                    }
+                    saveToDevice($q) {
                         alert("TripPlan.saveToDevice");
                         return $q.defer().promise;
-                    };
-                    return TripPlan;
-                }());
+                    }
+                }
                 Trips.TripPlan = TripPlan;
             })(Trips = Models.Trips || (Models.Trips = {}));
         })(Models = Mockup.Models || (Mockup.Models = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
-///<reference path="../../Models/Trips/TripPlan.ts" />
+/// <reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
+/// <reference path="../../Models/Trips/TripPlan.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -1943,8 +1913,8 @@ var BackpackPlanner;
         })(Resources = Mockup.Resources || (Mockup.Resources = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
-///<reference path="../../Resources/Trips/TripPlanResource.ts" />
+/// <reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
+/// <reference path="../../Resources/Trips/TripPlanResource.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -1964,8 +1934,8 @@ var BackpackPlanner;
         })(Services = Mockup.Services || (Mockup.Services = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
-///<reference path="../../Resources/Personal/UserInformationResource.ts" />
+/// <reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
+/// <reference path="../../Resources/Personal/UserInformationResource.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -1985,8 +1955,8 @@ var BackpackPlanner;
         })(Services = Mockup.Services || (Mockup.Services = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../scripts/typings/angularjs/angular-resource.d.ts" />
-///<reference path="../Resources/AppSettingsResource.ts" />
+/// <reference path="../../scripts/typings/angularjs/angular-resource.d.ts" />
+/// <reference path="../Resources/AppSettingsResource.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -2003,23 +1973,23 @@ var BackpackPlanner;
         })(Services = Mockup.Services || (Mockup.Services = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="Models/Gear/GearCollection.ts" />
-///<reference path="Models/Gear/GearItem.ts" />
-///<reference path="Models/Gear/GearSystem.ts" />
-///<reference path="Resources/Gear/GearCollectionResource.ts" />
-///<reference path="Resources/Gear/GearItemResource.ts" />
-///<reference path="Resources/Gear/GearSystemResource.ts" />
-///<reference path="Services/Gear/GearCollectionService.ts"/>
-///<reference path="Services/Gear/GearItemService.ts"/>
-///<reference path="Services/Gear/GearSystemService.ts"/>
+/// <reference path="../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="Models/Gear/GearCollection.ts" />
+/// <reference path="Models/Gear/GearItem.ts" />
+/// <reference path="Models/Gear/GearSystem.ts" />
+/// <reference path="Resources/Gear/GearCollectionResource.ts" />
+/// <reference path="Resources/Gear/GearItemResource.ts" />
+/// <reference path="Resources/Gear/GearSystemResource.ts" />
+/// <reference path="Services/Gear/GearCollectionService.ts"/>
+/// <reference path="Services/Gear/GearItemService.ts"/>
+/// <reference path="Services/Gear/GearSystemService.ts"/>
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
     (function (Mockup) {
         "use strict";
-        var GearState = (function () {
-            function GearState() {
+        class GearState {
+            constructor() {
                 /* Gear Items */
                 this._gearItems = [];
                 /* Gear Systems */
@@ -2028,26 +1998,26 @@ var BackpackPlanner;
                 this._gearCollections = [];
             }
             // TODO: this should be a read-only collection
-            GearState.prototype.getGearItems = function () {
+            getGearItems() {
                 return this._gearItems;
-            };
-            GearState.prototype.getGearItemIndexById = function (gearItemId) {
-                for (var i = 0; i < this._gearItems.length; ++i) {
-                    var gearItem = this._gearItems[i];
+            }
+            getGearItemIndexById(gearItemId) {
+                for (let i = 0; i < this._gearItems.length; ++i) {
+                    const gearItem = this._gearItems[i];
                     if (gearItem.Id == gearItemId) {
                         return i;
                     }
                 }
                 return -1;
-            };
-            GearState.prototype.getGearItemById = function (gearItemId) {
-                var idx = this.getGearItemIndexById(gearItemId);
+            }
+            getGearItemById(gearItemId) {
+                const idx = this.getGearItemIndexById(gearItemId);
                 return idx < 0 ? null : this._gearItems[idx];
-            };
-            GearState.prototype.getNextGearItemId = function () {
+            }
+            getNextGearItemId() {
                 return ++GearState._lastGearItemId;
-            };
-            GearState.prototype.addGearItem = function (gearItem) {
+            }
+            addGearItem(gearItem) {
                 if (gearItem.Id < 0) {
                     gearItem.Id = this.getNextGearItemId();
                 }
@@ -2056,39 +2026,39 @@ var BackpackPlanner;
                 }
                 this._gearItems.push(gearItem);
                 return gearItem.Id;
-            };
-            GearState.prototype.deleteGearItem = function (gearItem) {
-                var idx = this.getGearItemIndexById(gearItem.Id);
+            }
+            deleteGearItem(gearItem) {
+                const idx = this.getGearItemIndexById(gearItem.Id);
                 if (idx < 0) {
                     return false;
                 }
                 this._gearItems.splice(idx, 1);
                 return true;
-            };
-            GearState.prototype.deleteAllGearItems = function () {
+            }
+            deleteAllGearItems() {
                 this._gearItems = [];
-            };
+            }
             // TODO: this should be a read-only collection
-            GearState.prototype.getGearSystems = function () {
+            getGearSystems() {
                 return this._gearSystems;
-            };
-            GearState.prototype.getGearSystemIndexById = function (gearSystemId) {
-                for (var i = 0; i < this._gearSystems.length; ++i) {
-                    var gearSystem = this._gearSystems[i];
+            }
+            getGearSystemIndexById(gearSystemId) {
+                for (let i = 0; i < this._gearSystems.length; ++i) {
+                    const gearSystem = this._gearSystems[i];
                     if (gearSystem.Id == gearSystemId) {
                         return i;
                     }
                 }
                 return -1;
-            };
-            GearState.prototype.getGearSystemById = function (gearSystemId) {
-                var idx = this.getGearSystemIndexById(gearSystemId);
+            }
+            getGearSystemById(gearSystemId) {
+                const idx = this.getGearSystemIndexById(gearSystemId);
                 return idx < 0 ? null : this._gearSystems[idx];
-            };
-            GearState.prototype.getNextGearSystemId = function () {
+            }
+            getNextGearSystemId() {
                 return ++GearState._lastGearSystemId;
-            };
-            GearState.prototype.addGearSystem = function (gearSystem) {
+            }
+            addGearSystem(gearSystem) {
                 if (gearSystem.Id < 0) {
                     gearSystem.Id = this.getNextGearSystemId();
                 }
@@ -2097,50 +2067,50 @@ var BackpackPlanner;
                 }
                 this._gearSystems.push(gearSystem);
                 return gearSystem.Id;
-            };
-            GearState.prototype.removeGearItemFromSystems = function (gearItem) {
-                var gearSystems = [];
-                for (var i = 0; i < this._gearSystems.length; ++i) {
-                    var gearSystem = this._gearSystems[i];
+            }
+            removeGearItemFromSystems(gearItem) {
+                const gearSystems = [];
+                for (let i = 0; i < this._gearSystems.length; ++i) {
+                    const gearSystem = this._gearSystems[i];
                     if (gearSystem.containsGearItemById(gearItem.Id)) {
                         gearSystem.removeGearItemById(gearItem.Id);
                         gearSystems.push(gearSystem);
                     }
                 }
                 return gearSystems;
-            };
-            GearState.prototype.deleteGearSystem = function (gearSystem) {
-                var idx = this.getGearSystemIndexById(gearSystem.Id);
+            }
+            deleteGearSystem(gearSystem) {
+                const idx = this.getGearSystemIndexById(gearSystem.Id);
                 if (idx < 0) {
                     return false;
                 }
                 this._gearSystems.splice(idx, 1);
                 return true;
-            };
-            GearState.prototype.deleteAllGearSystems = function () {
+            }
+            deleteAllGearSystems() {
                 this._gearSystems = [];
-            };
+            }
             // TODO: this should be a read-only collection
-            GearState.prototype.getGearCollections = function () {
+            getGearCollections() {
                 return this._gearCollections;
-            };
-            GearState.prototype.getGearCollectionIndexById = function (gearCollectionId) {
-                for (var i = 0; i < this._gearCollections.length; ++i) {
-                    var gearCollection = this._gearCollections[i];
+            }
+            getGearCollectionIndexById(gearCollectionId) {
+                for (let i = 0; i < this._gearCollections.length; ++i) {
+                    const gearCollection = this._gearCollections[i];
                     if (gearCollection.Id == gearCollectionId) {
                         return i;
                     }
                 }
                 return -1;
-            };
-            GearState.prototype.getGearCollectionById = function (gearCollectionId) {
-                var idx = this.getGearCollectionIndexById(gearCollectionId);
+            }
+            getGearCollectionById(gearCollectionId) {
+                const idx = this.getGearCollectionIndexById(gearCollectionId);
                 return idx < 0 ? null : this._gearCollections[idx];
-            };
-            GearState.prototype.getNextGearCollectionId = function () {
+            }
+            getNextGearCollectionId() {
                 return ++GearState._lastGearCollectionId;
-            };
-            GearState.prototype.addGearCollection = function (gearCollection) {
+            }
+            addGearCollection(gearCollection) {
                 if (gearCollection.Id < 0) {
                     gearCollection.Id = this.getNextGearCollectionId();
                 }
@@ -2149,147 +2119,142 @@ var BackpackPlanner;
                 }
                 this._gearCollections.push(gearCollection);
                 return gearCollection.Id;
-            };
-            GearState.prototype.removeGearSystemFromCollections = function (gearSystem) {
-                var gearCollections = [];
-                for (var i = 0; i < this._gearCollections.length; ++i) {
-                    var gearCollection = this._gearCollections[i];
+            }
+            removeGearSystemFromCollections(gearSystem) {
+                const gearCollections = [];
+                for (let i = 0; i < this._gearCollections.length; ++i) {
+                    const gearCollection = this._gearCollections[i];
                     if (gearCollection.containsGearSystemById(gearSystem.Id)) {
                         gearCollection.removeGearSystemById(gearSystem.Id);
                         gearCollections.push(gearCollection);
                     }
                 }
                 return gearCollections;
-            };
-            GearState.prototype.removeGearItemFromCollections = function (gearItem) {
-                var gearCollections = [];
-                for (var i = 0; i < this._gearCollections.length; ++i) {
-                    var gearCollection = this._gearCollections[i];
+            }
+            removeGearItemFromCollections(gearItem) {
+                const gearCollections = [];
+                for (let i = 0; i < this._gearCollections.length; ++i) {
+                    const gearCollection = this._gearCollections[i];
                     if (gearCollection.containsGearItemById(gearItem.Id)) {
                         gearCollection.removeGearItemById(gearItem.Id);
                         gearCollections.push(gearCollection);
                     }
                 }
                 return gearCollections;
-            };
-            GearState.prototype.deleteGearCollection = function (gearCollection) {
-                var idx = this.getGearCollectionIndexById(gearCollection.Id);
+            }
+            deleteGearCollection(gearCollection) {
+                const idx = this.getGearCollectionIndexById(gearCollection.Id);
                 if (idx < 0) {
                     return false;
                 }
                 this._gearCollections.splice(idx, 1);
                 return true;
-            };
-            GearState.prototype.deleteAllGearCollections = function () {
+            }
+            deleteAllGearCollections() {
                 this._gearCollections = [];
-            };
+            }
             /* Utilities */
-            GearState.prototype.deleteAllData = function () {
+            deleteAllData() {
                 this.deleteAllGearCollections();
                 this.deleteAllGearSystems();
                 this.deleteAllGearItems();
-            };
+            }
             /* Load/Save */
-            GearState.prototype.loadGearItems = function ($q, gearItemResources) {
-                var _this = this;
-                var promises = [];
+            loadGearItems($q, gearItemResources) {
+                const promises = [];
                 this._gearItems = [];
-                for (var i = 0; i < gearItemResources.length; ++i) {
-                    var gearItem = new Mockup.Models.Gear.GearItem();
-                    promises.push(gearItem.loadFromDevice($q, gearItemResources[i]).then(function (loadedGearItem) {
-                        _this.addGearItem(loadedGearItem);
+                for (let i = 0; i < gearItemResources.length; ++i) {
+                    const gearItem = new Mockup.Models.Gear.GearItem();
+                    promises.push(gearItem.loadFromDevice($q, gearItemResources[i]).then((loadedGearItem) => {
+                        this.addGearItem(loadedGearItem);
                     }));
                 }
                 return $q.all(promises);
-            };
-            GearState.prototype.loadGearSystems = function ($q, gearSystemResources) {
-                var _this = this;
-                var promises = [];
+            }
+            loadGearSystems($q, gearSystemResources) {
+                const promises = [];
                 this._gearSystems = [];
-                for (var i = 0; i < gearSystemResources.length; ++i) {
-                    var gearSystem = new Mockup.Models.Gear.GearSystem();
-                    promises.push(gearSystem.loadFromDevice($q, gearSystemResources[i]).then(function (loadedGearSystem) {
-                        _this.addGearSystem(loadedGearSystem);
+                for (let i = 0; i < gearSystemResources.length; ++i) {
+                    const gearSystem = new Mockup.Models.Gear.GearSystem();
+                    promises.push(gearSystem.loadFromDevice($q, gearSystemResources[i]).then((loadedGearSystem) => {
+                        this.addGearSystem(loadedGearSystem);
                     }));
                 }
                 return $q.all(promises);
-            };
-            GearState.prototype.loadGearCollections = function ($q, gearCollectionResources) {
-                var _this = this;
-                var promises = [];
+            }
+            loadGearCollections($q, gearCollectionResources) {
+                const promises = [];
                 this._gearCollections = [];
-                for (var i = 0; i < gearCollectionResources.length; ++i) {
-                    var gearCollection = new Mockup.Models.Gear.GearCollection();
-                    promises.push(gearCollection.loadFromDevice($q, gearCollectionResources[i]).then(function (loadedGearCollection) {
-                        _this.addGearCollection(loadedGearCollection);
+                for (let i = 0; i < gearCollectionResources.length; ++i) {
+                    const gearCollection = new Mockup.Models.Gear.GearCollection();
+                    promises.push(gearCollection.loadFromDevice($q, gearCollectionResources[i]).then((loadedGearCollection) => {
+                        this.addGearCollection(loadedGearCollection);
                     }));
                 }
                 return $q.all(promises);
-            };
-            GearState.prototype.loadFromDevice = function ($q, gearItemService, gearSystemService, gearCollectionService) {
-                var _this = this;
-                var promises = [];
-                promises.push(gearItemService.query().$promise.then(function (gearItemResources) {
-                    _this.loadGearItems($q, gearItemResources).then(function () {
+            }
+            loadFromDevice($q, gearItemService, gearSystemService, gearCollectionService) {
+                const promises = [];
+                promises.push(gearItemService.query().$promise.then((gearItemResources) => {
+                    this.loadGearItems($q, gearItemResources).then(() => {
                     });
                 }));
-                promises.push(gearSystemService.query().$promise.then(function (gearSystemResources) {
-                    _this.loadGearSystems($q, gearSystemResources).then(function () {
+                promises.push(gearSystemService.query().$promise.then((gearSystemResources) => {
+                    this.loadGearSystems($q, gearSystemResources).then(() => {
                     });
                 }));
-                promises.push(gearCollectionService.query().$promise.then(function (gearCollectionResources) {
-                    _this.loadGearCollections($q, gearCollectionResources).then(function () {
+                promises.push(gearCollectionService.query().$promise.then((gearCollectionResources) => {
+                    this.loadGearCollections($q, gearCollectionResources).then(() => {
                     });
                 }));
                 return $q.all(promises);
-            };
-            GearState.prototype.saveToDevice = function ($q) {
+            }
+            saveToDevice($q) {
                 alert("GearState.saveToDevice");
                 return $q.defer().promise;
-            };
-            GearState._lastGearItemId = 0;
-            GearState._lastGearSystemId = 0;
-            GearState._lastGearCollectionId = 0;
-            return GearState;
-        }());
+            }
+        }
+        GearState._lastGearItemId = 0;
+        GearState._lastGearSystemId = 0;
+        GearState._lastGearCollectionId = 0;
         Mockup.GearState = GearState;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="Models/Meals/Meal.ts" />
-///<reference path="Resources/Meals/MealResource.ts" />
-///<reference path="Services/Meals/MealService.ts"/>
+/// <reference path="../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="Models/Meals/Meal.ts" />
+/// <reference path="Resources/Meals/MealResource.ts" />
+/// <reference path="Services/Meals/MealService.ts"/>
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
     (function (Mockup) {
         "use strict";
-        var MealState = (function () {
-            function MealState() {
+        class MealState {
+            constructor() {
                 /* Meals */
                 this._meals = [];
             }
             // TODO: this should be a read-only collection
-            MealState.prototype.getMeals = function () {
+            getMeals() {
                 return this._meals;
-            };
-            MealState.prototype.getMealIndexById = function (mealId) {
-                for (var i = 0; i < this._meals.length; ++i) {
-                    var meal = this._meals[i];
+            }
+            getMealIndexById(mealId) {
+                for (let i = 0; i < this._meals.length; ++i) {
+                    const meal = this._meals[i];
                     if (meal.Id == mealId) {
                         return i;
                     }
                 }
                 return -1;
-            };
-            MealState.prototype.getMealById = function (mealId) {
-                var idx = this.getMealIndexById(mealId);
+            }
+            getMealById(mealId) {
+                const idx = this.getMealIndexById(mealId);
                 return idx < 0 ? null : this._meals[idx];
-            };
-            MealState.prototype.getNextMealId = function () {
+            }
+            getNextMealId() {
                 return ++MealState._lastMealId;
-            };
-            MealState.prototype.addMeal = function (meal) {
+            }
+            addMeal(meal) {
                 if (meal.Id < 0) {
                     meal.Id = this.getNextMealId();
                 }
@@ -2298,94 +2263,91 @@ var BackpackPlanner;
                 }
                 this._meals.push(meal);
                 return meal.Id;
-            };
-            MealState.prototype.deleteMeal = function (meal) {
-                var idx = this.getMealIndexById(meal.Id);
+            }
+            deleteMeal(meal) {
+                const idx = this.getMealIndexById(meal.Id);
                 if (idx < 0) {
                     return false;
                 }
                 this._meals.splice(idx, 1);
                 return true;
-            };
-            MealState.prototype.deleteAllMeals = function () {
+            }
+            deleteAllMeals() {
                 this._meals = [];
-            };
+            }
             /* Utilities */
-            MealState.prototype.deleteAllData = function () {
+            deleteAllData() {
                 this.deleteAllMeals();
-            };
+            }
             /* Load/Save */
-            MealState.prototype.loadMeals = function ($q, mealResources) {
-                var _this = this;
-                var promises = [];
+            loadMeals($q, mealResources) {
+                const promises = [];
                 this._meals = [];
-                for (var i = 0; i < mealResources.length; ++i) {
-                    var meal = new Mockup.Models.Meals.Meal();
-                    promises.push(meal.loadFromDevice($q, mealResources[i]).then(function (loadedMeal) {
-                        _this.addMeal(loadedMeal);
+                for (let i = 0; i < mealResources.length; ++i) {
+                    const meal = new Mockup.Models.Meals.Meal();
+                    promises.push(meal.loadFromDevice($q, mealResources[i]).then((loadedMeal) => {
+                        this.addMeal(loadedMeal);
                     }));
                 }
                 return $q.all(promises);
-            };
-            MealState.prototype.loadFromDevice = function ($q, mealService) {
-                var _this = this;
-                var promises = [];
-                promises.push(mealService.query().$promise.then(function (mealResources) {
-                    _this.loadMeals($q, mealResources).then(function () {
+            }
+            loadFromDevice($q, mealService) {
+                const promises = [];
+                promises.push(mealService.query().$promise.then((mealResources) => {
+                    this.loadMeals($q, mealResources).then(() => {
                     });
                 }));
                 return $q.all(promises);
-            };
-            MealState.prototype.saveToDevice = function ($q) {
+            }
+            saveToDevice($q) {
                 alert("MealState.saveToDevice");
                 return $q.defer().promise;
-            };
-            MealState._lastMealId = 0;
-            return MealState;
-        }());
+            }
+        }
+        MealState._lastMealId = 0;
         Mockup.MealState = MealState;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="Models/Trips/TripItinerary.ts" />
-///<reference path="Models/Trips/TripPlan.ts" />
-///<reference path="Resources/Trips/TripItineraryResource.ts" />
-///<reference path="Resources/Trips/TripPlanResource.ts" />
-///<reference path="Services/Trips/TripItineraryService.ts" />
-///<reference path="Services/Trips/TripPlanService.ts" />
+/// <reference path="../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="Models/Trips/TripItinerary.ts" />
+/// <reference path="Models/Trips/TripPlan.ts" />
+/// <reference path="Resources/Trips/TripItineraryResource.ts" />
+/// <reference path="Resources/Trips/TripPlanResource.ts" />
+/// <reference path="Services/Trips/TripItineraryService.ts" />
+/// <reference path="Services/Trips/TripPlanService.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
     (function (Mockup) {
         "use strict";
-        var TripState = (function () {
-            function TripState() {
+        class TripState {
+            constructor() {
                 /* Trip Itineraries */
                 this._tripItineraries = [];
                 /* Trip Plans */
                 this._tripPlans = [];
             }
             // TODO: this should be a read-only collection
-            TripState.prototype.getTripItineraries = function () {
+            getTripItineraries() {
                 return this._tripItineraries;
-            };
-            TripState.prototype.getTripItineraryIndexById = function (tripItineraryId) {
-                for (var i = 0; i < this._tripItineraries.length; ++i) {
-                    var tripItinerary = this._tripItineraries[i];
+            }
+            getTripItineraryIndexById(tripItineraryId) {
+                for (let i = 0; i < this._tripItineraries.length; ++i) {
+                    const tripItinerary = this._tripItineraries[i];
                     if (tripItinerary.Id == tripItineraryId) {
                         return i;
                     }
                 }
                 return -1;
-            };
-            TripState.prototype.getTripItineraryById = function (tripItineraryId) {
-                var idx = this.getTripItineraryIndexById(tripItineraryId);
+            }
+            getTripItineraryById(tripItineraryId) {
+                const idx = this.getTripItineraryIndexById(tripItineraryId);
                 return idx < 0 ? null : this._tripItineraries[idx];
-            };
-            TripState.prototype.getNextTripItineraryId = function () {
+            }
+            getNextTripItineraryId() {
                 return ++TripState._lastTripItineraryId;
-            };
-            TripState.prototype.addTripItinerary = function (tripItinerary) {
+            }
+            addTripItinerary(tripItinerary) {
                 if (tripItinerary.Id < 0) {
                     tripItinerary.Id = this.getNextTripItineraryId();
                 }
@@ -2394,39 +2356,39 @@ var BackpackPlanner;
                 }
                 this._tripItineraries.push(tripItinerary);
                 return tripItinerary.Id;
-            };
-            TripState.prototype.deleteTripItinerary = function (tripItinerary) {
-                var idx = this.getTripItineraryIndexById(tripItinerary.Id);
+            }
+            deleteTripItinerary(tripItinerary) {
+                const idx = this.getTripItineraryIndexById(tripItinerary.Id);
                 if (idx < 0) {
                     return false;
                 }
                 this._tripItineraries.splice(idx, 1);
                 return true;
-            };
-            TripState.prototype.deleteAllTripItineraries = function () {
+            }
+            deleteAllTripItineraries() {
                 this._tripItineraries = [];
-            };
+            }
             // TODO: this should be a read-only collection
-            TripState.prototype.getTripPlans = function () {
+            getTripPlans() {
                 return this._tripPlans;
-            };
-            TripState.prototype.getTripPlanIndexById = function (tripPlanId) {
-                for (var i = 0; i < this._tripPlans.length; ++i) {
-                    var tripPlan = this._tripPlans[i];
+            }
+            getTripPlanIndexById(tripPlanId) {
+                for (let i = 0; i < this._tripPlans.length; ++i) {
+                    const tripPlan = this._tripPlans[i];
                     if (tripPlan.Id == tripPlanId) {
                         return i;
                     }
                 }
                 return -1;
-            };
-            TripState.prototype.getTripPlanById = function (tripPlanId) {
-                var idx = this.getTripPlanIndexById(tripPlanId);
+            }
+            getTripPlanById(tripPlanId) {
+                const idx = this.getTripPlanIndexById(tripPlanId);
                 return idx < 0 ? null : this._tripPlans[idx];
-            };
-            TripState.prototype.getNextTripPlanId = function () {
+            }
+            getNextTripPlanId() {
                 return ++TripState._lastTripPlanId;
-            };
-            TripState.prototype.addTripPlan = function (tripPlan) {
+            }
+            addTripPlan(tripPlan) {
                 if (tripPlan.Id < 0) {
                     tripPlan.Id = this.getNextTripPlanId();
                 }
@@ -2435,151 +2397,147 @@ var BackpackPlanner;
                 }
                 this._tripPlans.push(tripPlan);
                 return tripPlan.Id;
-            };
-            TripState.prototype.removeGearCollectionFromPlans = function (gearCollection) {
-                var tripPlans = [];
-                for (var i = 0; i < this._tripPlans.length; ++i) {
-                    var tripPlan = this._tripPlans[i];
+            }
+            removeGearCollectionFromPlans(gearCollection) {
+                const tripPlans = [];
+                for (let i = 0; i < this._tripPlans.length; ++i) {
+                    const tripPlan = this._tripPlans[i];
                     if (tripPlan.containsGearCollectionById(tripPlan.Id)) {
                         tripPlan.removeGearCollectionById(tripPlan.Id);
                         tripPlans.push(tripPlan);
                     }
                 }
                 return tripPlans;
-            };
-            TripState.prototype.removeGearSystemFromPlans = function (gearSystem) {
-                var tripPlans = [];
-                for (var i = 0; i < this._tripPlans.length; ++i) {
-                    var tripPlan = this._tripPlans[i];
+            }
+            removeGearSystemFromPlans(gearSystem) {
+                const tripPlans = [];
+                for (let i = 0; i < this._tripPlans.length; ++i) {
+                    const tripPlan = this._tripPlans[i];
                     if (tripPlan.containsGearSystemById(gearSystem.Id)) {
                         tripPlan.removeGearSystemById(gearSystem.Id);
                         tripPlans.push(tripPlan);
                     }
                 }
                 return tripPlans;
-            };
-            TripState.prototype.removeGearItemFromPlans = function (gearItem) {
-                var tripPlans = [];
-                for (var i = 0; i < this._tripPlans.length; ++i) {
-                    var tripPlan = this._tripPlans[i];
+            }
+            removeGearItemFromPlans(gearItem) {
+                const tripPlans = [];
+                for (let i = 0; i < this._tripPlans.length; ++i) {
+                    const tripPlan = this._tripPlans[i];
                     if (tripPlan.containsGearItemById(gearItem.Id)) {
                         tripPlan.removeGearItemById(gearItem.Id);
                         tripPlans.push(tripPlan);
                     }
                 }
                 return tripPlans;
-            };
-            TripState.prototype.removeMealFromPlans = function (meal) {
-                var tripPlans = [];
-                for (var i = 0; i < this._tripPlans.length; ++i) {
-                    var tripPlan = this._tripPlans[i];
+            }
+            removeMealFromPlans(meal) {
+                const tripPlans = [];
+                for (let i = 0; i < this._tripPlans.length; ++i) {
+                    const tripPlan = this._tripPlans[i];
                     if (tripPlan.containsMealById(tripPlan.Id)) {
                         tripPlan.removeMealById(tripPlan.Id);
                         tripPlans.push(tripPlan);
                     }
                 }
                 return tripPlans;
-            };
-            TripState.prototype.removeTripItineraryFromPlans = function (tripItinerary) {
-                var tripPlans = [];
-                for (var i = 0; i < this._tripPlans.length; ++i) {
-                    var tripPlan = this._tripPlans[i];
+            }
+            removeTripItineraryFromPlans(tripItinerary) {
+                const tripPlans = [];
+                for (let i = 0; i < this._tripPlans.length; ++i) {
+                    const tripPlan = this._tripPlans[i];
                     if (tripPlan.tripItineraryId() == tripItinerary.Id) {
                         tripPlan.tripItineraryId(-1);
                         tripPlans.push(tripPlan);
                     }
                 }
                 return tripPlans;
-            };
-            TripState.prototype.deleteTripPlan = function (tripPlan) {
-                var idx = this.getTripPlanIndexById(tripPlan.Id);
+            }
+            deleteTripPlan(tripPlan) {
+                const idx = this.getTripPlanIndexById(tripPlan.Id);
                 if (idx < 0) {
                     return false;
                 }
                 this._tripPlans.splice(idx, 1);
                 return true;
-            };
-            TripState.prototype.deleteAllTripPlans = function () {
+            }
+            deleteAllTripPlans() {
                 this._tripPlans = [];
-            };
+            }
             /* Utilities */
-            TripState.prototype.deleteAllData = function () {
+            deleteAllData() {
                 this.deleteAllTripItineraries();
                 this.deleteAllTripPlans();
-            };
+            }
             /* Load/Save */
-            TripState.prototype.loadTripItineraries = function ($q, tripItineraryResources) {
-                var _this = this;
-                var promises = [];
+            loadTripItineraries($q, tripItineraryResources) {
+                const promises = [];
                 this._tripItineraries = [];
-                for (var i = 0; i < tripItineraryResources.length; ++i) {
-                    var tripItinerary = new Mockup.Models.Trips.TripItinerary();
-                    promises.push(tripItinerary.loadFromDevice($q, tripItineraryResources[i]).then(function (loadedTripItinerary) {
-                        _this.addTripItinerary(loadedTripItinerary);
+                for (let i = 0; i < tripItineraryResources.length; ++i) {
+                    const tripItinerary = new Mockup.Models.Trips.TripItinerary();
+                    promises.push(tripItinerary.loadFromDevice($q, tripItineraryResources[i]).then((loadedTripItinerary) => {
+                        this.addTripItinerary(loadedTripItinerary);
                     }));
                 }
                 return $q.all(promises);
-            };
-            TripState.prototype.loadTripPlans = function ($q, tripPlanResources) {
-                var _this = this;
-                var promises = [];
+            }
+            loadTripPlans($q, tripPlanResources) {
+                const promises = [];
                 this._tripPlans = [];
-                for (var i = 0; i < tripPlanResources.length; ++i) {
-                    var tripPlan = new Mockup.Models.Trips.TripPlan();
-                    promises.push(tripPlan.loadFromDevice($q, tripPlanResources[i]).then(function (loadedTripPlan) {
-                        _this.addTripPlan(loadedTripPlan);
+                for (let i = 0; i < tripPlanResources.length; ++i) {
+                    const tripPlan = new Mockup.Models.Trips.TripPlan();
+                    promises.push(tripPlan.loadFromDevice($q, tripPlanResources[i]).then((loadedTripPlan) => {
+                        this.addTripPlan(loadedTripPlan);
                     }));
                 }
                 return $q.all(promises);
-            };
-            TripState.prototype.loadFromDevice = function ($q, tripItineraryService, tripPlanService) {
-                var _this = this;
-                var promises = [];
-                promises.push(tripItineraryService.query().$promise.then(function (tripItineraryResources) {
-                    _this.loadTripItineraries($q, tripItineraryResources).then(function () {
+            }
+            loadFromDevice($q, tripItineraryService, tripPlanService) {
+                const promises = [];
+                promises.push(tripItineraryService.query().$promise.then((tripItineraryResources) => {
+                    this.loadTripItineraries($q, tripItineraryResources).then(() => {
                     });
                 }));
-                promises.push(tripPlanService.query().$promise.then(function (tripPlanResources) {
-                    _this.loadTripPlans($q, tripPlanResources).then(function () {
+                promises.push(tripPlanService.query().$promise.then((tripPlanResources) => {
+                    this.loadTripPlans($q, tripPlanResources).then(() => {
                     });
                 }));
                 return $q.all(promises);
-            };
-            TripState.prototype.saveToDevice = function ($q) {
+            }
+            saveToDevice($q) {
                 alert("TripState.saveToDevice");
                 return $q.defer().promise;
-            };
-            TripState._lastTripItineraryId = 0;
-            TripState._lastTripPlanId = 0;
-            return TripState;
-        }());
+            }
+        }
+        TripState._lastTripItineraryId = 0;
+        TripState._lastTripPlanId = 0;
         Mockup.TripState = TripState;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="Actions/Command.ts"/>
-///<reference path="Models/Personal/UserInformation.ts" />
-///<reference path="Models/AppSettings.ts" />
-///<reference path="Resources/Personal/UserInformationResource.ts" />
-///<reference path="Resources/AppSettingsResource.ts" />
-///<reference path="Services/Gear/GearCollectionService.ts"/>
-///<reference path="Services/Gear/GearItemService.ts"/>
-///<reference path="Services/Gear/GearSystemService.ts"/>
-///<reference path="Services/Meals/MealService.ts"/>
-///<reference path="Services/Trips/TripItineraryService.ts"/>
-///<reference path="Services/Trips/TripPlanService.ts"/>
-///<reference path="Services/Personal/UserInformationService.ts"/>
-///<reference path="Services/AppSettingsService.ts"/>
-///<reference path="GearState.ts" />
-///<reference path="MealState.ts" />
-///<reference path="TripState.ts" />
+/// <reference path="../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="Actions/Command.ts"/>
+/// <reference path="Models/Personal/UserInformation.ts" />
+/// <reference path="Models/AppSettings.ts" />
+/// <reference path="Resources/Personal/UserInformationResource.ts" />
+/// <reference path="Resources/AppSettingsResource.ts" />
+/// <reference path="Services/Gear/GearCollectionService.ts"/>
+/// <reference path="Services/Gear/GearItemService.ts"/>
+/// <reference path="Services/Gear/GearSystemService.ts"/>
+/// <reference path="Services/Meals/MealService.ts"/>
+/// <reference path="Services/Trips/TripItineraryService.ts"/>
+/// <reference path="Services/Trips/TripPlanService.ts"/>
+/// <reference path="Services/Personal/UserInformationService.ts"/>
+/// <reference path="Services/AppSettingsService.ts"/>
+/// <reference path="GearState.ts" />
+/// <reference path="MealState.ts" />
+/// <reference path="TripState.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
     (function (Mockup) {
         "use strict";
-        var AppState = (function () {
-            function AppState() {
+        class AppState {
+            constructor() {
                 /* App Settings */
                 this._appSettings = new Mockup.Models.AppSettings();
                 /* User Information */
@@ -2594,87 +2552,85 @@ var BackpackPlanner;
                     throw new Error("Error: AppState already instantiated!");
                 }
             }
-            AppState.getInstance = function () {
+            static getInstance() {
                 return AppState._instance;
-            };
-            AppState.prototype.executeAction = function (action) {
+            }
+            executeAction(action) {
                 this._lastAction = action;
                 this._lastAction.doAction();
-            };
-            AppState.prototype.undoAction = function () {
+            }
+            undoAction() {
                 if (!this._lastAction) {
                     return;
                 }
                 this._lastAction.undoAction();
                 this._lastAction = undefined;
-            };
-            AppState.prototype.getAppSettings = function () {
+            }
+            getAppSettings() {
                 return this._appSettings;
-            };
-            AppState.prototype.getUserInformation = function () {
+            }
+            getUserInformation() {
                 return this._userInformation;
-            };
-            AppState.prototype.getGearState = function () {
+            }
+            getGearState() {
                 return this._gearState;
-            };
-            AppState.prototype.getMealState = function () {
+            }
+            getMealState() {
                 return this._mealState;
-            };
-            AppState.prototype.getTripState = function () {
+            }
+            getTripState() {
                 return this._tripState;
-            };
+            }
             /* Utilities */
-            AppState.prototype.deleteAllData = function () {
+            deleteAllData() {
                 this._gearState.deleteAllData();
                 this._mealState.deleteAllData();
                 this._tripState.deleteAllData();
-            };
+            }
             /* Load/Save */
-            AppState.prototype.loadFromDevice = function ($q, appSettingsService, userInformationService, gearItemService, gearSystemService, gearCollectionService, mealService, tripItineraryService, tripPlanService) {
-                var _this = this;
-                var promises = [];
+            loadFromDevice($q, appSettingsService, userInformationService, gearItemService, gearSystemService, gearCollectionService, mealService, tripItineraryService, tripPlanService) {
+                const promises = [];
                 // load the application settings
-                promises.push(appSettingsService.get().$promise.then(function (appSettingsResource) {
-                    _this._appSettings.loadFromDevice($q, appSettingsResource).then(function () {
+                promises.push(appSettingsService.get().$promise.then((appSettingsResource) => {
+                    this._appSettings.loadFromDevice($q, appSettingsResource).then(() => {
                     });
                 }));
                 // load the user's personal information
-                promises.push(userInformationService.get().$promise.then(function (userInfoResource) {
-                    _this._userInformation.loadFromDevice($q, userInfoResource).then(function () {
+                promises.push(userInformationService.get().$promise.then((userInfoResource) => {
+                    this._userInformation.loadFromDevice($q, userInfoResource).then(() => {
                     });
                 }));
                 promises.push(this._gearState.loadFromDevice($q, gearItemService, gearSystemService, gearCollectionService));
                 promises.push(this._mealState.loadFromDevice($q, mealService));
                 promises.push(this._tripState.loadFromDevice($q, tripItineraryService, tripPlanService));
                 return $q.all(promises);
-            };
-            AppState.prototype.saveToDevice = function ($q) {
+            }
+            saveToDevice($q) {
                 alert("AppState.saveToDevice");
                 return $q.defer().promise;
-            };
+            }
             /* Import/Export */
-            AppState.prototype.importFromCloudStorage = function ($q, cloudStorage) {
+            importFromCloudStorage($q, cloudStorage) {
                 // mockup does nothing here
                 return $q.defer().promise;
-            };
-            AppState.prototype.exportToCloudStorage = function ($q, cloudStorage) {
+            }
+            exportToCloudStorage($q, cloudStorage) {
                 // mockup does nothing here
                 return $q.defer().promise;
-            };
-            /* Singleton */
-            AppState._instance = new AppState();
-            return AppState;
-        }());
+            }
+        }
+        /* Singleton */
+        AppState._instance = new AppState();
         Mockup.AppState = AppState;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../scripts/typings/underscore/underscore.d.ts" />
-///<reference path="../../Resources/Gear/GearCollectionResource.ts"/>
-///<reference path="../../AppState.ts"/>
-///<reference path="../Entry.ts"/>
-///<reference path="GearItem.ts"/>
-///<reference path="GearSystem.ts"/>
+/// <reference path="../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../scripts/typings/underscore/underscore.d.ts" />
+/// <reference path="../../Resources/Gear/GearCollectionResource.ts"/>
+/// <reference path="../../AppState.ts"/>
+/// <reference path="../Entry.ts"/>
+/// <reference path="GearItem.ts"/>
+/// <reference path="GearSystem.ts"/>
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -2684,43 +2640,39 @@ var BackpackPlanner;
             var Gear;
             (function (Gear) {
                 "use strict";
-                var GearCollection = (function () {
-                    function GearCollection() {
+                class GearCollection {
+                    constructor() {
                         this._id = -1;
                         this._name = "";
                         this._note = "";
                         this._gearSystems = [];
                         this._gearItems = [];
                     }
-                    Object.defineProperty(GearCollection.prototype, "Id", {
-                        get: function () {
-                            return this._id;
-                        },
-                        set: function (id) {
-                            this._id = id;
-                        },
-                        enumerable: true,
-                        configurable: true
-                    });
-                    GearCollection.prototype.name = function (name) {
+                    get Id() {
+                        return this._id;
+                    }
+                    set Id(id) {
+                        this._id = id;
+                    }
+                    name(name) {
                         return arguments.length
                             ? (this._name = name)
                             : this._name;
-                    };
-                    GearCollection.prototype.note = function (note) {
+                    }
+                    note(note) {
                         return arguments.length
                             ? (this._note = note)
                             : this._note;
-                    };
-                    GearCollection.prototype.getTotalGearItemCount = function () {
-                        var visitedGearItems = [];
-                        var count = 0;
-                        for (var i = 0; i < this._gearSystems.length; ++i) {
-                            var gearSystemEntry = this._gearSystems[i];
+                    }
+                    getTotalGearItemCount() {
+                        const visitedGearItems = [];
+                        let count = 0;
+                        for (let i = 0; i < this._gearSystems.length; ++i) {
+                            const gearSystemEntry = this._gearSystems[i];
                             count += gearSystemEntry.getGearItemCount(visitedGearItems);
                         }
-                        for (var i = 0; i < this._gearItems.length; ++i) {
-                            var gearItemEntry = this._gearItems[i];
+                        for (let i = 0; i < this._gearItems.length; ++i) {
+                            const gearItemEntry = this._gearItems[i];
                             if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
                                 continue;
                             }
@@ -2728,18 +2680,18 @@ var BackpackPlanner;
                             count += gearItemEntry.count();
                         }
                         return count;
-                    };
+                    }
                     /* Gear Systems */
-                    GearCollection.prototype.getGearSystems = function () {
+                    getGearSystems() {
                         return this._gearSystems;
-                    };
-                    GearCollection.prototype.getGearSystemCount = function (visitedGearSystems) {
+                    }
+                    getGearSystemCount(visitedGearSystems) {
                         if (!visitedGearSystems) {
                             visitedGearSystems = [];
                         }
-                        var count = 0;
-                        for (var i = 0; i < this._gearSystems.length; ++i) {
-                            var gearSystemEntry = this._gearSystems[i];
+                        let count = 0;
+                        for (let i = 0; i < this._gearSystems.length; ++i) {
+                            const gearSystemEntry = this._gearSystems[i];
                             if (_.contains(visitedGearSystems, gearSystemEntry.getGearSystemId())) {
                                 continue;
                             }
@@ -2747,28 +2699,28 @@ var BackpackPlanner;
                             count += gearSystemEntry.count();
                         }
                         return count;
-                    };
-                    GearCollection.prototype.getGearSystemEntryIndexById = function (gearSystemId) {
-                        return _.findIndex(this._gearSystems, function (gearSystemEntry) {
+                    }
+                    getGearSystemEntryIndexById(gearSystemId) {
+                        return _.findIndex(this._gearSystems, (gearSystemEntry) => {
                             return gearSystemEntry.getGearSystemId() == gearSystemId;
                         });
-                    };
-                    GearCollection.prototype.containsGearSystemById = function (gearSystemId) {
-                        return undefined != _.find(this._gearSystems, function (gearSystemEntry) {
+                    }
+                    containsGearSystemById(gearSystemId) {
+                        return undefined != _.find(this._gearSystems, (gearSystemEntry) => {
                             return gearSystemEntry.getGearSystemId() == gearSystemId;
                         });
-                    };
-                    GearCollection.prototype.containsGearSystemItems = function (gearSystem) {
-                        var gearItems = gearSystem.getGearItems();
-                        for (var i = 0; i < gearItems.length; ++i) {
-                            var gearItemEntry = gearItems[i];
+                    }
+                    containsGearSystemItems(gearSystem) {
+                        const gearItems = gearSystem.getGearItems();
+                        for (let i = 0; i < gearItems.length; ++i) {
+                            const gearItemEntry = gearItems[i];
                             if (this.containsGearItemById(gearItemEntry.getGearItemId())) {
                                 return true;
                             }
                         }
                         return false;
-                    };
-                    GearCollection.prototype.addGearSystem = function (gearSystem) {
+                    }
+                    addGearSystem(gearSystem) {
                         if (this.containsGearSystemById(gearSystem.Id)) {
                             throw "The collection already contains this system!";
                         }
@@ -2776,8 +2728,8 @@ var BackpackPlanner;
                             throw "The collection already contains items from this system!";
                         }
                         this._gearSystems.push(new Gear.GearSystemEntry(gearSystem.Id));
-                    };
-                    GearCollection.prototype.addGearSystemEntry = function (gearSystemId, count) {
+                    }
+                    addGearSystemEntry(gearSystemId, count) {
                         if (this.containsGearSystemById(gearSystemId)) {
                             throw "The collection already contains this system!";
                         }
@@ -2791,29 +2743,29 @@ var BackpackPlanner;
                             throw "The collection already contains items from this system!";
                         }*/
                         this._gearSystems.push(new Gear.GearSystemEntry(gearSystemId, count));
-                    };
-                    GearCollection.prototype.removeGearSystemById = function (gearSystemId) {
-                        var idx = this.getGearSystemEntryIndexById(gearSystemId);
+                    }
+                    removeGearSystemById(gearSystemId) {
+                        const idx = this.getGearSystemEntryIndexById(gearSystemId);
                         if (idx < 0) {
                             return false;
                         }
                         this._gearSystems.splice(idx, 1);
                         return true;
-                    };
-                    GearCollection.prototype.removeAllGearSystems = function () {
+                    }
+                    removeAllGearSystems() {
                         this._gearSystems = [];
-                    };
+                    }
                     /* Gear Items */
-                    GearCollection.prototype.getGearItems = function () {
+                    getGearItems() {
                         return this._gearItems;
-                    };
-                    GearCollection.prototype.getGearItemCount = function (visitedGearItems) {
+                    }
+                    getGearItemCount(visitedGearItems) {
                         if (!visitedGearItems) {
                             visitedGearItems = [];
                         }
-                        var count = 0;
-                        for (var i = 0; i < this._gearItems.length; ++i) {
-                            var gearItemEntry = this._gearItems[i];
+                        let count = 0;
+                        for (let i = 0; i < this._gearItems.length; ++i) {
+                            const gearItemEntry = this._gearItems[i];
                             if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
                                 continue;
                             }
@@ -2821,15 +2773,15 @@ var BackpackPlanner;
                             count += gearItemEntry.count();
                         }
                         return count;
-                    };
-                    GearCollection.prototype.getGearItemEntryIndexById = function (gearItemId) {
-                        return _.findIndex(this._gearItems, function (gearItemEntry) {
+                    }
+                    getGearItemEntryIndexById(gearItemId) {
+                        return _.findIndex(this._gearItems, (gearItemEntry) => {
                             return gearItemEntry.getGearItemId() == gearItemId;
                         });
-                    };
-                    GearCollection.prototype.containsGearItemById = function (gearItemId) {
-                        if (_.find(this._gearSystems, function (gearSystemEntry) {
-                            var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(gearSystemEntry.getGearSystemId());
+                    }
+                    containsGearItemById(gearItemId) {
+                        if (_.find(this._gearSystems, (gearSystemEntry) => {
+                            const gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById(gearSystemEntry.getGearSystemId());
                             if (!gearSystem) {
                                 return false;
                             }
@@ -2837,45 +2789,45 @@ var BackpackPlanner;
                         })) {
                             return true;
                         }
-                        return undefined != _.find(this._gearItems, function (gearItemEntry) {
+                        return undefined != _.find(this._gearItems, (gearItemEntry) => {
                             return gearItemEntry.getGearItemId() == gearItemId;
                         });
-                    };
-                    GearCollection.prototype.addGearItem = function (gearItem) {
+                    }
+                    addGearItem(gearItem) {
                         if (this.containsGearItemById(gearItem.Id)) {
                             throw "The collection already contains this item!";
                         }
                         this._gearItems.push(new Gear.GearItemEntry(gearItem.Id));
-                    };
-                    GearCollection.prototype.addGearItemEntry = function (gearItemId, count) {
+                    }
+                    addGearItemEntry(gearItemId, count) {
                         if (this.containsGearItemById(gearItemId)) {
                             throw "The collection already contains this item!";
                         }
                         this._gearItems.push(new Gear.GearItemEntry(gearItemId, count));
-                    };
-                    GearCollection.prototype.removeGearItemById = function (gearItemId) {
-                        var idx = this.getGearItemEntryIndexById(gearItemId);
+                    }
+                    removeGearItemById(gearItemId) {
+                        const idx = this.getGearItemEntryIndexById(gearItemId);
                         if (idx < 0) {
                             return false;
                         }
                         this._gearItems.splice(idx, 1);
                         return true;
-                    };
-                    GearCollection.prototype.removeAllGearItems = function () {
+                    }
+                    removeAllGearItems() {
                         this._gearItems = [];
-                    };
+                    }
                     /* Weight/Cost */
-                    GearCollection.prototype.getTotalWeightInGrams = function (visitedGearItems) {
+                    getTotalWeightInGrams(visitedGearItems) {
                         if (!visitedGearItems) {
                             visitedGearItems = [];
                         }
-                        var weightInGrams = 0;
-                        for (var i = 0; i < this._gearSystems.length; ++i) {
-                            var gearSystemEntry = this._gearSystems[i];
+                        let weightInGrams = 0;
+                        for (let i = 0; i < this._gearSystems.length; ++i) {
+                            const gearSystemEntry = this._gearSystems[i];
                             weightInGrams += gearSystemEntry.getTotalWeightInGrams(visitedGearItems);
                         }
-                        for (var i = 0; i < this._gearItems.length; ++i) {
-                            var gearItemEntry = this._gearItems[i];
+                        for (let i = 0; i < this._gearItems.length; ++i) {
+                            const gearItemEntry = this._gearItems[i];
                             if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
                                 continue;
                             }
@@ -2883,21 +2835,21 @@ var BackpackPlanner;
                             weightInGrams += gearItemEntry.getTotalWeightInGrams();
                         }
                         return weightInGrams;
-                    };
-                    GearCollection.prototype.getTotalWeightInUnits = function () {
+                    }
+                    getTotalWeightInUnits() {
                         return Mockup.convertGramsToUnits(this.getTotalWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units());
-                    };
-                    GearCollection.prototype.getBaseWeightInGrams = function (visitedGearItems) {
+                    }
+                    getBaseWeightInGrams(visitedGearItems) {
                         if (!visitedGearItems) {
                             visitedGearItems = [];
                         }
-                        var weightInGrams = 0;
-                        for (var i = 0; i < this._gearSystems.length; ++i) {
-                            var gearSystemEntry = this._gearSystems[i];
+                        let weightInGrams = 0;
+                        for (let i = 0; i < this._gearSystems.length; ++i) {
+                            const gearSystemEntry = this._gearSystems[i];
                             weightInGrams += gearSystemEntry.getBaseWeightInGrams(visitedGearItems);
                         }
-                        for (var i = 0; i < this._gearItems.length; ++i) {
-                            var gearItemEntry = this._gearItems[i];
+                        for (let i = 0; i < this._gearItems.length; ++i) {
+                            const gearItemEntry = this._gearItems[i];
                             if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
                                 continue;
                             }
@@ -2908,21 +2860,21 @@ var BackpackPlanner;
                             }
                         }
                         return weightInGrams;
-                    };
-                    GearCollection.prototype.getBaseWeightInUnits = function () {
+                    }
+                    getBaseWeightInUnits() {
                         return Mockup.convertGramsToUnits(this.getBaseWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units());
-                    };
-                    GearCollection.prototype.getPackWeightInGrams = function (visitedGearItems) {
+                    }
+                    getPackWeightInGrams(visitedGearItems) {
                         if (!visitedGearItems) {
                             visitedGearItems = [];
                         }
-                        var weightInGrams = 0;
-                        for (var i = 0; i < this._gearSystems.length; ++i) {
-                            var gearSystemEntry = this._gearSystems[i];
+                        let weightInGrams = 0;
+                        for (let i = 0; i < this._gearSystems.length; ++i) {
+                            const gearSystemEntry = this._gearSystems[i];
                             weightInGrams += gearSystemEntry.getPackWeightInGrams(visitedGearItems);
                         }
-                        for (var i = 0; i < this._gearItems.length; ++i) {
-                            var gearItemEntry = this._gearItems[i];
+                        for (let i = 0; i < this._gearItems.length; ++i) {
+                            const gearItemEntry = this._gearItems[i];
                             if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
                                 continue;
                             }
@@ -2933,21 +2885,21 @@ var BackpackPlanner;
                             }
                         }
                         return weightInGrams;
-                    };
-                    GearCollection.prototype.getPackWeightInUnits = function () {
+                    }
+                    getPackWeightInUnits() {
                         return Mockup.convertGramsToUnits(this.getPackWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units());
-                    };
-                    GearCollection.prototype.getSkinOutWeightInGrams = function (visitedGearItems) {
+                    }
+                    getSkinOutWeightInGrams(visitedGearItems) {
                         if (!visitedGearItems) {
                             visitedGearItems = [];
                         }
-                        var weightInGrams = 0;
-                        for (var i = 0; i < this._gearSystems.length; ++i) {
-                            var gearSystemEntry = this._gearSystems[i];
+                        let weightInGrams = 0;
+                        for (let i = 0; i < this._gearSystems.length; ++i) {
+                            const gearSystemEntry = this._gearSystems[i];
                             weightInGrams += gearSystemEntry.getSkinOutWeightInGrams(visitedGearItems);
                         }
-                        for (var i = 0; i < this._gearItems.length; ++i) {
-                            var gearItemEntry = this._gearItems[i];
+                        for (let i = 0; i < this._gearItems.length; ++i) {
+                            const gearItemEntry = this._gearItems[i];
                             if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
                                 continue;
                             }
@@ -2958,21 +2910,21 @@ var BackpackPlanner;
                             }
                         }
                         return weightInGrams;
-                    };
-                    GearCollection.prototype.getSkinOutWeightInUnits = function () {
+                    }
+                    getSkinOutWeightInUnits() {
                         return Mockup.convertGramsToUnits(this.getSkinOutWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units());
-                    };
-                    GearCollection.prototype.getCostInUSDP = function (visitedGearItems) {
+                    }
+                    getCostInUSDP(visitedGearItems) {
                         if (!visitedGearItems) {
                             visitedGearItems = [];
                         }
-                        var costInUSDP = 0;
-                        for (var i = 0; i < this._gearSystems.length; ++i) {
-                            var gearSystemEntry = this._gearSystems[i];
+                        let costInUSDP = 0;
+                        for (let i = 0; i < this._gearSystems.length; ++i) {
+                            const gearSystemEntry = this._gearSystems[i];
                             costInUSDP += gearSystemEntry.getCostInUSDP(visitedGearItems);
                         }
-                        for (var i = 0; i < this._gearItems.length; ++i) {
-                            var gearItemEntry = this._gearItems[i];
+                        for (let i = 0; i < this._gearItems.length; ++i) {
+                            const gearItemEntry = this._gearItems[i];
                             if (_.contains(visitedGearItems, gearItemEntry.getGearItemId())) {
                                 continue;
                             }
@@ -2980,24 +2932,24 @@ var BackpackPlanner;
                             costInUSDP += gearItemEntry.getCostInUSDP();
                         }
                         return costInUSDP;
-                    };
-                    GearCollection.prototype.getCostInCurrency = function () {
+                    }
+                    getCostInCurrency() {
                         return Mockup.convertUSDPToCurrency(this.getCostInUSDP([]), /*currency*/ Mockup.AppState.getInstance().getAppSettings().currency());
-                    };
-                    GearCollection.prototype.getCostPerUnitInCurrency = function () {
-                        var weightInUnits = Mockup.convertGramsToUnits(this.getTotalWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units());
-                        var costInCurrency = Mockup.convertUSDPToCurrency(this.getCostInUSDP([]), /*currency*/ Mockup.AppState.getInstance().getAppSettings().currency());
+                    }
+                    getCostPerUnitInCurrency() {
+                        const weightInUnits = Mockup.convertGramsToUnits(this.getTotalWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units());
+                        const costInCurrency = Mockup.convertUSDPToCurrency(this.getCostInUSDP([]), /*currency*/ Mockup.AppState.getInstance().getAppSettings().currency());
                         return 0 == weightInUnits
                             ? costInCurrency
                             : costInCurrency / weightInUnits;
-                    };
+                    }
                     /* Load/Save */
-                    GearCollection.prototype.update = function (gearCollection) {
+                    update(gearCollection) {
                         this._name = gearCollection._name;
                         this._note = gearCollection._note;
                         this._gearSystems = [];
-                        for (var i = 0; i < gearCollection._gearSystems.length; ++i) {
-                            var gearSystemEntry = gearCollection._gearSystems[i];
+                        for (let i = 0; i < gearCollection._gearSystems.length; ++i) {
+                            const gearSystemEntry = gearCollection._gearSystems[i];
                             try {
                                 this.addGearSystemEntry(gearSystemEntry.getGearSystemId(), gearSystemEntry.count());
                             }
@@ -3005,30 +2957,30 @@ var BackpackPlanner;
                             }
                         }
                         this._gearItems = [];
-                        for (var i = 0; i < gearCollection._gearItems.length; ++i) {
-                            var gearItemEntry = gearCollection._gearItems[i];
+                        for (let i = 0; i < gearCollection._gearItems.length; ++i) {
+                            const gearItemEntry = gearCollection._gearItems[i];
                             try {
                                 this.addGearItemEntry(gearItemEntry.getGearItemId(), gearItemEntry.count());
                             }
                             catch (error) {
                             }
                         }
-                    };
-                    GearCollection.prototype.loadFromDevice = function ($q, gearCollectionResource) {
-                        var deferred = $q.defer();
+                    }
+                    loadFromDevice($q, gearCollectionResource) {
+                        const deferred = $q.defer();
                         this._id = gearCollectionResource.Id;
                         this._name = gearCollectionResource.Name;
                         this._note = gearCollectionResource.Note;
-                        for (var i = 0; i < gearCollectionResource.GearSystems.length; ++i) {
-                            var gearSystemEntry = gearCollectionResource.GearSystems[i];
+                        for (let i = 0; i < gearCollectionResource.GearSystems.length; ++i) {
+                            const gearSystemEntry = gearCollectionResource.GearSystems[i];
                             try {
                                 this.addGearSystemEntry(gearSystemEntry.GearSystemId, gearSystemEntry.Count);
                             }
                             catch (error) {
                             }
                         }
-                        for (var i = 0; i < gearCollectionResource.GearItems.length; ++i) {
-                            var gearItemEntry = gearCollectionResource.GearItems[i];
+                        for (let i = 0; i < gearCollectionResource.GearItems.length; ++i) {
+                            const gearItemEntry = gearCollectionResource.GearItems[i];
                             try {
                                 this.addGearItemEntry(gearItemEntry.GearItemId, gearItemEntry.Count);
                             }
@@ -3037,16 +2989,15 @@ var BackpackPlanner;
                         }
                         deferred.resolve(this);
                         return deferred.promise;
-                    };
-                    GearCollection.prototype.saveToDevice = function ($q) {
+                    }
+                    saveToDevice($q) {
                         alert("GearCollection.saveToDevice");
                         return $q.defer().promise;
-                    };
-                    return GearCollection;
-                }());
+                    }
+                }
                 Gear.GearCollection = GearCollection;
-                var GearCollectionEntry = (function () {
-                    function GearCollectionEntry(gearCollectionId, count) {
+                class GearCollectionEntry {
+                    constructor(gearCollectionId, count) {
                         this._gearCollectionId = -1;
                         this._count = 1;
                         this._gearCollectionId = gearCollectionId;
@@ -3054,102 +3005,101 @@ var BackpackPlanner;
                             this._count = count;
                         }
                     }
-                    GearCollectionEntry.prototype.getGearCollectionId = function () {
+                    getGearCollectionId() {
                         return this._gearCollectionId;
-                    };
-                    GearCollectionEntry.prototype.count = function (count) {
+                    }
+                    count(count) {
                         return arguments.length
                             ? (this._count = count)
                             : this._count;
-                    };
-                    GearCollectionEntry.prototype.getName = function () {
-                        var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
+                    }
+                    getName() {
+                        const gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
                         if (!gearCollection) {
                             return "";
                         }
                         return gearCollection.name();
-                    };
-                    GearCollectionEntry.prototype.getTotalGearItemCount = function () {
-                        var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
+                    }
+                    getTotalGearItemCount() {
+                        const gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
                         if (!gearCollection) {
                             return 0;
                         }
                         return this._count * gearCollection.getTotalGearItemCount();
-                    };
-                    GearCollectionEntry.prototype.getGearSystemCount = function (visitedGearSystems) {
-                        var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
+                    }
+                    getGearSystemCount(visitedGearSystems) {
+                        const gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
                         if (!gearCollection) {
                             return 0;
                         }
                         return this._count * gearCollection.getGearSystemCount(visitedGearSystems);
-                    };
-                    GearCollectionEntry.prototype.getGearItemCount = function (visitedGearItems) {
-                        var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
+                    }
+                    getGearItemCount(visitedGearItems) {
+                        const gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
                         if (!gearCollection) {
                             return 0;
                         }
                         return this._count * gearCollection.getGearItemCount(visitedGearItems);
-                    };
-                    GearCollectionEntry.prototype.getTotalWeightInGrams = function (visitedGearItems) {
-                        var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
+                    }
+                    getTotalWeightInGrams(visitedGearItems) {
+                        const gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
                         if (!gearCollection) {
                             return 0;
                         }
                         return this._count * gearCollection.getTotalWeightInGrams(visitedGearItems);
-                    };
-                    GearCollectionEntry.prototype.getTotalWeightInUnits = function () {
+                    }
+                    getTotalWeightInUnits() {
                         return parseFloat(Mockup.convertGramsToUnits(this.getTotalWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
-                    };
-                    GearCollectionEntry.prototype.getBaseWeightInGrams = function (visitedGearItems) {
-                        var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
+                    }
+                    getBaseWeightInGrams(visitedGearItems) {
+                        const gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
                         if (!gearCollection) {
                             return 0;
                         }
                         return this._count * gearCollection.getBaseWeightInGrams(visitedGearItems);
-                    };
-                    GearCollectionEntry.prototype.getBaseWeightInUnits = function () {
+                    }
+                    getBaseWeightInUnits() {
                         return parseFloat(Mockup.convertGramsToUnits(this.getBaseWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
-                    };
-                    GearCollectionEntry.prototype.getPackWeightInGrams = function (visitedGearItems) {
-                        var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
+                    }
+                    getPackWeightInGrams(visitedGearItems) {
+                        const gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
                         if (!gearCollection) {
                             return 0;
                         }
                         return this._count * gearCollection.getPackWeightInGrams(visitedGearItems);
-                    };
-                    GearCollectionEntry.prototype.getPackWeightInUnits = function () {
+                    }
+                    getPackWeightInUnits() {
                         return parseFloat(Mockup.convertGramsToUnits(this.getPackWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
-                    };
-                    GearCollectionEntry.prototype.getSkinOutWeightInGrams = function (visitedGearItems) {
-                        var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
+                    }
+                    getSkinOutWeightInGrams(visitedGearItems) {
+                        const gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
                         if (!gearCollection) {
                             return 0;
                         }
                         return this._count * gearCollection.getSkinOutWeightInGrams(visitedGearItems);
-                    };
-                    GearCollectionEntry.prototype.getSkinOutWeightInUnits = function () {
+                    }
+                    getSkinOutWeightInUnits() {
                         return parseFloat(Mockup.convertGramsToUnits(this.getSkinOutWeightInGrams([]), /*units*/ Mockup.AppState.getInstance().getAppSettings().units()).toFixed(2));
-                    };
-                    GearCollectionEntry.prototype.getCostInUSDP = function (visitedGearItems) {
-                        var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
+                    }
+                    getCostInUSDP(visitedGearItems) {
+                        const gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById(this._gearCollectionId);
                         if (!gearCollection) {
                             return 0;
                         }
                         return this._count * gearCollection.getCostInUSDP(visitedGearItems);
-                    };
-                    GearCollectionEntry.prototype.getCostInCurrency = function () {
+                    }
+                    getCostInCurrency() {
                         return Mockup.convertUSDPToCurrency(this.getCostInUSDP([]), /*currency*/ Mockup.AppState.getInstance().getAppSettings().currency());
-                    };
-                    return GearCollectionEntry;
-                }());
+                    }
+                }
                 Gear.GearCollectionEntry = GearCollectionEntry;
             })(Gear = Models.Gear || (Models.Gear = {}));
         })(Models = Mockup.Models || (Mockup.Models = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../Models/Gear/GearCollection.ts"/>
-///<reference path="../../Command.ts"/>
-///<reference path="../../../AppState.ts"/>
+/// <reference path="../../../Models/Gear/GearCollection.ts"/>
+/// <reference path="../../Command.ts"/>
+/// <reference path="../../../AppState.ts"/>
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -3161,32 +3111,31 @@ var BackpackPlanner;
                 var Collections;
                 (function (Collections) {
                     "use strict";
-                    var DeleteGearCollectionAction = (function () {
-                        function DeleteGearCollectionAction() {
+                    class DeleteGearCollectionAction {
+                        constructor() {
                             this._tripPlans = [];
                         }
-                        DeleteGearCollectionAction.prototype.doAction = function () {
+                        doAction() {
                             this._tripPlans = Mockup.AppState.getInstance().getTripState().removeGearCollectionFromPlans(this.GearCollection);
                             Mockup.AppState.getInstance().getGearState().deleteGearCollection(this.GearCollection);
-                        };
-                        DeleteGearCollectionAction.prototype.undoAction = function () {
+                        }
+                        undoAction() {
                             Mockup.AppState.getInstance().getGearState().addGearCollection(this.GearCollection);
-                            for (var i = 0; i < this._tripPlans.length; ++i) {
-                                var tripPlan = this._tripPlans[i];
+                            for (let i = 0; i < this._tripPlans.length; ++i) {
+                                const tripPlan = this._tripPlans[i];
                                 tripPlan.addGearCollection(this.GearCollection);
                             }
-                        };
-                        return DeleteGearCollectionAction;
-                    }());
+                        }
+                    }
                     Collections.DeleteGearCollectionAction = DeleteGearCollectionAction;
                 })(Collections = Gear.Collections || (Gear.Collections = {}));
             })(Gear = Actions.Gear || (Actions.Gear = {}));
         })(Actions = Mockup.Actions || (Mockup.Actions = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../Models/Gear/GearItem.ts"/>
-///<reference path="../../Command.ts"/>
-///<reference path="../../../AppState.ts"/>
+/// <reference path="../../../Models/Gear/GearItem.ts"/>
+/// <reference path="../../Command.ts"/>
+/// <reference path="../../../AppState.ts"/>
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -3198,44 +3147,43 @@ var BackpackPlanner;
                 var Items;
                 (function (Items) {
                     "use strict";
-                    var DeleteGearItemAction = (function () {
-                        function DeleteGearItemAction() {
+                    class DeleteGearItemAction {
+                        constructor() {
                             this._gearSystems = [];
                             this._gearCollections = [];
                             this._tripPlans = [];
                         }
-                        DeleteGearItemAction.prototype.doAction = function () {
+                        doAction() {
                             this._tripPlans = Mockup.AppState.getInstance().getTripState().removeGearItemFromPlans(this.GearItem);
                             this._gearCollections = Mockup.AppState.getInstance().getGearState().removeGearItemFromCollections(this.GearItem);
                             this._gearSystems = Mockup.AppState.getInstance().getGearState().removeGearItemFromSystems(this.GearItem);
                             Mockup.AppState.getInstance().getGearState().deleteGearItem(this.GearItem);
-                        };
-                        DeleteGearItemAction.prototype.undoAction = function () {
+                        }
+                        undoAction() {
                             Mockup.AppState.getInstance().getGearState().addGearItem(this.GearItem);
-                            for (var i = 0; i < this._gearSystems.length; ++i) {
-                                var gearSystem = this._gearSystems[i];
+                            for (let i = 0; i < this._gearSystems.length; ++i) {
+                                const gearSystem = this._gearSystems[i];
                                 gearSystem.addGearItem(this.GearItem);
                             }
-                            for (var i = 0; i < this._gearCollections.length; ++i) {
-                                var gearCollection = this._gearCollections[i];
+                            for (let i = 0; i < this._gearCollections.length; ++i) {
+                                const gearCollection = this._gearCollections[i];
                                 gearCollection.addGearItem(this.GearItem);
                             }
-                            for (var i = 0; i < this._tripPlans.length; ++i) {
-                                var tripPlan = this._tripPlans[i];
+                            for (let i = 0; i < this._tripPlans.length; ++i) {
+                                const tripPlan = this._tripPlans[i];
                                 tripPlan.addGearItem(this.GearItem);
                             }
-                        };
-                        return DeleteGearItemAction;
-                    }());
+                        }
+                    }
                     Items.DeleteGearItemAction = DeleteGearItemAction;
                 })(Items = Gear.Items || (Gear.Items = {}));
             })(Gear = Actions.Gear || (Actions.Gear = {}));
         })(Actions = Mockup.Actions || (Mockup.Actions = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../Models/Gear/GearSystem.ts"/>
-///<reference path="../../Command.ts"/>
-///<reference path="../../../AppState.ts"/>
+/// <reference path="../../../Models/Gear/GearSystem.ts"/>
+/// <reference path="../../Command.ts"/>
+/// <reference path="../../../AppState.ts"/>
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -3247,38 +3195,37 @@ var BackpackPlanner;
                 var Systems;
                 (function (Systems) {
                     "use strict";
-                    var DeleteGearSystemAction = (function () {
-                        function DeleteGearSystemAction() {
+                    class DeleteGearSystemAction {
+                        constructor() {
                             this._gearCollections = [];
                             this._tripPlans = [];
                         }
-                        DeleteGearSystemAction.prototype.doAction = function () {
+                        doAction() {
                             this._tripPlans = Mockup.AppState.getInstance().getTripState().removeGearSystemFromPlans(this.GearSystem);
                             this._gearCollections = Mockup.AppState.getInstance().getGearState().removeGearSystemFromCollections(this.GearSystem);
                             Mockup.AppState.getInstance().getGearState().deleteGearSystem(this.GearSystem);
-                        };
-                        DeleteGearSystemAction.prototype.undoAction = function () {
+                        }
+                        undoAction() {
                             Mockup.AppState.getInstance().getGearState().addGearSystem(this.GearSystem);
-                            for (var i = 0; i < this._gearCollections.length; ++i) {
-                                var gearCollection = this._gearCollections[i];
+                            for (let i = 0; i < this._gearCollections.length; ++i) {
+                                const gearCollection = this._gearCollections[i];
                                 gearCollection.addGearSystem(this.GearSystem);
                             }
-                            for (var i = 0; i < this._tripPlans.length; ++i) {
-                                var tripPlan = this._tripPlans[i];
+                            for (let i = 0; i < this._tripPlans.length; ++i) {
+                                const tripPlan = this._tripPlans[i];
                                 tripPlan.addGearSystem(this.GearSystem);
                             }
-                        };
-                        return DeleteGearSystemAction;
-                    }());
+                        }
+                    }
                     Systems.DeleteGearSystemAction = DeleteGearSystemAction;
                 })(Systems = Gear.Systems || (Gear.Systems = {}));
             })(Gear = Actions.Gear || (Actions.Gear = {}));
         })(Actions = Mockup.Actions || (Mockup.Actions = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../Models/Meals/Meal.ts"/>
-///<reference path="../Command.ts"/>
-///<reference path="../../AppState.ts"/>
+/// <reference path="../../Models/Meals/Meal.ts"/>
+/// <reference path="../Command.ts"/>
+/// <reference path="../../AppState.ts"/>
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -3288,31 +3235,30 @@ var BackpackPlanner;
             var Meals;
             (function (Meals) {
                 "use strict";
-                var DeleteMealAction = (function () {
-                    function DeleteMealAction() {
+                class DeleteMealAction {
+                    constructor() {
                         this._tripPlans = [];
                     }
-                    DeleteMealAction.prototype.doAction = function () {
+                    doAction() {
                         this._tripPlans = Mockup.AppState.getInstance().getTripState().removeMealFromPlans(this.Meal);
                         Mockup.AppState.getInstance().getMealState().deleteMeal(this.Meal);
-                    };
-                    DeleteMealAction.prototype.undoAction = function () {
+                    }
+                    undoAction() {
                         Mockup.AppState.getInstance().getMealState().addMeal(this.Meal);
-                        for (var i = 0; i < this._tripPlans.length; ++i) {
-                            var tripPlan = this._tripPlans[i];
+                        for (let i = 0; i < this._tripPlans.length; ++i) {
+                            const tripPlan = this._tripPlans[i];
                             tripPlan.addMeal(this.Meal);
                         }
-                    };
-                    return DeleteMealAction;
-                }());
+                    }
+                }
                 Meals.DeleteMealAction = DeleteMealAction;
             })(Meals = Actions.Meals || (Actions.Meals = {}));
         })(Actions = Mockup.Actions || (Mockup.Actions = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../Models/Trips/TripItinerary.ts"/>
-///<reference path="../../Command.ts"/>
-///<reference path="../../../AppState.ts"/>
+/// <reference path="../../../Models/Trips/TripItinerary.ts"/>
+/// <reference path="../../Command.ts"/>
+/// <reference path="../../../AppState.ts"/>
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -3324,32 +3270,31 @@ var BackpackPlanner;
                 var Itineraries;
                 (function (Itineraries) {
                     "use strict";
-                    var DeleteTripItineraryAction = (function () {
-                        function DeleteTripItineraryAction() {
+                    class DeleteTripItineraryAction {
+                        constructor() {
                             this._tripPlans = [];
                         }
-                        DeleteTripItineraryAction.prototype.doAction = function () {
+                        doAction() {
                             this._tripPlans = Mockup.AppState.getInstance().getTripState().removeTripItineraryFromPlans(this.TripItinerary);
                             Mockup.AppState.getInstance().getTripState().deleteTripItinerary(this.TripItinerary);
-                        };
-                        DeleteTripItineraryAction.prototype.undoAction = function () {
+                        }
+                        undoAction() {
                             Mockup.AppState.getInstance().getTripState().addTripItinerary(this.TripItinerary);
-                            for (var i = 0; i < this._tripPlans.length; ++i) {
-                                var tripPlan = this._tripPlans[i];
+                            for (let i = 0; i < this._tripPlans.length; ++i) {
+                                const tripPlan = this._tripPlans[i];
                                 tripPlan.tripItineraryId(this.TripItinerary.Id);
                             }
-                        };
-                        return DeleteTripItineraryAction;
-                    }());
+                        }
+                    }
                     Itineraries.DeleteTripItineraryAction = DeleteTripItineraryAction;
                 })(Itineraries = Trips.Itineraries || (Trips.Itineraries = {}));
             })(Trips = Actions.Trips || (Actions.Trips = {}));
         })(Actions = Mockup.Actions || (Mockup.Actions = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../Models/Trips/TripPlan.ts"/>
-///<reference path="../../Command.ts"/>
-///<reference path="../../../AppState.ts"/>
+/// <reference path="../../../Models/Trips/TripPlan.ts"/>
+/// <reference path="../../Command.ts"/>
+/// <reference path="../../../AppState.ts"/>
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -3361,24 +3306,21 @@ var BackpackPlanner;
                 var Plans;
                 (function (Plans) {
                     "use strict";
-                    var DeleteTripPlanAction = (function () {
-                        function DeleteTripPlanAction() {
-                        }
-                        DeleteTripPlanAction.prototype.doAction = function () {
+                    class DeleteTripPlanAction {
+                        doAction() {
                             Mockup.AppState.getInstance().getTripState().deleteTripPlan(this.TripPlan);
-                        };
-                        DeleteTripPlanAction.prototype.undoAction = function () {
+                        }
+                        undoAction() {
                             Mockup.AppState.getInstance().getTripState().addTripPlan(this.TripPlan);
-                        };
-                        return DeleteTripPlanAction;
-                    }());
+                        }
+                    }
                     Plans.DeleteTripPlanAction = DeleteTripPlanAction;
                 })(Plans = Trips.Plans || (Trips.Plans = {}));
             })(Trips = Actions.Trips || (Actions.Trips = {}));
         })(Actions = Mockup.Actions || (Mockup.Actions = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="Models/AppSettings.ts"/>
+/// <reference path="Models/AppSettings.ts"/>
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -3391,7 +3333,7 @@ var BackpackPlanner;
                 case "Metric":
                     return "gram";
             }
-            throw new Error("Invalid units: " + units);
+            throw new Error(`Invalid units: ${units}`);
         }
         Mockup.getUnitsWeightString = getUnitsWeightString;
         function convertGramsToOunces(grams) {
@@ -3409,7 +3351,7 @@ var BackpackPlanner;
                 case "Imperial":
                     return convertGramsToOunces(grams);
             }
-            throw new Error("Invalid units: " + units);
+            throw new Error(`Invalid units: ${units}`);
         }
         Mockup.convertGramsToUnits = convertGramsToUnits;
         function convertUnitsToGrams(value, units) {
@@ -3419,7 +3361,7 @@ var BackpackPlanner;
                 case "Imperial":
                     return convertOuncesToGrams(value);
             }
-            throw new Error("Invalid units: " + units);
+            throw new Error(`Invalid units: ${units}`);
         }
         Mockup.convertUnitsToGrams = convertUnitsToGrams;
         function getUnitsLengthString(units) {
@@ -3429,7 +3371,7 @@ var BackpackPlanner;
                 case "Metric":
                     return "centimeters";
             }
-            throw new Error("Invalid units: " + units);
+            throw new Error(`Invalid units: ${units}`);
         }
         Mockup.getUnitsLengthString = getUnitsLengthString;
         function convertCentimetersToInches(centimeters) {
@@ -3447,7 +3389,7 @@ var BackpackPlanner;
                 case "Imperial":
                     return convertCentimetersToInches(centimeters);
             }
-            throw new Error("Invalid units: " + units);
+            throw new Error(`Invalid units: ${units}`);
         }
         Mockup.convertCentimetersToUnits = convertCentimetersToUnits;
         function convertUnitsToCentimeters(value, units) {
@@ -3457,7 +3399,7 @@ var BackpackPlanner;
                 case "Imperial":
                     return convertInchesToCentimeters(value);
             }
-            throw new Error("Invalid units: " + units);
+            throw new Error(`Invalid units: ${units}`);
         }
         Mockup.convertUnitsToCentimeters = convertUnitsToCentimeters;
         function getCurrencyString(currency) {
@@ -3465,7 +3407,7 @@ var BackpackPlanner;
                 case "USD":
                     return "USD";
             }
-            throw new Error("Invalid currency: " + currency);
+            throw new Error(`Invalid currency: ${currency}`);
         }
         Mockup.getCurrencyString = getCurrencyString;
         function convertUSDPToUSD(usdp) {
@@ -3481,7 +3423,7 @@ var BackpackPlanner;
                 case "USD":
                     return convertUSDPToUSD(usdp);
             }
-            throw new Error("Invalid currency: " + currency);
+            throw new Error(`Invalid currency: ${currency}`);
         }
         Mockup.convertUSDPToCurrency = convertUSDPToCurrency;
         function convertCurrencyToUSDP(value, currency) {
@@ -3489,30 +3431,30 @@ var BackpackPlanner;
                 case "USD":
                     return convertUSDToUSDP(value);
             }
-            throw new Error("Invalid currency: " + currency);
+            throw new Error(`Invalid currency: ${currency}`);
         }
         Mockup.convertCurrencyToUSDP = convertCurrencyToUSDP;
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../scripts/typings/angular-material/index.d.ts" />
-///<reference path="../Models/Gear/GearItem.ts" />
-///<reference path="../Models/Gear/GearSystem.ts" />
-///<reference path="../Models/Gear/GearCollection.ts" />
-///<reference path="../Models/Meals/Meal.ts" />
-///<reference path="../Models/Trips/TripItinerary.ts" />
-///<reference path="../Models/Trips/TripPlan.ts" />
-///<reference path="../Models/Personal/UserInformation.ts" />
-///<reference path="../Models/AppSettings.ts" />
-///<reference path="../Services/Gear/GearCollectionService.ts"/>
-///<reference path="../Services/Gear/GearItemService.ts"/>
-///<reference path="../Services/Gear/GearSystemService.ts"/>
-///<reference path="../Services/Meals/MealService.ts"/>
-///<reference path="../Services/Trips/TripItineraryService.ts"/>
-///<reference path="../Services/Trips/TripPlanService.ts"/>
-///<reference path="../Services/Personal/UserInformationService.ts"/>
-///<reference path="../Services/AppSettingsService.ts"/>
-///<reference path="../UnitConversion.ts"/>
+/// <reference path="../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../scripts/typings/angular-material/index.d.ts" />
+/// <reference path="../Models/Gear/GearItem.ts" />
+/// <reference path="../Models/Gear/GearSystem.ts" />
+/// <reference path="../Models/Gear/GearCollection.ts" />
+/// <reference path="../Models/Meals/Meal.ts" />
+/// <reference path="../Models/Trips/TripItinerary.ts" />
+/// <reference path="../Models/Trips/TripPlan.ts" />
+/// <reference path="../Models/Personal/UserInformation.ts" />
+/// <reference path="../Models/AppSettings.ts" />
+/// <reference path="../Services/Gear/GearCollectionService.ts"/>
+/// <reference path="../Services/Gear/GearItemService.ts"/>
+/// <reference path="../Services/Gear/GearSystemService.ts"/>
+/// <reference path="../Services/Meals/MealService.ts"/>
+/// <reference path="../Services/Trips/TripItineraryService.ts"/>
+/// <reference path="../Services/Trips/TripPlanService.ts"/>
+/// <reference path="../Services/Personal/UserInformationService.ts"/>
+/// <reference path="../Services/AppSettingsService.ts"/>
+/// <reference path="../UnitConversion.ts"/>
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -3520,90 +3462,89 @@ var BackpackPlanner;
         var Controllers;
         (function (Controllers) {
             "use strict";
-            var AppCtrl = (function () {
-                function AppCtrl($scope, $q, $location, $anchorScroll, $mdSidenav, $mdDialog, $mdToast, appSettingsService, userInformationService, gearItemService, gearSystemService, gearCollectionService, mealService, tripItineraryService, tripPlanService) {
+            class AppCtrl {
+                constructor($scope, $q, $location, $anchorScroll, $mdSidenav, $mdDialog, $mdToast, appSettingsService, userInformationService, gearItemService, gearSystemService, gearCollectionService, mealService, tripItineraryService, tripPlanService) {
                     $scope.appStateLoading = true;
-                    Mockup.AppState.getInstance().loadFromDevice($q, appSettingsService, userInformationService, gearItemService, gearSystemService, gearCollectionService, mealService, tripItineraryService, tripPlanService).then(function () {
+                    Mockup.AppState.getInstance().loadFromDevice($q, appSettingsService, userInformationService, gearItemService, gearSystemService, gearCollectionService, mealService, tripItineraryService, tripPlanService).then(() => {
                         $scope.appStateLoading = false;
                     });
                     // user information
-                    $scope.getUserInfo = function () {
+                    $scope.getUserInfo = () => {
                         return Mockup.AppState.getInstance().getUserInformation();
                     };
                     // gear items
-                    $scope.getGearItems = function () {
+                    $scope.getGearItems = () => {
                         return Mockup.AppState.getInstance().getGearState().getGearItems();
                     };
-                    $scope.getGearItemById = function (gearItemId) {
+                    $scope.getGearItemById = (gearItemId) => {
                         return Mockup.AppState.getInstance().getGearState().getGearItemById(gearItemId);
                     };
                     // gear systems
-                    $scope.getGearSystems = function () {
+                    $scope.getGearSystems = () => {
                         return Mockup.AppState.getInstance().getGearState().getGearSystems();
                     };
-                    $scope.getGearSystemById = function (gearSystemId) {
+                    $scope.getGearSystemById = (gearSystemId) => {
                         return Mockup.AppState.getInstance().getGearState().getGearSystemById(gearSystemId);
                     };
                     // gear collections
-                    $scope.getGearCollections = function () {
+                    $scope.getGearCollections = () => {
                         return Mockup.AppState.getInstance().getGearState().getGearCollections();
                     };
-                    $scope.getGearCollectionById = function (gearCollectionId) {
+                    $scope.getGearCollectionById = (gearCollectionId) => {
                         return Mockup.AppState.getInstance().getGearState().getGearCollectionById(gearCollectionId);
                     };
                     // meals
-                    $scope.getMeals = function () {
+                    $scope.getMeals = () => {
                         return Mockup.AppState.getInstance().getMealState().getMeals();
                     };
-                    $scope.getMealById = function (mealId) {
+                    $scope.getMealById = (mealId) => {
                         return Mockup.AppState.getInstance().getMealState().getMealById(mealId);
                     };
                     // trip itineraries
-                    $scope.getTripItineraries = function () {
+                    $scope.getTripItineraries = () => {
                         return Mockup.AppState.getInstance().getTripState().getTripItineraries();
                     };
-                    $scope.getTripItineraryById = function (tripItineraryId) {
+                    $scope.getTripItineraryById = (tripItineraryId) => {
                         return Mockup.AppState.getInstance().getTripState().getTripItineraryById(tripItineraryId);
                     };
                     // trip plans
-                    $scope.getTripPlans = function () {
+                    $scope.getTripPlans = () => {
                         return Mockup.AppState.getInstance().getTripState().getTripPlans();
                     };
-                    $scope.getTripPlanById = function (tripPlanId) {
+                    $scope.getTripPlanById = (tripPlanId) => {
                         return Mockup.AppState.getInstance().getTripState().getTripPlanById(tripPlanId);
                     };
                     // unit utilities
-                    $scope.getUnitsWeightString = function () {
+                    $scope.getUnitsWeightString = () => {
                         return Mockup.getUnitsWeightString(Mockup.AppState.getInstance().getAppSettings().units());
                     };
-                    $scope.getUnitsLengthString = function () {
+                    $scope.getUnitsLengthString = () => {
                         return Mockup.getUnitsLengthString(Mockup.AppState.getInstance().getAppSettings().units());
                     };
-                    $scope.getCurrencyString = function () {
+                    $scope.getCurrencyString = () => {
                         return Mockup.getCurrencyString(Mockup.AppState.getInstance().getAppSettings().currency());
                     };
-                    $scope.getDaysBetween = function (startDate, endDate) {
-                        var oneDayInMs = 86400000;
-                        var startDateInMs = startDate.getTime();
-                        var endDateInMs = endDate.getTime();
-                        var daysBetweenInMs = endDateInMs - startDateInMs;
+                    $scope.getDaysBetween = (startDate, endDate) => {
+                        const oneDayInMs = 86400000;
+                        const startDateInMs = startDate.getTime();
+                        const endDateInMs = endDate.getTime();
+                        const daysBetweenInMs = endDateInMs - startDateInMs;
                         return Math.round(daysBetweenInMs / oneDayInMs);
                     };
                     // view utilities
-                    $scope.scrollToTop = function () {
+                    $scope.scrollToTop = () => {
                         $location.hash("top");
                         $anchorScroll();
                     };
-                    $scope.isActive = function (viewLocation) {
+                    $scope.isActive = (viewLocation) => {
                         // set the nav item as active when we're looking at its location
                         return $location.path() === viewLocation;
                     };
-                    $scope.toggleSidenav = function () {
+                    $scope.toggleSidenav = () => {
                         $mdSidenav("left").toggle();
                     };
                 }
-                return AppCtrl;
-            }());
+            }
             Controllers.AppCtrl = AppCtrl;
             AppCtrl.$inject = ["$scope", "$q", "$location", "$anchorScroll",
                 "$mdSidenav", "$mdDialog", "$mdToast",
@@ -3613,9 +3554,9 @@ var BackpackPlanner;
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
-///<reference path="../../AppCtrl.ts" />
+/// <reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../../scripts/typings/angular-material/index.d.ts" />
+/// <reference path="../../AppCtrl.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -3627,12 +3568,12 @@ var BackpackPlanner;
                 var Collections;
                 (function (Collections) {
                     "use strict";
-                    var AddGearCollectionCtrl = (function () {
-                        function AddGearCollectionCtrl($scope, $location, $mdDialog, $mdToast) {
+                    class AddGearCollectionCtrl {
+                        constructor($scope, $location, $mdDialog, $mdToast) {
                             $scope.orderGearItemsBy = "getName()";
                             $scope.orderGearSystemsBy = "getName()";
                             $scope.gearCollection = new Mockup.Models.Gear.GearCollection();
-                            $scope.showAddGearItemDlg = function (event) {
+                            $scope.showAddGearItemDlg = (event) => {
                                 $mdDialog.show({
                                     controller: Collections.AddGearItemDlgCtrl,
                                     templateUrl: "content/partials/gear/collections/add-item.html",
@@ -3643,7 +3584,7 @@ var BackpackPlanner;
                                     }
                                 });
                             };
-                            $scope.showAddGearSystemDlg = function (event) {
+                            $scope.showAddGearSystemDlg = (event) => {
                                 $mdDialog.show({
                                     controller: Collections.AddGearSystemDlgCtrl,
                                     templateUrl: "content/partials/gear/collections/add-system.html",
@@ -3654,21 +3595,20 @@ var BackpackPlanner;
                                     }
                                 });
                             };
-                            $scope.addGearCollection = function () {
+                            $scope.addGearCollection = () => {
                                 Mockup.AppState.getInstance().getGearState().addGearCollection($scope.gearCollection);
                                 var addToast = $mdToast.simple()
-                                    .textContent("Added gear collection: " + $scope.gearCollection.name())
+                                    .textContent(`Added gear collection: ${$scope.gearCollection.name()}`)
                                     .action("OK")
                                     .position("bottom left");
                                 $location.path("/gear/collections");
                                 $mdToast.show(addToast);
                             };
-                            $scope.resetGearCollection = function () {
+                            $scope.resetGearCollection = () => {
                                 $scope.gearCollection = new Mockup.Models.Gear.GearCollection();
                             };
                         }
-                        return AddGearCollectionCtrl;
-                    }());
+                    }
                     Collections.AddGearCollectionCtrl = AddGearCollectionCtrl;
                     AddGearCollectionCtrl.$inject = ["$scope", "$location", "$mdDialog", "$mdToast"];
                 })(Collections = Gear.Collections || (Gear.Collections = {}));
@@ -3676,10 +3616,10 @@ var BackpackPlanner;
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
-///<reference path="../../../../scripts/typings/angularjs/angular-route.d.ts" />
-///<reference path="../../AppCtrl.ts" />
+/// <reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../../scripts/typings/angular-material/index.d.ts" />
+/// <reference path="../../../../scripts/typings/angularjs/angular-route.d.ts" />
+/// <reference path="../../AppCtrl.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -3691,18 +3631,18 @@ var BackpackPlanner;
                 var Collections;
                 (function (Collections) {
                     "use strict";
-                    var GearCollectionCtrl = (function () {
-                        function GearCollectionCtrl($scope, $routeParams, $location, $mdDialog, $mdToast) {
+                    class GearCollectionCtrl {
+                        constructor($scope, $routeParams, $location, $mdDialog, $mdToast) {
                             $scope.orderGearSystemsBy = "getName()";
                             $scope.orderGearItemsBy = "getName()";
-                            var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById($routeParams.gearCollectionId);
+                            const gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById($routeParams.gearCollectionId);
                             if (null == gearCollection) {
                                 alert("The gear collection does not exist!");
                                 $location.path("/gear/collections");
                                 return;
                             }
                             $scope.gearCollection = angular.copy(gearCollection);
-                            $scope.showAddGearSystemDlg = function (event) {
+                            $scope.showAddGearSystemDlg = (event) => {
                                 $mdDialog.show({
                                     controller: Collections.AddGearSystemDlgCtrl,
                                     templateUrl: "content/partials/gear/collections/add-system.html",
@@ -3713,7 +3653,7 @@ var BackpackPlanner;
                                     }
                                 });
                             };
-                            $scope.showAddGearItemDlg = function (event) {
+                            $scope.showAddGearItemDlg = (event) => {
                                 $mdDialog.show({
                                     controller: Collections.AddGearItemDlgCtrl,
                                     templateUrl: "content/partials/gear/collections/add-item.html",
@@ -3724,7 +3664,7 @@ var BackpackPlanner;
                                     }
                                 });
                             };
-                            $scope.saveGearCollection = function () {
+                            $scope.saveGearCollection = () => {
                                 var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById($scope.gearCollection.Id);
                                 if (null == gearCollection) {
                                     alert("The gear collection no longer exists!");
@@ -3733,13 +3673,13 @@ var BackpackPlanner;
                                 }
                                 gearCollection.update($scope.gearCollection);
                                 var updateToast = $mdToast.simple()
-                                    .textContent("Updated gear collection: " + $scope.gearCollection.name())
+                                    .textContent(`Updated gear collection: ${$scope.gearCollection.name()}`)
                                     .action("OK")
                                     .position("bottom left");
                                 $location.path("/gear/collections");
                                 $mdToast.show(updateToast);
                             };
-                            $scope.resetGearCollection = function () {
+                            $scope.resetGearCollection = () => {
                                 var gearCollection = Mockup.AppState.getInstance().getGearState().getGearCollectionById($scope.gearCollection.Id);
                                 if (null == gearCollection) {
                                     alert("The gear collection no longer exists!");
@@ -3748,7 +3688,7 @@ var BackpackPlanner;
                                 }
                                 $scope.gearCollection = angular.copy(gearCollection);
                             };
-                            $scope.deleteGearCollection = function (event) {
+                            $scope.deleteGearCollection = (event) => {
                                 var confirm = $mdDialog.confirm()
                                     .parent(angular.element(document.body))
                                     .title("Delete Gear Collection")
@@ -3763,32 +3703,31 @@ var BackpackPlanner;
                                     .ok("OK")
                                     .targetEvent(event);
                                 var deleteToast = $mdToast.simple()
-                                    .textContent("Deleted gear collection: " + $scope.gearCollection.name())
+                                    .textContent(`Deleted gear collection: ${$scope.gearCollection.name()}`)
                                     .action("Undo")
                                     .position("bottom left");
                                 var undoDeleteToast = $mdToast.simple()
-                                    .textContent("Restored gear collection: " + $scope.gearCollection.name())
+                                    .textContent(`Restored gear collection: ${$scope.gearCollection.name()}`)
                                     .action("OK")
                                     .position("bottom left");
-                                $mdDialog.show(confirm).then(function () {
-                                    $mdDialog.show(receipt).then(function () {
-                                        var action = new Mockup.Actions.Gear.Collections.DeleteGearCollectionAction();
+                                $mdDialog.show(confirm).then(() => {
+                                    $mdDialog.show(receipt).then(() => {
+                                        const action = new Mockup.Actions.Gear.Collections.DeleteGearCollectionAction();
                                         action.GearCollection = $scope.gearCollection;
                                         Mockup.AppState.getInstance().executeAction(action);
                                         $location.path("/gear/collections");
-                                        $mdToast.show(deleteToast).then(function (response) {
+                                        $mdToast.show(deleteToast).then((response) => {
                                             if ("ok" == response) {
                                                 Mockup.AppState.getInstance().undoAction();
                                                 $mdToast.show(undoDeleteToast);
-                                                $location.path("/gear/collections/" + $scope.gearCollection.Id);
+                                                $location.path(`/gear/collections/${$scope.gearCollection.Id}`);
                                             }
                                         });
                                     });
                                 });
                             };
                         }
-                        return GearCollectionCtrl;
-                    }());
+                    }
                     Collections.GearCollectionCtrl = GearCollectionCtrl;
                     GearCollectionCtrl.$inject = ["$scope", "$routeParams", "$location", "$mdDialog", "$mdToast"];
                 })(Collections = Gear.Collections || (Gear.Collections = {}));
@@ -3796,9 +3735,9 @@ var BackpackPlanner;
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
-///<reference path="../../AppCtrl.ts" />
+/// <reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../../scripts/typings/angular-material/index.d.ts" />
+/// <reference path="../../AppCtrl.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -3810,17 +3749,17 @@ var BackpackPlanner;
                 var Collections;
                 (function (Collections) {
                     "use strict";
-                    var GearCollectionsCtrl = (function () {
-                        function GearCollectionsCtrl($scope, $mdDialog) {
+                    class GearCollectionsCtrl {
+                        constructor($scope, $mdDialog) {
                             $scope.filterName = "";
                             $scope.orderBy = "name()";
-                            $scope.filterGearCollection = function (gearCollection) {
+                            $scope.filterGearCollection = (gearCollection) => {
                                 if ($scope.filterName) {
                                     return gearCollection.name().toLowerCase().indexOf($scope.filterName.toLowerCase()) >= 0;
                                 }
                                 return true;
                             };
-                            $scope.showWhatIsGearCollectionDlg = function (event) {
+                            $scope.showWhatIsGearCollectionDlg = (event) => {
                                 $mdDialog.show({
                                     controller: Collections.WhatIsGearCollectionDlgCtrl,
                                     templateUrl: "content/partials/gear/collections/what.html",
@@ -3829,8 +3768,7 @@ var BackpackPlanner;
                                 });
                             };
                         }
-                        return GearCollectionsCtrl;
-                    }());
+                    }
                     Collections.GearCollectionsCtrl = GearCollectionsCtrl;
                     GearCollectionsCtrl.$inject = ["$scope", "$mdDialog"];
                 })(Collections = Gear.Collections || (Gear.Collections = {}));
@@ -3838,9 +3776,9 @@ var BackpackPlanner;
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
-///<reference path="../../AppCtrl.ts" />
+/// <reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../../scripts/typings/angular-material/index.d.ts" />
+/// <reference path="../../AppCtrl.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -3852,24 +3790,23 @@ var BackpackPlanner;
                 var Items;
                 (function (Items) {
                     "use strict";
-                    var AddGearItemCtrl = (function () {
-                        function AddGearItemCtrl($scope, $location, $mdToast) {
+                    class AddGearItemCtrl {
+                        constructor($scope, $location, $mdToast) {
                             $scope.gearItem = new Mockup.Models.Gear.GearItem();
-                            $scope.addGearItem = function () {
+                            $scope.addGearItem = () => {
                                 Mockup.AppState.getInstance().getGearState().addGearItem($scope.gearItem);
                                 var addToast = $mdToast.simple()
-                                    .textContent("Added gear item: " + $scope.gearItem.name())
+                                    .textContent(`Added gear item: ${$scope.gearItem.name()}`)
                                     .action("OK")
                                     .position("bottom left");
                                 $location.path("/gear/items");
                                 $mdToast.show(addToast);
                             };
-                            $scope.resetGearItem = function () {
+                            $scope.resetGearItem = () => {
                                 $scope.gearItem = new Mockup.Models.Gear.GearItem();
                             };
                         }
-                        return AddGearItemCtrl;
-                    }());
+                    }
                     Items.AddGearItemCtrl = AddGearItemCtrl;
                     AddGearItemCtrl.$inject = ["$scope", "$location", "$mdToast"];
                 })(Items = Gear.Items || (Gear.Items = {}));
@@ -3877,10 +3814,10 @@ var BackpackPlanner;
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
-///<reference path="../../../../scripts/typings/angularjs/angular-route.d.ts" />
-///<reference path="../../AppCtrl.ts" />
+/// <reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../../scripts/typings/angular-material/index.d.ts" />
+/// <reference path="../../../../scripts/typings/angularjs/angular-route.d.ts" />
+/// <reference path="../../AppCtrl.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -3892,16 +3829,16 @@ var BackpackPlanner;
                 var Items;
                 (function (Items) {
                     "use strict";
-                    var GearItemCtrl = (function () {
-                        function GearItemCtrl($scope, $routeParams, $location, $mdDialog, $mdToast) {
-                            var gearItem = Mockup.AppState.getInstance().getGearState().getGearItemById($routeParams.gearItemId);
+                    class GearItemCtrl {
+                        constructor($scope, $routeParams, $location, $mdDialog, $mdToast) {
+                            const gearItem = Mockup.AppState.getInstance().getGearState().getGearItemById($routeParams.gearItemId);
                             if (null == gearItem) {
                                 alert("The gear item does not exist!");
                                 $location.path("/gear/items");
                                 return;
                             }
                             $scope.gearItem = angular.copy(gearItem);
-                            $scope.saveGearItem = function () {
+                            $scope.saveGearItem = () => {
                                 var gearItem = Mockup.AppState.getInstance().getGearState().getGearItemById($scope.gearItem.Id);
                                 if (null == gearItem) {
                                     alert("The gear item no longer exists!");
@@ -3910,13 +3847,13 @@ var BackpackPlanner;
                                 }
                                 gearItem.update($scope.gearItem);
                                 var updateToast = $mdToast.simple()
-                                    .textContent("Updated gear item: " + $scope.gearItem.name())
+                                    .textContent(`Updated gear item: ${$scope.gearItem.name()}`)
                                     .action("OK")
                                     .position("bottom left");
                                 $location.path("/gear/items");
                                 $mdToast.show(updateToast);
                             };
-                            $scope.resetGearItem = function () {
+                            $scope.resetGearItem = () => {
                                 var gearItem = Mockup.AppState.getInstance().getGearState().getGearItemById($scope.gearItem.Id);
                                 if (null == gearItem) {
                                     alert("The gear item no longer exists!");
@@ -3925,7 +3862,7 @@ var BackpackPlanner;
                                 }
                                 $scope.gearItem = angular.copy(gearItem);
                             };
-                            $scope.deleteGearItem = function (event) {
+                            $scope.deleteGearItem = (event) => {
                                 var confirm = $mdDialog.confirm()
                                     .parent(angular.element(document.body))
                                     .title("Delete Gear Item")
@@ -3940,32 +3877,31 @@ var BackpackPlanner;
                                     .ok("OK")
                                     .targetEvent(event);
                                 var deleteToast = $mdToast.simple()
-                                    .textContent("Deleted gear item: " + $scope.gearItem.name())
+                                    .textContent(`Deleted gear item: ${$scope.gearItem.name()}`)
                                     .action("Undo")
                                     .position("bottom left");
                                 var undoDeleteToast = $mdToast.simple()
-                                    .textContent("Restored gear item: " + $scope.gearItem.name())
+                                    .textContent(`Restored gear item: ${$scope.gearItem.name()}`)
                                     .action("OK")
                                     .position("bottom left");
-                                $mdDialog.show(confirm).then(function () {
-                                    $mdDialog.show(receipt).then(function () {
-                                        var action = new Mockup.Actions.Gear.Items.DeleteGearItemAction();
+                                $mdDialog.show(confirm).then(() => {
+                                    $mdDialog.show(receipt).then(() => {
+                                        const action = new Mockup.Actions.Gear.Items.DeleteGearItemAction();
                                         action.GearItem = $scope.gearItem;
                                         Mockup.AppState.getInstance().executeAction(action);
                                         $location.path("/gear/items");
-                                        $mdToast.show(deleteToast).then(function (response) {
+                                        $mdToast.show(deleteToast).then((response) => {
                                             if ("ok" == response) {
                                                 Mockup.AppState.getInstance().undoAction();
                                                 $mdToast.show(undoDeleteToast);
-                                                $location.path("/gear/items/" + $scope.gearItem.Id);
+                                                $location.path(`/gear/items/${$scope.gearItem.Id}`);
                                             }
                                         });
                                     });
                                 });
                             };
                         }
-                        return GearItemCtrl;
-                    }());
+                    }
                     Items.GearItemCtrl = GearItemCtrl;
                     GearItemCtrl.$inject = ["$scope", "$routeParams", "$location", "$mdDialog", "$mdToast"];
                 })(Items = Gear.Items || (Gear.Items = {}));
@@ -3973,9 +3909,9 @@ var BackpackPlanner;
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
-///<reference path="../../AppCtrl.ts" />
+/// <reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../../scripts/typings/angular-material/index.d.ts" />
+/// <reference path="../../AppCtrl.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -3987,17 +3923,17 @@ var BackpackPlanner;
                 var Items;
                 (function (Items) {
                     "use strict";
-                    var GearItemsCtrl = (function () {
-                        function GearItemsCtrl($scope, $mdDialog) {
+                    class GearItemsCtrl {
+                        constructor($scope, $mdDialog) {
                             $scope.filterName = "";
                             $scope.orderBy = "name()";
-                            $scope.filterGearItem = function (gearItem) {
+                            $scope.filterGearItem = (gearItem) => {
                                 if ($scope.filterName) {
                                     return gearItem.name().toLowerCase().indexOf($scope.filterName.toLowerCase()) >= 0;
                                 }
                                 return true;
                             };
-                            $scope.showWhatIsGearItemDlg = function (event) {
+                            $scope.showWhatIsGearItemDlg = (event) => {
                                 $mdDialog.show({
                                     controller: Items.WhatIsGearItemDlgCtrl,
                                     templateUrl: "content/partials/gear/items/what.html",
@@ -4006,8 +3942,7 @@ var BackpackPlanner;
                                 });
                             };
                         }
-                        return GearItemsCtrl;
-                    }());
+                    }
                     Items.GearItemsCtrl = GearItemsCtrl;
                     GearItemsCtrl.$inject = ["$scope", "$mdDialog"];
                 })(Items = Gear.Items || (Gear.Items = {}));
@@ -4015,9 +3950,9 @@ var BackpackPlanner;
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
-///<reference path="../../AppCtrl.ts" />
+/// <reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../../scripts/typings/angular-material/index.d.ts" />
+/// <reference path="../../AppCtrl.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -4029,11 +3964,11 @@ var BackpackPlanner;
                 var Systems;
                 (function (Systems) {
                     "use strict";
-                    var AddGearSystemCtrl = (function () {
-                        function AddGearSystemCtrl($scope, $location, $mdDialog, $mdToast) {
+                    class AddGearSystemCtrl {
+                        constructor($scope, $location, $mdDialog, $mdToast) {
                             $scope.orderGearItemsBy = "getName()";
                             $scope.gearSystem = new Mockup.Models.Gear.GearSystem();
-                            $scope.showAddGearItemDlg = function (event) {
+                            $scope.showAddGearItemDlg = (event) => {
                                 $mdDialog.show({
                                     controller: Systems.AddGearItemDlgCtrl,
                                     templateUrl: "content/partials/gear/systems/add-item.html",
@@ -4044,21 +3979,20 @@ var BackpackPlanner;
                                     }
                                 });
                             };
-                            $scope.addGearSystem = function () {
+                            $scope.addGearSystem = () => {
                                 Mockup.AppState.getInstance().getGearState().addGearSystem($scope.gearSystem);
                                 var addToast = $mdToast.simple()
-                                    .textContent("Added gear system: " + $scope.gearSystem.name())
+                                    .textContent(`Added gear system: ${$scope.gearSystem.name()}`)
                                     .action("OK")
                                     .position("bottom left");
                                 $location.path("/gear/systems");
                                 $mdToast.show(addToast);
                             };
-                            $scope.resetGearSystem = function () {
+                            $scope.resetGearSystem = () => {
                                 $scope.gearSystem = new Mockup.Models.Gear.GearSystem();
                             };
                         }
-                        return AddGearSystemCtrl;
-                    }());
+                    }
                     Systems.AddGearSystemCtrl = AddGearSystemCtrl;
                     AddGearSystemCtrl.$inject = ["$scope", "$location", "$mdDialog", "$mdToast"];
                 })(Systems = Gear.Systems || (Gear.Systems = {}));
@@ -4066,10 +4000,10 @@ var BackpackPlanner;
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
-///<reference path="../../../../scripts/typings/angularjs/angular-route.d.ts" />
-///<reference path="../../AppCtrl.ts" />
+/// <reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../../scripts/typings/angular-material/index.d.ts" />
+/// <reference path="../../../../scripts/typings/angularjs/angular-route.d.ts" />
+/// <reference path="../../AppCtrl.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -4081,17 +4015,17 @@ var BackpackPlanner;
                 var Systems;
                 (function (Systems) {
                     "use strict";
-                    var GearSystemCtrl = (function () {
-                        function GearSystemCtrl($scope, $routeParams, $location, $mdDialog, $mdToast) {
+                    class GearSystemCtrl {
+                        constructor($scope, $routeParams, $location, $mdDialog, $mdToast) {
                             $scope.orderGearItemsBy = "getName()";
-                            var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById($routeParams.gearSystemId);
+                            const gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById($routeParams.gearSystemId);
                             if (null == gearSystem) {
                                 alert("The gear system does not exist!");
                                 $location.path("/gear/systems");
                                 return;
                             }
                             $scope.gearSystem = angular.copy(gearSystem);
-                            $scope.showAddGearItemDlg = function (event) {
+                            $scope.showAddGearItemDlg = (event) => {
                                 $mdDialog.show({
                                     controller: Systems.AddGearItemDlgCtrl,
                                     templateUrl: "content/partials/gear/systems/add-item.html",
@@ -4102,7 +4036,7 @@ var BackpackPlanner;
                                     }
                                 });
                             };
-                            $scope.saveGearSystem = function () {
+                            $scope.saveGearSystem = () => {
                                 var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById($scope.gearSystem.Id);
                                 if (null == gearSystem) {
                                     alert("The gear system no longer exists!");
@@ -4111,13 +4045,13 @@ var BackpackPlanner;
                                 }
                                 gearSystem.update($scope.gearSystem);
                                 var updateToast = $mdToast.simple()
-                                    .textContent("Updated gear system: " + $scope.gearSystem.name())
+                                    .textContent(`Updated gear system: ${$scope.gearSystem.name()}`)
                                     .action("OK")
                                     .position("bottom left");
                                 $location.path("/gear/systems");
                                 $mdToast.show(updateToast);
                             };
-                            $scope.resetGearSystem = function () {
+                            $scope.resetGearSystem = () => {
                                 var gearSystem = Mockup.AppState.getInstance().getGearState().getGearSystemById($scope.gearSystem.Id);
                                 if (null == gearSystem) {
                                     alert("The gear system no longer exists!");
@@ -4126,7 +4060,7 @@ var BackpackPlanner;
                                 }
                                 $scope.gearSystem = angular.copy(gearSystem);
                             };
-                            $scope.deleteGearSystem = function (event) {
+                            $scope.deleteGearSystem = (event) => {
                                 var confirm = $mdDialog.confirm()
                                     .parent(angular.element(document.body))
                                     .title("Delete Gear System")
@@ -4141,32 +4075,31 @@ var BackpackPlanner;
                                     .ok("OK")
                                     .targetEvent(event);
                                 var deleteToast = $mdToast.simple()
-                                    .textContent("Deleted gear system: " + $scope.gearSystem.name())
+                                    .textContent(`Deleted gear system: ${$scope.gearSystem.name()}`)
                                     .action("Undo")
                                     .position("bottom left");
                                 var undoDeleteToast = $mdToast.simple()
-                                    .textContent("Restored gear system: " + $scope.gearSystem.name())
+                                    .textContent(`Restored gear system: ${$scope.gearSystem.name()}`)
                                     .action("OK")
                                     .position("bottom left");
-                                $mdDialog.show(confirm).then(function () {
-                                    $mdDialog.show(receipt).then(function () {
-                                        var action = new Mockup.Actions.Gear.Systems.DeleteGearSystemAction();
+                                $mdDialog.show(confirm).then(() => {
+                                    $mdDialog.show(receipt).then(() => {
+                                        const action = new Mockup.Actions.Gear.Systems.DeleteGearSystemAction();
                                         action.GearSystem = $scope.gearSystem;
                                         Mockup.AppState.getInstance().executeAction(action);
                                         $location.path("/gear/systems");
-                                        $mdToast.show(deleteToast).then(function (response) {
+                                        $mdToast.show(deleteToast).then((response) => {
                                             if ("ok" == response) {
                                                 Mockup.AppState.getInstance().undoAction();
                                                 $mdToast.show(undoDeleteToast);
-                                                $location.path("/gear/systems/" + $scope.gearSystem.Id);
+                                                $location.path(`/gear/systems/${$scope.gearSystem.Id}`);
                                             }
                                         });
                                     });
                                 });
                             };
                         }
-                        return GearSystemCtrl;
-                    }());
+                    }
                     Systems.GearSystemCtrl = GearSystemCtrl;
                     GearSystemCtrl.$inject = ["$scope", "$routeParams", "$location", "$mdDialog", "$mdToast"];
                 })(Systems = Gear.Systems || (Gear.Systems = {}));
@@ -4174,9 +4107,9 @@ var BackpackPlanner;
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
-///<reference path="../../AppCtrl.ts" />
+/// <reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../../scripts/typings/angular-material/index.d.ts" />
+/// <reference path="../../AppCtrl.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -4188,17 +4121,17 @@ var BackpackPlanner;
                 var Systems;
                 (function (Systems) {
                     "use strict";
-                    var GearSystemsCtrl = (function () {
-                        function GearSystemsCtrl($scope, $mdDialog) {
+                    class GearSystemsCtrl {
+                        constructor($scope, $mdDialog) {
                             $scope.filterName = "";
                             $scope.orderBy = "name()";
-                            $scope.filterGearSystem = function (gearSystem) {
+                            $scope.filterGearSystem = (gearSystem) => {
                                 if ($scope.filterName) {
                                     return gearSystem.name().toLowerCase().indexOf($scope.filterName.toLowerCase()) >= 0;
                                 }
                                 return true;
                             };
-                            $scope.showWhatIsGearSystemDlg = function (event) {
+                            $scope.showWhatIsGearSystemDlg = (event) => {
                                 $mdDialog.show({
                                     controller: Systems.WhatIsGearSystemDlgCtrl,
                                     templateUrl: "content/partials/gear/systems/what.html",
@@ -4207,8 +4140,7 @@ var BackpackPlanner;
                                 });
                             };
                         }
-                        return GearSystemsCtrl;
-                    }());
+                    }
                     Systems.GearSystemsCtrl = GearSystemsCtrl;
                     GearSystemsCtrl.$inject = ["$scope", "$mdDialog"];
                 })(Systems = Gear.Systems || (Gear.Systems = {}));
@@ -4216,9 +4148,9 @@ var BackpackPlanner;
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../scripts/typings/angular-material/index.d.ts" />
-///<reference path="../AppCtrl.ts" />
+/// <reference path="../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../scripts/typings/angular-material/index.d.ts" />
+/// <reference path="../AppCtrl.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -4228,17 +4160,17 @@ var BackpackPlanner;
             var Meals;
             (function (Meals) {
                 "use strict";
-                var MealsCtrl = (function () {
-                    function MealsCtrl($scope, $mdDialog) {
+                class MealsCtrl {
+                    constructor($scope, $mdDialog) {
                         $scope.filterName = "";
                         $scope.orderBy = "name()";
-                        $scope.filterMeal = function (meal) {
+                        $scope.filterMeal = (meal) => {
                             if ($scope.filterName) {
                                 return meal.name().toLowerCase().indexOf($scope.filterName.toLowerCase()) >= 0;
                             }
                             return true;
                         };
-                        $scope.showWhatIsMealDlg = function (event) {
+                        $scope.showWhatIsMealDlg = (event) => {
                             $mdDialog.show({
                                 controller: Meals.WhatIsMealDlgCtrl,
                                 templateUrl: "content/partials/meals/what.html",
@@ -4247,18 +4179,17 @@ var BackpackPlanner;
                             });
                         };
                     }
-                    return MealsCtrl;
-                }());
+                }
                 Meals.MealsCtrl = MealsCtrl;
                 MealsCtrl.$inject = ["$scope", "$mdDialog"];
             })(Meals = Controllers.Meals || (Controllers.Meals = {}));
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../scripts/typings/angular-material/index.d.ts" />
-///<reference path="../../../scripts/typings/angularjs/angular-route.d.ts" />
-///<reference path="../AppCtrl.ts" />
+/// <reference path="../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../scripts/typings/angular-material/index.d.ts" />
+/// <reference path="../../../scripts/typings/angularjs/angular-route.d.ts" />
+/// <reference path="../AppCtrl.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -4268,16 +4199,16 @@ var BackpackPlanner;
             var Meals;
             (function (Meals) {
                 "use strict";
-                var MealCtrl = (function () {
-                    function MealCtrl($scope, $routeParams, $location, $mdDialog, $mdToast) {
-                        var meal = Mockup.AppState.getInstance().getMealState().getMealById($routeParams.mealId);
+                class MealCtrl {
+                    constructor($scope, $routeParams, $location, $mdDialog, $mdToast) {
+                        const meal = Mockup.AppState.getInstance().getMealState().getMealById($routeParams.mealId);
                         if (null == meal) {
                             alert("The meal does not exist!");
                             $location.path("/meals");
                             return;
                         }
                         $scope.meal = angular.copy(meal);
-                        $scope.saveMeal = function () {
+                        $scope.saveMeal = () => {
                             var meal = Mockup.AppState.getInstance().getMealState().getMealById($scope.meal.Id);
                             if (null == meal) {
                                 alert("The meal no longer exists!");
@@ -4286,13 +4217,13 @@ var BackpackPlanner;
                             }
                             meal.update($scope.meal);
                             var updateToast = $mdToast.simple()
-                                .textContent("Updated meal: " + $scope.meal.name())
+                                .textContent(`Updated meal: ${$scope.meal.name()}`)
                                 .action("OK")
                                 .position("bottom left");
                             $location.path("/meals");
                             $mdToast.show(updateToast);
                         };
-                        $scope.resetMeal = function () {
+                        $scope.resetMeal = () => {
                             var meal = Mockup.AppState.getInstance().getMealState().getMealById($scope.meal.Id);
                             if (null == meal) {
                                 alert("The meal no longer exists!");
@@ -4301,7 +4232,7 @@ var BackpackPlanner;
                             }
                             $scope.meal = angular.copy(meal);
                         };
-                        $scope.deleteMeal = function (event) {
+                        $scope.deleteMeal = (event) => {
                             var confirm = $mdDialog.confirm()
                                 .parent(angular.element(document.body))
                                 .title("Delete Meal")
@@ -4316,41 +4247,40 @@ var BackpackPlanner;
                                 .ok("OK")
                                 .targetEvent(event);
                             var deleteToast = $mdToast.simple()
-                                .textContent("Deleted meal: " + $scope.meal.name())
+                                .textContent(`Deleted meal: ${$scope.meal.name()}`)
                                 .action("Undo")
                                 .position("bottom left");
                             var undoDeleteToast = $mdToast.simple()
-                                .textContent("Restored meal: " + $scope.meal.name())
+                                .textContent(`Restored meal: ${$scope.meal.name()}`)
                                 .action("OK")
                                 .position("bottom left");
-                            $mdDialog.show(confirm).then(function () {
-                                $mdDialog.show(receipt).then(function () {
-                                    var action = new Mockup.Actions.Meals.DeleteMealAction();
+                            $mdDialog.show(confirm).then(() => {
+                                $mdDialog.show(receipt).then(() => {
+                                    const action = new Mockup.Actions.Meals.DeleteMealAction();
                                     action.Meal = $scope.meal;
                                     Mockup.AppState.getInstance().executeAction(action);
                                     $location.path("/meals");
-                                    $mdToast.show(deleteToast).then(function (response) {
+                                    $mdToast.show(deleteToast).then((response) => {
                                         if ("ok" == response) {
                                             Mockup.AppState.getInstance().undoAction();
                                             $mdToast.show(undoDeleteToast);
-                                            $location.path("/meals/" + $scope.meal.Id);
+                                            $location.path(`/meals/${$scope.meal.Id}`);
                                         }
                                     });
                                 });
                             });
                         };
                     }
-                    return MealCtrl;
-                }());
+                }
                 Meals.MealCtrl = MealCtrl;
                 MealCtrl.$inject = ["$scope", "$routeParams", "$location", "$mdDialog", "$mdToast"];
             })(Meals = Controllers.Meals || (Controllers.Meals = {}));
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../scripts/typings/angular-material/index.d.ts" />
-///<reference path="../AppCtrl.ts" />
+/// <reference path="../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../scripts/typings/angular-material/index.d.ts" />
+/// <reference path="../AppCtrl.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -4360,33 +4290,32 @@ var BackpackPlanner;
             var Meals;
             (function (Meals) {
                 "use strict";
-                var AddMealCtrl = (function () {
-                    function AddMealCtrl($scope, $location, $mdToast) {
+                class AddMealCtrl {
+                    constructor($scope, $location, $mdToast) {
                         $scope.meal = new Mockup.Models.Meals.Meal();
-                        $scope.addMeal = function () {
+                        $scope.addMeal = () => {
                             Mockup.AppState.getInstance().getMealState().addMeal($scope.meal);
                             var addToast = $mdToast.simple()
-                                .textContent("Added meal: " + $scope.meal.name())
+                                .textContent(`Added meal: ${$scope.meal.name()}`)
                                 .action("OK")
                                 .position("bottom left");
                             $location.path("/meals");
                             $mdToast.show(addToast);
                         };
-                        $scope.resetMeal = function () {
+                        $scope.resetMeal = () => {
                             $scope.meal = new Mockup.Models.Meals.Meal();
                         };
                     }
-                    return AddMealCtrl;
-                }());
+                }
                 Meals.AddMealCtrl = AddMealCtrl;
                 AddMealCtrl.$inject = ["$scope", "$location", "$mdToast"];
             })(Meals = Controllers.Meals || (Controllers.Meals = {}));
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
-///<reference path="../../AppCtrl.ts" />
+/// <reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../../scripts/typings/angular-material/index.d.ts" />
+/// <reference path="../../AppCtrl.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -4398,17 +4327,17 @@ var BackpackPlanner;
                 var Itineraries;
                 (function (Itineraries) {
                     "use strict";
-                    var TripItinerariesCtrl = (function () {
-                        function TripItinerariesCtrl($scope, $mdDialog) {
+                    class TripItinerariesCtrl {
+                        constructor($scope, $mdDialog) {
                             $scope.filterName = "";
                             $scope.orderBy = "name()";
-                            $scope.filterTripItinerary = function (tripItinerary) {
+                            $scope.filterTripItinerary = (tripItinerary) => {
                                 if ($scope.filterName) {
                                     return tripItinerary.name().toLowerCase().indexOf($scope.filterName.toLowerCase()) >= 0;
                                 }
                                 return true;
                             };
-                            $scope.showWhatIsTripItineraryDlg = function (event) {
+                            $scope.showWhatIsTripItineraryDlg = (event) => {
                                 $mdDialog.show({
                                     controller: Itineraries.WhatIsTripItineraryDlgCtrl,
                                     templateUrl: "content/partials/trips/itineraries/what.html",
@@ -4417,8 +4346,7 @@ var BackpackPlanner;
                                 });
                             };
                         }
-                        return TripItinerariesCtrl;
-                    }());
+                    }
                     Itineraries.TripItinerariesCtrl = TripItinerariesCtrl;
                     TripItinerariesCtrl.$inject = ["$scope", "$mdDialog"];
                 })(Itineraries = Trips.Itineraries || (Trips.Itineraries = {}));
@@ -4426,10 +4354,10 @@ var BackpackPlanner;
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
-///<reference path="../../../../scripts/typings/angularjs/angular-route.d.ts" />
-///<reference path="../../AppCtrl.ts" />
+/// <reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../../scripts/typings/angular-material/index.d.ts" />
+/// <reference path="../../../../scripts/typings/angularjs/angular-route.d.ts" />
+/// <reference path="../../AppCtrl.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -4441,16 +4369,16 @@ var BackpackPlanner;
                 var Itineraries;
                 (function (Itineraries) {
                     "use strict";
-                    var TripItineraryCtrl = (function () {
-                        function TripItineraryCtrl($scope, $routeParams, $location, $mdDialog, $mdToast) {
-                            var tripItinerary = Mockup.AppState.getInstance().getTripState().getTripItineraryById($routeParams.tripItineraryId);
+                    class TripItineraryCtrl {
+                        constructor($scope, $routeParams, $location, $mdDialog, $mdToast) {
+                            const tripItinerary = Mockup.AppState.getInstance().getTripState().getTripItineraryById($routeParams.tripItineraryId);
                             if (null == tripItinerary) {
                                 alert("The trip itinerary does not exist!");
                                 $location.path("/trips/itineraries");
                                 return;
                             }
                             $scope.tripItinerary = angular.copy(tripItinerary);
-                            $scope.saveTripItinerary = function () {
+                            $scope.saveTripItinerary = () => {
                                 var tripItinerary = Mockup.AppState.getInstance().getTripState().getTripItineraryById($scope.tripItinerary.Id);
                                 if (null == tripItinerary) {
                                     alert("The trip itinerary no longer exists!");
@@ -4459,13 +4387,13 @@ var BackpackPlanner;
                                 }
                                 tripItinerary.update($scope.tripItinerary);
                                 var updateToast = $mdToast.simple()
-                                    .textContent("Updated gear collection: " + $scope.tripItinerary.name())
+                                    .textContent(`Updated gear collection: ${$scope.tripItinerary.name()}`)
                                     .action("OK")
                                     .position("bottom left");
                                 $location.path("/trips/itineraries");
                                 $mdToast.show(updateToast);
                             };
-                            $scope.resetTripItinerary = function () {
+                            $scope.resetTripItinerary = () => {
                                 var tripItinerary = Mockup.AppState.getInstance().getTripState().getTripItineraryById($scope.tripItinerary.Id);
                                 if (null == tripItinerary) {
                                     alert("The trip itinerary no longer exists!");
@@ -4474,7 +4402,7 @@ var BackpackPlanner;
                                 }
                                 $scope.tripItinerary = angular.copy(tripItinerary);
                             };
-                            $scope.deleteTripItinerary = function (event) {
+                            $scope.deleteTripItinerary = (event) => {
                                 var confirm = $mdDialog.confirm()
                                     .parent(angular.element(document.body))
                                     .title("Delete Trip Itinerary")
@@ -4489,32 +4417,31 @@ var BackpackPlanner;
                                     .ok("OK")
                                     .targetEvent(event);
                                 var deleteToast = $mdToast.simple()
-                                    .textContent("Deleted trip itinerary: " + $scope.tripItinerary.name())
+                                    .textContent(`Deleted trip itinerary: ${$scope.tripItinerary.name()}`)
                                     .action("Undo")
                                     .position("bottom left");
                                 var undoDeleteToast = $mdToast.simple()
-                                    .textContent("Restored trip itinerary: " + $scope.tripItinerary.name())
+                                    .textContent(`Restored trip itinerary: ${$scope.tripItinerary.name()}`)
                                     .action("OK")
                                     .position("bottom left");
-                                $mdDialog.show(confirm).then(function () {
-                                    $mdDialog.show(receipt).then(function () {
-                                        var action = new Mockup.Actions.Trips.Itineraries.DeleteTripItineraryAction();
+                                $mdDialog.show(confirm).then(() => {
+                                    $mdDialog.show(receipt).then(() => {
+                                        const action = new Mockup.Actions.Trips.Itineraries.DeleteTripItineraryAction();
                                         action.TripItinerary = $scope.tripItinerary;
                                         Mockup.AppState.getInstance().executeAction(action);
                                         $location.path("/trips/itineraries");
-                                        $mdToast.show(deleteToast).then(function (response) {
+                                        $mdToast.show(deleteToast).then((response) => {
                                             if ("ok" == response) {
                                                 Mockup.AppState.getInstance().undoAction();
                                                 $mdToast.show(undoDeleteToast);
-                                                $location.path("/trips/itineraries/" + $scope.tripItinerary.Id);
+                                                $location.path(`/trips/itineraries/${$scope.tripItinerary.Id}`);
                                             }
                                         });
                                     });
                                 });
                             };
                         }
-                        return TripItineraryCtrl;
-                    }());
+                    }
                     Itineraries.TripItineraryCtrl = TripItineraryCtrl;
                     TripItineraryCtrl.$inject = ["$scope", "$routeParams", "$location", "$mdDialog", "$mdToast"];
                 })(Itineraries = Trips.Itineraries || (Trips.Itineraries = {}));
@@ -4522,9 +4449,9 @@ var BackpackPlanner;
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
-///<reference path="../../AppCtrl.ts" />
+/// <reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../../scripts/typings/angular-material/index.d.ts" />
+/// <reference path="../../AppCtrl.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -4536,24 +4463,23 @@ var BackpackPlanner;
                 var Itineraries;
                 (function (Itineraries) {
                     "use strict";
-                    var AddTripItineraryCtrl = (function () {
-                        function AddTripItineraryCtrl($scope, $location, $mdToast) {
+                    class AddTripItineraryCtrl {
+                        constructor($scope, $location, $mdToast) {
                             $scope.tripItinerary = new Mockup.Models.Trips.TripItinerary();
-                            $scope.addTripItinerary = function () {
+                            $scope.addTripItinerary = () => {
                                 Mockup.AppState.getInstance().getTripState().addTripItinerary($scope.tripItinerary);
                                 var addToast = $mdToast.simple()
-                                    .textContent("Added trip itinerary: " + $scope.tripItinerary.name())
+                                    .textContent(`Added trip itinerary: ${$scope.tripItinerary.name()}`)
                                     .action("OK")
                                     .position("bottom left");
                                 $location.path("/trips/itineraries");
                                 $mdToast.show(addToast);
                             };
-                            $scope.resetTripItinerary = function () {
+                            $scope.resetTripItinerary = () => {
                                 $scope.tripItinerary = new Mockup.Models.Trips.TripItinerary();
                             };
                         }
-                        return AddTripItineraryCtrl;
-                    }());
+                    }
                     Itineraries.AddTripItineraryCtrl = AddTripItineraryCtrl;
                     AddTripItineraryCtrl.$inject = ["$scope", "$location", "$mdToast"];
                 })(Itineraries = Trips.Itineraries || (Trips.Itineraries = {}));
@@ -4561,9 +4487,9 @@ var BackpackPlanner;
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
-///<reference path="../../AppCtrl.ts" />
+/// <reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../../scripts/typings/angular-material/index.d.ts" />
+/// <reference path="../../AppCtrl.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -4575,17 +4501,17 @@ var BackpackPlanner;
                 var Plans;
                 (function (Plans) {
                     "use strict";
-                    var TripPlansCtrl = (function () {
-                        function TripPlansCtrl($scope, $mdDialog) {
+                    class TripPlansCtrl {
+                        constructor($scope, $mdDialog) {
                             $scope.filterName = "";
                             $scope.orderBy = "name()";
-                            $scope.filterTripPlan = function (tripPlan) {
+                            $scope.filterTripPlan = (tripPlan) => {
                                 if ($scope.filterName) {
                                     return tripPlan.name().toLowerCase().indexOf($scope.filterName.toLowerCase()) >= 0;
                                 }
                                 return true;
                             };
-                            $scope.showWhatIsTripPlan = function (event) {
+                            $scope.showWhatIsTripPlan = (event) => {
                                 $mdDialog.show({
                                     controller: Plans.WhatIsTripPlanDlgCtrl,
                                     templateUrl: "content/partials/trips/plans/what.html",
@@ -4594,8 +4520,7 @@ var BackpackPlanner;
                                 });
                             };
                         }
-                        return TripPlansCtrl;
-                    }());
+                    }
                     Plans.TripPlansCtrl = TripPlansCtrl;
                     TripPlansCtrl.$inject = ["$scope", "$mdDialog"];
                 })(Plans = Trips.Plans || (Trips.Plans = {}));
@@ -4603,10 +4528,10 @@ var BackpackPlanner;
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
-///<reference path="../../../../scripts/typings/angularjs/angular-route.d.ts" />
-///<reference path="../../AppCtrl.ts" />
+/// <reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../../scripts/typings/angular-material/index.d.ts" />
+/// <reference path="../../../../scripts/typings/angularjs/angular-route.d.ts" />
+/// <reference path="../../AppCtrl.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -4618,20 +4543,20 @@ var BackpackPlanner;
                 var Plans;
                 (function (Plans) {
                     "use strict";
-                    var TripPlanCtrl = (function () {
-                        function TripPlanCtrl($scope, $routeParams, $location, $mdDialog, $mdToast) {
+                    class TripPlanCtrl {
+                        constructor($scope, $routeParams, $location, $mdDialog, $mdToast) {
                             $scope.orderGearCollectionsBy = "getName()";
                             $scope.orderGearSystemsBy = "getName()";
                             $scope.orderGearItemsBy = "getName()";
                             $scope.orderMealsBy = "getName()";
-                            var tripPlan = Mockup.AppState.getInstance().getTripState().getTripPlanById($routeParams.tripPlanId);
+                            const tripPlan = Mockup.AppState.getInstance().getTripState().getTripPlanById($routeParams.tripPlanId);
                             if (null == tripPlan) {
                                 alert("The trip plan does not exist!");
                                 $location.path("/trips/plans");
                                 return;
                             }
                             $scope.tripPlan = angular.copy(tripPlan);
-                            $scope.showAddGearCollectionDlg = function (event) {
+                            $scope.showAddGearCollectionDlg = (event) => {
                                 $mdDialog.show({
                                     controller: Plans.AddGearCollectionDlgCtrl,
                                     templateUrl: "content/partials/trips/plans/add-collection.html",
@@ -4642,7 +4567,7 @@ var BackpackPlanner;
                                     }
                                 });
                             };
-                            $scope.showAddGearSystemDlg = function (event) {
+                            $scope.showAddGearSystemDlg = (event) => {
                                 $mdDialog.show({
                                     controller: Plans.AddGearSystemDlgCtrl,
                                     templateUrl: "content/partials/trips/plans/add-system.html",
@@ -4653,7 +4578,7 @@ var BackpackPlanner;
                                     }
                                 });
                             };
-                            $scope.showAddGearItemDlg = function (event) {
+                            $scope.showAddGearItemDlg = (event) => {
                                 $mdDialog.show({
                                     controller: Plans.AddGearItemDlgCtrl,
                                     templateUrl: "content/partials/trips/plans/add-item.html",
@@ -4664,7 +4589,7 @@ var BackpackPlanner;
                                     }
                                 });
                             };
-                            $scope.showAddMealDlg = function (event) {
+                            $scope.showAddMealDlg = (event) => {
                                 $mdDialog.show({
                                     controller: Plans.AddMealDlgCtrl,
                                     templateUrl: "content/partials/trips/plans/add-meal.html",
@@ -4675,7 +4600,7 @@ var BackpackPlanner;
                                     }
                                 });
                             };
-                            $scope.saveTripPlan = function () {
+                            $scope.saveTripPlan = () => {
                                 var tripPlan = Mockup.AppState.getInstance().getTripState().getTripPlanById($scope.tripPlan.Id);
                                 if (null == tripPlan) {
                                     alert("The trip plan no longer exists!");
@@ -4684,13 +4609,13 @@ var BackpackPlanner;
                                 }
                                 tripPlan.update($scope.tripPlan);
                                 var updateToast = $mdToast.simple()
-                                    .textContent("Updated trip plan: " + $scope.tripPlan.name())
+                                    .textContent(`Updated trip plan: ${$scope.tripPlan.name()}`)
                                     .action("OK")
                                     .position("bottom left");
                                 $location.path("/trips/plans");
                                 $mdToast.show(updateToast);
                             };
-                            $scope.resetTripPlan = function () {
+                            $scope.resetTripPlan = () => {
                                 var tripPlan = Mockup.AppState.getInstance().getTripState().getTripPlanById($scope.tripPlan.Id);
                                 if (null == tripPlan) {
                                     alert("The trip plan no longer exists!");
@@ -4699,7 +4624,7 @@ var BackpackPlanner;
                                 }
                                 $scope.tripPlan = angular.copy(tripPlan);
                             };
-                            $scope.deleteTripPlan = function (event) {
+                            $scope.deleteTripPlan = (event) => {
                                 var confirm = $mdDialog.confirm()
                                     .parent(angular.element(document.body))
                                     .title("Delete Trip Plan")
@@ -4714,32 +4639,31 @@ var BackpackPlanner;
                                     .ok("OK")
                                     .targetEvent(event);
                                 var deleteToast = $mdToast.simple()
-                                    .textContent("Deleted trip plan: " + $scope.tripPlan.name())
+                                    .textContent(`Deleted trip plan: ${$scope.tripPlan.name()}`)
                                     .action("Undo")
                                     .position("bottom left");
                                 var undoDeleteToast = $mdToast.simple()
-                                    .textContent("Restored trip plan: " + $scope.tripPlan.name())
+                                    .textContent(`Restored trip plan: ${$scope.tripPlan.name()}`)
                                     .action("OK")
                                     .position("bottom left");
-                                $mdDialog.show(confirm).then(function () {
-                                    $mdDialog.show(receipt).then(function () {
-                                        var action = new Mockup.Actions.Trips.Plans.DeleteTripPlanAction();
+                                $mdDialog.show(confirm).then(() => {
+                                    $mdDialog.show(receipt).then(() => {
+                                        const action = new Mockup.Actions.Trips.Plans.DeleteTripPlanAction();
                                         action.TripPlan = $scope.tripPlan;
                                         Mockup.AppState.getInstance().executeAction(action);
                                         $location.path("/trips/plans");
-                                        $mdToast.show(deleteToast).then(function (response) {
+                                        $mdToast.show(deleteToast).then((response) => {
                                             if ("ok" == response) {
                                                 Mockup.AppState.getInstance().undoAction();
                                                 $mdToast.show(undoDeleteToast);
-                                                $location.path("/trips/plans/" + $scope.tripPlan.Id);
+                                                $location.path(`/trips/plans/${$scope.tripPlan.Id}`);
                                             }
                                         });
                                     });
                                 });
                             };
                         }
-                        return TripPlanCtrl;
-                    }());
+                    }
                     Plans.TripPlanCtrl = TripPlanCtrl;
                     TripPlanCtrl.$inject = ["$scope", "$routeParams", "$location", "$mdDialog", "$mdToast"];
                 })(Plans = Trips.Plans || (Trips.Plans = {}));
@@ -4747,9 +4671,9 @@ var BackpackPlanner;
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
-///<reference path="../../AppCtrl.ts" />
+/// <reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../../scripts/typings/angular-material/index.d.ts" />
+/// <reference path="../../AppCtrl.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -4761,14 +4685,14 @@ var BackpackPlanner;
                 var Plans;
                 (function (Plans) {
                     "use strict";
-                    var AddTripPlanCtrl = (function () {
-                        function AddTripPlanCtrl($scope, $location, $mdDialog, $mdToast) {
+                    class AddTripPlanCtrl {
+                        constructor($scope, $location, $mdDialog, $mdToast) {
                             $scope.orderGearCollectionsBy = "getName()";
                             $scope.orderGearSystemsBy = "getName()";
                             $scope.orderGearItemsBy = "getName()";
                             $scope.orderMealsBy = "getName()";
                             $scope.tripPlan = new Mockup.Models.Trips.TripPlan();
-                            $scope.showAddGearCollectionDlg = function (event) {
+                            $scope.showAddGearCollectionDlg = (event) => {
                                 $mdDialog.show({
                                     controller: Plans.AddGearCollectionDlgCtrl,
                                     templateUrl: "content/partials/trips/plans/add-collection.html",
@@ -4779,7 +4703,7 @@ var BackpackPlanner;
                                     }
                                 });
                             };
-                            $scope.showAddGearSystemDlg = function (event) {
+                            $scope.showAddGearSystemDlg = (event) => {
                                 $mdDialog.show({
                                     controller: Plans.AddGearSystemDlgCtrl,
                                     templateUrl: "content/partials/trips/plans/add-system.html",
@@ -4790,7 +4714,7 @@ var BackpackPlanner;
                                     }
                                 });
                             };
-                            $scope.showAddGearItemDlg = function (event) {
+                            $scope.showAddGearItemDlg = (event) => {
                                 $mdDialog.show({
                                     controller: Plans.AddGearItemDlgCtrl,
                                     templateUrl: "content/partials/trips/plans/add-item.html",
@@ -4801,7 +4725,7 @@ var BackpackPlanner;
                                     }
                                 });
                             };
-                            $scope.showAddMealDlg = function (event) {
+                            $scope.showAddMealDlg = (event) => {
                                 $mdDialog.show({
                                     controller: Plans.AddMealDlgCtrl,
                                     templateUrl: "content/partials/trips/plans/add-meal.html",
@@ -4812,21 +4736,20 @@ var BackpackPlanner;
                                     }
                                 });
                             };
-                            $scope.addTripPlan = function () {
+                            $scope.addTripPlan = () => {
                                 Mockup.AppState.getInstance().getTripState().addTripPlan($scope.tripPlan);
                                 var addToast = $mdToast.simple()
-                                    .textContent("Added trip plan: " + $scope.tripPlan.name())
+                                    .textContent(`Added trip plan: ${$scope.tripPlan.name()}`)
                                     .action("OK")
                                     .position("bottom left");
                                 $location.path("/trips/plans");
                                 $mdToast.show(addToast);
                             };
-                            $scope.resetTripPlan = function () {
+                            $scope.resetTripPlan = () => {
                                 $scope.tripPlan = new Mockup.Models.Trips.TripPlan();
                             };
                         }
-                        return AddTripPlanCtrl;
-                    }());
+                    }
                     Plans.AddTripPlanCtrl = AddTripPlanCtrl;
                     AddTripPlanCtrl.$inject = ["$scope", "$location", "$mdDialog", "$mdToast"];
                 })(Plans = Trips.Plans || (Trips.Plans = {}));
@@ -4834,9 +4757,9 @@ var BackpackPlanner;
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../scripts/typings/angular-material/index.d.ts" />
-///<reference path="../../Models/AppSettings.ts" />
+/// <reference path="../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../scripts/typings/angular-material/index.d.ts" />
+/// <reference path="../../Models/AppSettings.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -4846,10 +4769,10 @@ var BackpackPlanner;
             var Personal;
             (function (Personal) {
                 "use strict";
-                var UserInformationCtrl = (function () {
-                    function UserInformationCtrl($scope, $location, $mdDialog, $mdToast) {
+                class UserInformationCtrl {
+                    constructor($scope, $location, $mdDialog, $mdToast) {
                         $scope.userInfo = angular.copy(Mockup.AppState.getInstance().getUserInformation());
-                        $scope.showWhatIsPersonalDlg = function (event) {
+                        $scope.showWhatIsPersonalDlg = (event) => {
                             $mdDialog.show({
                                 controller: Personal.WhatIsPersonalDlgCtrl,
                                 templateUrl: "content/partials/personal/what.html",
@@ -4857,7 +4780,7 @@ var BackpackPlanner;
                                 targetEvent: event
                             });
                         };
-                        $scope.saveUserInformation = function () {
+                        $scope.saveUserInformation = () => {
                             Mockup.AppState.getInstance().getUserInformation().update($scope.userInfo);
                             var updateToast = $mdToast.simple()
                                 .textContent("Updated personal information!")
@@ -4866,21 +4789,20 @@ var BackpackPlanner;
                             $location.path("/personal");
                             $mdToast.show(updateToast);
                         };
-                        $scope.resetUserInformation = function () {
+                        $scope.resetUserInformation = () => {
                             $scope.userInfo = angular.copy(Mockup.AppState.getInstance().getUserInformation());
                         };
                     }
-                    return UserInformationCtrl;
-                }());
+                }
                 Personal.UserInformationCtrl = UserInformationCtrl;
                 UserInformationCtrl.$inject = ["$scope", "$location", "$mdDialog", "$mdToast"];
             })(Personal = Controllers.Personal || (Controllers.Personal = {}));
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../scripts/typings/angular-material/index.d.ts" />
-///<reference path="../Models/AppSettings.ts" />
+/// <reference path="../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../scripts/typings/angular-material/index.d.ts" />
+/// <reference path="../Models/AppSettings.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -4888,14 +4810,14 @@ var BackpackPlanner;
         var Controllers;
         (function (Controllers) {
             "use strict";
-            var AppSettingsCtrl = (function () {
-                function AppSettingsCtrl($scope, $location, $mdDialog, $mdToast) {
+            class AppSettingsCtrl {
+                constructor($scope, $location, $mdDialog, $mdToast) {
                     $scope.appSettings = angular.copy(Mockup.AppState.getInstance().getAppSettings());
                     $scope.showAdvancedSettings = false;
-                    $scope.toggleAdvancedSettings = function () {
+                    $scope.toggleAdvancedSettings = () => {
                         $scope.showAdvancedSettings = !$scope.showAdvancedSettings;
                     };
-                    $scope.saveAppSettings = function () {
+                    $scope.saveAppSettings = () => {
                         Mockup.AppState.getInstance().getAppSettings().update($scope.appSettings);
                         var updateToast = $mdToast.simple()
                             .textContent("Updated application settings!")
@@ -4904,13 +4826,13 @@ var BackpackPlanner;
                         $location.path("/settings");
                         $mdToast.show(updateToast);
                     };
-                    $scope.resetAppSettings = function () {
+                    $scope.resetAppSettings = () => {
                         $scope.appSettings = angular.copy(Mockup.AppState.getInstance().getAppSettings());
                     };
-                    $scope.defaultAppSettings = function () {
+                    $scope.defaultAppSettings = () => {
                         $scope.appSettings.resetToDefaults();
                     };
-                    $scope.deleteAllGearItems = function (event) {
+                    $scope.deleteAllGearItems = (event) => {
                         var confirm = $mdDialog.confirm()
                             .parent(angular.element(document.body))
                             .title("Delete All Gear Items")
@@ -4928,14 +4850,14 @@ var BackpackPlanner;
                             .textContent("Deleted all gear items")
                             .action("OK")
                             .position("bottom left");
-                        $mdDialog.show(confirm).then(function () {
-                            $mdDialog.show(receipt).then(function () {
+                        $mdDialog.show(confirm).then(() => {
+                            $mdDialog.show(receipt).then(() => {
                                 Mockup.AppState.getInstance().getGearState().deleteAllGearItems();
                                 $mdToast.show(deleteToast);
                             });
                         });
                     };
-                    $scope.deleteAllGearSystems = function (event) {
+                    $scope.deleteAllGearSystems = (event) => {
                         var confirm = $mdDialog.confirm()
                             .parent(angular.element(document.body))
                             .title("Delete All Gear Systems")
@@ -4953,14 +4875,14 @@ var BackpackPlanner;
                             .textContent("Deleted all gear systems")
                             .action("OK")
                             .position("bottom left");
-                        $mdDialog.show(confirm).then(function () {
-                            $mdDialog.show(receipt).then(function () {
+                        $mdDialog.show(confirm).then(() => {
+                            $mdDialog.show(receipt).then(() => {
                                 Mockup.AppState.getInstance().getGearState().deleteAllGearSystems();
                                 $mdToast.show(deleteToast);
                             });
                         });
                     };
-                    $scope.deleteAllGearCollections = function (event) {
+                    $scope.deleteAllGearCollections = (event) => {
                         var confirm = $mdDialog.confirm()
                             .parent(angular.element(document.body))
                             .title("Delete All Gear Collections")
@@ -4978,14 +4900,14 @@ var BackpackPlanner;
                             .textContent("Deleted all gear collections")
                             .action("OK")
                             .position("bottom left");
-                        $mdDialog.show(confirm).then(function () {
-                            $mdDialog.show(receipt).then(function () {
+                        $mdDialog.show(confirm).then(() => {
+                            $mdDialog.show(receipt).then(() => {
                                 Mockup.AppState.getInstance().getGearState().deleteAllGearCollections();
                                 $mdToast.show(deleteToast);
                             });
                         });
                     };
-                    $scope.deleteAllMeals = function (event) {
+                    $scope.deleteAllMeals = (event) => {
                         var confirm = $mdDialog.confirm()
                             .parent(angular.element(document.body))
                             .title("Delete All Meals")
@@ -5003,14 +4925,14 @@ var BackpackPlanner;
                             .textContent("Deleted all meals")
                             .action("OK")
                             .position("bottom left");
-                        $mdDialog.show(confirm).then(function () {
-                            $mdDialog.show(receipt).then(function () {
+                        $mdDialog.show(confirm).then(() => {
+                            $mdDialog.show(receipt).then(() => {
                                 Mockup.AppState.getInstance().getMealState().deleteAllMeals();
                                 $mdToast.show(deleteToast);
                             });
                         });
                     };
-                    $scope.deleteAllTripItineraries = function (event) {
+                    $scope.deleteAllTripItineraries = (event) => {
                         var confirm = $mdDialog.confirm()
                             .parent(angular.element(document.body))
                             .title("Delete All Trip Itineraries")
@@ -5028,14 +4950,14 @@ var BackpackPlanner;
                             .textContent("Deleted all trip itineraries")
                             .action("OK")
                             .position("bottom left");
-                        $mdDialog.show(confirm).then(function () {
-                            $mdDialog.show(receipt).then(function () {
+                        $mdDialog.show(confirm).then(() => {
+                            $mdDialog.show(receipt).then(() => {
                                 Mockup.AppState.getInstance().getTripState().deleteAllTripItineraries();
                                 $mdToast.show(deleteToast);
                             });
                         });
                     };
-                    $scope.deleteAllTripPlans = function (event) {
+                    $scope.deleteAllTripPlans = (event) => {
                         var confirm = $mdDialog.confirm()
                             .parent(angular.element(document.body))
                             .title("Delete All Trip Plans")
@@ -5053,14 +4975,14 @@ var BackpackPlanner;
                             .textContent("Deleted all trip plans")
                             .action("OK")
                             .position("bottom left");
-                        $mdDialog.show(confirm).then(function () {
-                            $mdDialog.show(receipt).then(function () {
+                        $mdDialog.show(confirm).then(() => {
+                            $mdDialog.show(receipt).then(() => {
                                 Mockup.AppState.getInstance().getTripState().deleteAllTripPlans();
                                 $mdToast.show(deleteToast);
                             });
                         });
                     };
-                    $scope.deleteAllData = function (event) {
+                    $scope.deleteAllData = (event) => {
                         var confirm = $mdDialog.confirm()
                             .parent(angular.element(document.body))
                             .title("Delete All Data")
@@ -5078,55 +5000,50 @@ var BackpackPlanner;
                             .textContent("Deleted all data")
                             .action("OK")
                             .position("bottom left");
-                        $mdDialog.show(confirm).then(function () {
-                            $mdDialog.show(receipt).then(function () {
+                        $mdDialog.show(confirm).then(() => {
+                            $mdDialog.show(receipt).then(() => {
                                 Mockup.AppState.getInstance().deleteAllData();
                                 $mdToast.show(deleteToast);
                             });
                         });
                     };
                 }
-                return AppSettingsCtrl;
-            }());
+            }
             Controllers.AppSettingsCtrl = AppSettingsCtrl;
             AppSettingsCtrl.$inject = ["$scope", "$location", "$mdDialog", "$mdToast"];
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../scripts/typings/angularjs/angular-route.d.ts" />
+/// <reference path="../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../scripts/typings/angularjs/angular-route.d.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
     (function (Mockup) {
         "use strict";
-        var RootScopeConfig = (function () {
-            function RootScopeConfig($rootScope) {
-                $rootScope.$on("$routeChangeSuccess", function (event, currentRoute, previousRoute) {
+        class RootScopeConfig {
+            constructor($rootScope) {
+                $rootScope.$on("$routeChangeSuccess", (event, currentRoute, previousRoute) => {
                     // change the app menu title when the route changes
                     $rootScope.title = currentRoute.title;
                 });
             }
-            return RootScopeConfig;
-        }());
+        }
         Mockup.RootScopeConfig = RootScopeConfig;
         ;
         RootScopeConfig.$inject = ["$rootScope"];
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../scripts/typings/angularjs/angular-route.d.ts" />
+/// <reference path="../scripts/typings/angularjs/angular-route.d.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
     (function (Mockup) {
         "use strict";
-        var CustomRouteConfig = (function () {
-            function CustomRouteConfig() {
-            }
-            return CustomRouteConfig;
-        }());
-        var RouteConfig = (function () {
-            function RouteConfig($routeProvider) {
+        class CustomRouteConfig {
+        }
+        class RouteConfig {
+            constructor($routeProvider) {
                 $routeProvider.when("/", {
                     redirectTo: "/gear/items"
                 });
@@ -5255,33 +5172,32 @@ var BackpackPlanner;
                     redirectTo: "/404"
                 });
             }
-            RouteConfig.prototype.addRoute = function ($routeProvider, url, routeConfig) {
+            addRoute($routeProvider, url, routeConfig) {
                 $routeProvider.when(url, routeConfig);
-            };
-            return RouteConfig;
-        }());
+            }
+        }
         Mockup.RouteConfig = RouteConfig;
         ;
         RouteConfig.$inject = ["$routeProvider"];
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../Scripts/typings/angular-material/index.d.ts" />
+/// <reference path="../Scripts/typings/angular-material/index.d.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
     (function (Mockup) {
         "use strict";
-        var ThemeConfig = (function () {
-            function ThemeConfig($mdThemingProvider) {
-                var primaryPalette = $mdThemingProvider.extendPalette("green", {
+        class ThemeConfig {
+            constructor($mdThemingProvider) {
+                const primaryPalette = $mdThemingProvider.extendPalette("green", {
                     "500": "668000",
                     "A100": "501616",
                     "contrastDefaultColor": "light"
                 });
-                var backgroundPalette = $mdThemingProvider.extendPalette("brown", {
+                const backgroundPalette = $mdThemingProvider.extendPalette("brown", {
                     "500": "decd87"
                 });
-                var accentPalette = $mdThemingProvider.extendPalette("blue-grey", {});
+                const accentPalette = $mdThemingProvider.extendPalette("blue-grey", {});
                 $mdThemingProvider.definePalette("mockupPrimaryPalette", primaryPalette);
                 $mdThemingProvider.definePalette("mockupBackgroundPalette", backgroundPalette);
                 $mdThemingProvider.definePalette("mockupAccentPalette", accentPalette);
@@ -5297,38 +5213,37 @@ var BackpackPlanner;
                     "default": "500"
                 });
             }
-            return ThemeConfig;
-        }());
+        }
         Mockup.ThemeConfig = ThemeConfig;
         ;
         ThemeConfig.$inject = ["$mdThemingProvider"];
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="Controllers/Gear/Collections/AddGearCollectionCtrl.ts" />
-///<reference path="Controllers/Gear/Collections/GearCollectionCtrl.ts" />
-///<reference path="Controllers/Gear/Collections/GearCollectionsCtrl.ts" />
-///<reference path="Controllers/Gear/Items/AddGearItemCtrl.ts" />
-///<reference path="Controllers/Gear/Items/GearItemCtrl.ts" />
-///<reference path="Controllers/Gear/Items/GearItemsCtrl.ts" />
-///<reference path="Controllers/Gear/Systems/AddGearSystemCtrl.ts" />
-///<reference path="Controllers/Gear/Systems/GearSystemCtrl.ts" />
-///<reference path="Controllers/Gear/Systems/GearSystemsCtrl.ts" />
-///<reference path="Controllers/Meals/MealsCtrl.ts" />
-///<reference path="Controllers/Meals/MealCtrl.ts" />
-///<reference path="Controllers/Meals/AddMealCtrl.ts" />
-///<reference path="Controllers/Trips/Itineraries/TripItinerariesCtrl.ts" />
-///<reference path="Controllers/Trips/Itineraries/TripItineraryCtrl.ts" />
-///<reference path="Controllers/Trips/Itineraries/AddTripItineraryCtrl.ts" />
-///<reference path="Controllers/Trips/Plans/TripPlansCtrl.ts" />
-///<reference path="Controllers/Trips/Plans/TripPlanCtrl.ts" />
-///<reference path="Controllers/Trips/Plans/AddTripPlanCtrl.ts" />
-///<reference path="Controllers/Personal/UserInformationCtrl.ts" />
-///<reference path="Controllers/AppCtrl.ts" />
-///<reference path="Controllers/AppSettingsCtrl.ts" />
-///<reference path="RootScopeConfig.ts" />
-///<reference path="RouteConfig.ts" />
-///<reference path="ThemeConfig.ts" />
+/// <reference path="../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="Controllers/Gear/Collections/AddGearCollectionCtrl.ts" />
+/// <reference path="Controllers/Gear/Collections/GearCollectionCtrl.ts" />
+/// <reference path="Controllers/Gear/Collections/GearCollectionsCtrl.ts" />
+/// <reference path="Controllers/Gear/Items/AddGearItemCtrl.ts" />
+/// <reference path="Controllers/Gear/Items/GearItemCtrl.ts" />
+/// <reference path="Controllers/Gear/Items/GearItemsCtrl.ts" />
+/// <reference path="Controllers/Gear/Systems/AddGearSystemCtrl.ts" />
+/// <reference path="Controllers/Gear/Systems/GearSystemCtrl.ts" />
+/// <reference path="Controllers/Gear/Systems/GearSystemsCtrl.ts" />
+/// <reference path="Controllers/Meals/MealsCtrl.ts" />
+/// <reference path="Controllers/Meals/MealCtrl.ts" />
+/// <reference path="Controllers/Meals/AddMealCtrl.ts" />
+/// <reference path="Controllers/Trips/Itineraries/TripItinerariesCtrl.ts" />
+/// <reference path="Controllers/Trips/Itineraries/TripItineraryCtrl.ts" />
+/// <reference path="Controllers/Trips/Itineraries/AddTripItineraryCtrl.ts" />
+/// <reference path="Controllers/Trips/Plans/TripPlansCtrl.ts" />
+/// <reference path="Controllers/Trips/Plans/TripPlanCtrl.ts" />
+/// <reference path="Controllers/Trips/Plans/AddTripPlanCtrl.ts" />
+/// <reference path="Controllers/Personal/UserInformationCtrl.ts" />
+/// <reference path="Controllers/AppCtrl.ts" />
+/// <reference path="Controllers/AppSettingsCtrl.ts" />
+/// <reference path="RootScopeConfig.ts" />
+/// <reference path="RouteConfig.ts" />
+/// <reference path="ThemeConfig.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -5385,9 +5300,9 @@ var BackpackPlanner;
         mockupApp.controller("AddTripPlanCtrl", Mockup.Controllers.Trips.Plans.AddTripPlanCtrl);
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
-///<reference path="../../../AppState.ts" />
+/// <reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../../scripts/typings/angular-material/index.d.ts" />
+/// <reference path="../../../AppState.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -5399,27 +5314,27 @@ var BackpackPlanner;
                 var Collections;
                 (function (Collections) {
                     "use strict";
-                    var AddGearItemDlgCtrl = (function () {
-                        function AddGearItemDlgCtrl($scope, $mdDialog, gearCollection) {
+                    class AddGearItemDlgCtrl {
+                        constructor($scope, $mdDialog, gearCollection) {
                             $scope.gearCollection = gearCollection;
                             $scope.filterName = "";
                             $scope.orderBy = "name()";
-                            $scope.close = function () {
+                            $scope.close = () => {
                                 $mdDialog.hide();
                             };
-                            $scope.filterGearItem = function (gearItem) {
+                            $scope.filterGearItem = (gearItem) => {
                                 if ($scope.filterName) {
                                     return gearItem.name().toLowerCase().indexOf($scope.filterName.toLowerCase()) >= 0;
                                 }
                                 return true;
                             };
-                            $scope.getGearItems = function () {
+                            $scope.getGearItems = () => {
                                 return Mockup.AppState.getInstance().getGearState().getGearItems();
                             };
-                            $scope.isGearItemSelected = function (gearItem) {
+                            $scope.isGearItemSelected = (gearItem) => {
                                 return $scope.gearCollection.containsGearItemById(gearItem.Id);
                             };
-                            $scope.toggleGearItemSelected = function (gearItem) {
+                            $scope.toggleGearItemSelected = (gearItem) => {
                                 if (!$scope.gearCollection.containsGearItemById(gearItem.Id)) {
                                     try {
                                         $scope.gearCollection.addGearItem(gearItem);
@@ -5435,17 +5350,16 @@ var BackpackPlanner;
                                 }
                             };
                         }
-                        return AddGearItemDlgCtrl;
-                    }());
+                    }
                     Collections.AddGearItemDlgCtrl = AddGearItemDlgCtrl;
                 })(Collections = Gear.Collections || (Gear.Collections = {}));
             })(Gear = Controllers.Gear || (Controllers.Gear = {}));
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
-///<reference path="../../../AppState.ts" />
+/// <reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../../scripts/typings/angular-material/index.d.ts" />
+/// <reference path="../../../AppState.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -5457,27 +5371,27 @@ var BackpackPlanner;
                 var Collections;
                 (function (Collections) {
                     "use strict";
-                    var AddGearSystemDlgCtrl = (function () {
-                        function AddGearSystemDlgCtrl($scope, $mdDialog, gearCollection) {
+                    class AddGearSystemDlgCtrl {
+                        constructor($scope, $mdDialog, gearCollection) {
                             $scope.gearCollection = gearCollection;
                             $scope.filterName = "";
                             $scope.orderBy = "name()";
-                            $scope.close = function () {
+                            $scope.close = () => {
                                 $mdDialog.hide();
                             };
-                            $scope.filterGearSystem = function (gearSystem) {
+                            $scope.filterGearSystem = (gearSystem) => {
                                 if ($scope.filterName) {
                                     return gearSystem.name().toLowerCase().indexOf($scope.filterName.toLowerCase()) >= 0;
                                 }
                                 return true;
                             };
-                            $scope.getGearSystems = function () {
+                            $scope.getGearSystems = () => {
                                 return Mockup.AppState.getInstance().getGearState().getGearSystems();
                             };
-                            $scope.isGearSystemSelected = function (gearSystem) {
+                            $scope.isGearSystemSelected = (gearSystem) => {
                                 return $scope.gearCollection.containsGearSystemById(gearSystem.Id);
                             };
-                            $scope.toggleGearSystemSelected = function (gearSystem) {
+                            $scope.toggleGearSystemSelected = (gearSystem) => {
                                 if (!$scope.gearCollection.containsGearSystemById(gearSystem.Id)) {
                                     try {
                                         $scope.gearCollection.addGearSystem(gearSystem);
@@ -5493,16 +5407,15 @@ var BackpackPlanner;
                                 }
                             };
                         }
-                        return AddGearSystemDlgCtrl;
-                    }());
+                    }
                     Collections.AddGearSystemDlgCtrl = AddGearSystemDlgCtrl;
                 })(Collections = Gear.Collections || (Gear.Collections = {}));
             })(Gear = Controllers.Gear || (Controllers.Gear = {}));
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
+/// <reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../../scripts/typings/angular-material/index.d.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -5514,22 +5427,21 @@ var BackpackPlanner;
                 var Collections;
                 (function (Collections) {
                     "use strict";
-                    var WhatIsGearCollectionDlgCtrl = (function () {
-                        function WhatIsGearCollectionDlgCtrl($scope, $mdDialog) {
-                            $scope.close = function () {
+                    class WhatIsGearCollectionDlgCtrl {
+                        constructor($scope, $mdDialog) {
+                            $scope.close = () => {
                                 $mdDialog.hide();
                             };
                         }
-                        return WhatIsGearCollectionDlgCtrl;
-                    }());
+                    }
                     Collections.WhatIsGearCollectionDlgCtrl = WhatIsGearCollectionDlgCtrl;
                 })(Collections = Gear.Collections || (Gear.Collections = {}));
             })(Gear = Controllers.Gear || (Controllers.Gear = {}));
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
+/// <reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../../scripts/typings/angular-material/index.d.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -5541,23 +5453,22 @@ var BackpackPlanner;
                 var Items;
                 (function (Items) {
                     "use strict";
-                    var WhatIsGearItemDlgCtrl = (function () {
-                        function WhatIsGearItemDlgCtrl($scope, $mdDialog) {
-                            $scope.close = function () {
+                    class WhatIsGearItemDlgCtrl {
+                        constructor($scope, $mdDialog) {
+                            $scope.close = () => {
                                 $mdDialog.hide();
                             };
                         }
-                        return WhatIsGearItemDlgCtrl;
-                    }());
+                    }
                     Items.WhatIsGearItemDlgCtrl = WhatIsGearItemDlgCtrl;
                 })(Items = Gear.Items || (Gear.Items = {}));
             })(Gear = Controllers.Gear || (Controllers.Gear = {}));
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
-///<reference path="../../../AppState.ts" />
+/// <reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../../scripts/typings/angular-material/index.d.ts" />
+/// <reference path="../../../AppState.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -5569,27 +5480,27 @@ var BackpackPlanner;
                 var Systems;
                 (function (Systems) {
                     "use strict";
-                    var AddGearItemDlgCtrl = (function () {
-                        function AddGearItemDlgCtrl($scope, $mdDialog, gearSystem) {
+                    class AddGearItemDlgCtrl {
+                        constructor($scope, $mdDialog, gearSystem) {
                             $scope.gearSystem = gearSystem;
                             $scope.filterName = "";
                             $scope.orderBy = "name()";
-                            $scope.close = function () {
+                            $scope.close = () => {
                                 $mdDialog.hide();
                             };
-                            $scope.filterGearItem = function (gearItem) {
+                            $scope.filterGearItem = (gearItem) => {
                                 if ($scope.filterName) {
                                     return gearItem.name().toLowerCase().indexOf($scope.filterName.toLowerCase()) >= 0;
                                 }
                                 return true;
                             };
-                            $scope.getGearItems = function () {
+                            $scope.getGearItems = () => {
                                 return Mockup.AppState.getInstance().getGearState().getGearItems();
                             };
-                            $scope.isGearItemSelected = function (gearItem) {
+                            $scope.isGearItemSelected = (gearItem) => {
                                 return $scope.gearSystem.containsGearItemById(gearItem.Id);
                             };
-                            $scope.toggleGearItemSelected = function (gearItem) {
+                            $scope.toggleGearItemSelected = (gearItem) => {
                                 if (!$scope.gearSystem.containsGearItemById(gearItem.Id)) {
                                     try {
                                         $scope.gearSystem.addGearItem(gearItem);
@@ -5605,16 +5516,15 @@ var BackpackPlanner;
                                 }
                             };
                         }
-                        return AddGearItemDlgCtrl;
-                    }());
+                    }
                     Systems.AddGearItemDlgCtrl = AddGearItemDlgCtrl;
                 })(Systems = Gear.Systems || (Gear.Systems = {}));
             })(Gear = Controllers.Gear || (Controllers.Gear = {}));
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
+/// <reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../../scripts/typings/angular-material/index.d.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -5626,22 +5536,21 @@ var BackpackPlanner;
                 var Systems;
                 (function (Systems) {
                     "use strict";
-                    var WhatIsGearSystemDlgCtrl = (function () {
-                        function WhatIsGearSystemDlgCtrl($scope, $mdDialog) {
-                            $scope.close = function () {
+                    class WhatIsGearSystemDlgCtrl {
+                        constructor($scope, $mdDialog) {
+                            $scope.close = () => {
                                 $mdDialog.hide();
                             };
                         }
-                        return WhatIsGearSystemDlgCtrl;
-                    }());
+                    }
                     Systems.WhatIsGearSystemDlgCtrl = WhatIsGearSystemDlgCtrl;
                 })(Systems = Gear.Systems || (Gear.Systems = {}));
             })(Gear = Controllers.Gear || (Controllers.Gear = {}));
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../scripts/typings/angular-material/index.d.ts" />
+/// <reference path="../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../scripts/typings/angular-material/index.d.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -5651,21 +5560,20 @@ var BackpackPlanner;
             var Meals;
             (function (Meals) {
                 "use strict";
-                var WhatIsMealDlgCtrl = (function () {
-                    function WhatIsMealDlgCtrl($scope, $mdDialog) {
-                        $scope.close = function () {
+                class WhatIsMealDlgCtrl {
+                    constructor($scope, $mdDialog) {
+                        $scope.close = () => {
                             $mdDialog.hide();
                         };
                     }
-                    return WhatIsMealDlgCtrl;
-                }());
+                }
                 Meals.WhatIsMealDlgCtrl = WhatIsMealDlgCtrl;
             })(Meals = Controllers.Meals || (Controllers.Meals = {}));
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../scripts/typings/angular-material/index.d.ts" />
+/// <reference path="../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../scripts/typings/angular-material/index.d.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -5675,21 +5583,20 @@ var BackpackPlanner;
             var Personal;
             (function (Personal) {
                 "use strict";
-                var WhatIsPersonalDlgCtrl = (function () {
-                    function WhatIsPersonalDlgCtrl($scope, $mdDialog) {
-                        $scope.close = function () {
+                class WhatIsPersonalDlgCtrl {
+                    constructor($scope, $mdDialog) {
+                        $scope.close = () => {
                             $mdDialog.hide();
                         };
                     }
-                    return WhatIsPersonalDlgCtrl;
-                }());
+                }
                 Personal.WhatIsPersonalDlgCtrl = WhatIsPersonalDlgCtrl;
             })(Personal = Controllers.Personal || (Controllers.Personal = {}));
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
+/// <reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../../scripts/typings/angular-material/index.d.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -5701,23 +5608,22 @@ var BackpackPlanner;
                 var Itineraries;
                 (function (Itineraries) {
                     "use strict";
-                    var WhatIsTripItineraryDlgCtrl = (function () {
-                        function WhatIsTripItineraryDlgCtrl($scope, $mdDialog) {
-                            $scope.close = function () {
+                    class WhatIsTripItineraryDlgCtrl {
+                        constructor($scope, $mdDialog) {
+                            $scope.close = () => {
                                 $mdDialog.hide();
                             };
                         }
-                        return WhatIsTripItineraryDlgCtrl;
-                    }());
+                    }
                     Itineraries.WhatIsTripItineraryDlgCtrl = WhatIsTripItineraryDlgCtrl;
                 })(Itineraries = Trips.Itineraries || (Trips.Itineraries = {}));
             })(Trips = Controllers.Trips || (Controllers.Trips = {}));
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
-///<reference path="../../../AppState.ts" />
+/// <reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../../scripts/typings/angular-material/index.d.ts" />
+/// <reference path="../../../AppState.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -5729,27 +5635,27 @@ var BackpackPlanner;
                 var Plans;
                 (function (Plans) {
                     "use strict";
-                    var AddGearCollectionDlgCtrl = (function () {
-                        function AddGearCollectionDlgCtrl($scope, $mdDialog, tripPlan) {
+                    class AddGearCollectionDlgCtrl {
+                        constructor($scope, $mdDialog, tripPlan) {
                             $scope.tripPlan = tripPlan;
                             $scope.filterName = "";
                             $scope.orderBy = "name()";
-                            $scope.close = function () {
+                            $scope.close = () => {
                                 $mdDialog.hide();
                             };
-                            $scope.filterGearCollection = function (gearCollection) {
+                            $scope.filterGearCollection = (gearCollection) => {
                                 if ($scope.filterName) {
                                     return gearCollection.name().toLowerCase().indexOf($scope.filterName.toLowerCase()) >= 0;
                                 }
                                 return true;
                             };
-                            $scope.getGearCollections = function () {
+                            $scope.getGearCollections = () => {
                                 return Mockup.AppState.getInstance().getGearState().getGearCollections();
                             };
-                            $scope.isGearCollectionSelected = function (gearCollection) {
+                            $scope.isGearCollectionSelected = (gearCollection) => {
                                 return $scope.tripPlan.containsGearCollectionById(gearCollection.Id);
                             };
-                            $scope.toggleGearCollectionSelected = function (gearCollection) {
+                            $scope.toggleGearCollectionSelected = (gearCollection) => {
                                 if (!$scope.tripPlan.containsGearCollectionById(gearCollection.Id)) {
                                     try {
                                         $scope.tripPlan.addGearCollection(gearCollection);
@@ -5765,17 +5671,16 @@ var BackpackPlanner;
                                 }
                             };
                         }
-                        return AddGearCollectionDlgCtrl;
-                    }());
+                    }
                     Plans.AddGearCollectionDlgCtrl = AddGearCollectionDlgCtrl;
                 })(Plans = Trips.Plans || (Trips.Plans = {}));
             })(Trips = Controllers.Trips || (Controllers.Trips = {}));
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
-///<reference path="../../../AppState.ts" />
+/// <reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../../scripts/typings/angular-material/index.d.ts" />
+/// <reference path="../../../AppState.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -5787,26 +5692,26 @@ var BackpackPlanner;
                 var Plans;
                 (function (Plans) {
                     "use strict";
-                    var AddGearItemDlgCtrl = (function () {
-                        function AddGearItemDlgCtrl($scope, $mdDialog, tripPlan) {
+                    class AddGearItemDlgCtrl {
+                        constructor($scope, $mdDialog, tripPlan) {
                             $scope.tripPlan = tripPlan;
                             $scope.orderBy = "name()";
-                            $scope.close = function () {
+                            $scope.close = () => {
                                 $mdDialog.hide();
                             };
-                            $scope.filterGearItem = function (gearItem) {
+                            $scope.filterGearItem = (gearItem) => {
                                 if ($scope.filterName) {
                                     return gearItem.name().toLowerCase().indexOf($scope.filterName.toLowerCase()) >= 0;
                                 }
                                 return true;
                             };
-                            $scope.getGearItems = function () {
+                            $scope.getGearItems = () => {
                                 return Mockup.AppState.getInstance().getGearState().getGearItems();
                             };
-                            $scope.isGearItemSelected = function (gearItem) {
+                            $scope.isGearItemSelected = (gearItem) => {
                                 return $scope.tripPlan.containsGearItemById(gearItem.Id);
                             };
-                            $scope.toggleGearItemSelected = function (gearItem) {
+                            $scope.toggleGearItemSelected = (gearItem) => {
                                 if (!$scope.tripPlan.containsGearItemById(gearItem.Id)) {
                                     try {
                                         $scope.tripPlan.addGearItem(gearItem);
@@ -5822,17 +5727,16 @@ var BackpackPlanner;
                                 }
                             };
                         }
-                        return AddGearItemDlgCtrl;
-                    }());
+                    }
                     Plans.AddGearItemDlgCtrl = AddGearItemDlgCtrl;
                 })(Plans = Trips.Plans || (Trips.Plans = {}));
             })(Trips = Controllers.Trips || (Controllers.Trips = {}));
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
-///<reference path="../../../AppState.ts" />
+/// <reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../../scripts/typings/angular-material/index.d.ts" />
+/// <reference path="../../../AppState.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -5844,27 +5748,27 @@ var BackpackPlanner;
                 var Plans;
                 (function (Plans) {
                     "use strict";
-                    var AddGearSystemDlgCtrl = (function () {
-                        function AddGearSystemDlgCtrl($scope, $mdDialog, tripPlan) {
+                    class AddGearSystemDlgCtrl {
+                        constructor($scope, $mdDialog, tripPlan) {
                             $scope.tripPlan = tripPlan;
                             $scope.filterName = "";
                             $scope.orderBy = "name()";
-                            $scope.close = function () {
+                            $scope.close = () => {
                                 $mdDialog.hide();
                             };
-                            $scope.filterGearSystem = function (gearSystem) {
+                            $scope.filterGearSystem = (gearSystem) => {
                                 if ($scope.filterName) {
                                     return gearSystem.name().toLowerCase().indexOf($scope.filterName.toLowerCase()) >= 0;
                                 }
                                 return true;
                             };
-                            $scope.getGearSystems = function () {
+                            $scope.getGearSystems = () => {
                                 return Mockup.AppState.getInstance().getGearState().getGearSystems();
                             };
-                            $scope.isGearSystemSelected = function (gearSystem) {
+                            $scope.isGearSystemSelected = (gearSystem) => {
                                 return $scope.tripPlan.containsGearSystemById(gearSystem.Id);
                             };
-                            $scope.toggleGearSystemSelected = function (gearSystem) {
+                            $scope.toggleGearSystemSelected = (gearSystem) => {
                                 if (!$scope.tripPlan.containsGearSystemById(gearSystem.Id)) {
                                     try {
                                         $scope.tripPlan.addGearSystem(gearSystem);
@@ -5880,17 +5784,16 @@ var BackpackPlanner;
                                 }
                             };
                         }
-                        return AddGearSystemDlgCtrl;
-                    }());
+                    }
                     Plans.AddGearSystemDlgCtrl = AddGearSystemDlgCtrl;
                 })(Plans = Trips.Plans || (Trips.Plans = {}));
             })(Trips = Controllers.Trips || (Controllers.Trips = {}));
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
-///<reference path="../../../AppState.ts" />
+/// <reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../../scripts/typings/angular-material/index.d.ts" />
+/// <reference path="../../../AppState.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -5902,26 +5805,26 @@ var BackpackPlanner;
                 var Plans;
                 (function (Plans) {
                     "use strict";
-                    var AddMealDlgCtrl = (function () {
-                        function AddMealDlgCtrl($scope, $mdDialog, tripPlan) {
+                    class AddMealDlgCtrl {
+                        constructor($scope, $mdDialog, tripPlan) {
                             $scope.tripPlan = tripPlan;
                             $scope.orderBy = "name()";
-                            $scope.close = function () {
+                            $scope.close = () => {
                                 $mdDialog.hide();
                             };
-                            $scope.filterMeal = function (meal) {
+                            $scope.filterMeal = (meal) => {
                                 if ($scope.filterName) {
                                     return meal.name().toLowerCase().indexOf($scope.filterName.toLowerCase()) >= 0;
                                 }
                                 return true;
                             };
-                            $scope.getMeals = function () {
+                            $scope.getMeals = () => {
                                 return Mockup.AppState.getInstance().getMealState().getMeals();
                             };
-                            $scope.isMealSelected = function (meal) {
+                            $scope.isMealSelected = (meal) => {
                                 return $scope.tripPlan.containsMealById(meal.Id);
                             };
-                            $scope.toggleMealSelected = function (meal) {
+                            $scope.toggleMealSelected = (meal) => {
                                 if (!$scope.tripPlan.containsMealById(meal.Id)) {
                                     try {
                                         $scope.tripPlan.addMeal(meal);
@@ -5937,16 +5840,15 @@ var BackpackPlanner;
                                 }
                             };
                         }
-                        return AddMealDlgCtrl;
-                    }());
+                    }
                     Plans.AddMealDlgCtrl = AddMealDlgCtrl;
                 })(Plans = Trips.Plans || (Trips.Plans = {}));
             })(Trips = Controllers.Trips || (Controllers.Trips = {}));
         })(Controllers = Mockup.Controllers || (Mockup.Controllers = {}));
     })(Mockup = BackpackPlanner.Mockup || (BackpackPlanner.Mockup = {}));
 })(BackpackPlanner || (BackpackPlanner = {}));
-///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
+/// <reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../../scripts/typings/angular-material/index.d.ts" />
 var BackpackPlanner;
 (function (BackpackPlanner) {
     var Mockup;
@@ -5958,14 +5860,13 @@ var BackpackPlanner;
                 var Plans;
                 (function (Plans) {
                     "use strict";
-                    var WhatIsTripPlanDlgCtrl = (function () {
-                        function WhatIsTripPlanDlgCtrl($scope, $mdDialog) {
-                            $scope.close = function () {
+                    class WhatIsTripPlanDlgCtrl {
+                        constructor($scope, $mdDialog) {
+                            $scope.close = () => {
                                 $mdDialog.hide();
                             };
                         }
-                        return WhatIsTripPlanDlgCtrl;
-                    }());
+                    }
                     Plans.WhatIsTripPlanDlgCtrl = WhatIsTripPlanDlgCtrl;
                 })(Plans = Trips.Plans || (Trips.Plans = {}));
             })(Trips = Controllers.Trips || (Controllers.Trips = {}));

@@ -1,10 +1,10 @@
-﻿///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
+﻿/// <reference path="../../../scripts/typings/angularjs/angular.d.ts" />
 
-///<reference path="../../Resources/Gear/GearItemResource.ts"/>
+/// <reference path="../../Resources/Gear/GearItemResource.ts"/>
 
-///<reference path="../../AppState.ts"/>
+/// <reference path="../../AppState.ts"/>
 
-///<reference path="../Entry.ts"/>
+/// <reference path="../Entry.ts"/>
 
 module BackpackPlanner.Mockup.Models.Gear {
     "use strict";

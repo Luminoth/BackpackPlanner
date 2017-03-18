@@ -1,8 +1,8 @@
-///<reference path="../../../Models/Gear/GearSystem.ts"/>
+/// <reference path="../../../Models/Gear/GearSystem.ts"/>
 
-///<reference path="../../Command.ts"/>
+/// <reference path="../../Command.ts"/>
 
-///<reference path="../../../AppState.ts"/>
+/// <reference path="../../../AppState.ts"/>
 
 module BackpackPlanner.Mockup.Actions.Gear.Systems {
     "use strict";

@@ -1,17 +1,17 @@
-﻿///<reference path="../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../scripts/typings/underscore/underscore.d.ts" />
+﻿/// <reference path="../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../scripts/typings/underscore/underscore.d.ts" />
 
-//<reference path="../../Resources/Trips/TripPlanResource.ts"/>
+/// <reference path="../../Resources/Trips/TripPlanResource.ts"/>
 
-///<reference path="../../AppState.ts"/>
+/// <reference path="../../AppState.ts"/>
 
-///<reference path="../Gear/GearCollection.ts"/>
-///<reference path="../Gear/GearItem.ts"/>
-///<reference path="../Gear/GearSystem.ts"/>
+/// <reference path="../Gear/GearCollection.ts"/>
+/// <reference path="../Gear/GearItem.ts"/>
+/// <reference path="../Gear/GearSystem.ts"/>
 
-///<reference path="../Meals/Meal.ts"/>
+/// <reference path="../Meals/Meal.ts"/>
 
-///<reference path="TripItinerary.ts"/>
+/// <reference path="TripItinerary.ts"/>
 
 module BackpackPlanner.Mockup.Models.Trips {
     "use strict";

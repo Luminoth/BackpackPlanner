@@ -1,7 +1,7 @@
-///<reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../../../scripts/typings/angular-material/index.d.ts" />
+/// <reference path="../../../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../../../scripts/typings/angular-material/index.d.ts" />
 
-///<reference path="../../../AppState.ts" />
+/// <reference path="../../../AppState.ts" />
 
 module BackpackPlanner.Mockup.Controllers.Gear.Collections {
     "use strict";

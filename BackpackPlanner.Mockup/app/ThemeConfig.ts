@@ -1,4 +1,4 @@
-﻿///<reference path="../Scripts/typings/angular-material/index.d.ts" />
+﻿/// <reference path="../Scripts/typings/angular-material/index.d.ts" />
 
 module BackpackPlanner.Mockup {
     "use strict";

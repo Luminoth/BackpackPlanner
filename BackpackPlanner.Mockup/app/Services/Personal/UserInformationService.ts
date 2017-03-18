@@ -1,6 +1,6 @@
-﻿///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
+﻿/// <reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
 
-///<reference path="../../Resources/Personal/UserInformationResource.ts" />
+/// <reference path="../../Resources/Personal/UserInformationResource.ts" />
 
 module BackpackPlanner.Mockup.Services.Personal {
     "use strict";

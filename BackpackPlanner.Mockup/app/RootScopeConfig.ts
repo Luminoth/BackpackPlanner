@@ -1,5 +1,5 @@
-﻿///<reference path="../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../scripts/typings/angularjs/angular-route.d.ts" />
+﻿/// <reference path="../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../scripts/typings/angularjs/angular-route.d.ts" />
 
 module BackpackPlanner.Mockup {
     "use strict";

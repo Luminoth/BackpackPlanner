@@ -1,4 +1,4 @@
-﻿///<reference path="../../Resources/Personal/UserInformationResource.ts"/>
+﻿/// <reference path="../../Resources/Personal/UserInformationResource.ts"/>
 
 module BackpackPlanner.Mockup.Models.Personal {
     "use strict";

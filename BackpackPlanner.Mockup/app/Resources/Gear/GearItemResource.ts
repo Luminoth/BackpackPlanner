@@ -1,4 +1,4 @@
-﻿///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
+﻿/// <reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
 
 module BackpackPlanner.Mockup.Resources.Gear {
     "use strict";

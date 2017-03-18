@@ -1,13 +1,13 @@
-﻿///<reference path="../scripts/typings/angularjs/angular.d.ts" />
+﻿/// <reference path="../scripts/typings/angularjs/angular.d.ts" />
 
-///<reference path="Models/Trips/TripItinerary.ts" />
-///<reference path="Models/Trips/TripPlan.ts" />
+/// <reference path="Models/Trips/TripItinerary.ts" />
+/// <reference path="Models/Trips/TripPlan.ts" />
 
-///<reference path="Resources/Trips/TripItineraryResource.ts" />
-///<reference path="Resources/Trips/TripPlanResource.ts" />
+/// <reference path="Resources/Trips/TripItineraryResource.ts" />
+/// <reference path="Resources/Trips/TripPlanResource.ts" />
 
-///<reference path="Services/Trips/TripItineraryService.ts" />
-///<reference path="Services/Trips/TripPlanService.ts" />
+/// <reference path="Services/Trips/TripItineraryService.ts" />
+/// <reference path="Services/Trips/TripPlanService.ts" />
 
 module BackpackPlanner.Mockup {
     "use strict";

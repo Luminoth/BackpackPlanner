@@ -1,37 +1,37 @@
-﻿///<reference path="../scripts/typings/angularjs/angular.d.ts" />
+﻿/// <reference path="../scripts/typings/angularjs/angular.d.ts" />
 
-///<reference path="Controllers/Gear/Collections/AddGearCollectionCtrl.ts" />
-///<reference path="Controllers/Gear/Collections/GearCollectionCtrl.ts" />
-///<reference path="Controllers/Gear/Collections/GearCollectionsCtrl.ts" />
+/// <reference path="Controllers/Gear/Collections/AddGearCollectionCtrl.ts" />
+/// <reference path="Controllers/Gear/Collections/GearCollectionCtrl.ts" />
+/// <reference path="Controllers/Gear/Collections/GearCollectionsCtrl.ts" />
 
-///<reference path="Controllers/Gear/Items/AddGearItemCtrl.ts" />
-///<reference path="Controllers/Gear/Items/GearItemCtrl.ts" />
-///<reference path="Controllers/Gear/Items/GearItemsCtrl.ts" />
+/// <reference path="Controllers/Gear/Items/AddGearItemCtrl.ts" />
+/// <reference path="Controllers/Gear/Items/GearItemCtrl.ts" />
+/// <reference path="Controllers/Gear/Items/GearItemsCtrl.ts" />
 
-///<reference path="Controllers/Gear/Systems/AddGearSystemCtrl.ts" />
-///<reference path="Controllers/Gear/Systems/GearSystemCtrl.ts" />
-///<reference path="Controllers/Gear/Systems/GearSystemsCtrl.ts" />
+/// <reference path="Controllers/Gear/Systems/AddGearSystemCtrl.ts" />
+/// <reference path="Controllers/Gear/Systems/GearSystemCtrl.ts" />
+/// <reference path="Controllers/Gear/Systems/GearSystemsCtrl.ts" />
 
-///<reference path="Controllers/Meals/MealsCtrl.ts" />
-///<reference path="Controllers/Meals/MealCtrl.ts" />
-///<reference path="Controllers/Meals/AddMealCtrl.ts" />
+/// <reference path="Controllers/Meals/MealsCtrl.ts" />
+/// <reference path="Controllers/Meals/MealCtrl.ts" />
+/// <reference path="Controllers/Meals/AddMealCtrl.ts" />
 
-///<reference path="Controllers/Trips/Itineraries/TripItinerariesCtrl.ts" />
-///<reference path="Controllers/Trips/Itineraries/TripItineraryCtrl.ts" />
-///<reference path="Controllers/Trips/Itineraries/AddTripItineraryCtrl.ts" />
+/// <reference path="Controllers/Trips/Itineraries/TripItinerariesCtrl.ts" />
+/// <reference path="Controllers/Trips/Itineraries/TripItineraryCtrl.ts" />
+/// <reference path="Controllers/Trips/Itineraries/AddTripItineraryCtrl.ts" />
 
-///<reference path="Controllers/Trips/Plans/TripPlansCtrl.ts" />
-///<reference path="Controllers/Trips/Plans/TripPlanCtrl.ts" />
-///<reference path="Controllers/Trips/Plans/AddTripPlanCtrl.ts" />
+/// <reference path="Controllers/Trips/Plans/TripPlansCtrl.ts" />
+/// <reference path="Controllers/Trips/Plans/TripPlanCtrl.ts" />
+/// <reference path="Controllers/Trips/Plans/AddTripPlanCtrl.ts" />
 
-///<reference path="Controllers/Personal/UserInformationCtrl.ts" />
+/// <reference path="Controllers/Personal/UserInformationCtrl.ts" />
 
-///<reference path="Controllers/AppCtrl.ts" />
-///<reference path="Controllers/AppSettingsCtrl.ts" />
+/// <reference path="Controllers/AppCtrl.ts" />
+/// <reference path="Controllers/AppSettingsCtrl.ts" />
 
-///<reference path="RootScopeConfig.ts" />
-///<reference path="RouteConfig.ts" />
-///<reference path="ThemeConfig.ts" />
+/// <reference path="RootScopeConfig.ts" />
+/// <reference path="RouteConfig.ts" />
+/// <reference path="ThemeConfig.ts" />
 
 module BackpackPlanner.Mockup {
     "use strict";

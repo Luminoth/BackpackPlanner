@@ -1,25 +1,25 @@
-﻿///<reference path="../scripts/typings/angularjs/angular.d.ts" />
+﻿/// <reference path="../scripts/typings/angularjs/angular.d.ts" />
 
-///<reference path="Actions/Command.ts"/>
+/// <reference path="Actions/Command.ts"/>
 
-///<reference path="Models/Personal/UserInformation.ts" />
-///<reference path="Models/AppSettings.ts" />
+/// <reference path="Models/Personal/UserInformation.ts" />
+/// <reference path="Models/AppSettings.ts" />
 
-///<reference path="Resources/Personal/UserInformationResource.ts" />
-///<reference path="Resources/AppSettingsResource.ts" />
+/// <reference path="Resources/Personal/UserInformationResource.ts" />
+/// <reference path="Resources/AppSettingsResource.ts" />
 
-///<reference path="Services/Gear/GearCollectionService.ts"/>
-///<reference path="Services/Gear/GearItemService.ts"/>
-///<reference path="Services/Gear/GearSystemService.ts"/>
-///<reference path="Services/Meals/MealService.ts"/>
-///<reference path="Services/Trips/TripItineraryService.ts"/>
-///<reference path="Services/Trips/TripPlanService.ts"/>
-///<reference path="Services/Personal/UserInformationService.ts"/>
-///<reference path="Services/AppSettingsService.ts"/>
+/// <reference path="Services/Gear/GearCollectionService.ts"/>
+/// <reference path="Services/Gear/GearItemService.ts"/>
+/// <reference path="Services/Gear/GearSystemService.ts"/>
+/// <reference path="Services/Meals/MealService.ts"/>
+/// <reference path="Services/Trips/TripItineraryService.ts"/>
+/// <reference path="Services/Trips/TripPlanService.ts"/>
+/// <reference path="Services/Personal/UserInformationService.ts"/>
+/// <reference path="Services/AppSettingsService.ts"/>
 
-///<reference path="GearState.ts" />
-///<reference path="MealState.ts" />
-///<reference path="TripState.ts" />
+/// <reference path="GearState.ts" />
+/// <reference path="MealState.ts" />
+/// <reference path="TripState.ts" />
 
 module BackpackPlanner.Mockup {
     "use strict";

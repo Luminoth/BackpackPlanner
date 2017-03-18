@@ -1,8 +1,8 @@
-///<reference path="../../../Models/Trips/TripPlan.ts"/>
+/// <reference path="../../../Models/Trips/TripPlan.ts"/>
 
-///<reference path="../../Command.ts"/>
+/// <reference path="../../Command.ts"/>
 
-///<reference path="../../../AppState.ts"/>
+/// <reference path="../../../AppState.ts"/>
 
 module BackpackPlanner.Mockup.Actions.Trips.Plans {
     "use strict";

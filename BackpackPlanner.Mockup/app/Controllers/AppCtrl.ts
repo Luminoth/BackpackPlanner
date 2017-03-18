@@ -1,25 +1,25 @@
-﻿///<reference path="../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../scripts/typings/angular-material/index.d.ts" />
+﻿/// <reference path="../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../scripts/typings/angular-material/index.d.ts" />
 
-///<reference path="../Models/Gear/GearItem.ts" />
-///<reference path="../Models/Gear/GearSystem.ts" />
-///<reference path="../Models/Gear/GearCollection.ts" />
-///<reference path="../Models/Meals/Meal.ts" />
-///<reference path="../Models/Trips/TripItinerary.ts" />
-///<reference path="../Models/Trips/TripPlan.ts" />
-///<reference path="../Models/Personal/UserInformation.ts" />
-///<reference path="../Models/AppSettings.ts" />
+/// <reference path="../Models/Gear/GearItem.ts" />
+/// <reference path="../Models/Gear/GearSystem.ts" />
+/// <reference path="../Models/Gear/GearCollection.ts" />
+/// <reference path="../Models/Meals/Meal.ts" />
+/// <reference path="../Models/Trips/TripItinerary.ts" />
+/// <reference path="../Models/Trips/TripPlan.ts" />
+/// <reference path="../Models/Personal/UserInformation.ts" />
+/// <reference path="../Models/AppSettings.ts" />
 
-///<reference path="../Services/Gear/GearCollectionService.ts"/>
-///<reference path="../Services/Gear/GearItemService.ts"/>
-///<reference path="../Services/Gear/GearSystemService.ts"/>
-///<reference path="../Services/Meals/MealService.ts"/>
-///<reference path="../Services/Trips/TripItineraryService.ts"/>
-///<reference path="../Services/Trips/TripPlanService.ts"/>
-///<reference path="../Services/Personal/UserInformationService.ts"/>
-///<reference path="../Services/AppSettingsService.ts"/>
+/// <reference path="../Services/Gear/GearCollectionService.ts"/>
+/// <reference path="../Services/Gear/GearItemService.ts"/>
+/// <reference path="../Services/Gear/GearSystemService.ts"/>
+/// <reference path="../Services/Meals/MealService.ts"/>
+/// <reference path="../Services/Trips/TripItineraryService.ts"/>
+/// <reference path="../Services/Trips/TripPlanService.ts"/>
+/// <reference path="../Services/Personal/UserInformationService.ts"/>
+/// <reference path="../Services/AppSettingsService.ts"/>
 
-///<reference path="../UnitConversion.ts"/>
+/// <reference path="../UnitConversion.ts"/>
 
 module BackpackPlanner.Mockup.Controllers {
     "use strict";

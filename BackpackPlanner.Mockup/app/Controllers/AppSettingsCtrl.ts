@@ -1,7 +1,7 @@
-///<reference path="../../scripts/typings/angularjs/angular.d.ts" />
-///<reference path="../../scripts/typings/angular-material/index.d.ts" />
+/// <reference path="../../scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="../../scripts/typings/angular-material/index.d.ts" />
 
-///<reference path="../Models/AppSettings.ts" />
+/// <reference path="../Models/AppSettings.ts" />
 
 module BackpackPlanner.Mockup.Controllers {
     "use strict";

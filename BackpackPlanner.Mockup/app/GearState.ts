@@ -1,16 +1,16 @@
-﻿///<reference path="../scripts/typings/angularjs/angular.d.ts" />
+﻿/// <reference path="../scripts/typings/angularjs/angular.d.ts" />
 
-///<reference path="Models/Gear/GearCollection.ts" />
-///<reference path="Models/Gear/GearItem.ts" />
-///<reference path="Models/Gear/GearSystem.ts" />
+/// <reference path="Models/Gear/GearCollection.ts" />
+/// <reference path="Models/Gear/GearItem.ts" />
+/// <reference path="Models/Gear/GearSystem.ts" />
 
-///<reference path="Resources/Gear/GearCollectionResource.ts" />
-///<reference path="Resources/Gear/GearItemResource.ts" />
-///<reference path="Resources/Gear/GearSystemResource.ts" />
+/// <reference path="Resources/Gear/GearCollectionResource.ts" />
+/// <reference path="Resources/Gear/GearItemResource.ts" />
+/// <reference path="Resources/Gear/GearSystemResource.ts" />
 
-///<reference path="Services/Gear/GearCollectionService.ts"/>
-///<reference path="Services/Gear/GearItemService.ts"/>
-///<reference path="Services/Gear/GearSystemService.ts"/>
+/// <reference path="Services/Gear/GearCollectionService.ts"/>
+/// <reference path="Services/Gear/GearItemService.ts"/>
+/// <reference path="Services/Gear/GearSystemService.ts"/>
 
 module BackpackPlanner.Mockup {
     "use strict";

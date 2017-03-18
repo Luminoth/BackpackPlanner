@@ -1,6 +1,6 @@
-///<reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
+/// <reference path="../../../scripts/typings/angularjs/angular-resource.d.ts" />
 
-///<reference path="../../Resources/Trips/TripPlanResource.ts" />
+/// <reference path="../../Resources/Trips/TripPlanResource.ts" />
 
 module BackpackPlanner.Mockup.Services.Trips {
     "use strict";
