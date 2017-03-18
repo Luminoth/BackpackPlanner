@@ -31,7 +31,7 @@
                 <md-option value="-getCostPerUnitInCurrency()">Cost / Weight</md-option>
             </md-select>
         </md-input-container>
-        <md-button class="mockup-card-button" layout-fill ng-repeat="gearCollection in getGearCollections() | filter:filterGearCollection | orderBy:orderBy" href="#/gear/collections/{{ gearCollection.Id }}">
+        <md-button class="mockup-card-button" layout-fill ng-repeat="gearCollection in getGearCollections() | filter:filterGearCollection | orderBy:orderBy" href="/#!/gear/collections/{{ gearCollection.Id }}">
             <md-card class="mockup-card" flex>
                 <md-card-content class="mockup-card-content">
                     <h2 class="md-title">{{ gearCollection.name() }}</h2>
@@ -47,7 +47,7 @@
             </md-card>
         </md-button>
     </div>
-    <md-button class="md-fab md-primary md-hue-1 mockup-add-button" href="#/gear/collections/add">
+    <md-button class="md-fab md-primary md-hue-1 mockup-add-button" href="/#!/gear/collections/add">
         <ng-md-icon icon="add" style="fill: white"></ng-md-icon>
     </md-button>
 </div>

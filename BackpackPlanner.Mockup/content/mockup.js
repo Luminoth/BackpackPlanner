@@ -5256,7 +5256,7 @@ var BackpackPlanner;
             "ngResource",
             "ngRoute",
             "ngSanitize",
-            //"ngTouch",        // this breaks md-button ng-click operation
+            "ngTouch",
             "ngMaterial",
             "ngMdIcons",
             "ui.bootstrap"

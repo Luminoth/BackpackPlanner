@@ -23,7 +23,7 @@
                 <md-option value="name()">Name</md-option>
             </md-select>
         </md-input-container>
-        <md-button class="mockup-card-button" layout-fill ng-repeat="tripItinerary in getTripItineraries() | filter:filterTripItinerary | orderBy:orderBy" href="#/trips/itineraries/{{ tripItinerary.Id }}">
+        <md-button class="mockup-card-button" layout-fill ng-repeat="tripItinerary in getTripItineraries() | filter:filterTripItinerary | orderBy:orderBy" href="/#!/trips/itineraries/{{ tripItinerary.Id }}">
             <md-card class="mockup-card" flex>
                 <md-card-content class="mockup-card-content">
                     <h2 class="md-title">{{ tripItinerary.name() }}</h2>
@@ -33,7 +33,7 @@
             </md-card>
         </md-button>
     </div>
-    <md-button class="md-fab md-primary md-hue-1 mockup-add-button" href="#/trips/itineraries/add">
+    <md-button class="md-fab md-primary md-hue-1 mockup-add-button" href="/#!/trips/itineraries/add">
         <ng-md-icon icon="add" style="fill: white"></ng-md-icon>
     </md-button>
 </div>

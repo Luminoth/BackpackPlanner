@@ -3,13 +3,14 @@
 // Definitions by: Blake Bigelow <https://github.com/blbigelow>, Peter Hajdu <https://github.com/PeterHajdu>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
-import * as angular from 'angular';
+/// <reference path="../angularjs/angular.d.ts" />
 
-declare var _: string;
-export = _;
+declare module "angular-material" {
+    var _: string;
+    export = _;
+}
 
-declare module 'angular' {
-    export namespace material {
+declare namespace angular.material {
         interface IBottomSheetOptions {
             templateUrl?: string;
             template?: string;
@@ -423,5 +424,4 @@ declare module 'angular' {
                 LEFT: string,
             };
         }
-    }
 }

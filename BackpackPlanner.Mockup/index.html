@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Backpacking Planner Mockup</title>
-    <link href="//cdnjs.cloudflare.com/ajax/libs/angular-material/0.10.1/angular-material.css" rel="stylesheet"/>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.0/angular-material.css" rel="stylesheet"/>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="content/app.css" rel="stylesheet" />
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -14,7 +14,7 @@
       <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.js"></script>
 </head>
 <body layout="column" ng-controller="AppCtrl">
 <md-toolbar class="md-whiteframe-z2" layout="row" ng-cloak>
@@ -39,35 +39,35 @@
         <md-content flex>
             <md-list>
                 <md-list-item>
-                    <md-button class="mockup-sidenav-button {{ isActive('/personal') ? 'md-primary' : '' }}" href="#/personal" ng-click="toggleSidenav()" flex>Personal Information</md-button>
+                    <md-button class="mockup-sidenav-button {{ isActive('/personal') ? 'md-primary' : '' }}" ng-href="/#!/personal" ng-click="toggleSidenav()" flex>Personal Information</md-button>
                 </md-list-item>
                 <md-divider></md-divider>
                 <md-list-item>
-                    <md-button class="mockup-sidenav-button {{ isActive('/gear/items') ? 'md-primary' : '' }}" href="#/gear/items" ng-click="toggleSidenav()" flex>Gear Items ({{ getGearItems().length }})</md-button>
+                    <md-button class="mockup-sidenav-button {{ isActive('/gear/items') ? 'md-primary' : '' }}" ng-href="/#!/gear/items" ng-click="toggleSidenav()" flex>Gear Items ({{ getGearItems().length }})</md-button>
                 </md-list-item>
                 <md-list-item>
-                    <md-button class="mockup-sidenav-button {{ isActive('/gear/systems') ? 'md-primary' : '' }}" href="#/gear/systems" ng-click="toggleSidenav()" flex>Gear Systems ({{ getGearSystems().length }})</md-button>
+                    <md-button class="mockup-sidenav-button {{ isActive('/gear/systems') ? 'md-primary' : '' }}" ng-href="/#!/gear/systems" ng-click="toggleSidenav()" flex>Gear Systems ({{ getGearSystems().length }})</md-button>
                 </md-list-item>
                 <md-list-item>
-                    <md-button class="mockup-sidenav-button {{ isActive('/gear/collections') ? 'md-primary' : '' }}" href="#/gear/collections" ng-click="toggleSidenav()" flex>Gear Collections ({{ getGearCollections().length }})</md-button>
+                    <md-button class="mockup-sidenav-button {{ isActive('/gear/collections') ? 'md-primary' : '' }}" ng-href="/#!/gear/collections" ng-click="toggleSidenav()" flex>Gear Collections ({{ getGearCollections().length }})</md-button>
                 </md-list-item>
                 <md-divider></md-divider>
                 <md-list-item>
-                    <md-button class="mockup-sidenav-button {{ isActive('/meals') ? 'md-primary' : '' }}" href="#/meals" ng-click="toggleSidenav()" flex>Meals ({{ getMeals().length }})</md-button>
+                    <md-button class="mockup-sidenav-button {{ isActive('/meals') ? 'md-primary' : '' }}" ng-href="/#!/meals" ng-click="toggleSidenav()" flex>Meals ({{ getMeals().length }})</md-button>
                 </md-list-item>
                 <md-divider></md-divider>
                 <!--<md-list-item>
-                    <md-button class="mockup-sidenav-button {{ isActive('/trips/itineraries') ? 'md-primary' : '' }}" href="#/trips/itineraries" ng-click="toggleSidenav()" flex>Trip Itineraries ({{ getTripItineraries().length }})</md-button>
+                    <md-button class="mockup-sidenav-button {{ isActive('/trips/itineraries') ? 'md-primary' : '' }}" ng-href="/#!/trips/itineraries" ng-click="toggleSidenav()" flex>Trip Itineraries ({{ getTripItineraries().length }})</md-button>
                 </md-list-item>-->
                 <md-list-item>
-                    <md-button class="mockup-sidenav-button {{ isActive('/trips/plans') ? 'md-primary' : '' }}" href="#/trips/plans" ng-click="toggleSidenav()" flex>Trip Plans ({{ getTripPlans().length }})</md-button>
+                    <md-button class="mockup-sidenav-button {{ isActive('/trips/plans') ? 'md-primary' : '' }}" ng-href="/#!/trips/plans" ng-click="toggleSidenav()" flex>Trip Plans ({{ getTripPlans().length }})</md-button>
                 </md-list-item>
                 <md-divider></md-divider>
                 <md-list-item>
-                    <md-button class="mockup-sidenav-button {{ isActive('/settings') ? 'md-primary' : '' }}" href="#/settings" ng-click="toggleSidenav()" flex><ng-md-icon icon="settings" style="fill: grey"></ng-md-icon> Settings</md-button>
+                    <md-button class="mockup-sidenav-button {{ isActive('/settings') ? 'md-primary' : '' }}" ng-href="/#!/settings" ng-click="toggleSidenav()" flex><ng-md-icon icon="settings" style="fill: grey"></ng-md-icon> Settings</md-button>
                 </md-list-item>
                 <md-list-item>
-                    <md-button class="mockup-sidenav-button {{ isActive('/help') ? 'md-primary' : '' }}" href="#/help" ng-click="toggleSidenav()" flex><ng-md-icon icon="help" style="fill: grey"></ng-md-icon> Help</md-button>
+                    <md-button class="mockup-sidenav-button {{ isActive('/help') ? 'md-primary' : '' }}" ng-href="/#!/help" ng-click="toggleSidenav()" flex><ng-md-icon icon="help" style="fill: grey"></ng-md-icon> Help</md-button>
                 </md-list-item>
                 <div flex></div>
             </md-list>
@@ -75,16 +75,16 @@
     </md-sidenav>
     <md-content flex ng-view>Application loading, please wait...</md-content>
 </div>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-animate.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-aria.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-messages.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-resource.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-route.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-sanitize.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-touch.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/angular-material/0.10.1/angular-material.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.5.0/angular-material-icons.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.1/ui-bootstrap-tpls.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular-animate.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular-aria.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular-messages.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular-resource.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular-route.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular-sanitize.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular-touch.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.0/angular-material.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.7.1/angular-material-icons.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js"></script>
 <script src="content/mockup.js"></script>
 </body>
