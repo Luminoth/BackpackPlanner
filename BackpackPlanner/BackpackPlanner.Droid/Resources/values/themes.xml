@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <resources>
     <style name="AppTheme" parent="AppTheme.Base">
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="android:alertDialogTheme">@style/AlertDialogTheme</item>
     </style>
     <style name="AlertDialogTheme" parent="AlertDialogTheme.Base">
@@ -20,5 +19,7 @@
         <item name="colorAccent">@color/accent</item>
         <item name="android:windowBackground">@color/windowBackground</item>
         <item name="colorButtonNormal">@color/accent</item>
+
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
     </style>
 </resources>
