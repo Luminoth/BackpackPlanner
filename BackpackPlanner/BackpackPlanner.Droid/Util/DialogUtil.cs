@@ -29,7 +29,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
             ProgressDialog dialog = new ProgressDialog(activity);
             dialog.SetProgressStyle(style);
             //dialog.SetTitle(titleResId);
-            dialog.SetMessage(activity.Resources.GetString(messageResId));
+            dialog.SetMessage(TextUtil.GetHtmlString(activity, messageResId));
             dialog.SetCancelable(allowCancel);
             dialog.SetCanceledOnTouchOutside(allowCancel);
             dialog.Indeterminate = indeterminate;
@@ -37,21 +37,19 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
             return dialog;
         }
 
-// TODO: swap setting the title/message on these (title first, then message)
-
         public static Android.Support.V7.App.AlertDialog ShowAlert(Activity activity, int messageResId, int titleResId)
         {
             Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(activity);
-            return builder.SetMessage(messageResId)
-                .SetTitle(titleResId)
+            return builder.SetTitle(titleResId)
+                .SetMessage(TextUtil.GetHtmlString(activity, messageResId))
                 .Show();
         }
 
         public static Android.Support.V7.App.AlertDialog ShowOkAlert(Activity activity, int messageResId, int titleResId, EventHandler<DialogClickEventArgs> okEventHandler=null)
         {
             Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(activity);
-            return builder.SetMessage(messageResId)
-                .SetTitle(titleResId)
+            return builder.SetTitle(titleResId)
+                .SetMessage(TextUtil.GetHtmlString(activity, messageResId))
                 .SetPositiveButton(Android.Resource.String.Ok, okEventHandler ?? ((sender, args) => { }))
                 .Show();
         }
@@ -59,10 +57,20 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
         public static Android.Support.V7.App.AlertDialog ShowOkCancelAlert(Activity activity, int messageResId, int titleResId, EventHandler<DialogClickEventArgs> okEventHandler=null, EventHandler<DialogClickEventArgs> cancelEventHandler=null)
         {
             Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(activity);
-            return builder.SetMessage(messageResId)
-                .SetTitle(titleResId)
+            return builder.SetTitle(titleResId)
+                .SetMessage(TextUtil.GetHtmlString(activity, messageResId))
                 .SetPositiveButton(Android.Resource.String.Ok, okEventHandler ?? ((sender, args) => { }))
                 .SetNegativeButton(Android.Resource.String.Cancel, cancelEventHandler ?? ((sender, args) => { }))
+                .Show();
+        }
+
+        public static Android.Support.V7.App.AlertDialog ShowYesNoAlert(Activity activity, int messageResId, int titleResId, EventHandler<DialogClickEventArgs> yesEventHandler=null, EventHandler<DialogClickEventArgs> noEventHandler=null)
+        {
+            Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(activity);
+            return builder.SetTitle(titleResId)
+                .SetMessage(TextUtil.GetHtmlString(activity, messageResId))
+                .SetPositiveButton(Resource.String.label_yes, yesEventHandler ?? ((sender, args) => { }))
+                .SetNegativeButton(Resource.String.label_no, noEventHandler ?? ((sender, args) => { }))
                 .Show();
         }
 
@@ -87,16 +95,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
             Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(activity);
             return builder.SetTitle(titleResId)
                 .SetMultiChoiceItems(items, checkedItems, itemClickEventHandler ?? ((sender, args) => { }))
-                .Show();
-        }
-
-        public static Android.Support.V7.App.AlertDialog ShowYesNoAlert(Activity activity, int messageResId, int titleResId, EventHandler<DialogClickEventArgs> yesEventHandler=null, EventHandler<DialogClickEventArgs> noEventHandler=null)
-        {
-            Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(activity);
-            return builder.SetMessage(messageResId)
-                .SetTitle(titleResId)
-                .SetPositiveButton(Resource.String.label_yes, yesEventHandler ?? ((sender, args) => { }))
-                .SetNegativeButton(Resource.String.label_no, noEventHandler ?? ((sender, args) => { }))
                 .Show();
         }
     }

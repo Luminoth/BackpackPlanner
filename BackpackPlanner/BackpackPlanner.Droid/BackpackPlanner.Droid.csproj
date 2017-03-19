@@ -295,6 +295,7 @@
     <Compile Include="Util\FragmentTransitionUtil.cs" />
     <Compile Include="Util\NavigationDrawerManager.cs" />
     <Compile Include="Util\SnackbarUtil.cs" />
+    <Compile Include="Util\TextUtil.cs" />
     <Compile Include="Util\ViewPagerIndicator.cs" />
   </ItemGroup>
   <ItemGroup>
