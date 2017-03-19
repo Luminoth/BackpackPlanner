@@ -21,17 +21,84 @@
 
     <!-- What is a text -->
 
-    <string name="what_is_a_gear_item">Lots of text about gear items</string>
+    <string name="what_is_a_gear_item">
+        <![CDATA[
+        <p>A Gear Item is a single piece of gear that is either carried, worn, or left in the car on a backpacking trip. Gear Items can also be consumable.</p>
+        <p>Some examples of Gear Items would be:
+            <ul>
+                <li>A backpack</li>
+                <li>A tent</li>
+                <li>Your favorite pair of shoes</li>
+                <li>A celebration beer waiting in the car</li>
+            </ul>
+        </p>
+        <p>Gear Items are categorized by weight using the following scheme:
+            <ul>
+                <li><font color="black">No weight or not carried</font></li>
+                <li><font color="grey">Ultralight (under 8 ounces)</font></li>
+                <li><font color="aqua">Light (under 16 ounces)</font></li>
+                <li><font color="green">Medium (under 48 ounces)</font></li>
+                <li><font color="yellow">Heavy (under 80 ounces)</font></li>
+                <li><font color="red">Extra Heavy (over 80 ounces)</font></li>
+            </ul>
+        </p>
+        ]]>
+    </string>
 
-    <string name="what_is_a_gear_system">Lots of text about gear systems</string>
+    <string name="what_is_a_gear_system">
+        <![CDATA[
+        <p>A Gear System is a small collection of related Gear Items.</p>
+        <p>
+            Some examples of Gear Systems would be:
+            <ul>
+                <li>A water filtration system</li>
+                <li>A shelter system</li>
+                <li>Your favorite set of clothes</li>
+                <li>A change of clothes waiting in the car</li>
+            </ul>
+        </p>
+        ]]>
+    </string>
 
-    <string name="what_is_a_gear_collection">Lots of text about gear collections</string>
+    <string name="what_is_a_gear_collection">
+        <![CDATA[
+        <p>A Gear Collection is a collection of Gear Systems and Gear Items.</p>
+        <p>
+            Some examples of Gear Systems would be:
+            <ul>
+                <li>A three season collection including clothes and shelter system</li>
+                <li>A winter collection including clothes and shelter system</li>
+                <li>A backpack, shelter system, water system, and a few miscellaneous items</li>
+            </ul>
+        </p>
+        ]]>
+    </string>
 
-    <string name="what_is_a_meal">Lots of text about meals</string>
+    <string name="what_is_a_meal">
+        <![CDATA[
+        <p>A Meal is a single consumable item that is carried on a backpacking trip and consumed as a meal.</p>
+        <p>
+            Some examples of Meals would be:
+            <ul>
+                <li>A complete lunch, dinner, or breakfast</li>
+                <li>A snack bar</li>
+                <li>An electrolyte drink additive</li>
+            </ul>
+        </p>
+        ]]>
+    </string>
 
-    <string name="what_is_a_trip_itinerary">Lots of text about trip itineraries</string>
+    <string name="what_is_a_trip_itinerary">
+        <![CDATA[
+        <p>TODO</p>
+        ]]>
+    </string>
 
-    <string name="what_is_a_trip_plan">Lots of text about trip plans</string>
+    <string name="what_is_a_trip_plan">
+        <![CDATA[
+        <p>TODO</p>
+        ]]>
+    </string>
 
     <!-- Delete confirmations -->
 
