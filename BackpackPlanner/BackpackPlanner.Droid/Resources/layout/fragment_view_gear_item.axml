@@ -121,11 +121,26 @@
                 android:inputType="text|textMultiLine" />
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
-    <Button
-        android:id="@+id/button_save_gear_item"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="@string/label_save_gear_item"
-        android:textColor="@android:color/white" />
+        android:layout_alignParentBottom="true">
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_save_gear_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:elevation="15dp"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_add" />
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_reset_gear_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:elevation="15dp"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_undo" />
+    </LinearLayout>
 </RelativeLayout>

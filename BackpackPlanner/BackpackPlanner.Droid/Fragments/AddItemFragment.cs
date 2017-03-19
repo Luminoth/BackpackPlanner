@@ -17,7 +17,6 @@
 using Android.App;
 using Android.OS;
 using Android.Views;
-using Android.Widget;
 
 using EnergonSoftware.BackpackPlanner.Commands;
 using EnergonSoftware.BackpackPlanner.Droid.Util;
@@ -29,6 +28,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
     {
         protected abstract int AddItemResource { get; }
 
+        protected abstract int ResetItemResource { get; }
+
         protected override bool HasSearchView => false;
 
         protected override bool CanExport => false;
@@ -39,7 +40,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         {
             base.OnViewCreated(view, savedInstanceState);
 
-            Button addItemButton = view.FindViewById<Button>(AddItemResource);
+            Android.Support.Design.Widget.FloatingActionButton addItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(AddItemResource);
             addItemButton.Click += (sender, args) => {
                 if(!DoDataExchange()) {
                     return;
@@ -60,6 +61,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                         });
                     }
                 );
+            };
+
+            Android.Support.Design.Widget.FloatingActionButton resetItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(ResetItemResource);
+            resetItemButton.Click += (sender, args) => {
+                OnReset();
             };
         }
     }

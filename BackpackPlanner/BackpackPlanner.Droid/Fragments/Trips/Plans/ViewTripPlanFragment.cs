@@ -34,7 +34,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
 
         protected override int TitleResource => Resource.String.title_view_trip_plan;
 
-        protected override int SaveItemResource => Resource.Id.button_save_trip_plan;
+        protected override int SaveItemResource => Resource.Id.fab_save_trip_plan;
+
+        protected override int ResetItemResource => Resource.Id.fab_reset_trip_plan;
 
 #region Controls
         private Android.Support.Design.Widget.TextInputLayout _tripPlanNameEditText;
@@ -115,6 +117,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
             }
 
             return valid;
+        }
+
+        protected override void OnReset()
+        {
+// TODO
         }
     }
 }

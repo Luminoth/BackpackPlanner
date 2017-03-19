@@ -35,5 +35,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         protected abstract bool OnValidate();
 
         protected abstract void OnDoDataExchange();
+
+        protected abstract void OnReset();
     }
 }

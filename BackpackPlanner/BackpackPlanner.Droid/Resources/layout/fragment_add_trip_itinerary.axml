@@ -29,11 +29,26 @@
                 android:inputType="text|textMultiLine" />
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
-    <Button
-        android:id="@+id/button_add_trip_itinerary"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="@string/label_add_trip_itinerary"
-        android:textColor="@android:color/white" />
+        android:layout_alignParentBottom="true">
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_add_trip_itinerary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:elevation="15dp"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_add" />
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_reset_trip_itinerary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:elevation="15dp"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_undo" />
+    </LinearLayout>
 </RelativeLayout>

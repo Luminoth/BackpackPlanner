@@ -32,7 +32,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
 
         protected override int TitleResource => Resource.String.title_add_meal;
 
-        protected override int AddItemResource => Resource.Id.button_add_meal;
+        protected override int AddItemResource => Resource.Id.fab_add_meal;
+
+        protected override int ResetItemResource => Resource.Id.fab_reset_meal;
 
 #region Controls
         private Android.Support.Design.Widget.TextInputLayout _mealNameEditText;
@@ -98,6 +100,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
             }
 
             return valid;
+        }
+
+        protected override void OnReset()
+        {
+// TODO
         }
     }
 }

@@ -32,7 +32,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
 
         protected override int TitleResource => Resource.String.title_view_gear_item;
 
-        protected override int SaveItemResource => Resource.Id.button_save_gear_item;
+        protected override int SaveItemResource => Resource.Id.fab_save_gear_item;
+
+        protected override int ResetItemResource => Resource.Id.fab_reset_gear_item;
 
 #region Controls
         private Android.Support.Design.Widget.TextInputLayout _gearItemNameEditText;
@@ -144,6 +146,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
             }
 
             return valid;
+        }
+
+        protected override void OnReset()
+        {
+// TODO
         }
     }
 }
