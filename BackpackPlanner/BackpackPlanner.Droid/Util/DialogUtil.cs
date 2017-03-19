@@ -26,7 +26,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
     {
         public static ProgressDialog ShowProgressDialog(Activity activity, int messageResId, /*int titleResId,*/ bool allowCancel, bool indeterminate, ProgressDialogStyle style=ProgressDialogStyle.Spinner)
         {
-            ProgressDialog dialog = new ProgressDialog(activity);
+            ProgressDialog dialog = new ProgressDialog(activity, Resource.Style.AlertDialogTheme);
             dialog.SetProgressStyle(style);
             //dialog.SetTitle(titleResId);
             dialog.SetMessage(TextUtil.GetHtmlString(activity, messageResId));
@@ -39,7 +39,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 
         public static Android.Support.V7.App.AlertDialog ShowAlert(Activity activity, int messageResId, int titleResId)
         {
-            Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(activity);
+            Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(activity, Resource.Style.AlertDialogTheme);
             return builder.SetTitle(titleResId)
                 .SetMessage(TextUtil.GetHtmlString(activity, messageResId))
                 .Show();
@@ -47,7 +47,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 
         public static Android.Support.V7.App.AlertDialog ShowOkAlert(Activity activity, int messageResId, int titleResId, EventHandler<DialogClickEventArgs> okEventHandler=null)
         {
-            Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(activity);
+            Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(activity, Resource.Style.AlertDialogTheme);
             return builder.SetTitle(titleResId)
                 .SetMessage(TextUtil.GetHtmlString(activity, messageResId))
                 .SetPositiveButton(Android.Resource.String.Ok, okEventHandler ?? ((sender, args) => { }))
@@ -56,7 +56,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 
         public static Android.Support.V7.App.AlertDialog ShowOkCancelAlert(Activity activity, int messageResId, int titleResId, EventHandler<DialogClickEventArgs> okEventHandler=null, EventHandler<DialogClickEventArgs> cancelEventHandler=null)
         {
-            Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(activity);
+            Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(activity, Resource.Style.AlertDialogTheme);
             return builder.SetTitle(titleResId)
                 .SetMessage(TextUtil.GetHtmlString(activity, messageResId))
                 .SetPositiveButton(Android.Resource.String.Ok, okEventHandler ?? ((sender, args) => { }))
@@ -66,7 +66,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 
         public static Android.Support.V7.App.AlertDialog ShowYesNoAlert(Activity activity, int messageResId, int titleResId, EventHandler<DialogClickEventArgs> yesEventHandler=null, EventHandler<DialogClickEventArgs> noEventHandler=null)
         {
-            Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(activity);
+            Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(activity, Resource.Style.AlertDialogTheme);
             return builder.SetTitle(titleResId)
                 .SetMessage(TextUtil.GetHtmlString(activity, messageResId))
                 .SetPositiveButton(Resource.String.label_yes, yesEventHandler ?? ((sender, args) => { }))
@@ -76,7 +76,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 
         public static Android.Support.V7.App.AlertDialog ShowListViewAlert(Activity activity, int titleResId, IListAdapter adapter, EventHandler<DialogClickEventArgs> itemClickEventHandler=null)
         {
-            Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(activity);
+            Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(activity, Resource.Style.AlertDialogTheme);
             return builder.SetTitle(titleResId)
                 .SetAdapter(adapter, itemClickEventHandler ?? ((sender, args) => { }))
                 .Show();
@@ -84,7 +84,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 
         public static Android.Support.V7.App.AlertDialog ShowSingleChoiceAlert(Activity activity, int titleResId, string[] items, int checkedItem, EventHandler<DialogClickEventArgs> itemClickEventHandler=null)
         {
-            Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(activity);
+            Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(activity, Resource.Style.AlertDialogTheme);
             return builder.SetTitle(titleResId)
                 .SetSingleChoiceItems(items, checkedItem, itemClickEventHandler ?? ((sender, args) => { }))
                 .Show();
@@ -92,7 +92,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
 
         public static Android.Support.V7.App.AlertDialog ShowMultiChoiceAlert(Activity activity, int titleResId, string[] items, bool[] checkedItems, EventHandler<DialogMultiChoiceClickEventArgs> itemClickEventHandler=null)
         {
-            Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(activity);
+            Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(activity, Resource.Style.AlertDialogTheme);
             return builder.SetTitle(titleResId)
                 .SetMultiChoiceItems(items, checkedItems, itemClickEventHandler ?? ((sender, args) => { }))
                 .Show();

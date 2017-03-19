@@ -5257,6 +5257,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0a00da
 			public const int AlertDialog_AppCompat_Light = 2131362010;
 			
+			// aapt resource value: 0x7f0a01a0
+			public const int AlertDialogTheme = 2131362208;
+			
+			// aapt resource value: 0x7f0a01a1
+			public const int AlertDialogTheme_Base = 2131362209;
+			
 			// aapt resource value: 0x7f0a00db
 			public const int Animation_AppCompat_Dialog = 2131362011;
 			
@@ -5269,8 +5275,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0a019f
 			public const int AppTheme = 2131362207;
 			
-			// aapt resource value: 0x7f0a01a0
-			public const int AppTheme_Base = 2131362208;
+			// aapt resource value: 0x7f0a01a2
+			public const int AppTheme_Base = 2131362210;
 			
 			// aapt resource value: 0x7f0a00dd
 			public const int Base_AlertDialog_AppCompat = 2131362013;
@@ -6226,8 +6232,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0a0000
 			public const int Theme_IAPTheme = 2131361792;
 			
-			// aapt resource value: 0x7f0a01a1
-			public const int Theme_PageIndicatorDefaults = 2131362209;
+			// aapt resource value: 0x7f0a01a3
+			public const int Theme_PageIndicatorDefaults = 2131362211;
 			
 			// aapt resource value: 0x7f0a014a
 			public const int ThemeOverlay_AppCompat = 2131362122;
@@ -6250,8 +6256,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0a0150
 			public const int ThemeOverlay_AppCompat_Light = 2131362128;
 			
-			// aapt resource value: 0x7f0a01a2
-			public const int Widget = 2131362210;
+			// aapt resource value: 0x7f0a01a4
+			public const int Widget = 2131362212;
 			
 			// aapt resource value: 0x7f0a0151
 			public const int Widget_AppCompat_ActionBar = 2131362129;
@@ -6475,8 +6481,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0a0198
 			public const int Widget_AppCompat_Toolbar_Button_Navigation = 2131362200;
 			
-			// aapt resource value: 0x7f0a01a3
-			public const int Widget_CirclePageIndicator = 2131362211;
+			// aapt resource value: 0x7f0a01a5
+			public const int Widget_CirclePageIndicator = 2131362213;
 			
 			// aapt resource value: 0x7f0a0020
 			public const int Widget_Design_AppBarLayout = 2131361824;
