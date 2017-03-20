@@ -134,7 +134,7 @@
             android:layout_height="wrap_content"
             android:elevation="15dp"
             android:layout_margin="16dp"
-            app:backgroundTint="@android:color/green"
+            app:backgroundTint="@color/green"
             android:src="@drawable/ic_save" />
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_reset_gear_item"
@@ -149,7 +149,7 @@
             android:layout_height="wrap_content"
             android:elevation="15dp"
             android:layout_margin="16dp"
-            app:backgroundTint="@android:color/red"
+            app:backgroundTint="@color/red"
             android:src="@drawable/ic_delete" />
     </LinearLayout>
 </RelativeLayout>

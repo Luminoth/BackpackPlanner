@@ -4,4 +4,6 @@
     <color name="primaryDark">#000000</color>
     <color name="accent">#501616</color>
     <color name="windowBackground">#DECD87</color>
+    <color name="red">#FF0000</color>
+    <color name="green">#008800</color>
 </resources>
