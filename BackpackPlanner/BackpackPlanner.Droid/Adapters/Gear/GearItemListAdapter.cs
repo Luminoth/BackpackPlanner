@@ -18,6 +18,8 @@ using System;
 using System.Globalization;
 using System.Linq;
 
+using Android.Graphics;
+using Android.Graphics.Drawables;
 using Android.Views;
 using Android.Widget;
 
@@ -79,27 +81,35 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
                 }
 
                 _textViewWeightCategory.Text = ListItem.WeightCategory.ShortName();
+
+                // TODO: is there any way to turn this into a core-extension?
+                // we would somehow have to convert to the appropriate android color
+                Color categoryStickerColor = Color.Gray;
                 switch(ListItem.WeightCategory)
                 {
                 case WeightCategory.None:
-                    _textViewWeightCategory.SetBackgroundResource(Resource.Color.black);
+                    categoryStickerColor = Color.Gray;
                     break;
                 case WeightCategory.Ultralight:
-                    _textViewWeightCategory.SetBackgroundResource(Resource.Color.grey);
+                    categoryStickerColor = Color.White;
                     break;
                 case WeightCategory.Light:
-                    _textViewWeightCategory.SetBackgroundResource(Resource.Color.aqua);
+                    categoryStickerColor = Color.Aqua;
                     break;
                 case WeightCategory.Medium:
-                    _textViewWeightCategory.SetBackgroundResource(Resource.Color.green);
+                    categoryStickerColor = Color.Green;
                     break;
                 case WeightCategory.Heavy:
-                    _textViewWeightCategory.SetBackgroundResource(Resource.Color.yellow);
+                    categoryStickerColor = Color.Yellow;
                     break;
                 case WeightCategory.ExtraHeavy:
-                    _textViewWeightCategory.SetBackgroundResource(Resource.Color.red);
+                    categoryStickerColor = Color.Red;
                     break;
                 }
+
+                GradientDrawable categoryStickerDrawable = (GradientDrawable)_textViewWeightCategory.Background;
+                categoryStickerDrawable.SetColor(categoryStickerColor);
+                categoryStickerDrawable.SetStroke(5, Color.Black);
 
                 int weightInUnits = (int)ListItem.WeightInUnits;
                 _textViewWeight.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_gear_item_weight),

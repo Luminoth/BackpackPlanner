@@ -39,10 +39,12 @@
             android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/view_gear_item_weight_category"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:textColor="@color/white"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="5dp"
+                android:gravity="center"
+                android:background="@drawable/category_sticker"
+                android:textColor="@color/black"
                 android:text="NC" />
             <TextView
                 android:id="@+id/view_gear_item_weight"
