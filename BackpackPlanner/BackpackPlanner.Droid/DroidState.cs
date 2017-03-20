@@ -48,7 +48,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
         /// </summary>
         /// <param name="activity">The activity.</param>
         /// <returns>Can safely be called multiple times over the life of the application.</returns>
-        public async Task OnCreate(BaseActivity activity)
+        public void OnCreate(BaseActivity activity)
         {
             if(null == CustomLogger.PlatformLogger) {
                 CustomLogger.PlatformLogger = new DroidLogger();
@@ -68,12 +68,17 @@ namespace EnergonSoftware.BackpackPlanner.Droid
                     PermissionRequestFactory
                 );
 
-                await BackpackPlannerState.InitAsync().ConfigureAwait(false);
+                BackpackPlannerState.InitAsync().Wait();
             }
 
             LoadPreferences(activity);
 
             ((HockeyAppManager)BackpackPlannerState.PlatformHockeyAppManager).OnCreate(activity);
+        }
+
+        public void OnDestroy()
+        {
+            BackpackPlannerState?.Destroy();
         }
 
         public void OnResume(BaseActivity activity)

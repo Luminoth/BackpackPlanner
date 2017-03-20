@@ -15,7 +15,6 @@
 */
 
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 using Android.App;
 using Android.Content;
@@ -70,6 +69,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         public Spinner SortItemsSpinner { get; private set; }
 #endregion
 
+        private bool _haveItems;
+
         protected abstract Android.Support.V4.App.Fragment CreateAddItemFragment();
 
         protected abstract BaseListAdapter<T> CreateAdapter();
@@ -101,33 +102,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         {
             base.OnResume();
 
-            ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_initializing_database, false, true);
-
-            Task.Run(async () =>
-            {
-// TODO: should this error if the database hasn't even started initializing? eg - initializing AND initialized are false
-
-                Logger.Info($"{typeof(T)} awaiting database initialization: {DroidState.Instance.BackpackPlannerState.DatabaseState.IsInitializing}");
-                while(DroidState.Instance.BackpackPlannerState.DatabaseState.IsInitializing) {
-                    await Task.Delay(1).ConfigureAwait(false);
-                }
-                Logger.Debug("Database initialized!");
-
-                Activity.RunOnUiThread(() =>
-                {
-                    progressDialog.Dismiss();
-
-                    PopulateList();
-                });
-            });
-        }
-
-        public override void OnPause()
-        {
-            base.OnPause();
-
-            Logger.Debug("Clearing item list for pause...");
-            ListItems.Clear();
+            PopulateList();
         }
 
         public override void OnCreateOptionsMenu(IMenu menu, MenuInflater inflater)
@@ -139,6 +114,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         protected void PopulateList()
         {
+            if(_haveItems) {
+                return;
+            }
+
             ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_loading_items, false, true);
 
             new GetItemsCommand<T>().DoActionInBackground(DroidState.Instance.BackpackPlannerState,
@@ -154,6 +133,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                         progressDialog.Dismiss();
 
                         Adapter.ListItems = ListItems;
+                        _haveItems = true;
+
                         UpdateView();
                     });
                 }

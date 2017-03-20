@@ -57,7 +57,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             _startupStopwatch.Start();
 #endif
 
-            Task.Run(async () => await DroidState.Instance.OnCreate(this).ConfigureAwait(false));
+            DroidState.Instance.OnCreate(this);
         }
 
         protected override void OnDestroy()
@@ -70,6 +70,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             foreach(var kvp in _permissionRequests) {
                 kvp.Value.RemoveAll(x => this == x.Activity);
             }
+
+            // this is bad, we only want to do this if the
+            // full application is closed, not the activity
+            //DroidState.Instance.OnDestroy();
 
             base.OnDestroy();
         }

@@ -22,7 +22,7 @@ using Microsoft.HockeyApp;
 
 namespace EnergonSoftware.BackpackPlanner.Windows
 {
-    public class HockeyAppManager : IHockeyAppManager
+    public sealed class HockeyAppManager : IHockeyAppManager
     {
         public string AppId => "4a1fe69d1c8a49f08ed3de584e44f0fe";
 
@@ -45,9 +45,8 @@ namespace EnergonSoftware.BackpackPlanner.Windows
             IsInitialized = true;
         }
 
-        public async Task DestroyAsync()
+        public void Destroy()
         {
-            await Task.Delay(0).ConfigureAwait(false);
         }
 
         public void ShowFeedback()

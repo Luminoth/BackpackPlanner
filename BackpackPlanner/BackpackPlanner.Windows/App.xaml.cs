@@ -102,6 +102,8 @@ namespace EnergonSoftware.BackpackPlanner.Windows
             await BackpackPlannerState.DatabaseState.InitDatabaseAsync(BackpackPlannerState);
         }
 
+        // TODO: where do we call BackpackPlannerState.Destroy() ?
+
         /// <summary>
         /// Invoked when Navigation to a certain page fails
         /// </summary>

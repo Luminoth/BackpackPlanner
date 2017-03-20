@@ -87,13 +87,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             return 1 == CrashManager.HasStackTraces(new Java.Lang.Ref.WeakReference(activity));
         }
 
-        public async Task DestroyAsync()
+        public void Destroy()
         {
             TaskScheduler.UnobservedTaskException -= OnUnobservedTaskException;
             AppDomain.CurrentDomain.UnhandledException -= OnUnhandledException;
             AndroidEnvironment.UnhandledExceptionRaiser -= OnUnhandledExceptionRaised;
-
-            await Task.Delay(0).ConfigureAwait(false);
         }
 
         public void ShowFeedback()

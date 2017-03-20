@@ -40,14 +40,13 @@ namespace EnergonSoftware.BackpackPlanner.Windows
 
         private string _appFolderId;
 
-        public override async Task InitAsync()
+        public override void Init()
         {
-            await Task.Delay(0).ConfigureAwait(false);
         }
 
-        public override async Task DestroyAsync()
+        public override void Destroy()
         {
-            await base.DestroyAsync().ConfigureAwait(false);
+            base.Destroy();
 
             Cleanup();
         }

@@ -14,8 +14,6 @@
    limitations under the License.
 */
 
-using System.Threading.Tasks;
-
 using Android.App;
 using Android.Content.Res;
 using Android.OS;
@@ -96,14 +94,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             base.OnPostCreate(savedInstanceState, persistentState);
 
             _navigationDrawerManager.Toggle.SyncState();
-        }
-
-        protected override void OnStart()
-        {
-            base.OnStart();
-
-// TODO: what if the db calls just inherintly called this?
-            Task.Run(async () => await DroidState.Instance.InitDatabase().ConfigureAwait(false));
         }
 
         protected override void OnSaveInstanceState(Bundle outState)

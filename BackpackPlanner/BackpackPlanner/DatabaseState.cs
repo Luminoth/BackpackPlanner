@@ -16,6 +16,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -72,14 +73,6 @@ namespace EnergonSoftware.BackpackPlanner
         /// </value>
         // ReSharper disable once InconsistentNaming
         public ISQLitePlatform SQLitePlatform { get; set; }
-
-        /// <summary>
-        /// Gets a value indicating whether the database is initializing.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if the database is initializing; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsInitializing { get; private set; }
 
         /// <summary>
         /// Gets a value indicating whether the database is initialized.
@@ -158,20 +151,19 @@ namespace EnergonSoftware.BackpackPlanner
             {
                 Version = CurrentDatabaseVersion
             };
+            DatabaseVersion oldVersion;
 
             Logger.Info("Initializing database...");
 
             await Connection.LockAsync().ConfigureAwait(false);
             try {
-                IsInitializing = true;
-
                 var databaseVersionTableInfo = Connection.Connection.GetTableInfo("DatabaseVersion");
                 if(!databaseVersionTableInfo.Any()) {
                     Logger.Debug("Creating a new database...");
                     await DatabaseVersion.CreateTablesAsync(state).ConfigureAwait(false);
                 }
 
-                DatabaseVersion oldVersion = await DatabaseVersion.GetAsync(state).ConfigureAwait(false);
+                oldVersion = await DatabaseVersion.GetAsync(state).ConfigureAwait(false);
                 if(null == oldVersion) {
                     Logger.Debug("DatabaseVersion.Get returned null!?!");
                     throw new InvalidOperationException("DatabaseVersion.Get returned null!?!");
@@ -189,14 +181,12 @@ namespace EnergonSoftware.BackpackPlanner
 
                 newVersion.DatabaseVersionId = oldVersion.DatabaseVersionId;
                 await DatabaseVersion.UpdateAsync(state, newVersion).ConfigureAwait(false);
-
-                /*if(oldVersion.Version < 1) {
-                    await PopulateInitialDatabaseAsync(state).ConfigureAwait(false);
-                }*/
             } finally {
-                IsInitializing = false;
-
                 Connection.Release();
+            }
+
+            if(oldVersion.Version < 1) {
+                await PopulateInitialDatabaseAsync(state).ConfigureAwait(false);
             }
 
             IsInitialized = true;
@@ -206,6 +196,9 @@ namespace EnergonSoftware.BackpackPlanner
         {
 #if DEBUG
             Logger.Debug("Populating test data, this will take a while...");
+
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
 
 #region Test Gear Items
             Logger.Debug("Inserting test gear items...");
@@ -632,7 +625,8 @@ namespace EnergonSoftware.BackpackPlanner
             );
 #endregion
 
-            Logger.Debug("Finished populating test data!");
+            stopwatch.Stop();
+            Logger.Debug($"Finished populating test data in {stopwatch.ElapsedMilliseconds}ms");
 #else
             await Task.Delay(0).ConfigureAwait(false);
 #endif

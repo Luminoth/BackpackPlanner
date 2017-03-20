@@ -47,7 +47,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.HockeyApp
         /// <summary>
         /// 
         /// </summary>
-        Task DestroyAsync();
+        void Destroy();
 
         /// <summary>
         /// Shows the feedback form.

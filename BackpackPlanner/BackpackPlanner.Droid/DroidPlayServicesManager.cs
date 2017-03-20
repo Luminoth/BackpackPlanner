@@ -68,9 +68,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             _connectionListener = new PlayServicesConnectionListener(this);
         }
 
-        public override async Task InitAsync()
+        public override void Init()
         {
-            await Task.Delay(0).ConfigureAwait(false);
         }
 
         public void OnCreate(BaseActivity activity)

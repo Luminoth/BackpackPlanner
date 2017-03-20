@@ -14,6 +14,9 @@
    limitations under the License.
 */
 
+using System.Diagnostics;
+using System.Threading.Tasks;
+
 using Android.App;
 using Android.OS;
 
@@ -37,6 +40,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 
             Title = Resources.GetString(Resource.String.app_name);
         }
+#if DEBUG
+        private readonly Stopwatch _initStopwatch = new Stopwatch();
+#endif
 
         protected override void OnDestroy()
         {
@@ -51,16 +57,51 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
         {
             base.OnResume();
 
-            if(DroidState.Instance.BackpackPlannerState.Settings.MetaSettings.FirstRun) {
-                Logger.Debug("Starting FTUE...");
-                StartActivity(typeof(FTUEActivity));
-            } else {
-                Logger.Debug("Starting main activity...");
-                StartActivity(typeof(BackpackPlannerActivity));
-            }
-            DroidState.Instance.BackpackPlannerState.Settings.MetaSettings.FirstRun = false;
+            Task.Run(async () => await Init().ConfigureAwait(false));
+        }
 
-            Finish();
+        public override void OnBackPressed()
+        {
+            // prevent back button from doing anything while loading
+        }
+
+        private async Task Init()
+        {
+            Logger.Debug("Initializing...");
+
+#if DEBUG
+            _initStopwatch.Start();
+#endif
+
+            await DroidState.Instance.InitDatabase().ConfigureAwait(false);
+
+            InitFinished();
+        }
+
+        private void InitFinished()
+        {
+#if DEBUG
+            if(_initStopwatch.IsRunning) {
+                Logger.Debug($"Initialization finished in: {_initStopwatch.ElapsedMilliseconds}ms");
+            }
+            _initStopwatch.Stop();
+#else
+            Logger.Debug("Initialization finished!");
+#endif
+
+            RunOnUiThread(() =>
+            {
+                if(DroidState.Instance.BackpackPlannerState.Settings.MetaSettings.FirstRun) {
+                    Logger.Debug("Starting FTUE...");
+                    StartActivity(typeof(FTUEActivity));
+                } else {
+                    Logger.Debug("Starting main activity...");
+                    StartActivity(typeof(BackpackPlannerActivity));
+                }
+                DroidState.Instance.BackpackPlannerState.Settings.MetaSettings.FirstRun = false;
+
+                Finish();
+            });
         }
     }
 }

@@ -64,7 +64,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.PlayServices
         private void Dispose(bool disposing)
         {
             if(disposing) {
-                DestroyAsync().Wait();
+                Destroy();
             }
         }
 #endregion
@@ -77,14 +77,14 @@ namespace EnergonSoftware.BackpackPlanner.Core.PlayServices
         /// <summary>
         /// Initializes Google Play Services.
         /// </summary>
-        public abstract Task InitAsync();
+        public abstract void Init();
 
         /// <summary>
         /// Destroys Google Play Services.
         /// </summary>
-        public virtual async Task DestroyAsync()
+        public virtual void Destroy()
         {
-            await DisconnectAsync().ConfigureAwait(false);
+            DisconnectAsync().Wait();
         }
 
         /// <summary>

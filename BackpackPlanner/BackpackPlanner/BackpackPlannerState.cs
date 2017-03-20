@@ -168,21 +168,21 @@ namespace EnergonSoftware.BackpackPlanner
 
             await PlatformHockeyAppManager.InitAsync().ConfigureAwait(false);
 
-            await PlatformPlayServicesManager.InitAsync().ConfigureAwait(false);
+            PlatformPlayServicesManager.Init();
         }
 
         /// <summary>
         /// Destroys the dependency state.
         /// </summary>
-        public async Task DestroyAsync()
+        public void Destroy()
         {
             Logger.Debug("Destroying platform state...");
 
-            await PlatformPlayServicesManager.DestroyAsync().ConfigureAwait(false);
+            PlatformPlayServicesManager.Destroy();
 
-            await DatabaseState.DisconnectAsync().ConfigureAwait(false);
+            DatabaseState.DisconnectAsync().Wait();
 
-            await PlatformHockeyAppManager.DestroyAsync().ConfigureAwait(false);
+            PlatformHockeyAppManager.Destroy();
         }
     }
 }
