@@ -1510,44 +1510,44 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 		public partial class Color
 		{
 			
-			// aapt resource value: 0x7f09006f
-			public const int abc_background_cache_hint_selector_material_dark = 2131296367;
-			
 			// aapt resource value: 0x7f090070
-			public const int abc_background_cache_hint_selector_material_light = 2131296368;
+			public const int abc_background_cache_hint_selector_material_dark = 2131296368;
 			
 			// aapt resource value: 0x7f090071
-			public const int abc_btn_colored_borderless_text_material = 2131296369;
+			public const int abc_background_cache_hint_selector_material_light = 2131296369;
 			
 			// aapt resource value: 0x7f090072
-			public const int abc_btn_colored_text_material = 2131296370;
+			public const int abc_btn_colored_borderless_text_material = 2131296370;
 			
 			// aapt resource value: 0x7f090073
-			public const int abc_color_highlight_material = 2131296371;
+			public const int abc_btn_colored_text_material = 2131296371;
 			
 			// aapt resource value: 0x7f090074
-			public const int abc_hint_foreground_material_dark = 2131296372;
+			public const int abc_color_highlight_material = 2131296372;
 			
 			// aapt resource value: 0x7f090075
-			public const int abc_hint_foreground_material_light = 2131296373;
+			public const int abc_hint_foreground_material_dark = 2131296373;
+			
+			// aapt resource value: 0x7f090076
+			public const int abc_hint_foreground_material_light = 2131296374;
 			
 			// aapt resource value: 0x7f090015
 			public const int abc_input_method_navigation_guard = 2131296277;
 			
-			// aapt resource value: 0x7f090076
-			public const int abc_primary_text_disable_only_material_dark = 2131296374;
-			
 			// aapt resource value: 0x7f090077
-			public const int abc_primary_text_disable_only_material_light = 2131296375;
+			public const int abc_primary_text_disable_only_material_dark = 2131296375;
 			
 			// aapt resource value: 0x7f090078
-			public const int abc_primary_text_material_dark = 2131296376;
+			public const int abc_primary_text_disable_only_material_light = 2131296376;
 			
 			// aapt resource value: 0x7f090079
-			public const int abc_primary_text_material_light = 2131296377;
+			public const int abc_primary_text_material_dark = 2131296377;
 			
 			// aapt resource value: 0x7f09007a
-			public const int abc_search_url_text = 2131296378;
+			public const int abc_primary_text_material_light = 2131296378;
+			
+			// aapt resource value: 0x7f09007b
+			public const int abc_search_url_text = 2131296379;
 			
 			// aapt resource value: 0x7f090016
 			public const int abc_search_url_text_normal = 2131296278;
@@ -1558,32 +1558,32 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f090018
 			public const int abc_search_url_text_selected = 2131296280;
 			
-			// aapt resource value: 0x7f09007b
-			public const int abc_secondary_text_material_dark = 2131296379;
-			
 			// aapt resource value: 0x7f09007c
-			public const int abc_secondary_text_material_light = 2131296380;
+			public const int abc_secondary_text_material_dark = 2131296380;
 			
 			// aapt resource value: 0x7f09007d
-			public const int abc_tint_btn_checkable = 2131296381;
+			public const int abc_secondary_text_material_light = 2131296381;
 			
 			// aapt resource value: 0x7f09007e
-			public const int abc_tint_default = 2131296382;
+			public const int abc_tint_btn_checkable = 2131296382;
 			
 			// aapt resource value: 0x7f09007f
-			public const int abc_tint_edittext = 2131296383;
+			public const int abc_tint_default = 2131296383;
 			
 			// aapt resource value: 0x7f090080
-			public const int abc_tint_seek_thumb = 2131296384;
+			public const int abc_tint_edittext = 2131296384;
 			
 			// aapt resource value: 0x7f090081
-			public const int abc_tint_spinner = 2131296385;
+			public const int abc_tint_seek_thumb = 2131296385;
 			
 			// aapt resource value: 0x7f090082
-			public const int abc_tint_switch_thumb = 2131296386;
+			public const int abc_tint_spinner = 2131296386;
 			
 			// aapt resource value: 0x7f090083
-			public const int abc_tint_switch_track = 2131296387;
+			public const int abc_tint_switch_thumb = 2131296387;
+			
+			// aapt resource value: 0x7f090084
+			public const int abc_tint_switch_track = 2131296388;
 			
 			// aapt resource value: 0x7f090055
 			public const int accent = 2131296341;
@@ -1594,8 +1594,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f09001a
 			public const int accent_material_light = 2131296282;
 			
-			// aapt resource value: 0x7f09005a
-			public const int aqua = 2131296346;
+			// aapt resource value: 0x7f09005b
+			public const int aqua = 2131296347;
 			
 			// aapt resource value: 0x7f09001b
 			public const int background_floating_material_dark = 2131296283;
@@ -1648,8 +1648,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f090052
 			public const int cardview_shadow_start_color = 2131296338;
 			
-			// aapt resource value: 0x7f090084
-			public const int common_google_signin_btn_text_dark = 2131296388;
+			// aapt resource value: 0x7f090085
+			public const int common_google_signin_btn_text_dark = 2131296389;
 			
 			// aapt resource value: 0x7f090000
 			public const int common_google_signin_btn_text_dark_default = 2131296256;
@@ -1663,8 +1663,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f090003
 			public const int common_google_signin_btn_text_dark_pressed = 2131296259;
 			
-			// aapt resource value: 0x7f090085
-			public const int common_google_signin_btn_text_light = 2131296389;
+			// aapt resource value: 0x7f090086
+			public const int common_google_signin_btn_text_light = 2131296390;
 			
 			// aapt resource value: 0x7f090004
 			public const int common_google_signin_btn_text_light_default = 2131296260;
@@ -1678,38 +1678,38 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f090007
 			public const int common_google_signin_btn_text_light_pressed = 2131296263;
 			
-			// aapt resource value: 0x7f090066
-			public const int default_circle_indicator_fill_color = 2131296358;
-			
 			// aapt resource value: 0x7f090067
-			public const int default_circle_indicator_page_color = 2131296359;
+			public const int default_circle_indicator_fill_color = 2131296359;
 			
 			// aapt resource value: 0x7f090068
-			public const int default_circle_indicator_stroke_color = 2131296360;
+			public const int default_circle_indicator_page_color = 2131296360;
 			
 			// aapt resource value: 0x7f090069
-			public const int default_line_indicator_selected_color = 2131296361;
+			public const int default_circle_indicator_stroke_color = 2131296361;
 			
 			// aapt resource value: 0x7f09006a
-			public const int default_line_indicator_unselected_color = 2131296362;
+			public const int default_line_indicator_selected_color = 2131296362;
 			
 			// aapt resource value: 0x7f09006b
-			public const int default_title_indicator_footer_color = 2131296363;
+			public const int default_line_indicator_unselected_color = 2131296363;
 			
 			// aapt resource value: 0x7f09006c
-			public const int default_title_indicator_selected_color = 2131296364;
+			public const int default_title_indicator_footer_color = 2131296364;
 			
 			// aapt resource value: 0x7f09006d
-			public const int default_title_indicator_text_color = 2131296365;
+			public const int default_title_indicator_selected_color = 2131296365;
 			
 			// aapt resource value: 0x7f09006e
-			public const int default_underline_indicator_selected_color = 2131296366;
+			public const int default_title_indicator_text_color = 2131296366;
+			
+			// aapt resource value: 0x7f09006f
+			public const int default_underline_indicator_selected_color = 2131296367;
 			
 			// aapt resource value: 0x7f090009
 			public const int design_bottom_navigation_shadow_color = 2131296265;
 			
-			// aapt resource value: 0x7f090086
-			public const int design_error = 2131296390;
+			// aapt resource value: 0x7f090087
+			public const int design_error = 2131296391;
 			
 			// aapt resource value: 0x7f09000a
 			public const int design_fab_shadow_end_color = 2131296266;
@@ -1741,8 +1741,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f090013
 			public const int design_textinput_error_color_light = 2131296275;
 			
-			// aapt resource value: 0x7f090087
-			public const int design_tint_password_toggle = 2131296391;
+			// aapt resource value: 0x7f090088
+			public const int design_tint_password_toggle = 2131296392;
 			
 			// aapt resource value: 0x7f090027
 			public const int dim_foreground_disabled_material_dark = 2131296295;
@@ -1762,11 +1762,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f09002c
 			public const int foreground_material_light = 2131296300;
 			
-			// aapt resource value: 0x7f09005b
-			public const int green = 2131296347;
-			
 			// aapt resource value: 0x7f090059
-			public const int grey = 2131296345;
+			public const int gray = 2131296345;
+			
+			// aapt resource value: 0x7f09005c
+			public const int green = 2131296348;
+			
+			// aapt resource value: 0x7f09005a
+			public const int grey = 2131296346;
 			
 			// aapt resource value: 0x7f09002d
 			public const int highlighted_text_material_dark = 2131296301;
@@ -1852,8 +1855,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f090044
 			public const int primary_text_disabled_material_light = 2131296324;
 			
-			// aapt resource value: 0x7f09005d
-			public const int red = 2131296349;
+			// aapt resource value: 0x7f09005e
+			public const int red = 2131296350;
 			
 			// aapt resource value: 0x7f090045
 			public const int ripple_material_dark = 2131296325;
@@ -1879,11 +1882,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f09004c
 			public const int switch_thumb_disabled_material_light = 2131296332;
 			
-			// aapt resource value: 0x7f090088
-			public const int switch_thumb_material_dark = 2131296392;
-			
 			// aapt resource value: 0x7f090089
-			public const int switch_thumb_material_light = 2131296393;
+			public const int switch_thumb_material_dark = 2131296393;
+			
+			// aapt resource value: 0x7f09008a
+			public const int switch_thumb_material_light = 2131296394;
 			
 			// aapt resource value: 0x7f09004d
 			public const int switch_thumb_normal_material_dark = 2131296333;
@@ -1891,35 +1894,35 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f09004e
 			public const int switch_thumb_normal_material_light = 2131296334;
 			
-			// aapt resource value: 0x7f09005e
-			public const int vpi__background_holo_dark = 2131296350;
-			
 			// aapt resource value: 0x7f09005f
-			public const int vpi__background_holo_light = 2131296351;
-			
-			// aapt resource value: 0x7f090062
-			public const int vpi__bright_foreground_disabled_holo_dark = 2131296354;
-			
-			// aapt resource value: 0x7f090063
-			public const int vpi__bright_foreground_disabled_holo_light = 2131296355;
+			public const int vpi__background_holo_dark = 2131296351;
 			
 			// aapt resource value: 0x7f090060
-			public const int vpi__bright_foreground_holo_dark = 2131296352;
+			public const int vpi__background_holo_light = 2131296352;
 			
-			// aapt resource value: 0x7f090061
-			public const int vpi__bright_foreground_holo_light = 2131296353;
+			// aapt resource value: 0x7f090063
+			public const int vpi__bright_foreground_disabled_holo_dark = 2131296355;
 			
 			// aapt resource value: 0x7f090064
-			public const int vpi__bright_foreground_inverse_holo_dark = 2131296356;
+			public const int vpi__bright_foreground_disabled_holo_light = 2131296356;
+			
+			// aapt resource value: 0x7f090061
+			public const int vpi__bright_foreground_holo_dark = 2131296353;
+			
+			// aapt resource value: 0x7f090062
+			public const int vpi__bright_foreground_holo_light = 2131296354;
 			
 			// aapt resource value: 0x7f090065
-			public const int vpi__bright_foreground_inverse_holo_light = 2131296357;
+			public const int vpi__bright_foreground_inverse_holo_dark = 2131296357;
 			
-			// aapt resource value: 0x7f09008a
-			public const int vpi__dark_theme = 2131296394;
+			// aapt resource value: 0x7f090066
+			public const int vpi__bright_foreground_inverse_holo_light = 2131296358;
 			
 			// aapt resource value: 0x7f09008b
-			public const int vpi__light_theme = 2131296395;
+			public const int vpi__dark_theme = 2131296395;
+			
+			// aapt resource value: 0x7f09008c
+			public const int vpi__light_theme = 2131296396;
 			
 			// aapt resource value: 0x7f090058
 			public const int white = 2131296344;
@@ -1927,8 +1930,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f090056
 			public const int windowBackground = 2131296342;
 			
-			// aapt resource value: 0x7f09005c
-			public const int yellow = 2131296348;
+			// aapt resource value: 0x7f09005d
+			public const int yellow = 2131296349;
 			
 			static Color()
 			{
@@ -2688,26 +2691,26 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f020053
 			public const int avd_hide_password = 2130837587;
 			
-			// aapt resource value: 0x7f020089
-			public const int avd_hide_password_1 = 2130837641;
-			
-			// aapt resource value: 0x7f02008a
-			public const int avd_hide_password_2 = 2130837642;
-			
 			// aapt resource value: 0x7f02008b
-			public const int avd_hide_password_3 = 2130837643;
+			public const int avd_hide_password_1 = 2130837643;
+			
+			// aapt resource value: 0x7f02008c
+			public const int avd_hide_password_2 = 2130837644;
+			
+			// aapt resource value: 0x7f02008d
+			public const int avd_hide_password_3 = 2130837645;
 			
 			// aapt resource value: 0x7f020054
 			public const int avd_show_password = 2130837588;
 			
-			// aapt resource value: 0x7f02008c
-			public const int avd_show_password_1 = 2130837644;
-			
-			// aapt resource value: 0x7f02008d
-			public const int avd_show_password_2 = 2130837645;
-			
 			// aapt resource value: 0x7f02008e
-			public const int avd_show_password_3 = 2130837646;
+			public const int avd_show_password_1 = 2130837646;
+			
+			// aapt resource value: 0x7f02008f
+			public const int avd_show_password_2 = 2130837647;
+			
+			// aapt resource value: 0x7f020090
+			public const int avd_show_password_3 = 2130837648;
 			
 			// aapt resource value: 0x7f020055
 			public const int common_full_open_on_phone = 2130837589;
@@ -2818,52 +2821,58 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			public const int ic_share = 2130837624;
 			
 			// aapt resource value: 0x7f020079
-			public const int ic_undo = 2130837625;
+			public const int ic_splash = 2130837625;
 			
 			// aapt resource value: 0x7f02007a
-			public const int Icon = 2130837626;
+			public const int ic_undo = 2130837626;
 			
 			// aapt resource value: 0x7f02007b
-			public const int navigation_empty_icon = 2130837627;
+			public const int Icon = 2130837627;
 			
 			// aapt resource value: 0x7f02007c
-			public const int notification_action_background = 2130837628;
+			public const int navigation_empty_icon = 2130837628;
 			
 			// aapt resource value: 0x7f02007d
-			public const int notification_bg = 2130837629;
+			public const int notification_action_background = 2130837629;
 			
 			// aapt resource value: 0x7f02007e
-			public const int notification_bg_low = 2130837630;
+			public const int notification_bg = 2130837630;
 			
 			// aapt resource value: 0x7f02007f
-			public const int notification_bg_low_normal = 2130837631;
+			public const int notification_bg_low = 2130837631;
 			
 			// aapt resource value: 0x7f020080
-			public const int notification_bg_low_pressed = 2130837632;
+			public const int notification_bg_low_normal = 2130837632;
 			
 			// aapt resource value: 0x7f020081
-			public const int notification_bg_normal = 2130837633;
+			public const int notification_bg_low_pressed = 2130837633;
 			
 			// aapt resource value: 0x7f020082
-			public const int notification_bg_normal_pressed = 2130837634;
+			public const int notification_bg_normal = 2130837634;
 			
 			// aapt resource value: 0x7f020083
-			public const int notification_icon_background = 2130837635;
-			
-			// aapt resource value: 0x7f020087
-			public const int notification_template_icon_bg = 2130837639;
-			
-			// aapt resource value: 0x7f020088
-			public const int notification_template_icon_low_bg = 2130837640;
+			public const int notification_bg_normal_pressed = 2130837635;
 			
 			// aapt resource value: 0x7f020084
-			public const int notification_tile_bg = 2130837636;
+			public const int notification_icon_background = 2130837636;
+			
+			// aapt resource value: 0x7f020089
+			public const int notification_template_icon_bg = 2130837641;
+			
+			// aapt resource value: 0x7f02008a
+			public const int notification_template_icon_low_bg = 2130837642;
 			
 			// aapt resource value: 0x7f020085
-			public const int notify_panel_notification_icon_bg = 2130837637;
+			public const int notification_tile_bg = 2130837637;
 			
 			// aapt resource value: 0x7f020086
-			public const int preference_list_divider_material = 2130837638;
+			public const int notify_panel_notification_icon_bg = 2130837638;
+			
+			// aapt resource value: 0x7f020087
+			public const int preference_list_divider_material = 2130837639;
+			
+			// aapt resource value: 0x7f020088
+			public const int splash = 2130837640;
 			
 			static Drawable()
 			{
@@ -5305,12 +5314,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0a00da
 			public const int AlertDialog_AppCompat_Light = 2131362010;
 			
-			// aapt resource value: 0x7f0a01a0
-			public const int AlertDialogTheme = 2131362208;
-			
-			// aapt resource value: 0x7f0a01a1
-			public const int AlertDialogTheme_Base = 2131362209;
-			
 			// aapt resource value: 0x7f0a00db
 			public const int Animation_AppCompat_Dialog = 2131362011;
 			
@@ -5323,8 +5326,17 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0a019f
 			public const int AppTheme = 2131362207;
 			
+			// aapt resource value: 0x7f0a01a1
+			public const int AppTheme_AlertDialog = 2131362209;
+			
 			// aapt resource value: 0x7f0a01a2
-			public const int AppTheme_Base = 2131362210;
+			public const int AppTheme_AlertDialog_Base = 2131362210;
+			
+			// aapt resource value: 0x7f0a01a3
+			public const int AppTheme_Base = 2131362211;
+			
+			// aapt resource value: 0x7f0a01a0
+			public const int AppTheme_Splash = 2131362208;
 			
 			// aapt resource value: 0x7f0a00dd
 			public const int Base_AlertDialog_AppCompat = 2131362013;
@@ -6280,8 +6292,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0a0000
 			public const int Theme_IAPTheme = 2131361792;
 			
-			// aapt resource value: 0x7f0a01a3
-			public const int Theme_PageIndicatorDefaults = 2131362211;
+			// aapt resource value: 0x7f0a01a4
+			public const int Theme_PageIndicatorDefaults = 2131362212;
 			
 			// aapt resource value: 0x7f0a014a
 			public const int ThemeOverlay_AppCompat = 2131362122;
@@ -6304,8 +6316,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0a0150
 			public const int ThemeOverlay_AppCompat_Light = 2131362128;
 			
-			// aapt resource value: 0x7f0a01a4
-			public const int Widget = 2131362212;
+			// aapt resource value: 0x7f0a01a5
+			public const int Widget = 2131362213;
 			
 			// aapt resource value: 0x7f0a0151
 			public const int Widget_AppCompat_ActionBar = 2131362129;
@@ -6529,8 +6541,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0a0198
 			public const int Widget_AppCompat_Toolbar_Button_Navigation = 2131362200;
 			
-			// aapt resource value: 0x7f0a01a5
-			public const int Widget_CirclePageIndicator = 2131362213;
+			// aapt resource value: 0x7f0a01a6
+			public const int Widget_CirclePageIndicator = 2131362214;
 			
 			// aapt resource value: 0x7f0a0020
 			public const int Widget_Design_AppBarLayout = 2131361824;

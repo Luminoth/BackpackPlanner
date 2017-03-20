@@ -18,28 +18,17 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 
 using Android.App;
-using Android.OS;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 {
-    [Activity(Label = "@string/app_name", MainLauncher = true, Icon = "@drawable/icon")]
+    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.Splash", MainLauncher = true, NoHistory = true, Exported = true)]
     [MetaData("com.google.android.gms.version", Value = "@integer/google_play_services_version")]
     public sealed class MainActivity : BaseActivity
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(MainActivity));
 
-        protected override void OnCreate(Bundle savedInstanceState)
-        {
-            base.OnCreate(savedInstanceState);
-
-            SetContentView(Resource.Layout.activity_main);
-
-            InitToolbar();
-
-            Title = Resources.GetString(Resource.String.app_name);
-        }
 #if DEBUG
         private readonly Stopwatch _initStopwatch = new Stopwatch();
 #endif
