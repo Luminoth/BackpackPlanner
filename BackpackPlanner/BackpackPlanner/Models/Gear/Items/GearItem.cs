@@ -23,6 +23,7 @@ using EnergonSoftware.BackpackPlanner.Models.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
 using EnergonSoftware.BackpackPlanner.Settings;
+using EnergonSoftware.BackpackPlanner.Units;
 using EnergonSoftware.BackpackPlanner.Units.Currency;
 using EnergonSoftware.BackpackPlanner.Units.Units;
 
@@ -243,6 +244,9 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Items
 
         [Ignore]
         public int TripPlanCount => TripPlans?.Count ?? 0;
+
+        [Ignore]
+        public WeightCategory WeightCategory => GearCarried.NotCarried == Carried ? WeightCategory.None : Settings.GetWeightCategory(WeightInGrams);
 
         public GearItem()
         {

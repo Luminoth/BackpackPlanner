@@ -15,6 +15,7 @@
 */
 
 using EnergonSoftware.BackpackPlanner.Core.Settings;
+using EnergonSoftware.BackpackPlanner.Units;
 using EnergonSoftware.BackpackPlanner.Units.Currency;
 using EnergonSoftware.BackpackPlanner.Units.Units;
 
@@ -222,6 +223,31 @@ namespace EnergonSoftware.BackpackPlanner.Settings
             _settingsManager = settingsManager;
 
             MetaSettings = new MetaSettings(_settingsManager);
+        }
+
+        public WeightCategory GetWeightCategory(int weightInGrams)
+        {
+            if(weightInGrams <= 0) {
+                return WeightCategory.None;
+            }
+
+            if(weightInGrams < UltralightWeightCategoryMaxWeightInGrams) {
+                return WeightCategory.Ultralight;
+            }
+
+            if(weightInGrams < LightWeightCategoryMaxWeightInGrams) {
+                return WeightCategory.Light;
+            }
+
+            if(weightInGrams < MediumWeightCategoryMaxWeightInGrams) {
+                return WeightCategory.Medium;
+            }
+
+            if(weightInGrams < HeavyWeightCategoryMaxWeightInGrams) {
+                return WeightCategory.Heavy;
+            }
+
+            return WeightCategory.ExtraHeavy;
         }
     }
 }

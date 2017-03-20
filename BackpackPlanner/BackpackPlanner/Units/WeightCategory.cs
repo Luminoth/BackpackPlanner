@@ -59,4 +59,25 @@ namespace EnergonSoftware.BackpackPlanner.Units
         [Description("Extra Heavy")]
         ExtraHeavy
     }
+
+    public static class WeightCategoryExtensions
+    {
+        public static string ShortName(this WeightCategory weightCategory)
+        {
+            switch(weightCategory)
+            {
+            case WeightCategory.Ultralight:
+                return "UL";
+            case WeightCategory.Light:
+                return "L";
+            case WeightCategory.Medium:
+                return "M";
+            case WeightCategory.Heavy:
+                return "H";
+            case WeightCategory.ExtraHeavy:
+                return "EH";
+            }
+            return "NC";
+        }
+    }
 }

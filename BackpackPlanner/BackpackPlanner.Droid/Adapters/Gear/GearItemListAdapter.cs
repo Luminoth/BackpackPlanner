@@ -24,6 +24,7 @@ using Android.Widget;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
+using EnergonSoftware.BackpackPlanner.Units;
 using EnergonSoftware.BackpackPlanner.Units.Units;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
@@ -37,6 +38,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
             private readonly Android.Support.V7.Widget.Toolbar _toolbar;
 
             private readonly TextView _textViewMakeModel;
+            private readonly TextView _textViewWeightCategory;
             private readonly TextView _textViewWeight;
             private readonly TextView _textViewCost;
 
@@ -47,6 +49,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
                 _toolbar.SetOnMenuItemClickListener(this);
 
                 _textViewMakeModel = itemView.FindViewById<TextView>(Resource.Id.view_gear_item_make_model);
+                _textViewWeightCategory = itemView.FindViewById<TextView>(Resource.Id.view_gear_item_weight_category);
                 _textViewWeight = itemView.FindViewById<TextView>(Resource.Id.view_gear_item_weight);
                 _textViewCost = itemView.FindViewById<TextView>(Resource.Id.view_gear_item_cost);
             }
@@ -73,6 +76,29 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
                 } else {
                     _textViewMakeModel.Visibility = ViewStates.Visible;
                     _textViewMakeModel.Text = makeModel;
+                }
+
+                _textViewWeightCategory.Text = ListItem.WeightCategory.ShortName();
+                switch(ListItem.WeightCategory)
+                {
+                case WeightCategory.None:
+                    _textViewWeightCategory.SetBackgroundResource(Resource.Color.black);
+                    break;
+                case WeightCategory.Ultralight:
+                    _textViewWeightCategory.SetBackgroundResource(Resource.Color.grey);
+                    break;
+                case WeightCategory.Light:
+                    _textViewWeightCategory.SetBackgroundResource(Resource.Color.aqua);
+                    break;
+                case WeightCategory.Medium:
+                    _textViewWeightCategory.SetBackgroundResource(Resource.Color.green);
+                    break;
+                case WeightCategory.Heavy:
+                    _textViewWeightCategory.SetBackgroundResource(Resource.Color.yellow);
+                    break;
+                case WeightCategory.ExtraHeavy:
+                    _textViewWeightCategory.SetBackgroundResource(Resource.Color.red);
+                    break;
                 }
 
                 int weightInUnits = (int)ListItem.WeightInUnits;
