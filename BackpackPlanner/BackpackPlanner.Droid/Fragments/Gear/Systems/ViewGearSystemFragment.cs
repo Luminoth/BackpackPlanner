@@ -31,7 +31,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 
         protected override int ResetItemResource => Resource.Id.fab_reset_gear_system;
 
-        protected override int DeleteItemResource => Resource.Id.fab_delete_gear_collection;
+        protected override int DeleteItemResource => Resource.Id.fab_delete_gear_system;
 
 #region Controls
         private Android.Support.Design.Widget.TextInputLayout _gearSystemNameEditText;
