@@ -2667,26 +2667,26 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f020053
 			public const int avd_hide_password = 2130837587;
 			
-			// aapt resource value: 0x7f020088
-			public const int avd_hide_password_1 = 2130837640;
-			
 			// aapt resource value: 0x7f020089
-			public const int avd_hide_password_2 = 2130837641;
+			public const int avd_hide_password_1 = 2130837641;
 			
 			// aapt resource value: 0x7f02008a
-			public const int avd_hide_password_3 = 2130837642;
+			public const int avd_hide_password_2 = 2130837642;
+			
+			// aapt resource value: 0x7f02008b
+			public const int avd_hide_password_3 = 2130837643;
 			
 			// aapt resource value: 0x7f020054
 			public const int avd_show_password = 2130837588;
 			
-			// aapt resource value: 0x7f02008b
-			public const int avd_show_password_1 = 2130837643;
-			
 			// aapt resource value: 0x7f02008c
-			public const int avd_show_password_2 = 2130837644;
+			public const int avd_show_password_1 = 2130837644;
 			
 			// aapt resource value: 0x7f02008d
-			public const int avd_show_password_3 = 2130837645;
+			public const int avd_show_password_2 = 2130837645;
+			
+			// aapt resource value: 0x7f02008e
+			public const int avd_show_password_3 = 2130837646;
 			
 			// aapt resource value: 0x7f020055
 			public const int common_full_open_on_phone = 2130837589;
@@ -2785,61 +2785,64 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			public const int ic_help = 2130837620;
 			
 			// aapt resource value: 0x7f020075
-			public const int ic_search = 2130837621;
+			public const int ic_save = 2130837621;
 			
 			// aapt resource value: 0x7f020076
-			public const int ic_settings = 2130837622;
+			public const int ic_search = 2130837622;
 			
 			// aapt resource value: 0x7f020077
-			public const int ic_share = 2130837623;
+			public const int ic_settings = 2130837623;
 			
 			// aapt resource value: 0x7f020078
-			public const int ic_undo = 2130837624;
+			public const int ic_share = 2130837624;
 			
 			// aapt resource value: 0x7f020079
-			public const int Icon = 2130837625;
+			public const int ic_undo = 2130837625;
 			
 			// aapt resource value: 0x7f02007a
-			public const int navigation_empty_icon = 2130837626;
+			public const int Icon = 2130837626;
 			
 			// aapt resource value: 0x7f02007b
-			public const int notification_action_background = 2130837627;
+			public const int navigation_empty_icon = 2130837627;
 			
 			// aapt resource value: 0x7f02007c
-			public const int notification_bg = 2130837628;
+			public const int notification_action_background = 2130837628;
 			
 			// aapt resource value: 0x7f02007d
-			public const int notification_bg_low = 2130837629;
+			public const int notification_bg = 2130837629;
 			
 			// aapt resource value: 0x7f02007e
-			public const int notification_bg_low_normal = 2130837630;
+			public const int notification_bg_low = 2130837630;
 			
 			// aapt resource value: 0x7f02007f
-			public const int notification_bg_low_pressed = 2130837631;
+			public const int notification_bg_low_normal = 2130837631;
 			
 			// aapt resource value: 0x7f020080
-			public const int notification_bg_normal = 2130837632;
+			public const int notification_bg_low_pressed = 2130837632;
 			
 			// aapt resource value: 0x7f020081
-			public const int notification_bg_normal_pressed = 2130837633;
+			public const int notification_bg_normal = 2130837633;
 			
 			// aapt resource value: 0x7f020082
-			public const int notification_icon_background = 2130837634;
-			
-			// aapt resource value: 0x7f020086
-			public const int notification_template_icon_bg = 2130837638;
-			
-			// aapt resource value: 0x7f020087
-			public const int notification_template_icon_low_bg = 2130837639;
+			public const int notification_bg_normal_pressed = 2130837634;
 			
 			// aapt resource value: 0x7f020083
-			public const int notification_tile_bg = 2130837635;
+			public const int notification_icon_background = 2130837635;
+			
+			// aapt resource value: 0x7f020087
+			public const int notification_template_icon_bg = 2130837639;
+			
+			// aapt resource value: 0x7f020088
+			public const int notification_template_icon_low_bg = 2130837640;
 			
 			// aapt resource value: 0x7f020084
-			public const int notify_panel_notification_icon_bg = 2130837636;
+			public const int notification_tile_bg = 2130837636;
 			
 			// aapt resource value: 0x7f020085
-			public const int preference_list_divider_material = 2130837637;
+			public const int notify_panel_notification_icon_bg = 2130837637;
+			
+			// aapt resource value: 0x7f020086
+			public const int preference_list_divider_material = 2130837638;
 			
 			static Drawable()
 			{
@@ -2854,8 +2857,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f0d010a
-			public const int action0 = 2131558666;
+			// aapt resource value: 0x7f0d0110
+			public const int action0 = 2131558672;
 			
 			// aapt resource value: 0x7f0d0071
 			public const int action_bar = 2131558513;
@@ -2878,38 +2881,38 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0d004e
 			public const int action_bar_title = 2131558478;
 			
-			// aapt resource value: 0x7f0d0107
-			public const int action_container = 2131558663;
+			// aapt resource value: 0x7f0d010d
+			public const int action_container = 2131558669;
 			
 			// aapt resource value: 0x7f0d0072
 			public const int action_context_bar = 2131558514;
 			
-			// aapt resource value: 0x7f0d0155
-			public const int action_delete_gear_collection = 2131558741;
-			
-			// aapt resource value: 0x7f0d0156
-			public const int action_delete_gear_item = 2131558742;
-			
-			// aapt resource value: 0x7f0d0157
-			public const int action_delete_gear_system = 2131558743;
-			
-			// aapt resource value: 0x7f0d0158
-			public const int action_delete_meal = 2131558744;
-			
 			// aapt resource value: 0x7f0d015b
-			public const int action_delete_trip_itinerary = 2131558747;
+			public const int action_delete_gear_collection = 2131558747;
 			
 			// aapt resource value: 0x7f0d015c
-			public const int action_delete_trip_plan = 2131558748;
+			public const int action_delete_gear_item = 2131558748;
+			
+			// aapt resource value: 0x7f0d015d
+			public const int action_delete_gear_system = 2131558749;
+			
+			// aapt resource value: 0x7f0d015e
+			public const int action_delete_meal = 2131558750;
+			
+			// aapt resource value: 0x7f0d0161
+			public const int action_delete_trip_itinerary = 2131558753;
+			
+			// aapt resource value: 0x7f0d0162
+			public const int action_delete_trip_plan = 2131558754;
+			
+			// aapt resource value: 0x7f0d0114
+			public const int action_divider = 2131558676;
+			
+			// aapt resource value: 0x7f0d0160
+			public const int action_export = 2131558752;
 			
 			// aapt resource value: 0x7f0d010e
-			public const int action_divider = 2131558670;
-			
-			// aapt resource value: 0x7f0d015a
-			public const int action_export = 2131558746;
-			
-			// aapt resource value: 0x7f0d0108
-			public const int action_image = 2131558664;
+			public const int action_image = 2131558670;
 			
 			// aapt resource value: 0x7f0d0005
 			public const int action_menu_divider = 2131558405;
@@ -2926,14 +2929,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0d0050
 			public const int action_mode_close_button = 2131558480;
 			
-			// aapt resource value: 0x7f0d0159
-			public const int action_search = 2131558745;
+			// aapt resource value: 0x7f0d015f
+			public const int action_search = 2131558751;
 			
-			// aapt resource value: 0x7f0d0109
-			public const int action_text = 2131558665;
+			// aapt resource value: 0x7f0d010f
+			public const int action_text = 2131558671;
 			
-			// aapt resource value: 0x7f0d0117
-			public const int actions = 2131558679;
+			// aapt resource value: 0x7f0d011d
+			public const int actions = 2131558685;
 			
 			// aapt resource value: 0x7f0d0051
 			public const int activity_chooser_view_content = 2131558481;
@@ -3106,8 +3109,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0d00db
 			public const int button_what_trip_plan = 2131558619;
 			
-			// aapt resource value: 0x7f0d010b
-			public const int cancel_action = 2131558667;
+			// aapt resource value: 0x7f0d0111
+			public const int cancel_action = 2131558673;
 			
 			// aapt resource value: 0x7f0d001e
 			public const int center = 2131558430;
@@ -3121,8 +3124,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0d0068
 			public const int checkbox = 2131558504;
 			
-			// aapt resource value: 0x7f0d0113
-			public const int chronometer = 2131558675;
+			// aapt resource value: 0x7f0d0119
+			public const int chronometer = 2131558681;
 			
 			// aapt resource value: 0x7f0d0029
 			public const int clip_horizontal = 2131558441;
@@ -3178,8 +3181,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0d0021
 			public const int end = 2131558433;
 			
-			// aapt resource value: 0x7f0d011d
-			public const int end_padder = 2131558685;
+			// aapt resource value: 0x7f0d0123
+			public const int end_padder = 2131558691;
 			
 			// aapt resource value: 0x7f0d0018
 			public const int enterAlways = 2131558424;
@@ -3214,6 +3217,24 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0d00c1
 			public const int fab_add_trip_plan = 2131558593;
 			
+			// aapt resource value: 0x7f0d00e2
+			public const int fab_delete_gear_collection = 2131558626;
+			
+			// aapt resource value: 0x7f0d00f1
+			public const int fab_delete_gear_item = 2131558641;
+			
+			// aapt resource value: 0x7f0d00f5
+			public const int fab_delete_gear_system = 2131558645;
+			
+			// aapt resource value: 0x7f0d0101
+			public const int fab_delete_meal = 2131558657;
+			
+			// aapt resource value: 0x7f0d0105
+			public const int fab_delete_trip_itinerary = 2131558661;
+			
+			// aapt resource value: 0x7f0d010b
+			public const int fab_delete_trip_plan = 2131558667;
+			
 			// aapt resource value: 0x7f0d0095
 			public const int fab_reset_gear_collection = 2131558549;
 			
@@ -3235,20 +3256,20 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0d00e1
 			public const int fab_save_gear_collection = 2131558625;
 			
-			// aapt resource value: 0x7f0d00ef
-			public const int fab_save_gear_item = 2131558639;
+			// aapt resource value: 0x7f0d00f0
+			public const int fab_save_gear_item = 2131558640;
 			
-			// aapt resource value: 0x7f0d00f2
-			public const int fab_save_gear_system = 2131558642;
-			
-			// aapt resource value: 0x7f0d00fd
-			public const int fab_save_meal = 2131558653;
+			// aapt resource value: 0x7f0d00f4
+			public const int fab_save_gear_system = 2131558644;
 			
 			// aapt resource value: 0x7f0d0100
-			public const int fab_save_trip_itinerary = 2131558656;
+			public const int fab_save_meal = 2131558656;
 			
-			// aapt resource value: 0x7f0d0105
-			public const int fab_save_trip_plan = 2131558661;
+			// aapt resource value: 0x7f0d0104
+			public const int fab_save_trip_itinerary = 2131558660;
+			
+			// aapt resource value: 0x7f0d010a
+			public const int fab_save_trip_plan = 2131558666;
 			
 			// aapt resource value: 0x7f0d002b
 			public const int fill = 2131558443;
@@ -3292,17 +3313,17 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0d00d0
 			public const int gear_systems_sort = 2131558608;
 			
-			// aapt resource value: 0x7f0d0148
-			public const int group_gear = 2131558728;
-			
-			// aapt resource value: 0x7f0d014c
-			public const int group_meals = 2131558732;
-			
-			// aapt resource value: 0x7f0d0151
-			public const int group_settings = 2131558737;
-			
 			// aapt resource value: 0x7f0d014e
-			public const int group_trips = 2131558734;
+			public const int group_gear = 2131558734;
+			
+			// aapt resource value: 0x7f0d0152
+			public const int group_meals = 2131558738;
+			
+			// aapt resource value: 0x7f0d0157
+			public const int group_settings = 2131558743;
+			
+			// aapt resource value: 0x7f0d0154
+			public const int group_trips = 2131558740;
 			
 			// aapt resource value: 0x7f0d0007
 			public const int home = 2131558407;
@@ -3316,11 +3337,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0d0056
 			public const int icon = 2131558486;
 			
-			// aapt resource value: 0x7f0d011e
-			public const int icon_frame = 2131558686;
+			// aapt resource value: 0x7f0d0124
+			public const int icon_frame = 2131558692;
 			
-			// aapt resource value: 0x7f0d0118
-			public const int icon_group = 2131558680;
+			// aapt resource value: 0x7f0d011e
+			public const int icon_group = 2131558686;
 			
 			// aapt resource value: 0x7f0d0012
 			public const int icon_only = 2131558418;
@@ -3331,8 +3352,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0d0053
 			public const int image = 2131558483;
 			
-			// aapt resource value: 0x7f0d0114
-			public const int info = 2131558676;
+			// aapt resource value: 0x7f0d011a
+			public const int info = 2131558682;
 			
 			// aapt resource value: 0x7f0d000c
 			public const int item_touch_helper_previous_elevation = 2131558412;
@@ -3346,14 +3367,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0d0017
 			public const int light = 2131558423;
 			
-			// aapt resource value: 0x7f0d0119
-			public const int line1 = 2131558681;
+			// aapt resource value: 0x7f0d011f
+			public const int line1 = 2131558687;
 			
-			// aapt resource value: 0x7f0d011b
-			public const int line3 = 2131558683;
+			// aapt resource value: 0x7f0d0121
+			public const int line3 = 2131558689;
 			
-			// aapt resource value: 0x7f0d0120
-			public const int list = 2131558688;
+			// aapt resource value: 0x7f0d0126
+			public const int list = 2131558694;
 			
 			// aapt resource value: 0x7f0d0037
 			public const int listMode = 2131558455;
@@ -3361,8 +3382,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0d0055
 			public const int list_item = 2131558485;
 			
-			// aapt resource value: 0x7f0d0147
-			public const int masked = 2131558727;
+			// aapt resource value: 0x7f0d014d
+			public const int masked = 2131558733;
 			
 			// aapt resource value: 0x7f0d00d6
 			public const int meals_layout = 2131558614;
@@ -3370,8 +3391,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0d00d5
 			public const int meals_sort = 2131558613;
 			
-			// aapt resource value: 0x7f0d010d
-			public const int media_actions = 2131558669;
+			// aapt resource value: 0x7f0d0113
+			public const int media_actions = 2131558675;
 			
 			// aapt resource value: 0x7f0d0042
 			public const int middle = 2131558466;
@@ -3382,32 +3403,32 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0d0032
 			public const int multiply = 2131558450;
 			
-			// aapt resource value: 0x7f0d0154
-			public const int nav_debug_fragment = 2131558740;
+			// aapt resource value: 0x7f0d015a
+			public const int nav_debug_fragment = 2131558746;
 			
-			// aapt resource value: 0x7f0d014b
-			public const int nav_gear_collections_fragment = 2131558731;
-			
-			// aapt resource value: 0x7f0d0149
-			public const int nav_gear_items_fragment = 2131558729;
-			
-			// aapt resource value: 0x7f0d014a
-			public const int nav_gear_systems_fragment = 2131558730;
-			
-			// aapt resource value: 0x7f0d0153
-			public const int nav_help_fragment = 2131558739;
-			
-			// aapt resource value: 0x7f0d014d
-			public const int nav_meals_fragment = 2131558733;
-			
-			// aapt resource value: 0x7f0d0152
-			public const int nav_settings_fragment = 2131558738;
+			// aapt resource value: 0x7f0d0151
+			public const int nav_gear_collections_fragment = 2131558737;
 			
 			// aapt resource value: 0x7f0d014f
-			public const int nav_trip_itineraries_fragment = 2131558735;
+			public const int nav_gear_items_fragment = 2131558735;
 			
 			// aapt resource value: 0x7f0d0150
-			public const int nav_trip_plans_fragment = 2131558736;
+			public const int nav_gear_systems_fragment = 2131558736;
+			
+			// aapt resource value: 0x7f0d0159
+			public const int nav_help_fragment = 2131558745;
+			
+			// aapt resource value: 0x7f0d0153
+			public const int nav_meals_fragment = 2131558739;
+			
+			// aapt resource value: 0x7f0d0158
+			public const int nav_settings_fragment = 2131558744;
+			
+			// aapt resource value: 0x7f0d0155
+			public const int nav_trip_itineraries_fragment = 2131558741;
+			
+			// aapt resource value: 0x7f0d0156
+			public const int nav_trip_plans_fragment = 2131558742;
 			
 			// aapt resource value: 0x7f0d0083
 			public const int navigation = 2131558531;
@@ -3415,8 +3436,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0d008c
 			public const int navigation_header_container = 2131558540;
 			
-			// aapt resource value: 0x7f0d0106
-			public const int navigation_header_text = 2131558662;
+			// aapt resource value: 0x7f0d010c
+			public const int navigation_header_text = 2131558668;
 			
 			// aapt resource value: 0x7f0d0046
 			public const int never = 2131558470;
@@ -3448,14 +3469,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0d002f
 			public const int normal = 2131558447;
 			
+			// aapt resource value: 0x7f0d011c
+			public const int notification_background = 2131558684;
+			
 			// aapt resource value: 0x7f0d0116
-			public const int notification_background = 2131558678;
+			public const int notification_main_column = 2131558678;
 			
-			// aapt resource value: 0x7f0d0110
-			public const int notification_main_column = 2131558672;
-			
-			// aapt resource value: 0x7f0d010f
-			public const int notification_main_column_container = 2131558671;
+			// aapt resource value: 0x7f0d0115
+			public const int notification_main_column_container = 2131558677;
 			
 			// aapt resource value: 0x7f0d0027
 			public const int parallax = 2131558439;
@@ -3478,11 +3499,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0d0024
 			public const int right = 2131558436;
 			
-			// aapt resource value: 0x7f0d0115
-			public const int right_icon = 2131558677;
+			// aapt resource value: 0x7f0d011b
+			public const int right_icon = 2131558683;
 			
-			// aapt resource value: 0x7f0d0111
-			public const int right_side = 2131558673;
+			// aapt resource value: 0x7f0d0117
+			public const int right_side = 2131558679;
 			
 			// aapt resource value: 0x7f0d0033
 			public const int screen = 2131558451;
@@ -3532,17 +3553,17 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0d007e
 			public const int search_voice_btn = 2131558526;
 			
-			// aapt resource value: 0x7f0d0121
-			public const int seekbar = 2131558689;
+			// aapt resource value: 0x7f0d0127
+			public const int seekbar = 2131558695;
 			
-			// aapt resource value: 0x7f0d0122
-			public const int seekbar_value = 2131558690;
+			// aapt resource value: 0x7f0d0128
+			public const int seekbar_value = 2131558696;
 			
 			// aapt resource value: 0x7f0d007f
 			public const int select_dialog_listview = 2131558527;
 			
-			// aapt resource value: 0x7f0d0124
-			public const int settings_toolbar = 2131558692;
+			// aapt resource value: 0x7f0d012a
+			public const int settings_toolbar = 2131558698;
 			
 			// aapt resource value: 0x7f0d0069
 			public const int shortcut = 2131558505;
@@ -3571,8 +3592,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0d0059
 			public const int spacer = 2131558489;
 			
-			// aapt resource value: 0x7f0d011f
-			public const int spinner = 2131558687;
+			// aapt resource value: 0x7f0d0125
+			public const int spinner = 2131558693;
 			
 			// aapt resource value: 0x7f0d000a
 			public const int split_action_bar = 2131558410;
@@ -3592,8 +3613,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0d0025
 			public const int start = 2131558437;
 			
-			// aapt resource value: 0x7f0d010c
-			public const int status_bar_latest_event_content = 2131558668;
+			// aapt resource value: 0x7f0d0112
+			public const int status_bar_latest_event_content = 2131558674;
 			
 			// aapt resource value: 0x7f0d006b
 			public const int submenuarrow = 2131558507;
@@ -3601,17 +3622,17 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0d007c
 			public const int submit_area = 2131558524;
 			
-			// aapt resource value: 0x7f0d0123
-			public const int switchWidget = 2131558691;
+			// aapt resource value: 0x7f0d0129
+			public const int switchWidget = 2131558697;
 			
 			// aapt resource value: 0x7f0d0038
 			public const int tabMode = 2131558456;
 			
-			// aapt resource value: 0x7f0d011c
-			public const int text = 2131558684;
+			// aapt resource value: 0x7f0d0122
+			public const int text = 2131558690;
 			
-			// aapt resource value: 0x7f0d011a
-			public const int text2 = 2131558682;
+			// aapt resource value: 0x7f0d0120
+			public const int text2 = 2131558688;
 			
 			// aapt resource value: 0x7f0d005f
 			public const int textSpacerNoButtons = 2131558495;
@@ -3628,8 +3649,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0d0001
 			public const int textinput_error = 2131558401;
 			
-			// aapt resource value: 0x7f0d0112
-			public const int time = 2131558674;
+			// aapt resource value: 0x7f0d0118
+			public const int time = 2131558680;
 			
 			// aapt resource value: 0x7f0d0057
 			public const int title = 2131558487;
@@ -3685,14 +3706,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0d0049
 			public const int vertical = 2131558473;
 			
-			// aapt resource value: 0x7f0d0125
-			public const int view_gear_collection = 2131558693;
+			// aapt resource value: 0x7f0d012b
+			public const int view_gear_collection = 2131558699;
 			
-			// aapt resource value: 0x7f0d012a
-			public const int view_gear_collection_cost = 2131558698;
+			// aapt resource value: 0x7f0d0130
+			public const int view_gear_collection_cost = 2131558704;
 			
-			// aapt resource value: 0x7f0d0128
-			public const int view_gear_collection_items = 2131558696;
+			// aapt resource value: 0x7f0d012e
+			public const int view_gear_collection_items = 2131558702;
 			
 			// aapt resource value: 0x7f0d00df
 			public const int view_gear_collection_name = 2131558623;
@@ -3700,131 +3721,131 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0d00e0
 			public const int view_gear_collection_note = 2131558624;
 			
-			// aapt resource value: 0x7f0d0127
-			public const int view_gear_collection_systems = 2131558695;
-			
-			// aapt resource value: 0x7f0d0126
-			public const int view_gear_collection_toolbar = 2131558694;
-			
-			// aapt resource value: 0x7f0d0129
-			public const int view_gear_collection_weight = 2131558697;
-			
-			// aapt resource value: 0x7f0d012b
-			public const int view_gear_item = 2131558699;
-			
-			// aapt resource value: 0x7f0d00e6
-			public const int view_gear_item_carried = 2131558630;
-			
-			// aapt resource value: 0x7f0d00e7
-			public const int view_gear_item_carried_carried = 2131558631;
-			
-			// aapt resource value: 0x7f0d00e9
-			public const int view_gear_item_carried_not_carried = 2131558633;
-			
-			// aapt resource value: 0x7f0d00e8
-			public const int view_gear_item_carried_worn = 2131558632;
-			
-			// aapt resource value: 0x7f0d00ea
-			public const int view_gear_item_consumable = 2131558634;
-			
-			// aapt resource value: 0x7f0d00eb
-			public const int view_gear_item_consumed = 2131558635;
-			
-			// aapt resource value: 0x7f0d00ed
-			public const int view_gear_item_cost = 2131558637;
-			
-			// aapt resource value: 0x7f0d00e3
-			public const int view_gear_item_make = 2131558627;
-			
 			// aapt resource value: 0x7f0d012d
-			public const int view_gear_item_make_model = 2131558701;
-			
-			// aapt resource value: 0x7f0d00e4
-			public const int view_gear_item_model = 2131558628;
-			
-			// aapt resource value: 0x7f0d00e2
-			public const int view_gear_item_name = 2131558626;
-			
-			// aapt resource value: 0x7f0d00ee
-			public const int view_gear_item_note = 2131558638;
+			public const int view_gear_collection_systems = 2131558701;
 			
 			// aapt resource value: 0x7f0d012c
-			public const int view_gear_item_toolbar = 2131558700;
-			
-			// aapt resource value: 0x7f0d00e5
-			public const int view_gear_item_website = 2131558629;
-			
-			// aapt resource value: 0x7f0d00ec
-			public const int view_gear_item_weight = 2131558636;
-			
-			// aapt resource value: 0x7f0d012e
-			public const int view_gear_system = 2131558702;
-			
-			// aapt resource value: 0x7f0d0132
-			public const int view_gear_system_cost = 2131558706;
-			
-			// aapt resource value: 0x7f0d0130
-			public const int view_gear_system_items = 2131558704;
-			
-			// aapt resource value: 0x7f0d00f0
-			public const int view_gear_system_name = 2131558640;
-			
-			// aapt resource value: 0x7f0d00f1
-			public const int view_gear_system_note = 2131558641;
+			public const int view_gear_collection_toolbar = 2131558700;
 			
 			// aapt resource value: 0x7f0d012f
-			public const int view_gear_system_toolbar = 2131558703;
+			public const int view_gear_collection_weight = 2131558703;
 			
 			// aapt resource value: 0x7f0d0131
-			public const int view_gear_system_weight = 2131558705;
+			public const int view_gear_item = 2131558705;
+			
+			// aapt resource value: 0x7f0d00e7
+			public const int view_gear_item_carried = 2131558631;
+			
+			// aapt resource value: 0x7f0d00e8
+			public const int view_gear_item_carried_carried = 2131558632;
+			
+			// aapt resource value: 0x7f0d00ea
+			public const int view_gear_item_carried_not_carried = 2131558634;
+			
+			// aapt resource value: 0x7f0d00e9
+			public const int view_gear_item_carried_worn = 2131558633;
+			
+			// aapt resource value: 0x7f0d00eb
+			public const int view_gear_item_consumable = 2131558635;
+			
+			// aapt resource value: 0x7f0d00ec
+			public const int view_gear_item_consumed = 2131558636;
+			
+			// aapt resource value: 0x7f0d00ee
+			public const int view_gear_item_cost = 2131558638;
+			
+			// aapt resource value: 0x7f0d00e4
+			public const int view_gear_item_make = 2131558628;
 			
 			// aapt resource value: 0x7f0d0133
-			public const int view_meal = 2131558707;
+			public const int view_gear_item_make_model = 2131558707;
 			
-			// aapt resource value: 0x7f0d00f9
-			public const int view_meal_calories = 2131558649;
+			// aapt resource value: 0x7f0d00e5
+			public const int view_gear_item_model = 2131558629;
 			
-			// aapt resource value: 0x7f0d0136
-			public const int view_meal_calories_per_serving = 2131558710;
+			// aapt resource value: 0x7f0d00e3
+			public const int view_gear_item_name = 2131558627;
 			
-			// aapt resource value: 0x7f0d00f8
-			public const int view_meal_cost = 2131558648;
+			// aapt resource value: 0x7f0d00ef
+			public const int view_gear_item_note = 2131558639;
 			
-			// aapt resource value: 0x7f0d00fb
-			public const int view_meal_fiber = 2131558651;
+			// aapt resource value: 0x7f0d0132
+			public const int view_gear_item_toolbar = 2131558706;
 			
-			// aapt resource value: 0x7f0d0138
-			public const int view_meal_fiber_per_serving = 2131558712;
+			// aapt resource value: 0x7f0d00e6
+			public const int view_gear_item_website = 2131558630;
 			
-			// aapt resource value: 0x7f0d00f5
-			public const int view_meal_mealtime = 2131558645;
-			
-			// aapt resource value: 0x7f0d00f3
-			public const int view_meal_name = 2131558643;
-			
-			// aapt resource value: 0x7f0d00fc
-			public const int view_meal_note = 2131558652;
-			
-			// aapt resource value: 0x7f0d00fa
-			public const int view_meal_protein = 2131558650;
-			
-			// aapt resource value: 0x7f0d0137
-			public const int view_meal_protein_per_serving = 2131558711;
-			
-			// aapt resource value: 0x7f0d00f6
-			public const int view_meal_servings = 2131558646;
+			// aapt resource value: 0x7f0d00ed
+			public const int view_gear_item_weight = 2131558637;
 			
 			// aapt resource value: 0x7f0d0134
-			public const int view_meal_toolbar = 2131558708;
+			public const int view_gear_system = 2131558708;
 			
-			// aapt resource value: 0x7f0d00f4
-			public const int view_meal_website = 2131558644;
+			// aapt resource value: 0x7f0d0138
+			public const int view_gear_system_cost = 2131558712;
 			
-			// aapt resource value: 0x7f0d00f7
-			public const int view_meal_weight = 2131558647;
+			// aapt resource value: 0x7f0d0136
+			public const int view_gear_system_items = 2131558710;
+			
+			// aapt resource value: 0x7f0d00f2
+			public const int view_gear_system_name = 2131558642;
+			
+			// aapt resource value: 0x7f0d00f3
+			public const int view_gear_system_note = 2131558643;
 			
 			// aapt resource value: 0x7f0d0135
-			public const int view_meal_weight_per_serving = 2131558709;
+			public const int view_gear_system_toolbar = 2131558709;
+			
+			// aapt resource value: 0x7f0d0137
+			public const int view_gear_system_weight = 2131558711;
+			
+			// aapt resource value: 0x7f0d0139
+			public const int view_meal = 2131558713;
+			
+			// aapt resource value: 0x7f0d00fc
+			public const int view_meal_calories = 2131558652;
+			
+			// aapt resource value: 0x7f0d013c
+			public const int view_meal_calories_per_serving = 2131558716;
+			
+			// aapt resource value: 0x7f0d00fb
+			public const int view_meal_cost = 2131558651;
+			
+			// aapt resource value: 0x7f0d00fe
+			public const int view_meal_fiber = 2131558654;
+			
+			// aapt resource value: 0x7f0d013e
+			public const int view_meal_fiber_per_serving = 2131558718;
+			
+			// aapt resource value: 0x7f0d00f8
+			public const int view_meal_mealtime = 2131558648;
+			
+			// aapt resource value: 0x7f0d00f6
+			public const int view_meal_name = 2131558646;
+			
+			// aapt resource value: 0x7f0d00ff
+			public const int view_meal_note = 2131558655;
+			
+			// aapt resource value: 0x7f0d00fd
+			public const int view_meal_protein = 2131558653;
+			
+			// aapt resource value: 0x7f0d013d
+			public const int view_meal_protein_per_serving = 2131558717;
+			
+			// aapt resource value: 0x7f0d00f9
+			public const int view_meal_servings = 2131558649;
+			
+			// aapt resource value: 0x7f0d013a
+			public const int view_meal_toolbar = 2131558714;
+			
+			// aapt resource value: 0x7f0d00f7
+			public const int view_meal_website = 2131558647;
+			
+			// aapt resource value: 0x7f0d00fa
+			public const int view_meal_weight = 2131558650;
+			
+			// aapt resource value: 0x7f0d013b
+			public const int view_meal_weight_per_serving = 2131558715;
 			
 			// aapt resource value: 0x7f0d0002
 			public const int view_offset_helper = 2131558402;
@@ -3832,65 +3853,65 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0d0085
 			public const int view_pager_indicator = 2131558533;
 			
-			// aapt resource value: 0x7f0d0139
-			public const int view_trip_itinerary = 2131558713;
-			
-			// aapt resource value: 0x7f0d00fe
-			public const int view_trip_itinerary_name = 2131558654;
-			
-			// aapt resource value: 0x7f0d00ff
-			public const int view_trip_itinerary_note = 2131558655;
-			
-			// aapt resource value: 0x7f0d013a
-			public const int view_trip_itinerary_toolbar = 2131558714;
-			
-			// aapt resource value: 0x7f0d013b
-			public const int view_trip_plan = 2131558715;
-			
-			// aapt resource value: 0x7f0d0142
-			public const int view_trip_plan_base_weight = 2131558722;
-			
 			// aapt resource value: 0x7f0d013f
-			public const int view_trip_plan_collections = 2131558719;
-			
-			// aapt resource value: 0x7f0d0145
-			public const int view_trip_plan_cost = 2131558725;
-			
-			// aapt resource value: 0x7f0d013d
-			public const int view_trip_plan_days = 2131558717;
-			
-			// aapt resource value: 0x7f0d0103
-			public const int view_trip_plan_enddate = 2131558659;
-			
-			// aapt resource value: 0x7f0d0141
-			public const int view_trip_plan_items = 2131558721;
-			
-			// aapt resource value: 0x7f0d013e
-			public const int view_trip_plan_meals = 2131558718;
-			
-			// aapt resource value: 0x7f0d0101
-			public const int view_trip_plan_name = 2131558657;
-			
-			// aapt resource value: 0x7f0d0104
-			public const int view_trip_plan_note = 2131558660;
-			
-			// aapt resource value: 0x7f0d0143
-			public const int view_trip_plan_pack_weight = 2131558723;
-			
-			// aapt resource value: 0x7f0d0144
-			public const int view_trip_plan_skinout_weight = 2131558724;
+			public const int view_trip_itinerary = 2131558719;
 			
 			// aapt resource value: 0x7f0d0102
-			public const int view_trip_plan_startdate = 2131558658;
+			public const int view_trip_itinerary_name = 2131558658;
+			
+			// aapt resource value: 0x7f0d0103
+			public const int view_trip_itinerary_note = 2131558659;
 			
 			// aapt resource value: 0x7f0d0140
-			public const int view_trip_plan_systems = 2131558720;
+			public const int view_trip_itinerary_toolbar = 2131558720;
 			
-			// aapt resource value: 0x7f0d013c
-			public const int view_trip_plan_toolbar = 2131558716;
+			// aapt resource value: 0x7f0d0141
+			public const int view_trip_plan = 2131558721;
+			
+			// aapt resource value: 0x7f0d0148
+			public const int view_trip_plan_base_weight = 2131558728;
+			
+			// aapt resource value: 0x7f0d0145
+			public const int view_trip_plan_collections = 2131558725;
+			
+			// aapt resource value: 0x7f0d014b
+			public const int view_trip_plan_cost = 2131558731;
+			
+			// aapt resource value: 0x7f0d0143
+			public const int view_trip_plan_days = 2131558723;
+			
+			// aapt resource value: 0x7f0d0108
+			public const int view_trip_plan_enddate = 2131558664;
+			
+			// aapt resource value: 0x7f0d0147
+			public const int view_trip_plan_items = 2131558727;
+			
+			// aapt resource value: 0x7f0d0144
+			public const int view_trip_plan_meals = 2131558724;
+			
+			// aapt resource value: 0x7f0d0106
+			public const int view_trip_plan_name = 2131558662;
+			
+			// aapt resource value: 0x7f0d0109
+			public const int view_trip_plan_note = 2131558665;
+			
+			// aapt resource value: 0x7f0d0149
+			public const int view_trip_plan_pack_weight = 2131558729;
+			
+			// aapt resource value: 0x7f0d014a
+			public const int view_trip_plan_skinout_weight = 2131558730;
+			
+			// aapt resource value: 0x7f0d0107
+			public const int view_trip_plan_startdate = 2131558663;
 			
 			// aapt resource value: 0x7f0d0146
-			public const int visible = 2131558726;
+			public const int view_trip_plan_systems = 2131558726;
+			
+			// aapt resource value: 0x7f0d0142
+			public const int view_trip_plan_toolbar = 2131558722;
+			
+			// aapt resource value: 0x7f0d014c
+			public const int visible = 2131558732;
 			
 			// aapt resource value: 0x7f0d0014
 			public const int wide = 2131558420;
