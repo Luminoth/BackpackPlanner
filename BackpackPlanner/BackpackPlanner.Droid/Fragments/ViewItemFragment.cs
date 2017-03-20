@@ -30,6 +30,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         protected abstract int ResetItemResource { get; }
 
+        protected abstract int DeleteItemResource { get; }
+
         protected override bool HasSearchView => false;
 
         protected override bool CanExport => false;
@@ -66,6 +68,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             Android.Support.Design.Widget.FloatingActionButton resetItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(ResetItemResource);
             resetItemButton.Click += (sender, args) => {
                 OnReset();
+            };
+
+            Android.Support.Design.Widget.FloatingActionButton deleteItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(DeleteItemResource);
+            deleteItemButton.Click += (sender, args) => {
             };
         }
     }

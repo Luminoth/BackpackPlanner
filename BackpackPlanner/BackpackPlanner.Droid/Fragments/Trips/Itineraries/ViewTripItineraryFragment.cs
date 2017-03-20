@@ -31,6 +31,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries
 
         protected override int ResetItemResource => Resource.Id.fab_reset_trip_itinerary;
 
+        protected override int DeleteItemResource => Resource.Id.fab_delete_trip_itinerary;
+
 #region Controls
         private Android.Support.Design.Widget.TextInputLayout _tripItineraryNameEditText;
         private Android.Support.Design.Widget.TextInputLayout _tripItineraryNoteEditText;

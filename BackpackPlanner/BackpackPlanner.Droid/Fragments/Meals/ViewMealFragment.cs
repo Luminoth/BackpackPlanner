@@ -36,6 +36,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
 
         protected override int ResetItemResource => Resource.Id.fab_reset_meal;
 
+        protected override int DeleteItemResource => Resource.Id.fab_delete_meal;
+
 #region Controls
         private Android.Support.Design.Widget.TextInputLayout _mealNameEditText;
         private Android.Support.Design.Widget.TextInputLayout _mealWebsiteEditText;

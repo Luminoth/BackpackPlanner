@@ -38,6 +38,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
 
         protected override int ResetItemResource => Resource.Id.fab_reset_trip_plan;
 
+        protected override int DeleteItemResource => Resource.Id.fab_delete_trip_plan;
+
 #region Controls
         private Android.Support.Design.Widget.TextInputLayout _tripPlanNameEditText;
         private Android.Support.Design.Widget.TextInputLayout _tripPlanStartDateText;
