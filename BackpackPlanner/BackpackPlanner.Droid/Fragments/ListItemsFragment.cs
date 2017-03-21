@@ -57,10 +57,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         protected override bool CanExport => true;
 
-        public int ItemCount => ListItems.Count;
-
-        protected readonly List<T> ListItems = new List<T>();
-
         protected BaseListAdapter<T> Adapter { get; private set; } 
 
 #region Controls
@@ -68,8 +64,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         public Spinner SortItemsSpinner { get; private set; }
 #endregion
-
-        private bool _haveItems;
 
         protected abstract Android.Support.V4.App.Fragment CreateAddItemFragment();
 
@@ -114,10 +108,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         protected void PopulateList()
         {
-            if(_haveItems) {
-                return;
-            }
-
             ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_loading_items, false, true);
 
             new GetItemsCommand<T>().DoActionInBackground(DroidState.Instance.BackpackPlannerState,
@@ -125,15 +115,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                 {
                     Logger.Debug($"Read {command.Items.Count} items...");
 
-                    ListItems.Clear();  // is this unnecessary?
-                    ListItems.AddRange(command.Items);
-
                     Activity.RunOnUiThread(() =>
                     {
                         progressDialog.Dismiss();
 
-                        Adapter.ListItems = ListItems;
-                        _haveItems = true;
+                        Adapter.ListItems = command.Items;
 
                         UpdateView();
                     });
@@ -154,8 +140,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             new DeleteItemCommand<T>(item).DoActionInBackground(DroidState.Instance.BackpackPlannerState,
                 command =>
                 {
-                    ListItems.Remove(item);
-
                     Activity.RunOnUiThread(() =>
                     {
                         progressDialog.Dismiss();
@@ -178,8 +162,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             command.UndoActionInBackground(DroidState.Instance.BackpackPlannerState,
                 a =>
                 {
-                    ListItems.Add(a.Item);
-
                     Activity.RunOnUiThread(() =>
                     {
                         progressDialog.Dismiss();
@@ -196,7 +178,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         private void UpdateView()
         {
-            bool hasItems = ItemCount > 0;
+            bool hasItems = Adapter.ItemCount > 0;
 
             _noItemsTextView.Visibility = hasItems ? ViewStates.Gone : ViewStates.Visible;
 
