@@ -236,6 +236,7 @@
   <ItemGroup>
     <Compile Include="Activities\BaseActivity.cs" />
     <Compile Include="Activities\FTUEActivity.cs" />
+    <Compile Include="Adapters\BaseIntermediateItemListAdapter.cs" />
     <Compile Include="Adapters\BaseListAdapter.cs" />
     <Compile Include="Adapters\Gear\GearCollectionListAdapter.cs" />
     <Compile Include="Adapters\Gear\GearItemListAdapter.cs" />
