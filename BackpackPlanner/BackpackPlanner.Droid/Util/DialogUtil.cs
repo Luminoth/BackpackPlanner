@@ -74,27 +74,30 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
                 .Show();
         }
 
-        public static Android.Support.V7.App.AlertDialog ShowListViewAlert(Activity activity, int titleResId, IListAdapter adapter, EventHandler<DialogClickEventArgs> itemClickEventHandler=null)
+        public static Android.Support.V7.App.AlertDialog ShowListViewAlert(Activity activity, int titleResId, IListAdapter adapter, EventHandler<DialogClickEventArgs> itemClickEventHandler=null, EventHandler<DialogClickEventArgs> okEventHandler=null)
         {
             Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(activity, Resource.Style.AppTheme_AlertDialog);
             return builder.SetTitle(titleResId)
                 .SetAdapter(adapter, itemClickEventHandler ?? ((sender, args) => { }))
+                .SetPositiveButton(Android.Resource.String.Ok, okEventHandler ?? ((sender, args) => { }))
                 .Show();
         }
 
-        public static Android.Support.V7.App.AlertDialog ShowSingleChoiceAlert(Activity activity, int titleResId, string[] items, int checkedItem, EventHandler<DialogClickEventArgs> itemClickEventHandler=null)
+        public static Android.Support.V7.App.AlertDialog ShowSingleChoiceAlert(Activity activity, int titleResId, string[] items, int checkedItem, EventHandler<DialogClickEventArgs> itemClickEventHandler=null, EventHandler<DialogClickEventArgs> okEventHandler=null)
         {
             Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(activity, Resource.Style.AppTheme_AlertDialog);
             return builder.SetTitle(titleResId)
                 .SetSingleChoiceItems(items, checkedItem, itemClickEventHandler ?? ((sender, args) => { }))
+                .SetPositiveButton(Android.Resource.String.Ok, okEventHandler ?? ((sender, args) => { }))
                 .Show();
         }
 
-        public static Android.Support.V7.App.AlertDialog ShowMultiChoiceAlert(Activity activity, int titleResId, string[] items, bool[] checkedItems, EventHandler<DialogMultiChoiceClickEventArgs> itemClickEventHandler=null)
+        public static Android.Support.V7.App.AlertDialog ShowMultiChoiceAlert(Activity activity, int titleResId, string[] items, bool[] checkedItems, EventHandler<DialogMultiChoiceClickEventArgs> itemClickEventHandler=null, EventHandler<DialogClickEventArgs> okEventHandler=null)
         {
             Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(activity, Resource.Style.AppTheme_AlertDialog);
             return builder.SetTitle(titleResId)
                 .SetMultiChoiceItems(items, checkedItems, itemClickEventHandler ?? ((sender, args) => { }))
+                .SetPositiveButton(Android.Resource.String.Ok, okEventHandler ?? ((sender, args) => { }))
                 .Show();
         }
     }
