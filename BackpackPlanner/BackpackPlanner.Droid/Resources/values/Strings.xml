@@ -200,6 +200,8 @@
     <string name="label_gear_item_cost">Cost in %1$s</string>
     <string name="label_gear_item_note">Note</string>
 
+    <string name="label_gear_item_quantity">Quantity</string>
+
     <string name="label_add_gear_item">Add Gear Item</string>
     <string name="label_add_gear_items">Add Gear Items</string>
     <string name="label_save_gear_item">Save Gear Item</string>
@@ -208,6 +210,8 @@
     <string name="label_view_gear_item_make_model">%1$s %2$s</string>
     <string name="label_view_gear_item_weight">%1$d %2$s</string>
     <string name="label_view_gear_item_cost">%1$s (%2$s per %3$s)</string>
+
+    <string name="label_view_gear_item_total_weight">%1$d total %2$s</string>
 
     <!-- Gear Systems -->
 
@@ -219,6 +223,8 @@
     <string name="label_gear_system_name">Name</string>
     <string name="label_no_gear_items_system">You have no gear items in this system! Try adding one!</string>
     <string name="label_gear_system_note">Note</string>
+
+    <string name="label_gear_system_quantity">Quantity</string>
 
     <string name="label_add_gear_system">Add Gear System</string>
     <string name="label_add_gear_systems">Add Gear Systems</string>
@@ -240,6 +246,8 @@
     <string name="label_no_gear_systems_collection">You have no gear systems in this collection! Try adding one!</string>
     <string name="label_no_gear_items_collection">You have no gear items in this collection! Try adding one!</string>
     <string name="label_gear_collection_note">Note</string>
+
+    <string name="label_gear_collection_quantity">Quantity</string>
 
     <string name="label_add_gear_collection">Add Gear Collection</string>
     <string name="label_add_gear_collections">Add Gear Collections</string>
@@ -268,6 +276,8 @@
     <string name="label_meal_protein">Protein in grams</string>
     <string name="label_meal_fiber">Fiber in grams</string>
     <string name="label_meal_note">Note</string>
+
+    <string name="label_meal_quantity">Quantity</string>
 
     <string name="label_add_meal">Add Meal</string>
     <string name="label_add_meals">Add Meals</string>
