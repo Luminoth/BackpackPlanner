@@ -130,13 +130,15 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
             );
         }
 
+        protected override GearSystem CreateItem()
+        {
+            return new GearSystem(DroidState.Instance.BackpackPlannerState.Settings);
+        }
+
         protected override void OnDoDataExchange()
         {
-            Item = new GearSystem(DroidState.Instance.BackpackPlannerState.Settings)
-            {
-                Name = _gearSystemNameEditText.EditText.Text,
-                Note = _gearSystemNoteEditText.EditText.Text
-            };
+            Item.Name = _gearSystemNameEditText.EditText.Text;
+            Item.Note = _gearSystemNoteEditText.EditText.Text;
         }
 
         protected override bool OnValidate()

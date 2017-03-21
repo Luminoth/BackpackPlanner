@@ -44,13 +44,15 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries
             _tripItineraryNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.add_trip_itinerary_note);
         }
 
+        protected override TripItinerary CreateItem()
+        {
+            return new TripItinerary(DroidState.Instance.BackpackPlannerState.Settings);
+        }
+
         protected override void OnDoDataExchange()
         {
-            Item = new TripItinerary(DroidState.Instance.BackpackPlannerState.Settings)
-            {
-                Name = _tripItineraryNameEditText.EditText.Text,
-                Note = _tripItineraryNoteEditText.EditText.Text
-            };
+            Item.Name = _tripItineraryNameEditText.EditText.Text;
+            Item.Note = _tripItineraryNoteEditText.EditText.Text;
         }
 
         protected override bool OnValidate()

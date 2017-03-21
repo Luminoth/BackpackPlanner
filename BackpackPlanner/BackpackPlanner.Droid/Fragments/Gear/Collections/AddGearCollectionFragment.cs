@@ -36,6 +36,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
         private Android.Support.Design.Widget.TextInputLayout _gearCollectionNoteEditText;
 #endregion
 
+        protected override GearCollection CreateItem()
+        {
+            return new GearCollection(DroidState.Instance.BackpackPlannerState.Settings);
+        }
+
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
             base.OnViewCreated(view, savedInstanceState);
@@ -46,11 +51,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
 
         protected override void OnDoDataExchange()
         {
-            Item = new GearCollection(DroidState.Instance.BackpackPlannerState.Settings)
-            {
-                Name = _gearCollectionNameEditText.EditText.Text,
-                Note = _gearCollectionNoteEditText.EditText.Text
-            };
+            Item.Name = _gearCollectionNameEditText.EditText.Text;
+            Item.Note = _gearCollectionNoteEditText.EditText.Text;
         }
 
         protected override bool OnValidate()

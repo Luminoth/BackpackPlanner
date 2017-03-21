@@ -77,18 +77,20 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
             );
         }
 
+        protected override GearItem CreateItem()
+        {
+            return new GearItem(DroidState.Instance.BackpackPlannerState.Settings);
+        }
+
         protected override void OnDoDataExchange()
         {
-            Item = new GearItem(DroidState.Instance.BackpackPlannerState.Settings)
-            {
-                Name = _gearItemNameEditText.EditText.Text,
-                Make = _gearItemMakeEditText.EditText.Text,
-                Model = _gearItemModelEditText.EditText.Text,
-                Url = _gearItemWebsiteEditText.EditText.Text,
-                WeightInUnits = Convert.ToSingle(_gearItemWeightEditText.EditText.Text),
-                CostInCurrency = Convert.ToSingle(_gearItemCostEditText.EditText.Text),
-                Note = _gearItemNoteEditText.EditText.Text
-            };
+            Item.Name = _gearItemNameEditText.EditText.Text;
+            Item.Make = _gearItemMakeEditText.EditText.Text;
+            Item.Model = _gearItemModelEditText.EditText.Text;
+            Item.Url = _gearItemWebsiteEditText.EditText.Text;
+            Item.WeightInUnits = Convert.ToSingle(_gearItemWeightEditText.EditText.Text);
+            Item.CostInCurrency = Convert.ToSingle(_gearItemCostEditText.EditText.Text);
+            Item.Note = _gearItemNoteEditText.EditText.Text;
 
             int carriedSelectionResId = _gearItemCarriedRadioGroup.CheckedRadioButtonId;
             switch(carriedSelectionResId)

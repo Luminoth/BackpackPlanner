@@ -73,21 +73,23 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
             );
         }
 
+        protected override Meal CreateItem()
+        {
+            return new Meal(DroidState.Instance.BackpackPlannerState.Settings);
+        }
+
         protected override void OnDoDataExchange()
         {
-            Item = new Meal(DroidState.Instance.BackpackPlannerState.Settings)
-            {
-                Name = _mealNameEditText.EditText.Text,
-                Url = _mealWebsiteEditText.EditText.Text,
-                MealTime = (MealTime)Enum.Parse(typeof(MealTime), _mealMealTimeSpinner.SelectedItem.ToString()),
-                ServingCount = Convert.ToInt32(_mealServingsEditText.EditText.Text),
-                WeightInUnits = Convert.ToSingle(_mealWeightEditText.EditText.Text),
-                CostInCurrency = Convert.ToSingle(_mealCostEditText.EditText.Text),
-                Calories = Convert.ToInt32(_mealCaloriesEditText.EditText.Text),
-                ProteinInGrams = Convert.ToInt32(_mealProteinEditText.EditText.Text),
-                FiberInGrams = Convert.ToInt32(_mealFiberEditText.EditText.Text),
-                Note = _mealNoteEditText.EditText.Text
-            };
+            Item.Name = _mealNameEditText.EditText.Text;
+            Item.Url = _mealWebsiteEditText.EditText.Text;
+            Item.MealTime = (MealTime)Enum.Parse(typeof(MealTime), _mealMealTimeSpinner.SelectedItem.ToString());
+            Item.ServingCount = Convert.ToInt32(_mealServingsEditText.EditText.Text);
+            Item.WeightInUnits = Convert.ToSingle(_mealWeightEditText.EditText.Text);
+            Item.CostInCurrency = Convert.ToSingle(_mealCostEditText.EditText.Text);
+            Item.Calories = Convert.ToInt32(_mealCaloriesEditText.EditText.Text);
+            Item.ProteinInGrams = Convert.ToInt32(_mealProteinEditText.EditText.Text);
+            Item.FiberInGrams = Convert.ToInt32(_mealFiberEditText.EditText.Text);
+            Item.Note = _mealNoteEditText.EditText.Text;
         }
 
         protected override bool OnValidate()

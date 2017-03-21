@@ -86,13 +86,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
             _tripPlanNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.add_trip_plan_note);
         }
 
+        protected override TripPlan CreateItem()
+        {
+            return new TripPlan(DroidState.Instance.BackpackPlannerState.Settings);
+        }
+
         protected override void OnDoDataExchange()
         {
-            Item = new TripPlan(DroidState.Instance.BackpackPlannerState.Settings)
-            {
-                Name = _tripPlanNameEditText.EditText.Text,
-                Note = _tripPlanNoteEditText.EditText.Text
-            };
+            Item.Name = _tripPlanNameEditText.EditText.Text;
 
             try {
                 Item.StartDate = Convert.ToDateTime(_tripPlanStartDateText.EditText.Text);
@@ -105,6 +106,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
             } catch(FormatException) {
                 Logger.Error("Error parsing end date!");
             }
+
+            Item.Note = _tripPlanNoteEditText.EditText.Text;
         }
 
         protected override bool OnValidate()

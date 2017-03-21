@@ -24,7 +24,7 @@ using EnergonSoftware.BackpackPlanner.Models;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 {
-    public abstract class AddItemFragment<T> : DataFragment where T: DatabaseItem
+    public abstract class AddItemFragment<T> : DataFragment where T: DatabaseItem, new()
     {
         protected abstract int AddItemResource { get; }
 
@@ -34,7 +34,16 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         protected override bool CanExport => false;
 
-        public T Item { get; protected set; }
+        public T Item { get; private set; }
+
+        protected abstract T CreateItem();
+
+        public override void OnCreate(Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);
+
+            Item = CreateItem();
+        }
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
