@@ -107,7 +107,8 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries
         {
         }
 
-        public TripItinerary(BackpackPlannerSettings settings) : base(settings)
+        public TripItinerary(BackpackPlannerSettings settings)
+            : base(settings)
         {
         }
 

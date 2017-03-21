@@ -136,7 +136,8 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Collections
         {
         }
 
-        public GearCollection(BackpackPlannerSettings settings) : base(settings)
+        public GearCollection(BackpackPlannerSettings settings)
+            : base(settings)
         {
         }
 

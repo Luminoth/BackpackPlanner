@@ -263,7 +263,8 @@ namespace EnergonSoftware.BackpackPlanner.Models.Meals
         {
         }
 
-        public Meal(BackpackPlannerSettings settings) : base(settings)
+        public Meal(BackpackPlannerSettings settings)
+            : base(settings)
         {
         }
 

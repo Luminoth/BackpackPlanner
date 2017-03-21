@@ -26,10 +26,10 @@ namespace EnergonSoftware.BackpackPlanner.Models
     public abstract class DatabaseIntermediateItem
     {
         [Ignore]
-        public DatabaseItem Parent { get; private set; }
+        public DatabaseItem Parent { get; }
 
         [Ignore]
-        public DatabaseItem Child { get; private set; }
+        public DatabaseItem Child { get; }
 
         private int _count;
 
@@ -74,10 +74,10 @@ namespace EnergonSoftware.BackpackPlanner.Models
     public abstract class DatabaseIntermediateItem<T, TV> : DatabaseIntermediateItem where T: DatabaseItem where TV: DatabaseItem
     {
         [Ignore]
-        public new T Parent { get; private set; }
+        public new T Parent { get; }
 
         [Ignore]
-        public new TV Child { get; private set; }
+        public new TV Child { get; }
 
         protected DatabaseIntermediateItem()
         {

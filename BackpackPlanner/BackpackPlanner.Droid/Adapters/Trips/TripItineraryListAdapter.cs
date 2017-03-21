@@ -33,7 +33,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips
 
             private readonly Android.Support.V7.Widget.Toolbar _toolbar;
 
-            public TripItineraryViewHolder(View itemView, BaseListAdapter<TripItinerary> adapter) : base(itemView, adapter)
+            public TripItineraryViewHolder(View itemView, BaseListAdapter<TripItinerary> adapter)
+                : base(itemView, adapter)
             {
                 _toolbar = itemView.FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.view_trip_itinerary_toolbar);
                 _toolbar.InflateMenu(Resource.Menu.trip_itinerary_menu);
@@ -56,7 +57,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips
 
         public override int LayoutResource => Resource.Layout.view_trip_itinerary;
 
-        public TripItineraryListAdapter(ListItemsFragment<TripItinerary> fragment) : base(fragment)
+        public TripItineraryListAdapter(ListItemsFragment<TripItinerary> fragment)
+            : base(fragment)
         {
         }
 

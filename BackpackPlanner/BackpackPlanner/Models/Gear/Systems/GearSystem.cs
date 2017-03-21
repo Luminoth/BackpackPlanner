@@ -147,7 +147,8 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Systems
         {
         }
 
-        public GearSystem(BackpackPlannerSettings settings) : base(settings)
+        public GearSystem(BackpackPlannerSettings settings)
+            : base(settings)
         {
         }
 

@@ -195,7 +195,8 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
         {
         }
 
-        public TripPlan(BackpackPlannerSettings settings) : base(settings)
+        public TripPlan(BackpackPlannerSettings settings)
+            : base(settings)
         {
         }
 

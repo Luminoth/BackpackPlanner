@@ -24,7 +24,7 @@ using EnergonSoftware.BackpackPlanner.Models;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 {
-    public abstract class AddItemFragment<T> : DataFragment where T: DatabaseItem, new()
+    public abstract class AddItemFragment<T> : DataFragment where T: DatabaseItem
     {
         protected abstract int AddItemResource { get; }
 

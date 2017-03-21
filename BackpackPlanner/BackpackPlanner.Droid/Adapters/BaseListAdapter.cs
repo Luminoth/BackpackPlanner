@@ -53,7 +53,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
             protected abstract void UpdateView();
 
-            protected BaseViewHolder(View itemView, BaseListAdapter<T> adapter) : base(itemView)
+            protected BaseViewHolder(View itemView, BaseListAdapter<T> adapter)
+                : base(itemView)
             {
                 Adapter = adapter;
 

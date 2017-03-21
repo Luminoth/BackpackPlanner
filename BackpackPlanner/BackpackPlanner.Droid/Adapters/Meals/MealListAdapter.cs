@@ -45,7 +45,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
             private readonly TextView _textViewCalories;
             private readonly TextView _textViewCost;
 
-            public MealViewHolder(View itemView, BaseListAdapter<Meal> adapter) : base(itemView, adapter)
+            public MealViewHolder(View itemView, BaseListAdapter<Meal> adapter)
+                : base(itemView, adapter)
             {
                 _toolbar = itemView.FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.view_meal_toolbar);
                 _toolbar.InflateMenu(Resource.Menu.meal_menu);
@@ -114,7 +115,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
 
         public override int LayoutResource => Resource.Layout.view_meal;
 
-        public MealListAdapter(ListItemsFragment<Meal> fragment) : base(fragment)
+        public MealListAdapter(ListItemsFragment<Meal> fragment)
+            : base(fragment)
         {
         }
 

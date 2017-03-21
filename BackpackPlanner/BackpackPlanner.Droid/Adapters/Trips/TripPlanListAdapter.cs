@@ -46,7 +46,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips
             private readonly TextView _textViewSkinOutWeight;
             private readonly TextView _textViewCost;
 
-            public TripPlanViewHolder(View itemView, BaseListAdapter<TripPlan> adapter) : base(itemView, adapter)
+            public TripPlanViewHolder(View itemView, BaseListAdapter<TripPlan> adapter)
+                : base(itemView, adapter)
             {
                 _toolbar = itemView.FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.view_trip_plan_toolbar);
                 _toolbar.InflateMenu(Resource.Menu.trip_plan_menu);
@@ -120,7 +121,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips
 
         public override int LayoutResource => Resource.Layout.view_trip_plan;
 
-        public TripPlanListAdapter(ListItemsFragment<TripPlan> fragment) : base(fragment)
+        public TripPlanListAdapter(ListItemsFragment<TripPlan> fragment)
+            : base(fragment)
         {
         }
 

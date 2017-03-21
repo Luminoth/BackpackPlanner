@@ -36,7 +36,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
         {
             public override int Count => 5;
 
-            public FTUEPagerAdapter(Android.Support.V4.App.FragmentManager fragmentManager) : base(fragmentManager)
+            public FTUEPagerAdapter(Android.Support.V4.App.FragmentManager fragmentManager)
+                : base(fragmentManager)
             {
             }
 

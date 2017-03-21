@@ -252,7 +252,8 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Items
         {
         }
 
-        public GearItem(BackpackPlannerSettings settings) : base(settings)
+        public GearItem(BackpackPlannerSettings settings)
+            : base(settings)
         {
         }
 

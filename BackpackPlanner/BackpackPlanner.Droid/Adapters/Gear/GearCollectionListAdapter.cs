@@ -41,7 +41,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
             private readonly TextView _textViewWeight;
             private readonly TextView _textViewCost;
 
-            public GearCollectionViewHolder(View itemView, BaseListAdapter<GearCollection> adapter) : base(itemView, adapter)
+            public GearCollectionViewHolder(View itemView, BaseListAdapter<GearCollection> adapter)
+                : base(itemView, adapter)
             {
                 _toolbar = itemView.FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.view_gear_collection_toolbar);
                 _toolbar.InflateMenu(Resource.Menu.gear_collection_menu);
@@ -88,7 +89,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
 
         public override int LayoutResource => Resource.Layout.view_gear_collection;
 
-        public GearCollectionListAdapter(ListItemsFragment<GearCollection> fragment) : base(fragment)
+        public GearCollectionListAdapter(ListItemsFragment<GearCollection> fragment)
+            : base(fragment)
         {
         }
 
