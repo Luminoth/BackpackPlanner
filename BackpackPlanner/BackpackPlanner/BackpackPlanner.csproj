@@ -57,6 +57,7 @@
     <Compile Include="Core\Util\DictionaryExtensions.cs" />
     <Compile Include="DatabaseState.cs" />
     <Compile Include="Core\Settings\SettingsManager.cs" />
+    <Compile Include="Models\DatabaseIntermediateItem.cs" />
     <Compile Include="Models\DatabaseItem.cs" />
     <Compile Include="Core\Permissions\PermissionRequest.cs" />
     <Compile Include="Settings\MetaSettings.cs" />

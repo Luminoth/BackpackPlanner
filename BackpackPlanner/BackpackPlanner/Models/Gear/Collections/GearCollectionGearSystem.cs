@@ -17,6 +17,7 @@
 using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
+using EnergonSoftware.BackpackPlanner.Settings;
 
 using SQLiteNetExtensions.Attributes;
 
@@ -25,7 +26,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Collections
     /// <summary>
     /// 
     /// </summary>
-    public sealed class GearCollectionGearSystem
+    public sealed class GearCollectionGearSystem : DatabaseIntermediateItem<GearCollection, GearSystem>
     {
         /// <summary>
         /// Creates the database tables.
@@ -53,5 +54,14 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Collections
         /// </value>
         [ForeignKey(typeof(GearSystem))]
         public int GearSystemId { get; set; } = -1;
+
+        public GearCollectionGearSystem()
+        {
+        }
+
+        public GearCollectionGearSystem(GearCollection gearCollection, GearSystem gearSystem, BackpackPlannerSettings settings)
+            : base(gearCollection, gearSystem, settings)
+        {
+        }
     }
 }

@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Settings;
 
+using SQLite.Net.Attributes;
 using SQLiteNetExtensionsAsync.Extensions;
 
 namespace EnergonSoftware.BackpackPlanner.Models
@@ -315,6 +316,7 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// <value>
         /// The planner settings.
         /// </value>
+        [Ignore]
         protected BackpackPlannerSettings Settings { get; set; }
 
         /// <summary>
