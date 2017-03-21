@@ -24,7 +24,7 @@ using EnergonSoftware.BackpackPlanner.Models;
 
 namespace EnergonSoftware.BackpackPlanner.Windows.Pages
 {
-    public abstract class ListItemsPage<T> : BasePage where T: DatabaseItem, new()
+    public abstract class ListItemsPage<T> : BasePage where T: DatabaseItem
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(ListItemsPage<>));
 

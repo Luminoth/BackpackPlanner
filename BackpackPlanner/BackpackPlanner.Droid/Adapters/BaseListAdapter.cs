@@ -26,7 +26,7 @@ using EnergonSoftware.BackpackPlanner.Models;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 {
-    public abstract class BaseListAdapter<T> : Android.Support.V7.Widget.RecyclerView.Adapter where T: DatabaseItem, new()
+    public abstract class BaseListAdapter<T> : Android.Support.V7.Widget.RecyclerView.Adapter where T: DatabaseItem
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(BaseListAdapter<T>));
 

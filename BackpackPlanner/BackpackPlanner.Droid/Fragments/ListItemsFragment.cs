@@ -33,7 +33,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
     /// <summary>
     /// Helper for the data listing fragments
     /// </summary>
-    public abstract class ListItemsFragment<T> : RecyclerFragment where T: DatabaseItem, new()
+    public abstract class ListItemsFragment<T> : RecyclerFragment where T: DatabaseItem
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(ListItemsFragment<T>));
 
