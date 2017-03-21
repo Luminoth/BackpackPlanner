@@ -18,7 +18,9 @@ using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
 using EnergonSoftware.BackpackPlanner.Settings;
+using EnergonSoftware.BackpackPlanner.Units.Units;
 
+using SQLite.Net.Attributes;
 using SQLiteNetExtensions.Attributes;
 
 namespace EnergonSoftware.BackpackPlanner.Models.Gear.Systems
@@ -54,6 +56,24 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Systems
         /// </value>
         [ForeignKey(typeof(GearItem))]
         public int GearItemId { get; set; } = -1;
+
+        /// <summary>
+        /// Gets or sets the total weight of these gear items in grams.
+        /// </summary>
+        /// <value>
+        /// The total weight of these gear items in grams.
+        /// </value>
+        [Ignore]
+        public int TotalWeightInGrams => Count * Child.WeightInGrams;
+
+        /// <summary>
+        /// Gets or sets the total weight of these gear items in weight units.
+        /// </summary>
+        /// <value>
+        /// The total weight of these gear items in weight units.
+        /// </value>
+        [Ignore]
+        public float TotalWeightInUnits => Settings?.Units.WeightFromGrams(TotalWeightInGrams) ?? TotalWeightInGrams;
 
         public GearSystemGearItem()
         {
