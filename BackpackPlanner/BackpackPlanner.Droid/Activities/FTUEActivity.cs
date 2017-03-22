@@ -61,6 +61,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             }
         }
 
+#region Activity Lifecycle
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -77,6 +78,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 
             Title = Resources.GetString(Resource.String.app_name);
         }
+#endregion
 
         /// <summary>
         /// Finishes the ftue.

@@ -33,6 +33,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
         private readonly Stopwatch _initStopwatch = new Stopwatch();
 #endif
 
+#region Activity Lifecycle
         protected override void OnDestroy()
         {
             if(((HockeyAppManager)DroidState.Instance.BackpackPlannerState.PlatformHockeyAppManager).HasNewCrashes(this)) {
@@ -48,6 +49,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 
             Task.Run(async () => await Init().ConfigureAwait(false));
         }
+#endregion
 
         public override void OnBackPressed()
         {
