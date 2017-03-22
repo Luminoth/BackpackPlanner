@@ -14,6 +14,10 @@
    limitations under the License.
 */
 
+using Android.Widget;
+
+using EnergonSoftware.BackpackPlanner.Droid.Adapters;
+
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 {
     /// <summary>
@@ -21,6 +25,22 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
     /// </summary>
     public abstract class DataFragment : BaseFragment
     {
+        protected sealed class FilterListener<T> : Java.Lang.Object, Filter.IFilterListener
+        {
+            private readonly BaseListViewAdapter<T> _adapter;
+
+            public FilterListener(BaseListViewAdapter<T> adapter)
+            {
+                _adapter = adapter;
+            }
+
+            public void OnFilterComplete(int count)
+            {
+                // TODO: need a method to build an IComparator
+                //_adapter.Sort();
+            }
+        }
+
         public bool DoDataExchange()
         {
             if(!OnValidate()) {

@@ -27,6 +27,7 @@ using EnergonSoftware.BackpackPlanner.Models;
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 {
     public abstract class BaseListAdapter<T> : Android.Support.V7.Widget.RecyclerView.Adapter where T: DatabaseItem
+// TODO: rename this BaseRecyclerItemListAdapter
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(BaseListAdapter<T>));
 
@@ -126,6 +127,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
         protected abstract void FilterItems(string text);
 
+#region ViewHolder
         protected abstract BaseViewHolder CreateViewHolder(View itemView);
 
         public override Android.Support.V7.Widget.RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
@@ -140,7 +142,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
             T gearItem = FilteredListItems.ElementAt(position);
             baseViewHolder.ListItem = gearItem;
         }
+#endregion
 
+#region Add/Remove items
         public void AddItem(T item)
         {
             _listItems.Add(item);
@@ -152,8 +156,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
             _listItems.Remove(item);
             FilterAndSortItems();
         }
+#endregion
 
         private void FilterAndSortItems()
+#region Filter and Sort
         {
             Logger.Debug("Filtering and sorting items...");
 
@@ -168,6 +174,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
             }
         }
 
+#endregion
         protected BaseListAdapter(ListItemsFragment<T> fragment)
         {
             Fragment = fragment;

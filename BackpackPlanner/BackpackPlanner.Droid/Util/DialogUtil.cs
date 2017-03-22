@@ -18,6 +18,7 @@ using System;
 
 using Android.App;
 using Android.Content;
+using Android.Views;
 using Android.Widget;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Util
@@ -99,6 +100,45 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
                 .SetMultiChoiceItems(items, checkedItems, itemClickEventHandler ?? ((sender, args) => { }))
                 .SetPositiveButton(Android.Resource.String.Ok, okEventHandler ?? ((sender, args) => { }))
                 .Show();
+        }
+
+        public static Android.Support.V7.App.AlertDialog ShowMultiChoiceAlertWithSearch(Activity activity, int titleResId, string[] items, bool[] checkedItems, EventHandler<Android.Support.V7.Widget.SearchView.QueryTextChangeEventArgs> queryTextChangedEventHandler=null, EventHandler<DialogMultiChoiceClickEventArgs> itemClickEventHandler=null, EventHandler<DialogClickEventArgs> okEventHandler=null)
+        {
+            View titleView = LayoutInflater.From(activity).Inflate(Resource.Layout.alert_dialog_filter, null);
+
+            TextView titleTextView = titleView.FindViewById<TextView>(Resource.Id.alert_dialog_title);
+            titleTextView.SetText(titleResId);
+
+            Android.Support.V7.Widget.SearchView searchView = titleView.FindViewById<Android.Support.V7.Widget.SearchView>(Resource.Id.alert_dialog_search);
+            searchView.QueryHint = activity.Resources.GetString(Resource.String.search_hint);
+            searchView.QueryTextChange += queryTextChangedEventHandler;
+
+            Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(activity, Resource.Style.AppTheme_AlertDialog);
+            Android.Support.V7.App.AlertDialog dialog = builder.SetCustomTitle(titleView)
+                .SetMultiChoiceItems(items, checkedItems,
+                    (sender, args) =>
+                    {
+                        searchView.ClearFocus();
+                        itemClickEventHandler?.Invoke(sender, args);
+                    }
+                )
+                .SetPositiveButton(Android.Resource.String.Ok, okEventHandler ?? ((sender, args) => { }))
+                .Show();
+
+            // fix focus/keyboard issues
+            dialog.ListView.RequestFocus();
+            searchView.FocusChange += (sender, args) =>
+            {
+                if(args.HasFocus) {
+                    dialog.Window.SetSoftInputMode(SoftInput.StateAlwaysVisible | SoftInput.AdjustResize);
+                }
+            };
+
+// TODO: can't seem to get the keyboard to show!
+// so for now I guess we'll just kill search
+searchView.Visibility = ViewStates.Gone;
+
+            return dialog;
         }
     }
 }

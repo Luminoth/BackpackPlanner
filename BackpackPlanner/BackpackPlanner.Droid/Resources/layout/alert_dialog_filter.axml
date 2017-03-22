@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/primary">
+    <TextView
+        android:id="@+id/alert_dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="?dialogPreferredPadding"
+        android:paddingLeft="?dialogPreferredPadding"
+        style="@style/Base.TextAppearance.AppCompat.Title"
+        android:textColor="@android:color/white"
+        android:text="Title" />
+    <android.support.v7.widget.SearchView
+        android:id="@+id/alert_dialog_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:iconifiedByDefault="false" />
+</LinearLayout>

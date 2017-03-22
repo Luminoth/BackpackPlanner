@@ -130,9 +130,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 
         private void AddGearItemButtonClickEventHandler(object sender, EventArgs args)
         {
-// TODO: add filtering
-
-            DialogUtil.ShowMultiChoiceAlert(Activity, Resource.String.label_add_gear_items, _gearItemsNames, _selectedGearItems,
+            DialogUtil.ShowMultiChoiceAlertWithSearch(Activity, Resource.String.label_add_gear_items, _gearItemsNames, _selectedGearItems,
+                (a, b) =>
+                {
+                    _gearItemListAdapter.Filter.InvokeFilter(b.NewText, new FilterListener<GearSystemGearItem>(_gearItemListAdapter));
+                },
                 (a, b) =>
                 {
                     UpdateGearItemList(b.Which, b.IsChecked);
@@ -151,10 +153,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
                     Count = 1
                 };
                 _gearItemListAdapter.AddItem(gearItem, gearSystemGearItem);
-                // TODO: sort (requires the item to extend Java.Lang.Object :\)
             } else {
                 _gearItemListAdapter.RemoveItem(gearItem);
             }
+
+            // TODO: this may be unnecessary
+            _gearItemListAdapter.NotifyDataSetChanged();
 
             UpdateView();
         }
