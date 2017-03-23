@@ -3,6 +3,7 @@
     "Google.Apis.Drive.v3": "1.22.0.792",
     "HockeySDK.Core": "4.1.6",
     "HockeySDK.WINRT": "4.1.6",
+    "JetBrains.Annotations": "10.4.0",
     "Microsoft.ApplicationInsights": "2.2.0",
     "Microsoft.ApplicationInsights.PersistenceChannel": "1.2.3",
     "Microsoft.ApplicationInsights.WindowsApps": "1.1.1",
