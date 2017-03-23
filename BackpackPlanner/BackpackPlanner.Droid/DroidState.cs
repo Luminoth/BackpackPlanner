@@ -50,9 +50,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
         /// <returns>Can safely be called multiple times over the life of the application.</returns>
         public void OnCreate(BaseActivity activity)
         {
-            if(null == CustomLogger.PlatformLogger) {
-                CustomLogger.PlatformLogger = new DroidLogger();
-            }
+            CustomLogger.PlatformLogger = new DroidLogger();
 
             if(null == PermissionRequestFactory) {
                 PermissionRequestFactory = new DroidPermissionRequestFactory(activity);
