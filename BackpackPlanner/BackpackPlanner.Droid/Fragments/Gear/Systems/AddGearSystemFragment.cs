@@ -22,7 +22,7 @@ using Android.OS;
 using Android.Views;
 using Android.Widget;
 
-using EnergonSoftware.BackpackPlanner.Commands;
+using EnergonSoftware.BackpackPlanner.Commands.Gear;
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear;
 using EnergonSoftware.BackpackPlanner.Droid.Util;
@@ -89,7 +89,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 
             ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_loading_items, false, true);
 
-            new GetItemsCommand<GearItem>().DoActionInBackground(DroidState.Instance.BackpackPlannerState,
+            new GetGearItemsCommand().DoActionInBackground(DroidState.Instance.BackpackPlannerState,
                 command =>
                 {
                     Logger.Debug($"Read {command.Items.Count} items...");

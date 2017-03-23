@@ -17,6 +17,8 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
+using EnergonSoftware.BackpackPlanner.Commands;
+using EnergonSoftware.BackpackPlanner.Commands.Gear;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Collections;
 
 namespace EnergonSoftware.BackpackPlanner.Windows.Pages.Gear.Collections
@@ -41,6 +43,11 @@ namespace EnergonSoftware.BackpackPlanner.Windows.Pages.Gear.Collections
         public GearCollectionsPage()
         {
             InitializeComponent();
+        }
+
+        protected override GetItemsCommand<GearCollection> CreateGetItemsCommand()
+        {
+            return new GetGearCollectionsCommand();
         }
 
         protected override void UpdateValues()

@@ -17,6 +17,8 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
+using EnergonSoftware.BackpackPlanner.Commands;
+using EnergonSoftware.BackpackPlanner.Commands.Meals;
 using EnergonSoftware.BackpackPlanner.Models.Meals;
 
 namespace EnergonSoftware.BackpackPlanner.Windows.Pages.Meals
@@ -41,6 +43,11 @@ namespace EnergonSoftware.BackpackPlanner.Windows.Pages.Meals
         public MealsPage()
         {
             InitializeComponent();
+        }
+
+        protected override GetItemsCommand<Meal> CreateGetItemsCommand()
+        {
+            return new GetMealsCommand();
         }
 
         protected override void UpdateValues()

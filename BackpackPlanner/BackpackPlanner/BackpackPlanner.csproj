@@ -41,9 +41,16 @@
     <Compile Include="Commands\AddItemCommand.cs" />
     <Compile Include="Commands\CountItemsCommand.cs" />
     <Compile Include="Commands\DeleteItemCommand.cs" />
+    <Compile Include="Commands\Gear\GetGearCollectionsCommand.cs" />
+    <Compile Include="Commands\Gear\GetGearItemsCommand.cs" />
+    <Compile Include="Commands\Gear\GetGearSystemsCommand.cs" />
+    <Compile Include="Commands\GetItemCommand.cs" />
     <Compile Include="Commands\GetItemsCommand.cs" />
+    <Compile Include="Commands\Meals\GetMealsCommand.cs" />
     <Compile Include="Commands\SaveItemCommand.cs" />
     <Compile Include="BackpackPlannerState.cs" />
+    <Compile Include="Commands\Trips\GetTripItinerariesCommand.cs" />
+    <Compile Include="Commands\Trips\GetTripPlansCommand.cs" />
     <Compile Include="Core\Database\DatabaseConnection.cs" />
     <Compile Include="Core\Database\DatabaseException.cs" />
     <Compile Include="Core\Database\SQLiteDatabaseConnection.cs" />

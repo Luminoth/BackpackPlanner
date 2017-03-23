@@ -14,6 +14,8 @@
    limitations under the License.
 */
 
+using EnergonSoftware.BackpackPlanner.Commands;
+using EnergonSoftware.BackpackPlanner.Commands.Trips;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
@@ -43,6 +45,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
         protected override int SortItemsResource => Resource.Id.trip_plans_sort;
 
         protected override int AddItemResource => Resource.Id.fab_add_trip_plan;
+
+        protected override GetItemsCommand<TripPlan> CreateGetItemsCommand()
+        {
+            return new GetTripPlansCommand();
+        }
 
         protected override Android.Support.V4.App.Fragment CreateAddItemFragment()
         {

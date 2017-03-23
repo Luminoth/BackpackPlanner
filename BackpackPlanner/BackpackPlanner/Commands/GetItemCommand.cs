@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2015 Shane Lillie
+   Copyright 2017 Shane Lillie
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -14,8 +14,6 @@
    limitations under the License.
 */
 
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Models;
@@ -25,34 +23,34 @@ namespace EnergonSoftware.BackpackPlanner.Commands
     /// <summary>
     /// Gets all items.
     /// </summary>
-    public abstract class GetItemsCommand<T> : Command<GetItemsCommand<T>> where T: DatabaseItem
+    public class GetItemCommand<T> : Command<GetItemCommand<T>> where T: DatabaseItem
     {
         /// <summary>
-        /// Gets the items.
+        /// Gets the id of the item to get.
         /// </summary>
         /// <value>
-        /// The items.
+        /// The id of the item to get.
         /// </value>
-        public List<T> Items { get; private set; } = new List<T>();
+        public int Id { get; }
 
         /// <summary>
-        /// Gets or sets the item filter.
+        /// Gets the item.
         /// </summary>
         /// <value>
-        /// The item filter.
+        /// The item.
         /// </value>
-        public Func<T, bool> Filter { get; set; }
+        public T Item { get; private set; }
 
-        protected GetItemsCommand(Func<T, bool> filter=null)
+        public GetItemCommand(int id)
         {
-            Filter = filter;
+            Id = id;
         }
 
         public override async Task DoActionAsync(BackpackPlannerState state)
         {
             await base.DoActionAsync(state).ConfigureAwait(false);
 
-            Items = await DatabaseItem.GetValidItemsAsync<T>(state, Filter).ConfigureAwait(false);
+            Item = await DatabaseItem.GetValidItemAsync<T>(state, Id).ConfigureAwait(false);
         }
     }
 }

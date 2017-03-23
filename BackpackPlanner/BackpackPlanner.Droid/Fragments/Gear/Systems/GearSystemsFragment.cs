@@ -14,6 +14,8 @@
    limitations under the License.
 */
 
+using EnergonSoftware.BackpackPlanner.Commands;
+using EnergonSoftware.BackpackPlanner.Commands.Gear;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
@@ -43,6 +45,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
         protected override int SortItemsResource => Resource.Id.gear_systems_sort;
 
         protected override int AddItemResource => Resource.Id.fab_add_gear_system;
+
+        protected override GetItemsCommand<GearSystem> CreateGetItemsCommand()
+        {
+            return new GetGearSystemsCommand();
+        }
 
         protected override Android.Support.V4.App.Fragment CreateAddItemFragment()
         {

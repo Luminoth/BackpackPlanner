@@ -36,13 +36,15 @@ namespace EnergonSoftware.BackpackPlanner.Windows.Pages
 
         protected abstract ListView ItemsListView { get; }
 
+        protected abstract GetItemsCommand<T> CreateGetItemsCommand();
+
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
             LoadProgressRing.Visibility = Visibility.Visible;
 
-            var command = new GetItemsCommand<T>();
+            var command = CreateGetItemsCommand();
             await command.DoActionAsync(App.CurrentApp.BackpackPlannerState);
 
             Logger.Debug($"Read {command.Items.Count} items...");

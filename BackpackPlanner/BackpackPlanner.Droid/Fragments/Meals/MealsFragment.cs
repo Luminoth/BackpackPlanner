@@ -14,6 +14,8 @@
    limitations under the License.
 */
 
+using EnergonSoftware.BackpackPlanner.Commands;
+using EnergonSoftware.BackpackPlanner.Commands.Meals;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals;
 using EnergonSoftware.BackpackPlanner.Models.Meals;
@@ -43,6 +45,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
         protected override int SortItemsResource => Resource.Id.meals_sort;
 
         protected override int AddItemResource => Resource.Id.fab_add_meal;
+
+        protected override GetItemsCommand<Meal> CreateGetItemsCommand()
+        {
+            return new GetMealsCommand();
+        }
 
         protected override Android.Support.V4.App.Fragment CreateAddItemFragment()
         {

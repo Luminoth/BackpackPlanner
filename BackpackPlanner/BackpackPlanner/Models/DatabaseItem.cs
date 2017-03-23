@@ -17,6 +17,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
@@ -92,14 +93,20 @@ namespace EnergonSoftware.BackpackPlanner.Models
             }
         }
 
-        private static async Task<List<T>> GetValidItemsInternalAsync<T>(BackpackPlannerState state, Predicate<T> filter) where T: DatabaseItem
+        // NOTE: *WithChildren doesn't work right for us because it doesn't pull in "duplicates"
+        // so the quantity of child items is always 1 when read in
+
+        private static async Task<List<T>> GetValidItemsInternalAsync<T>(BackpackPlannerState state, Func<T, bool> filter) where T: DatabaseItem
         {
             Stopwatch stopWatch = Stopwatch.StartNew();
-            var items = await (from x in state.DatabaseState.Connection.AsyncConnection.Table<T>() where !x.IsDeleted /*&& filter(x)*/ select x).ToListAsync().ConfigureAwait(false);
-            Logger.Debug("Reading children...");
+            var items = (await (from x in state.DatabaseState.Connection.AsyncConnection.Table<T>() where !x.IsDeleted select x).ToListAsync().ConfigureAwait(false))
+                .Where(filter).ToList();
+
+            //Logger.Debug("Reading children...");
             foreach(T item in items) {
-                await state.DatabaseState.Connection.AsyncConnection.GetChildrenAsync(item).ConfigureAwait(false);
                 item.Settings = state.Settings;
+
+                //await state.DatabaseState.Connection.AsyncConnection.GetChildrenAsync(item).ConfigureAwait(false);
             }
             stopWatch.Stop();
             Logger.Debug($"Database read took {stopWatch.ElapsedMilliseconds}ms");
@@ -116,7 +123,7 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// <returns>
         /// All of the not-deleted items from the database
         /// </returns>
-        public static async Task<List<T>> GetValidItemsAsync<T>(BackpackPlannerState state, Predicate<T> filter=null) where T: DatabaseItem
+        public static async Task<List<T>> GetValidItemsAsync<T>(BackpackPlannerState state, Func<T, bool> filter=null) where T: DatabaseItem
         {
             ValidateState(state);
 
@@ -142,7 +149,9 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// <returns>
         /// All of the items from the database
         /// </returns>
-        public static async Task<List<T>> GetAllItemsAsync<T>(BackpackPlannerState state) where T: DatabaseItem
+        // TODO: because *WithChildren doesn't work right for us
+        // this is going to be re-written to work with custom commands
+        /*public static async Task<List<T>> GetAllItemsAsync<T>(BackpackPlannerState state) where T: DatabaseItem
         {
             ValidateState(state);
 
@@ -162,7 +171,7 @@ namespace EnergonSoftware.BackpackPlanner.Models
             } finally {
                 state.DatabaseState.Connection.Release();
             }
-        }
+        }*/
 
         /// <summary>
         /// Gets a single item from the database.
@@ -173,7 +182,7 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// <returns>
         /// A single item from the database
         /// </returns>
-        public static async Task<T> GetItemAsync<T>(BackpackPlannerState state, int itemId) where T: DatabaseItem
+        public static async Task<T> GetValidItemAsync<T>(BackpackPlannerState state, int itemId) where T: DatabaseItem
         {
             ValidateState(state);
 
@@ -186,9 +195,9 @@ namespace EnergonSoftware.BackpackPlanner.Models
                 if(null == item) {
                     return null;
                 }
-
-                await state.DatabaseState.Connection.AsyncConnection.GetChildrenAsync(item).ConfigureAwait(false);
                 item.Settings = state.Settings;
+
+                //await state.DatabaseState.Connection.AsyncConnection.GetChildrenAsync(item).ConfigureAwait(false);
 
                 stopWatch.Stop();
                 Logger.Debug($"Database read took {stopWatch.ElapsedMilliseconds}ms");

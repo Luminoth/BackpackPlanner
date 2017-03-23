@@ -17,6 +17,8 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
+using EnergonSoftware.BackpackPlanner.Commands;
+using EnergonSoftware.BackpackPlanner.Commands.Trips;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
 
 namespace EnergonSoftware.BackpackPlanner.Windows.Pages.Trips.Plans
@@ -41,6 +43,11 @@ namespace EnergonSoftware.BackpackPlanner.Windows.Pages.Trips.Plans
         public TripPlansPage()
         {
             InitializeComponent();
+        }
+
+        protected override GetItemsCommand<TripPlan> CreateGetItemsCommand()
+        {
+            return new GetTripPlansCommand();
         }
 
         protected override void UpdateValues()
