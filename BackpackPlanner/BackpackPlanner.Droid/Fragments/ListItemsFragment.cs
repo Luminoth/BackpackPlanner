@@ -35,6 +35,23 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(ListItemsFragment<T>));
 
+        private sealed class ListAdapterDataObserver : Android.Support.V7.Widget.RecyclerView.AdapterDataObserver
+        {
+            private readonly ListItemsFragment<T> _fragment;
+
+            public ListAdapterDataObserver(ListItemsFragment<T> fragment)
+            {
+                _fragment = fragment;
+            }
+
+            public override void OnChanged()
+            {
+                base.OnChanged();
+
+                _fragment.UpdateView();
+            }
+        }
+
         protected abstract int WhatIsAnItemButtonResource { get; }
 
         protected abstract int WhatIsAnItemTitleResource { get; }
@@ -73,6 +90,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
             Adapter = CreateAdapter();
             Layout.SetAdapter(Adapter);
+
+            Adapter.RegisterAdapterDataObserver(new ListAdapterDataObserver(this));
 
             _noItemsTextView = View.FindViewById<TextView>(NoItemsResource);
 
@@ -118,8 +137,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                         progressDialog.Dismiss();
 
                         Adapter.ListItems = command.Items;
-
-                        UpdateView();
                     });
                 }
             );
@@ -144,8 +161,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
                         Adapter.RemoveItem(item);
 
-                        UpdateView();
-
                         SnackbarUtil.ShowUndoSnackbar(View, Resource.String.label_deleted_item, Android.Support.Design.Widget.Snackbar.LengthLong,
                             view => UndoDeleteItemEventHandler(view, command));
                     });
@@ -165,8 +180,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                         progressDialog.Dismiss();
 
                         Adapter.AddItem(a.Item);
-
-                        UpdateView();
 
                         SnackbarUtil.ShowSnackbar(view, Resource.String.label_deleted_item_undone, Android.Support.Design.Widget.Snackbar.LengthShort);
                     });

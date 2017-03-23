@@ -15,6 +15,7 @@
 */
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
@@ -23,6 +24,7 @@ using Android.Widget;
 
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans;
+using EnergonSoftware.BackpackPlanner.Droid.Util;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
 using EnergonSoftware.BackpackPlanner.Units.Units;
 
@@ -119,11 +121,29 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips
             }
         }
 
+        private sealed class TripPlanFilter : BaseFilter
+        {
+            public TripPlanFilter(TripPlanListAdapter adapter)
+                : base(adapter)
+            {
+            }
+
+            protected override IEnumerable<ObjectWrapper> DoFilter(string constraint)
+            {
+                return from item in Adapter.ListItems
+                    where item.Name.ToLower().Contains(constraint)
+                    select item.ToJavaObject();
+            }
+        }
+
         public override int LayoutResource => Resource.Layout.view_trip_plan;
+
+        public override Filter Filter { get; }
 
         public TripPlanListAdapter(ListItemsFragment<TripPlan> fragment)
             : base(fragment)
         {
+            Filter = new TripPlanFilter(this);
         }
 
         protected override void SortItemsByPosition(int position)
@@ -146,11 +166,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips
                 // TODO
                 break;
             }
-        }
-
-        protected override void FilterItems(string text)
-        {
-            FilteredListItems = from item in ListItems where item.Name.ToLower().Contains(text) select item;
         }
 
         protected override BaseViewHolder CreateViewHolder(View itemView)
