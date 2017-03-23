@@ -225,6 +225,19 @@ namespace EnergonSoftware.BackpackPlanner.Settings
             MetaSettings = new MetaSettings(_settingsManager);
         }
 
+        public WeightClass GetWeightClass(int weightInGrams)
+        {
+            if(weightInGrams < UltralightClassMaxWeightInGrams) {
+                return WeightClass.Ultralight;
+            }
+
+            if(weightInGrams < LightweightClassMaxWeightInGrams) {
+                return WeightClass.Lightweight;
+            }
+
+            return WeightClass.Traditional;
+        }
+
         public WeightCategory GetWeightCategory(int weightInGrams)
         {
             if(weightInGrams <= 0) {
