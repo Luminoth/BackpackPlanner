@@ -172,6 +172,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
         {
             Item.Name = _gearSystemNameEditText.EditText.Text;
             Item.Note = _gearSystemNoteEditText.EditText.Text;
+
+            Item.GearItems.Clear();
+            foreach(var kvp in _gearItemListAdapter.ItemMap) {
+                for(int i=0; i <kvp.Value.Count; ++i) {
+                    Item.GearItems.Add(kvp.Key);
+                }
+            }
         }
 
         protected override bool OnValidate()
@@ -182,6 +189,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
                 _gearSystemNameEditText.EditText.Error = "A name is required!";
                 valid = false;                
             }
+
+// TODO: validate no item quantities are < 1
 
             return valid;
         }
