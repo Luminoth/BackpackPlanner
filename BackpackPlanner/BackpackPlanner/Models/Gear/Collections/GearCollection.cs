@@ -32,7 +32,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Collections
     /// <summary>
     /// 
     /// </summary>
-    public sealed class GearCollection : DatabaseItem
+    public sealed class GearCollection : DatabaseItem, IBackpackPlannerItem
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(GearCollection));
 

@@ -15,15 +15,12 @@
 */
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 using Android.Views;
-using Android.Widget;
 
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries;
-using EnergonSoftware.BackpackPlanner.Droid.Util;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips
@@ -58,29 +55,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips
             }
         }
 
-        private sealed class TripItineraryFilter : BaseFilter
-        {
-            public TripItineraryFilter(TripItineraryListAdapter adapter)
-                : base(adapter)
-            {
-            }
-
-            protected override IEnumerable<ObjectWrapper> DoFilter(string constraint)
-            {
-                return from item in Adapter.ListItems
-                    where item.Name.ToLower().Contains(constraint)
-                    select item.ToJavaObject();
-            }
-        }
-
         public override int LayoutResource => Resource.Layout.view_trip_itinerary;
-
-        public override Filter Filter { get; }
 
         public TripItineraryListAdapter(ListItemsFragment<TripItinerary> fragment)
             : base(fragment)
         {
-            Filter = new TripItineraryFilter(this);
         }
 
         protected override void SortItemsByPosition(int position)

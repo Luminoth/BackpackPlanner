@@ -31,7 +31,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
     /// <summary>
     /// Helper for the data listing fragments
     /// </summary>
-    public abstract class ListItemsFragment<T> : RecyclerFragment where T: DatabaseItem
+    public abstract class ListItemsFragment<T> : RecyclerFragment where T: DatabaseItem, IBackpackPlannerItem
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(ListItemsFragment<T>));
 
@@ -123,11 +123,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             FilterView.QueryTextChange += Adapter.FilterItemsEventHandler;
         }
 
+        protected abstract GetItemsCommand<T> CreateGetItemsCommand();
+
         protected void PopulateList()
         {
             ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_loading_items, false, true);
 
-            new GetItemsCommand<T>().DoActionInBackground(DroidState.Instance.BackpackPlannerState,
+            CreateGetItemsCommand().DoActionInBackground(DroidState.Instance.BackpackPlannerState,
                 command =>
                 {
                     Logger.Debug($"Read {command.Items.Count} items...");

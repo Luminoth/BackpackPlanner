@@ -34,7 +34,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
     /// <summary>
     /// 
     /// </summary>
-    public sealed class TripPlan : DatabaseItem
+    public sealed class TripPlan : DatabaseItem, IBackpackPlannerItem
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(TripPlan));
 

@@ -30,7 +30,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries
     /// <summary>
     /// 
     /// </summary>
-    public sealed class TripItinerary : DatabaseItem
+    public sealed class TripItinerary : DatabaseItem, IBackpackPlannerItem
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(TripItinerary));
 

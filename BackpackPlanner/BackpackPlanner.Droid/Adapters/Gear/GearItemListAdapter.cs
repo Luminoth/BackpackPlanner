@@ -15,7 +15,6 @@
 */
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
@@ -26,7 +25,6 @@ using Android.Widget;
 
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items;
-using EnergonSoftware.BackpackPlanner.Droid.Util;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
 using EnergonSoftware.BackpackPlanner.Units;
 using EnergonSoftware.BackpackPlanner.Units.Units;
@@ -129,27 +127,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
 
         public override int LayoutResource => Resource.Layout.view_gear_item;
 
-        private sealed class GearItemFilter : BaseFilter
-        {
-            public GearItemFilter(GearItemListAdapter adapter)
-                : base(adapter)
-            {
-            }
-
-            protected override IEnumerable<ObjectWrapper> DoFilter(string constraint)
-            {
-                return from item in Adapter.ListItems
-                    where item.Name.ToLower().Contains(constraint)
-                    select item.ToJavaObject();
-            }
-        }
-
-        public override Filter Filter { get; }
-
         public GearItemListAdapter(ListItemsFragment<GearItem> fragment)
             : base(fragment)
         {
-            Filter = new GearItemFilter(this);
         }
 
         protected override void SortItemsByPosition(int position)

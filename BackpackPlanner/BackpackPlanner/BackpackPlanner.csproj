@@ -57,6 +57,7 @@
     <Compile Include="Core\Util\DictionaryExtensions.cs" />
     <Compile Include="DatabaseState.cs" />
     <Compile Include="Core\Settings\SettingsManager.cs" />
+    <Compile Include="Models\BackpackPlannerItem.cs" />
     <Compile Include="Models\DatabaseIntermediateItem.cs" />
     <Compile Include="Models\DatabaseItem.cs" />
     <Compile Include="Core\Permissions\PermissionRequest.cs" />
@@ -122,5 +123,6 @@
       <Private>True</Private>
     </Reference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>

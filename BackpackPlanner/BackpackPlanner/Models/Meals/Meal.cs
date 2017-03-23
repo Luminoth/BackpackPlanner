@@ -32,7 +32,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Meals
     /// <summary>
     /// 
     /// </summary>
-    public sealed class Meal : DatabaseItem
+    public sealed class Meal : DatabaseItem, IBackpackPlannerItem
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(Meal));
 

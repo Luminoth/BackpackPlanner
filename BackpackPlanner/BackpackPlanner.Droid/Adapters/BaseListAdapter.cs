@@ -29,7 +29,7 @@ using Java.Lang;
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 {
 // TODO: rename this BaseRecyclerItemListAdapter
-    public abstract class BaseListAdapter<T> : Android.Support.V7.Widget.RecyclerView.Adapter, IFilterable where T: DatabaseItem
+    public abstract class BaseListAdapter<T> : Android.Support.V7.Widget.RecyclerView.Adapter, IFilterable where T: DatabaseItem, IBackpackPlannerItem
     {
         protected abstract class BaseViewHolder : Android.Support.V7.Widget.RecyclerView.ViewHolder, Android.Support.V7.Widget.Toolbar.IOnMenuItemClickListener
         {
@@ -74,13 +74,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
             }
         }
 
-        public abstract class BaseFilter : Filter
+        private sealed class ItemFilter : Filter
         {
-            protected BaseListAdapter<T> Adapter { get; }
-
-            // TODO: might be even easier to just have this
-            // be a Predicate property to test against in the Linq construct
-            protected abstract IEnumerable<ObjectWrapper> DoFilter(string constraint);
+            private readonly BaseListAdapter<T> _adapter;
 
             protected override FilterResults PerformFiltering(ICharSequence constraint)
             {
@@ -90,8 +86,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
                 // NOTE: not checking vs whitespace because that might be useful to filter on
                 var filteredItemEnumerable = string.IsNullOrEmpty(filterConstraint)
-                    ? from item in Adapter.ListItems select item.ToJavaObject()
-                    : DoFilter(filterConstraint);
+                    ? from item in _adapter.ListItems select item.ToJavaObject()
+                    : from item in _adapter.ListItems where item.Name.ToLower().Contains(filterConstraint) select item.ToJavaObject();
 
                 var filteredObjectArray = filteredItemEnumerable.ToArray();
                 results.Values = filteredObjectArray;
@@ -103,12 +99,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
             protected override void PublishResults(ICharSequence constraint, FilterResults results)
             {
                 var filteredItems = results.Values.ToArray<ObjectWrapper>();
-                Adapter.FilteredListItems = from item in filteredItems select (T)item.Instance;
+                _adapter.FilteredListItems = from item in filteredItems select (T)item.Instance;
             }
 
-            protected BaseFilter(BaseListAdapter<T> adapter)
+            public ItemFilter(BaseListAdapter<T> adapter)
             {
-                Adapter = adapter;
+                _adapter = adapter;
             }
         }
 
@@ -161,7 +157,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
             }
         }
 
-        public abstract Filter Filter { get; }
+        public Filter Filter { get; }
 
 #region ViewHolder
         protected abstract BaseViewHolder CreateViewHolder(View itemView);
@@ -231,6 +227,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
         protected BaseListAdapter(ListItemsFragment<T> fragment)
         {
             Fragment = fragment;
+            Filter = new ItemFilter(this);
         }
     }
 }
