@@ -98,7 +98,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries
         public string Note { get; set; } = string.Empty;
 
         [OneToMany(CascadeOperations = CascadeOperation.CascadeRead, ReadOnly = true)]
-        public List<TripPlan> TripPlans { get; set; }
+        public List<TripPlan> TripPlans { get; set; } = new List<TripPlan>();
 
         [Ignore]
         public int TripPlanCount => TripPlans?.Count ?? 0;

@@ -228,19 +228,19 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Items
         public string Note { get; set; } = string.Empty;
 
         [ManyToMany(typeof(GearSystemGearItem), CascadeOperations = CascadeOperation.CascadeRead, ReadOnly = true)]
-        public List<GearSystem> GearSystems { get; set; }
+        public List<GearSystem> GearSystems { get; set; } = new List<GearSystem>();
 
         [Ignore]
         public int GearSystemCount => GearSystems?.Count ?? 0;
 
         [ManyToMany(typeof(GearCollectionGearItem), CascadeOperations = CascadeOperation.CascadeRead, ReadOnly = true)]
-        public List<GearCollection> GearCollections { get; set; }
+        public List<GearCollection> GearCollections { get; set; } = new List<GearCollection>();
 
         [Ignore]
         public int GearCollectionCount => GearCollections?.Count ?? 0;
 
         [ManyToMany(typeof(TripPlanGearItem), CascadeOperations = CascadeOperation.CascadeRead, ReadOnly = true)]
-        public List<TripPlan> TripPlans { get; set; }
+        public List<TripPlan> TripPlans { get; set; } = new List<TripPlan>();
 
         [Ignore]
         public int TripPlanCount => TripPlans?.Count ?? 0;

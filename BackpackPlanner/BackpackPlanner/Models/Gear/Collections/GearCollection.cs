@@ -100,7 +100,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Collections
         /// The gear systems contained in this collection.
         /// </value>
         [ManyToMany(typeof(GearCollectionGearSystem), CascadeOperations = CascadeOperation.All)]
-        public List<GearSystem> GearSystems { get; set; }
+        public List<GearSystem> GearSystems { get; set; } = new List<GearSystem>();
 
         [Ignore]
         public int GearSystemCount => GearSystems?.Count ?? 0;
@@ -112,7 +112,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Collections
         /// The gear items contained in this collection.
         /// </value>
         [ManyToMany(typeof(GearCollectionGearItem), CascadeOperations = CascadeOperation.All)]
-        public List<GearItem> GearItems { get; set; }
+        public List<GearItem> GearItems { get; set; } = new List<GearItem>();
 
         [Ignore]
         public int GearItemCount => GearItems?.Count ?? 0;
@@ -127,7 +127,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Collections
         public string Note { get; set; } = string.Empty;
 
         [ManyToMany(typeof(TripPlanGearCollection), CascadeOperations = CascadeOperation.CascadeRead, ReadOnly = true)]
-        public List<TripPlan> TripPlans { get; set; }
+        public List<TripPlan> TripPlans { get; set; } = new List<TripPlan>();
 
         [Ignore]
         public int TripPlanCount => TripPlans?.Count ?? 0;

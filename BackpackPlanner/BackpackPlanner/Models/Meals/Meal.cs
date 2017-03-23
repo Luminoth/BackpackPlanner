@@ -254,7 +254,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Meals
         public string Note { get; set; } = string.Empty;
 
         [ManyToMany(typeof(TripPlanMeal), CascadeOperations = CascadeOperation.CascadeRead, ReadOnly = true)]
-        public List<TripPlan> TripPlans { get; set; }
+        public List<TripPlan> TripPlans { get; set; } = new List<TripPlan>();
 
         [Ignore]
         public int TripPlanCount => TripPlans?.Count ?? 0;
