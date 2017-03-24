@@ -19,6 +19,8 @@ using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Models;
 
+using JetBrains.Annotations;
+
 namespace EnergonSoftware.BackpackPlanner.Commands
 {
     /// <summary>
@@ -32,6 +34,7 @@ namespace EnergonSoftware.BackpackPlanner.Commands
         /// <value>
         /// The item to delete.
         /// </value>
+        [NotNull]
         public T Item { get; }
 
         /// <summary>
@@ -45,7 +48,7 @@ namespace EnergonSoftware.BackpackPlanner.Commands
             }
 
             Item = item;
-        } 
+        }
 
         public override async Task DoActionAsync(BackpackPlannerState state)
         {

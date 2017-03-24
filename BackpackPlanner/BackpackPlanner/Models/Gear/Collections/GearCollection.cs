@@ -14,15 +14,14 @@
    limitations under the License.
 */
 
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
-using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
-using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
 using EnergonSoftware.BackpackPlanner.Settings;
+using EnergonSoftware.BackpackPlanner.Units.Currency;
+using EnergonSoftware.BackpackPlanner.Units.Units;
 
 using SQLite.Net.Attributes;
 using SQLiteNetExtensions.Attributes;
@@ -36,6 +35,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Collections
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(GearCollection));
 
+#region Database Init
         /// <summary>
         /// Initializes the gear collection tables in the database.
         /// </summary>
@@ -55,25 +55,23 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Collections
             }
 
             if(oldVersion < 1 && newVersion >= 1) {
-                Logger.Debug("Creating gear collection tables...");
                 await CreateTablesAsync(state).ConfigureAwait(false);
             }
         }
 
         private static async Task CreateTablesAsync(BackpackPlannerState state)
         {
+            Logger.Debug("Creating gear collection table...");
             await state.DatabaseState.Connection.AsyncConnection.CreateTableAsync<GearCollection>().ConfigureAwait(false);
 
             await GearCollectionGearSystem.CreateTablesAsync(state).ConfigureAwait(false);
             await GearCollectionGearItem.CreateTablesAsync(state).ConfigureAwait(false);
         }
+#endregion
 
+#region Properties
         [Ignore]
         public override int Id { get { return GearCollectionId; } set { GearCollectionId = value; } }
-
-        public override DateTime LastUpdated { get; set; } = DateTime.Now;
-
-        public override bool IsDeleted { get; set; }
 
         /// <summary>
         /// Gets or sets the gear collection identifier.
@@ -84,6 +82,8 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Collections
         [PrimaryKey, AutoIncrement, Column("_id")]
         public int GearCollectionId { get; set; } = -1;
 
+        private string _name = string.Empty;
+
         /// <summary>
         /// Gets or sets the gear collection name.
         /// </summary>
@@ -91,7 +91,13 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Collections
         /// The gear collection name.
         /// </value>
         [MaxLength(64), NotNull]
-        public string Name { get; set; } = string.Empty;
+        public string Name
+        {
+            get { return _name; }
+            set { _name = value ?? string.Empty; }
+        }
+
+        private List<GearCollectionGearSystem> _gearSystems = new List<GearCollectionGearSystem>();
 
         /// <summary>
         /// Gets or sets the gear systems contained in this collection.
@@ -99,11 +105,14 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Collections
         /// <value>
         /// The gear systems contained in this collection.
         /// </value>
-        [ManyToMany(typeof(GearCollectionGearSystem), CascadeOperations = CascadeOperation.All)]
-        public List<GearSystem> GearSystems { get; set; } = new List<GearSystem>();
+        [OneToMany(CascadeOperations = CascadeOperation.All)]
+        public List<GearCollectionGearSystem> GearSystems
+        {
+            get { return _gearSystems; }
+            set { _gearSystems = value ?? new List<GearCollectionGearSystem>(); }
+        }
 
-        [Ignore]
-        public int GearSystemCount => GearSystems?.Count ?? 0;
+        private List<GearCollectionGearItem> _gearItems = new List<GearCollectionGearItem>();
 
         /// <summary>
         /// Gets or sets the gear items contained in this collection.
@@ -111,11 +120,14 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Collections
         /// <value>
         /// The gear items contained in this collection.
         /// </value>
-        [ManyToMany(typeof(GearCollectionGearItem), CascadeOperations = CascadeOperation.All)]
-        public List<GearItem> GearItems { get; set; } = new List<GearItem>();
+        [OneToMany(CascadeOperations = CascadeOperation.All)]
+        public List<GearCollectionGearItem> GearItems
+        {
+            get { return _gearItems; }
+            set { _gearItems = value ?? new List<GearCollectionGearItem>(); }
+        }
 
-        [Ignore]
-        public int GearItemCount => GearItems?.Count ?? 0;
+        private string _note = string.Empty;
 
         /// <summary>
         /// Gets or sets the gear collection note.
@@ -124,13 +136,12 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Collections
         /// The gear collection note.
         /// </value>
         [MaxLength(1024)]
-        public string Note { get; set; } = string.Empty;
-
-        [ManyToMany(typeof(TripPlanGearCollection), CascadeOperations = CascadeOperation.CascadeRead, ReadOnly = true)]
-        public List<TripPlan> TripPlans { get; set; } = new List<TripPlan>();
-
-        [Ignore]
-        public int TripPlanCount => TripPlans?.Count ?? 0;
+        public string Note
+        {
+            get { return _note; }
+            set { _note = value ?? string.Empty; }
+        }
+#endregion
 
         public GearCollection()
         {
@@ -141,29 +152,65 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Collections
         {
         }
 
+
         public int GetTotalGearItemCount()
         {
-            // TODO: calculate this
-            return 0;
+            var visitedGearItems = new List<int>();
+            return IGearItemContainerExtensions.GetGearItemCount(_gearSystems, visitedGearItems)
+                + GetGearItemCount(visitedGearItems);
         }
 
-        public float GetWeightInUnits()
+#region Gear Systems
+        public int GetGearSystemCount(List<int> visitedGearSystems=null)
         {
-            // TODO: calculate this
-            return 0.0f;
+            return GearCollectionGearSystem.GetGearSystemCount(_gearSystems, visitedGearSystems);
+        } 
+#endregion
+
+#region Gear Items
+        public int GetGearItemCount(List<int> visitedGearItems=null)
+        {
+            return GearCollectionGearItem.GetGearItemCount(_gearItems, visitedGearItems);
+        }
+#endregion
+
+#region Weight
+        public int GetTotalWeightInGrams(List<int> visitedGearItems=null)
+        {
+            return GearCollectionGearSystem.GetTotalWeightInGrams(_gearSystems, visitedGearItems)
+                + GearCollectionGearItem.GetTotalWeightInGrams(_gearItems, visitedGearItems);
         }
 
-        public float GetCostInCurrency()
+        public float GetTotalWeightInUnits()
         {
-            // TODO: calculate this
-            return 0.0f;
+            int weightInGrams = GetTotalWeightInGrams();
+            return Settings?.Units.WeightFromGrams(weightInGrams) ?? weightInGrams;
+        }
+#endregion
+
+#region Cost
+        public int GetTotalCostInUSDP(List<int> visitedGearItems=null)
+        {
+            return GearCollectionGearSystem.GetTotalCostInUSDP(_gearSystems, visitedGearItems)
+                + GearCollectionGearItem.GetTotalCostInUSDP(_gearItems, visitedGearItems);
+        }
+
+        public float GetTotalCostInCurrency()
+        {
+            int costInUSDP = GetTotalCostInUSDP();
+            return Settings?.Currency.CurrencyFromUSDP(costInUSDP) ?? costInUSDP;
         }
 
         public float GetCostPerWeightInCurrency()
         {
-            // TODO: calculate this
-            return 0.0f;
+            float weightInUnits = GetTotalWeightInUnits();
+            float costInCurrency = GetTotalCostInCurrency();
+
+            return 0.0f == weightInUnits
+                ? costInCurrency
+                : costInCurrency / weightInUnits;
         }
+#endregion
 
         public override bool Equals(object obj)
         {

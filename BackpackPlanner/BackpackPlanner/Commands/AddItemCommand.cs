@@ -19,6 +19,8 @@ using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Models;
 
+using JetBrains.Annotations;
+
 namespace EnergonSoftware.BackpackPlanner.Commands
 {
     /// <summary>
@@ -32,6 +34,7 @@ namespace EnergonSoftware.BackpackPlanner.Commands
         /// <value>
         /// The item to add.
         /// </value>
+        [NotNull]
         public T Item { get; }
 
         /// <summary>
@@ -46,6 +49,8 @@ namespace EnergonSoftware.BackpackPlanner.Commands
 
             Item = item;
         }
+
+// TODO: needs to save children after saving the item
 
         public override async Task DoActionAsync(BackpackPlannerState state)
         {

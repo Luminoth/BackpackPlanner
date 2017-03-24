@@ -68,6 +68,11 @@
     <Compile Include="Models\DatabaseIntermediateItem.cs" />
     <Compile Include="Models\DatabaseItem.cs" />
     <Compile Include="Core\Permissions\PermissionRequest.cs" />
+    <Compile Include="Models\Gear\Collections\GearCollectionEntry.cs" />
+    <Compile Include="Models\Gear\Items\GearItemContainer.cs" />
+    <Compile Include="Models\Gear\Items\GearItemEntry.cs" />
+    <Compile Include="Models\Gear\Systems\GearSystemEntry.cs" />
+    <Compile Include="Models\Meals\MealEntry.cs" />
     <Compile Include="Settings\MetaSettings.cs" />
     <Compile Include="Units\Currency\Currency.cs" />
     <Compile Include="Settings\BackpackPlannerSettings.cs" />

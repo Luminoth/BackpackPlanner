@@ -51,7 +51,7 @@ namespace EnergonSoftware.BackpackPlanner
         /// <summary>
         /// The database version
         /// </summary>
-        public const int CurrentDatabaseVersion = 3;
+        public const int CurrentDatabaseVersion = 4;
 
         /// <summary>
         /// Gets the database connection.
@@ -201,428 +201,367 @@ namespace EnergonSoftware.BackpackPlanner
             stopwatch.Start();
 
 #region Test Gear Items
-            Logger.Debug("Inserting test gear items...");
-            await DatabaseItem.InsertItemsAsync(state, new List<GearItem>
+            var gearItems = new List<GearItem>
+            {
+                new GearItem(state.Settings)
                 {
-                    new GearItem(state.Settings)
-                    {
-                        Name = "Alcohol Stove",
-                        Make = "Zelph's Stoveworks",
-                        Model = "StarLyte",
-                        Url = "http://www.woodgaz-stove.com/starlyte-burner-with-lid.php",
-                        WeightInGrams = 19,
-                        CostInUSDP = 1300,
-                    },
-                    new GearItem(state.Settings)
-                    {
-                        Name = "Backpack",
-                        Make = "ULA",
-                        Model = "Circuit",
-                        Url = "http://www.ula-equipment.com/product_p/circuit.htm",
-                        WeightInGrams = 986,
-                        CostInUSDP = 22500,
-                        Note = "Medium torso (18\" - 21\"). Medium hipbelt (34\" - 38\"). J-Curve shoulder strap. Aluminum stay removed. Includes hanging s-biner \"Ahhh\" and water shoe carabiner. 39L main body. Max 15 pound base weight, 30-35 pack weight."
-                    },
-                    new GearItem(state.Settings)
-                    {
-                        Name = "Hammock",
-                        Make = "Aaron Erbe",
-                        Model = "DIY",
-                        WeightInGrams = 422,
-                        CostInUSDP = 0,
-                        Note = "Includes adjustable ridge line and 2x whoopie slings from whoopieslings.com, and bishop bag."
-                    },
-                    new GearItem(state.Settings)
-                    {
-                        Name = "Head Lamp",
-                        Make = "Petzl",
-                        Model = "Tikka Plus 2",
-                        WeightInGrams = 79,
-                        CostInUSDP = 2995
-                    },
-                    new GearItem(state.Settings)
-                    {
-                        Name = "Kilt",
-                        Make = "Utilikilt",
-                        Model = "Survival",
-                        Url = "http://www.utilikilts.com/index.php/the-survival.html",
-                        Carried = GearCarried.Worn,
-                        WeightInGrams = 989,
-                        CostInUSDP = 33000,
-                        Note = "100% cotton. Cargo pockets removed (3.8 ounces each)."
-                    },
-                    new GearItem(state.Settings)
-                    {
-                        Name = "New Underquilt",
-                        Make = "Arrowhead Equipment",
-                        Model = "Anniversary Jarbridge 3S (25F)",
-                        Url = "http://www.arrowhead-equipment.com/store/p510/Anniversary_Jarbidge_UnderQuilt.htmll",
-                        WeightInGrams = 566,
-                        CostInUSDP = 7500,
-                        Note = "6oz APEX Climashield synthetic"
-                    },
-                    new GearItem(state.Settings)
-                    {
-                        Name = "Old Underquilt",
-                        Make = "Aaron Erbe",
-                        Model = "DIY",
-                        WeightInGrams = 887,
-                        CostInUSDP = 0,
-                        Note = "Synthetic material. Need to have Aaron or Joe possibly remove some material from the overstuff collars to get the size and weight down on this."
-                    },
-                    new GearItem(state.Settings)
-                    {
-                        Name = "Overquilt",
-                        Make = "Arrowhead Equipment",
-                        Model = "Owyhee Top Quilt Regular 3S (25F)",
-                        Url = "http://www.arrowhead-equipment.com/store/p314/Owyhee_Top_Quilt_Regular.html",
-                        WeightInGrams = 802,
-                        CostInUSDP = 17900,
-                        Note = "6oz APEX Climashield synthetic"
-                    },
-                    new GearItem(state.Settings)
-                    {
-                        Name = "Toilet Paper",
-                        IsConsumable = true,
-                        ConsumedPerDay = 10,
-                        WeightInGrams = 1,
-                        CostInUSDP = 1,
-                        Note = "Can't have too much!"
-                    },
-                    new GearItem(state.Settings)
-                    {
-                        Name = "Tree Straps",
-                        Url = "http://shop.whoopieslings.com/Tree-Huggers-TH.htm",
-                        WeightInGrams = 198,
-                        CostInUSDP = 1200,
-                        Note = "12'x1\". Includes dutch buckle and titanium dutch clip (max 300 pounds)."
-                    },
-                    new GearItem(state.Settings)
-                    {
-                        Name = "5g Water Jug",
-                        Carried = GearCarried.NotCarried
-                    },
-                    new GearItem(state.Settings)
-                    {
-                        Name = "Wind Screen",
-                        Make = "Trail Designs",
-                        Model = "Caldera Cone System",
-                        Url = "http://www.traildesigns.com/stoves/caldera-cone-system",
-                        WeightInGrams = 141,
-                        CostInUSDP = 3400
-                    }
+                    Name = "Backpack",
+                    Make = "ULA",
+                    Model = "Circuit",
+                    Url = "http://www.ula-equipment.com/product_p/circuit.htm",
+                    WeightInGrams = 986,
+                    CostInUSDP = 22500,
+                    Note = "Medium torso (18\" - 21\"). Medium hipbelt (34\" - 38\"). J-Curve shoulder strap. Aluminum stay removed. Includes hanging s-biner \"Ahhh\" and water shoe carabiner. 39L main body. Max 15 pound base weight, 30-35 pack weight."
+                },
+                new GearItem(state.Settings)
+                {
+                    Name = "Hammock",
+                    Make = "Aaron Erbe",
+                    Model = "DIY",
+                    WeightInGrams = 422,
+                    CostInUSDP = 0,
+                    Note = "Includes adjustable ridge line and 2x whoopie slings from whoopieslings.com, and bishop bag."
+                },
+                new GearItem(state.Settings)
+                {
+                    Name = "Tree Straps",
+                    Url = "http://shop.whoopieslings.com/Tree-Huggers-TH.htm",
+                    WeightInGrams = 198,
+                    CostInUSDP = 1200,
+                    Note = "12'x1\". Includes dutch buckle and titanium dutch clip (max 300 pounds)."
+                },
+                new GearItem(state.Settings)
+                {
+                    Name = "Old Underquilt",
+                    Make = "Aaron Erbe",
+                    Model = "DIY",
+                    WeightInGrams = 887,
+                    CostInUSDP = 0,
+                    Note = "Synthetic material. Need to have Aaron or Joe possibly remove some material from the overstuff collars to get the size and weight down on this."
+                },
+                new GearItem(state.Settings)
+                {
+                    Name = "Overquilt",
+                    Make = "Arrowhead Equipment",
+                    Model = "Owyhee Top Quilt Regular 3S (25F)",
+                    Url = "http://www.arrowhead-equipment.com/store/p314/Owyhee_Top_Quilt_Regular.html",
+                    WeightInGrams = 802,
+                    CostInUSDP = 17900,
+                    Note = "6oz APEX Climashield synthetic"
+                },
+                new GearItem(state.Settings)
+                {
+                    Name = "New Underquilt",
+                    Make = "Arrowhead Equipment",
+                    Model = "Anniversary Jarbridge 3S (25F)",
+                    Url = "http://www.arrowhead-equipment.com/store/p510/Anniversary_Jarbidge_UnderQuilt.htmll",
+                    WeightInGrams = 566,
+                    CostInUSDP = 7500,
+                    Note = "6oz APEX Climashield synthetic"
+                },
+                new GearItem(state.Settings)
+                {
+                    Name = "Toilet Paper",
+                    IsConsumable = true,
+                    ConsumedPerDay = 10,
+                    WeightInGrams = 1,
+                    CostInUSDP = 1,
+                    Note = "Can't have too much!"
+                },
+                new GearItem(state.Settings)
+                {
+                    Name = "Kilt",
+                    Make = "Utilikilt",
+                    Model = "Survival",
+                    Url = "http://www.utilikilts.com/index.php/the-survival.html",
+                    Carried = GearCarried.Worn,
+                    WeightInGrams = 989,
+                    CostInUSDP = 33000,
+                    Note = "100% cotton. Cargo pockets removed (3.8 ounces each)."
+                },
+                new GearItem(state.Settings)
+                {
+                    Name = "5g Water Jug",
+                    Carried = GearCarried.NotCarried
+                },
+                new GearItem(state.Settings)
+                {
+                    Name = "Head Lamp",
+                    Make = "Petzl",
+                    Model = "Tikka Plus 2",
+                    WeightInGrams = 79,
+                    CostInUSDP = 2995
+                },
+                new GearItem(state.Settings)
+                {
+                    Name = "Alcohol Stove",
+                    Make = "Zelph's Stoveworks",
+                    Model = "StarLyte",
+                    Url = "http://www.woodgaz-stove.com/starlyte-burner-with-lid.php",
+                    WeightInGrams = 19,
+                    CostInUSDP = 1300,
+                },
+                new GearItem(state.Settings)
+                {
+                    Name = "Wind Screen",
+                    Make = "Trail Designs",
+                    Model = "Caldera Cone System",
+                    Url = "http://www.traildesigns.com/stoves/caldera-cone-system",
+                    WeightInGrams = 141,
+                    CostInUSDP = 3400
                 }
-            );
+            };
+
+            Logger.Debug("Inserting test gear items...");
+            await DatabaseItem.InsertItemsAsync(state, gearItems);
 #endregion
 
 #region Test Gear Systems
-            Logger.Debug("Inserting test gear systems...");
-            await DatabaseItem.InsertItemsAsync(state, new List<GearSystem>
+            var gearSystems = new List<GearSystem>
+            {
+                new GearSystem(state.Settings)
                 {
-                    new GearSystem(state.Settings)
+                    Name = "New Hammock Setup",
+                    GearItems = new List<GearSystemGearItem>
                     {
-                        Name = "One"
+                        // Hammock
+                        new GearSystemGearItem
+                        {
+                            GearItemId = 2,
+                            Count = 1
+                        },
+
+                        // Tree Straps
+                        new GearSystemGearItem
+                        {
+                            GearItemId = 3,
+                            Count = 1
+                        },
+
+                        // Overquilt
+                        new GearSystemGearItem
+                        {
+                            GearItemId = 5,
+                            Count = 1
+                        },
+
+                        // New Underquilt
+                        new GearSystemGearItem
+                        {
+                            GearItemId = 6,
+                            Count = 1
+                        }
                     },
-                    new GearSystem(state.Settings)
+                    Note = "3 season"
+                },
+                new GearSystem(state.Settings)
+                {
+                    Name = "Old Hammock Setup",
+                    GearItems = new List<GearSystemGearItem>
                     {
-                        Name = "Two"
+                        // Hammock
+                        new GearSystemGearItem
+                        {
+                            GearItemId = 2,
+                            Count = 1
+                        },
+
+                        // Tree Straps
+                        new GearSystemGearItem
+                        {
+                            GearItemId = 3,
+                            Count = 1
+                        },
+
+                        // Old Underquilt
+                        new GearSystemGearItem
+                        {
+                            GearItemId = 4,
+                            Count = 1
+                        },
+
+                        // Overquilt
+                        new GearSystemGearItem
+                        {
+                            GearItemId = 5,
+                            Count = 1
+                        }
                     },
-                    new GearSystem(state.Settings)
+                    Note = "3 season"
+                },
+                new GearSystem(state.Settings)
+                {
+                    Name = "Car Camping",
+                    GearItems = new List<GearSystemGearItem>
                     {
-                        Name = "Three"
+                        // 5g Water Jug
+                        new GearSystemGearItem
+                        {
+                            GearItemId = 9,
+                            Count = 2
+                        }
                     },
-                    new GearSystem(state.Settings)
+                    Note = "Leave this junk in the car"
+                },
+                new GearSystem(state.Settings)
+                {
+                    Name = "Cook System",
+                    GearItems = new List<GearSystemGearItem>
                     {
-                        Name = "Four"
-                    },
-                    new GearSystem(state.Settings)
-                    {
-                        Name = "Five"
-                    },
-                    new GearSystem(state.Settings)
-                    {
-                        Name = "Six"
-                    },
-                    new GearSystem(state.Settings)
-                    {
-                        Name = "Seven"
-                    },
-                    new GearSystem(state.Settings)
-                    {
-                        Name = "Eight"
-                    },
-                    new GearSystem(state.Settings)
-                    {
-                        Name = "Nine"
-                    },
-                    new GearSystem(state.Settings)
-                    {
-                        Name = "Ten"
+                        // Alcohol Stove
+                        new GearSystemGearItem
+                        {
+                            GearItemId = 11,
+                            Count = 1
+                        },
+
+                        // Wind Screen
+                        new GearSystemGearItem
+                        {
+                            GearItemId = 12,
+                            Count = 1
+                        }
                     }
                 }
-            );
+            };
+
+            Logger.Debug("Inserting test gear systems...");
+            await DatabaseItem.InsertItemsAsync(state, gearSystems);
 #endregion
 
 #region Test Gear Collections
-            Logger.Debug("Inserting test gear collections...");
-            await DatabaseItem.InsertItemsAsync(state, new List<GearCollection>
+            var gearCollections = new List<GearCollection>
+            {
+                new GearCollection(state.Settings)
                 {
-                    new GearCollection(state.Settings)
+                    Name = "3 Season Hammock",
+                    GearSystems = new List<GearCollectionGearSystem>
                     {
-                        Name = "One"
+                        // New Hammock Setup
+                        new GearCollectionGearSystem
+                        {
+                            GearSystemId = 1,
+                            Count = 1
+                        },
+
+                        // Cook System
+                        new GearCollectionGearSystem
+                        {
+                            GearSystemId = 4,
+                            Count = 1
+                        }
                     },
-                    new GearCollection(state.Settings)
+                    GearItems = new List<GearCollectionGearItem>
                     {
-                        Name = "Two"
+                        // Backpack
+                        new GearCollectionGearItem
+                        {
+                            GearItemId = 1,
+                            Count = 1
+                        },
+
+                        // Head Lamp
+                        new GearCollectionGearItem
+                        {
+                            GearItemId = 10,
+                            Count = 1
+                        }
                     },
-                    new GearCollection(state.Settings)
-                    {
-                        Name = "Three"
-                    },
-                    new GearCollection(state.Settings)
-                    {
-                        Name = "Four"
-                    },
-                    new GearCollection(state.Settings)
-                    {
-                        Name = "Five"
-                    },
-                    new GearCollection(state.Settings)
-                    {
-                        Name = "Six"
-                    },
-                    new GearCollection(state.Settings)
-                    {
-                        Name = "Seven"
-                    },
-                    new GearCollection(state.Settings)
-                    {
-                        Name = "Eight"
-                    },
-                    new GearCollection(state.Settings)
-                    {
-                        Name = "Nine"
-                    },
-                    new GearCollection(state.Settings)
-                    {
-                        Name = "Ten"
-                    }
+                    Note = "Test Collection"
                 }
-            );
+            };
+
+            Logger.Debug("Inserting test gear collections...");
+            await DatabaseItem.InsertItemsAsync(state, gearCollections);
 #endregion
 
 #region Test Meals
-            Logger.Debug("Inserting test meals...");
-            await DatabaseItem.InsertItemsAsync(state, new List<Meal>
+            var meals = new List<Meal>
+            {
+                new Meal(state.Settings)
                 {
-                    new Meal(state.Settings)
-                    {
-                        Name = "One",
-                        MealTime = MealTime.Dinner,
-                        ServingCount = 1,
-                        Calories = 50,
-                        ProteinInGrams = 1,
-                        FiberInGrams = 1,
-                        WeightInGrams = 1,
-                        CostInUSDP = 20
-                    },
-                    new Meal(state.Settings)
-                    {
-                        Name = "Two",
-                        MealTime = MealTime.Lunch,
-                        ServingCount = 1,
-                        Calories = 50,
-                        ProteinInGrams = 1,
-                        FiberInGrams = 1,
-                        WeightInGrams = 2,
-                        CostInUSDP = 19
-                    },
-                    new Meal(state.Settings)
-                    {
-                        Name = "Three",
-                        MealTime = MealTime.Breakfast,
-                        ServingCount = 1,
-                        Calories = 50,
-                        ProteinInGrams = 1,
-                        FiberInGrams = 1,
-                        WeightInGrams = 3,
-                        CostInUSDP = 18
-                    },
-                    new Meal(state.Settings)
-                    {
-                        Name = "Four",
-                        MealTime = MealTime.Drink,
-                        ServingCount = 1,
-                        Calories = 50,
-                        ProteinInGrams = 1,
-                        FiberInGrams = 1,
-                        WeightInGrams = 4,
-                        CostInUSDP = 17
-                    },
-                    new Meal(state.Settings)
-                    {
-                        Name = "Five",
-                        MealTime = MealTime.Snack,
-                        ServingCount = 1,
-                        Calories = 50,
-                        ProteinInGrams = 1,
-                        FiberInGrams = 1,
-                        WeightInGrams = 5,
-                        CostInUSDP = 16
-                    },
-                    new Meal(state.Settings)
-                    {
-                        Name = "Six",
-                        MealTime = MealTime.Other,
-                        ServingCount = 1,
-                        Calories = 50,
-                        ProteinInGrams = 1,
-                        FiberInGrams = 1,
-                        WeightInGrams = 6,
-                        CostInUSDP = 15
-                    },
-                    new Meal(state.Settings)
-                    {
-                        Name = "Seven",
-                        MealTime = MealTime.Breakfast,
-                        ServingCount = 1,
-                        Calories = 50,
-                        ProteinInGrams = 1,
-                        FiberInGrams = 1,
-                        WeightInGrams = 7,
-                        CostInUSDP = 14
-                    },
-                    new Meal(state.Settings)
-                    {
-                        Name = "Eight",
-                        MealTime = MealTime.Lunch,
-                        ServingCount = 1,
-                        Calories = 50,
-                        ProteinInGrams = 1,
-                        FiberInGrams = 1,
-                        WeightInGrams = 8,
-                        CostInUSDP = 13
-                    },
-                    new Meal(state.Settings)
-                    {
-                        Name = "Nine",
-                        MealTime = MealTime.Dinner,
-                        ServingCount = 1,
-                        Calories = 50,
-                        ProteinInGrams = 1,
-                        FiberInGrams = 1,
-                        WeightInGrams = 9,
-                        CostInUSDP = 12
-                    },
-                    new Meal(state.Settings)
-                    {
-                        Name = "Ten",
-                        MealTime = MealTime.Snack,
-                        ServingCount = 1,
-                        Calories = 50,
-                        ProteinInGrams = 1,
-                        FiberInGrams = 1,
-                        WeightInGrams = 10,
-                        CostInUSDP = 11
-                    }
+                    Name = "Cheesy Chicken Dinner",
+                    MealTime = MealTime.Dinner,
+                    ServingCount = 1,
+                    Calories = 300,
+                    ProteinInGrams = 20,
+                    FiberInGrams = 5,
+                    WeightInGrams = 300,
+                    CostInUSDP = 10
                 }
-            );
+            };
+
+            Logger.Debug("Inserting test meals...");
+            await DatabaseItem.InsertItemsAsync(state, meals);
 #endregion
 
 #region Test Trip Itineraries
-            Logger.Debug("Inserting test trip itineraries...");
-            await DatabaseItem.InsertItemsAsync(state, new List<TripItinerary>
+            var tripItineraries = new List<TripItinerary>
+            {
+                new TripItinerary(state.Settings)
                 {
-                    new TripItinerary(state.Settings)
-                    {
-                        Name = "One"
-                    },
-                    new TripItinerary(state.Settings)
-                    {
-                        Name = "Two"
-                    },
-                    new TripItinerary(state.Settings)
-                    {
-                        Name = "Three"
-                    },
-                    new TripItinerary(state.Settings)
-                    {
-                        Name = "Four"
-                    },
-                    new TripItinerary(state.Settings)
-                    {
-                        Name = "Five"
-                    },
-                    new TripItinerary(state.Settings)
-                    {
-                        Name = "Six"
-                    },
-                    new TripItinerary(state.Settings)
-                    {
-                        Name = "Seven"
-                    },
-                    new TripItinerary(state.Settings)
-                    {
-                        Name = "Eight"
-                    },
-                    new TripItinerary(state.Settings)
-                    {
-                        Name = "Nine"
-                    },
-                    new TripItinerary(state.Settings)
-                    {
-                        Name = "Ten"
-                    }
+                    Name = "Turkey Camp 2015",
+                    Note = "Looks like an easy hike!"
                 }
-            );
+            };
+
+            Logger.Debug("Inserting test trip itineraries...");
+            await DatabaseItem.InsertItemsAsync(state, tripItineraries);
 #endregion
 
 #region Test Trip Plans
-            Logger.Debug("Inserting test trip plans...");
-            await DatabaseItem.InsertItemsAsync(state, new List<TripPlan>
+            var tripPlans = new List<TripPlan>
+            {
+                new TripPlan(state.Settings)
                 {
-                    new TripPlan(state.Settings)
+                    Name = "Turkey Camp 2015",
+                    StartDate = DateTime.Now,
+                    EndDate = DateTime.Now,
+
+                    // Turkey Camp 2015
+                    TripItineraryId = 1,
+
+                    GearCollections = new List<TripPlanGearCollection>
                     {
-                        Name = "One"
+                        // 3 Season Hammock
+                        new TripPlanGearCollection
+                        {
+                            GearCollectionId = 1,
+                            Count = 1
+                        }
                     },
-                    new TripPlan(state.Settings)
+                    GearSystems = new List<TripPlanGearSystem>
                     {
-                        Name = "Two"
+                        // Cook System
+                        new TripPlanGearSystem
+                        {
+                            GearSystemId = 4,
+                            Count = 1
+                        }
                     },
-                    new TripPlan(state.Settings)
+                    GearItems = new List<TripPlanGearItem>
                     {
-                        Name = "Three"
+                        // 5g Water Jug
+                        new TripPlanGearItem
+                        {
+                            GearItemId = 9,
+                            Count = 1
+                        }
                     },
-                    new TripPlan(state.Settings)
+                    Meals = new List<TripPlanMeal>
                     {
-                        Name = "Four"
-                    },
-                    new TripPlan(state.Settings)
-                    {
-                        Name = "Five"
-                    },
-                    new TripPlan(state.Settings)
-                    {
-                        Name = "Six"
-                    },
-                    new TripPlan(state.Settings)
-                    {
-                        Name = "Seven"
-                    },
-                    new TripPlan(state.Settings)
-                    {
-                        Name = "Eight"
-                    },
-                    new TripPlan(state.Settings)
-                    {
-                        Name = "Nine"
-                    },
-                    new TripPlan(state.Settings)
-                    {
-                        Name = "Ten"
+                        // Cheese Chicken Dinner
+                        new TripPlanMeal
+                        {
+                            MealId = 1,
+                            Count = 1
+                        }
                     }
                 }
-            );
+            };
+
+            Logger.Debug("Inserting test trip plans...");
+            await DatabaseItem.InsertItemsAsync(state, tripPlans);
 #endregion
 
             stopwatch.Stop();

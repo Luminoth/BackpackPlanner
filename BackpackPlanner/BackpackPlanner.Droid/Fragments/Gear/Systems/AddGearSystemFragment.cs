@@ -171,14 +171,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
         protected override void OnDoDataExchange()
         {
             Item.Name = _gearSystemNameEditText.EditText.Text;
+            Item.GearItems = _gearItemListAdapter.ItemMap.Values.ToList();
             Item.Note = _gearSystemNoteEditText.EditText.Text;
-
-            Item.GearItems.Clear();
-            foreach(var kvp in _gearItemListAdapter.ItemMap) {
-                for(int i=0; i <kvp.Value.Count; ++i) {
-                    Item.GearItems.Add(kvp.Key);
-                }
-            }
         }
 
         protected override bool OnValidate()

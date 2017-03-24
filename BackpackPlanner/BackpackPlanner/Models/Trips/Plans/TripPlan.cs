@@ -19,12 +19,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
-using EnergonSoftware.BackpackPlanner.Models.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
-using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
-using EnergonSoftware.BackpackPlanner.Models.Meals;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries;
 using EnergonSoftware.BackpackPlanner.Settings;
+using EnergonSoftware.BackpackPlanner.Units;
+using EnergonSoftware.BackpackPlanner.Units.Currency;
+using EnergonSoftware.BackpackPlanner.Units.Units;
 
 using SQLite.Net.Attributes;
 using SQLiteNetExtensions.Attributes;
@@ -38,6 +38,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(TripPlan));
 
+#region Database Init
         /// <summary>
         /// Initializes the trip plans tables in the database.
         /// </summary>
@@ -57,13 +58,13 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
             }
 
             if(oldVersion < 2 && newVersion >= 2) {
-                Logger.Debug("Creating trip plan tables...");
                 await CreateTablesAsync(state).ConfigureAwait(false);
             }
         }
 
         private static async Task CreateTablesAsync(BackpackPlannerState state)
         {
+            Logger.Debug("Creating trip plan table...");
             await state.DatabaseState.Connection.AsyncConnection.CreateTableAsync<TripPlan>().ConfigureAwait(false);
 
             await TripPlanGearCollection.CreateTablesAsync(state).ConfigureAwait(false);
@@ -71,13 +72,11 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
             await TripPlanGearItem.CreateTablesAsync(state).ConfigureAwait(false);
             await TripPlanMeal.CreateTablesAsync(state).ConfigureAwait(false);
         }
+#endregion
 
+#region Properties
         [Ignore]
         public override int Id { get { return TripPlanId; } set { TripPlanId = value; } }
-
-        public override DateTime LastUpdated { get; set; } = DateTime.Now;
-
-        public override bool IsDeleted { get; set; }
 
         /// <summary>
         /// Gets or sets the trip plan identifier.
@@ -88,6 +87,8 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
         [PrimaryKey, AutoIncrement, Column("_id")]
         public int TripPlanId { get; set; } = -1;
 
+        private string _name = string.Empty;
+
         /// <summary>
         /// Gets or sets the trip plan name.
         /// </summary>
@@ -95,7 +96,11 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
         /// The trip plan name.
         /// </value>
         [MaxLength(64), NotNull]
-        public string Name { get; set; } = string.Empty;
+        public string Name
+        {
+            get { return _name; }
+            set { _name = value ?? string.Empty; }
+        }
 
         /// <summary>
         /// Gets or sets the start date of the trip plan.
@@ -134,17 +139,22 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
         [ManyToOne]
         public TripItinerary TripItinerary { get; set; }
 
+        private List<TripPlanGearCollection> _gearCollections = new List<TripPlanGearCollection>();
+
         /// <summary>
         /// Gets or sets the gear collections contained in this plan.
         /// </summary>
         /// <value>
         /// The gear collections contained in this plan.
         /// </value>
-        [ManyToMany(typeof(TripPlanGearCollection), CascadeOperations = CascadeOperation.All)]
-        public List<GearCollection> GearCollections { get; set; } = new List<GearCollection>();
+        [OneToMany(CascadeOperations = CascadeOperation.All)]
+        public List<TripPlanGearCollection> GearCollections
+        {
+            get { return _gearCollections; }
+            set { _gearCollections = value ?? new List<TripPlanGearCollection>(); }
+        }
 
-        [Ignore]
-        public int GearCollectionCount => GearCollections?.Count ?? 0;
+        private List<TripPlanGearSystem> _gearSystems = new List<TripPlanGearSystem>();
 
         /// <summary>
         /// Gets or sets the gear systems contained in this plan.
@@ -152,11 +162,14 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
         /// <value>
         /// The gear systems contained in this plan.
         /// </value>
-        [ManyToMany(typeof(TripPlanGearSystem), CascadeOperations = CascadeOperation.All)]
-        public List<GearSystem> GearSystems { get; set; } = new List<GearSystem>();
+        [OneToMany(CascadeOperations = CascadeOperation.All)]
+        public List<TripPlanGearSystem> GearSystems
+        {
+            get { return _gearSystems; }
+            set { _gearSystems = value ?? new List<TripPlanGearSystem>(); }
+        }
 
-        [Ignore]
-        public int GearSystemCount => GearSystems?.Count ?? 0;
+        private List<TripPlanGearItem> _gearItems = new List<TripPlanGearItem>();
 
         /// <summary>
         /// Gets or sets the gear items contained in this plan.
@@ -164,11 +177,14 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
         /// <value>
         /// The gear items contained in this plan.
         /// </value>
-        [ManyToMany(typeof(TripPlanGearItem), CascadeOperations = CascadeOperation.All)]
-        public List<GearItem> GearItems { get; set; } = new List<GearItem>();
+        [OneToMany(CascadeOperations = CascadeOperation.All)]
+        public List<TripPlanGearItem> GearItems
+        {
+            get { return _gearItems; }
+            set { _gearItems = value ?? new List<TripPlanGearItem>(); }
+        }
 
-        [Ignore]
-        public int GearItemCount => GearItems?.Count ?? 0;
+        private List<TripPlanMeal> _meals = new List<TripPlanMeal>();
 
         /// <summary>
         /// Gets or sets the meals contained in this plan.
@@ -176,11 +192,14 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
         /// <value>
         /// The meals contained in this plan.
         /// </value>
-        [ManyToMany(typeof(TripPlanMeal), CascadeOperations = CascadeOperation.All)]
-        public List<Meal> Meals { get; set; } = new List<Meal>();
+        [OneToMany(CascadeOperations = CascadeOperation.All)]
+        public List<TripPlanMeal> Meals
+        {
+            get { return _meals; }
+            set { _meals = value ?? new List<TripPlanMeal>(); }
+        }
 
-        [Ignore]
-        public int MealCount => Meals?.Count ?? 0;
+        private string _note = string.Empty;
 
         /// <summary>
         /// Gets or sets the trip plan note.
@@ -189,7 +208,15 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
         /// The trip plan note.
         /// </value>
         [MaxLength(1024)]
-        public string Note { get; set; } = string.Empty;
+        public string Note
+        {
+            get { return _note; }
+            set { _note = value ?? string.Empty; }
+        }
+
+        [Ignore]
+        public WeightClass WeightClass => Settings?.GetWeightClass(GetBaseWeightInGrams()) ?? WeightClass.Traditional;
+#endregion
 
         public TripPlan()
         {
@@ -202,32 +229,65 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
 
         public int GetTotalGearItemCount()
         {
-            // TODO: calculate this
-            return 0;
+            var visitedGearItems = new List<int>();
+            return IGearItemContainerExtensions.GetGearItemCount(_gearCollections, visitedGearItems)
+                + IGearItemContainerExtensions.GetGearItemCount(_gearSystems, visitedGearItems)
+                + GetGearItemCount(visitedGearItems);
         }
 
         public int GetTotalCalories()
         {
+            var visitedMeals = new List<int>();
+            return TripPlanMeal.GetTotalCalories(_meals, visitedMeals);
+        }
+
+#region Gear Collections
+        public int GetGearCollectionCount(List<int> visitedGearCollections=null)
+        {
+            return TripPlanGearCollection.GetGearCollectionCount(_gearCollections, visitedGearCollections);
+        } 
+#endregion
+
+#region Gear Systems
+        public int GetGearSystemCount(List<int> visitedGearSystems=null)
+        {
+            return TripPlanGearSystem.GetGearSystemCount(_gearSystems, visitedGearSystems);
+        } 
+#endregion
+
+#region Gear Items
+        public int GetGearItemCount(List<int> visitedGearItems=null)
+        {
+            return TripPlanGearItem.GetGearItemCount(_gearItems, visitedGearItems);
+        }
+#endregion
+
+#region Meals
+        public int GetMealCount(List<int> visitedMeals=null)
+        {
+            return TripPlanMeal.GetMealCount(_meals, visitedMeals);
+        }
+#endregion
+
+#region Weight
+        public int GetTotalWeightInGrams(List<int> visitedGearItems=null, List<int> visitedMeals=null)
+        {
+            return TripPlanGearCollection.GetTotalWeightInGrams(_gearCollections, visitedGearItems)
+                + TripPlanGearSystem.GetTotalWeightInGrams(_gearSystems, visitedGearItems)
+                + TripPlanGearItem.GetTotalWeightInGrams(_gearItems, visitedGearItems)
+                + TripPlanMeal.GetTotalWeightInGrams(_meals, visitedMeals);
+        }
+
+        public float GetTotalWeightInUnits()
+        {
+            int weightInGrams = GetTotalWeightInGrams();
+            return Settings?.Units.WeightFromGrams(weightInGrams) ?? weightInGrams;
+        }
+
+        public int GetBaseWeightInGrams()
+        {
             // TODO: calculate this
             return 0;
-        }
-
-        public float GetWeightInUnits()
-        {
-            // TODO: calculate this
-            return 0.0f;
-        }
-
-        public float GetCostInCurrency()
-        {
-            // TODO: calculate this
-            return 0.0f;
-        }
-
-        public float GetCostPerWeightInCurrency()
-        {
-            // TODO: calculate this
-            return 0.0f;
         }
 
         public float GetBaseWeightInUnits()
@@ -247,6 +307,33 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
             // TODO: calculate this
             return 0.0f;
         }
+#endregion
+
+#region Cost
+        public int GetTotalCostInUSDP(List<int> visitedGearItems=null, List<int> visitedMeals=null)
+        {
+            return TripPlanGearCollection.GetTotalCostInUSDP(_gearCollections, visitedGearItems)
+                + TripPlanGearSystem.GetTotalCostInUSDP(_gearSystems, visitedGearItems)
+                + TripPlanGearItem.GetTotalCostInUSDP(_gearItems, visitedGearItems)
+                + TripPlanMeal.GetTotalCostInUSDP(_meals, visitedMeals);
+        }
+
+        public float GetTotalCostInCurrency()
+        {
+            int costInUSDP = GetTotalCostInUSDP();
+            return Settings?.Currency.CurrencyFromUSDP(costInUSDP) ?? costInUSDP;
+        }
+
+        public float GetCostPerWeightInCurrency()
+        {
+            float weightInUnits = GetTotalWeightInUnits();
+            float costInCurrency = GetTotalCostInCurrency();
+
+            return 0.0f == weightInUnits
+                ? costInCurrency
+                : costInCurrency / weightInUnits;
+        }
+#endregion
 
         public override bool Equals(object obj)
         {

@@ -15,10 +15,9 @@
 */
 
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
-using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
 
 namespace EnergonSoftware.BackpackPlanner.Commands.Gear
@@ -38,34 +37,22 @@ namespace EnergonSoftware.BackpackPlanner.Commands.Gear
             await base.DoActionAsync(state).ConfigureAwait(false);
 
             foreach(GearSystem item in Items) {
-                await ReadGearItems(state, item).ConfigureAwait(false);
+                await GetGearItemsAsync(state, item).ConfigureAwait(false);
             }
         }
 
-// TODO: apply these changes to other container-types
-
-        private async Task ReadGearItems(BackpackPlannerState state, GearSystem gearSystem)
+        private async Task GetGearItemsAsync(BackpackPlannerState state, GearSystem gearSystem)
         {
-            var intermediateItems = await (from x in state.DatabaseState.Connection.AsyncConnection.Table<GearSystemGearItem>() where x.GearSystemId == gearSystem.Id select x).ToListAsync().ConfigureAwait(false);
+            gearSystem.GearItems = await GearSystemGearItem.GetItemsAsync(state, gearSystem).ConfigureAwait(false);
 
-            var intermediateItemMap = new Dictionary<int, int>();
-            foreach(GearSystemGearItem intermediateItem in intermediateItems) {
-                if(intermediateItemMap.ContainsKey(intermediateItem.GearItemId)) {
-                    ++intermediateItemMap[intermediateItem.GearItemId];
-                } else {
-                    intermediateItemMap.Add(intermediateItem.GearItemId, 1);
-                }
-            }
-
-            GetGearItemsCommand command = new GetGearItemsCommand(x => intermediateItemMap.ContainsKey(x.Id));
+            var gearItemIds = gearSystem.GearItems.Select(gearItem => gearItem.GearItemId).ToList();
+            GetGearItemsCommand command = new GetGearItemsCommand(x => gearItemIds.Contains(x.Id));
             await command.DoActionAsync(state).ConfigureAwait(false);
 
-            gearSystem.GearItems.Clear();
-            foreach(GearItem item in command.Items) {
-                int count = intermediateItemMap[item.Id];
-                for(int i=0; i<count; ++i) {
-                    gearSystem.GearItems.Add(item);
-                }
+            var gearItemMap = command.Items.ToDictionary(gearItem => gearItem.Id);
+            foreach(GearSystemGearItem gearItem in gearSystem.GearItems) {
+                gearItem.Parent = gearSystem;
+                gearItem.Child = gearItemMap[gearItem.GearItemId];
             }
         }
     }

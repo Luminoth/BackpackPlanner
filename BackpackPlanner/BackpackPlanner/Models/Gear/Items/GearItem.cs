@@ -14,21 +14,15 @@
    limitations under the License.
 */
 
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
-using EnergonSoftware.BackpackPlanner.Models.Gear.Collections;
-using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
-using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
 using EnergonSoftware.BackpackPlanner.Settings;
 using EnergonSoftware.BackpackPlanner.Units;
 using EnergonSoftware.BackpackPlanner.Units.Currency;
 using EnergonSoftware.BackpackPlanner.Units.Units;
 
 using SQLite.Net.Attributes;
-using SQLiteNetExtensions.Attributes;
 
 namespace EnergonSoftware.BackpackPlanner.Models.Gear.Items
 {
@@ -39,6 +33,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Items
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(GearItem));
 
+#region Database Init
         /// <summary>
         /// Initializes the gear item tables in the database.
         /// </summary>
@@ -58,22 +53,20 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Items
             }
 
             if(oldVersion < 1 && newVersion >= 1) {
-                Logger.Debug("Creating gear item tables...");
                 await CreateTablesAsync(state).ConfigureAwait(false);
             }
         }
 
         private static async Task CreateTablesAsync(BackpackPlannerState state)
         {
+            Logger.Debug("Creating gear item table...");
             await state.DatabaseState.Connection.AsyncConnection.CreateTableAsync<GearItem>().ConfigureAwait(false);
         }
+#endregion
 
+#region Properties
         [Ignore]
         public override int Id { get { return GearItemId; } set { GearItemId = value; } }
-
-        public override DateTime LastUpdated { get; set; } = DateTime.Now;
-
-        public override bool IsDeleted { get; set; }
 
         /// <summary>
         /// Gets or sets the gear item identifier.
@@ -84,6 +77,8 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Items
         [PrimaryKey, AutoIncrement, Column("_id")]
         public int GearItemId { get; set; } = -1;
 
+        private string _name = string.Empty;
+
         /// <summary>
         /// Gets or sets the gear item name.
         /// </summary>
@@ -91,7 +86,13 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Items
         /// The gear item name.
         /// </value>
         [MaxLength(64), NotNull]
-        public string Name { get; set; } = string.Empty;
+        public string Name
+        {
+            get { return _name; }
+            set { _name = value ?? string.Empty; }
+        }
+
+        private string _make = string.Empty;
 
         /// <summary>
         /// Gets or sets the gear item make.
@@ -100,7 +101,13 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Items
         /// The gear item make.
         /// </value>
         [MaxLength(32)]
-        public string Make { get; set; } = string.Empty;
+        public string Make
+        {
+            get { return _make; }
+            set { _make = value ?? string.Empty; }
+        }
+
+        private string _model = string.Empty;
 
         /// <summary>
         /// Gets or sets the gear item model.
@@ -109,8 +116,13 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Items
         /// The gear item model.
         /// </value>
         [MaxLength(32)]
-        public string Model { get; set; } = string.Empty;
+        public string Model
+        {
+            get { return _model; }
+            set { _model = value ?? string.Empty; }
+        }
 
+        private string _url = string.Empty;
 
         /// <summary>
         /// Gets or sets the gear item url.
@@ -119,7 +131,11 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Items
         /// The gear item url.
         /// </value>
         [MaxLength(2048)]
-        public string Url { get; set; } = string.Empty;
+        public string Url
+        {
+            get { return _url; }
+            set { _url = value ?? string.Empty; }
+        }
 
         /// <summary>
         /// Gets or sets the carried-ness of this gear item.
@@ -218,6 +234,8 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Items
         [Ignore]
         public float CostPerWeightInCurrency => 0.0f == WeightInUnits ? 0.0f : CostInCurrency / WeightInUnits;
 
+        private string _note = string.Empty;
+
         /// <summary>
         /// Gets or sets the gear item note.
         /// </summary>
@@ -225,28 +243,15 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Items
         /// The gear item note.
         /// </value>
         [MaxLength(1024)]
-        public string Note { get; set; } = string.Empty;
-
-        [ManyToMany(typeof(GearSystemGearItem), CascadeOperations = CascadeOperation.CascadeRead, ReadOnly = true)]
-        public List<GearSystem> GearSystems { get; set; } = new List<GearSystem>();
-
-        [Ignore]
-        public int GearSystemCount => GearSystems?.Count ?? 0;
-
-        [ManyToMany(typeof(GearCollectionGearItem), CascadeOperations = CascadeOperation.CascadeRead, ReadOnly = true)]
-        public List<GearCollection> GearCollections { get; set; } = new List<GearCollection>();
-
-        [Ignore]
-        public int GearCollectionCount => GearCollections?.Count ?? 0;
-
-        [ManyToMany(typeof(TripPlanGearItem), CascadeOperations = CascadeOperation.CascadeRead, ReadOnly = true)]
-        public List<TripPlan> TripPlans { get; set; } = new List<TripPlan>();
-
-        [Ignore]
-        public int TripPlanCount => TripPlans?.Count ?? 0;
+        public string Note
+        {
+            get { return _note; }
+            set { _note = value ?? string.Empty; }
+        }
 
         [Ignore]
         public WeightCategory WeightCategory => GearCarried.NotCarried == Carried ? WeightCategory.None : Settings.GetWeightCategory(WeightInGrams);
+#endregion
 
         public GearItem()
         {

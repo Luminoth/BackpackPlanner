@@ -14,11 +14,14 @@
    limitations under the License.
 */
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
+using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
 using EnergonSoftware.BackpackPlanner.Settings;
 
+using SQLite.Net.Attributes;
 using SQLiteNetExtensions.Attributes;
 
 namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
@@ -26,15 +29,23 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
     /// <summary>
     /// 
     /// </summary>
-    public sealed class TripPlanGearSystem : DatabaseIntermediateItem<TripPlan, GearSystem>
+    public sealed class TripPlanGearSystem : GearSystemEntry<TripPlan>
     {
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(TripPlanGearSystem));
+
         /// <summary>
         /// Creates the database tables.
         /// </summary>
         /// <param name="state">The system state.</param>
         public static async Task CreateTablesAsync(BackpackPlannerState state)
         {
+            Logger.Debug("Creating trip plan gear system table...");
             await state.DatabaseState.Connection.AsyncConnection.CreateTableAsync<TripPlanGearSystem>().ConfigureAwait(false);
+        }
+
+        public static async Task<List<TripPlanGearSystem>> GetItemsAsync(BackpackPlannerState state, TripPlan tripPlan)
+        {
+            return await (from x in state.DatabaseState.Connection.AsyncConnection.Table<TripPlanGearSystem>() where x.TripPlanId == tripPlan.Id select x).ToListAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -44,6 +55,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
         /// The trip plan identifier.
         /// </value>
         [ForeignKey(typeof(TripPlan))]
+        [Indexed(Name="TripPlanGearSystemId", Order=1, Unique=true)]
         public int TripPlanId { get; set; } = -1;
 
         /// <summary>
@@ -53,7 +65,8 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
         /// The gear system identifier.
         /// </value>
         [ForeignKey(typeof(GearSystem))]
-        public int GearSystemId { get; set; } = -1;
+        [Indexed(Name="TripPlanGearSystemId", Order=2, Unique=true)]
+        public override int GearSystemId { get; set; } = -1;
 
         public TripPlanGearSystem()
         {

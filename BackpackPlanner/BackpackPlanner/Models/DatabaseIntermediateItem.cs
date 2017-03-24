@@ -16,6 +16,8 @@
 
 using EnergonSoftware.BackpackPlanner.Settings;
 
+using JetBrains.Annotations;
+
 using SQLite.Net.Attributes;
 
 namespace EnergonSoftware.BackpackPlanner.Models
@@ -26,10 +28,12 @@ namespace EnergonSoftware.BackpackPlanner.Models
     public abstract class DatabaseIntermediateItem
     {
         [Ignore]
-        public DatabaseItem Parent { get; }
+        [CanBeNull]
+        public DatabaseItem Parent { get; set; }
 
         [Ignore]
-        public DatabaseItem Child { get; }
+        [CanBeNull]
+        public DatabaseItem Child { get; set; }
 
         private int _count;
 
@@ -39,11 +43,10 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// <value>
         /// The number of gear items.
         /// </value>
-        [Ignore]
+        [SQLite.Net.Attributes.NotNull]
         public int Count
         {
             get { return _count; }
-
             set { _count = value < 0 ? 0 : value; }
         }
 
@@ -54,6 +57,7 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// The planner settings.
         /// </value>
         [Ignore]
+        [CanBeNull]
         protected BackpackPlannerSettings Settings { get; set; }
 
         protected DatabaseIntermediateItem()
@@ -62,9 +66,9 @@ namespace EnergonSoftware.BackpackPlanner.Models
 
         protected DatabaseIntermediateItem(DatabaseItem parent, DatabaseItem child, BackpackPlannerSettings settings)
         {
-            Settings = settings;
             Parent = parent;
             Child = child;
+            Settings = settings;
         }
     }
 
@@ -74,10 +78,12 @@ namespace EnergonSoftware.BackpackPlanner.Models
     public abstract class DatabaseIntermediateItem<T, TV> : DatabaseIntermediateItem where T: DatabaseItem where TV: DatabaseItem
     {
         [Ignore]
-        public new T Parent { get; }
+        [CanBeNull]
+        public new T Parent { get; set; }
 
         [Ignore]
-        public new TV Child { get; }
+        [CanBeNull]
+        public new TV Child { get; set; }
 
         protected DatabaseIntermediateItem()
         {

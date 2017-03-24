@@ -20,6 +20,8 @@ using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 
+using JetBrains.Annotations;
+
 using SQLite.Net;
 using SQLite.Net.Async;
 using SQLite.Net.Interop;
@@ -50,6 +52,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
         /// <value>
         /// The synchronous connection.
         /// </value>
+        [CanBeNull]
         public SQLiteConnectionWithLock Connection { get; private set; }
 
         /// <summary>
@@ -58,8 +61,10 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
         /// <value>
         /// The asynchronous connection.
         /// </value>
+        [CanBeNull]
         public SQLiteAsyncConnection AsyncConnection { get; private set; }
 
+        [CanBeNull]
         private SQLiteConnectionString _connectionString;
 
 #region Dispose
@@ -105,6 +110,10 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
         /// <param name="connectionString">The connection string.</param>
         public async Task ConnectAsync(BackpackPlannerState state, ISQLitePlatform sqlitePlatform, SQLiteConnectionString connectionString)
         {
+            if(null == connectionString) {
+                throw new ArgumentNullException(nameof(connectionString));
+            }
+
             if(IsConnected) {
                 throw new InvalidOperationException("Database connection already connected!");
             }
@@ -113,7 +122,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
 
             await LockAsync().ConfigureAwait(false);
             try {
-                Logger.Debug($"Opening connection to database {_connectionString.ConnectionString}...");
+                Logger.Debug($"Opening connection to database {_connectionString?.ConnectionString}...");
                 Connection = new SQLiteConnectionWithLock(sqlitePlatform, connectionString);
                 AsyncConnection = new SQLiteAsyncConnection(() => Connection);
             } finally {
@@ -132,11 +141,11 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
 
             await LockAsync().ConfigureAwait(false);
             try {
-                Logger.Debug($"Closing connection to database {_connectionString.ConnectionString}...");
+                Logger.Debug($"Closing connection to database {_connectionString?.ConnectionString}...");
 
                 AsyncConnection = null;
 
-                Connection.Close();
+                Connection?.Close();
                 Connection = null;
 
                 _connectionString = null;

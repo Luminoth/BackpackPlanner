@@ -23,6 +23,8 @@ using System.Threading.Tasks;
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Settings;
 
+using JetBrains.Annotations;
+
 using SQLite.Net.Attributes;
 using SQLiteNetExtensionsAsync.Extensions;
 
@@ -35,6 +37,7 @@ namespace EnergonSoftware.BackpackPlanner.Models
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(DatabaseItem));
 
+#region Helper Statics
         /// <summary>
         /// Validates the state to ensure it can be used for database operations.
         /// </summary>
@@ -93,20 +96,17 @@ namespace EnergonSoftware.BackpackPlanner.Models
             }
         }
 
-        // NOTE: *WithChildren doesn't work right for us because it doesn't pull in "duplicates"
-        // so the quantity of child items is always 1 when read in
-
         private static async Task<List<T>> GetValidItemsInternalAsync<T>(BackpackPlannerState state, Func<T, bool> filter) where T: DatabaseItem
         {
             Stopwatch stopWatch = Stopwatch.StartNew();
             var items = (await (from x in state.DatabaseState.Connection.AsyncConnection.Table<T>() where !x.IsDeleted select x).ToListAsync().ConfigureAwait(false))
                 .Where(filter).ToList();
 
-            //Logger.Debug("Reading children...");
             foreach(T item in items) {
                 item.Settings = state.Settings;
 
-                //await state.DatabaseState.Connection.AsyncConnection.GetChildrenAsync(item).ConfigureAwait(false);
+// TODO: what about invalid (eg - deleted) children??
+                await state.DatabaseState.Connection.AsyncConnection.GetChildrenAsync(item).ConfigureAwait(false);
             }
             stopWatch.Stop();
             Logger.Debug($"Database read took {stopWatch.ElapsedMilliseconds}ms");
@@ -149,9 +149,7 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// <returns>
         /// All of the items from the database
         /// </returns>
-        // TODO: because *WithChildren doesn't work right for us
-        // this is going to be re-written to work with custom commands
-        /*public static async Task<List<T>> GetAllItemsAsync<T>(BackpackPlannerState state) where T: DatabaseItem
+        public static async Task<List<T>> GetAllItemsAsync<T>(BackpackPlannerState state) where T: DatabaseItem
         {
             ValidateState(state);
 
@@ -160,6 +158,7 @@ namespace EnergonSoftware.BackpackPlanner.Models
                 Logger.Debug($"Reading all {typeof(T)}s from the database...");
 
                 Stopwatch stopWatch = Stopwatch.StartNew();
+// TODO: what about invalid (eg - deleted) children??
                 var items = await state.DatabaseState.Connection.AsyncConnection.GetAllWithChildrenAsync<T>().ConfigureAwait(false);
                 foreach(T item in items) {
                     item.Settings = state.Settings;
@@ -171,7 +170,7 @@ namespace EnergonSoftware.BackpackPlanner.Models
             } finally {
                 state.DatabaseState.Connection.Release();
             }
-        }*/
+        }
 
         /// <summary>
         /// Gets a single item from the database.
@@ -197,7 +196,8 @@ namespace EnergonSoftware.BackpackPlanner.Models
                 }
                 item.Settings = state.Settings;
 
-                //await state.DatabaseState.Connection.AsyncConnection.GetChildrenAsync(item).ConfigureAwait(false);
+// TODO: what about invalid (eg - deleted) children??
+                await state.DatabaseState.Connection.AsyncConnection.GetChildrenAsync(item).ConfigureAwait(false);
 
                 stopWatch.Stop();
                 Logger.Debug($"Database read took {stopWatch.ElapsedMilliseconds}ms");
@@ -259,6 +259,8 @@ namespace EnergonSoftware.BackpackPlanner.Models
         {
             ValidateState(state);
 
+// TODO: what about the case where a child was removed?
+
             await state.DatabaseState.Connection.LockAsync().ConfigureAwait(false);
             try {
                 item.LastUpdated = DateTime.Now;
@@ -275,26 +277,9 @@ namespace EnergonSoftware.BackpackPlanner.Models
                 state.DatabaseState.Connection.Release();
             }
         }
+#endregion
 
-        /// <summary>
-        /// Deletes an item from the database.
-        /// </summary>
-        /// <typeparam name="T">The type of the item to delete</typeparam>
-        /// <param name="state">The system state.</param>
-        /// <returns>The number of items deleted?</returns>
-        /*public static async Task<int> DeleteAllItemsAsync<T>(BackpackPlannerState state) where T: DatabaseItem
-        {
-            ValidateState(state);
-
-            await state.DatabaseState.Connection.LockAsync().ConfigureAwait(false);
-            try {
-                Logger.Debug($"Deleting all {typeof(T)}s from the database...");
-                return await state.DatabaseState.Connection.AsyncConnection.DeleteAllAsync<T>().ConfigureAwait(false);
-            } finally {
-                state.DatabaseState.Connection.Release();
-            }
-        }*/
-
+#region Properties
         /// <summary>
         /// Gets the item identifier.
         /// </summary>
@@ -309,7 +294,7 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// <value>
         /// The last update timestamp.
         /// </value>
-        public abstract DateTime LastUpdated { get; set; }
+        public DateTime LastUpdated { get; set; } = DateTime.Now;
 
         /// <summary>
         /// Gets or sets a value indicating whether this item is deleted.
@@ -317,7 +302,7 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// <value>
         /// <c>true</c> if this item is deleted; otherwise, <c>false</c>.
         /// </value>
-        public abstract bool IsDeleted { get; set; }
+        public bool IsDeleted { get; set; }
 
         /// <summary>
         /// Gets the planner settings.
@@ -326,7 +311,9 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// The planner settings.
         /// </value>
         [Ignore]
+        [CanBeNull]
         protected BackpackPlannerSettings Settings { get; set; }
+#endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DatabaseItem"/> class.

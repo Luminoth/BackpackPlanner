@@ -37,27 +37,39 @@ namespace EnergonSoftware.BackpackPlanner.Commands.Gear
             await base.DoActionAsync(state).ConfigureAwait(false);
 
             foreach(GearCollection item in Items) {
-                await ReadGearSystems(state, item).ConfigureAwait(false);
-                await ReadGearItems(state, item).ConfigureAwait(false);
+                await GetGearSystemsAsync(state, item).ConfigureAwait(false);
+                await GetGearItemsAsync(state, item).ConfigureAwait(false);
             }
         }
 
-        private async Task ReadGearSystems(BackpackPlannerState state, GearCollection gearCollection)
+        private async Task GetGearSystemsAsync(BackpackPlannerState state, GearCollection gearCollection)
         {
-            var intermediateItems = await (from x in state.DatabaseState.Connection.AsyncConnection.Table<GearCollectionGearSystem>() where x.GearSystemId == gearCollection.Id select x).ToListAsync().ConfigureAwait(false);
+            gearCollection.GearSystems = await GearCollectionGearSystem.GetItemsAsync(state, gearCollection).ConfigureAwait(false);
 
-            GetGearSystemsCommand command = new GetGearSystemsCommand(x => (from i in intermediateItems where i.GearSystemId == x.Id select i).Any());
+            var gearSystemIds = gearCollection.GearSystems.Select(gearSystem => gearSystem.GearSystemId).ToList();
+            GetGearSystemsCommand command = new GetGearSystemsCommand(x => gearSystemIds.Contains(x.Id));
             await command.DoActionAsync(state).ConfigureAwait(false);
-            gearCollection.GearSystems = command.Items;
+
+            var gearSystemMap = command.Items.ToDictionary(gearSystem => gearSystem.Id);
+            foreach(GearCollectionGearSystem gearSystem in gearCollection.GearSystems) {
+                gearSystem.Parent = gearCollection;
+                gearSystem.Child = gearSystemMap[gearSystem.GearSystemId];
+            }
         }
 
-        private async Task ReadGearItems(BackpackPlannerState state, GearCollection gearCollection)
+        private async Task GetGearItemsAsync(BackpackPlannerState state, GearCollection gearCollection)
         {
-            var intermediateItems = await (from x in state.DatabaseState.Connection.AsyncConnection.Table<GearCollectionGearItem>() where x.GearItemId == gearCollection.Id select x).ToListAsync().ConfigureAwait(false);
+            gearCollection.GearItems = await GearCollectionGearItem.GetItemsAsync(state, gearCollection).ConfigureAwait(false);
 
-            GetGearItemsCommand command = new GetGearItemsCommand(x => (from i in intermediateItems where i.GearItemId == x.Id select i).Any());
+            var gearItemIds = gearCollection.GearItems.Select(gearItem => gearItem.GearItemId).ToList();
+            GetGearItemsCommand command = new GetGearItemsCommand(x => gearItemIds.Contains(x.Id));
             await command.DoActionAsync(state).ConfigureAwait(false);
-            gearCollection.GearItems = command.Items;
+
+            var gearItemMap = command.Items.ToDictionary(gearItem => gearItem.Id);
+            foreach(GearCollectionGearItem gearItem in gearCollection.GearItems) {
+                gearItem.Parent = gearCollection;
+                gearItem.Child = gearItemMap[gearItem.GearItemId];
+            }
         }
     }
 }

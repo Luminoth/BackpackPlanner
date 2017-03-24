@@ -20,6 +20,8 @@ using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Models;
 
+using JetBrains.Annotations;
+
 namespace EnergonSoftware.BackpackPlanner.Commands
 {
     /// <summary>
@@ -33,6 +35,7 @@ namespace EnergonSoftware.BackpackPlanner.Commands
         /// <value>
         /// The items.
         /// </value>
+        [CanBeNull]
         public List<T> Items { get; private set; } = new List<T>();
 
         /// <summary>
@@ -41,6 +44,7 @@ namespace EnergonSoftware.BackpackPlanner.Commands
         /// <value>
         /// The item filter.
         /// </value>
+        [CanBeNull]
         public Func<T, bool> Filter { get; set; }
 
         protected GetItemsCommand(Func<T, bool> filter=null)

@@ -14,11 +14,14 @@
    limitations under the License.
 */
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
+using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.Settings;
 
+using SQLite.Net.Attributes;
 using SQLiteNetExtensions.Attributes;
 
 namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
@@ -26,15 +29,23 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
     /// <summary>
     /// 
     /// </summary>
-    public sealed class TripPlanGearCollection : DatabaseIntermediateItem<TripPlan, GearCollection>
+    public sealed class TripPlanGearCollection : GearCollectionEntry<TripPlan>
     {
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(TripPlanGearCollection));
+
         /// <summary>
         /// Creates the database tables.
         /// </summary>
         /// <param name="state">The system state.</param>
         public static async Task CreateTablesAsync(BackpackPlannerState state)
         {
+            Logger.Debug("Creating trip plan gear collection table...");
             await state.DatabaseState.Connection.AsyncConnection.CreateTableAsync<TripPlanGearCollection>().ConfigureAwait(false);
+        }
+
+        public static async Task<List<TripPlanGearCollection>> GetItemsAsync(BackpackPlannerState state, TripPlan tripPlan)
+        {
+            return await (from x in state.DatabaseState.Connection.AsyncConnection.Table<TripPlanGearCollection>() where x.TripPlanId == tripPlan.Id select x).ToListAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -44,6 +55,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
         /// The trip plan identifier.
         /// </value>
         [ForeignKey(typeof(TripPlan))]
+        [Indexed(Name="TripPlanGearCollectionId", Order=1, Unique=true)]
         public int TripPlanId { get; set; } = -1;
 
         /// <summary>
@@ -53,7 +65,8 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
         /// The gear collection identifier.
         /// </value>
         [ForeignKey(typeof(GearCollection))]
-        public int GearCollectionId { get; set; } = -1;
+        [Indexed(Name="TripPlanGearCollectionId", Order=2, Unique=true)]
+        public override int GearCollectionId { get; set; } = -1;
 
         public TripPlanGearCollection()
         {

@@ -14,11 +14,14 @@
    limitations under the License.
 */
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
+using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
 using EnergonSoftware.BackpackPlanner.Settings;
 
+using SQLite.Net.Attributes;
 using SQLiteNetExtensions.Attributes;
 
 namespace EnergonSoftware.BackpackPlanner.Models.Gear.Collections
@@ -26,15 +29,23 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Collections
     /// <summary>
     /// 
     /// </summary>
-    public sealed class GearCollectionGearItem : DatabaseIntermediateItem<GearCollection, GearItem>
+    public sealed class GearCollectionGearItem : GearItemEntry<GearCollection>
     {
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(GearCollectionGearItem));
+
         /// <summary>
         /// Creates the database tables.
         /// </summary>
         /// <param name="state">The system state.</param>
         public static async Task CreateTablesAsync(BackpackPlannerState state)
         {
+            Logger.Debug("Creating gear collection gear item table...");
             await state.DatabaseState.Connection.AsyncConnection.CreateTableAsync<GearCollectionGearItem>().ConfigureAwait(false);
+        }
+
+        public static async Task<List<GearCollectionGearItem>> GetItemsAsync(BackpackPlannerState state, GearCollection gearCollection)
+        {
+            return await (from x in state.DatabaseState.Connection.AsyncConnection.Table<GearCollectionGearItem>() where x.GearCollectionId == gearCollection.Id select x).ToListAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -44,6 +55,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Collections
         /// The gear collection identifier.
         /// </value>
         [ForeignKey(typeof(GearCollection))]
+        [Indexed(Name="GearCollectionGearItemId", Order=1, Unique=true)]
         public int GearCollectionId { get; set; } = -1;
 
         /// <summary>
@@ -53,7 +65,8 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Collections
         /// The gear item identifier.
         /// </value>
         [ForeignKey(typeof(GearItem))]
-        public int GearItemId { get; set; } = -1;
+        [Indexed(Name="GearCollectionGearItemId", Order=2, Unique=true)]
+        public override int GearItemId { get; set; } = -1;
 
         public GearCollectionGearItem()
         {

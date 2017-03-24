@@ -39,47 +39,71 @@ namespace EnergonSoftware.BackpackPlanner.Commands.Trips
             await base.DoActionAsync(state).ConfigureAwait(false);
 
             foreach(TripPlan item in Items) {
-                await ReadGearCollections(state, item).ConfigureAwait(false);
-                await ReadGearSystems(state, item).ConfigureAwait(false);
-                await ReadGearItems(state, item).ConfigureAwait(false);
-                await ReadMeals(state, item).ConfigureAwait(false);
+                await GetGearCollectionsAsync(state, item).ConfigureAwait(false);
+                await GetGearSystemsAsync(state, item).ConfigureAwait(false);
+                await GetGearItemsAsync(state, item).ConfigureAwait(false);
+                await GetMealsAsync(state, item).ConfigureAwait(false);
             }
         }
 
-        private async Task ReadGearCollections(BackpackPlannerState state, TripPlan tripPlan)
+        private async Task GetGearCollectionsAsync(BackpackPlannerState state, TripPlan tripPlan)
         {
-            var intermediateItems = await (from x in state.DatabaseState.Connection.AsyncConnection.Table<TripPlanGearCollection>() where x.GearCollectionId == tripPlan.Id select x).ToListAsync().ConfigureAwait(false);
+            tripPlan.GearCollections = await TripPlanGearCollection.GetItemsAsync(state, tripPlan).ConfigureAwait(false);
 
-            GetGearSystemsCommand command = new GetGearSystemsCommand(x => (from i in intermediateItems where i.GearCollectionId == x.Id select i).Any());
+            var gearCollectionIds = tripPlan.GearCollections.Select(gearCollection => gearCollection.GearCollectionId).ToList();
+            GetGearCollectionsCommand command = new GetGearCollectionsCommand(x => gearCollectionIds.Contains(x.Id));
             await command.DoActionAsync(state).ConfigureAwait(false);
-            tripPlan.GearSystems = command.Items;
+
+            var gearCollectionMap = command.Items.ToDictionary(gearCollection => gearCollection.Id);
+            foreach(TripPlanGearCollection gearCollection in tripPlan.GearCollections) {
+                gearCollection.Parent = tripPlan;
+                gearCollection.Child = gearCollectionMap[gearCollection.GearCollectionId];
+            }
         }
 
-        private async Task ReadGearSystems(BackpackPlannerState state, TripPlan tripPlan)
+        private async Task GetGearSystemsAsync(BackpackPlannerState state, TripPlan tripPlan)
         {
-            var intermediateItems = await (from x in state.DatabaseState.Connection.AsyncConnection.Table<TripPlanGearSystem>() where x.GearSystemId == tripPlan.Id select x).ToListAsync().ConfigureAwait(false);
+            tripPlan.GearSystems = await TripPlanGearSystem.GetItemsAsync(state, tripPlan).ConfigureAwait(false);
 
-            GetGearSystemsCommand command = new GetGearSystemsCommand(x => (from i in intermediateItems where i.GearSystemId == x.Id select i).Any());
+            var gearSystemIds = tripPlan.GearSystems.Select(gearSystem => gearSystem.GearSystemId).ToList();
+            GetGearSystemsCommand command = new GetGearSystemsCommand(x => gearSystemIds.Contains(x.Id));
             await command.DoActionAsync(state).ConfigureAwait(false);
-            tripPlan.GearSystems = command.Items;
+
+            var gearSystemMap = command.Items.ToDictionary(gearSystem => gearSystem.Id);
+            foreach(TripPlanGearSystem gearSystem in tripPlan.GearSystems) {
+                gearSystem.Parent = tripPlan;
+                gearSystem.Child = gearSystemMap[gearSystem.GearSystemId];
+            }
         }
 
-        private async Task ReadGearItems(BackpackPlannerState state, TripPlan tripPlan)
+        private async Task GetGearItemsAsync(BackpackPlannerState state, TripPlan tripPlan)
         {
-            var intermediateItems = await (from x in state.DatabaseState.Connection.AsyncConnection.Table<TripPlanGearItem>() where x.GearItemId == tripPlan.Id select x).ToListAsync().ConfigureAwait(false);
+            tripPlan.GearItems = await TripPlanGearItem.GetItemsAsync(state, tripPlan).ConfigureAwait(false);
 
-            GetGearItemsCommand command = new GetGearItemsCommand(x => (from i in intermediateItems where i.GearItemId == x.Id select i).Any());
+            var gearItemIds = tripPlan.GearItems.Select(gearItem => gearItem.GearItemId).ToList();
+            GetGearItemsCommand command = new GetGearItemsCommand(x => gearItemIds.Contains(x.Id));
             await command.DoActionAsync(state).ConfigureAwait(false);
-            tripPlan.GearItems = command.Items;
+
+            var gearItemMap = command.Items.ToDictionary(gearItem => gearItem.Id);
+            foreach(TripPlanGearItem gearItem in tripPlan.GearItems) {
+                gearItem.Parent = tripPlan;
+                gearItem.Child = gearItemMap[gearItem.GearItemId];
+            }
         }
 
-        private async Task ReadMeals(BackpackPlannerState state, TripPlan tripPlan)
+        private async Task GetMealsAsync(BackpackPlannerState state, TripPlan tripPlan)
         {
-            var intermediateItems = await (from x in state.DatabaseState.Connection.AsyncConnection.Table<TripPlanMeal>() where x.MealId == tripPlan.Id select x).ToListAsync().ConfigureAwait(false);
+            tripPlan.Meals = await TripPlanMeal.GetItemsAsync(state, tripPlan).ConfigureAwait(false);
 
-            GetMealsCommand command = new GetMealsCommand(x => (from i in intermediateItems where i.MealId == x.Id select i).Any());
+            var mealIds = tripPlan.Meals.Select(meal => meal.MealId).ToList();
+            GetMealsCommand command = new GetMealsCommand(x => mealIds.Contains(x.Id));
             await command.DoActionAsync(state).ConfigureAwait(false);
-            tripPlan.Meals = command.Items;
+
+            var mealMap = command.Items.ToDictionary(meal => meal.Id);
+            foreach(TripPlanMeal meal in tripPlan.Meals) {
+                meal.Parent = tripPlan;
+                meal.Child = mealMap[meal.MealId];
+            }
         }
     }
 }

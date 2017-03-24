@@ -18,6 +18,8 @@ using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Models;
 
+using JetBrains.Annotations;
+
 namespace EnergonSoftware.BackpackPlanner.Commands
 {
     /// <summary>
@@ -39,6 +41,7 @@ namespace EnergonSoftware.BackpackPlanner.Commands
         /// <value>
         /// The item.
         /// </value>
+        [CanBeNull]
         public T Item { get; private set; }
 
         public GetItemCommand(int id)

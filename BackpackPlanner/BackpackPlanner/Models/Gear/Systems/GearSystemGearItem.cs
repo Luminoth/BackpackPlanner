@@ -14,11 +14,12 @@
    limitations under the License.
 */
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
+using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
 using EnergonSoftware.BackpackPlanner.Settings;
-using EnergonSoftware.BackpackPlanner.Units.Units;
 
 using SQLite.Net.Attributes;
 using SQLiteNetExtensions.Attributes;
@@ -28,15 +29,23 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Systems
     /// <summary>
     /// 
     /// </summary>
-    public sealed class GearSystemGearItem : DatabaseIntermediateItem<GearSystem, GearItem>
+    public sealed class GearSystemGearItem : GearItemEntry<GearSystem>
     {
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(GearSystemGearItem));
+
         /// <summary>
         /// Creates the database tables.
         /// </summary>
         /// <param name="state">The system state.</param>
         public static async Task CreateTablesAsync(BackpackPlannerState state)
         {
+            Logger.Debug("Creating gear system gear item table...");
             await state.DatabaseState.Connection.AsyncConnection.CreateTableAsync<GearSystemGearItem>().ConfigureAwait(false);
+        }
+
+        public static async Task<List<GearSystemGearItem>> GetItemsAsync(BackpackPlannerState state, GearSystem gearSystem)
+        {
+            return await (from x in state.DatabaseState.Connection.AsyncConnection.Table<GearSystemGearItem>() where x.GearSystemId == gearSystem.Id select x).ToListAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -46,6 +55,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Systems
         /// The gear system identifier.
         /// </value>
         [ForeignKey(typeof(GearSystem))]
+        [Indexed(Name="GearSystemGearItemId", Order=1, Unique=true)]
         public int GearSystemId { get; set; } = -1;
 
         /// <summary>
@@ -55,25 +65,10 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Systems
         /// The gear item identifier.
         /// </value>
         [ForeignKey(typeof(GearItem))]
-        public int GearItemId { get; set; } = -1;
+        [Indexed(Name="GearSystemGearItemId", Order=2, Unique=true)]
+        public override int GearItemId { get; set; } = -1;
 
-        /// <summary>
-        /// Gets or sets the total weight of these gear items in grams.
-        /// </summary>
-        /// <value>
-        /// The total weight of these gear items in grams.
-        /// </value>
-        [Ignore]
-        public int TotalWeightInGrams => Count * Child.WeightInGrams;
 
-        /// <summary>
-        /// Gets or sets the total weight of these gear items in weight units.
-        /// </summary>
-        /// <value>
-        /// The total weight of these gear items in weight units.
-        /// </value>
-        [Ignore]
-        public float TotalWeightInUnits => Settings?.Units.WeightFromGrams(TotalWeightInGrams) ?? TotalWeightInGrams;
 
         public GearSystemGearItem()
         {

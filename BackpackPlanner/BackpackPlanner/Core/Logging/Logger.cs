@@ -77,11 +77,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Logging
         public static ILogger PlatformLogger
         {
             get { return _platformLogger; }
-
-            set
-            {
-                _platformLogger = value ?? new DiagnosticsLogger();
-            }
+            set { _platformLogger = value ?? new DiagnosticsLogger(); }
         }
 
         private static readonly object CacheLock = new object();

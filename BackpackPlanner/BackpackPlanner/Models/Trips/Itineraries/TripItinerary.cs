@@ -14,16 +14,12 @@
    limitations under the License.
 */
 
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
-using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
 using EnergonSoftware.BackpackPlanner.Settings;
 
 using SQLite.Net.Attributes;
-using SQLiteNetExtensions.Attributes;
 
 namespace EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries
 {
@@ -34,6 +30,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(TripItinerary));
 
+#region Database Init
         /// <summary>
         /// Initializes the trip itinerary tables in the database.
         /// </summary>
@@ -53,22 +50,20 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries
             }
 
             if(oldVersion < 2 && newVersion >= 2) {
-                Logger.Debug("Creating trip itinerary tables...");
                 await CreateTablesAsync(state).ConfigureAwait(false);
             }
         }
 
         private static async Task CreateTablesAsync(BackpackPlannerState state)
         {
+            Logger.Debug("Creating trip itinerary table...");
             await state.DatabaseState.Connection.AsyncConnection.CreateTableAsync<TripItinerary>().ConfigureAwait(false);
         }
+#endregion
 
+#region Properties
         [Ignore]
         public override int Id { get { return TripItineraryId; } set { TripItineraryId = value; } }
-
-        public override DateTime LastUpdated { get; set; } = DateTime.Now;
-
-        public override bool IsDeleted { get; set; }
 
         /// <summary>
         /// Gets or sets the trip itinerary identifier.
@@ -79,6 +74,8 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries
         [PrimaryKey, AutoIncrement, Column("_id")]
         public int TripItineraryId { get; set; } = -1;
 
+        private string _name = string.Empty;
+
         /// <summary>
         /// Gets or sets the trip itinerary name.
         /// </summary>
@@ -86,7 +83,13 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries
         /// The trip itinerary name.
         /// </value>
         [MaxLength(64), NotNull]
-        public string Name { get; set; } = string.Empty;
+        public string Name
+        {
+            get { return _name; }
+            set { _name = value ?? string.Empty; }
+        }
+
+        private string _note = string.Empty;
 
         /// <summary>
         /// Gets or sets the trip itinerary note.
@@ -95,13 +98,12 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries
         /// The trip itinerary note.
         /// </value>
         [MaxLength(1024)]
-        public string Note { get; set; } = string.Empty;
-
-        [OneToMany(CascadeOperations = CascadeOperation.CascadeRead, ReadOnly = true)]
-        public List<TripPlan> TripPlans { get; set; } = new List<TripPlan>();
-
-        [Ignore]
-        public int TripPlanCount => TripPlans?.Count ?? 0;
+        public string Note
+        {
+            get { return _note; }
+            set { _note = value ?? string.Empty; }
+        }
+#endregion
 
         public TripItinerary()
         {

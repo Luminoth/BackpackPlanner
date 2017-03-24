@@ -67,19 +67,19 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
                 _toolbar.Title = ListItem.Name;
 
                 _textViewSystems.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_gear_collection_systems),
-                    ListItem.GearSystemCount
+                    ListItem.GearSystems.Count
                 );
 
                 _textViewItems.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_gear_collection_items),
-                    ListItem.GearItemCount, ListItem.GetTotalGearItemCount()
+                    ListItem.GearItems.Count, ListItem.GetTotalGearItemCount()
                 );
 
-                int weightInUnits = (int)ListItem.GetWeightInUnits();
+                int weightInUnits = (int)ListItem.GetTotalWeightInUnits();
                 _textViewWeight.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_gear_collection_weight),
                     weightInUnits, DroidState.Instance.BackpackPlannerState.Settings.Units.GetSmallWeightString(weightInUnits != 1)
                 );
 
-                string formattedCost = ListItem.GetCostInCurrency().ToString("C", CultureInfo.CurrentCulture);
+                string formattedCost = ListItem.GetTotalCostInCurrency().ToString("C", CultureInfo.CurrentCulture);
                 string formattedCostPerWeight = ListItem.GetCostPerWeightInCurrency().ToString("C", CultureInfo.CurrentCulture);
                 _textViewCost.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_gear_collection_cost),
                     formattedCost, formattedCostPerWeight, DroidState.Instance.BackpackPlannerState.Settings.Units.GetSmallWeightString(false)

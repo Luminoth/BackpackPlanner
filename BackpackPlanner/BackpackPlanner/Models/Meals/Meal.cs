@@ -14,18 +14,14 @@
    limitations under the License.
 */
 
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
-using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
 using EnergonSoftware.BackpackPlanner.Settings;
 using EnergonSoftware.BackpackPlanner.Units.Currency;
 using EnergonSoftware.BackpackPlanner.Units.Units;
 
 using SQLite.Net.Attributes;
-using SQLiteNetExtensions.Attributes;
 
 namespace EnergonSoftware.BackpackPlanner.Models.Meals
 {
@@ -36,6 +32,7 @@ namespace EnergonSoftware.BackpackPlanner.Models.Meals
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(Meal));
 
+#region Database Init
         /// <summary>
         /// Initializes the meal tables in the database.
         /// </summary>
@@ -55,22 +52,20 @@ namespace EnergonSoftware.BackpackPlanner.Models.Meals
             }
 
             if(oldVersion < 2 && newVersion >= 2) {
-                Logger.Debug("Creating meal cache tables...");
                 await CreateTablesAsync(state).ConfigureAwait(false);
             }
         }
 
         private static async Task CreateTablesAsync(BackpackPlannerState state)
         {
+            Logger.Debug("Creating meal table...");
             await state.DatabaseState.Connection.AsyncConnection.CreateTableAsync<Meal>().ConfigureAwait(false);
         }
+#endregion
 
+#region Properties
         [Ignore]
         public override int Id { get { return MealId; } set { MealId = value; } }
-
-        public override DateTime LastUpdated { get; set; } = DateTime.Now;
-
-        public override bool IsDeleted { get; set; }
 
         /// <summary>
         /// Gets or sets the meal identifier.
@@ -81,6 +76,8 @@ namespace EnergonSoftware.BackpackPlanner.Models.Meals
         [PrimaryKey, AutoIncrement, Column("_id")]
         public int MealId { get; set; } = -1;
 
+        private string _name = string.Empty;
+
         /// <summary>
         /// Gets or sets the meal name.
         /// </summary>
@@ -88,7 +85,13 @@ namespace EnergonSoftware.BackpackPlanner.Models.Meals
         /// The meal name.
         /// </value>
         [MaxLength(64), NotNull]
-        public string Name { get; set; } = string.Empty;
+        public string Name
+        {
+            get { return _name; }
+            set { _name = value ?? string.Empty; }
+        }
+
+        private string _url = string.Empty;
 
         /// <summary>
         /// Gets or sets the meal url.
@@ -97,7 +100,11 @@ namespace EnergonSoftware.BackpackPlanner.Models.Meals
         /// The meal url.
         /// </value>
         [MaxLength(2048)]
-        public string Url { get; set; } = string.Empty;
+        public string Url
+        {
+            get { return _url; }
+            set { _url = value ?? string.Empty; }
+        }
 
         /// <summary>
         /// Gets or sets the meal time of this meal.
@@ -244,20 +251,21 @@ namespace EnergonSoftware.BackpackPlanner.Models.Meals
         [Ignore]
         public float CostPerWeightInCurrency => 0.0f == WeightInUnits ? 0.0f : CostInCurrency / WeightInUnits;
 
-        /// <summary>
-        /// Gets or sets the meal note.
-        /// </summary>
-        /// <value>
-        /// The meal note.
-        /// </value>
-        [MaxLength(1024)]
-        public string Note { get; set; } = string.Empty;
+        private string _note = string.Empty;
 
-        [ManyToMany(typeof(TripPlanMeal), CascadeOperations = CascadeOperation.CascadeRead, ReadOnly = true)]
-        public List<TripPlan> TripPlans { get; set; } = new List<TripPlan>();
-
-        [Ignore]
-        public int TripPlanCount => TripPlans?.Count ?? 0;
+        /// <summary> 
+        /// Gets or sets the meal note. 
+        /// </summary> 
+        /// <value> 
+        /// The meal note. 
+        /// </value> 
+        [MaxLength(1024)] 
+        public string Note
+        {
+            get { return _note; }
+            set { _note = value ?? string.Empty; }
+        }
+#endregion
 
         public Meal()
         {
