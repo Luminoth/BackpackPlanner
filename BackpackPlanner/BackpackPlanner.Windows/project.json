@@ -1,6 +1,6 @@
 ﻿{
   "dependencies": {
-    "Google.Apis.Drive.v3": "1.22.0.792",
+    "Google.Apis.Drive.v3": "1.22.0.803",
     "HockeySDK.Core": "4.1.6",
     "HockeySDK.WINRT": "4.1.6",
     "JetBrains.Annotations": "10.4.0",

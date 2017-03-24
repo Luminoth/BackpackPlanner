@@ -48,3 +48,14 @@ The following is necessary to fix Proguard failing:
 * https://developer.xamarin.com/guides/android/deployment,_testing,_and_metrics/publishing_an_application/part_1_-_preparing_an_application_for_release/
 * https://developer.xamarin.com/guides/android/deployment,_testing,_and_metrics/publishing_an_application/part_2_-_signing_the_android_application_package/
   * This has a PowerShell example that is useful for working with Jenkins
+
+# Pulling the database from a debug install
+
+* adb shell
+  * run-as com.energonsoftware.BackpackPlanner
+  * cd /data/user/0/com.energonsoftware.BackpackPlanner/files/
+  * chmod 644 BackpackPlanner.db
+  * cp BackpackPlanner.db /mnt/sdcard
+  * chmod 600 BackpackPlanner.db
+  * exit
+* adb pull /mnt/sdcard/BackpackPlanner.db
