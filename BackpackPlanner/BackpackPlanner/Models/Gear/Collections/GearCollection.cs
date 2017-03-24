@@ -152,7 +152,6 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Collections
         {
         }
 
-
         public int GetTotalGearItemCount()
         {
             var visitedGearItems = new List<int>();
