@@ -21,7 +21,7 @@ using EnergonSoftware.BackpackPlanner.Settings;
 
 using JetBrains.Annotations;
 
-using SQLite.Net.Attributes;
+using SQLite;
 
 namespace EnergonSoftware.BackpackPlanner.Models.Meals
 {

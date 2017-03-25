@@ -21,7 +21,7 @@ using EnergonSoftware.BackpackPlanner.Settings;
 using EnergonSoftware.BackpackPlanner.Units.Currency;
 using EnergonSoftware.BackpackPlanner.Units.Units;
 
-using SQLite.Net.Attributes;
+using SQLite;
 
 namespace EnergonSoftware.BackpackPlanner.Models.Meals
 {

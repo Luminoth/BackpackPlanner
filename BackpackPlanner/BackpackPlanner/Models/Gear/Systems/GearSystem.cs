@@ -22,8 +22,7 @@ using EnergonSoftware.BackpackPlanner.Settings;
 using EnergonSoftware.BackpackPlanner.Units.Currency;
 using EnergonSoftware.BackpackPlanner.Units.Units;
 
-using SQLite.Net.Attributes;
-using SQLiteNetExtensions.Attributes;
+using SQLite;
 
 namespace EnergonSoftware.BackpackPlanner.Models.Gear.Systems
 {
@@ -103,7 +102,6 @@ namespace EnergonSoftware.BackpackPlanner.Models.Gear.Systems
         /// <value>
         /// The gear items contained in this system.
         /// </value>
-        [OneToMany(CascadeOperations = CascadeOperation.All)]
         public List<GearSystemGearItem> GearItems
         {
             get { return _gearItems; }

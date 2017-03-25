@@ -18,7 +18,7 @@ using EnergonSoftware.BackpackPlanner.Settings;
 
 using JetBrains.Annotations;
 
-using SQLite.Net.Attributes;
+using SQLite;
 
 namespace EnergonSoftware.BackpackPlanner.Models
 {
@@ -43,7 +43,7 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// <value>
         /// The number of gear items.
         /// </value>
-        [SQLite.Net.Attributes.NotNull]
+        [SQLite.NotNull]
         public int Count
         {
             get { return _count; }

@@ -25,8 +25,6 @@ using EnergonSoftware.BackpackPlanner.Core.Settings;
 using EnergonSoftware.BackpackPlanner.Models.Personal;
 using EnergonSoftware.BackpackPlanner.Settings;
 
-using SQLite.Net.Interop;
-
 namespace EnergonSoftware.BackpackPlanner
 {
     /// <summary>
@@ -116,9 +114,8 @@ namespace EnergonSoftware.BackpackPlanner
         /// <param name="platformHockeyAppManager">The platform HockeyApp manager.</param>
         /// <param name="platformSettingsManager">The platform settings manager.</param>
         /// <param name="platformPlayServicesManager">The platform google play services manager.</param>
-        /// <param name="sqlitePlatform">The SQLite platform.</param>
         /// <param name="platformPermissionRequestFactory">The platform permission request factory.</param>
-        public BackpackPlannerState(IHockeyAppManager platformHockeyAppManager, SettingsManager platformSettingsManager, PlayServicesManager platformPlayServicesManager, ISQLitePlatform sqlitePlatform, PermissionRequestFactory platformPermissionRequestFactory)
+        public BackpackPlannerState(IHockeyAppManager platformHockeyAppManager, SettingsManager platformSettingsManager, PlayServicesManager platformPlayServicesManager, PermissionRequestFactory platformPermissionRequestFactory)
         {
             if(null == platformHockeyAppManager) {
                 throw new ArgumentNullException(nameof(platformHockeyAppManager));
@@ -132,10 +129,6 @@ namespace EnergonSoftware.BackpackPlanner
                 throw new ArgumentNullException(nameof(platformPlayServicesManager));
             }
 
-            if(null == sqlitePlatform) {
-                throw new ArgumentNullException(nameof(sqlitePlatform));
-            }
-
             if(null == platformPermissionRequestFactory) {
                 throw new ArgumentNullException(nameof(platformPermissionRequestFactory));
             }
@@ -144,8 +137,6 @@ namespace EnergonSoftware.BackpackPlanner
 
             PlatformSettingsManager = platformSettingsManager;
             Settings = new BackpackPlannerSettings(PlatformSettingsManager);
-
-            DatabaseState.SQLitePlatform = sqlitePlatform;
 
             PlatformPlayServicesManager = platformPlayServicesManager;
 

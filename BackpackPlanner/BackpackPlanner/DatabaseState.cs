@@ -31,8 +31,7 @@ using EnergonSoftware.BackpackPlanner.Models.Meals;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries;
 using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
 
-using SQLite.Net;
-using SQLite.Net.Interop;
+using SQLite;
 
 namespace EnergonSoftware.BackpackPlanner
 {
@@ -64,15 +63,6 @@ namespace EnergonSoftware.BackpackPlanner
         /// connection to the database... so here we are
         /// </remarks>
         public SQLiteDatabaseConnection Connection { get; } = new SQLiteDatabaseConnection();
-
-        /// <summary>
-        /// Gets or sets the SQLite platform.
-        /// </summary>
-        /// <value>
-        /// The SQLite platform.
-        /// </value>
-        // ReSharper disable once InconsistentNaming
-        public ISQLitePlatform SQLitePlatform { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether the database is initialized.
@@ -115,14 +105,10 @@ namespace EnergonSoftware.BackpackPlanner
                 return;
             }
 
-            if(null == SQLitePlatform) {
-                throw new InvalidOperationException("Invalid SQLite platform!");
-            }
-
             // connect to the database
             SQLiteConnectionString connectionString = new SQLiteConnectionString(Path.Combine(dbPath, dbName), true);
             Logger.Info($"Connecting to database at {connectionString.ConnectionString}...");
-            await Connection.ConnectAsync(state, SQLitePlatform, connectionString).ConfigureAwait(false);
+            await Connection.ConnectAsync(state, connectionString).ConfigureAwait(false);
         }
 
         /// <summary>

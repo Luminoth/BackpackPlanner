@@ -19,8 +19,7 @@ using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 
-using SQLite.Net.Attributes;
-using SQLiteNetExtensionsAsync.Extensions;
+using SQLite;
 
 namespace EnergonSoftware.BackpackPlanner.Models
 {

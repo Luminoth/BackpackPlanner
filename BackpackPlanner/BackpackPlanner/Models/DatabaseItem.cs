@@ -25,8 +25,7 @@ using EnergonSoftware.BackpackPlanner.Settings;
 
 using JetBrains.Annotations;
 
-using SQLite.Net.Attributes;
-using SQLiteNetExtensionsAsync.Extensions;
+using SQLite;
 
 namespace EnergonSoftware.BackpackPlanner.Models
 {
@@ -77,7 +76,7 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// <typeparam name="T"></typeparam>
         /// <param name="state">The system state.</param>
         /// <returns>The number of items in the database.</returns>
-        public static async Task<int> CountValidItemsAsync<T>(BackpackPlannerState state) where T: DatabaseItem
+        public static async Task<int> CountValidItemsAsync<T>(BackpackPlannerState state) where T: DatabaseItem, new()
         {
             ValidateState(state);
 
@@ -96,7 +95,7 @@ namespace EnergonSoftware.BackpackPlanner.Models
             }
         }
 
-        private static async Task<List<T>> GetValidItemsInternalAsync<T>(BackpackPlannerState state, Func<T, bool> filter) where T: DatabaseItem
+        private static async Task<List<T>> GetValidItemsInternalAsync<T>(BackpackPlannerState state, Func<T, bool> filter) where T: DatabaseItem, new()
         {
             Stopwatch stopWatch = Stopwatch.StartNew();
             var items = (await (from x in state.DatabaseState.Connection.AsyncConnection.Table<T>() where !x.IsDeleted select x).ToListAsync().ConfigureAwait(false))
@@ -123,7 +122,7 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// <returns>
         /// All of the not-deleted items from the database
         /// </returns>
-        public static async Task<List<T>> GetValidItemsAsync<T>(BackpackPlannerState state, Func<T, bool> filter=null) where T: DatabaseItem
+        public static async Task<List<T>> GetValidItemsAsync<T>(BackpackPlannerState state, Func<T, bool> filter=null) where T: DatabaseItem, new()
         {
             ValidateState(state);
 
@@ -181,7 +180,7 @@ namespace EnergonSoftware.BackpackPlanner.Models
         /// <returns>
         /// A single item from the database
         /// </returns>
-        public static async Task<T> GetValidItemAsync<T>(BackpackPlannerState state, int itemId) where T: DatabaseItem
+        public static async Task<T> GetValidItemAsync<T>(BackpackPlannerState state, int itemId) where T: DatabaseItem, new()
         {
             ValidateState(state);
 

@@ -22,9 +22,7 @@ using EnergonSoftware.BackpackPlanner.Core.Logging;
 
 using JetBrains.Annotations;
 
-using SQLite.Net;
-using SQLite.Net.Async;
-using SQLite.Net.Interop;
+using SQLite;
 
 namespace EnergonSoftware.BackpackPlanner.Core.Database
 {
@@ -53,7 +51,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
         /// The synchronous connection.
         /// </value>
         [CanBeNull]
-        public SQLiteConnectionWithLock Connection { get; private set; }
+        public SQLiteConnection Connection { get; private set; }
 
         /// <summary>
         /// Gets the asynchronous connection.
@@ -106,9 +104,8 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
         /// Connects to the database.
         /// </summary>
         /// <param name="state">The system state.</param>
-        /// <param name="sqlitePlatform">The sqlite platform.</param>
         /// <param name="connectionString">The connection string.</param>
-        public async Task ConnectAsync(BackpackPlannerState state, ISQLitePlatform sqlitePlatform, SQLiteConnectionString connectionString)
+        public async Task ConnectAsync(BackpackPlannerState state, SQLiteConnectionString connectionString)
         {
             if(null == connectionString) {
                 throw new ArgumentNullException(nameof(connectionString));
@@ -123,8 +120,8 @@ namespace EnergonSoftware.BackpackPlanner.Core.Database
             await LockAsync().ConfigureAwait(false);
             try {
                 Logger.Debug($"Opening connection to database {_connectionString?.ConnectionString}...");
-                Connection = new SQLiteConnectionWithLock(sqlitePlatform, connectionString);
-                AsyncConnection = new SQLiteAsyncConnection(() => Connection);
+                Connection = new SQLiteConnection(_connectionString?.DatabasePath);
+                AsyncConnection = new SQLiteAsyncConnection(_connectionString?.DatabasePath);
             } finally {
                 Release();
             }

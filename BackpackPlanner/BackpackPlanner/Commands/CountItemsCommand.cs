@@ -23,7 +23,7 @@ namespace EnergonSoftware.BackpackPlanner.Commands
     /// <summary>
     /// Gets all items.
     /// </summary>
-    public class CountItemsCommand<T> : Command<CountItemsCommand<T>> where T: DatabaseItem
+    public class CountItemsCommand<T> : Command<CountItemsCommand<T>> where T: DatabaseItem, new()
     {
         /// <summary>
         /// Gets the count of items in the database.

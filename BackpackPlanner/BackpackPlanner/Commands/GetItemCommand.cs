@@ -25,7 +25,7 @@ namespace EnergonSoftware.BackpackPlanner.Commands
     /// <summary>
     /// Gets all items.
     /// </summary>
-    public class GetItemCommand<T> : Command<GetItemCommand<T>> where T: DatabaseItem
+    public class GetItemCommand<T> : Command<GetItemCommand<T>> where T: DatabaseItem, new()
     {
         /// <summary>
         /// Gets the id of the item to get.

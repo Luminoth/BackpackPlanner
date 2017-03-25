@@ -21,8 +21,7 @@ using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Models.Meals;
 using EnergonSoftware.BackpackPlanner.Settings;
 
-using SQLite.Net.Attributes;
-using SQLiteNetExtensions.Attributes;
+using SQLite;
 
 namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
 {
@@ -54,7 +53,6 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
         /// <value>
         /// The trip plan identifier.
         /// </value>
-        [ForeignKey(typeof(TripPlan))]
         [Indexed(Name="TripPlanMealId", Order=1, Unique=true)]
         public int TripPlanId { get; set; } = -1;
 
@@ -64,7 +62,6 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
         /// <value>
         /// The meal identifier.
         /// </value>
-        [ForeignKey(typeof(Meal))]
         [Indexed(Name="TripPlanMealId", Order=2, Unique=true)]
         public override int MealId { get; set; } = -1;
 

@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Settings;
 
-using SQLite.Net.Attributes;
+using SQLite;
 
 namespace EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries
 {

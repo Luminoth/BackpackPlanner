@@ -26,8 +26,7 @@ using EnergonSoftware.BackpackPlanner.Units;
 using EnergonSoftware.BackpackPlanner.Units.Currency;
 using EnergonSoftware.BackpackPlanner.Units.Units;
 
-using SQLite.Net.Attributes;
-using SQLiteNetExtensions.Attributes;
+using SQLite;
 
 namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
 {
@@ -127,7 +126,6 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
         /// <value>
         /// The trip itinerary identifier.
         /// </value>
-        [ForeignKey(typeof(TripItinerary))]
         public int TripItineraryId { get; set; } = -1;
 
         /// <summary>
@@ -136,7 +134,6 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
         /// <value>
         /// The trip itinerary.
         /// </value>
-        [ManyToOne]
         public TripItinerary TripItinerary { get; set; }
 
         private List<TripPlanGearCollection> _gearCollections = new List<TripPlanGearCollection>();
@@ -147,7 +144,6 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
         /// <value>
         /// The gear collections contained in this plan.
         /// </value>
-        [OneToMany(CascadeOperations = CascadeOperation.All)]
         public List<TripPlanGearCollection> GearCollections
         {
             get { return _gearCollections; }
@@ -162,7 +158,6 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
         /// <value>
         /// The gear systems contained in this plan.
         /// </value>
-        [OneToMany(CascadeOperations = CascadeOperation.All)]
         public List<TripPlanGearSystem> GearSystems
         {
             get { return _gearSystems; }
@@ -177,7 +172,6 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
         /// <value>
         /// The gear items contained in this plan.
         /// </value>
-        [OneToMany(CascadeOperations = CascadeOperation.All)]
         public List<TripPlanGearItem> GearItems
         {
             get { return _gearItems; }
@@ -192,7 +186,6 @@ namespace EnergonSoftware.BackpackPlanner.Models.Trips.Plans
         /// <value>
         /// The meals contained in this plan.
         /// </value>
-        [OneToMany(CascadeOperations = CascadeOperation.All)]
         public List<TripPlanMeal> Meals
         {
             get { return _meals; }

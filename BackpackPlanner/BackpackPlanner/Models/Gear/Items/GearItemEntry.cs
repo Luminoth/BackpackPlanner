@@ -22,7 +22,7 @@ using EnergonSoftware.BackpackPlanner.Units.Units;
 
 using JetBrains.Annotations;
 
-using SQLite.Net.Attributes;
+using SQLite;
 
 namespace EnergonSoftware.BackpackPlanner.Models.Gear.Items
 {
