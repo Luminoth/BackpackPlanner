@@ -28,6 +28,8 @@ namespace EnergonSoftware.BackpackPlanner.Settings
         /// The first run preference key
         /// </summary>
         public const string FirstRunPreferenceKey = "firstRun";
+
+        public const string TestDataEnteredKey = "testDataEntered";
 #endregion
 
         private bool _firstRun = true;
@@ -48,6 +50,21 @@ namespace EnergonSoftware.BackpackPlanner.Settings
                 _settingsManager?.PutBoolean(FirstRunPreferenceKey, _firstRun);
             }
         }
+
+#if DEBUG
+        private bool _testDataEntered;
+
+        public bool TestDataEntered
+        {
+            get { return _testDataEntered; }
+
+            set
+            {
+                _testDataEntered = value;
+                _settingsManager?.PutBoolean(TestDataEnteredKey, _testDataEntered);
+            }
+        }
+#endif
 
         private readonly SettingsManager _settingsManager;
 

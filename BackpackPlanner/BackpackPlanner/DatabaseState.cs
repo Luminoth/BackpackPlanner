@@ -18,27 +18,25 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
-using EnergonSoftware.BackpackPlanner.Core.Database;
 using EnergonSoftware.BackpackPlanner.Core.Logging;
-using EnergonSoftware.BackpackPlanner.Models;
-using EnergonSoftware.BackpackPlanner.Models.Gear.Collections;
-using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
-using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
-using EnergonSoftware.BackpackPlanner.Models.Meals;
-using EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries;
-using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
+using EnergonSoftware.BackpackPlanner.DAL;
+using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections;
+using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items;
+using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems;
+using EnergonSoftware.BackpackPlanner.DAL.Models.Meals;
+using EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Itineraries;
+using EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans;
 
-using SQLite;
+using Microsoft.EntityFrameworkCore;
 
 namespace EnergonSoftware.BackpackPlanner
 {
     /// <summary>
     /// 
     /// </summary>
-    public sealed class DatabaseState : IDisposable
+    public sealed class DatabaseState
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(DatabaseState));
 
@@ -48,139 +46,30 @@ namespace EnergonSoftware.BackpackPlanner
         public const string DatabaseName = "BackpackPlanner.db";
 
         /// <summary>
-        /// The database version
-        /// </summary>
-        public const int CurrentDatabaseVersion = 4;
-
-        /// <summary>
-        /// Gets the database connection.
-        /// </summary>
-        /// <value>
-        /// The database connection.
-        /// </value>
-        /// <remarks>
-        /// Android recommends only having a single, long-lived
-        /// connection to the database... so here we are
-        /// </remarks>
-        public SQLiteDatabaseConnection Connection { get; } = new SQLiteDatabaseConnection();
-
-        /// <summary>
-        /// Gets a value indicating whether the database is initialized.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if the database is initialized; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsInitialized { get; private set; }
-
-#region Dispose
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        private void Dispose(bool disposing)
-        {
-            if(disposing) {
-                Connection?.Dispose();
-            }
-        }
-#endregion
-
-        ~DatabaseState()
-        {
-            Dispose(false);
-        }
-
-        /// <summary>
         /// Connects the library database connections.
         /// </summary>
         /// <param name="state">The system state.</param>
         /// <param name="dbPath">The database path.</param>
         /// <param name="dbName">Name of the database.</param>
-        public async Task ConnectAsync(BackpackPlannerState state, string dbPath, string dbName)
+        public async Task InitAsync(BackpackPlannerState state, string dbPath, string dbName)
         {
-            if(Connection.IsConnected) {
-                Logger.Warn("Database connection already initialized!");
-                return;
-            }
+            string fullPath = Path.Combine(dbPath, dbName);
+            Logger.Info($"Connecting to database at {fullPath}...");
+            using(DatabaseContext dbContext = new DatabaseContext(fullPath)) {
+                Logger.Info("Migrating database...");
+                await dbContext.Database.MigrateAsync().ConfigureAwait(false);
 
-            // connect to the database
-            SQLiteConnectionString connectionString = new SQLiteConnectionString(Path.Combine(dbPath, dbName), true);
-            Logger.Info($"Connecting to database at {connectionString.ConnectionString}...");
-            await Connection.ConnectAsync(state, connectionString).ConfigureAwait(false);
+                await PopulateInitialDatabaseAsync(dbContext, state).ConfigureAwait(false);
+            }
         }
 
-        /// <summary>
-        /// Disconnects from the database.
-        /// </summary>
-        public async Task DisconnectAsync()
-        {
-            if(!Connection.IsConnected) {
-                return;
-            }
-
-            await Connection.CloseAsync().ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Initializes the database.
-        /// </summary>
-        /// <param name="state">The system state.</param>
-        public async Task InitDatabaseAsync(BackpackPlannerState state)
-        {
-            if(IsInitialized) {
-                return;
-            }
-
-            DatabaseVersion newVersion = new DatabaseVersion
-            {
-                Version = CurrentDatabaseVersion
-            };
-            DatabaseVersion oldVersion;
-
-            Logger.Info("Initializing database...");
-
-            await Connection.LockAsync().ConfigureAwait(false);
-            try {
-                var databaseVersionTableInfo = Connection.Connection.GetTableInfo("DatabaseVersion");
-                if(!databaseVersionTableInfo.Any()) {
-                    Logger.Debug("Creating a new database...");
-                    await DatabaseVersion.CreateTablesAsync(state).ConfigureAwait(false);
-                }
-
-                oldVersion = await DatabaseVersion.GetAsync(state).ConfigureAwait(false);
-                if(null == oldVersion) {
-                    Logger.Debug("DatabaseVersion.Get returned null!?!");
-                    throw new InvalidOperationException("DatabaseVersion.Get returned null!?!");
-                }
-                Logger.Debug($"Old database version: {oldVersion.Version}, current database version: {CurrentDatabaseVersion}");
-
-                // TODO: find a way to make this transactional
-                // so that we can roll it back on error and avoid updating the db version
-                await GearItem.InitDatabaseAsync(state, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
-                await GearSystem.InitDatabaseAsync(state, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
-                await GearCollection.InitDatabaseAsync(state, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
-                await Meal.InitDatabaseAsync(state, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
-                await TripItinerary.InitDatabaseAsync(state, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
-                await TripPlan.InitDatabaseAsync(state, oldVersion.Version, newVersion.Version).ConfigureAwait(false);
-
-                newVersion.DatabaseVersionId = oldVersion.DatabaseVersionId;
-                await DatabaseVersion.UpdateAsync(state, newVersion).ConfigureAwait(false);
-            } finally {
-                Connection.Release();
-            }
-
-            if(oldVersion.Version < 1) {
-                await PopulateInitialDatabaseAsync(state).ConfigureAwait(false);
-            }
-
-            IsInitialized = true;
-        }
-
-        private async Task PopulateInitialDatabaseAsync(BackpackPlannerState state)
+        private async Task PopulateInitialDatabaseAsync(DatabaseContext dbContext, BackpackPlannerState state)
         {
 #if DEBUG
+            if(state.Settings.MetaSettings.TestDataEntered) {
+                return;
+            }
+
             Logger.Debug("Populating test data, this will take a while...");
 
             Stopwatch stopwatch = new Stopwatch();
@@ -299,7 +188,8 @@ namespace EnergonSoftware.BackpackPlanner
             };
 
             Logger.Debug("Inserting test gear items...");
-            await DatabaseItem.InsertItemsAsync(state, gearItems);
+            dbContext.GearItems.AddRange(gearItems);
+            await dbContext.SaveChangesAsync().ConfigureAwait(false);
 #endregion
 
 #region Test Gear Systems
@@ -308,31 +198,31 @@ namespace EnergonSoftware.BackpackPlanner
                 new GearSystem(state.Settings)
                 {
                     Name = "New Hammock Setup",
-                    GearItems = new List<GearSystemGearItem>
+                    TestGearItems = new List<GearItemEntry>
                     {
                         // Hammock
-                        new GearSystemGearItem
+                        new GearItemEntry
                         {
                             GearItemId = 2,
                             Count = 1
                         },
 
                         // Tree Straps
-                        new GearSystemGearItem
+                        new GearItemEntry
                         {
                             GearItemId = 3,
                             Count = 1
                         },
 
                         // Overquilt
-                        new GearSystemGearItem
+                        new GearItemEntry
                         {
                             GearItemId = 5,
                             Count = 1
                         },
 
                         // New Underquilt
-                        new GearSystemGearItem
+                        new GearItemEntry
                         {
                             GearItemId = 6,
                             Count = 1
@@ -343,31 +233,31 @@ namespace EnergonSoftware.BackpackPlanner
                 new GearSystem(state.Settings)
                 {
                     Name = "Old Hammock Setup",
-                    GearItems = new List<GearSystemGearItem>
+                    TestGearItems = new List<GearItemEntry>
                     {
                         // Hammock
-                        new GearSystemGearItem
+                        new GearItemEntry
                         {
                             GearItemId = 2,
                             Count = 1
                         },
 
                         // Tree Straps
-                        new GearSystemGearItem
+                        new GearItemEntry
                         {
                             GearItemId = 3,
                             Count = 1
                         },
 
                         // Old Underquilt
-                        new GearSystemGearItem
+                        new GearItemEntry
                         {
                             GearItemId = 4,
                             Count = 1
                         },
 
                         // Overquilt
-                        new GearSystemGearItem
+                        new GearItemEntry
                         {
                             GearItemId = 5,
                             Count = 1
@@ -378,10 +268,10 @@ namespace EnergonSoftware.BackpackPlanner
                 new GearSystem(state.Settings)
                 {
                     Name = "Car Camping",
-                    GearItems = new List<GearSystemGearItem>
+                    TestGearItems = new List<GearItemEntry>
                     {
                         // 5g Water Jug
-                        new GearSystemGearItem
+                        new GearItemEntry
                         {
                             GearItemId = 9,
                             Count = 2
@@ -392,17 +282,17 @@ namespace EnergonSoftware.BackpackPlanner
                 new GearSystem(state.Settings)
                 {
                     Name = "Cook System",
-                    GearItems = new List<GearSystemGearItem>
+                    TestGearItems = new List<GearItemEntry>
                     {
                         // Alcohol Stove
-                        new GearSystemGearItem
+                        new GearItemEntry
                         {
                             GearItemId = 11,
                             Count = 1
                         },
 
                         // Wind Screen
-                        new GearSystemGearItem
+                        new GearItemEntry
                         {
                             GearItemId = 12,
                             Count = 1
@@ -412,7 +302,8 @@ namespace EnergonSoftware.BackpackPlanner
             };
 
             Logger.Debug("Inserting test gear systems...");
-            await DatabaseItem.InsertItemsAsync(state, gearSystems);
+            dbContext.GearSystems.AddRange(gearSystems);
+            await dbContext.SaveChangesAsync().ConfigureAwait(false);
 #endregion
 
 #region Test Gear Collections
@@ -421,33 +312,33 @@ namespace EnergonSoftware.BackpackPlanner
                 new GearCollection(state.Settings)
                 {
                     Name = "3 Season Hammock",
-                    GearSystems = new List<GearCollectionGearSystem>
+                    TestGearSystems = new List<GearSystemEntry>
                     {
                         // New Hammock Setup
-                        new GearCollectionGearSystem
+                        new GearSystemEntry
                         {
                             GearSystemId = 1,
                             Count = 1
                         },
 
                         // Cook System
-                        new GearCollectionGearSystem
+                        new GearSystemEntry
                         {
                             GearSystemId = 4,
                             Count = 1
                         }
                     },
-                    GearItems = new List<GearCollectionGearItem>
+                    TestGearItems = new List<GearItemEntry>
                     {
                         // Backpack
-                        new GearCollectionGearItem
+                        new GearItemEntry
                         {
                             GearItemId = 1,
                             Count = 1
                         },
 
                         // Head Lamp
-                        new GearCollectionGearItem
+                        new GearItemEntry
                         {
                             GearItemId = 10,
                             Count = 1
@@ -458,7 +349,8 @@ namespace EnergonSoftware.BackpackPlanner
             };
 
             Logger.Debug("Inserting test gear collections...");
-            await DatabaseItem.InsertItemsAsync(state, gearCollections);
+            dbContext.GearCollections.AddRange(gearCollections);
+            await dbContext.SaveChangesAsync().ConfigureAwait(false);
 #endregion
 
 #region Test Meals
@@ -478,7 +370,8 @@ namespace EnergonSoftware.BackpackPlanner
             };
 
             Logger.Debug("Inserting test meals...");
-            await DatabaseItem.InsertItemsAsync(state, meals);
+            dbContext.Meals.AddRange(meals);
+            await dbContext.SaveChangesAsync().ConfigureAwait(false);
 #endregion
 
 #region Test Trip Itineraries
@@ -492,7 +385,8 @@ namespace EnergonSoftware.BackpackPlanner
             };
 
             Logger.Debug("Inserting test trip itineraries...");
-            await DatabaseItem.InsertItemsAsync(state, tripItineraries);
+            dbContext.TripItineraries.AddRange(tripItineraries);
+            await dbContext.SaveChangesAsync().ConfigureAwait(false);
 #endregion
 
 #region Test Trip Plans
@@ -505,39 +399,39 @@ namespace EnergonSoftware.BackpackPlanner
                     EndDate = DateTime.Now,
 
                     // Turkey Camp 2015
-                    TripItineraryId = 1,
+                    TestTripItineraryId = 1,
 
-                    GearCollections = new List<TripPlanGearCollection>
+                    TestGearCollections = new List<GearCollectionEntry>
                     {
                         // 3 Season Hammock
-                        new TripPlanGearCollection
+                        new GearCollectionEntry
                         {
                             GearCollectionId = 1,
                             Count = 1
                         }
                     },
-                    GearSystems = new List<TripPlanGearSystem>
+                    TestGearSystems = new List<GearSystemEntry>
                     {
                         // Cook System
-                        new TripPlanGearSystem
+                        new GearSystemEntry
                         {
                             GearSystemId = 4,
                             Count = 1
                         }
                     },
-                    GearItems = new List<TripPlanGearItem>
+                    TestGearItems = new List<GearItemEntry>
                     {
                         // 5g Water Jug
-                        new TripPlanGearItem
+                        new GearItemEntry
                         {
                             GearItemId = 9,
                             Count = 1
                         }
                     },
-                    Meals = new List<TripPlanMeal>
+                    TestMeals = new List<MealEntry>
                     {
                         // Cheese Chicken Dinner
-                        new TripPlanMeal
+                        new MealEntry
                         {
                             MealId = 1,
                             Count = 1
@@ -547,8 +441,11 @@ namespace EnergonSoftware.BackpackPlanner
             };
 
             Logger.Debug("Inserting test trip plans...");
-            await DatabaseItem.InsertItemsAsync(state, tripPlans);
+            dbContext.TripPlans.AddRange(tripPlans);
+            await dbContext.SaveChangesAsync().ConfigureAwait(false);
 #endregion
+
+            state.Settings.MetaSettings.TestDataEntered = true;
 
             stopwatch.Stop();
             Logger.Debug($"Finished populating test data in {stopwatch.ElapsedMilliseconds}ms");

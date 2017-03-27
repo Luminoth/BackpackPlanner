@@ -22,7 +22,7 @@ using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Core.Permissions;
 using EnergonSoftware.BackpackPlanner.Core.PlayServices;
 using EnergonSoftware.BackpackPlanner.Core.Settings;
-using EnergonSoftware.BackpackPlanner.Models.Personal;
+using EnergonSoftware.BackpackPlanner.DAL.Models.Personal;
 using EnergonSoftware.BackpackPlanner.Settings;
 
 namespace EnergonSoftware.BackpackPlanner
@@ -102,7 +102,6 @@ namespace EnergonSoftware.BackpackPlanner
         private void Dispose(bool disposing)
         {
             if(disposing) {
-                DatabaseState?.Dispose();
                 PlatformPlayServicesManager?.Dispose();
             }
         }
@@ -117,30 +116,14 @@ namespace EnergonSoftware.BackpackPlanner
         /// <param name="platformPermissionRequestFactory">The platform permission request factory.</param>
         public BackpackPlannerState(IHockeyAppManager platformHockeyAppManager, SettingsManager platformSettingsManager, PlayServicesManager platformPlayServicesManager, PermissionRequestFactory platformPermissionRequestFactory)
         {
-            if(null == platformHockeyAppManager) {
-                throw new ArgumentNullException(nameof(platformHockeyAppManager));
-            }
+            PlatformHockeyAppManager = platformHockeyAppManager ?? throw new ArgumentNullException(nameof(platformHockeyAppManager));
 
-            if(null == platformSettingsManager) {
-                throw new ArgumentNullException(nameof(platformSettingsManager));
-            }
-
-            if(null == platformPlayServicesManager) {
-                throw new ArgumentNullException(nameof(platformPlayServicesManager));
-            }
-
-            if(null == platformPermissionRequestFactory) {
-                throw new ArgumentNullException(nameof(platformPermissionRequestFactory));
-            }
-
-            PlatformHockeyAppManager = platformHockeyAppManager;
-
-            PlatformSettingsManager = platformSettingsManager;
+            PlatformSettingsManager = platformSettingsManager ?? throw new ArgumentNullException(nameof(platformSettingsManager));
             Settings = new BackpackPlannerSettings(PlatformSettingsManager);
 
-            PlatformPlayServicesManager = platformPlayServicesManager;
+            PlatformPlayServicesManager = platformPlayServicesManager ?? throw new ArgumentNullException(nameof(platformPlayServicesManager));
 
-            PlatformPermissionRequestFactory = platformPermissionRequestFactory;
+            PlatformPermissionRequestFactory = platformPermissionRequestFactory ?? throw new ArgumentNullException(nameof(platformPermissionRequestFactory));
 
             PersonalInformation = new PersonalInformation(PlatformSettingsManager, Settings);
         }
@@ -170,8 +153,6 @@ namespace EnergonSoftware.BackpackPlanner
             Logger.Debug("Destroying platform state...");
 
             PlatformPlayServicesManager.Destroy();
-
-            DatabaseState.DisconnectAsync().Wait();
 
             PlatformHockeyAppManager.Destroy();
         }

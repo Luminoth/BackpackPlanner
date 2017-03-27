@@ -1,0 +1,10 @@
+﻿From console:
+
+  dotnet ef migrations add <name>
+
+Names:
+
+v1
+
+List migrations:
+    dotnet ef migrations list
