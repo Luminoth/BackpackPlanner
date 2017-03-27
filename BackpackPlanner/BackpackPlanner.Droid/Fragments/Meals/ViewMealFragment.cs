@@ -20,7 +20,7 @@ using Android.OS;
 using Android.Views;
 using Android.Widget;
 
-using EnergonSoftware.BackpackPlanner.Models.Meals;
+using EnergonSoftware.BackpackPlanner.DAL.Models.Meals;
 using EnergonSoftware.BackpackPlanner.Units.Currency;
 using EnergonSoftware.BackpackPlanner.Units.Units;
 

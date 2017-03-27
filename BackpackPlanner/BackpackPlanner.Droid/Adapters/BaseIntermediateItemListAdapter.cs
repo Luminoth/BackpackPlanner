@@ -17,13 +17,13 @@
 using System.Collections.Generic;
 
 using EnergonSoftware.BackpackPlanner.Core.Util;
+using EnergonSoftware.BackpackPlanner.DAL.Models;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
-using EnergonSoftware.BackpackPlanner.Models;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 {
 // TODO: rename BaseIntermediateItemListViewAdapter
-    public abstract class BaseIntermediateItemListAdapter<T, TV> : BaseListViewAdapter<T> where T : DatabaseIntermediateItem where TV: DatabaseItem
+    public abstract class BaseIntermediateItemListAdapter<T, TV> : BaseListViewAdapter<T> where T : BaseIntermediateModel where TV: BaseModel
     {
         private readonly Dictionary<TV, T> _itemMap = new Dictionary<TV, T>();
 

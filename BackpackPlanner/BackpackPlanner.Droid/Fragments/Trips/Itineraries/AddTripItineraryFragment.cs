@@ -14,10 +14,11 @@
    limitations under the License.
 */
 
+using System.Threading.Tasks;
 using Android.OS;
 using Android.Views;
-
-using EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries;
+using EnergonSoftware.BackpackPlanner.DAL;
+using EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Itineraries;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries
 {
@@ -47,6 +48,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries
         protected override TripItinerary CreateItem()
         {
             return new TripItinerary(DroidState.Instance.BackpackPlannerState.Settings);
+        }
+
+        protected override async Task AddItemAsync(DatabaseContext dbContext)
+        {
+            await dbContext.TripItineraries.AddAsync(Item).ConfigureAwait(false);
         }
 
         protected override void OnDoDataExchange()

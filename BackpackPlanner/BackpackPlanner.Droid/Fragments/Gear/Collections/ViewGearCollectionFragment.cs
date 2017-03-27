@@ -17,7 +17,7 @@
 using Android.OS;
 using Android.Views;
 
-using EnergonSoftware.BackpackPlanner.Models.Gear.Collections;
+using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
 {

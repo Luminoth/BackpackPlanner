@@ -17,9 +17,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-using EnergonSoftware.BackpackPlanner.Commands;
-using EnergonSoftware.BackpackPlanner.Commands.Gear;
-using EnergonSoftware.BackpackPlanner.Models.Gear.Collections;
+using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections;
 
 namespace EnergonSoftware.BackpackPlanner.Windows.Pages.Gear.Collections
 {

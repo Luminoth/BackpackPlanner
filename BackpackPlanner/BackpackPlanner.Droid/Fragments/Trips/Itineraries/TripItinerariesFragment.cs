@@ -14,11 +14,15 @@
    limitations under the License.
 */
 
-using EnergonSoftware.BackpackPlanner.Commands;
-using EnergonSoftware.BackpackPlanner.Commands.Trips;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+using EnergonSoftware.BackpackPlanner.DAL;
+using EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Itineraries;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips;
-using EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries;
+
+using Microsoft.EntityFrameworkCore;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries
 {
@@ -46,9 +50,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries
 
         protected override int AddItemResource => Resource.Id.fab_add_trip_itinerary;
 
-        protected override GetItemsCommand<TripItinerary> CreateGetItemsCommand()
+        protected override async Task<List<TripItinerary>> GetItemsAsync(DatabaseContext dbContext)
         {
-            return new GetTripItinerariesCommand();
+            return await dbContext.TripItineraries.ToListAsync().ConfigureAwait(false);
         }
 
         protected override Android.Support.V4.App.Fragment CreateAddItemFragment()

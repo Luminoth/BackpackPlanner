@@ -28,8 +28,6 @@ using EnergonSoftware.BackpackPlanner.Windows.Logging;
 using EnergonSoftware.BackpackPlanner.Windows.Pages;
 using EnergonSoftware.BackpackPlanner.Windows.Permissions;
 
-using SQLite.Net.Platform.WinRT;
-
 namespace EnergonSoftware.BackpackPlanner.Windows
 {
     public sealed partial class App : IDisposable
@@ -56,7 +54,6 @@ namespace EnergonSoftware.BackpackPlanner.Windows
                 new HockeyAppManager(),
                 new WindowsSettingsManager(),
                 new WindowsPlayServicesManager(),
-                new SQLitePlatformWinRT(),
                 new WindowsPermissionRequestFactory()
             );
         }
@@ -98,8 +95,7 @@ namespace EnergonSoftware.BackpackPlanner.Windows
 
             await BackpackPlannerState.InitAsync();
 
-            await BackpackPlannerState.DatabaseState.ConnectAsync(BackpackPlannerState, ApplicationData.Current.LocalFolder.Path, DatabaseState.DatabaseName);
-            await BackpackPlannerState.DatabaseState.InitDatabaseAsync(BackpackPlannerState);
+            await BackpackPlannerState.DatabaseState.InitAsync(BackpackPlannerState, ApplicationData.Current.LocalFolder.Path, DatabaseState.DatabaseName);
         }
 
         // TODO: where do we call BackpackPlannerState.Destroy() ?

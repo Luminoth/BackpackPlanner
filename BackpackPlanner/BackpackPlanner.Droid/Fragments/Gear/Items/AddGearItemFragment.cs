@@ -15,12 +15,14 @@
 */
 
 using System;
+using System.Threading.Tasks;
 
 using Android.OS;
 using Android.Views;
 using Android.Widget;
 
-using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
+using EnergonSoftware.BackpackPlanner.DAL;
+using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items;
 using EnergonSoftware.BackpackPlanner.Units.Currency;
 using EnergonSoftware.BackpackPlanner.Units.Units;
 
@@ -80,6 +82,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
         protected override GearItem CreateItem()
         {
             return new GearItem(DroidState.Instance.BackpackPlannerState.Settings);
+        }
+
+        protected override async Task AddItemAsync(DatabaseContext dbContext)
+        {
+            await dbContext.GearItems.AddAsync(Item).ConfigureAwait(false);
         }
 
         protected override void OnDoDataExchange()

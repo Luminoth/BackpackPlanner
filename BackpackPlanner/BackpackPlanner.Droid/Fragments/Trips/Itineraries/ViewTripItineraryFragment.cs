@@ -17,7 +17,7 @@
 using Android.OS;
 using Android.Views;
 
-using EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries;
+using EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Itineraries;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries
 {

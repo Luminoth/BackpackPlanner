@@ -16,18 +16,21 @@
 
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 using Android.App;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
 
-using EnergonSoftware.BackpackPlanner.Commands.Gear;
 using EnergonSoftware.BackpackPlanner.Core.Logging;
+using EnergonSoftware.BackpackPlanner.DAL;
+using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items;
+using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear;
 using EnergonSoftware.BackpackPlanner.Droid.Util;
-using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
-using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
+
+using Microsoft.EntityFrameworkCore;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 {
@@ -89,14 +92,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 
             ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_loading_items, false, true);
 
-            new GetGearItemsCommand().DoActionInBackground(DroidState.Instance.BackpackPlannerState,
-                command =>
+            Task.Run(async () =>
                 {
-                    Logger.Debug($"Read {command.Items.Count} items...");
-
-                    _gearItems = command.Items.ToArray();
-                    _gearItemsNames = (from x in _gearItems select x.Name).ToArray();
-                    _selectedGearItems = new bool[_gearItems.Length];
+                    using(DatabaseContext dbContext = DroidState.Instance.BackpackPlannerState.DatabaseState.CreateContext()) {
+                        _gearItems = await dbContext.GearItems.ToArrayAsync().ConfigureAwait(false);
+                        _gearItemsNames = (from x in _gearItems select x.Name).ToArray();
+                        _selectedGearItems = new bool[_gearItems.Length];
+                    }
 
                     OnItemsLoaded(progressDialog);
                 }
@@ -133,7 +135,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
             DialogUtil.ShowMultiChoiceAlertWithSearch(Activity, Resource.String.label_add_gear_items, _gearItemsNames, _selectedGearItems,
                 (a, b) =>
                 {
-                    _gearItemListAdapter.Filter.InvokeFilter(b.NewText, new FilterListener<GearSystemGearItem>(_gearItemListAdapter));
+                    _gearItemListAdapter.Filter.InvokeFilter(b.NewText, new FilterListener<GearItemEntry>(_gearItemListAdapter));
                 },
                 (a, b) =>
                 {
@@ -148,7 +150,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 
             GearItem gearItem = _gearItems[index];
             if(isSelected) {
-                GearSystemGearItem gearSystemGearItem = new GearSystemGearItem(Item, gearItem, DroidState.Instance.BackpackPlannerState.Settings)
+                GearItemEntry gearSystemGearItem = new GearItemEntry(gearItem, DroidState.Instance.BackpackPlannerState.Settings)
                 {
                     Count = 1
                 };
@@ -168,10 +170,15 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
             return new GearSystem(DroidState.Instance.BackpackPlannerState.Settings);
         }
 
+        protected override async Task AddItemAsync(DatabaseContext dbContext)
+        {
+            await dbContext.GearSystems.AddAsync(Item).ConfigureAwait(false);
+        }
+
         protected override void OnDoDataExchange()
         {
             Item.Name = _gearSystemNameEditText.EditText.Text;
-            Item.GearItems = _gearItemListAdapter.ItemMap.Values.ToList();
+            Item.AddGearItems(_gearItemListAdapter.ItemMap.Values.ToList());
             Item.Note = _gearSystemNoteEditText.EditText.Text;
         }
 

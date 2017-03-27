@@ -15,12 +15,14 @@
 */
 
 using System;
+using System.Threading.Tasks;
 
 using Android.OS;
 using Android.Views;
 using Android.Widget;
 
-using EnergonSoftware.BackpackPlanner.Models.Meals;
+using EnergonSoftware.BackpackPlanner.DAL;
+using EnergonSoftware.BackpackPlanner.DAL.Models.Meals;
 using EnergonSoftware.BackpackPlanner.Units.Currency;
 using EnergonSoftware.BackpackPlanner.Units.Units;
 
@@ -76,6 +78,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
         protected override Meal CreateItem()
         {
             return new Meal(DroidState.Instance.BackpackPlannerState.Settings);
+        }
+
+        protected override async Task AddItemAsync(DatabaseContext dbContext)
+        {
+            await dbContext.Meals.AddAsync(Item).ConfigureAwait(false);
         }
 
         protected override void OnDoDataExchange()

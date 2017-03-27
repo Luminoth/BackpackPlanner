@@ -28,14 +28,14 @@ namespace EnergonSoftware.BackpackPlanner.DAL
 {
     public class DatabaseContext : DbContext
     {
-        public virtual DbSet<GearItem> GearItems { get; set; }
-        public virtual DbSet<GearSystem> GearSystems { get; set; }
-        public virtual DbSet<GearCollection> GearCollections { get; set; }
+        public virtual DbSet<GearItem> GearItems { get; private set; }
+        public virtual DbSet<GearSystem> GearSystems { get; private set; }
+        public virtual DbSet<GearCollection> GearCollections { get; private set; }
 
-        public virtual DbSet<Meal> Meals { get; set; }
+        public virtual DbSet<Meal> Meals { get; private set; }
 
-        public virtual DbSet<TripItinerary> TripItineraries { get; set; }
-        public virtual DbSet<TripPlan> TripPlans { get; set; }
+        public virtual DbSet<TripItinerary> TripItineraries { get; private set; }
+        public virtual DbSet<TripPlan> TripPlans { get; private set; }
 
         public string DatabasePath { get; }
 

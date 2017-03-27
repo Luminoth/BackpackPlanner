@@ -19,9 +19,7 @@ using System.Globalization;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-using EnergonSoftware.BackpackPlanner.Commands;
-using EnergonSoftware.BackpackPlanner.Commands.Gear;
-using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
+using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items;
 using EnergonSoftware.BackpackPlanner.Units.Units;
 using EnergonSoftware.BackpackPlanner.Windows.Utils;
 

@@ -14,17 +14,19 @@
    limitations under the License.
 */
 
+using System.Threading.Tasks;
+
 using Android.App;
 using Android.OS;
 using Android.Views;
 
-using EnergonSoftware.BackpackPlanner.Commands;
+using EnergonSoftware.BackpackPlanner.DAL;
+using EnergonSoftware.BackpackPlanner.DAL.Models;
 using EnergonSoftware.BackpackPlanner.Droid.Util;
-using EnergonSoftware.BackpackPlanner.Models;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 {
-    public abstract class AddItemFragment<T> : DataFragment where T: DatabaseItem
+    public abstract class AddItemFragment<T> : DataFragment where T: BaseModel
     {
         protected abstract int AddItemResource { get; }
 
@@ -45,6 +47,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             Item = CreateItem();
         }
 
+        protected abstract Task AddItemAsync(DatabaseContext dbContext);
+
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
             base.OnViewCreated(view, savedInstanceState);
@@ -57,9 +61,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
                 ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_adding_item, false, true);
 
-                new AddItemCommand<T>(Item).DoActionInBackground(DroidState.Instance.BackpackPlannerState,
-                    command =>
+                Task.Run(async () =>
                     {
+                        using(DatabaseContext dbContext = DroidState.Instance.BackpackPlannerState.DatabaseState.CreateContext()) {
+                            await AddItemAsync(dbContext).ConfigureAwait(false); 
+                        }
+
                         Activity.RunOnUiThread(() =>
                         {
                             progressDialog.Dismiss();

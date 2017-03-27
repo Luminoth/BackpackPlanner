@@ -1,10 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputType>winexe</OutputType>
+  </PropertyGroup>
+
   <PropertyGroup>
-    <TargetFramework>uap10.0</TargetFramework>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <PackageTargetFallback>uap10.0</PackageTargetFallback>
     <AssemblyName>BackpackPlanner.Windows</AssemblyName>
     <PackageId>BackpackPlanner.Windows</PackageId>
-    <RuntimeIdentifiers>win10-arm;win10-arm-aot;win10-x86;win10-x86-aot;win10-x64;win10-x64-aot</RuntimeIdentifiers>
+    <RuntimeIdentifiers>win10-x86;win10-x86-aot;win10-x64;win10-x64-aot</RuntimeIdentifiers>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
     <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
@@ -14,20 +19,26 @@
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
     <GenerateNeutralResourcesLanguageAttribute>false</GenerateNeutralResourcesLanguageAttribute>
+    <ApplicationIcon />
+    <OutputTypeEx>winexe</OutputTypeEx>
+    <StartupObject />
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Google.Apis.Drive.v3" Version="1.22.0.803" />
+    <PackageReference Include="Google.Apis.Drive.v3" Version="1.23.0.809" />
     <PackageReference Include="HockeySDK.Core" Version="4.1.6" />
     <PackageReference Include="HockeySDK.WINRT" Version="4.1.6" />
     <PackageReference Include="JetBrains.Annotations" Version="10.4.0" />
     <PackageReference Include="Microsoft.ApplicationInsights" Version="2.2.0" />
     <PackageReference Include="Microsoft.ApplicationInsights.PersistenceChannel" Version="1.2.3" />
     <PackageReference Include="Microsoft.ApplicationInsights.WindowsApps" Version="1.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="1.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="1.1.1" />
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="5.3.1" />
-    <PackageReference Include="SQLite.Net-PCL" Version="3.1.1" />
-    <PackageReference Include="SQLite.Net.Async-PCL" Version="3.1.1" />
-    <PackageReference Include="SQLite.Net.Core-PCL" Version="3.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BackpackPlanner\BackpackPlanner.csproj" />
   </ItemGroup>
 
 </Project>

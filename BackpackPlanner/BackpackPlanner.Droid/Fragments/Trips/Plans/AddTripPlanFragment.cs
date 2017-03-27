@@ -16,13 +16,15 @@
 
 using System;
 using System.Globalization;
+using System.Threading.Tasks;
 
 using Android.OS;
 using Android.Views;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
+using EnergonSoftware.BackpackPlanner.DAL;
+using EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Util;
-using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
 {
@@ -89,6 +91,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
         protected override TripPlan CreateItem()
         {
             return new TripPlan(DroidState.Instance.BackpackPlannerState.Settings);
+        }
+
+        protected override async Task AddItemAsync(DatabaseContext dbContext)
+        {
+            await dbContext.TripPlans.AddAsync(Item).ConfigureAwait(false);
         }
 
         protected override void OnDoDataExchange()

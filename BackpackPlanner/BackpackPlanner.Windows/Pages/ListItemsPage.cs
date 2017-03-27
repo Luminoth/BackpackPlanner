@@ -18,13 +18,12 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-using EnergonSoftware.BackpackPlanner.Commands;
 using EnergonSoftware.BackpackPlanner.Core.Logging;
-using EnergonSoftware.BackpackPlanner.Models;
+using EnergonSoftware.BackpackPlanner.DAL.Models;
 
 namespace EnergonSoftware.BackpackPlanner.Windows.Pages
 {
-    public abstract class ListItemsPage<T> : BasePage where T: DatabaseItem
+    public abstract class ListItemsPage<T> : BasePage where T: BaseModel
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(ListItemsPage<>));
 

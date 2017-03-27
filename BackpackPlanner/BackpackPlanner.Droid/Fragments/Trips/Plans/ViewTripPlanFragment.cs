@@ -21,8 +21,8 @@ using Android.OS;
 using Android.Views;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
+using EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Util;
-using EnergonSoftware.BackpackPlanner.Models.Trips.Plans;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
 {

@@ -14,24 +14,27 @@
    limitations under the License.
 */
 
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
 using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
 
-using EnergonSoftware.BackpackPlanner.Commands;
 using EnergonSoftware.BackpackPlanner.Core.Logging;
+using EnergonSoftware.BackpackPlanner.DAL;
+using EnergonSoftware.BackpackPlanner.DAL.Models;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters;
 using EnergonSoftware.BackpackPlanner.Droid.Util;
-using EnergonSoftware.BackpackPlanner.Models;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 {
     /// <summary>
     /// Helper for the data listing fragments
     /// </summary>
-    public abstract class ListItemsFragment<T> : RecyclerFragment where T: DatabaseItem, IBackpackPlannerItem
+    public abstract class ListItemsFragment<T> : RecyclerFragment where T: BaseModel, IBackpackPlannerItem
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(ListItemsFragment<T>));
 
@@ -123,22 +126,25 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             FilterView.QueryTextChange += Adapter.FilterItemsEventHandler;
         }
 
-        protected abstract GetItemsCommand<T> CreateGetItemsCommand();
+        protected abstract Task<List<T>> GetItemsAsync(DatabaseContext dbContext);
 
         protected void PopulateList()
         {
             ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_loading_items, false, true);
 
-            CreateGetItemsCommand().DoActionInBackground(DroidState.Instance.BackpackPlannerState,
-                command =>
+            Task.Run(async () =>
                 {
-                    Logger.Debug($"Read {command.Items.Count} items...");
+                    List<T> items;
+                    using(DatabaseContext dbContext = DroidState.Instance.BackpackPlannerState.DatabaseState.CreateContext()) {
+                        items = await GetItemsAsync(dbContext).ConfigureAwait(false);
+                    }
+                    Logger.Debug($"Read {items?.Count ?? 0} items...");
 
                     Activity.RunOnUiThread(() =>
                     {
                         progressDialog.Dismiss();
 
-                        Adapter.ListItems = command.Items;
+                        Adapter.ListItems = items ?? new List<T>();
                     });
                 }
             );
@@ -154,9 +160,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         {
             ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_deleting_item, false, true);
 
-            new DeleteItemCommand<T>(item).DoActionInBackground(DroidState.Instance.BackpackPlannerState,
-                command =>
+            Task.Run(async () =>
                 {
+                    using(DatabaseContext dbContext = DroidState.Instance.BackpackPlannerState.DatabaseState.CreateContext()) {
+                        item.IsDeleted = true;
+                        await dbContext.SaveChangesAsync().ConfigureAwait(false);
+                    }
+
                     Activity.RunOnUiThread(() =>
                     {
                         progressDialog.Dismiss();
@@ -164,24 +174,28 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                         Adapter.RemoveItem(item);
 
                         SnackbarUtil.ShowUndoSnackbar(View, Resource.String.label_deleted_item, Android.Support.Design.Widget.Snackbar.LengthLong,
-                            view => UndoDeleteItemEventHandler(view, command));
+                            view => UndoDeleteItemEventHandler(view, item));
                     });
                 }
             );
         }
 
-        private void UndoDeleteItemEventHandler(View view, DeleteItemCommand<T> command)
+        private void UndoDeleteItemEventHandler(View view, T item)
         {
             ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_deleted_item_undoing, false, true);
 
-            command.UndoActionInBackground(DroidState.Instance.BackpackPlannerState,
-                a =>
+            Task.Run(async () =>
                 {
+                    using(DatabaseContext dbContext = DroidState.Instance.BackpackPlannerState.DatabaseState.CreateContext()) {
+                        item.IsDeleted = false;
+                        await dbContext.SaveChangesAsync().ConfigureAwait(false);
+                    }
+
                     Activity.RunOnUiThread(() =>
                     {
                         progressDialog.Dismiss();
 
-                        Adapter.AddItem(a.Item);
+                        Adapter.AddItem(item);
 
                         SnackbarUtil.ShowSnackbar(view, Resource.String.label_deleted_item_undone, Android.Support.Design.Widget.Snackbar.LengthShort);
                     });

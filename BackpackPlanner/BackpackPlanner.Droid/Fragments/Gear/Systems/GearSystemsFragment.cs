@@ -14,11 +14,15 @@
    limitations under the License.
 */
 
-using EnergonSoftware.BackpackPlanner.Commands;
-using EnergonSoftware.BackpackPlanner.Commands.Gear;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+using EnergonSoftware.BackpackPlanner.DAL;
+using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear;
-using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
+
+using Microsoft.EntityFrameworkCore;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 {
@@ -46,9 +50,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 
         protected override int AddItemResource => Resource.Id.fab_add_gear_system;
 
-        protected override GetItemsCommand<GearSystem> CreateGetItemsCommand()
+        protected override async Task<List<GearSystem>> GetItemsAsync(DatabaseContext dbContext)
         {
-            return new GetGearSystemsCommand();
+            return await dbContext.GearSystems.ToListAsync().ConfigureAwait(false);
         }
 
         protected override Android.Support.V4.App.Fragment CreateAddItemFragment()

@@ -19,14 +19,13 @@ using System;
 using Android.Views;
 using Android.Widget;
 
+using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
-using EnergonSoftware.BackpackPlanner.Models.Gear.Items;
-using EnergonSoftware.BackpackPlanner.Models.Gear.Systems;
 using EnergonSoftware.BackpackPlanner.Units.Units;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
 {
-    public sealed class GearSystemGearItemListAdapter : BaseIntermediateItemListAdapter<GearSystemGearItem, GearItem>
+    public sealed class GearSystemGearItemListAdapter : BaseIntermediateItemListAdapter<GearItemEntry, GearItem>
     {
         private sealed class GearSystemGearItemViewHolder : ViewHolder
         {
@@ -75,7 +74,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
         {
         }
 
-        public GearSystemGearItemListAdapter(BaseFragment fragment, GearSystemGearItem[] items)
+        public GearSystemGearItemListAdapter(BaseFragment fragment, GearItemEntry[] items)
             : base(fragment, items)
         {
         }

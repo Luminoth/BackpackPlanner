@@ -20,16 +20,14 @@ namespace EnergonSoftware.BackpackPlanner.Core.Util
 {
     public static class DictionaryExtensions
     {
-        public static V GetOrDefault<K, V>(this Dictionary<K, V> dictionary, K key, V defaultValue=default(V))
+        public static TV GetOrDefault<TK, TV>(this Dictionary<TK, TV> dictionary, TK key, TV defaultValue=default(TV))
         {
-            V value;
-            return dictionary.TryGetValue(key, out value) ? value : defaultValue;
+            return dictionary.TryGetValue(key, out TV value) ? value : defaultValue;
         }
 
-        public static V GetAndRemove<K, V>(this Dictionary<K, V> dictionary, K key, V defaultValue=default(V))
+        public static TV GetAndRemove<TK, TV>(this Dictionary<TK, TV> dictionary, TK key, TV defaultValue=default(TV))
         {
-            V value;
-            if(!dictionary.TryGetValue(key, out value)) {
+            if (!dictionary.TryGetValue(key, out TV value)) {
                 return defaultValue;
             }
 

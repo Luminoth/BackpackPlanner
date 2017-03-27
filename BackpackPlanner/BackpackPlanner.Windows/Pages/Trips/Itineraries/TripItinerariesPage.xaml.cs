@@ -17,9 +17,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-using EnergonSoftware.BackpackPlanner.Commands;
-using EnergonSoftware.BackpackPlanner.Commands.Trips;
-using EnergonSoftware.BackpackPlanner.Models.Trips.Itineraries;
+using EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Itineraries;
 
 namespace EnergonSoftware.BackpackPlanner.Windows.Pages.Trips.Itineraries
 {

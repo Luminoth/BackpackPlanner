@@ -14,10 +14,13 @@
    limitations under the License.
 */
 
+using System.Threading.Tasks;
+
 using Android.OS;
 using Android.Views;
 
-using EnergonSoftware.BackpackPlanner.Models.Gear.Collections;
+using EnergonSoftware.BackpackPlanner.DAL;
+using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
 {
@@ -39,6 +42,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
         protected override GearCollection CreateItem()
         {
             return new GearCollection(DroidState.Instance.BackpackPlannerState.Settings);
+        }
+
+        protected override async Task AddItemAsync(DatabaseContext dbContext)
+        {
+            await dbContext.GearCollections.AddAsync(Item).ConfigureAwait(false);
         }
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)

@@ -11,7 +11,6 @@ namespace EnergonSoftware.BackpackPlanner.Core.Permissions
         /// Checks for the read permission.
         /// </summary>
         /// <param name="state">The system state.</param>
-        /// <exception cref="EnergonSoftware.BackpackPlanner.Core.Permissions.PermissionDeniedException">Database item error: Read permission denied!</exception>
         public static async Task CheckReadPermission(BackpackPlannerState state)
         {
             if(!await state.PlatformPermissionRequestFactory.Create(PermissionRequest.PermissionType.ReadStorage).Request(state).ConfigureAwait(false)) {
@@ -23,7 +22,6 @@ namespace EnergonSoftware.BackpackPlanner.Core.Permissions
         /// Checks for the write permission.
         /// </summary>
         /// <param name="state">The system state.</param>
-        /// <exception cref="EnergonSoftware.BackpackPlanner.Core.Permissions.PermissionDeniedException">Database item error: Write permission denied!</exception>
         public static async Task CheckWritePermission(BackpackPlannerState state)
         {
             if(!await state.PlatformPermissionRequestFactory.Create(PermissionRequest.PermissionType.WriteStorage).Request(state).ConfigureAwait(false)) {

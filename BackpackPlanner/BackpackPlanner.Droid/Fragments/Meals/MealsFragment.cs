@@ -14,11 +14,15 @@
    limitations under the License.
 */
 
-using EnergonSoftware.BackpackPlanner.Commands;
-using EnergonSoftware.BackpackPlanner.Commands.Meals;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+using EnergonSoftware.BackpackPlanner.DAL;
+using EnergonSoftware.BackpackPlanner.DAL.Models.Meals;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals;
-using EnergonSoftware.BackpackPlanner.Models.Meals;
+
+using Microsoft.EntityFrameworkCore;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
 {
@@ -46,9 +50,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
 
         protected override int AddItemResource => Resource.Id.fab_add_meal;
 
-        protected override GetItemsCommand<Meal> CreateGetItemsCommand()
+        protected override async Task<List<Meal>> GetItemsAsync(DatabaseContext dbContext)
         {
-            return new GetMealsCommand();
+            return await dbContext.Meals.ToListAsync().ConfigureAwait(false);
         }
 
         protected override Android.Support.V4.App.Fragment CreateAddItemFragment()

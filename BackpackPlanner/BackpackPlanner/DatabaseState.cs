@@ -45,6 +45,13 @@ namespace EnergonSoftware.BackpackPlanner
         /// </summary>
         public const string DatabaseName = "BackpackPlanner.db";
 
+        public string DatabasePath { get; private set; }
+
+        public DatabaseContext CreateContext()
+        {
+            return new DatabaseContext(DatabasePath);
+        }
+
         /// <summary>
         /// Connects the library database connections.
         /// </summary>
@@ -53,9 +60,10 @@ namespace EnergonSoftware.BackpackPlanner
         /// <param name="dbName">Name of the database.</param>
         public async Task InitAsync(BackpackPlannerState state, string dbPath, string dbName)
         {
-            string fullPath = Path.Combine(dbPath, dbName);
-            Logger.Info($"Connecting to database at {fullPath}...");
-            using(DatabaseContext dbContext = new DatabaseContext(fullPath)) {
+            DatabasePath = Path.Combine(dbPath, dbName);
+
+            Logger.Info($"Connecting to database at {DatabasePath}...");
+            using(DatabaseContext dbContext = CreateContext()) {
                 Logger.Info("Migrating database...");
                 await dbContext.Database.MigrateAsync().ConfigureAwait(false);
 
@@ -188,7 +196,7 @@ namespace EnergonSoftware.BackpackPlanner
             };
 
             Logger.Debug("Inserting test gear items...");
-            dbContext.GearItems.AddRange(gearItems);
+            await dbContext.GearItems.AddRangeAsync(gearItems).ConfigureAwait(false);
             await dbContext.SaveChangesAsync().ConfigureAwait(false);
 #endregion
 
@@ -302,7 +310,7 @@ namespace EnergonSoftware.BackpackPlanner
             };
 
             Logger.Debug("Inserting test gear systems...");
-            dbContext.GearSystems.AddRange(gearSystems);
+            await dbContext.GearSystems.AddRangeAsync(gearSystems).ConfigureAwait(false);
             await dbContext.SaveChangesAsync().ConfigureAwait(false);
 #endregion
 
@@ -349,7 +357,7 @@ namespace EnergonSoftware.BackpackPlanner
             };
 
             Logger.Debug("Inserting test gear collections...");
-            dbContext.GearCollections.AddRange(gearCollections);
+            await dbContext.GearCollections.AddRangeAsync(gearCollections).ConfigureAwait(false);
             await dbContext.SaveChangesAsync().ConfigureAwait(false);
 #endregion
 
@@ -370,7 +378,7 @@ namespace EnergonSoftware.BackpackPlanner
             };
 
             Logger.Debug("Inserting test meals...");
-            dbContext.Meals.AddRange(meals);
+            await dbContext.Meals.AddRangeAsync(meals).ConfigureAwait(false);
             await dbContext.SaveChangesAsync().ConfigureAwait(false);
 #endregion
 
@@ -385,7 +393,7 @@ namespace EnergonSoftware.BackpackPlanner
             };
 
             Logger.Debug("Inserting test trip itineraries...");
-            dbContext.TripItineraries.AddRange(tripItineraries);
+            await dbContext.TripItineraries.AddRangeAsync(tripItineraries).ConfigureAwait(false);
             await dbContext.SaveChangesAsync().ConfigureAwait(false);
 #endregion
 
@@ -441,7 +449,7 @@ namespace EnergonSoftware.BackpackPlanner
             };
 
             Logger.Debug("Inserting test trip plans...");
-            dbContext.TripPlans.AddRange(tripPlans);
+            await dbContext.TripPlans.AddRangeAsync(tripPlans).ConfigureAwait(false);
             await dbContext.SaveChangesAsync().ConfigureAwait(false);
 #endregion
 

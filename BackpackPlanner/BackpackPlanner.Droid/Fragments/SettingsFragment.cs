@@ -20,9 +20,9 @@ using System.Globalization;
 using Android.Content;
 using Android.OS;
 
+using EnergonSoftware.BackpackPlanner.DAL.Models.Personal;
 using EnergonSoftware.BackpackPlanner.Droid.Activities;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Util;
-using EnergonSoftware.BackpackPlanner.Models.Personal;
 using EnergonSoftware.BackpackPlanner.Settings;
 using EnergonSoftware.BackpackPlanner.Units.Units;
 

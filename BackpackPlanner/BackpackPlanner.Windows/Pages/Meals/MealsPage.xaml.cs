@@ -17,9 +17,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-using EnergonSoftware.BackpackPlanner.Commands;
-using EnergonSoftware.BackpackPlanner.Commands.Meals;
-using EnergonSoftware.BackpackPlanner.Models.Meals;
+using EnergonSoftware.BackpackPlanner.DAL.Models.Meals;
 
 namespace EnergonSoftware.BackpackPlanner.Windows.Pages.Meals
 {

@@ -20,16 +20,16 @@ using System.Linq;
 using Android.Views;
 using Android.Widget;
 
+using EnergonSoftware.BackpackPlanner.DAL.Models;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 using EnergonSoftware.BackpackPlanner.Droid.Util;
-using EnergonSoftware.BackpackPlanner.Models;
 
 using Java.Lang;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 {
 // TODO: rename this BaseRecyclerItemListAdapter
-    public abstract class BaseListAdapter<T> : Android.Support.V7.Widget.RecyclerView.Adapter, IFilterable where T: DatabaseItem, IBackpackPlannerItem
+    public abstract class BaseListAdapter<T> : Android.Support.V7.Widget.RecyclerView.Adapter, IFilterable where T: BaseModel, IBackpackPlannerItem
     {
         protected abstract class BaseViewHolder : Android.Support.V7.Widget.RecyclerView.ViewHolder, Android.Support.V7.Widget.Toolbar.IOnMenuItemClickListener
         {
