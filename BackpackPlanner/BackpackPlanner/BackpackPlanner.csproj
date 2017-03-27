@@ -1,119 +1,34 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{2CFC170A-90FF-4D74-A144-951315A95704}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>EnergonSoftware.BackpackPlanner</RootNamespace>
+    <TargetFramework>netstandard1.4</TargetFramework>
     <AssemblyName>BackpackPlanner</AssemblyName>
-    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
-    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
+    <PackageId>BackpackPlanner</PackageId>
+    <NetStandardImplicitPackageVersion>1.6.1</NetStandardImplicitPackageVersion>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+    <GenerateNeutralResourcesLanguageAttribute>false</GenerateNeutralResourcesLanguageAttribute>
+    <RootNamespace>EnergonSoftware.BackpackPlanner</RootNamespace>
+    <Version>1.0.0</Version>
+    <Authors />
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
-    <DocumentationFile>bin\Debug\BackpackPlanner.XML</DocumentationFile>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
-    <CodeAnalysisRuleSet>..\analysis.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>full</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
-    <DocumentationFile>bin\Release\BackpackPlanner.XML</DocumentationFile>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
-    <CodeAnalysisRuleSet>..\analysis.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Compile Include="Commands\Command.cs" />
-    <Compile Include="Commands\AddItemCommand.cs" />
-    <Compile Include="Commands\CountItemsCommand.cs" />
-    <Compile Include="Commands\DeleteItemCommand.cs" />
-    <Compile Include="Commands\Gear\GetGearCollectionsCommand.cs" />
-    <Compile Include="Commands\Gear\GetGearItemsCommand.cs" />
-    <Compile Include="Commands\Gear\GetGearSystemsCommand.cs" />
-    <Compile Include="Commands\GetItemCommand.cs" />
-    <Compile Include="Commands\GetItemsCommand.cs" />
-    <Compile Include="Commands\Meals\GetMealsCommand.cs" />
-    <Compile Include="Commands\SaveItemCommand.cs" />
-    <Compile Include="BackpackPlannerState.cs" />
-    <Compile Include="Commands\Trips\GetTripItinerariesCommand.cs" />
-    <Compile Include="Commands\Trips\GetTripPlansCommand.cs" />
-    <Compile Include="Core\Database\DatabaseConnection.cs" />
-    <Compile Include="Core\Database\DatabaseException.cs" />
-    <Compile Include="Core\Database\SQLiteDatabaseConnection.cs" />
-    <Compile Include="Core\HockeyApp\HockeyAppManager.cs" />
-    <Compile Include="Core\Permissions\PermissionDeniedException.cs" />
-    <Compile Include="Core\Permissions\PermissionHelper.cs" />
-    <Compile Include="Core\Util\ObjectExtensions.cs" />
-    <Compile Include="Core\Permissions\PermissionRequestFactory.cs" />
-    <Compile Include="Core\PlayServices\PlayServicesConnectedEventArgs.cs" />
-    <Compile Include="Core\PlayServices\PlayServicesManager.cs" />
-    <Compile Include="Core\Util\DictionaryExtensions.cs" />
-    <Compile Include="DatabaseState.cs" />
-    <Compile Include="Core\Settings\SettingsManager.cs" />
-    <Compile Include="Models\BackpackPlannerItem.cs" />
-    <Compile Include="Models\DatabaseIntermediateItem.cs" />
-    <Compile Include="Models\DatabaseItem.cs" />
-    <Compile Include="Core\Permissions\PermissionRequest.cs" />
-    <Compile Include="Models\Gear\Collections\GearCollectionEntry.cs" />
-    <Compile Include="Models\Gear\Items\GearItemContainer.cs" />
-    <Compile Include="Models\Gear\Items\GearItemEntry.cs" />
-    <Compile Include="Models\Gear\Systems\GearSystemEntry.cs" />
-    <Compile Include="Models\Meals\MealEntry.cs" />
-    <Compile Include="Settings\MetaSettings.cs" />
-    <Compile Include="Units\Currency\Currency.cs" />
-    <Compile Include="Settings\BackpackPlannerSettings.cs" />
-    <Compile Include="Core\Logging\DiagnosticsLogger.cs" />
-    <Compile Include="Core\Logging\Logger.cs" />
-    <Compile Include="Models\DatabaseVersion.cs" />
-    <Compile Include="Models\Gear\Collections\GearCollectionGearItem.cs" />
-    <Compile Include="Models\Gear\Collections\GearCollectionGearSystem.cs" />
-    <Compile Include="Models\Gear\Items\GearCarried.cs" />
-    <Compile Include="Models\Gear\Collections\GearCollection.cs" />
-    <Compile Include="Models\Gear\Items\GearItem.cs" />
-    <Compile Include="Models\Gear\Systems\GearSystem.cs" />
-    <Compile Include="Models\Gear\Systems\GearSystemGearItem.cs" />
-    <Compile Include="Models\Meals\Meal.cs" />
-    <Compile Include="Models\Meals\MealTime.cs" />
-    <Compile Include="Models\Personal\PersonalInformation.cs" />
-    <Compile Include="Models\Personal\UserSex.cs" />
-    <Compile Include="Models\Trips\Itineraries\TripItinerary.cs" />
-    <Compile Include="Models\Trips\Plans\TripPlan.cs" />
-    <Compile Include="Models\Trips\Plans\TripPlanGearCollection.cs" />
-    <Compile Include="Models\Trips\Plans\TripPlanGearItem.cs" />
-    <Compile Include="Models\Trips\Plans\TripPlanGearSystem.cs" />
-    <Compile Include="Models\Trips\Plans\TripPlanMeal.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Units\Currency\CurrencyConversion.cs" />
-    <Compile Include="Units\Currency\CurrencyExtensions.cs" />
-    <Compile Include="Units\Units\UnitSystem.cs" />
-    <Compile Include="Units\Units\UnitSystemLengthExtensions.cs" />
-    <Compile Include="Units\Units\UnitSystemWeightExtensions.cs" />
-    <Compile Include="Core\Util\DescriptionAttribute.cs" />
-    <Compile Include="Core\Util\EnumDescription.cs" />
-    <Compile Include="Units\Units\UnitConversion.cs" />
-    <Compile Include="Units\WeightCategory.cs" />
-    <Compile Include="Units\WeightClass.cs" />
+    <PackageReference Include="JetBrains.Annotations" Version="10.4.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="1.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="1.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="1.1.1" />
+    <PackageReference Include="Microsoft.NETCore.Portable.Compatibility" Version="1.0.1" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="Doxyfile" />
-    <None Include="project.json" />
-  </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+
+    <ItemGroup>
+        <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.0.0" />
+    </ItemGroup>
+
 </Project>
