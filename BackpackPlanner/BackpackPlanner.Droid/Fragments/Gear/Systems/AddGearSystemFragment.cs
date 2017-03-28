@@ -23,7 +23,6 @@ using Android.OS;
 using Android.Views;
 using Android.Widget;
 
-using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.DAL;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems;
@@ -36,8 +35,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 {
     public sealed class AddGearSystemFragment : AddItemFragment<GearSystem>
     {
-        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(AddGearSystemFragment));
-
         protected override int LayoutResource => Resource.Layout.fragment_add_gear_system;
 
         protected override int TitleResource => Resource.String.title_add_gear_system;
@@ -64,7 +61,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 
         private bool[] _selectedGearItems;
 
-        private GearSystemGearItemListAdapter _gearItemListAdapter;
+        private GearItemEntryListAdapter _gearItemListAdapter;
 #endregion
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
@@ -77,7 +74,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
             _noGearItemsTextView = View.FindViewById<TextView>(Resource.Id.no_gear_items);
             _noGearItemsAddedTextView = View.FindViewById<TextView>(Resource.Id.no_gear_items_added);
 
-            _gearItemListAdapter = new GearSystemGearItemListAdapter(this);
+            _gearItemListAdapter = new GearItemEntryListAdapter(this);
 
             _gearItemsListView = View.FindViewById<ListView>(Resource.Id.gear_items_list);
             _gearItemsListView.Adapter = _gearItemListAdapter;
@@ -150,11 +147,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 
             GearItem gearItem = _gearItems[index];
             if(isSelected) {
-                GearItemEntry gearSystemGearItem = new GearItemEntry(gearItem, DroidState.Instance.BackpackPlannerState.Settings)
+                GearItemEntry gearItemEntry = new GearItemEntry(gearItem, DroidState.Instance.BackpackPlannerState.Settings)
                 {
                     Count = 1
                 };
-                _gearItemListAdapter.AddItem(gearItem, gearSystemGearItem);
+                _gearItemListAdapter.AddItem(gearItemEntry);
             } else {
                 _gearItemListAdapter.RemoveItem(gearItem);
             }
@@ -178,7 +175,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
         protected override void OnDoDataExchange()
         {
             Item.Name = _gearSystemNameEditText.EditText.Text;
-            Item.AddGearItems(_gearItemListAdapter.ItemMap.Values.ToList());
+            Item.AddGearItems(_gearItemListAdapter.Items);
             Item.Note = _gearSystemNoteEditText.EditText.Text;
         }
 

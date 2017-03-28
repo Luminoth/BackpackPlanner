@@ -15,43 +15,48 @@
 */
 
 using System.Collections.Generic;
+using System.Linq;
 
-using EnergonSoftware.BackpackPlanner.Core.Util;
 using EnergonSoftware.BackpackPlanner.DAL.Models;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 {
-// TODO: rename BaseIntermediateItemListViewAdapter
-    public abstract class BaseIntermediateItemListAdapter<T, TV> : BaseListViewAdapter<T> where T : BaseIntermediateModel where TV: BaseModel
+// TODO: rename BaseModelEntryListViewAdapter
+    public abstract class BaseModelEntryListAdapter<T> : BaseListViewAdapter<T> where T : BaseModelEntry
     {
-        private readonly Dictionary<TV, T> _itemMap = new Dictionary<TV, T>();
+        private readonly List<T> _items = new List<T>();
 
-        public IReadOnlyDictionary<TV, T> ItemMap => _itemMap;
+        public IReadOnlyCollection<T> Items => _items;
 
-        public void AddItem(TV child, T item)
+        public void AddItem(T item)
         {
-            _itemMap.Add(child, item);
+            _items.Add(item);
             Add(item);
         }
 
-        public void RemoveItem(TV child)
+        public void RemoveItem(T item)
         {
-            T item = _itemMap.GetAndRemove(child);
+            _items.Remove(item);
             Remove(item);
         }
 
-        protected BaseIntermediateItemListAdapter(BaseFragment fragment)
+        public void RemoveItem<TV>(TV item) where TV: BaseModel
+        {
+            var removeItems = from entry in Items where entry.Item.Id == item.Id select entry;
+            foreach(T entry in removeItems) {
+                RemoveItem(entry);
+            }
+        }
+
+        protected BaseModelEntryListAdapter(BaseFragment fragment)
             : base(fragment)
         {
         }
 
-        protected BaseIntermediateItemListAdapter(BaseFragment fragment, T[] items)
-            : base(fragment)
+        protected BaseModelEntryListAdapter(BaseFragment fragment, T[] items)
+            : base(fragment, items)
         {
-            foreach(T item in items) {
-                AddItem((TV)item.Child, item);
-            }
         }
     }
 }

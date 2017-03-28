@@ -25,15 +25,15 @@ using EnergonSoftware.BackpackPlanner.Units.Units;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
 {
-    public sealed class GearSystemGearItemListAdapter : BaseIntermediateItemListAdapter<GearItemEntry, GearItem>
+    public sealed class GearItemEntryListAdapter : BaseModelEntryListAdapter<GearItemEntry>
     {
-        private sealed class GearSystemGearItemViewHolder : ViewHolder
+        private sealed class GearItemEntryViewHolder : ViewHolder
         {
             private readonly TextView _textViewName;
             private readonly TextView _textViewTotalWeight;
             private readonly Android.Support.Design.Widget.TextInputLayout _editTextQuantity;
 
-            public GearSystemGearItemViewHolder(View itemView, GearSystemGearItemListAdapter adapter)
+            public GearItemEntryViewHolder(View itemView, GearItemEntryListAdapter adapter)
                 : base(itemView, adapter)
             {
                 _textViewName = itemView.FindViewById<TextView>(Resource.Id.view_gear_item_name);
@@ -48,7 +48,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
 
             protected override void UpdateView()
             {
-                _textViewName.Text = ListItem.Child.Name;
+                _textViewName.Text = ListItem.Item.Name;
                 _editTextQuantity.EditText.Text = ListItem.Count.ToString();
 
                 UpdateTotalWeight();
@@ -67,21 +67,21 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
             }
         }
 
-        public override int LayoutResource => Resource.Layout.view_intermediate_gear_item;
+        public override int LayoutResource => Resource.Layout.view_gear_item_entry;
 
-        public GearSystemGearItemListAdapter(BaseFragment fragment)
+        public GearItemEntryListAdapter(BaseFragment fragment)
             : base(fragment)
         {
         }
 
-        public GearSystemGearItemListAdapter(BaseFragment fragment, GearItemEntry[] items)
+        public GearItemEntryListAdapter(BaseFragment fragment, GearItemEntry[] items)
             : base(fragment, items)
         {
         }
 
         protected override ViewHolder CreateViewHolder(View itemView)
         {
-            return new GearSystemGearItemViewHolder(itemView, this);
+            return new GearItemEntryViewHolder(itemView, this);
         }
     }
 }
