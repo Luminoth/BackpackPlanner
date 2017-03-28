@@ -58,17 +58,35 @@ namespace EnergonSoftware.BackpackPlanner
         /// <param name="state">The system state.</param>
         /// <param name="dbPath">The database path.</param>
         /// <param name="dbName">Name of the database.</param>
-        public async Task InitAsync(BackpackPlannerState state, string dbPath, string dbName)
+        public async Task<bool> InitAsync(BackpackPlannerState state, string dbPath, string dbName)
         {
             DatabasePath = Path.Combine(dbPath, dbName);
-
-            Logger.Info($"Connecting to database at {DatabasePath}...");
             using(DatabaseContext dbContext = CreateContext()) {
                 Logger.Info("Migrating database...");
-                await dbContext.Database.MigrateAsync().ConfigureAwait(false);
+                try {
+                    await dbContext.Database.MigrateAsync().ConfigureAwait(false);
+                } catch(Exception e) {
+                    Logger.Error($"Unable to migrate database: {e.Message}!");
+                    Logger.Debug(e.StackTrace);
+                    return false;
+                }
 
-                await PopulateInitialDatabaseAsync(dbContext, state).ConfigureAwait(false);
+                try {
+                    await PopulateInitialDatabaseAsync(dbContext, state).ConfigureAwait(false);
+                } catch(Exception e) {
+                    Logger.Error($"Unable to populate initial database: {e.Message}");
+                    Logger.Debug(e.StackTrace);
+                    return false;
+                }
             }
+            return true;
+        }
+
+        private async Task SaveChangesAsync(DatabaseContext dbContext)
+        {
+            Logger.Debug("Saving changes...");
+            int count = await dbContext.SaveChangesAsync().ConfigureAwait(false);
+            Logger.Debug($"Saved {count} objects!");
         }
 
         private async Task PopulateInitialDatabaseAsync(DatabaseContext dbContext, BackpackPlannerState state)
@@ -195,9 +213,8 @@ namespace EnergonSoftware.BackpackPlanner
                 }
             };
 
-            Logger.Debug("Inserting test gear items...");
             await dbContext.GearItems.AddRangeAsync(gearItems).ConfigureAwait(false);
-            await dbContext.SaveChangesAsync().ConfigureAwait(false);
+            await SaveChangesAsync(dbContext).ConfigureAwait(false);
 #endregion
 
 #region Test Gear Systems
@@ -211,28 +228,28 @@ namespace EnergonSoftware.BackpackPlanner
                         // Hammock
                         new GearItemEntry
                         {
-                            GearItemId = 2,
+                            GearItem = gearItems[1],
                             Count = 1
                         },
 
                         // Tree Straps
                         new GearItemEntry
                         {
-                            GearItemId = 3,
+                            GearItem = gearItems[2],
                             Count = 1
                         },
 
                         // Overquilt
                         new GearItemEntry
                         {
-                            GearItemId = 5,
+                            GearItem = gearItems[4],
                             Count = 1
                         },
 
                         // New Underquilt
                         new GearItemEntry
                         {
-                            GearItemId = 6,
+                            GearItem = gearItems[5],
                             Count = 1
                         }
                     },
@@ -246,28 +263,28 @@ namespace EnergonSoftware.BackpackPlanner
                         // Hammock
                         new GearItemEntry
                         {
-                            GearItemId = 2,
+                            GearItem = gearItems[1],
                             Count = 1
                         },
 
                         // Tree Straps
                         new GearItemEntry
                         {
-                            GearItemId = 3,
+                            GearItem = gearItems[2],
                             Count = 1
                         },
 
                         // Old Underquilt
                         new GearItemEntry
                         {
-                            GearItemId = 4,
+                            GearItem = gearItems[3],
                             Count = 1
                         },
 
                         // Overquilt
                         new GearItemEntry
                         {
-                            GearItemId = 5,
+                            GearItem = gearItems[4],
                             Count = 1
                         }
                     },
@@ -281,7 +298,7 @@ namespace EnergonSoftware.BackpackPlanner
                         // 5g Water Jug
                         new GearItemEntry
                         {
-                            GearItemId = 9,
+                            GearItem = gearItems[8],
                             Count = 2
                         }
                     },
@@ -295,14 +312,14 @@ namespace EnergonSoftware.BackpackPlanner
                         // Alcohol Stove
                         new GearItemEntry
                         {
-                            GearItemId = 11,
+                            GearItem = gearItems[10],
                             Count = 1
                         },
 
                         // Wind Screen
                         new GearItemEntry
                         {
-                            GearItemId = 12,
+                            GearItem = gearItems[11],
                             Count = 1
                         }
                     }
@@ -311,7 +328,7 @@ namespace EnergonSoftware.BackpackPlanner
 
             Logger.Debug("Inserting test gear systems...");
             await dbContext.GearSystems.AddRangeAsync(gearSystems).ConfigureAwait(false);
-            await dbContext.SaveChangesAsync().ConfigureAwait(false);
+            await SaveChangesAsync(dbContext).ConfigureAwait(false);
 #endregion
 
 #region Test Gear Collections
@@ -325,14 +342,14 @@ namespace EnergonSoftware.BackpackPlanner
                         // New Hammock Setup
                         new GearSystemEntry
                         {
-                            GearSystemId = 1,
+                            GearSystem = gearSystems[0],
                             Count = 1
                         },
 
                         // Cook System
                         new GearSystemEntry
                         {
-                            GearSystemId = 4,
+                            GearSystem = gearSystems[3],
                             Count = 1
                         }
                     },
@@ -341,14 +358,14 @@ namespace EnergonSoftware.BackpackPlanner
                         // Backpack
                         new GearItemEntry
                         {
-                            GearItemId = 1,
+                            GearItem = gearItems[0],
                             Count = 1
                         },
 
                         // Head Lamp
                         new GearItemEntry
                         {
-                            GearItemId = 10,
+                            GearItem = gearItems[9],
                             Count = 1
                         }
                     },
@@ -358,7 +375,7 @@ namespace EnergonSoftware.BackpackPlanner
 
             Logger.Debug("Inserting test gear collections...");
             await dbContext.GearCollections.AddRangeAsync(gearCollections).ConfigureAwait(false);
-            await dbContext.SaveChangesAsync().ConfigureAwait(false);
+            await SaveChangesAsync(dbContext).ConfigureAwait(false);
 #endregion
 
 #region Test Meals
@@ -379,7 +396,7 @@ namespace EnergonSoftware.BackpackPlanner
 
             Logger.Debug("Inserting test meals...");
             await dbContext.Meals.AddRangeAsync(meals).ConfigureAwait(false);
-            await dbContext.SaveChangesAsync().ConfigureAwait(false);
+            await SaveChangesAsync(dbContext).ConfigureAwait(false);
 #endregion
 
 #region Test Trip Itineraries
@@ -394,7 +411,7 @@ namespace EnergonSoftware.BackpackPlanner
 
             Logger.Debug("Inserting test trip itineraries...");
             await dbContext.TripItineraries.AddRangeAsync(tripItineraries).ConfigureAwait(false);
-            await dbContext.SaveChangesAsync().ConfigureAwait(false);
+            await SaveChangesAsync(dbContext).ConfigureAwait(false);
 #endregion
 
 #region Test Trip Plans
@@ -407,14 +424,14 @@ namespace EnergonSoftware.BackpackPlanner
                     EndDate = DateTime.Now,
 
                     // Turkey Camp 2015
-                    TestTripItineraryId = 1,
+                    TripItinerary = tripItineraries[0],
 
                     TestGearCollections = new List<GearCollectionEntry>
                     {
                         // 3 Season Hammock
                         new GearCollectionEntry
                         {
-                            GearCollectionId = 1,
+                            GearCollection = gearCollections[0],
                             Count = 1
                         }
                     },
@@ -423,7 +440,7 @@ namespace EnergonSoftware.BackpackPlanner
                         // Cook System
                         new GearSystemEntry
                         {
-                            GearSystemId = 4,
+                            GearSystem = gearSystems[3],
                             Count = 1
                         }
                     },
@@ -432,7 +449,7 @@ namespace EnergonSoftware.BackpackPlanner
                         // 5g Water Jug
                         new GearItemEntry
                         {
-                            GearItemId = 9,
+                            GearItem = gearItems[8],
                             Count = 1
                         }
                     },
@@ -441,7 +458,7 @@ namespace EnergonSoftware.BackpackPlanner
                         // Cheese Chicken Dinner
                         new MealEntry
                         {
-                            MealId = 1,
+                            Meal = meals[0],
                             Count = 1
                         }
                     }
@@ -450,7 +467,7 @@ namespace EnergonSoftware.BackpackPlanner
 
             Logger.Debug("Inserting test trip plans...");
             await dbContext.TripPlans.AddRangeAsync(tripPlans).ConfigureAwait(false);
-            await dbContext.SaveChangesAsync().ConfigureAwait(false);
+            await SaveChangesAsync(dbContext).ConfigureAwait(false);
 #endregion
 
             state.Settings.MetaSettings.TestDataEntered = true;

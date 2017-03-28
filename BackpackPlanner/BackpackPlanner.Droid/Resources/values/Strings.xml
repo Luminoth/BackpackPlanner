@@ -19,6 +19,14 @@
 
     <string name="label_sort">Sort by</string>
 
+    <string name="title_initializing">Initializing</string>
+    <string name="message_initializing">Initializing application...</string>
+
+    <!-- Generic Errors -->
+
+    <string name="title_error_initialization">Initialization Error</string>
+    <string name="message_error_initialization">There was an error initializing the application!</string>
+
     <!-- What is a text -->
 
     <string name="what_is_a_gear_item">

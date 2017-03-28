@@ -95,7 +95,9 @@ namespace EnergonSoftware.BackpackPlanner.Windows
 
             await BackpackPlannerState.InitAsync();
 
-            await BackpackPlannerState.DatabaseState.InitAsync(BackpackPlannerState, ApplicationData.Current.LocalFolder.Path, DatabaseState.DatabaseName);
+            if(!await BackpackPlannerState.DatabaseState.InitAsync(BackpackPlannerState, ApplicationData.Current.LocalFolder.Path, DatabaseState.DatabaseName)) {
+                // TODO: show a message box
+            }
         }
 
         // TODO: where do we call BackpackPlannerState.Destroy() ?

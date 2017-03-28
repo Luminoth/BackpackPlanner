@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 using Android.App;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
+using EnergonSoftware.BackpackPlanner.Droid.Util;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 {
@@ -47,7 +48,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
         {
             base.OnResume();
 
-            Task.Run(async () => await Init().ConfigureAwait(false));
+            ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(this, Resource.String.message_initializing, false, true);
+
+            Task.Run(async () => await Init(progressDialog).ConfigureAwait(false));
         }
 #endregion
 
@@ -56,7 +59,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             // prevent back button from doing anything while loading
         }
 
-        private async Task Init()
+        private async Task Init(ProgressDialog progressDialog)
         {
             Logger.Debug("Initializing...");
 
@@ -64,24 +67,31 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             _initStopwatch.Start();
 #endif
 
-            await DroidState.Instance.InitDatabase().ConfigureAwait(false);
+            bool success = await DroidState.Instance.InitDatabase().ConfigureAwait(false);
 
-            InitFinished();
+            InitFinished(progressDialog, success);
         }
 
-        private void InitFinished()
+        private void InitFinished(ProgressDialog progressDialog, bool initSuccess)
         {
 #if DEBUG
             if(_initStopwatch.IsRunning) {
-                Logger.Debug($"Initialization finished in: {_initStopwatch.ElapsedMilliseconds}ms");
+                Logger.Debug($"Initialization finished in {_initStopwatch.ElapsedMilliseconds}ms, success: {initSuccess}");
             }
             _initStopwatch.Stop();
 #else
-            Logger.Debug("Initialization finished!");
+            Logger.Debug($"Initialization finished, success: ${initSuccess}");
 #endif
 
             RunOnUiThread(() =>
             {
+                progressDialog.Dismiss();
+
+                if(!initSuccess) {
+                    DialogUtil.ShowAlert(this, Resource.String.message_error_initialization, Resource.String.title_error_initialization);
+                    return;
+                }
+
                 if(DroidState.Instance.BackpackPlannerState.Settings.MetaSettings.FirstRun) {
                     Logger.Debug("Starting FTUE...");
                     StartActivity(typeof(FTUEActivity));

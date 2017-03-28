@@ -85,9 +85,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             ((HockeyAppManager)BackpackPlannerState.PlatformHockeyAppManager).OnPause(activity);
         }
 
-        public async Task InitDatabase()
+        public async Task<bool> InitDatabase()
         {
-            await BackpackPlannerState.DatabaseState.InitAsync(
+            return await BackpackPlannerState.DatabaseState.InitAsync(
                 BackpackPlannerState,
                 System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal),
                 DatabaseState.DatabaseName).ConfigureAwait(false);
