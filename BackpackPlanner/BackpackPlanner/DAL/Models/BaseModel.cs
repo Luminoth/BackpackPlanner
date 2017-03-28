@@ -40,7 +40,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models
         /// The item identifier.
         /// </value>
         [NotMapped]
-        public abstract int Id { get; set; }
+        public abstract int Id { get; }
 
 #region Database Properties
         /// <summary>

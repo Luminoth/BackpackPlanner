@@ -28,8 +28,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
     /// </summary>
     public sealed class Meal : BaseModel, IBackpackPlannerItem
     {
-        [NotMapped]
-        public override int Id { get { return MealId; } set { MealId = value; } }
+        public override int Id => MealId;
 
 #region Database Properties
         /// <summary>
@@ -38,8 +37,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
         /// <value>
         /// The meal identifier.
         /// </value>
-        [Key]
-        public int MealId { get; set; } = -1;
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int MealId { get; private set; }
 
         private string _name = string.Empty;
 

@@ -14,7 +14,6 @@
    limitations under the License.
 */
 
-
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -26,7 +25,7 @@ using JetBrains.Annotations;
 
 namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
 {
-    public class GearItemEntry : BaseIntermediateModel
+    public class GearItemEntry : BaseModelEntry
     {
 #region Static Helpers
         public static int GetGearItemCount<TE>(List<TE> gearItems, [CanBeNull] List<int> visitedGearItems) where TE: GearItemEntry
@@ -73,6 +72,10 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
         }
 #endregion
 
+        public override BaseModel Model => GearItem;
+
+        public override IBackpackPlannerItem Item => GearItem;
+
 #region Database Properties
         /// <summary>
         /// Gets or sets the gear item entry identifier.
@@ -80,11 +83,11 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
         /// <value>
         /// The gear item entry identifier.
         /// </value>
-        [Key]
-        public int GearItemEntryId { get; set; } = -1;
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int GearItemEntryId { get; private set; }
 
         [Required, ForeignKey("GearItem")]
-        public int GearItemId { get; set; }
+        public int GearItemId { get; private set; }
 
         public virtual GearItem GearItem { get; set; }
 #endregion
@@ -120,7 +123,6 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
         public GearItemEntry(GearItem gearItem, BackpackPlannerSettings settings)
             : base(settings)
         {
-            GearItemId = gearItem.Id;
             GearItem = gearItem;
         }
 

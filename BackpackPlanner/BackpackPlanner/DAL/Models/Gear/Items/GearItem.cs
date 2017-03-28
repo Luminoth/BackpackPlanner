@@ -29,8 +29,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
     /// </summary>
     public class GearItem : BaseModel, IBackpackPlannerItem
     {
-        [NotMapped]
-        public override int Id { get { return GearItemId; } set { GearItemId = value; } }
+        public override int Id => GearItemId;
 
 #region Database Properties
         /// <summary>
@@ -39,8 +38,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
         /// <value>
         /// The gear item identifier.
         /// </value>
-        [Key]
-        public int GearItemId { get; set; } = -1;
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int GearItemId { get; private set; }
 
         private string _name = string.Empty;
 

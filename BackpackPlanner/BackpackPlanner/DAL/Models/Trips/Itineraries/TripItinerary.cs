@@ -26,8 +26,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Itineraries
     /// </summary>
     public sealed class TripItinerary : BaseModel, IBackpackPlannerItem
     {
-        [NotMapped]
-        public override int Id { get { return TripItineraryId; } set { TripItineraryId = value; } }
+        public override int Id => TripItineraryId;
 
 #region Database Properties
         /// <summary>
@@ -36,8 +35,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Itineraries
         /// <value>
         /// The trip itinerary identifier.
         /// </value>
-        [Key]
-        public int TripItineraryId { get; set; } = -1;
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int TripItineraryId { get; private set; }
 
         private string _name = string.Empty;
 

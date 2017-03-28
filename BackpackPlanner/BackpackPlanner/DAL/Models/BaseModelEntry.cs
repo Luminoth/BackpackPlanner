@@ -30,9 +30,15 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models
     /// <summary>
     /// 
     /// </summary>
-    public abstract class BaseIntermediateModel : INotifyPropertyChanged
+    public abstract class BaseModelEntry : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotMapped]
+        public abstract BaseModel Model { get; }
+
+        [NotMapped]
+        public abstract IBackpackPlannerItem Item { get; }
 
 #region Database Properties
         private int _count;
@@ -65,12 +71,12 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models
         [CanBeNull]
         protected BackpackPlannerSettings Settings { get; private set; }
 
-        protected BaseIntermediateModel(BackpackPlannerSettings settings)
+        protected BaseModelEntry(BackpackPlannerSettings settings)
         {
             Settings = settings ?? throw new ArgumentNullException(nameof(settings));
         }
 
-        protected BaseIntermediateModel()
+        protected BaseModelEntry()
         {
         }
 

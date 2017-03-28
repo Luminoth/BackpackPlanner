@@ -14,6 +14,7 @@
    limitations under the License.
 */
 
+using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems;
@@ -28,6 +29,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL
 {
     public class DatabaseContext : DbContext
     {
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(DatabaseContext));
+
         public virtual DbSet<GearItem> GearItems { get; private set; }
         public virtual DbSet<GearSystem> GearSystems { get; private set; }
         public virtual DbSet<GearCollection> GearCollections { get; private set; }
@@ -50,7 +53,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite($"Filename={DatabasePath}");
+            Logger.Info($"Connecting to database at {DatabasePath}...");
+            optionsBuilder.UseSqlite($"Data Source={DatabasePath}");
         }
 
         private void SetPropertyAccessModeField<T>(ModelBuilder modelBuilder, string propertyName) where T: class

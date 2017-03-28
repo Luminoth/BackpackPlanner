@@ -19,6 +19,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models
 {
     public interface IBackpackPlannerItem
     {
+        int Id { get; }
+
         string Name { get; }
     }
 }

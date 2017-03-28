@@ -10,13 +10,13 @@ using EnergonSoftware.BackpackPlanner.DAL.Models.Meals;
 namespace EnergonSoftware.BackpackPlanner.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20170327164603_v1")]
+    [Migration("20170328202039_v1")]
     partial class v1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.1.1");
+                .HasAnnotation("ProductVersion", "1.2.0-preview1-24146");
 
             modelBuilder.Entity("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections.GearCollection", b =>
                 {

@@ -32,8 +32,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections
     /// </summary>
     public class GearCollection : BaseModel, IBackpackPlannerItem
     {
-        [NotMapped]
-        public override int Id { get { return GearCollectionId; } set { GearCollectionId = value; } }
+        public override int Id => GearCollectionId;
 
 #region Database Properties
         /// <summary>
@@ -42,8 +41,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections
         /// <value>
         /// The gear collection identifier.
         /// </value>
-        [Key]
-        public int GearCollectionId { get; set; } = -1;
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int GearCollectionId { get; private set; }
 
         private string _name = string.Empty;
 
@@ -145,26 +144,25 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections
         }
 
 #region Gear Systems
-        public void AddGearSystem(GearSystem gearSystem)
+        public void AddGearSystem(GearSystemEntry gearSystem)
         {
-            GearSystemEntry entry = (from item in _gearSystems where item.GearSystemId == gearSystem.Id select item).FirstOrDefault();
+            GearSystemEntry entry = (from item in _gearSystems where item.GearSystemId == gearSystem.GearSystemId select item).FirstOrDefault();
             if(null != entry) {
-                ++entry.Count;
+                entry.Count += gearSystem.Count;
                 return;
             }
 
-            entry = new GearSystemEntry(gearSystem, Settings);
-            entry.PropertyChanged += (sender, args) => {
+            gearSystem.PropertyChanged += (sender, args) => {
                 NotifyPropertyChanged(nameof(GearSystems));
             };
 
-            _gearSystems.Add(entry);
+            _gearSystems.Add(gearSystem);
             NotifyPropertyChanged(nameof(GearSystems));
         }
 
-        public void AddGearSystems(IReadOnlyCollection<GearSystem> gearSystems)
+        public void AddGearSystems(IReadOnlyCollection<GearSystemEntry> gearSystems)
         {
-            foreach(GearSystem gearSystem in gearSystems) {
+            foreach(GearSystemEntry gearSystem in gearSystems) {
                 AddGearSystem(gearSystem);
             }
         }
@@ -192,26 +190,25 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections
 #endregion
 
 #region Gear Items
-        public void AddGearItem(GearItem gearItem)
+        public void AddGearItem(GearItemEntry gearItem)
         {
-            GearItemEntry entry = (from item in _gearItems where item.GearItemId == gearItem.Id select item).FirstOrDefault();
+            GearItemEntry entry = (from item in _gearItems where item.GearItemId == gearItem.GearItemId select item).FirstOrDefault();
             if(null != entry) {
-                ++entry.Count;
+                entry.Count += gearItem.Count;
                 return;
             }
 
-            entry = new GearItemEntry(gearItem, Settings);
-            entry.PropertyChanged += (sender, args) => {
+            gearItem.PropertyChanged += (sender, args) => {
                 NotifyPropertyChanged(nameof(GearItems));
             };
 
-            _gearItems.Add(entry);
+            _gearItems.Add(gearItem);
             NotifyPropertyChanged(nameof(GearItems));
         }
 
-        public void AddGearItems(IReadOnlyCollection<GearItem> gearItems)
+        public void AddGearItems(IReadOnlyCollection<GearItemEntry> gearItems)
         {
-            foreach(GearItem gearItem in gearItems) {
+            foreach(GearItemEntry gearItem in gearItems) {
                 AddGearItem(gearItem);
             }
         }

@@ -37,8 +37,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
     /// </summary>
     public class TripPlan : BaseModel, IBackpackPlannerItem
     {
-        [NotMapped]
-        public override int Id { get { return TripPlanId; } set { TripPlanId = value; } }
+        public override int Id => TripPlanId;
 
 #region Database Properties
         /// <summary>
@@ -47,8 +46,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
         /// <value>
         /// The trip plan identifier.
         /// </value>
-        [Key]
-        public int TripPlanId { get; set; } = -1;
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int TripPlanId { get; private set; }
 
         private string _name = string.Empty;
 
@@ -112,7 +111,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
         /// The trip itinerary identifier.
         /// </value>
         [ForeignKey("TripItinerary")]
-        public int TripItineraryId { get; private set; } = -1;
+        public int TripItineraryId { get; private set; }
 
         private TripItinerary _tripItinerary;
 
@@ -200,16 +199,6 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
 
 #if DEBUG
         [NotMapped]
-        public int TestTripItineraryId
-        {
-            get { return TripItineraryId; }
-            set
-            {
-                TripItineraryId = value;
-            }
-        }
-
-        [NotMapped]
         public List<GearCollectionEntry> TestGearCollections
         {
             get { return _gearCollections; }
@@ -278,26 +267,25 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
         }
 
 #region Gear Collections
-        public void AddGearCollection(GearCollection gearCollection)
+        public void AddGearCollection(GearCollectionEntry gearCollection)
         {
-            GearCollectionEntry entry = (from item in _gearCollections where item.GearCollectionId == gearCollection.Id select item).FirstOrDefault();
+            GearCollectionEntry entry = (from item in _gearCollections where item.GearCollectionId == gearCollection.GearCollectionId select item).FirstOrDefault();
             if(null != entry) {
                 ++entry.Count;
                 return;
             }
 
-            entry = new GearCollectionEntry(gearCollection, Settings);
-            entry.PropertyChanged += (sender, args) => {
+            gearCollection.PropertyChanged += (sender, args) => {
                 NotifyPropertyChanged(nameof(GearCollections));
             };
 
-            _gearCollections.Add(entry);
+            _gearCollections.Add(gearCollection);
             NotifyPropertyChanged(nameof(GearCollections));
         }
 
-        public void AddGearCollections(IReadOnlyCollection<GearCollection> gearCollections)
+        public void AddGearCollections(IReadOnlyCollection<GearCollectionEntry> gearCollections)
         {
-            foreach(GearCollection gearCollection in gearCollections) {
+            foreach(GearCollectionEntry gearCollection in gearCollections) {
                 AddGearCollection(gearCollection);
             }
         }
@@ -325,26 +313,25 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
 #endregion
 
 #region Gear Systems
-        public void AddGearSystem(GearSystem gearSystem)
+        public void AddGearSystem(GearSystemEntry gearSystem)
         {
-            GearSystemEntry entry = (from item in _gearSystems where item.GearSystemId == gearSystem.Id select item).FirstOrDefault();
+            GearSystemEntry entry = (from item in _gearSystems where item.GearSystemId == gearSystem.GearSystemId select item).FirstOrDefault();
             if(null != entry) {
                 ++entry.Count;
                 return;
             }
 
-            entry = new GearSystemEntry(gearSystem, Settings);
-            entry.PropertyChanged += (sender, args) => {
+            gearSystem.PropertyChanged += (sender, args) => {
                 NotifyPropertyChanged(nameof(GearSystems));
             };
 
-            _gearSystems.Add(entry);
+            _gearSystems.Add(gearSystem);
             NotifyPropertyChanged(nameof(GearSystems));
         }
 
-        public void AddGearSystems(IReadOnlyCollection<GearSystem> gearSystems)
+        public void AddGearSystems(IReadOnlyCollection<GearSystemEntry> gearSystems)
         {
-            foreach(GearSystem gearSystem in gearSystems) {
+            foreach(GearSystemEntry gearSystem in gearSystems) {
                 AddGearSystem(gearSystem);
             }
         }
@@ -372,26 +359,25 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
 #endregion
 
 #region Gear Items
-        public void AddGearItem(GearItem gearItem)
+        public void AddGearItem(GearItemEntry gearItem)
         {
-            GearItemEntry entry = (from item in _gearItems where item.GearItemId == gearItem.Id select item).FirstOrDefault();
+            GearItemEntry entry = (from item in _gearItems where item.GearItemId == gearItem.GearItemId select item).FirstOrDefault();
             if(null != entry) {
                 ++entry.Count;
                 return;
             }
 
-            entry = new GearItemEntry(gearItem, Settings);
-            entry.PropertyChanged += (sender, args) => {
+            gearItem.PropertyChanged += (sender, args) => {
                 NotifyPropertyChanged(nameof(GearItems));
             };
 
-            _gearItems.Add(entry);
+            _gearItems.Add(gearItem);
             NotifyPropertyChanged(nameof(GearItems));
         }
 
-        public void AddGearItems(IReadOnlyCollection<GearItem> gearItems)
+        public void AddGearItems(IReadOnlyCollection<GearItemEntry> gearItems)
         {
-            foreach(GearItem gearItem in gearItems) {
+            foreach(GearItemEntry gearItem in gearItems) {
                 AddGearItem(gearItem);
             }
         }
@@ -419,26 +405,25 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
 #endregion
 
 #region Meals
-        public void AddMeal(Meal meal)
+        public void AddMeal(MealEntry meal)
         {
-            MealEntry entry = (from item in _meals where item.MealId == meal.Id select item).FirstOrDefault();
+            MealEntry entry = (from item in _meals where item.MealId == meal.MealId select item).FirstOrDefault();
             if(null != entry) {
                 ++entry.Count;
                 return;
             }
 
-            entry = new MealEntry(meal, Settings);
-            entry.PropertyChanged += (sender, args) => {
+            meal.PropertyChanged += (sender, args) => {
                 NotifyPropertyChanged(nameof(Meals));
             };
 
-            _meals.Add(entry);
+            _meals.Add(meal);
             NotifyPropertyChanged(nameof(Meals));
         }
 
-        public void AddMeals(IReadOnlyCollection<Meal> meals)
+        public void AddMeals(IReadOnlyCollection<MealEntry> meals)
         {
-            foreach(Meal meal in meals) {
+            foreach(MealEntry meal in meals) {
                 AddMeal(meal);
             }
         }

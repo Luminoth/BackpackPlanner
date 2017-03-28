@@ -31,8 +31,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems
     /// </summary>
     public class GearSystem : BaseModel, IBackpackPlannerItem
     {
-        [NotMapped]
-        public override int Id { get { return GearSystemId; } set { GearSystemId = value; } }
+        public override int Id => GearSystemId;
 
 #region Database Properties
         /// <summary>
@@ -41,8 +40,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems
         /// <value>
         /// The gear system identifier.
         /// </value>
-        [Key]
-        public int GearSystemId { get; set; } = -1;
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int GearSystemId { get; private set; }
 
         private string _name = string.Empty;
 
@@ -116,26 +115,25 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems
         }
 
 #region Gear Items
-        public void AddGearItem(GearItem gearItem)
+        public void AddGearItem(GearItemEntry gearItem)
         {
-            GearItemEntry entry = (from item in _gearItems where item.GearItemId == gearItem.Id select item).FirstOrDefault();
+            GearItemEntry entry = (from item in _gearItems where item.GearItemId == gearItem.GearItemId select item).FirstOrDefault();
             if(null != entry) {
-                ++entry.Count;
+                entry.Count += gearItem.Count;
                 return;
             }
 
-            entry = new GearItemEntry(gearItem, Settings);
-            entry.PropertyChanged += (sender, args) => {
+            gearItem.PropertyChanged += (sender, args) => {
                 NotifyPropertyChanged(nameof(GearItems));
             };
 
-            _gearItems.Add(entry);
+            _gearItems.Add(gearItem);
             NotifyPropertyChanged(nameof(GearItems));
         }
 
-        public void AddGearItems(IReadOnlyCollection<GearItem> gearItems)
+        public void AddGearItems(IReadOnlyCollection<GearItemEntry> gearItems)
         {
-            foreach(GearItem gearItem in gearItems) {
+            foreach(GearItemEntry gearItem in gearItems) {
                 AddGearItem(gearItem);
             }
         }
@@ -147,7 +145,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems
 
         public void RemoveGearItems(IReadOnlyCollection<GearItem> gearItems)
         {
-            var removeItems = (from item in _gearItems where gearItems.Any(x => x.Id == item.GearItemId) select item).ToList();
+            var removeItems = (from item in _gearItems where gearItems.Any(x => x.GearItemId == item.GearItemId) select item).ToList();
             foreach(GearItemEntry item in removeItems) {
                 item.OnRemove();
                 _gearItems.Remove(item);

@@ -14,7 +14,6 @@
    limitations under the License.
 */
 
-
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -27,8 +26,12 @@ using JetBrains.Annotations;
 
 namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems
 {
-    public class GearSystemEntry : BaseIntermediateModel, IGearItemContainer
+    public class GearSystemEntry : BaseModelEntry, IGearItemContainer
     {
+        public override BaseModel Model => GearSystem;
+
+        public override IBackpackPlannerItem Item => GearSystem;
+
 #region Static Helpers
         public static int GetGearSystemCount<TE>(List<TE> gearSystems, [CanBeNull] List<int> visitedGearSystems) where TE: GearSystemEntry
         {
@@ -62,11 +65,11 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems
         /// <value>
         /// The gear system entry identifier.
         /// </value>
-        [Key]
-        public int GearSystemEntryId { get; set; } = -1;
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int GearSystemEntryId { get; private set; }
 
         [Required, ForeignKey("GearSystem")]
-        public int GearSystemId { get; set; }
+        public int GearSystemId { get; private set; }
 
         public virtual GearSystem GearSystem { get; set; }
 #endregion
@@ -74,7 +77,6 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems
         public GearSystemEntry(GearSystem gearSystem, BackpackPlannerSettings settings)
             : base(settings)
         {
-            GearSystemId = gearSystem.Id;
             GearSystem = gearSystem;
         }
 

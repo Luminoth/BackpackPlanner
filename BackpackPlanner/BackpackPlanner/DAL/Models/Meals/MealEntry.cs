@@ -14,7 +14,6 @@
    limitations under the License.
 */
 
-
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -25,7 +24,7 @@ using JetBrains.Annotations;
 
 namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
 {
-    public class MealEntry : BaseIntermediateModel
+    public class MealEntry : BaseModelEntry
     {
 #region Static Helpers
         public static int GetMealCount<TE>(List<TE> meals, [CanBeNull] List<int> visitedMeals) where TE: MealEntry
@@ -85,6 +84,10 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
         }
 #endregion
 
+        public override BaseModel Model => Meal;
+
+        public override IBackpackPlannerItem Item => Meal;
+
 #region Database Properties
         /// <summary>
         /// Gets or sets the meal entry identifier.
@@ -92,11 +95,11 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
         /// <value>
         /// The meal entry identifier.
         /// </value>
-        [Key]
-        public int MealEntryId { get; set; } = -1;
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int MealEntryId { get; private set; }
 
         [ForeignKey("Meal")]
-        public int MealId { get; set; }
+        public int MealId { get; private set; }
 
         public virtual Meal Meal { get; set; }
 #endregion
@@ -114,7 +117,6 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
         public MealEntry(Meal meal, BackpackPlannerSettings settings)
             : base(settings)
         {
-            MealId = meal.Id;
             Meal = meal;
         }
 
