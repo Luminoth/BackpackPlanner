@@ -10,7 +10,7 @@ using EnergonSoftware.BackpackPlanner.DAL.Models.Meals;
 namespace EnergonSoftware.BackpackPlanner.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20170329150531_v1")]
+    [Migration("20170329152921_v1")]
     partial class v1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

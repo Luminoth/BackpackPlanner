@@ -52,7 +52,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
 
         protected override async Task<List<GearCollection>> GetItemsAsync(DatabaseContext dbContext)
         {
-            return await dbContext.GearCollections.ToListAsync().ConfigureAwait(false);
+            return await dbContext.GearCollections
+                .Include(gearCollection => gearCollection.GearSystems)
+                .Include(gearCollection => gearCollection.GearItems)
+                .ToListAsync().ConfigureAwait(false);
         }
 
         protected override Android.Support.V4.App.Fragment CreateAddItemFragment()

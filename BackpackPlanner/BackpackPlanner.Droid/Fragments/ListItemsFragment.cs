@@ -163,7 +163,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
             Task.Run(async () =>
                 {
-                    int count = -1;
+                    int count;
                     using(DatabaseContext dbContext = BaseActivity.BackpackPlannerState.DatabaseState.CreateContext()) {
                         try {
                             item.IsDeleted = true;
@@ -200,7 +200,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
             Task.Run(async () =>
                 {
-                    int count = -1;
+                    int count;
                     using(DatabaseContext dbContext = BaseActivity.BackpackPlannerState.DatabaseState.CreateContext()) {
                         try {
                             item.IsDeleted = false;
