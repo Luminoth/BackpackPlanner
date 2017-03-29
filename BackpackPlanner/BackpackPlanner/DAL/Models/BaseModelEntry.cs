@@ -25,24 +25,46 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models
     /// <summary>
     /// 
     /// </summary>
-    public abstract class BaseModelEntry : INotifyPropertyChanged
+    public abstract class BaseModelEntry<T> : INotifyPropertyChanged where T: BaseModel, IBackpackPlannerItem
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Gets the item entry identifier.
+        /// </summary>
+        /// <value>
+        /// The item entry identifier.
+        /// </value>
         [NotMapped]
-        public abstract BaseModel ItemModel { get; }
-
-        [NotMapped]
-        public abstract IBackpackPlannerItem Item { get; }
+        public abstract int Id { get; }
 
 #region Database Properties
+        /// <summary>
+        /// Gets or sets the model identifier.
+        /// </summary>
+        /// <value>
+        /// The model identifier.
+        /// </value>
+        /// <remarks>
+        /// This should have the Required and ForeignKey("Model") attributes
+        /// </remarks>
+        public abstract int ModelId { get; protected set; }
+
+        /// <summary>
+        /// Gets or sets the model.
+        /// </summary>
+        /// <value>
+        /// The model.
+        /// </value>
+        public abstract T Model { get; protected set; }
+
         private int _count;
 
         /// <summary>
-        /// Gets or sets the number of gear items.
+        /// Gets or sets the number of items.
         /// </summary>
         /// <value>
-        /// The number of gear items.
+        /// The number of items.
         /// </value>
         [Required]
         public int Count
@@ -64,6 +86,11 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models
         protected void NotifyPropertyChanged([CallerMemberName] string propertyName="")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected BaseModelEntry(T model)
+        {
+            Model = model;
         }
     }
 }

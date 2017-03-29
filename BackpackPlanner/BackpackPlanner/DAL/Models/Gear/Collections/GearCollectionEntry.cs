@@ -25,18 +25,18 @@ using JetBrains.Annotations;
 
 namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections
 {
-    public class GearCollectionEntry : BaseModelEntry, IGearItemContainer
+    public class GearCollectionEntry : BaseModelEntry<GearCollection>, IGearItemContainer
     {
 #region Static Helpers
         public static int GetGearCollectionCount<TE>(List<TE> gearCollections, [CanBeNull] List<int> visitedGearCollections) where TE: GearCollectionEntry
         {
             int count = 0;
             foreach(TE gearCollection in gearCollections) {
-                if(visitedGearCollections?.Contains(gearCollection.GearCollectionId) ?? false) {
+                if(visitedGearCollections?.Contains(gearCollection.ModelId) ?? false) {
                     continue;
                 }
 
-                visitedGearCollections?.Add(gearCollection.GearCollectionId);
+                visitedGearCollections?.Add(gearCollection.ModelId);
                 count += gearCollection.Count;
             }
             return count;
@@ -53,9 +53,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections
         }
 #endregion
 
-        public override BaseModel ItemModel => GearCollection;
-
-        public override IBackpackPlannerItem Item => GearCollection;
+        public override int Id => GearCollectionEntryId;
 
 #region Database Properties
         /// <summary>
@@ -67,30 +65,30 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int GearCollectionEntryId { get; private set; }
 
-        [Required, ForeignKey("GearCollection")]
-        public int GearCollectionId { get; private set; }
+        [Required, ForeignKey("Model")]
+        public override int ModelId { get; protected set; }
 
-        public virtual GearCollection GearCollection { get; set; }
+        public override GearCollection Model { get; protected set; }
 #endregion
 
         public  GearCollectionEntry(GearCollection gearCollection)
+            : base(gearCollection)
         {
-            GearCollection = gearCollection;
         }
 
         public int GetGearItemCount(List<int> visitedGearItems = null)
         {
-            return GearCollection?.GetGearItemCount(visitedGearItems) ?? 0;
+            return Model?.GetGearItemCount(visitedGearItems) ?? 0;
         }
 
         public int GetTotalWeightInGrams(List<int> visitedGearItems = null)
         {
-            return GearCollection?.GetTotalWeightInGrams(visitedGearItems) ?? 0;
+            return Model?.GetTotalWeightInGrams(visitedGearItems) ?? 0;
         }
 
         public int GetTotalCostInUSDP(List<int> visitedGearItems = null)
         {
-            return GearCollection?.GetTotalCostInUSDP(visitedGearItems) ?? 0;
+            return Model?.GetTotalCostInUSDP(visitedGearItems) ?? 0;
         }
     }
 }

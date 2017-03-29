@@ -136,15 +136,15 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
                     GearCollectionEntryId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Count = table.Column<int>(nullable: false),
-                    GearCollectionId = table.Column<int>(nullable: false),
+                    ModelId = table.Column<int>(nullable: false),
                     TripPlanId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_GearCollectionEntry", x => x.GearCollectionEntryId);
                     table.ForeignKey(
-                        name: "FK_GearCollectionEntry_GearCollections_GearCollectionId",
-                        column: x => x.GearCollectionId,
+                        name: "FK_GearCollectionEntry_GearCollections_ModelId",
+                        column: x => x.ModelId,
                         principalTable: "GearCollections",
                         principalColumn: "GearCollectionId",
                         onDelete: ReferentialAction.Cascade);
@@ -164,8 +164,8 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Count = table.Column<int>(nullable: false),
                     GearCollectionId = table.Column<int>(nullable: true),
-                    GearItemId = table.Column<int>(nullable: false),
                     GearSystemId = table.Column<int>(nullable: true),
+                    ModelId = table.Column<int>(nullable: false),
                     TripPlanId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -178,17 +178,17 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
                         principalColumn: "GearCollectionId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_GearItemEntry_GearItems_GearItemId",
-                        column: x => x.GearItemId,
-                        principalTable: "GearItems",
-                        principalColumn: "GearItemId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_GearItemEntry_GearSystems_GearSystemId",
                         column: x => x.GearSystemId,
                         principalTable: "GearSystems",
                         principalColumn: "GearSystemId",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_GearItemEntry_GearItems_ModelId",
+                        column: x => x.ModelId,
+                        principalTable: "GearItems",
+                        principalColumn: "GearItemId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_GearItemEntry_TripPlans_TripPlanId",
                         column: x => x.TripPlanId,
@@ -205,7 +205,7 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Count = table.Column<int>(nullable: false),
                     GearCollectionId = table.Column<int>(nullable: true),
-                    GearSystemId = table.Column<int>(nullable: false),
+                    ModelId = table.Column<int>(nullable: false),
                     TripPlanId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -218,8 +218,8 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
                         principalColumn: "GearCollectionId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_GearSystemEntry_GearSystems_GearSystemId",
-                        column: x => x.GearSystemId,
+                        name: "FK_GearSystemEntry_GearSystems_ModelId",
+                        column: x => x.ModelId,
                         principalTable: "GearSystems",
                         principalColumn: "GearSystemId",
                         onDelete: ReferentialAction.Cascade);
@@ -238,15 +238,15 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
                     MealEntryId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Count = table.Column<int>(nullable: false),
-                    MealId = table.Column<int>(nullable: false),
+                    ModelId = table.Column<int>(nullable: false),
                     TripPlanId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MealEntry", x => x.MealEntryId);
                     table.ForeignKey(
-                        name: "FK_MealEntry_Meals_MealId",
-                        column: x => x.MealId,
+                        name: "FK_MealEntry_Meals_ModelId",
+                        column: x => x.ModelId,
                         principalTable: "Meals",
                         principalColumn: "MealId",
                         onDelete: ReferentialAction.Cascade);
@@ -259,9 +259,9 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_GearCollectionEntry_GearCollectionId",
+                name: "IX_GearCollectionEntry_ModelId",
                 table: "GearCollectionEntry",
-                column: "GearCollectionId");
+                column: "ModelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GearCollectionEntry_TripPlanId",
@@ -274,14 +274,14 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
                 column: "GearCollectionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_GearItemEntry_GearItemId",
-                table: "GearItemEntry",
-                column: "GearItemId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_GearItemEntry_GearSystemId",
                 table: "GearItemEntry",
                 column: "GearSystemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GearItemEntry_ModelId",
+                table: "GearItemEntry",
+                column: "ModelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GearItemEntry_TripPlanId",
@@ -294,9 +294,9 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
                 column: "GearCollectionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_GearSystemEntry_GearSystemId",
+                name: "IX_GearSystemEntry_ModelId",
                 table: "GearSystemEntry",
-                column: "GearSystemId");
+                column: "ModelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GearSystemEntry_TripPlanId",
@@ -304,9 +304,9 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
                 column: "TripPlanId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MealEntry_MealId",
+                name: "IX_MealEntry_ModelId",
                 table: "MealEntry",
-                column: "MealId");
+                column: "ModelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MealEntry_TripPlanId",

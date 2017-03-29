@@ -25,22 +25,18 @@ using JetBrains.Annotations;
 
 namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems
 {
-    public class GearSystemEntry : BaseModelEntry, IGearItemContainer
+    public class GearSystemEntry : BaseModelEntry<GearSystem>, IGearItemContainer
     {
-        public override BaseModel ItemModel => GearSystem;
-
-        public override IBackpackPlannerItem Item => GearSystem;
-
 #region Static Helpers
         public static int GetGearSystemCount<TE>(List<TE> gearSystems, [CanBeNull] List<int> visitedGearSystems) where TE: GearSystemEntry
         {
             int count = 0;
             foreach(TE gearSystem in gearSystems) {
-                if(visitedGearSystems?.Contains(gearSystem.GearSystemId) ?? false) {
+                if(visitedGearSystems?.Contains(gearSystem.ModelId) ?? false) {
                     continue;
                 }
 
-                visitedGearSystems?.Add(gearSystem.GearSystemId);
+                visitedGearSystems?.Add(gearSystem.ModelId);
                 count += gearSystem.Count;
             }
             return count;
@@ -57,6 +53,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems
         }
 #endregion
 
+        public override int Id => GearSystemEntryId;
+
 #region Database Properties
         /// <summary>
         /// Gets or sets the gear system entry identifier.
@@ -67,30 +65,30 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int GearSystemEntryId { get; private set; }
 
-        [Required, ForeignKey("GearSystem")]
-        public int GearSystemId { get; private set; }
+        [Required, ForeignKey("Model")]
+        public override int ModelId { get; protected set; }
 
-        public virtual GearSystem GearSystem { get; set; }
+        public override GearSystem Model { get; protected set; }
 #endregion
 
         public GearSystemEntry(GearSystem gearSystem)
+            : base(gearSystem)
         {
-            GearSystem = gearSystem;
         }
 
         public int GetGearItemCount(List<int> visitedGearItems=null)
         {
-            return GearSystem?.GetGearItemCount(visitedGearItems) ?? 0;
+            return Model?.GetGearItemCount(visitedGearItems) ?? 0;
         }
 
         public int GetTotalWeightInGrams(List<int> visitedGearItems=null)
         {
-            return GearSystem?.GetTotalWeightInGrams(visitedGearItems) ?? 0;
+            return Model?.GetTotalWeightInGrams(visitedGearItems) ?? 0;
         }
 
         public int GetTotalCostInUSDP(List<int> visitedGearItems=null)
         {
-            return GearSystem?.GetTotalCostInUSDP(visitedGearItems) ?? 0;
+            return Model?.GetTotalCostInUSDP(visitedGearItems) ?? 0;
         }
     }
 }

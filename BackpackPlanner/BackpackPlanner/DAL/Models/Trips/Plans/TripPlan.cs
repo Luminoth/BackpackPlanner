@@ -262,7 +262,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
 #region Gear Collections
         public void AddGearCollection(GearCollectionEntry gearCollection)
         {
-            GearCollectionEntry entry = (from item in _gearCollections where item.GearCollectionId == gearCollection.GearCollectionId select item).FirstOrDefault();
+            GearCollectionEntry entry = (from item in _gearCollections where item.ModelId == gearCollection.ModelId select item).FirstOrDefault();
             if(null != entry) {
                 ++entry.Count;
                 return;
@@ -290,7 +290,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
 
         public void RemoveGearCollections(IReadOnlyCollection<GearCollection> gearCollections)
         {
-            var removeItems = (from item in _gearCollections where gearCollections.Any(x => x.Id == item.GearCollectionId) select item).ToList();
+            var removeItems = (from item in _gearCollections where gearCollections.Any(x => x.Id == item.ModelId) select item).ToList();
             foreach(GearCollectionEntry item in removeItems) {
                 item.OnRemove();
                 _gearCollections.Remove(item);
@@ -308,7 +308,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
 #region Gear Systems
         public void AddGearSystem(GearSystemEntry gearSystem)
         {
-            GearSystemEntry entry = (from item in _gearSystems where item.GearSystemId == gearSystem.GearSystemId select item).FirstOrDefault();
+            GearSystemEntry entry = (from item in _gearSystems where item.ModelId == gearSystem.ModelId select item).FirstOrDefault();
             if(null != entry) {
                 ++entry.Count;
                 return;
@@ -336,7 +336,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
 
         public void RemoveGearSystems(IReadOnlyCollection<GearSystem> gearSystems)
         {
-            var removeItems = (from item in _gearSystems where gearSystems.Any(x => x.Id == item.GearSystemId) select item).ToList();
+            var removeItems = (from item in _gearSystems where gearSystems.Any(x => x.Id == item.ModelId) select item).ToList();
             foreach(GearSystemEntry item in removeItems) {
                 item.OnRemove();
                 _gearSystems.Remove(item);
@@ -354,7 +354,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
 #region Gear Items
         public void AddGearItem(GearItemEntry gearItem)
         {
-            GearItemEntry entry = (from item in _gearItems where item.GearItemId == gearItem.GearItemId select item).FirstOrDefault();
+            GearItemEntry entry = (from item in _gearItems where item.ModelId == gearItem.ModelId select item).FirstOrDefault();
             if(null != entry) {
                 ++entry.Count;
                 return;
@@ -382,7 +382,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
 
         public void RemoveGearItems(IReadOnlyCollection<GearItem> gearItems)
         {
-            var removeItems = (from item in _gearItems where gearItems.Any(x => x.Id == item.GearItemId) select item).ToList();
+            var removeItems = (from item in _gearItems where gearItems.Any(x => x.Id == item.ModelId) select item).ToList();
             foreach(GearItemEntry item in removeItems) {
                 item.OnRemove();
                 _gearItems.Remove(item);
@@ -400,7 +400,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
 #region Meals
         public void AddMeal(MealEntry meal)
         {
-            MealEntry entry = (from item in _meals where item.MealId == meal.MealId select item).FirstOrDefault();
+            MealEntry entry = (from item in _meals where item.ModelId == meal.ModelId select item).FirstOrDefault();
             if(null != entry) {
                 ++entry.Count;
                 return;
@@ -428,7 +428,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
 
         public void RemoveMeals(IReadOnlyCollection<Meal> meals)
         {
-            var removeItems = (from item in _meals where meals.Any(x => x.Id == item.MealId) select item).ToList();
+            var removeItems = (from item in _meals where meals.Any(x => x.Id == item.ModelId) select item).ToList();
             foreach(MealEntry item in removeItems) {
                 item.OnRemove();
                 _meals.Remove(item);

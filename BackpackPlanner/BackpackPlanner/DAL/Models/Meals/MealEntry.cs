@@ -22,18 +22,18 @@ using JetBrains.Annotations;
 
 namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
 {
-    public class MealEntry : BaseModelEntry
+    public class MealEntry : BaseModelEntry<Meal>
     {
 #region Static Helpers
         public static int GetMealCount<TE>(List<TE> meals, [CanBeNull] List<int> visitedMeals) where TE: MealEntry
         {
             int count = 0;
             foreach(TE meal in meals) {
-                if(visitedMeals?.Contains(meal.MealId) ?? false) {
+                if(visitedMeals?.Contains(meal.ModelId) ?? false) {
                     continue;
                 }
 
-                visitedMeals?.Add(meal.MealId);
+                visitedMeals?.Add(meal.ModelId);
                 count += meal.Count;
             }
             return count;
@@ -43,11 +43,11 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
         {
             int calories = 0;
             foreach(TE meal in meals) {
-                if(visitedMeals?.Contains(meal.MealId) ?? false) {
+                if(visitedMeals?.Contains(meal.ModelId) ?? false) {
                     continue;
                 }
 
-                visitedMeals?.Add(meal.MealId);
+                visitedMeals?.Add(meal.ModelId);
                 calories += meal.Calories;
             }
             return calories;
@@ -57,11 +57,11 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
         {
             int weightInGrams = 0;
             foreach(TE meal in meals) {
-                if(visitedMeals?.Contains(meal.MealId) ?? false) {
+                if(visitedMeals?.Contains(meal.ModelId) ?? false) {
                     continue;
                 }
 
-                visitedMeals?.Add(meal.MealId);
+                visitedMeals?.Add(meal.ModelId);
                 weightInGrams += meal.TotalWeightInGrams;
             }
             return weightInGrams;
@@ -71,20 +71,18 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
         {
             int costInUSDP = 0;
             foreach(TE meal in meals) {
-                if(visitedMeals?.Contains(meal.MealId) ?? false) {
+                if(visitedMeals?.Contains(meal.ModelId) ?? false) {
                     continue;
                 }
 
-                visitedMeals?.Add(meal.MealId);
+                visitedMeals?.Add(meal.ModelId);
                 costInUSDP += meal.TotalCostInUSDP;
             }
             return costInUSDP;
         }
 #endregion
 
-        public override BaseModel ItemModel => Meal;
-
-        public override IBackpackPlannerItem Item => Meal;
+        public override int Id => MealEntryId;
 
 #region Database Properties
         /// <summary>
@@ -96,25 +94,25 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int MealEntryId { get; private set; }
 
-        [ForeignKey("Meal")]
-        public int MealId { get; private set; }
+        [Required, ForeignKey("Model")]
+        public override int ModelId { get; protected set; }
 
-        public virtual Meal Meal { get; set; }
+        public override Meal Model { get; protected set; }
 #endregion
 
         [NotMapped]
-        public int Calories => Count * (Meal?.Calories ?? 0);
+        public int Calories => Count * (Model?.Calories ?? 0);
 
         [NotMapped]
-        public int TotalWeightInGrams => Count * (Meal?.WeightInGrams ?? 0);
+        public int TotalWeightInGrams => Count * (Model?.WeightInGrams ?? 0);
 
         [NotMapped]
         // ReSharper disable once InconsistentNaming
-        public int TotalCostInUSDP => Count * (Meal?.CostInUSDP ?? 0);
+        public int TotalCostInUSDP => Count * (Model?.CostInUSDP ?? 0);
 
         public MealEntry(Meal meal)
+            : base(meal)
         {
-            Meal = meal;
         }
     }
 }

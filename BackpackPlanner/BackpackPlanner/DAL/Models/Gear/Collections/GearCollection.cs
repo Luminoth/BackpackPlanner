@@ -137,7 +137,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections
 #region Gear Systems
         public void AddGearSystem(GearSystemEntry gearSystem)
         {
-            GearSystemEntry entry = (from item in _gearSystems where item.GearSystemId == gearSystem.GearSystemId select item).FirstOrDefault();
+            GearSystemEntry entry = (from item in _gearSystems where item.ModelId == gearSystem.ModelId select item).FirstOrDefault();
             if(null != entry) {
                 entry.Count += gearSystem.Count;
                 return;
@@ -165,7 +165,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections
 
         public void RemoveGearSystems(IReadOnlyCollection<GearSystem> gearSystems)
         {
-            var removeItems = (from item in _gearSystems where gearSystems.Any(x => x.Id == item.GearSystemId) select item).ToList();
+            var removeItems = (from item in _gearSystems where gearSystems.Any(x => x.Id == item.ModelId) select item).ToList();
             foreach(GearSystemEntry item in removeItems) {
                 item.OnRemove();
                 _gearSystems.Remove(item);
@@ -183,7 +183,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections
 #region Gear Items
         public void AddGearItem(GearItemEntry gearItem)
         {
-            GearItemEntry entry = (from item in _gearItems where item.GearItemId == gearItem.GearItemId select item).FirstOrDefault();
+            GearItemEntry entry = (from item in _gearItems where item.ModelId == gearItem.ModelId select item).FirstOrDefault();
             if(null != entry) {
                 entry.Count += gearItem.Count;
                 return;
@@ -211,7 +211,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections
 
         public void RemoveGearItems(IReadOnlyCollection<GearItem> gearItems)
         {
-            var removeItems = (from item in _gearItems where gearItems.Any(x => x.Id == item.GearItemId) select item).ToList();
+            var removeItems = (from item in _gearItems where gearItems.Any(x => x.Id == item.ModelId) select item).ToList();
             foreach(GearItemEntry item in removeItems) {
                 item.OnRemove();
                 _gearItems.Remove(item);

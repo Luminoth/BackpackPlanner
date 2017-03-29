@@ -25,18 +25,18 @@ using JetBrains.Annotations;
 
 namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
 {
-    public class GearItemEntry : BaseModelEntry
+    public class GearItemEntry : BaseModelEntry<GearItem>
     {
 #region Static Helpers
         public static int GetGearItemCount<TE>(List<TE> gearItems, [CanBeNull] List<int> visitedGearItems) where TE: GearItemEntry
         {
             int count = 0;
             foreach(TE gearItem in gearItems) {
-                if(visitedGearItems?.Contains(gearItem.GearItemId) ?? false) {
+                if(visitedGearItems?.Contains(gearItem.ModelId) ?? false) {
                     continue;
                 }
 
-                visitedGearItems?.Add(gearItem.GearItemId);
+                visitedGearItems?.Add(gearItem.ModelId);
                 count += gearItem.Count;
             }
             return count;
@@ -46,11 +46,11 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
         {
             int weightInGrams = 0;
             foreach(TE gearItem in gearItems) {
-                if(visitedGearItems?.Contains(gearItem.GearItemId) ?? false) {
+                if(visitedGearItems?.Contains(gearItem.ModelId) ?? false) {
                     continue;
                 }
 
-                visitedGearItems?.Add(gearItem.GearItemId);
+                visitedGearItems?.Add(gearItem.ModelId);
                 weightInGrams += gearItem.TotalWeightInGrams;
             }
             return weightInGrams;
@@ -61,20 +61,18 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
         {
             int costInUSDP = 0;
             foreach(TE gearItem in gearItems) {
-                if(visitedGearItems?.Contains(gearItem.GearItemId) ?? false) {
+                if(visitedGearItems?.Contains(gearItem.ModelId) ?? false) {
                     continue;
                 }
 
-                visitedGearItems?.Add(gearItem.GearItemId);
+                visitedGearItems?.Add(gearItem.ModelId);
                 costInUSDP += gearItem.TotalCostInUSDP;
             }
             return costInUSDP;
         }
 #endregion
 
-        public override BaseModel ItemModel => GearItem;
-
-        public override IBackpackPlannerItem Item => GearItem;
+        public override int Id => GearItemEntryId;
 
 #region Database Properties
         /// <summary>
@@ -86,10 +84,10 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int GearItemEntryId { get; private set; }
 
-        [Required, ForeignKey("GearItem")]
-        public int GearItemId { get; private set; }
+        [Required, ForeignKey("Model")]
+        public override int ModelId { get; protected set; }
 
-        public virtual GearItem GearItem { get; set; }
+        public override GearItem Model { get; protected set; }
 #endregion
 
         /// <summary>
@@ -99,7 +97,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
         /// The total weight of these gear items in grams.
         /// </value>
         [NotMapped]
-        public int TotalWeightInGrams => Count * (GearItem?.WeightInGrams ?? 0);
+        public int TotalWeightInGrams => Count * (Model?.WeightInGrams ?? 0);
 
         /// <summary>
         /// Gets the total weight of these gear items in weight units.
@@ -120,11 +118,11 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
         /// </value>
         [NotMapped]
         // ReSharper disable once InconsistentNaming
-        public int TotalCostInUSDP => Count * (GearItem?.CostInUSDP ?? 0);
+        public int TotalCostInUSDP => Count * (Model?.CostInUSDP ?? 0);
 
         public GearItemEntry(GearItem gearItem)
+            : base(gearItem)
         {
-            GearItem = gearItem;
         }
     }
 }

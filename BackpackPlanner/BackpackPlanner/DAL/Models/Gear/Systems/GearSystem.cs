@@ -108,7 +108,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems
 #region Gear Items
         public void AddGearItem(GearItemEntry gearItem)
         {
-            GearItemEntry entry = (from item in _gearItems where item.GearItemId == gearItem.GearItemId select item).FirstOrDefault();
+            GearItemEntry entry = (from item in _gearItems where item.ModelId == gearItem.ModelId select item).FirstOrDefault();
             if(null != entry) {
                 entry.Count += gearItem.Count;
                 return;
@@ -136,7 +136,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems
 
         public void RemoveGearItems(IReadOnlyCollection<GearItem> gearItems)
         {
-            var removeItems = (from item in _gearItems where gearItems.Any(x => x.Id == item.GearItemId) select item).ToList();
+            var removeItems = (from item in _gearItems where gearItems.Any(x => x.Id == item.ModelId) select item).ToList();
             foreach(GearItemEntry item in removeItems) {
                 item.OnRemove();
                 _gearItems.Remove(item);

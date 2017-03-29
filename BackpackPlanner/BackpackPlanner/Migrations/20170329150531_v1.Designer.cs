@@ -10,7 +10,7 @@ using EnergonSoftware.BackpackPlanner.DAL.Models.Meals;
 namespace EnergonSoftware.BackpackPlanner.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20170328234927_v1")]
+    [Migration("20170329150531_v1")]
     partial class v1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,13 +46,13 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
 
                     b.Property<int>("Count");
 
-                    b.Property<int>("GearCollectionId");
+                    b.Property<int>("ModelId");
 
                     b.Property<int?>("TripPlanId");
 
                     b.HasKey("GearCollectionEntryId");
 
-                    b.HasIndex("GearCollectionId");
+                    b.HasIndex("ModelId");
 
                     b.HasIndex("TripPlanId");
 
@@ -108,9 +108,9 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
 
                     b.Property<int?>("GearCollectionId");
 
-                    b.Property<int>("GearItemId");
-
                     b.Property<int?>("GearSystemId");
+
+                    b.Property<int>("ModelId");
 
                     b.Property<int?>("TripPlanId");
 
@@ -118,9 +118,9 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
 
                     b.HasIndex("GearCollectionId");
 
-                    b.HasIndex("GearItemId");
-
                     b.HasIndex("GearSystemId");
+
+                    b.HasIndex("ModelId");
 
                     b.HasIndex("TripPlanId");
 
@@ -157,7 +157,7 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
 
                     b.Property<int?>("GearCollectionId");
 
-                    b.Property<int>("GearSystemId");
+                    b.Property<int>("ModelId");
 
                     b.Property<int?>("TripPlanId");
 
@@ -165,7 +165,7 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
 
                     b.HasIndex("GearCollectionId");
 
-                    b.HasIndex("GearSystemId");
+                    b.HasIndex("ModelId");
 
                     b.HasIndex("TripPlanId");
 
@@ -217,13 +217,13 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
 
                     b.Property<int>("Count");
 
-                    b.Property<int>("MealId");
+                    b.Property<int>("ModelId");
 
                     b.Property<int?>("TripPlanId");
 
                     b.HasKey("MealEntryId");
 
-                    b.HasIndex("MealId");
+                    b.HasIndex("ModelId");
 
                     b.HasIndex("TripPlanId");
 
@@ -282,9 +282,9 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
 
             modelBuilder.Entity("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections.GearCollectionEntry", b =>
                 {
-                    b.HasOne("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections.GearCollection", "GearCollection")
+                    b.HasOne("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections.GearCollection", "Model")
                         .WithMany()
-                        .HasForeignKey("GearCollectionId")
+                        .HasForeignKey("ModelId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans.TripPlan")
@@ -298,14 +298,14 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
                         .WithMany("GearItems")
                         .HasForeignKey("GearCollectionId");
 
-                    b.HasOne("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items.GearItem", "GearItem")
-                        .WithMany()
-                        .HasForeignKey("GearItemId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems.GearSystem")
                         .WithMany("GearItems")
                         .HasForeignKey("GearSystemId");
+
+                    b.HasOne("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items.GearItem", "Model")
+                        .WithMany()
+                        .HasForeignKey("ModelId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans.TripPlan")
                         .WithMany("GearItems")
@@ -318,9 +318,9 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
                         .WithMany("GearSystems")
                         .HasForeignKey("GearCollectionId");
 
-                    b.HasOne("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems.GearSystem", "GearSystem")
+                    b.HasOne("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems.GearSystem", "Model")
                         .WithMany()
-                        .HasForeignKey("GearSystemId")
+                        .HasForeignKey("ModelId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans.TripPlan")
@@ -330,9 +330,9 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
 
             modelBuilder.Entity("EnergonSoftware.BackpackPlanner.DAL.Models.Meals.MealEntry", b =>
                 {
-                    b.HasOne("EnergonSoftware.BackpackPlanner.DAL.Models.Meals.Meal", "Meal")
+                    b.HasOne("EnergonSoftware.BackpackPlanner.DAL.Models.Meals.Meal", "Model")
                         .WithMany()
-                        .HasForeignKey("MealId")
+                        .HasForeignKey("ModelId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans.TripPlan")
