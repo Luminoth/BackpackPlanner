@@ -25,7 +25,7 @@ using EnergonSoftware.BackpackPlanner.Units.Units;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
 {
-    public sealed class GearItemEntryListAdapter : BaseModelEntryListAdapter<GearItemEntry>
+    public sealed class GearItemEntryListAdapter : BaseModelEntryListAdapter<GearItemEntry, GearItem>
     {
         private sealed class GearItemEntryViewHolder : ViewHolder
         {
@@ -48,7 +48,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
 
             protected override void UpdateView()
             {
-                _textViewName.Text = ListItem.Item.Name;
+                _textViewName.Text = ListItem.Model.Name;
                 _editTextQuantity.EditText.Text = ListItem.Count.ToString();
 
                 UpdateTotalWeight();

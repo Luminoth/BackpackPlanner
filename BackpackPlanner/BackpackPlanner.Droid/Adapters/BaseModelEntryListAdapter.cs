@@ -23,7 +23,7 @@ using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 {
 // TODO: rename BaseModelEntryListViewAdapter
-    public abstract class BaseModelEntryListAdapter<T> : BaseListViewAdapter<T> where T : BaseModelEntry
+    public abstract class BaseModelEntryListAdapter<T, TV> : BaseListViewAdapter<T> where T: BaseModelEntry<TV> where TV: BaseModel, IBackpackPlannerItem
     {
         private readonly List<T> _items = new List<T>();
 
@@ -43,7 +43,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
         public void RemoveItem<TV>(TV item) where TV: BaseModel
         {
-            var removeItems = from entry in Items where entry.Item.Id == item.Id select entry;
+            var removeItems = from entry in Items where entry.Model.Id == item.Id select entry;
             foreach(T entry in removeItems) {
                 RemoveItem(entry);
             }
