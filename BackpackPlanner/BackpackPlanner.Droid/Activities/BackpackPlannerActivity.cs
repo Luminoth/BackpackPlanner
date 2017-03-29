@@ -42,7 +42,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
         {
             base.OnCreate(savedInstanceState);
 
-            ((DroidPlayServicesManager)DroidState.Instance.BackpackPlannerState.PlatformPlayServicesManager).OnCreate(this);
+            ((DroidPlayServicesManager)BackpackPlannerState.PlatformPlayServicesManager).OnCreate(this);
 
             SetContentView(Resource.Layout.activity_backpack_planner);
 
@@ -58,8 +58,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             _navigationDrawerManager.Toggle.ToolbarNavigationClickListener = this;
 
             // TODO: this doesn't seem to actually work
-            _navigationDrawerManager.HeaderText.Text = !string.IsNullOrWhiteSpace(DroidState.Instance.BackpackPlannerState.PersonalInformation.Name)
-                    ? DroidState.Instance.BackpackPlannerState.PersonalInformation.Name
+            _navigationDrawerManager.HeaderText.Text = !string.IsNullOrWhiteSpace(BackpackPlannerState.PersonalInformation.Name)
+                    ? BackpackPlannerState.PersonalInformation.Name
                     : Resources.GetString(Resource.String.app_name);
 
 #if !DEBUG

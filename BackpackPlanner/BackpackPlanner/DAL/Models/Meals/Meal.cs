@@ -237,68 +237,79 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
         public float CaloriesPerServing => Calories / (float)ServingCount;
 
         [NotMapped]
-        public float CaloriesPerWeight => Calories / WeightInUnits;
-
-        [NotMapped]
         public float ProteinPerServing => ProteinInGrams / (float)ServingCount;
 
         [NotMapped]
         public float FiberPerServing => FiberInGrams / (float)ServingCount;
 
         /// <summary>
-        /// Gets or sets the weight of this meal in weight units.
+        /// Gets the weight of this meal in weight units.
         /// </summary>
-        /// <value>
+        /// <returns>
         /// The weight of this meal in weight units.
-        /// </value>
-        [NotMapped]
-        public float WeightInUnits
+        /// </returns>
+        public float GetWeightInUnits(BackpackPlannerSettings settings)
         {
-            get { return Settings?.Units.WeightFromGrams(WeightInGrams) ?? WeightInGrams; }
-            set { _weightInGrams = (int)(Settings?.Units.GramsFromWeight(value) ?? value); }
+            return settings.Units.WeightFromGrams(WeightInGrams);
         }
-
-        [NotMapped]
-        public float WeightInUnitsPerServing => WeightInUnits / ServingCount;
 
         /// <summary>
-        /// Gets or sets the cost of this meal in currency units.
+        /// Sets the weight of this meal in weight units.
         /// </summary>
-        /// <value>
+        public void SetWeightInUnits(BackpackPlannerSettings settings, float value)
+        {
+            WeightInGrams = settings.Units.GramsFromWeight(value);
+        }
+
+        public float GetWeightInUnitsPerServing(BackpackPlannerSettings settings)
+        {
+            return GetWeightInUnits(settings) / ServingCount;
+        }
+
+        /// <summary>
+        /// Gets the cost of this meal in currency units.
+        /// </summary>
+        /// <returns>
         /// The cost of this meal in currency units.
-        /// </value>
-        [NotMapped]
-        public float CostInCurrency
+        /// </returns>
+        public float GetCostInCurrency(BackpackPlannerSettings settings)
         {
-            get { return Settings?.Currency.CurrencyFromUSDP(CostInUSDP) ?? CostInUSDP; }
-            set { _costInUSDP = (int)(Settings?.Currency.USDPFromCurrency(value) ?? value); }
+            return settings.Currency.CurrencyFromUSDP(CostInUSDP);
         }
 
-        [NotMapped]
-        public float CostPerWeightInCurrency => 0.0f == WeightInUnits ? 0.0f : CostInCurrency / WeightInUnits;
-
-        public Meal(BackpackPlannerSettings settings)
-            : base(settings)
+        /// <summary>
+        /// Sets the cost of this meal in currency units.
+        /// </summary>
+        public void SetCostInCurrency(BackpackPlannerSettings settings, float value)
         {
+            CostInUSDP = settings.Currency.USDPFromCurrency(value);
         }
 
-        public Meal()
+        public float GetCostInCurrencyPerWeightInUnits(BackpackPlannerSettings settings)
         {
+            float weightInUnits = GetWeightInUnits(settings);
+            return 0.0f == weightInUnits ? 0.0f : GetCostInCurrency(settings) / weightInUnits;
+        }
+
+        public float GetCaloriesPerWeightInUnits(BackpackPlannerSettings settings)
+        {
+            float weightInUnits = GetWeightInUnits(settings);
+            return 0.0f == weightInUnits ? 0.0f : Calories / weightInUnits;
         }
 
         public override bool Equals(object obj)
         {
-            if(MealId < 1) {
+            if(Id < 1) {
                 return false;
             }
 
             Meal meal = obj as Meal;
-            return MealId == meal?.MealId;
+            return Id == meal?.Id;
         }
 
         public override int GetHashCode()
         {
-            return MealId.GetHashCode();
+            return Id.GetHashCode();
         }
     }
 }

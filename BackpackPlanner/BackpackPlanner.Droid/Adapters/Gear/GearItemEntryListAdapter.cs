@@ -60,9 +60,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
                     ? 0
                     : Convert.ToInt32(_editTextQuantity.EditText.Text);
 
-                int totalWeightInUnits = (int)ListItem.TotalWeightInUnits;
+                int totalWeightInUnits = (int)ListItem.GetTotalWeightInUnits(Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings);
                 _textViewTotalWeight.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_gear_item_total_weight),
-                    totalWeightInUnits, DroidState.Instance.BackpackPlannerState.Settings.Units.GetSmallWeightString(totalWeightInUnits != 1)
+                    totalWeightInUnits, Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(totalWeightInUnits != 1)
                 );
             }
         }

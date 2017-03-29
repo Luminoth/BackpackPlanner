@@ -238,20 +238,33 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
 #endregion
 
         /// <summary>
-        /// Gets or sets the weight of this gear item in weight units.
+        /// Gets the weight of this gear item in weight units.
         /// </summary>
-        /// <value>
+        /// <returns>
         /// The weight of this gear item in weight units.
-        /// </value>
-        [NotMapped]
-        public float WeightInUnits
+        /// </returns>
+        public float GetWeightInUnits(BackpackPlannerSettings settings)
         {
-            get { return Settings?.Units.WeightFromGrams(WeightInGrams) ?? WeightInGrams; }
-            set
-            {
-                _weightInGrams = (int)(Settings?.Units.GramsFromWeight(value) ?? value);
-                NotifyPropertyChanged();
-            }
+            return settings.Units.WeightFromGrams(WeightInGrams);
+        }
+
+        /// <summary>
+        /// Sets the weight of this gear item in weight units.
+        /// </summary>
+        public void SetWeightInUnits(BackpackPlannerSettings settings, float value)
+        {
+            WeightInGrams = settings.Units.GramsFromWeight(value);
+        }
+
+        /// <summary>
+        /// Gets the cost of this gear item in currency units.
+        /// </summary>
+        /// <returns>
+        /// The cost of this gear item in currency units.
+        /// </returns>
+        public float GetCostInCurrency(BackpackPlannerSettings settings)
+        {
+            return settings.Currency.CurrencyFromUSDP(CostInUSDP);
         }
 
         /// <summary>
@@ -260,46 +273,35 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
         /// <value>
         /// The cost of this gear item in currency units.
         /// </value>
-        [NotMapped]
-        public float CostInCurrency
+        public void SetCostInCurrency(BackpackPlannerSettings settings, float value)
         {
-            get { return Settings?.Currency.CurrencyFromUSDP(CostInUSDP) ?? CostInUSDP; }
-            set
-            {
-                _costInUSDP = (int)(Settings?.Currency.USDPFromCurrency(value) ?? value);
-                NotifyPropertyChanged();
-            }
+            CostInUSDP = settings.Currency.USDPFromCurrency(value);
         }
 
-        [NotMapped]
-        public float CostPerWeightInCurrency => 0.0f == WeightInUnits ? 0.0f : CostInCurrency / WeightInUnits;
-
-        [NotMapped]
-        public WeightCategory WeightCategory => GearCarried.NotCarried == Carried ? WeightCategory.None : (Settings?.GetWeightCategory(WeightInGrams) ?? WeightCategory.None);
-
-
-        public GearItem(BackpackPlannerSettings settings)
-            : base(settings)
+        public float GetCostInCurrencyPerWeightInUnits(BackpackPlannerSettings settings)
         {
+            float weightInUnits = GetWeightInUnits(settings);
+            return 0.0f == weightInUnits ? 0.0f : GetCostInCurrency(settings) / weightInUnits;
         }
 
-        public GearItem()
+        public WeightCategory GetWeightCategory(BackpackPlannerSettings settings)
         {
+            return GearCarried.NotCarried == Carried ? WeightCategory.None : settings.GetWeightCategory(WeightInGrams);
         }
 
         public override bool Equals(object obj)
         {
-            if(GearItemId < 1) {
+            if(Id < 1) {
                 return false;
             }
 
             GearItem gearItem = obj as GearItem;
-            return GearItemId == gearItem?.GearItemId;
+            return Id == gearItem?.Id;
         }
 
         public override int GetHashCode()
         {
-            return GearItemId.GetHashCode();
+            return Id.GetHashCode();
         }
     }
 }

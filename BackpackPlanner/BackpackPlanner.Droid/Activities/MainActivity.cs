@@ -22,6 +22,8 @@ using Android.App;
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Droid.Util;
 
+using JetBrains.Annotations;
+
 namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.Splash", MainLauncher = true, NoHistory = true, Exported = true)]
@@ -37,7 +39,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 #region Activity Lifecycle
         protected override void OnDestroy()
         {
-            if(((HockeyAppManager)DroidState.Instance.BackpackPlannerState.PlatformHockeyAppManager).HasNewCrashes(this)) {
+            if(((HockeyAppManager)BackpackPlannerState.PlatformHockeyAppManager).HasNewCrashes(this)) {
                 Logger.Warn("Hockey app has new crashes, probably leaking the dialog!");
             }
 
@@ -48,7 +50,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
         {
             base.OnResume();
 
+#if DEBUG
             ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(this, Resource.String.message_initializing, false, true);
+#else
+            ProgressDialog progressDialog = null;
+#endif
 
             Task.Run(async () => await Init(progressDialog).ConfigureAwait(false));
         }
@@ -59,7 +65,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             // prevent back button from doing anything while loading
         }
 
-        private async Task Init(ProgressDialog progressDialog)
+        private async Task Init([CanBeNull] ProgressDialog progressDialog)
         {
             Logger.Debug("Initializing...");
 
@@ -67,12 +73,20 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             _initStopwatch.Start();
 #endif
 
-            bool success = await DroidState.Instance.InitDatabase().ConfigureAwait(false);
+            bool success = await InitDatabase().ConfigureAwait(false);
 
             InitFinished(progressDialog, success);
         }
 
-        private void InitFinished(ProgressDialog progressDialog, bool initSuccess)
+        private async Task<bool> InitDatabase()
+        {
+            return await BackpackPlannerState.DatabaseState.InitAsync(
+                BackpackPlannerState,
+                System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal),
+                DatabaseState.DatabaseName).ConfigureAwait(false);
+        }
+
+        private void InitFinished([CanBeNull] ProgressDialog progressDialog, bool initSuccess)
         {
 #if DEBUG
             if(_initStopwatch.IsRunning) {
@@ -85,21 +99,21 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 
             RunOnUiThread(() =>
             {
-                progressDialog.Dismiss();
+                progressDialog?.Dismiss();
 
                 if(!initSuccess) {
                     DialogUtil.ShowAlert(this, Resource.String.message_error_initialization, Resource.String.title_error_initialization);
                     return;
                 }
 
-                if(DroidState.Instance.BackpackPlannerState.Settings.MetaSettings.FirstRun) {
+                if(BackpackPlannerState.Settings.MetaSettings.FirstRun) {
                     Logger.Debug("Starting FTUE...");
                     StartActivity(typeof(FTUEActivity));
                 } else {
                     Logger.Debug("Starting main activity...");
                     StartActivity(typeof(BackpackPlannerActivity));
                 }
-                DroidState.Instance.BackpackPlannerState.Settings.MetaSettings.FirstRun = false;
+                BackpackPlannerState.Settings.MetaSettings.FirstRun = false;
 
                 Finish();
             });

@@ -104,7 +104,7 @@ namespace EnergonSoftware.BackpackPlanner
 #region Test Gear Items
             var gearItems = new List<GearItem>
             {
-                new GearItem(state.Settings)
+                new GearItem
                 {
                     Name = "Backpack",
                     Make = "ULA",
@@ -114,7 +114,7 @@ namespace EnergonSoftware.BackpackPlanner
                     CostInUSDP = 22500,
                     Note = "Medium torso (18\" - 21\"). Medium hipbelt (34\" - 38\"). J-Curve shoulder strap. Aluminum stay removed. Includes hanging s-biner \"Ahhh\" and water shoe carabiner. 39L main body. Max 15 pound base weight, 30-35 pack weight."
                 },
-                new GearItem(state.Settings)
+                new GearItem
                 {
                     Name = "Hammock",
                     Make = "Aaron Erbe",
@@ -123,7 +123,7 @@ namespace EnergonSoftware.BackpackPlanner
                     CostInUSDP = 0,
                     Note = "Includes adjustable ridge line and 2x whoopie slings from whoopieslings.com, and bishop bag."
                 },
-                new GearItem(state.Settings)
+                new GearItem
                 {
                     Name = "Tree Straps",
                     Url = "http://shop.whoopieslings.com/Tree-Huggers-TH.htm",
@@ -131,7 +131,7 @@ namespace EnergonSoftware.BackpackPlanner
                     CostInUSDP = 1200,
                     Note = "12'x1\". Includes dutch buckle and titanium dutch clip (max 300 pounds)."
                 },
-                new GearItem(state.Settings)
+                new GearItem
                 {
                     Name = "Old Underquilt",
                     Make = "Aaron Erbe",
@@ -140,7 +140,7 @@ namespace EnergonSoftware.BackpackPlanner
                     CostInUSDP = 0,
                     Note = "Synthetic material. Need to have Aaron or Joe possibly remove some material from the overstuff collars to get the size and weight down on this."
                 },
-                new GearItem(state.Settings)
+                new GearItem
                 {
                     Name = "Overquilt",
                     Make = "Arrowhead Equipment",
@@ -150,7 +150,7 @@ namespace EnergonSoftware.BackpackPlanner
                     CostInUSDP = 17900,
                     Note = "6oz APEX Climashield synthetic"
                 },
-                new GearItem(state.Settings)
+                new GearItem
                 {
                     Name = "New Underquilt",
                     Make = "Arrowhead Equipment",
@@ -160,7 +160,7 @@ namespace EnergonSoftware.BackpackPlanner
                     CostInUSDP = 7500,
                     Note = "6oz APEX Climashield synthetic"
                 },
-                new GearItem(state.Settings)
+                new GearItem
                 {
                     Name = "Toilet Paper",
                     IsConsumable = true,
@@ -169,7 +169,7 @@ namespace EnergonSoftware.BackpackPlanner
                     CostInUSDP = 1,
                     Note = "Can't have too much!"
                 },
-                new GearItem(state.Settings)
+                new GearItem
                 {
                     Name = "Kilt",
                     Make = "Utilikilt",
@@ -180,12 +180,12 @@ namespace EnergonSoftware.BackpackPlanner
                     CostInUSDP = 33000,
                     Note = "100% cotton. Cargo pockets removed (3.8 ounces each)."
                 },
-                new GearItem(state.Settings)
+                new GearItem
                 {
                     Name = "5g Water Jug",
                     Carried = GearCarried.NotCarried
                 },
-                new GearItem(state.Settings)
+                new GearItem
                 {
                     Name = "Head Lamp",
                     Make = "Petzl",
@@ -193,7 +193,7 @@ namespace EnergonSoftware.BackpackPlanner
                     WeightInGrams = 79,
                     CostInUSDP = 2995
                 },
-                new GearItem(state.Settings)
+                new GearItem
                 {
                     Name = "Alcohol Stove",
                     Make = "Zelph's Stoveworks",
@@ -202,7 +202,7 @@ namespace EnergonSoftware.BackpackPlanner
                     WeightInGrams = 19,
                     CostInUSDP = 1300,
                 },
-                new GearItem(state.Settings)
+                new GearItem
                 {
                     Name = "Wind Screen",
                     Make = "Trail Designs",
@@ -220,106 +220,95 @@ namespace EnergonSoftware.BackpackPlanner
 #region Test Gear Systems
             var gearSystems = new List<GearSystem>
             {
-                new GearSystem(state.Settings)
+                new GearSystem
                 {
                     Name = "New Hammock Setup",
                     TestGearItems = new List<GearItemEntry>
                     {
                         // Hammock
-                        new GearItemEntry
+                        new GearItemEntry(gearItems[1])
                         {
-                            GearItem = gearItems[1],
                             Count = 1
                         },
 
                         // Tree Straps
-                        new GearItemEntry
+                        new GearItemEntry(gearItems[2])
                         {
-                            GearItem = gearItems[2],
                             Count = 1
                         },
 
                         // Overquilt
-                        new GearItemEntry
+                        new GearItemEntry(gearItems[4])
                         {
-                            GearItem = gearItems[4],
                             Count = 1
                         },
 
                         // New Underquilt
-                        new GearItemEntry
+                        new GearItemEntry(gearItems[5])
                         {
-                            GearItem = gearItems[5],
                             Count = 1
                         }
                     },
                     Note = "3 season"
                 },
-                new GearSystem(state.Settings)
+                new GearSystem
                 {
                     Name = "Old Hammock Setup",
                     TestGearItems = new List<GearItemEntry>
                     {
                         // Hammock
-                        new GearItemEntry
+                        new GearItemEntry(gearItems[1])
                         {
-                            GearItem = gearItems[1],
                             Count = 1
                         },
 
                         // Tree Straps
-                        new GearItemEntry
+                        new GearItemEntry(gearItems[2])
                         {
-                            GearItem = gearItems[2],
                             Count = 1
                         },
 
                         // Old Underquilt
-                        new GearItemEntry
+                        new GearItemEntry(gearItems[3])
                         {
-                            GearItem = gearItems[3],
                             Count = 1
                         },
 
                         // Overquilt
-                        new GearItemEntry
+                        new GearItemEntry(gearItems[4])
                         {
-                            GearItem = gearItems[4],
                             Count = 1
                         }
                     },
                     Note = "3 season"
                 },
-                new GearSystem(state.Settings)
+                new GearSystem
                 {
                     Name = "Car Camping",
                     TestGearItems = new List<GearItemEntry>
                     {
                         // 5g Water Jug
-                        new GearItemEntry
+                        new GearItemEntry(gearItems[8])
                         {
-                            GearItem = gearItems[8],
                             Count = 2
                         }
                     },
                     Note = "Leave this junk in the car"
                 },
-                new GearSystem(state.Settings)
+                new GearSystem
                 {
                     Name = "Cook System",
                     TestGearItems = new List<GearItemEntry>
                     {
                         // Alcohol Stove
-                        new GearItemEntry
+                        new GearItemEntry(gearItems[10])
                         {
-                            GearItem = gearItems[10],
                             Count = 1
                         },
 
                         // Wind Screen
-                        new GearItemEntry
+                        new GearItemEntry(gearItems[11])
                         {
-                            GearItem = gearItems[11],
                             Count = 1
                         }
                     }
@@ -334,38 +323,34 @@ namespace EnergonSoftware.BackpackPlanner
 #region Test Gear Collections
             var gearCollections = new List<GearCollection>
             {
-                new GearCollection(state.Settings)
+                new GearCollection
                 {
                     Name = "3 Season Hammock",
                     TestGearSystems = new List<GearSystemEntry>
                     {
                         // New Hammock Setup
-                        new GearSystemEntry
+                        new GearSystemEntry(gearSystems[0])
                         {
-                            GearSystem = gearSystems[0],
                             Count = 1
                         },
 
                         // Cook System
-                        new GearSystemEntry
+                        new GearSystemEntry(gearSystems[3])
                         {
-                            GearSystem = gearSystems[3],
                             Count = 1
                         }
                     },
                     TestGearItems = new List<GearItemEntry>
                     {
                         // Backpack
-                        new GearItemEntry
+                        new GearItemEntry(gearItems[0])
                         {
-                            GearItem = gearItems[0],
                             Count = 1
                         },
 
                         // Head Lamp
-                        new GearItemEntry
+                        new GearItemEntry(gearItems[9])
                         {
-                            GearItem = gearItems[9],
                             Count = 1
                         }
                     },
@@ -381,7 +366,7 @@ namespace EnergonSoftware.BackpackPlanner
 #region Test Meals
             var meals = new List<Meal>
             {
-                new Meal(state.Settings)
+                new Meal
                 {
                     Name = "Cheesy Chicken Dinner",
                     MealTime = MealTime.Dinner,
@@ -402,7 +387,7 @@ namespace EnergonSoftware.BackpackPlanner
 #region Test Trip Itineraries
             var tripItineraries = new List<TripItinerary>
             {
-                new TripItinerary(state.Settings)
+                new TripItinerary
                 {
                     Name = "Turkey Camp 2015",
                     Note = "Looks like an easy hike!"
@@ -417,7 +402,7 @@ namespace EnergonSoftware.BackpackPlanner
 #region Test Trip Plans
             var tripPlans = new List<TripPlan>
             {
-                new TripPlan(state.Settings)
+                new TripPlan
                 {
                     Name = "Turkey Camp 2015",
                     StartDate = DateTime.Now,
@@ -429,36 +414,32 @@ namespace EnergonSoftware.BackpackPlanner
                     TestGearCollections = new List<GearCollectionEntry>
                     {
                         // 3 Season Hammock
-                        new GearCollectionEntry
+                        new GearCollectionEntry(gearCollections[0])
                         {
-                            GearCollection = gearCollections[0],
                             Count = 1
                         }
                     },
                     TestGearSystems = new List<GearSystemEntry>
                     {
                         // Cook System
-                        new GearSystemEntry
+                        new GearSystemEntry(gearSystems[3])
                         {
-                            GearSystem = gearSystems[3],
                             Count = 1
                         }
                     },
                     TestGearItems = new List<GearItemEntry>
                     {
                         // 5g Water Jug
-                        new GearItemEntry
+                        new GearItemEntry(gearItems[8])
                         {
-                            GearItem = gearItems[8],
                             Count = 1
                         }
                     },
                     TestMeals = new List<MealEntry>
                     {
                         // Cheese Chicken Dinner
-                        new MealEntry
+                        new MealEntry(meals[0])
                         {
-                            Meal = meals[0],
                             Count = 1
                         }
                     }

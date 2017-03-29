@@ -20,10 +20,6 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.CompilerServices;
 
-using EnergonSoftware.BackpackPlanner.Settings;
-
-using JetBrains.Annotations;
-
 namespace EnergonSoftware.BackpackPlanner.DAL.Models
 {
     /// <summary>
@@ -71,33 +67,6 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models
             }
         }
 #endregion
-
-        /// <summary>
-        /// Gets the planner settings.
-        /// </summary>
-        /// <value>
-        /// The planner settings.
-        /// </value>
-        [NotMapped]
-        [CanBeNull]
-        protected BackpackPlannerSettings Settings { get; private set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BaseModel"/> class.
-        /// </summary>
-        /// <param name="settings">The planner settings.</param>
-        /// <exception cref="System.ArgumentNullException"></exception>
-        protected BaseModel(BackpackPlannerSettings settings)
-        {
-            Settings = settings ?? throw new ArgumentNullException(nameof(settings));
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BaseModel"/> class.
-        /// </summary>
-        protected BaseModel()
-        {
-        }
 
         protected void NotifyPropertyChanged([CallerMemberName] string propertyName="")
         {

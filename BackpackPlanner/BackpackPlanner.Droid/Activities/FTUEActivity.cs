@@ -90,7 +90,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 
             // this is a hold-over from before the auto-managed connection
             // was added to the google play services
-            DroidState.Instance.BackpackPlannerState.Settings.ConnectGooglePlayServices = true;
+            BackpackPlannerState.Settings.ConnectGooglePlayServices = true;
 
             StartActivity(typeof(BackpackPlannerActivity));
 

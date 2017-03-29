@@ -41,7 +41,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             Button resetFTUEButton = view.FindViewById<Button>(Resource.Id.button_reset_ftue);
             resetFTUEButton.Click += (sender, args) => {
                 Logger.Debug("Resetting FTUE state");
-                DroidState.Instance.BackpackPlannerState.Settings.MetaSettings.FirstRun = true;
+                BaseActivity.BackpackPlannerState.Settings.MetaSettings.FirstRun = true;
             };
 
             Button resetDatabaseButton = view.FindViewById<Button>(Resource.Id.button_reset_database);

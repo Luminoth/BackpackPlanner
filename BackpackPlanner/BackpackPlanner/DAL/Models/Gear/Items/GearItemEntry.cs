@@ -72,7 +72,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
         }
 #endregion
 
-        public override BaseModel Model => GearItem;
+        public override BaseModel ItemModel => GearItem;
 
         public override IBackpackPlannerItem Item => GearItem;
 
@@ -107,8 +107,10 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
         /// <value>
         /// The total weight of these gear items in weight units.
         /// </value>
-        [NotMapped]
-        public float TotalWeightInUnits => Settings?.Units.WeightFromGrams(TotalWeightInGrams) ?? TotalWeightInGrams;
+        public float GetTotalWeightInUnits(BackpackPlannerSettings settings)
+        {
+            return settings.Units.WeightFromGrams(TotalWeightInGrams);
+        }
 
         /// <summary>
         /// Gets the total cost in USDP.
@@ -120,19 +122,9 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
         // ReSharper disable once InconsistentNaming
         public int TotalCostInUSDP => Count * (GearItem?.CostInUSDP ?? 0);
 
-        public GearItemEntry(GearItem gearItem, BackpackPlannerSettings settings)
-            : base(settings)
+        public GearItemEntry(GearItem gearItem)
         {
             GearItem = gearItem;
-        }
-
-        public GearItemEntry(BackpackPlannerSettings settings)
-            : base(settings)
-        {
-        }
-
-        public GearItemEntry()
-        {
         }
     }
 }

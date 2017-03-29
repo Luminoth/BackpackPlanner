@@ -127,15 +127,6 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections
         }
 #endif
 
-        public GearCollection(BackpackPlannerSettings settings)
-            : base(settings)
-        {
-        }
-
-        public GearCollection()
-        {
-        }
-
         public int GetTotalGearItemCount()
         {
             var visitedGearItems = new List<int>();
@@ -242,10 +233,10 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections
                 + GearItemEntry.GetTotalWeightInGrams(_gearItems, visitedGearItems);
         }
 
-        public float GetTotalWeightInUnits()
+        public float GetTotalWeightInUnits(BackpackPlannerSettings settings)
         {
             int weightInGrams = GetTotalWeightInGrams();
-            return Settings?.Units.WeightFromGrams(weightInGrams) ?? weightInGrams;
+            return settings.Units.WeightFromGrams(weightInGrams);
         }
 #endregion
 
@@ -256,36 +247,32 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections
                 + GearItemEntry.GetTotalCostInUSDP(_gearItems, visitedGearItems);
         }
 
-        public float GetTotalCostInCurrency()
+        public float GetTotalCostInCurrency(BackpackPlannerSettings settings)
         {
             int costInUSDP = GetTotalCostInUSDP();
-            return Settings?.Currency.CurrencyFromUSDP(costInUSDP) ?? costInUSDP;
+            return settings.Currency.CurrencyFromUSDP(costInUSDP);
         }
 
-        public float GetCostPerWeightInCurrency()
+        public float GetCostInCurrencyPerWeightInUnits(BackpackPlannerSettings settings)
         {
-            float weightInUnits = GetTotalWeightInUnits();
-            float costInCurrency = GetTotalCostInCurrency();
-
-            return 0.0f == weightInUnits
-                ? costInCurrency
-                : costInCurrency / weightInUnits;
+            float weightInUnits = GetTotalWeightInUnits(settings);
+            return 0.0f == weightInUnits ? 0.0f : GetTotalCostInCurrency(settings) / weightInUnits;
         }
 #endregion
 
         public override bool Equals(object obj)
         {
-            if(GearCollectionId < 1) {
+            if(Id < 1) {
                 return false;
             }
 
             GearCollection gearCollection = obj as GearCollection;
-            return GearCollectionId == gearCollection?.GearCollectionId;
+            return Id == gearCollection?.Id;
         }
 
         public override int GetHashCode()
         {
-            return GearCollectionId.GetHashCode();
+            return Id.GetHashCode();
         }
     }
 }

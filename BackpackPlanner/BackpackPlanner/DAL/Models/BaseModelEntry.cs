@@ -14,16 +14,11 @@
    limitations under the License.
 */
 
-using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 using System.Runtime.CompilerServices;
-
-using EnergonSoftware.BackpackPlanner.Settings;
-
-using JetBrains.Annotations;
 
 namespace EnergonSoftware.BackpackPlanner.DAL.Models
 {
@@ -35,7 +30,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotMapped]
-        public abstract BaseModel Model { get; }
+        public abstract BaseModel ItemModel { get; }
 
         [NotMapped]
         public abstract IBackpackPlannerItem Item { get; }
@@ -60,25 +55,6 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models
             }
         }
 #endregion
-
-        /// <summary>
-        /// Gets the planner settings.
-        /// </summary>
-        /// <value>
-        /// The planner settings.
-        /// </value>
-        [NotMapped]
-        [CanBeNull]
-        protected BackpackPlannerSettings Settings { get; private set; }
-
-        protected BaseModelEntry(BackpackPlannerSettings settings)
-        {
-            Settings = settings ?? throw new ArgumentNullException(nameof(settings));
-        }
-
-        protected BaseModelEntry()
-        {
-        }
 
         public void OnRemove()
         {

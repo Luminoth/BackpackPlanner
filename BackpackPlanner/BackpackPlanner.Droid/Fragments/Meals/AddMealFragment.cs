@@ -67,17 +67,17 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
             _mealNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.add_meal_note);
 
             _mealWeightEditText.Hint = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_meal_weight),
-                DroidState.Instance.BackpackPlannerState.Settings.Units.GetSmallWeightString(true)
+                BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(true)
             );
 
             _mealCostEditText.Hint = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_meal_cost),
-                DroidState.Instance.BackpackPlannerState.Settings.Currency.GetCurrencyString()
+                BaseActivity.BackpackPlannerState.Settings.Currency.GetCurrencyString()
             );
         }
 
         protected override Meal CreateItem()
         {
-            return new Meal(DroidState.Instance.BackpackPlannerState.Settings);
+            return new Meal();
         }
 
         protected override async Task AddItemAsync(DatabaseContext dbContext)
@@ -91,8 +91,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
             Item.Url = _mealWebsiteEditText.EditText.Text;
             Item.MealTime = (MealTime)Enum.Parse(typeof(MealTime), _mealMealTimeSpinner.SelectedItem.ToString());
             Item.ServingCount = Convert.ToInt32(_mealServingsEditText.EditText.Text);
-            Item.WeightInUnits = Convert.ToSingle(_mealWeightEditText.EditText.Text);
-            Item.CostInCurrency = Convert.ToSingle(_mealCostEditText.EditText.Text);
+            Item.SetWeightInUnits(BaseActivity.BackpackPlannerState.Settings, Convert.ToSingle(_mealWeightEditText.EditText.Text));
+            Item.SetCostInCurrency(BaseActivity.BackpackPlannerState.Settings, Convert.ToSingle(_mealCostEditText.EditText.Text));
             Item.Calories = Convert.ToInt32(_mealCaloriesEditText.EditText.Text);
             Item.ProteinInGrams = Convert.ToInt32(_mealProteinEditText.EditText.Text);
             Item.FiberInGrams = Convert.ToInt32(_mealFiberEditText.EditText.Text);

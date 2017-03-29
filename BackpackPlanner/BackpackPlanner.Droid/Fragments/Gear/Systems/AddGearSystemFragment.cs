@@ -91,7 +91,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 
             Task.Run(async () =>
                 {
-                    using(DatabaseContext dbContext = DroidState.Instance.BackpackPlannerState.DatabaseState.CreateContext()) {
+                    using(DatabaseContext dbContext = BaseActivity.BackpackPlannerState.DatabaseState.CreateContext()) {
                         _gearItems = await dbContext.GearItems.ToArrayAsync().ConfigureAwait(false);
                         _gearItemsNames = (from x in _gearItems select x.Name).ToArray();
                         _selectedGearItems = new bool[_gearItems.Length];
@@ -147,7 +147,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 
             GearItem gearItem = _gearItems[index];
             if(isSelected) {
-                GearItemEntry gearItemEntry = new GearItemEntry(gearItem, DroidState.Instance.BackpackPlannerState.Settings)
+                GearItemEntry gearItemEntry = new GearItemEntry(gearItem)
                 {
                     Count = 1
                 };
@@ -164,7 +164,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 
         protected override GearSystem CreateItem()
         {
-            return new GearSystem(DroidState.Instance.BackpackPlannerState.Settings);
+            return new GearSystem();
         }
 
         protected override async Task AddItemAsync(DatabaseContext dbContext)

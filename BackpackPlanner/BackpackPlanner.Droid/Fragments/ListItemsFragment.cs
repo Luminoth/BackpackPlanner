@@ -14,6 +14,7 @@
    limitations under the License.
 */
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -135,7 +136,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             Task.Run(async () =>
                 {
                     List<T> items;
-                    using(DatabaseContext dbContext = DroidState.Instance.BackpackPlannerState.DatabaseState.CreateContext()) {
+                    using(DatabaseContext dbContext = BaseActivity.BackpackPlannerState.DatabaseState.CreateContext()) {
                         items = await GetItemsAsync(dbContext).ConfigureAwait(false);
                     }
                     Logger.Debug($"Read {items?.Count ?? 0} items...");
@@ -162,14 +163,27 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
             Task.Run(async () =>
                 {
-                    using(DatabaseContext dbContext = DroidState.Instance.BackpackPlannerState.DatabaseState.CreateContext()) {
-                        item.IsDeleted = true;
-                        await dbContext.SaveChangesAsync().ConfigureAwait(false);
+                    int count = -1;
+                    using(DatabaseContext dbContext = BaseActivity.BackpackPlannerState.DatabaseState.CreateContext()) {
+                        try {
+                            item.IsDeleted = true;
+                            count = await dbContext.SaveChangesAsync().ConfigureAwait(false);
+                        } catch(Exception e) {
+                            Logger.Error($"Error adding item: {e.Message}");
+                            Logger.Debug(e.StackTrace);
+
+                            item.IsDeleted = false;
+                            count = -1;
+                        }
                     }
 
                     Activity.RunOnUiThread(() =>
                     {
                         progressDialog.Dismiss();
+
+                            if(count < 1) {
+                                return;
+                            }
 
                         Adapter.RemoveItem(item);
 
@@ -186,14 +200,27 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
             Task.Run(async () =>
                 {
-                    using(DatabaseContext dbContext = DroidState.Instance.BackpackPlannerState.DatabaseState.CreateContext()) {
-                        item.IsDeleted = false;
-                        await dbContext.SaveChangesAsync().ConfigureAwait(false);
+                    int count = -1;
+                    using(DatabaseContext dbContext = BaseActivity.BackpackPlannerState.DatabaseState.CreateContext()) {
+                        try {
+                            item.IsDeleted = false;
+                            count = await dbContext.SaveChangesAsync().ConfigureAwait(false);
+                        } catch(Exception e) {
+                            Logger.Error($"Error adding item: {e.Message}");
+                            Logger.Debug(e.StackTrace);
+
+                            item.IsDeleted = true;
+                            count = -1;
+                        }
                     }
 
                     Activity.RunOnUiThread(() =>
                     {
                         progressDialog.Dismiss();
+
+                            if(count < 1) {
+                                return;
+                            }
 
                         Adapter.AddItem(item);
 

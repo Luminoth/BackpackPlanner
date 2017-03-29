@@ -20,7 +20,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
 using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items;
-using EnergonSoftware.BackpackPlanner.Settings;
 
 using JetBrains.Annotations;
 
@@ -54,7 +53,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections
         }
 #endregion
 
-        public override BaseModel Model => GearCollection;
+        public override BaseModel ItemModel => GearCollection;
 
         public override IBackpackPlannerItem Item => GearCollection;
 
@@ -74,19 +73,9 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections
         public virtual GearCollection GearCollection { get; set; }
 #endregion
 
-        public  GearCollectionEntry(GearCollection gearCollection, BackpackPlannerSettings settings)
-            : base(settings)
+        public  GearCollectionEntry(GearCollection gearCollection)
         {
             GearCollection = gearCollection;
-        }
-
-        public  GearCollectionEntry(BackpackPlannerSettings settings)
-            : base(settings)
-        {
-        }
-
-        public GearCollectionEntry()
-        {
         }
 
         public int GetGearItemCount(List<int> visitedGearItems = null)

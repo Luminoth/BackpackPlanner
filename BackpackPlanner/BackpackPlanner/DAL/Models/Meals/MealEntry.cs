@@ -18,8 +18,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-using EnergonSoftware.BackpackPlanner.Settings;
-
 using JetBrains.Annotations;
 
 namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
@@ -84,7 +82,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
         }
 #endregion
 
-        public override BaseModel Model => Meal;
+        public override BaseModel ItemModel => Meal;
 
         public override IBackpackPlannerItem Item => Meal;
 
@@ -114,19 +112,9 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
         // ReSharper disable once InconsistentNaming
         public int TotalCostInUSDP => Count * (Meal?.CostInUSDP ?? 0);
 
-        public MealEntry(Meal meal, BackpackPlannerSettings settings)
-            : base(settings)
+        public MealEntry(Meal meal)
         {
             Meal = meal;
-        }
-
-        public MealEntry(BackpackPlannerSettings settings)
-            : base(settings)
-        {
-        }
-
-        public MealEntry()
-        {
         }
     }
 }

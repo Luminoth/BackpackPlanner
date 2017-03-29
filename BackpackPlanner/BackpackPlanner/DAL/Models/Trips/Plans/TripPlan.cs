@@ -194,9 +194,6 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
         [NotMapped]
         public int Days => (StartDate - EndDate).Days;
 
-        [NotMapped]
-        public WeightClass WeightClass => Settings?.GetWeightClass(GetBaseWeightInGrams()) ?? WeightClass.Traditional;
-
 #if DEBUG
         [NotMapped]
         public List<GearCollectionEntry> TestGearCollections
@@ -243,13 +240,9 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
         }
 #endif
 
-        public TripPlan(BackpackPlannerSettings settings)
-            : base(settings)
+        public WeightClass GetWeightClass(BackpackPlannerSettings settings)
         {
-        }
-
-        public TripPlan()
-        {
+            return settings.GetWeightClass(GetBaseWeightInGrams());
         }
 
         public int GetTotalGearItemCount()
@@ -459,10 +452,10 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
                 + MealEntry.GetTotalWeightInGrams(_meals, visitedMeals);
         }
 
-        public float GetTotalWeightInUnits()
+        public float GetTotalWeightInUnits(BackpackPlannerSettings settings)
         {
             int weightInGrams = GetTotalWeightInGrams();
-            return Settings?.Units.WeightFromGrams(weightInGrams) ?? weightInGrams;
+            return settings.Units.WeightFromGrams(weightInGrams);
         }
 
         public int GetBaseWeightInGrams()
@@ -499,36 +492,32 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
                 + MealEntry.GetTotalCostInUSDP(_meals, visitedMeals);
         }
 
-        public float GetTotalCostInCurrency()
+        public float GetTotalCostInCurrency(BackpackPlannerSettings settings)
         {
             int costInUSDP = GetTotalCostInUSDP();
-            return Settings?.Currency.CurrencyFromUSDP(costInUSDP) ?? costInUSDP;
+            return settings.Currency.CurrencyFromUSDP(costInUSDP);
         }
 
-        public float GetCostPerWeightInCurrency()
+        public float GetCostPerWeightInCurrency(BackpackPlannerSettings settings)
         {
-            float weightInUnits = GetTotalWeightInUnits();
-            float costInCurrency = GetTotalCostInCurrency();
-
-            return 0.0f == weightInUnits
-                ? costInCurrency
-                : costInCurrency / weightInUnits;
+            float weightInUnits = GetTotalWeightInUnits(settings);
+            return 0.0f == weightInUnits ? 0.0f : GetTotalCostInCurrency(settings) / weightInUnits;
         }
 #endregion
 
         public override bool Equals(object obj)
         {
-            if(TripPlanId < 1) {
+            if(Id < 1) {
                 return false;
             }
 
             TripPlan tripPlan = obj as TripPlan;
-            return TripPlanId == tripPlan?.TripPlanId;
+            return Id == tripPlan?.Id;
         }
 
         public override int GetHashCode()
         {
-            return TripPlanId.GetHashCode();
+            return Id.GetHashCode();
         }
     }
 }

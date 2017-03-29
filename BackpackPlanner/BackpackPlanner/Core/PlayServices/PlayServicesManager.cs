@@ -36,7 +36,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.PlayServices
         /// Occurs when Google Play Services connects or disconnects.
         /// </summary>
         public event EventHandler<PlayServicesConnectedEventArgs> PlayServicesConnectedEvent;
-        #endregion
+#endregion
 
         /// <summary>
         /// Gets a value indicating whether play services are enabled.

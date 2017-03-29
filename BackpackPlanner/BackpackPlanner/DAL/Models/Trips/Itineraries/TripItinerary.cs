@@ -17,8 +17,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-using EnergonSoftware.BackpackPlanner.Settings;
-
 namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Itineraries
 {
     /// <summary>
@@ -77,28 +75,19 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Itineraries
         }
 #endregion
 
-        public TripItinerary(BackpackPlannerSettings settings)
-            : base(settings)
-        {
-        }
-
-        public TripItinerary()
-        {
-        }
-
         public override bool Equals(object obj)
         {
-            if(TripItineraryId < 1) {
+            if(Id < 1) {
                 return false;
             }
 
             TripItinerary tripItinerary = obj as TripItinerary;
-            return TripItineraryId == tripItinerary?.TripItineraryId;
+            return Id == tripItinerary?.Id;
         }
 
         public override int GetHashCode()
         {
-            return TripItineraryId.GetHashCode();
+            return Id.GetHashCode();
         }
     }
 }

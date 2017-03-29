@@ -28,6 +28,7 @@ using Android.Content.PM;
 using Android.OS;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
+using EnergonSoftware.BackpackPlanner.Droid.Logging;
 using EnergonSoftware.BackpackPlanner.Droid.Permissions;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Activities
@@ -35,6 +36,22 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
     public class BaseActivity : Android.Support.V7.App.AppCompatActivity
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(BaseActivity));
+
+        // this needs to be static for the managers it contains
+        private static BackpackPlannerState _backpackPlannerStateInstance;
+
+        // need a separate reference to this because it needs to
+        // track the current activity
+        private static DroidPermissionRequestFactory _permissionRequestFactory;
+
+        private static bool _preferencesLoaded;
+
+        static BaseActivity()
+        {
+            CustomLogger.PlatformLogger = new DroidLogger();
+        }
+
+        public BackpackPlannerState BackpackPlannerState => _backpackPlannerStateInstance;
 
 #if DEBUG_LIFECYCLE
         private readonly Stopwatch _startupStopwatch = new Stopwatch();
@@ -49,15 +66,34 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 #region Activity Lifecycle
         protected override void OnCreate(Bundle savedInstanceState)
         {
-            base.OnCreate(savedInstanceState);
-
 #if DEBUG_LIFECYCLE
             Logger.Debug($"OnCreate - {GetType()}");
 
             _startupStopwatch.Start();
 #endif
 
-            DroidState.Instance.OnCreate(this);
+            base.OnCreate(savedInstanceState);
+
+            if(null == _permissionRequestFactory) {
+                _permissionRequestFactory = new DroidPermissionRequestFactory();
+            }
+            _permissionRequestFactory.Activity = this;
+
+            if(null == _backpackPlannerStateInstance) {
+                _backpackPlannerStateInstance = new BackpackPlannerState(
+                    new HockeyAppManager(),
+                    new DroidSettingsManager(Android.Support.V7.Preferences.PreferenceManager.GetDefaultSharedPreferences(this)),
+                    new DroidPlayServicesManager(),
+                    _permissionRequestFactory
+                );
+
+                // have to do this on the main thread
+                _backpackPlannerStateInstance.InitAsync().Wait();
+            }
+
+            LoadPreferences(this);
+
+            ((HockeyAppManager)_backpackPlannerStateInstance.PlatformHockeyAppManager).OnCreate(this);
         }
 
         protected override void OnDestroy()
@@ -73,15 +109,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 
             // this is bad, we only want to do this if the
             // full application is closed, not the activity
-            //DroidState.Instance.OnDestroy();
+            //_backpackPlannerState.Destroy();
 
             base.OnDestroy();
         }
 
         protected override void OnStart()
         {
-            base.OnStart();
-
 #if DEBUG_LIFECYCLE
             Logger.Debug($"OnStart - {GetType()}");
 
@@ -89,6 +123,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
                 Logger.Debug($"Time to Activity.Start(): {_startupStopwatch.ElapsedMilliseconds}ms");
             }
 #endif
+
+            base.OnStart();
         }
 
         protected override void OnStop()
@@ -102,8 +138,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 
         protected override void OnResume()
         {
-            base.OnResume();
-
 #if DEBUG_LIFECYCLE
             Logger.Debug($"OnResume - {GetType()}");
 
@@ -113,7 +147,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             _startupStopwatch.Stop();
 #endif
 
-            DroidState.Instance.OnResume(this);
+            base.OnResume();
+
+            ((HockeyAppManager)_backpackPlannerStateInstance.PlatformHockeyAppManager).OnResume(this);
         }
 
         protected override void OnPause()
@@ -122,7 +158,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             Logger.Debug($"OnPause - {GetType()}");
 #endif
 
-            DroidState.Instance.OnPause(this);
+            ((HockeyAppManager)_backpackPlannerStateInstance.PlatformHockeyAppManager).OnPause(this);
 
             base.OnPause();
         }
@@ -217,6 +253,21 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             requests.Add(permissionRequest);
         }
 #endregion
+
+        private void LoadPreferences(BaseActivity activity)
+        {
+            if(_preferencesLoaded) {
+                return;
+            }
+
+            Logger.Debug("Setting default preferences...");
+            Android.Support.V7.Preferences.PreferenceManager.SetDefaultValues(activity, Resource.Xml.settings, false);
+
+            Logger.Debug("Loading preferences...");
+            _backpackPlannerStateInstance.PlatformSettingsManager.Load(_backpackPlannerStateInstance.Settings, _backpackPlannerStateInstance.PersonalInformation);
+
+            _preferencesLoaded = true;
+        }
 
         protected void InitToolbar()
         {

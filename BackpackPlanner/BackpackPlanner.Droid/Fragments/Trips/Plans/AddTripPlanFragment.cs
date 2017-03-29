@@ -90,7 +90,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
 
         protected override TripPlan CreateItem()
         {
-            return new TripPlan(DroidState.Instance.BackpackPlannerState.Settings);
+            return new TripPlan();
         }
 
         protected override async Task AddItemAsync(DatabaseContext dbContext)

@@ -71,17 +71,17 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
             };
 
             _gearItemWeightEditText.Hint = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_gear_item_weight),
-                DroidState.Instance.BackpackPlannerState.Settings.Units.GetSmallWeightString(true)
+                BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(true)
             );
 
             _gearItemCostEditText.Hint = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_gear_item_cost),
-                DroidState.Instance.BackpackPlannerState.Settings.Currency.GetCurrencyString()
+                BaseActivity.BackpackPlannerState.Settings.Currency.GetCurrencyString()
             );
         }
 
         protected override GearItem CreateItem()
         {
-            return new GearItem(DroidState.Instance.BackpackPlannerState.Settings);
+            return new GearItem();
         }
 
         protected override async Task AddItemAsync(DatabaseContext dbContext)
@@ -95,8 +95,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
             Item.Make = _gearItemMakeEditText.EditText.Text;
             Item.Model = _gearItemModelEditText.EditText.Text;
             Item.Url = _gearItemWebsiteEditText.EditText.Text;
-            Item.WeightInUnits = Convert.ToSingle(_gearItemWeightEditText.EditText.Text);
-            Item.CostInCurrency = Convert.ToSingle(_gearItemCostEditText.EditText.Text);
+            Item.SetWeightInUnits(BaseActivity.BackpackPlannerState.Settings, Convert.ToSingle(_gearItemWeightEditText.EditText.Text));
+            Item.SetCostInCurrency(BaseActivity.BackpackPlannerState.Settings, Convert.ToSingle(_gearItemCostEditText.EditText.Text));
             Item.Note = _gearItemNoteEditText.EditText.Text;
 
             int carriedSelectionResId = _gearItemCarriedRadioGroup.CheckedRadioButtonId;

@@ -14,12 +14,14 @@
    limitations under the License.
 */
 
+using System;
 using System.Threading.Tasks;
 
 using Android.App;
 using Android.OS;
 using Android.Views;
 
+using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.DAL;
 using EnergonSoftware.BackpackPlanner.DAL.Models;
 using EnergonSoftware.BackpackPlanner.Droid.Util;
@@ -28,6 +30,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 {
     public abstract class AddItemFragment<T> : DataFragment where T: BaseModel
     {
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(AddItemFragment<T>));
+
         protected abstract int AddItemResource { get; }
 
         protected abstract int ResetItemResource { get; }
@@ -63,13 +67,25 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
                 Task.Run(async () =>
                     {
-                        using(DatabaseContext dbContext = DroidState.Instance.BackpackPlannerState.DatabaseState.CreateContext()) {
-                            await AddItemAsync(dbContext).ConfigureAwait(false); 
+                        int count = -1;
+                        using(DatabaseContext dbContext = BaseActivity.BackpackPlannerState.DatabaseState.CreateContext()) {
+                            try {
+                                await AddItemAsync(dbContext).ConfigureAwait(false);
+                                count = await dbContext.SaveChangesAsync().ConfigureAwait(false);
+                            } catch(Exception e) {
+                                Logger.Error($"Error adding item: {e.Message}");
+                                Logger.Debug(e.StackTrace);
+                                count = -1;
+                            }
                         }
 
                         Activity.RunOnUiThread(() =>
                         {
                             progressDialog.Dismiss();
+
+                            if(count < 1) {
+                                return;
+                            }
 
                             SnackbarUtil.ShowSnackbar(View, Resource.String.label_added_item, Android.Support.Design.Widget.Snackbar.LengthShort);
 

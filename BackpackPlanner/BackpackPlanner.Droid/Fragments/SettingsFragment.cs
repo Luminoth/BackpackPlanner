@@ -106,14 +106,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         /*private void SetHeightLabel()
         {
             _heightPreference.DialogTitle = _heightPreference.Title = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_height),
-                DroidState.Instance.BackpackPlannerState.Settings.Units.GetSmallLengthString(true)
+                BaseActivity.BackpackPlannerState.Settings.Units.GetSmallLengthString(true)
             );
         }*/
 
         private void SetWeightLabel()
         {
             _weightPreference.DialogTitle = _weightPreference.Title = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_weight),
-                DroidState.Instance.BackpackPlannerState.Settings.Units.GetSmallWeightString(true)
+                BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(true)
             );
         }
 #endregion
@@ -121,43 +121,43 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 #region Summaries
         /*private void SetNameSummary()
         {
-            _namePreference.Summary = string.IsNullOrWhiteSpace(DroidState.Instance.BackpackPlannerState.PersonalInformation.Name)
+            _namePreference.Summary = string.IsNullOrWhiteSpace(BaseActivity.BackpackPlannerState.PersonalInformation.Name)
                 ? Resources.GetString(Resource.String.summary_name)
-                : DroidState.Instance.BackpackPlannerState.PersonalInformation.Name;
+                : BaseActivity.BackpackPlannerState.PersonalInformation.Name;
         }*/
 
         /*private void SetBirthDateSummary()
         {
-            _birthDatePreference.Summary = DroidState.Instance.BackpackPlannerState.PersonalInformation.DateOfBirth?.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) ?? Resources.GetString(Resource.String.summary_birthdate);
+            _birthDatePreference.Summary = BaseActivity.BackpackPlannerState.PersonalInformation.DateOfBirth?.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) ?? Resources.GetString(Resource.String.summary_birthdate);
         }*/
 
         /*private void SetUserSexSummary()
         {
-            _userSexPreference.Summary = DroidState.Instance.BackpackPlannerState.PersonalInformation.Sex.ToString();
+            _userSexPreference.Summary = BaseActivity.BackpackPlannerState.PersonalInformation.Sex.ToString();
         }*/
 
         /*private void SetHeightSummary()
         {
             // TODO: make this a resource
-            _heightPreference.Summary = ((int)DroidState.Instance.BackpackPlannerState.PersonalInformation.HeightInUnits)
-                + " " + DroidState.Instance.BackpackPlannerState.Settings.Units.GetSmallLengthString(true);
+            _heightPreference.Summary = ((int)BaseActivity.BackpackPlannerState.PersonalInformation.HeightInUnits)
+                + " " + BaseActivity.BackpackPlannerState.Settings.Units.GetSmallLengthString(true);
         }*/
 
         private void SetWeightSummary()
         {
             // TODO: make this a resource
-            _weightPreference.Summary = ((int)DroidState.Instance.BackpackPlannerState.PersonalInformation.WeightInUnits)
-                + " " + DroidState.Instance.BackpackPlannerState.Settings.Units.GetSmallWeightString(true);
+            _weightPreference.Summary = ((int)BaseActivity.BackpackPlannerState.PersonalInformation.WeightInUnits)
+                + " " + BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(true);
         }
 
         private void SetUnitSystemSummary()
         {
-            _unitSystemPreference.Summary = DroidState.Instance.BackpackPlannerState.Settings.Units.ToString();
+            _unitSystemPreference.Summary = BaseActivity.BackpackPlannerState.Settings.Units.ToString();
         }
 
         private void SetCurrencySummary()
         {
-            _currencyPreference.Summary = DroidState.Instance.BackpackPlannerState.Settings.Currency.ToString();
+            _currencyPreference.Summary = BaseActivity.BackpackPlannerState.Settings.Currency.ToString();
         }
 #endregion
 
@@ -181,7 +181,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         public void OnSharedPreferenceChanged(ISharedPreferences sharedPreferences, string key)
         {
-            DroidState.Instance.BackpackPlannerState.PlatformSettingsManager.UpdateFromPreferences(key, DroidState.Instance.BackpackPlannerState.Settings, DroidState.Instance.BackpackPlannerState.PersonalInformation);
+            BaseActivity.BackpackPlannerState.PlatformSettingsManager.UpdateFromPreferences(key,
+                BaseActivity.BackpackPlannerState.Settings, BaseActivity.BackpackPlannerState.PersonalInformation);
 
 // TODO: if the connect google play services setting is switched from off to on
 // we need to do the connection here

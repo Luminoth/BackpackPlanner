@@ -81,12 +81,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
                     _textViewMakeModel.Text = makeModel;
                 }
 
-                _textViewWeightCategory.Text = ListItem.WeightCategory.ShortName();
+                WeightCategory weightCategory = ListItem.GetWeightCategory(Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings);
+                _textViewWeightCategory.Text = weightCategory.ShortName();
 
                 // TODO: is there any way to turn this into a core-extension?
                 // we would somehow have to convert to the appropriate android color
                 Color categoryStickerColor = Color.Gray;
-                switch(ListItem.WeightCategory)
+                switch(weightCategory)
                 {
                 case WeightCategory.None:
                     categoryStickerColor = Color.Gray;
@@ -112,15 +113,15 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
                 categoryStickerDrawable.SetColor(categoryStickerColor);
                 categoryStickerDrawable.SetStroke(5, Color.Black);
 
-                int weightInUnits = (int)ListItem.WeightInUnits;
+                int weightInUnits = (int)ListItem.GetWeightInUnits(Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings);
                 _textViewWeight.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_gear_item_weight),
-                    weightInUnits, DroidState.Instance.BackpackPlannerState.Settings.Units.GetSmallWeightString(weightInUnits != 1)
+                    weightInUnits, Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(weightInUnits != 1)
                 );
 
-                string formattedCost = ListItem.CostInCurrency.ToString("C", CultureInfo.CurrentCulture);
-                string formattedCostPerWeight = ListItem.CostPerWeightInCurrency.ToString("C", CultureInfo.CurrentCulture);
+                string formattedCost = ListItem.GetCostInCurrency(Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings).ToString("C", CultureInfo.CurrentCulture);
+                string formattedCostPerWeight = ListItem.GetCostInCurrencyPerWeightInUnits(Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings).ToString("C", CultureInfo.CurrentCulture);
                 _textViewCost.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_gear_item_cost),
-                    formattedCost, formattedCostPerWeight, DroidState.Instance.BackpackPlannerState.Settings.Units.GetSmallWeightString(false)
+                    formattedCost, formattedCostPerWeight, Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(false)
                 );
             }
         }

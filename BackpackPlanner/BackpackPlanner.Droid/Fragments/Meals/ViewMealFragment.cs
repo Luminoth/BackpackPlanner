@@ -68,10 +68,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
             _mealServingsEditText.EditText.Text = Item.ServingCount.ToString();
 
             _mealWeightEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.view_meal_weight);
-            _mealWeightEditText.EditText.Text = ((int)Item.WeightInUnits).ToString();
+            _mealWeightEditText.EditText.Text = ((int)Item.GetWeightInUnits(BaseActivity.BackpackPlannerState.Settings)).ToString();
 
             _mealCostEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.view_meal_cost);
-            _mealCostEditText.EditText.Text = ((int)Item.CostInCurrency).ToString();
+            _mealCostEditText.EditText.Text = ((int)Item.GetCostInCurrency(BaseActivity.BackpackPlannerState.Settings)).ToString();
 
             _mealCaloriesEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.view_meal_calories);
             _mealCaloriesEditText.EditText.Text = Item.Calories.ToString();
@@ -86,11 +86,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
             _mealNoteEditText.EditText.Text = Item.Note;
 
             _mealWeightEditText.Hint = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_meal_weight),
-                DroidState.Instance.BackpackPlannerState.Settings.Units.GetSmallWeightString(true)
+                BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(true)
             );
 
             _mealCostEditText.Hint = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_meal_cost),
-                DroidState.Instance.BackpackPlannerState.Settings.Currency.GetCurrencyString()
+                BaseActivity.BackpackPlannerState.Settings.Currency.GetCurrencyString()
             );
         }
 
@@ -100,8 +100,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
             Item.Url = _mealWebsiteEditText.EditText.Text;
             Item.MealTime = (MealTime)Enum.Parse(typeof(MealTime), _mealMealTimeSpinner.SelectedItem.ToString());
             Item.ServingCount = Convert.ToInt32(_mealServingsEditText.EditText.Text);
-            Item.WeightInUnits = Convert.ToSingle(_mealWeightEditText.EditText.Text);
-            Item.CostInCurrency = Convert.ToSingle(_mealCostEditText.EditText.Text);
+            Item.SetWeightInUnits(BaseActivity.BackpackPlannerState.Settings, Convert.ToSingle(_mealWeightEditText.EditText.Text));
+            Item.SetCostInCurrency(BaseActivity.BackpackPlannerState.Settings, Convert.ToSingle(_mealCostEditText.EditText.Text));
             Item.Calories = Convert.ToInt32(_mealCaloriesEditText.EditText.Text);
             Item.ProteinInGrams = Convert.ToInt32(_mealProteinEditText.EditText.Text);
             Item.FiberInGrams = Convert.ToInt32(_mealFiberEditText.EditText.Text);

@@ -41,7 +41,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
 
         protected override GearCollection CreateItem()
         {
-            return new GearCollection(DroidState.Instance.BackpackPlannerState.Settings);
+            return new GearCollection();
         }
 
         protected override async Task AddItemAsync(DatabaseContext dbContext)
