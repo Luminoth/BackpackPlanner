@@ -137,14 +137,25 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                 {
                     List<T> items;
                     using(DatabaseContext dbContext = BaseActivity.BackpackPlannerState.DatabaseState.CreateContext()) {
-                        items = await GetItemsAsync(dbContext).ConfigureAwait(false);
+                        try {
+                            items = await GetItemsAsync(dbContext).ConfigureAwait(false);
+                        } catch(Exception e) {
+                            Logger.Error($"Error loading items: {e.Message}");
+                            Logger.Debug(e.StackTrace);
+
+                            items = null;
+                        }
                     }
-                    Logger.Debug($"Read {items?.Count ?? 0} items...");
 
                     Activity.RunOnUiThread(() =>
                     {
                         progressDialog.Dismiss();
 
+                        if(null == items) {
+                            return;
+                        }
+
+                        Logger.Debug($"Read {items?.Count ?? 0} items...");
                         Adapter.ListItems = items ?? new List<T>();
                     });
                 }
@@ -181,9 +192,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                     {
                         progressDialog.Dismiss();
 
-                            if(count < 1) {
-                                return;
-                            }
+                        if(count < 1) {
+                            return;
+                        }
 
                         Adapter.RemoveItem(item);
 
