@@ -2314,6 +2314,18 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0c000f
 			public const int abc_text_size_title_material_toolbar = 2131492879;
 			
+			// aapt resource value: 0x7f0c009b
+			public const int card_corner_radius = 2131493019;
+			
+			// aapt resource value: 0x7f0c009c
+			public const int card_elevation = 2131493020;
+			
+			// aapt resource value: 0x7f0c009a
+			public const int card_margin_bottom = 2131493018;
+			
+			// aapt resource value: 0x7f0c0099
+			public const int card_margin_top = 2131493017;
+			
 			// aapt resource value: 0x7f0c0008
 			public const int cardview_compat_inset_shadow = 2131492872;
 			
@@ -2323,47 +2335,47 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0c000a
 			public const int cardview_default_radius = 2131492874;
 			
-			// aapt resource value: 0x7f0c0094
-			public const int default_circle_indicator_radius = 2131493012;
+			// aapt resource value: 0x7f0c009e
+			public const int default_circle_indicator_radius = 2131493022;
 			
-			// aapt resource value: 0x7f0c0095
-			public const int default_circle_indicator_stroke_width = 2131493013;
+			// aapt resource value: 0x7f0c009f
+			public const int default_circle_indicator_stroke_width = 2131493023;
 			
 			// aapt resource value: 0x7f0c0007
 			public const int default_gap = 2131492871;
 			
-			// aapt resource value: 0x7f0c0097
-			public const int default_line_indicator_gap_width = 2131493015;
-			
-			// aapt resource value: 0x7f0c0096
-			public const int default_line_indicator_line_width = 2131493014;
-			
-			// aapt resource value: 0x7f0c0098
-			public const int default_line_indicator_stroke_width = 2131493016;
-			
-			// aapt resource value: 0x7f0c0099
-			public const int default_title_indicator_clip_padding = 2131493017;
-			
-			// aapt resource value: 0x7f0c009b
-			public const int default_title_indicator_footer_indicator_height = 2131493019;
-			
-			// aapt resource value: 0x7f0c009c
-			public const int default_title_indicator_footer_indicator_underline_padding = 2131493020;
-			
-			// aapt resource value: 0x7f0c009a
-			public const int default_title_indicator_footer_line_height = 2131493018;
-			
-			// aapt resource value: 0x7f0c009d
-			public const int default_title_indicator_footer_padding = 2131493021;
-			
-			// aapt resource value: 0x7f0c009e
-			public const int default_title_indicator_text_size = 2131493022;
-			
-			// aapt resource value: 0x7f0c009f
-			public const int default_title_indicator_title_padding = 2131493023;
+			// aapt resource value: 0x7f0c00a1
+			public const int default_line_indicator_gap_width = 2131493025;
 			
 			// aapt resource value: 0x7f0c00a0
-			public const int default_title_indicator_top_padding = 2131493024;
+			public const int default_line_indicator_line_width = 2131493024;
+			
+			// aapt resource value: 0x7f0c00a2
+			public const int default_line_indicator_stroke_width = 2131493026;
+			
+			// aapt resource value: 0x7f0c00a3
+			public const int default_title_indicator_clip_padding = 2131493027;
+			
+			// aapt resource value: 0x7f0c00a5
+			public const int default_title_indicator_footer_indicator_height = 2131493029;
+			
+			// aapt resource value: 0x7f0c00a6
+			public const int default_title_indicator_footer_indicator_underline_padding = 2131493030;
+			
+			// aapt resource value: 0x7f0c00a4
+			public const int default_title_indicator_footer_line_height = 2131493028;
+			
+			// aapt resource value: 0x7f0c00a7
+			public const int default_title_indicator_footer_padding = 2131493031;
+			
+			// aapt resource value: 0x7f0c00a8
+			public const int default_title_indicator_text_size = 2131493032;
+			
+			// aapt resource value: 0x7f0c00a9
+			public const int default_title_indicator_title_padding = 2131493033;
+			
+			// aapt resource value: 0x7f0c00aa
+			public const int default_title_indicator_top_padding = 2131493034;
 			
 			// aapt resource value: 0x7f0c0075
 			public const int design_appbar_elevation = 2131492981;
@@ -2485,8 +2497,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0c005a
 			public const int disabled_alpha_material_light = 2131492954;
 			
-			// aapt resource value: 0x7f0c0093
-			public const int font_size_item_entry = 2131493011;
+			// aapt resource value: 0x7f0c0097
+			public const int fab_elevation = 2131493015;
+			
+			// aapt resource value: 0x7f0c0098
+			public const int fab_margin = 2131493016;
+			
+			// aapt resource value: 0x7f0c009d
+			public const int font_size_item_entry = 2131493021;
 			
 			// aapt resource value: 0x7f0c005b
 			public const int highlight_alpha_material_colored = 2131492955;
@@ -2517,6 +2535,15 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			
 			// aapt resource value: 0x7f0c0002
 			public const int item_touch_helper_swipe_escape_velocity = 2131492866;
+			
+			// aapt resource value: 0x7f0c0093
+			public const int nav_header_height = 2131493011;
+			
+			// aapt resource value: 0x7f0c0094
+			public const int nav_header_padding = 2131493012;
+			
+			// aapt resource value: 0x7f0c0095
+			public const int navigation_drawer_elevation = 2131493013;
 			
 			// aapt resource value: 0x7f0c0062
 			public const int notification_action_icon_size = 2131492962;
@@ -2574,6 +2601,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			
 			// aapt resource value: 0x7f0c0006
 			public const int preference_seekbar_value_width = 2131492870;
+			
+			// aapt resource value: 0x7f0c0096
+			public const int toolbar_elevation = 2131493014;
 			
 			static Dimension()
 			{

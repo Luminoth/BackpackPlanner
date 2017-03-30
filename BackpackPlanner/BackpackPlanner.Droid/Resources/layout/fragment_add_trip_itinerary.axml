@@ -40,16 +40,16 @@
             android:id="@+id/fab_add_trip_itinerary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:elevation="15dp"
-            android:layout_margin="16dp"
+            android:elevation="@dimen/fab_elevation"
+            android:layout_margin="@dimen/fab_margin"
             app:backgroundTint="@color/green"
             android:src="@drawable/ic_add" />
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_reset_trip_itinerary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:elevation="15dp"
-            android:layout_margin="16dp"
+            android:elevation="@dimen/fab_elevation"
+            android:layout_margin="@dimen/fab_margin"
             android:src="@drawable/ic_undo" />
     </LinearLayout>
 </RelativeLayout>

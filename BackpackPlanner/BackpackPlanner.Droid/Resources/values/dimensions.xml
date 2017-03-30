@@ -1,4 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <resources>
+    <dimen name="nav_header_height">96dp</dimen>
+    <dimen name="nav_header_padding">16dp</dimen>
+
+    <dimen name="navigation_drawer_elevation">16dp</dimen>
+
+    <dimen name="toolbar_elevation">4dp</dimen>
+
+    <dimen name="fab_elevation">15dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="card_margin_top">8dp</dimen>
+    <dimen name="card_margin_bottom">8dp</dimen>
+    <dimen name="card_corner_radius">0dp</dimen>
+    <dimen name="card_elevation">2dp</dimen>
+
     <dimen name="font_size_item_entry">10sp</dimen>
 </resources>

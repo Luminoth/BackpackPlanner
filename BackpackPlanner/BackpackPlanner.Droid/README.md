@@ -35,14 +35,6 @@ The following is necessary to fix Proguard failing:
 
 * 36dp
 
-# Elevations
-
-* Cards: 2dp
-* List top thingies: 3dp (TODO: this shadow doesn't work *sad face*)
-* Toolbars: 4dp
-* FAB: 15dp (setting app:borderWidth="0dp" on this doesn't seem to be useful)
-* Navigation Drawer: 16dp
-
 # Deployment
 
 * https://developer.xamarin.com/guides/android/deployment,_testing,_and_metrics/publishing_an_application/part_1_-_preparing_an_application_for_release/
