@@ -102,7 +102,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
                 progressDialog?.Dismiss();
 
                 if(!initSuccess) {
-                    DialogUtil.ShowAlert(this, Resource.String.message_error_initialization, Resource.String.title_error_initialization);
+                    DialogUtil.ShowOkAlert(this, Resource.String.message_error_initialization, Resource.String.title_error_initialization,
+                        (sender, args) =>
+                        {
+                            Finish();
+                        }
+                    );
                     return;
                 }
 
