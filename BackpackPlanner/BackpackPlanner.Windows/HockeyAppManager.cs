@@ -35,12 +35,7 @@ namespace EnergonSoftware.BackpackPlanner.Windows
             }
 
             HockeyClient.Current.Configure(AppId);
-
-            await HockeyClient.Current.SendCrashesAsync().ConfigureAwait(false);
-
-#if WINDOWS_PHONE_APP
-            await HockeyClient.Current.CheckForAppUpdateAsync().ConfigureAwait(false);
-#endif
+            await Task.Delay(0).ConfigureAwait(false);
 
             IsInitialized = true;
         }
@@ -51,7 +46,6 @@ namespace EnergonSoftware.BackpackPlanner.Windows
 
         public void ShowFeedback()
         {
-            HockeyClient.Current.ShowFeedback();
         }
     }
 }

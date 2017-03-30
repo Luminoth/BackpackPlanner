@@ -27,7 +27,7 @@
   <ItemGroup>
     <PackageReference Include="Google.Apis.Drive.v3" Version="1.23.0.809" />
     <PackageReference Include="HockeySDK.Core" Version="4.1.6" />
-    <PackageReference Include="HockeySDK.WINRT" Version="4.1.6" />
+    <PackageReference Include="HockeySDK.UWP" Version="4.1.6" />
     <PackageReference Include="JetBrains.Annotations" Version="10.4.0" />
     <PackageReference Include="Microsoft.ApplicationInsights" Version="2.2.0" />
     <PackageReference Include="Microsoft.ApplicationInsights.PersistenceChannel" Version="1.2.3" />

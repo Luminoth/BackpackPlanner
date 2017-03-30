@@ -14,17 +14,19 @@
    limitations under the License.
 */
 
-using System;
 using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Core.HockeyApp;
+using EnergonSoftware.BackpackPlanner.Core.Logging;
 
-using HockeyApp;
+using HockeyApp.iOS;
 
 namespace EnergonSoftware.BackpackPlanner.iOS
 {
     public class HockeyAppManager : IHockeyAppManager
     {
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(HockeyAppManager));
+
         public string AppId => "TODO";
 
         public bool IsInitialized { get; private set; }
@@ -32,40 +34,35 @@ namespace EnergonSoftware.BackpackPlanner.iOS
         public async Task InitAsync()
         {
             if(IsInitialized) {
+                Logger.Debug("HockeyApp already initialized!");
                 return;
             }
 
-            //We MUST wrap our setup in this block to wire up
-            // Mono's SIGSEGV and SIGBUS signals
-            Setup.EnableCustomCrashReporting(() => {
+            Logger.Info("Initializing HockeyApp...");
 
-                //Get the shared instance
-                BITHockeyManager manager = BITHockeyManager.SharedHockeyManager;
+            //Get the shared instance
+            BITHockeyManager manager = BITHockeyManager.SharedHockeyManager;
 
-                //Configure it to use our APP_ID
-                manager.Configure(AppId);
+// TODO: how do we turn always send on?
 
-                //Start the manager
-                manager.StartManager();
+            //Configure it to use our APP_ID
+            manager.Configure(AppId);
 
-                //Authenticate (there are other authentication options)
-                manager.Authenticator.AuthenticateInstallation();
+            manager.CrashManager.CrashManagerStatus = BITCrashManagerStatus.AutoSend;
 
-                //Rethrow any unhandled .NET exceptions as native iOS 
-                // exceptions so the stack traces appear nicely in HockeyApp
-                AppDomain.CurrentDomain.UnhandledException += (sender, args) => Setup.ThrowExceptionAsNative(args.ExceptionObject);
+            //Start the manager
+            manager.StartManager();
 
-                TaskScheduler.UnobservedTaskException += (sender, args) => Setup.ThrowExceptionAsNative(args.Exception);
-            });
+            //Authenticate (there are other authentication options)
+            manager.Authenticator.AuthenticateInstallation();
 
             await Task.Delay(0).ConfigureAwait(false);
 
             IsInitialized = true;
         }
 
-        public async Task DestroyAsync()
+        public void Destroy()
         {
-            await Task.Delay(0).ConfigureAwait(false);
         }
 
         public void ShowFeedback()

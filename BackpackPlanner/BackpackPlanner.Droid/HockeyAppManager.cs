@@ -23,13 +23,22 @@ using Android.Runtime;
 using EnergonSoftware.BackpackPlanner.Core.HockeyApp;
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 
-using HockeyApp;
+using HockeyApp.Android;
+using HockeyApp.Android.Metrics;
 
 namespace EnergonSoftware.BackpackPlanner.Droid
 {
     public sealed class HockeyAppManager : IHockeyAppManager
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(HockeyAppManager));
+
+        private class CustomCrashManagerListener : CrashManagerListener
+        {
+            public override bool ShouldAutoUploadCrashes()
+            {
+                return true;
+            }
+        }
 
         // static so that separate activities don't
         // initialize the handlers more than once
@@ -49,12 +58,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
             Logger.Info("Initializing HockeyApp...");
 
-            TraceWriter.Initialize();
-
-            AndroidEnvironment.UnhandledExceptionRaiser += OnUnhandledExceptionRaised;
-            AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
-            TaskScheduler.UnobservedTaskException += OnUnobservedTaskException;
-
+            // do nothing, we need access to the activity
             await Task.Delay(0).ConfigureAwait(false);
 
             IsInitialized = true;
@@ -62,6 +66,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
         public void OnCreate(Activity activity)
         {
+            CrashManager.Register(activity, AppId, new CustomCrashManagerListener());
+            MetricsManager.Register(activity.Application, AppId);
             UpdateManager.Register(activity, AppId);
         }
 
@@ -72,14 +78,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
         public void OnResume(Activity activity)
         {
-            Tracking.StartUsage(activity);
-            CrashManager.Register(activity, AppId);
         }
 
         public void OnPause(Activity activity)
         {
             UpdateManager.Unregister();
-            Tracking.StopUsage(activity);
         }
 
         public bool HasNewCrashes(Activity activity)
@@ -89,9 +92,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 
         public void Destroy()
         {
+            // TODO: move handling these somewhere else
+            // and make them do something useful
+/*
             TaskScheduler.UnobservedTaskException -= OnUnobservedTaskException;
             AppDomain.CurrentDomain.UnhandledException -= OnUnhandledException;
             AndroidEnvironment.UnhandledExceptionRaiser -= OnUnhandledExceptionRaised;
+*/
         }
 
         public void ShowFeedback()
@@ -106,19 +113,18 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             FeedbackManager.ShowFeedbackActivity(activity);*/
         }
 
+/*
         private void OnUnhandledExceptionRaised(object sender, RaiseThrowableEventArgs args)
         {
-            TraceWriter.WriteTrace(args.Exception);
-            args.Handled = true;
         }
 
         private void OnUnhandledException(object sender, UnhandledExceptionEventArgs args)
         {
-            TraceWriter.WriteTrace(args.ExceptionObject);
         }
 
         private void OnUnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs args)
         {
         }
+*/
     }
 }
