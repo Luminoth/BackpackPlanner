@@ -33,7 +33,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
 {
     public sealed class GearItemListAdapter : BaseModelRecyclerListAdapter<GearItem>
     {
-        private sealed class GearItemViewHolder : BaseViewHolder
+        private sealed class GearItemViewHolder : BaseModelViewHolder
         {
             protected override int DeleteActionResourceId => Resource.Id.action_delete_gear_item;
 

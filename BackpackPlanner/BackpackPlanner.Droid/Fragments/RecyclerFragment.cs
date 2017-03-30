@@ -26,7 +26,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
     {
         protected abstract int ListLayoutResource { get; }
 
-        protected Android.Support.V7.Widget.RecyclerView Layout { get; set; }
+        public Android.Support.V7.Widget.RecyclerView Layout { get; protected set; }
 
         protected Android.Support.V7.Widget.RecyclerView.LayoutManager LayoutManager { get; set; }
 

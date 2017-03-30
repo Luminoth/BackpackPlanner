@@ -30,7 +30,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
 {
     public sealed class MealListAdapter : BaseModelRecyclerListAdapter<Meal>
     {
-        private sealed class MealViewHolder : BaseViewHolder
+        private sealed class MealViewHolder : BaseModelViewHolder
         {
             protected override int DeleteActionResourceId => Resource.Id.action_delete_meal;
 

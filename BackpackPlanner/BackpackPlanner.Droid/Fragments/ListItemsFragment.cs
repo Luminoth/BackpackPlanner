@@ -155,8 +155,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                             return;
                         }
 
-                        Logger.Debug($"Read {items?.Count ?? 0} items...");
-                        Adapter.ListItems = items ?? new List<T>();
+                        Logger.Debug($"Read {items.Count} items...");
+                        Adapter.SetItems(items);
                     });
                 }
             );

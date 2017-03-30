@@ -28,36 +28,24 @@ using Java.Lang;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 {
-    public abstract class BaseModelRecyclerListAdapter<T> : Android.Support.V7.Widget.RecyclerView.Adapter, IFilterable where T: BaseModel, IBackpackPlannerItem
+#if ENABLE_ADS
+    public abstract class BaseModelRecyclerListAdapter<T> : BaseRecyclerListAdapterWithAds<T>, IFilterable where T: BaseModel, IBackpackPlannerItem
+
+#else
+    public abstract class BaseModelRecyclerListAdapter<T> : BaseRecyclerListAdapter<T>, IFilterable where T: BaseModel, IBackpackPlannerItem
+#endif
     {
-        protected abstract class BaseViewHolder : Android.Support.V7.Widget.RecyclerView.ViewHolder, Android.Support.V7.Widget.Toolbar.IOnMenuItemClickListener
+        protected abstract class BaseModelViewHolder : BaseViewHolder, Android.Support.V7.Widget.Toolbar.IOnMenuItemClickListener
         {
+            protected BaseModelRecyclerListAdapter<T> BaseModelAdapter => (BaseModelRecyclerListAdapter<T>)Adapter;
+
             protected abstract int DeleteActionResourceId { get; }
-
-            protected BaseModelRecyclerListAdapter<T> Adapter { get; }
-
-            private T _listItem;
-
-            public T ListItem
-            {
-                get { return _listItem; }
-
-                set
-                {
-                    _listItem = value;
-                    UpdateView();
-                }
-            }
 
             protected abstract Android.Support.V4.App.Fragment CreateViewItemFragment();
 
-            protected abstract void UpdateView();
-
-            protected BaseViewHolder(View itemView, BaseModelRecyclerListAdapter<T> adapter)
-                : base(itemView)
+            protected BaseModelViewHolder(View itemView, BaseModelRecyclerListAdapter<T> adapter)
+                : base(itemView, adapter)
             {
-                Adapter = adapter;
-
                 itemView.Click += (sender, args) => {
                     Adapter.Fragment.TransitionToFragment(Resource.Id.frame_content, CreateViewItemFragment(), null);
                 };
@@ -66,7 +54,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
             public virtual bool OnMenuItemClick(IMenuItem menuItem)
             {
                 if(DeleteActionResourceId == menuItem.ItemId) {
-                    Adapter.Fragment.DeleteItem(ListItem);
+                    BaseModelAdapter.ListItemsFragment.DeleteItem(ListItem);
                     return true;
                 }
                 return false;
@@ -122,25 +110,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
             }
         }
 
-        public ListItemsFragment<T> Fragment { get; }
-
-        public abstract int LayoutResource { get; }
+        public ListItemsFragment<T> ListItemsFragment => (ListItemsFragment<T>)Fragment;
 
         public override int ItemCount => FilteredListItems?.Count() ?? 0;
-
-        private List<T> _listItems = new List<T>();
-
-        public IReadOnlyCollection<T> ListItems
-        {
-            get { return _listItems; }
-
-            set
-            {
-                _listItems = null == value ? new List<T>() : new List<T>(value);
-
-                FilterItems();
-            }
-        }
 
         private IEnumerable<T> _filteredListItems = new List<T>();
 
@@ -158,34 +130,33 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
         public Filter Filter { get; }
 
-#region ViewHolder
-        protected abstract BaseViewHolder CreateViewHolder(View itemView);
-
-        public override Android.Support.V7.Widget.RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
-        {
-            View itemView = LayoutInflater.From(parent.Context).Inflate(LayoutResource, parent, false);
-            return CreateViewHolder(itemView);
-        }
-
         public override void OnBindViewHolder(Android.Support.V7.Widget.RecyclerView.ViewHolder holder, int position)
         {
+            base.OnBindViewHolder(holder, position);
+
             BaseViewHolder baseViewHolder = (BaseViewHolder)holder;
             T gearItem = FilteredListItems.ElementAt(position);
             baseViewHolder.ListItem = gearItem;
         }
-#endregion
 
-#region Add/Remove items
-        public void AddItem(T item)
+#region Add/Remove Items
+        public override void SetItems(IReadOnlyCollection<T> items)
         {
-            _listItems.Add(item);
+            base.SetItems(items);
+
+            FilterItems();
+        } 
+
+        public override void AddItem(T item)
+        {
+            base.AddItem(item);
 
             FilterItems();
         }
 
-        public void RemoveItem(T item)
+        public override void RemoveItem(T item)
         {
-            _listItems.Remove(item);
+            base.RemoveItem(item);
 
             FilterItems();
         }
@@ -206,10 +177,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
         private void SortFilteredItems()
         {
-            if(null == Fragment.SortItemsSpinner) {
+            if(null == ListItemsFragment.SortItemsSpinner) {
                 return;
             }
-            SortItemsByPosition(Fragment.SortItemsSpinner.SelectedItemPosition);
+            SortItemsByPosition(ListItemsFragment.SortItemsSpinner.SelectedItemPosition);
         }
 
         public void SortByItemSelectedEventHander(object sender, AdapterView.ItemSelectedEventArgs args)
@@ -224,8 +195,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 #endregion
 
         protected BaseModelRecyclerListAdapter(ListItemsFragment<T> fragment)
+            : base(fragment)
         {
-            Fragment = fragment;
             Filter = new ItemFilter(this);
         }
     }

@@ -294,6 +294,8 @@
     <Compile Include="Activities\BaseActivity.cs" />
     <Compile Include="Activities\FTUEActivity.cs" />
     <Compile Include="Adapters\BaseListViewAdapter.cs" />
+    <Compile Include="Adapters\BaseRecyclerListAdapter.cs" />
+    <Compile Include="Adapters\BaseRecyclerListAdapterWithAds.cs" />
     <Compile Include="Adapters\Gear\GearItemEntryListAdapter.cs" />
     <Compile Include="Adapters\BaseModelEntryListViewAdapter.cs" />
     <Compile Include="Adapters\BaseModelRecyclerListAdapter.cs" />
@@ -373,6 +375,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\alert_dialog_filter.axml" />
+    <AndroidResource Include="Resources\layout\view_ad.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
     <ProguardConfiguration Include="proguard.cfg" />
     <None Include="packages.config" />
     <None Include="README.md" />
@@ -438,7 +443,7 @@
       <SubType>AndroidResource</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\fragment_view_gear_system.axml">
-      <SubType>AndroidResource</SubType>
+      <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\fragment_view_meal.axml">
       <SubType>AndroidResource</SubType>

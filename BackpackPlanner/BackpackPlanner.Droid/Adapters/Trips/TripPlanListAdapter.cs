@@ -30,7 +30,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips
 {
     public sealed class TripPlanListAdapter : BaseModelRecyclerListAdapter<TripPlan>
     {
-        private sealed class TripPlanViewHolder : BaseViewHolder
+        private sealed class TripPlanViewHolder : BaseModelViewHolder
         {
             protected override int DeleteActionResourceId => Resource.Id.action_delete_trip_plan;
 
