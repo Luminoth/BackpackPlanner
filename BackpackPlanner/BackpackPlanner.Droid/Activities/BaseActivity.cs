@@ -14,10 +14,6 @@
    limitations under the License.
 */
 
-#if DEBUG
-#define DEBUG_LIFECYCLE
-#endif
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

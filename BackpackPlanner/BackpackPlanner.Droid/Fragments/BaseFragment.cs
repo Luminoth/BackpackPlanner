@@ -14,10 +14,6 @@
    limitations under the License.
 */
 
-#if DEBUG
-#define DEBUG_LIFECYCLE
-#endif
-
 using System.Diagnostics;
 
 using Android.OS;

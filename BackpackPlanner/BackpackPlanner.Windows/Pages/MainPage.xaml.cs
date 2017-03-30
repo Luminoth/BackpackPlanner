@@ -34,6 +34,9 @@ namespace EnergonSoftware.BackpackPlanner.Windows.Pages
 
 #if !DEBUG
             NavMenu.Items?.Remove(TripItinerariesItem);
+#endif
+
+#if !DEBUG_FRAGMENT
             NavMenu.Items?.Remove(DebugItem);
 #endif
         }

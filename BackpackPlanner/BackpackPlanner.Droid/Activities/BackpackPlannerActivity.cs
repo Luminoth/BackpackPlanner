@@ -64,6 +64,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 
 #if !DEBUG
             _navigationDrawerManager.RemoveItemByResId(Resource.Id.nav_trip_itineraries_fragment);
+#endif
+
+#if !DEBUG_FRAGMENT
             _navigationDrawerManager.RemoveItemByResId(Resource.Id.nav_debug_fragment);
 #endif
 
