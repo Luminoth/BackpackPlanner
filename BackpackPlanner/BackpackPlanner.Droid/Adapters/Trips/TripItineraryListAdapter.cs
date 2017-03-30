@@ -25,7 +25,7 @@ using EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips
 {
-    public sealed class TripItineraryListAdapter : BaseListAdapter<TripItinerary>
+    public sealed class TripItineraryListAdapter : BaseModelRecyclerListAdapter<TripItinerary>
     {
         private sealed class TripItineraryViewHolder : BaseViewHolder
         {
@@ -33,7 +33,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips
 
             private readonly Android.Support.V7.Widget.Toolbar _toolbar;
 
-            public TripItineraryViewHolder(View itemView, BaseListAdapter<TripItinerary> adapter)
+            public TripItineraryViewHolder(View itemView, BaseModelRecyclerListAdapter<TripItinerary> adapter)
                 : base(itemView, adapter)
             {
                 _toolbar = itemView.FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.view_trip_itinerary_toolbar);

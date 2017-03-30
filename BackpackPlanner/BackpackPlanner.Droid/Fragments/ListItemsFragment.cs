@@ -76,7 +76,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         protected override bool CanExport => true;
 
-        protected BaseListAdapter<T> Adapter { get; private set; } 
+        protected BaseModelRecyclerListAdapter<T> Adapter { get; private set; } 
 
 #region Controls
         private TextView _noItemsTextView;
@@ -86,7 +86,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         protected abstract Android.Support.V4.App.Fragment CreateAddItemFragment();
 
-        protected abstract BaseListAdapter<T> CreateAdapter();
+        protected abstract BaseModelRecyclerListAdapter<T> CreateAdapter();
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {

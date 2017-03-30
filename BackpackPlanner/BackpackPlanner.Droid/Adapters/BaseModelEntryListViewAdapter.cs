@@ -22,8 +22,7 @@ using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 {
-// TODO: rename BaseModelEntryListViewAdapter
-    public abstract class BaseModelEntryListAdapter<T, TV> : BaseListViewAdapter<T> where T: BaseModelEntry<TV> where TV: BaseModel, IBackpackPlannerItem
+    public abstract class BaseModelEntryListViewAdapter<T, TV> : BaseListViewAdapter<T> where T: BaseModelEntry<TV> where TV: BaseModel, IBackpackPlannerItem
     {
         private readonly List<T> _items = new List<T>();
 
@@ -49,12 +48,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
             }
         }
 
-        protected BaseModelEntryListAdapter(BaseFragment fragment)
+        protected BaseModelEntryListViewAdapter(BaseFragment fragment)
             : base(fragment)
         {
         }
 
-        protected BaseModelEntryListAdapter(BaseFragment fragment, T[] items)
+        protected BaseModelEntryListViewAdapter(BaseFragment fragment, T[] items)
             : base(fragment, items)
         {
         }

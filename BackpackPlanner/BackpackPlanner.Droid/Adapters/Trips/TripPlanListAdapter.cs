@@ -28,7 +28,7 @@ using EnergonSoftware.BackpackPlanner.Units.Units;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips
 {
-    public sealed class TripPlanListAdapter : BaseListAdapter<TripPlan>
+    public sealed class TripPlanListAdapter : BaseModelRecyclerListAdapter<TripPlan>
     {
         private sealed class TripPlanViewHolder : BaseViewHolder
         {
@@ -46,7 +46,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips
             private readonly TextView _textViewSkinOutWeight;
             private readonly TextView _textViewCost;
 
-            public TripPlanViewHolder(View itemView, BaseListAdapter<TripPlan> adapter)
+            public TripPlanViewHolder(View itemView, BaseModelRecyclerListAdapter<TripPlan> adapter)
                 : base(itemView, adapter)
             {
                 _toolbar = itemView.FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.view_trip_plan_toolbar);

@@ -28,14 +28,13 @@ using Java.Lang;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 {
-// TODO: rename this BaseRecyclerItemListAdapter
-    public abstract class BaseListAdapter<T> : Android.Support.V7.Widget.RecyclerView.Adapter, IFilterable where T: BaseModel, IBackpackPlannerItem
+    public abstract class BaseModelRecyclerListAdapter<T> : Android.Support.V7.Widget.RecyclerView.Adapter, IFilterable where T: BaseModel, IBackpackPlannerItem
     {
         protected abstract class BaseViewHolder : Android.Support.V7.Widget.RecyclerView.ViewHolder, Android.Support.V7.Widget.Toolbar.IOnMenuItemClickListener
         {
             protected abstract int DeleteActionResourceId { get; }
 
-            protected BaseListAdapter<T> Adapter { get; }
+            protected BaseModelRecyclerListAdapter<T> Adapter { get; }
 
             private T _listItem;
 
@@ -54,7 +53,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
             protected abstract void UpdateView();
 
-            protected BaseViewHolder(View itemView, BaseListAdapter<T> adapter)
+            protected BaseViewHolder(View itemView, BaseModelRecyclerListAdapter<T> adapter)
                 : base(itemView)
             {
                 Adapter = adapter;
@@ -76,7 +75,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
         private sealed class ItemFilter : Filter
         {
-            private readonly BaseListAdapter<T> _adapter;
+            private readonly BaseModelRecyclerListAdapter<T> _adapter;
 
             protected override FilterResults PerformFiltering(ICharSequence constraint)
             {
@@ -102,7 +101,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
                 _adapter.FilteredListItems = from item in filteredItems select (T)item.Instance;
             }
 
-            public ItemFilter(BaseListAdapter<T> adapter)
+            public ItemFilter(BaseModelRecyclerListAdapter<T> adapter)
             {
                 _adapter = adapter;
             }
@@ -110,9 +109,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
         private sealed class FilterListener : Java.Lang.Object, Filter.IFilterListener
         {
-            private readonly BaseListAdapter<T> _adapter;
+            private readonly BaseModelRecyclerListAdapter<T> _adapter;
 
-            public FilterListener(BaseListAdapter<T> adapter)
+            public FilterListener(BaseModelRecyclerListAdapter<T> adapter)
             {
                 _adapter = adapter;
             }
@@ -224,7 +223,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
         }
 #endregion
 
-        protected BaseListAdapter(ListItemsFragment<T> fragment)
+        protected BaseModelRecyclerListAdapter(ListItemsFragment<T> fragment)
         {
             Fragment = fragment;
             Filter = new ItemFilter(this);

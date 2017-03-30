@@ -60,7 +60,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
             return new AddMealFragment();
         }
 
-        protected override BaseListAdapter<Meal> CreateAdapter()
+        protected override BaseModelRecyclerListAdapter<Meal> CreateAdapter()
         {
             return new MealListAdapter(this);
         }

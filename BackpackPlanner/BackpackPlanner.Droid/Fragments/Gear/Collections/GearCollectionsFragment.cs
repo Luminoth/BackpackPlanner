@@ -63,7 +63,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
             return new AddGearCollectionFragment();
         }
 
-        protected override BaseListAdapter<GearCollection> CreateAdapter()
+        protected override BaseModelRecyclerListAdapter<GearCollection> CreateAdapter()
         {
             return new GearCollectionListAdapter(this);
         }

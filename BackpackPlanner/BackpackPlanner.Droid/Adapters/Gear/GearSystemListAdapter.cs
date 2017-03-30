@@ -28,7 +28,7 @@ using EnergonSoftware.BackpackPlanner.Units.Units;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
 {
-    public sealed class GearSystemListAdapter : BaseListAdapter<GearSystem>
+    public sealed class GearSystemListAdapter : BaseModelRecyclerListAdapter<GearSystem>
     {
         private sealed class GearSystemViewHolder : BaseViewHolder
         {
@@ -40,7 +40,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
             private readonly TextView _textViewWeight;
             private readonly TextView _textViewCost;
 
-            public GearSystemViewHolder(View itemView, BaseListAdapter<GearSystem> adapter)
+            public GearSystemViewHolder(View itemView, BaseModelRecyclerListAdapter<GearSystem> adapter)
                 : base(itemView, adapter)
             {
                 _toolbar = itemView.FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.view_gear_system_toolbar);

@@ -292,8 +292,8 @@
     <Compile Include="Activities\FTUEActivity.cs" />
     <Compile Include="Adapters\BaseListViewAdapter.cs" />
     <Compile Include="Adapters\Gear\GearItemEntryListAdapter.cs" />
-    <Compile Include="Adapters\BaseModelEntryListAdapter.cs" />
-    <Compile Include="Adapters\BaseListAdapter.cs" />
+    <Compile Include="Adapters\BaseModelEntryListViewAdapter.cs" />
+    <Compile Include="Adapters\BaseModelRecyclerListAdapter.cs" />
     <Compile Include="Adapters\Gear\GearCollectionListAdapter.cs" />
     <Compile Include="Adapters\Gear\GearItemListAdapter.cs" />
     <Compile Include="Adapters\Gear\GearSystemListAdapter.cs" />

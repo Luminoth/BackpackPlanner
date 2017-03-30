@@ -25,7 +25,7 @@ using EnergonSoftware.BackpackPlanner.Units.Units;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
 {
-    public sealed class GearItemEntryListAdapter : BaseModelEntryListAdapter<GearItemEntry, GearItem>
+    public sealed class GearItemEntryListAdapter : BaseModelEntryListViewAdapter<GearItemEntry, GearItem>
     {
         private sealed class GearItemEntryViewHolder : ViewHolder
         {

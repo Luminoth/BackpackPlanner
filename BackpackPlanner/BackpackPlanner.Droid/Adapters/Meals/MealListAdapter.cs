@@ -28,7 +28,7 @@ using EnergonSoftware.BackpackPlanner.Units.Units;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
 {
-    public sealed class MealListAdapter : BaseListAdapter<Meal>
+    public sealed class MealListAdapter : BaseModelRecyclerListAdapter<Meal>
     {
         private sealed class MealViewHolder : BaseViewHolder
         {
@@ -45,7 +45,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
             private readonly TextView _textViewCalories;
             private readonly TextView _textViewCost;
 
-            public MealViewHolder(View itemView, BaseListAdapter<Meal> adapter)
+            public MealViewHolder(View itemView, BaseModelRecyclerListAdapter<Meal> adapter)
                 : base(itemView, adapter)
             {
                 _toolbar = itemView.FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.view_meal_toolbar);

@@ -65,7 +65,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
             return new AddTripPlanFragment();
         }
 
-        protected override BaseListAdapter<TripPlan> CreateAdapter()
+        protected override BaseModelRecyclerListAdapter<TripPlan> CreateAdapter()
         {
             return new TripPlanListAdapter(this);
         }
