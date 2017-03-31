@@ -346,6 +346,7 @@
     <Compile Include="HockeyAppManager.cs" />
     <Compile Include="Logging\DroidLogger.cs" />
     <Compile Include="DroidSettingsManager.cs" />
+    <Compile Include="Logging\LogMessageEventArgs.cs" />
     <Compile Include="Permissions\DroidPermissionRequest.cs" />
     <Compile Include="Permissions\DroidPermissionRequestFactory.cs" />
     <Compile Include="Util\CircleViewPagerIndicator.cs" />

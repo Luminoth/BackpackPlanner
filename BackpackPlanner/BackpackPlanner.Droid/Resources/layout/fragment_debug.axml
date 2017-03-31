@@ -19,4 +19,14 @@
         android:layout_gravity="center_horizontal"
         android:text="@string/label_reset_database"
         android:textColor="@android:color/white" />
+    <TextView
+        android:id="@+id/title_log_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="Log Messages" />
+    <ListView
+        android:id="@+id/log_text_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

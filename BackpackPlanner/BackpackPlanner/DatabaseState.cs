@@ -66,16 +66,14 @@ namespace EnergonSoftware.BackpackPlanner
                 try {
                     await dbContext.Database.MigrateAsync().ConfigureAwait(false);
                 } catch(Exception e) {
-                    Logger.Error($"Unable to migrate database: {e.Message}!");
-                    Logger.Debug(e.StackTrace);
+                    Logger.Error($"Unable to migrate database: {e.Message}!", e);
                     return false;
                 }
 
                 try {
                     await PopulateInitialDatabaseAsync(dbContext, state).ConfigureAwait(false);
                 } catch(Exception e) {
-                    Logger.Error($"Unable to populate initial database: {e.Message}");
-                    Logger.Debug(e.StackTrace);
+                    Logger.Error($"Unable to populate initial database: {e.Message}", e);
                     return false;
                 }
             }

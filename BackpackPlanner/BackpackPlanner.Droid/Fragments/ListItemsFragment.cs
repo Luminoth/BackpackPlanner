@@ -140,8 +140,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                         try {
                             items = await GetItemsAsync(dbContext).ConfigureAwait(false);
                         } catch(Exception e) {
-                            Logger.Error($"Error loading items: {e.Message}");
-                            Logger.Debug(e.StackTrace);
+                            Logger.Error($"Error loading items: {e.Message}", e);
 
                             items = null;
                         }
@@ -180,8 +179,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                             item.IsDeleted = true;
                             count = await dbContext.SaveChangesAsync().ConfigureAwait(false);
                         } catch(Exception e) {
-                            Logger.Error($"Error adding item: {e.Message}");
-                            Logger.Debug(e.StackTrace);
+                            Logger.Error($"Error adding item: {e.Message}", e);
 
                             item.IsDeleted = false;
                             count = -1;
@@ -217,8 +215,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                             item.IsDeleted = false;
                             count = await dbContext.SaveChangesAsync().ConfigureAwait(false);
                         } catch(Exception e) {
-                            Logger.Error($"Error adding item: {e.Message}");
-                            Logger.Debug(e.StackTrace);
+                            Logger.Error($"Error adding item: {e.Message}", e);
 
                             item.IsDeleted = true;
                             count = -1;

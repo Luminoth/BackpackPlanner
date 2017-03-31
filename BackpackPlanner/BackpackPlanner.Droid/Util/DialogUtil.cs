@@ -55,6 +55,15 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
                 .Show();
         }
 
+        public static Android.Support.V7.App.AlertDialog ShowOkAlert(Activity activity, string message, string title, EventHandler<DialogClickEventArgs> okEventHandler=null)
+        {
+            Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(activity, Resource.Style.AppTheme_AlertDialog);
+            return builder.SetTitle(title)
+                .SetMessage(message)
+                .SetPositiveButton(Android.Resource.String.Ok, okEventHandler ?? ((sender, args) => { }))
+                .Show();
+        }
+
         public static Android.Support.V7.App.AlertDialog ShowOkCancelAlert(Activity activity, int messageResId, int titleResId, EventHandler<DialogClickEventArgs> okEventHandler=null, EventHandler<DialogClickEventArgs> cancelEventHandler=null)
         {
             Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(activity, Resource.Style.AppTheme_AlertDialog);

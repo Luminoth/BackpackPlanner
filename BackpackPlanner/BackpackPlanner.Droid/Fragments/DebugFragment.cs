@@ -14,11 +14,16 @@
    limitations under the License.
 */
 
+using System;
+using System.Linq;
+
 using Android.OS;
 using Android.Views;
 using Android.Widget;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
+using EnergonSoftware.BackpackPlanner.Droid.Logging;
+using EnergonSoftware.BackpackPlanner.Droid.Util;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 {
@@ -34,6 +39,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         protected override bool CanExport => false;
 
+#region Controls
+        private ListView _logTextListView;
+#endregion
+
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
             base.OnViewCreated(view, savedInstanceState);
@@ -47,8 +56,25 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             Button resetDatabaseButton = view.FindViewById<Button>(Resource.Id.button_reset_database);
             resetDatabaseButton.Click += (sender, args) => {
                 Logger.Debug("Resetting database");
-                // TODO
+                DialogUtil.ShowOkAlert(Activity, "TODO", "Database reset not implemented!");
             };
+
+            _logTextListView = view.FindViewById<ListView>(Resource.Id.log_text_list);
+            _logTextListView.Adapter = new ArrayAdapter<LogMessageEventArgs>(Context, Android.Resource.Layout.SimpleListItem1);
+
+            DroidLogger.LogMessageEvent += LogMessageEventHandler;
+        }
+
+        public override void OnDestroyView()
+        {
+            DroidLogger.LogMessageEvent -= LogMessageEventHandler;
+
+            base.OnDestroyView();
+        }
+
+        private void LogMessageEventHandler(object sender, EventArgs args)
+        {
+            ((ArrayAdapter<LogMessageEventArgs>)_logTextListView.Adapter).AddAll(DroidLogger.LogMessages.Reverse().ToList());
         }
     }
 }

@@ -73,8 +73,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                                 await AddItemAsync(dbContext).ConfigureAwait(false);
                                 count = await dbContext.SaveChangesAsync().ConfigureAwait(false);
                             } catch(Exception e) {
-                                Logger.Error($"Error adding item: {e.Message}");
-                                Logger.Debug(e.StackTrace);
+                                Logger.Error($"Error adding item: {e.Message}", e);
                                 count = -1;
                             }
                         }

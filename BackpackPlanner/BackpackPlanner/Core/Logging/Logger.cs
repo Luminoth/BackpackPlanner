@@ -26,6 +26,8 @@ namespace EnergonSoftware.BackpackPlanner.Core.Logging
     /// <remarks>
     /// Implement this on each platform to enable library logging.
     /// </remarks>
+    // TODO: if we make this an abstract class, we can make the Debug()
+    // methods Conditional, and thus avoid the #if DEBUG in the code
     public interface ILogger
     {
         /// <summary>

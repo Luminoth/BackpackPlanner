@@ -45,8 +45,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:elevation="15dp"
-        android:layout_margin="16dp"
+        android:elevation="@dimen/fab_elevation"
+        android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_add"
         android:visibility="gone" />
     <android.support.design.widget.TextInputLayout
