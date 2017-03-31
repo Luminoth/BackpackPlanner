@@ -14,6 +14,7 @@
    limitations under the License.
 */
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -25,6 +26,7 @@ using JetBrains.Annotations;
 
 namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections
 {
+    [Serializable]
     public class GearCollectionEntry : BaseModelEntry<GearCollection>, IGearItemContainer
     {
 #region Static Helpers

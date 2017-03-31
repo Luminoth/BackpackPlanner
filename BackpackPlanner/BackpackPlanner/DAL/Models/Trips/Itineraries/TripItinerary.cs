@@ -14,6 +14,7 @@
    limitations under the License.
 */
 
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -22,6 +23,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Itineraries
     /// <summary>
     /// 
     /// </summary>
+    [Serializable]
     public sealed class TripItinerary : BaseModel, IBackpackPlannerItem
     {
         public override int Id => TripItineraryId;

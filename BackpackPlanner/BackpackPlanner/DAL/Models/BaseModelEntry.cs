@@ -14,17 +14,21 @@
    limitations under the License.
 */
 
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 using System.Runtime.CompilerServices;
 
+using Newtonsoft.Json;
+
 namespace EnergonSoftware.BackpackPlanner.DAL.Models
 {
     /// <summary>
     /// 
     /// </summary>
+    [Serializable]
     public abstract class BaseModelEntry<T> : INotifyPropertyChanged where T: BaseModel, IBackpackPlannerItem
     {
         public event PropertyChangedEventHandler PropertyChanged;
@@ -35,7 +39,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models
         /// <value>
         /// The item entry identifier.
         /// </value>
-        [NotMapped]
+        [NotMapped, JsonIgnore]
         public abstract int Id { get; }
 
 #region Database Properties

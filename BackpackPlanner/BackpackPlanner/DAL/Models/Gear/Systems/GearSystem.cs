@@ -14,6 +14,7 @@
    limitations under the License.
 */
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -24,11 +25,15 @@ using EnergonSoftware.BackpackPlanner.Settings;
 using EnergonSoftware.BackpackPlanner.Units.Currency;
 using EnergonSoftware.BackpackPlanner.Units.Units;
 
+using Newtonsoft.Json;
+
 namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems
 {
     /// <summary>
     /// 
     /// </summary>
+
+    [Serializable]
     public class GearSystem : BaseModel, IBackpackPlannerItem
     {
         public override int Id => GearSystemId;
@@ -93,7 +98,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems
 #endregion
 
 #if DEBUG
-        [NotMapped]
+        [NotMapped, JsonIgnore]
         public List<GearItemEntry> TestGearItems
         {
             get { return _gearItems; }

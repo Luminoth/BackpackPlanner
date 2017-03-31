@@ -14,6 +14,7 @@
    limitations under the License.
 */
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -23,9 +24,13 @@ using EnergonSoftware.BackpackPlanner.Units.Units;
 
 using JetBrains.Annotations;
 
+using Newtonsoft.Json;
+
 namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
 {
-    public class GearItemEntry : BaseModelEntry<GearItem>
+ 
+    [Serializable]
+   public class GearItemEntry : BaseModelEntry<GearItem>
     {
 #region Static Helpers
         public static int GetGearItemCount<TE>(List<TE> gearItems, [CanBeNull] List<int> visitedGearItems) where TE: GearItemEntry
@@ -96,7 +101,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
         /// <value>
         /// The total weight of these gear items in grams.
         /// </value>
-        [NotMapped]
+        [NotMapped, JsonIgnore]
         public int TotalWeightInGrams => Count * (Model?.WeightInGrams ?? 0);
 
         /// <summary>
@@ -116,7 +121,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
         /// <value>
         /// The total cost in USDP.
         /// </value>
-        [NotMapped]
+        [NotMapped, JsonIgnore]
         // ReSharper disable once InconsistentNaming
         public int TotalCostInUSDP => Count * (Model?.CostInUSDP ?? 0);
 

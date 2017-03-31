@@ -14,6 +14,7 @@
    limitations under the License.
 */
 
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -21,11 +22,15 @@ using EnergonSoftware.BackpackPlanner.Settings;
 using EnergonSoftware.BackpackPlanner.Units.Currency;
 using EnergonSoftware.BackpackPlanner.Units.Units;
 
+using Newtonsoft.Json;
+
 namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
 {
     /// <summary>
     /// 
     /// </summary>
+
+    [Serializable]
     public sealed class Meal : BaseModel, IBackpackPlannerItem
     {
         public override int Id => MealId;
@@ -233,13 +238,13 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
         }
 #endregion
 
-        [NotMapped]
+        [NotMapped, JsonIgnore]
         public float CaloriesPerServing => Calories / (float)ServingCount;
 
-        [NotMapped]
+        [NotMapped, JsonIgnore]
         public float ProteinPerServing => ProteinInGrams / (float)ServingCount;
 
-        [NotMapped]
+        [NotMapped, JsonIgnore]
         public float FiberPerServing => FiberInGrams / (float)ServingCount;
 
         /// <summary>

@@ -20,11 +20,14 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.CompilerServices;
 
+using Newtonsoft.Json;
+
 namespace EnergonSoftware.BackpackPlanner.DAL.Models
 {
     /// <summary>
     /// 
     /// </summary>
+    [Serializable]
     public abstract class BaseModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
@@ -35,7 +38,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models
         /// <value>
         /// The item identifier.
         /// </value>
-        [NotMapped]
+        [NotMapped, JsonIgnore]
         public abstract int Id { get; }
 
 #region Database Properties

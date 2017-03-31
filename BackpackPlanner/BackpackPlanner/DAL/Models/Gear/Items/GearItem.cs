@@ -14,6 +14,7 @@
    limitations under the License.
 */
 
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -27,6 +28,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
     /// <summary>
     /// 
     /// </summary>
+
+    [Serializable]
     public class GearItem : BaseModel, IBackpackPlannerItem
     {
         public override int Id => GearItemId;

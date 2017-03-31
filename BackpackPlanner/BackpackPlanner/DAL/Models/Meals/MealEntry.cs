@@ -14,14 +14,17 @@
    limitations under the License.
 */
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 using JetBrains.Annotations;
+using Newtonsoft.Json;
 
 namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
 {
+    [Serializable]
     public class MealEntry : BaseModelEntry<Meal>
     {
 #region Static Helpers
@@ -100,13 +103,13 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
         public override Meal Model { get; protected set; }
 #endregion
 
-        [NotMapped]
+        [NotMapped, JsonIgnore]
         public int Calories => Count * (Model?.Calories ?? 0);
 
-        [NotMapped]
+        [NotMapped, JsonIgnore]
         public int TotalWeightInGrams => Count * (Model?.WeightInGrams ?? 0);
 
-        [NotMapped]
+        [NotMapped, JsonIgnore]
         // ReSharper disable once InconsistentNaming
         public int TotalCostInUSDP => Count * (Model?.CostInUSDP ?? 0);
 

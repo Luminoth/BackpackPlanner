@@ -30,11 +30,14 @@ using EnergonSoftware.BackpackPlanner.Units;
 using EnergonSoftware.BackpackPlanner.Units.Currency;
 using EnergonSoftware.BackpackPlanner.Units.Units;
 
+using Newtonsoft.Json;
+
 namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
 {
     /// <summary>
     /// 
     /// </summary>
+    [Serializable]
     public class TripPlan : BaseModel, IBackpackPlannerItem
     {
         public override int Id => TripPlanId;
@@ -191,11 +194,11 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
         }
 #endregion
 
-        [NotMapped]
+        [NotMapped, JsonIgnore]
         public int Days => (StartDate - EndDate).Days;
 
 #if DEBUG
-        [NotMapped]
+        [NotMapped, JsonIgnore]
         public List<GearCollectionEntry> TestGearCollections
         {
             get { return _gearCollections; }
@@ -206,7 +209,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
             }
         }
 
-        [NotMapped]
+        [NotMapped, JsonIgnore]
         public List<GearSystemEntry> TestGearSystems
         {
             get { return _gearSystems; }
@@ -217,7 +220,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
             }
         }
 
-        [NotMapped]
+        [NotMapped, JsonIgnore]
         public List<GearItemEntry> TestGearItems
         {
             get { return _gearItems; }
@@ -228,7 +231,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
             }
         }
 
-        [NotMapped]
+        [NotMapped, JsonIgnore]
         public List<MealEntry> TestMeals
         {
             get { return _meals; }
