@@ -79,6 +79,10 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems
         {
         }
 
+        protected GearSystemEntry()
+        {
+        }
+
         public int GetGearItemCount(List<int> visitedGearItems=null)
         {
             return Model?.GetGearItemCount(visitedGearItems) ?? 0;

@@ -73,8 +73,12 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections
         public override GearCollection Model { get; protected set; }
 #endregion
 
-        public  GearCollectionEntry(GearCollection gearCollection)
+        public GearCollectionEntry(GearCollection gearCollection)
             : base(gearCollection)
+        {
+        }
+
+        protected GearCollectionEntry()
         {
         }
 

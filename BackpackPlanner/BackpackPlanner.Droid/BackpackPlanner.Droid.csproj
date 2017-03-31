@@ -374,7 +374,9 @@
     <AndroidResource Include="Resources\layout\fragment_ftue_finish.axml" />
     <AndroidResource Include="Resources\layout\fragment_ftue_meals.axml" />
     <AndroidResource Include="Resources\layout\fragment_ftue_trips.axml" />
-    <AndroidResource Include="Resources\layout\fragment_debug.axml" />
+    <AndroidResource Include="Resources\layout\fragment_debug.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
     <AndroidResource Include="Resources\layout\view_gear_item_entry.axml">
       <SubType>Designer</SubType>
     </AndroidResource>

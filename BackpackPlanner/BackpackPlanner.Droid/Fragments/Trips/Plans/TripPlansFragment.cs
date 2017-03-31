@@ -54,9 +54,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
         {
             return await dbContext.TripPlans
                 .Include(tripPlan => tripPlan.GearCollections)
+                    .ThenInclude(gearCollection => gearCollection.Model)
                 .Include(tripPlan => tripPlan.GearSystems)
+                    .ThenInclude(gearSystem => gearSystem.Model)
                 .Include(tripPlan => tripPlan.GearItems)
+                    .ThenInclude(gearItem => gearItem.Model)
                 .Include(tripPlan => tripPlan.Meals)
+                    .ThenInclude(meal => meal.Model)
+                .Include(tripPlan => tripPlan.TripItinerary)
                 .ToListAsync().ConfigureAwait(false);
         }
 

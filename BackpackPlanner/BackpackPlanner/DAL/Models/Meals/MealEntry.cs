@@ -117,5 +117,9 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
             : base(meal)
         {
         }
+
+        protected MealEntry()
+        {
+        }
     }
 }

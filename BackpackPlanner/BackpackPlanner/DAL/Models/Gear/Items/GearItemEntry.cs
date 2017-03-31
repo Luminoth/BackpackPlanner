@@ -129,5 +129,9 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
             : base(gearItem)
         {
         }
+
+        protected GearItemEntry()
+        {
+        }
     }
 }

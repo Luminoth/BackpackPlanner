@@ -54,7 +54,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
         {
             return await dbContext.GearCollections
                 .Include(gearCollection => gearCollection.GearSystems)
+                    .ThenInclude(gearSystem => gearSystem.Model)
                 .Include(gearCollection => gearCollection.GearItems)
+                    .ThenInclude(gearItem => gearItem.Model)
                 .ToListAsync().ConfigureAwait(false);
         }
 

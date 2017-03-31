@@ -302,6 +302,10 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
             return 0.0f == weightInUnits ? 0.0f : Calories / weightInUnits;
         }
 
+        public Meal()
+        {
+        }
+
         public override bool Equals(object obj)
         {
             if(Id < 1) {

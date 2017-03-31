@@ -96,5 +96,9 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models
         {
             Model = model;
         }
+
+        protected BaseModelEntry()
+        {
+        }
     }
 }

@@ -292,6 +292,10 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
             return GearCarried.NotCarried == Carried ? WeightCategory.None : settings.GetWeightCategory(WeightInGrams);
         }
 
+        public GearItem()
+        {
+        }
+
         public override bool Equals(object obj)
         {
             if(Id < 1) {

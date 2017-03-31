@@ -77,6 +77,10 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Itineraries
         }
 #endregion
 
+        public TripItinerary()
+        {
+        }
+
         public override bool Equals(object obj)
         {
             if(Id < 1) {

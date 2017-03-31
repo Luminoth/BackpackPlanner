@@ -508,6 +508,10 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
         }
 #endregion
 
+        public TripPlan()
+        {
+        }
+
         public override bool Equals(object obj)
         {
             if(Id < 1) {

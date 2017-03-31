@@ -189,6 +189,10 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems
         }
 #endregion
 
+        public GearSystem()
+        {
+        }
+
         public override bool Equals(object obj)
         {
             if(Id < 1) {
