@@ -30,6 +30,7 @@ using EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Itineraries;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace EnergonSoftware.BackpackPlanner
 {
@@ -39,6 +40,36 @@ namespace EnergonSoftware.BackpackPlanner
     public sealed class DatabaseState
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(DatabaseState));
+
+        private sealed class LoggingProvider : Microsoft.Extensions.Logging.ILoggerProvider
+        {
+            private sealed class DatabaseLogger : Microsoft.Extensions.Logging.ILogger
+            {
+                public bool IsEnabled(Microsoft.Extensions.Logging.LogLevel logLevel)
+                {
+                    return true;
+                }
+
+                public void Log<T>(Microsoft.Extensions.Logging.LogLevel logLevel, Microsoft.Extensions.Logging.EventId eventId, T state, Exception exception, Func<T, Exception, string> formatter)
+                {
+                    Logger.Debug(formatter(state, exception));
+                }
+
+                public IDisposable BeginScope<T>(T state)
+                {
+                    return null;
+                }
+            }
+
+            public void Dispose()
+            {
+            }
+
+            public Microsoft.Extensions.Logging.ILogger CreateLogger(string categoryName)
+            {
+                return new DatabaseLogger();
+            }
+        }
 
         /// <summary>
         /// The database name
@@ -62,6 +93,9 @@ namespace EnergonSoftware.BackpackPlanner
         {
             DatabasePath = Path.Combine(dbPath, dbName);
             using(DatabaseContext dbContext = CreateContext()) {
+                Microsoft.Extensions.Logging.ILoggerFactory loggerFactory = dbContext.GetService<Microsoft.Extensions.Logging.ILoggerFactory>();
+                loggerFactory.AddProvider(new LoggingProvider());
+
                 Logger.Info("Migrating database...");
                 try {
                     await dbContext.Database.MigrateAsync().ConfigureAwait(false);
