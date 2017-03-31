@@ -27,6 +27,18 @@
     <string name="title_error_initialization">Initialization Error</string>
     <string name="message_error_initialization">There was an error initializing the application!</string>
 
+    <string name="title_error_reading_items">Error Reading Items</string>
+    <string name="message_error_reading_items">There was an error reading the items!</string>
+
+    <string name="title_error_adding_item">Error Adding Item</string>
+    <string name="message_error_adding_item">There was an error adding the item!</string>
+
+    <string name="title_error_deleting_item">Error Deleting Item</string>
+    <string name="message_error_deleting_item">There was an error deleting the item!</string>
+
+    <string name="title_error_restoring_item">Error Restoring Item</string>
+    <string name="message_error_restoring_item">There was an error restoring the item!</string>
+
     <!-- What is a text -->
 
     <string name="what_is_a_gear_item">

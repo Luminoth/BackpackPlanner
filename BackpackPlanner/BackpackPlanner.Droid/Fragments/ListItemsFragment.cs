@@ -151,6 +151,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                         progressDialog.Dismiss();
 
                         if(null == items) {
+                            DialogUtil.ShowOkAlert(Activity, Resource.String.message_error_reading_items, Resource.String.title_error_reading_items);
                             return;
                         }
 
@@ -191,6 +192,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                         progressDialog.Dismiss();
 
                         if(count < 1) {
+                            DialogUtil.ShowOkAlert(Activity, Resource.String.message_error_deleting_item, Resource.String.title_error_deleting_item);
                             return;
                         }
 
@@ -215,7 +217,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                             item.IsDeleted = false;
                             count = await dbContext.SaveChangesAsync().ConfigureAwait(false);
                         } catch(Exception e) {
-                            Logger.Error($"Error un-deleting {typeof(T)}: {e.Message}", e);
+                            Logger.Error($"Error restoring {typeof(T)}: {e.Message}", e);
 
                             item.IsDeleted = true;
                             count = -1;
@@ -227,6 +229,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                         progressDialog.Dismiss();
 
                             if(count < 1) {
+                                DialogUtil.ShowOkAlert(Activity, Resource.String.message_error_restoring_item, Resource.String.title_error_restoring_item);
                                 return;
                             }
 

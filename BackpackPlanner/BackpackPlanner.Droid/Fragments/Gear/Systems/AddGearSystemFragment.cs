@@ -188,8 +188,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
                 valid = false;                
             }
 
-// TODO: validate no item quantities are < 1
-
             return valid;
         }
 

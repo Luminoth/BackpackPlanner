@@ -83,6 +83,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                             progressDialog.Dismiss();
 
                             if(count < 1) {
+                                DialogUtil.ShowOkAlert(Activity, Resource.String.message_error_adding_item, Resource.String.title_error_adding_item);
                                 return;
                             }
 
