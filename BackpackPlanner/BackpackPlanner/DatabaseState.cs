@@ -245,6 +245,7 @@ namespace EnergonSoftware.BackpackPlanner
                 }
             };
 
+            Logger.Debug("Inserting test gear items...");
             await dbContext.GearItems.AddRangeAsync(gearItems).ConfigureAwait(false);
             await SaveChangesAsync(dbContext).ConfigureAwait(false);
 #endregion

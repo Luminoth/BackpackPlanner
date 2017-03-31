@@ -85,7 +85,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Logging
         }
 
 #if DEBUG
-        private const int MaxLogBuffer = 150;
+        private const int MaxLogBuffer = 500;
 
         public static event EventHandler<LogMessageEventArgs> LogMessageEvent;
 
