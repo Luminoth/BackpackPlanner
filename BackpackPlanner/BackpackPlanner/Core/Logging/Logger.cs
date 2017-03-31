@@ -188,7 +188,8 @@ namespace EnergonSoftware.BackpackPlanner.Core.Logging
         public void Debug(string message)
         {
 #if DEBUG
-            PlatformLogger.Debug(BuildMessage(_type, "DEBUG", message));
+            message = BuildMessage(_type, "DEBUG", message);
+            PlatformLogger.Debug(message);
             AddLog(message);
 #endif
         }
@@ -196,45 +197,52 @@ namespace EnergonSoftware.BackpackPlanner.Core.Logging
         public void Debug(string message, Exception ex)
         {
 #if DEBUG
-            PlatformLogger.Debug(BuildMessage(_type, "DEBUG", message), ex);
-            AddLog(message);
+            message = BuildMessage(_type, "DEBUG", message);
+            PlatformLogger.Debug(message, ex);
+            AddLog(message, ex);
 #endif
         }
 
         public void Info(string message)
         {
-            PlatformLogger.Debug(BuildMessage(_type, "INFO", message));
+            message = BuildMessage(_type, "INFO", message);
+            PlatformLogger.Debug(message);
             AddLog(message);
         }
 
         public void Info(string message, Exception ex)
         {
-            PlatformLogger.Debug(BuildMessage(_type, "INFO", message), ex);
-            AddLog(message);
+            message = BuildMessage(_type, "INFO", message);
+            PlatformLogger.Debug(message, ex);
+            AddLog(message, ex);
         }
 
         public void Warn(string message)
         {
-            PlatformLogger.Debug(BuildMessage(_type, "WARNING", message));
+            message = BuildMessage(_type, "WARNING", message);
+            PlatformLogger.Debug(message);
             AddLog(message);
         }
 
         public void Warn(string message, Exception ex)
         {
-            PlatformLogger.Debug(BuildMessage(_type, "WARNING", message), ex);
-            AddLog(message);
+            message = BuildMessage(_type, "WARNING", message);
+            PlatformLogger.Debug(message, ex);
+            AddLog(message, ex);
         }
 
         public void Error(string message)
         {
-            PlatformLogger.Debug(BuildMessage(_type, "ERROR", message));
+            message = BuildMessage(_type, "ERROR", message);
+            PlatformLogger.Debug(message);
             AddLog(message);
         }
 
         public void Error(string message, Exception ex)
         {
-            PlatformLogger.Debug(BuildMessage(_type, "ERROR", message), ex);
-            AddLog(message);
+            message = BuildMessage(_type, "ERROR", message);
+            PlatformLogger.Debug(message, ex);
+            AddLog(message, ex);
         }
 
         public CustomLogger(Type type)
