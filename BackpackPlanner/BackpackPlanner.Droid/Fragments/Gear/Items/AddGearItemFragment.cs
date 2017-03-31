@@ -79,6 +79,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
             );
         }
 
+        protected override void UpdateView()
+        {
+        }
+
         protected override GearItem CreateItem()
         {
             return new GearItem();

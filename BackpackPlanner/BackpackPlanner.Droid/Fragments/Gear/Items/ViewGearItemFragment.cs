@@ -113,6 +113,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
             );
         }
 
+        protected override void UpdateView()
+        {
+        }
+
         protected override void OnDoDataExchange()
         {
             Item.Name = _gearItemNameEditText.EditText.Text;

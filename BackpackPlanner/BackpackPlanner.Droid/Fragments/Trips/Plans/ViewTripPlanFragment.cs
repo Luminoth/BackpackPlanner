@@ -90,6 +90,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
             _tripPlanNoteEditText.EditText.Text = Item.Note;
         }
 
+        protected override void UpdateView()
+        {
+        }
+
         protected override void OnDoDataExchange()
         {
             Item.Name = _tripPlanNameEditText.EditText.Text;

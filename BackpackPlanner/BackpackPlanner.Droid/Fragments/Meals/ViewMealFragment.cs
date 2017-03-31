@@ -94,6 +94,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
             );
         }
 
+        protected override void UpdateView()
+        {
+        }
+
         protected override void OnDoDataExchange()
         {
             Item.Name = _mealNameEditText.EditText.Text;

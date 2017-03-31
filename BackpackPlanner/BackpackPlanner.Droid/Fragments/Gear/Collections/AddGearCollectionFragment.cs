@@ -39,6 +39,18 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
         private Android.Support.Design.Widget.TextInputLayout _gearCollectionNoteEditText;
 #endregion
 
+        public override void OnViewCreated(View view, Bundle savedInstanceState)
+        {
+            base.OnViewCreated(view, savedInstanceState);
+
+            _gearCollectionNameEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.add_gear_collection_name);
+            _gearCollectionNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.add_gear_collection_note);
+        }
+
+        protected override void UpdateView()
+        {
+        }
+
         protected override GearCollection CreateItem()
         {
             return new GearCollection();
@@ -47,14 +59,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
         protected override async Task AddItemAsync(DatabaseContext dbContext)
         {
             await dbContext.GearCollections.AddAsync(Item).ConfigureAwait(false);
-        }
-
-        public override void OnViewCreated(View view, Bundle savedInstanceState)
-        {
-            base.OnViewCreated(view, savedInstanceState);
-
-            _gearCollectionNameEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.add_gear_collection_name);
-            _gearCollectionNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.add_gear_collection_note);
         }
 
         protected override void OnDoDataExchange()

@@ -88,6 +88,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
             _tripPlanNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.add_trip_plan_note);
         }
 
+        protected override void UpdateView()
+        {
+        }
+
         protected override TripPlan CreateItem()
         {
             return new TripPlan();

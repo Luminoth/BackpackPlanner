@@ -148,7 +148,12 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems
             }
 
             NotifyPropertyChanged(nameof(GearItems));
-        } 
+        }
+
+        public void RemoveAllGearItems()
+        {
+            RemoveGearItems((from item in _gearItems select item.Model).ToList());
+        }
 
         public int GetGearItemCount(List<int> visitedGearItems=null)
         {

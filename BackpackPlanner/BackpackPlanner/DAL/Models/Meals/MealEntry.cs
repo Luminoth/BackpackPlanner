@@ -100,7 +100,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
         [Required, ForeignKey("Model")]
         public override int ModelId { get; protected set; }
 
-        public override Meal Model { get; protected set; }
+        public override Meal Model { get; set; }
 #endregion
 
         [NotMapped, JsonIgnore]
@@ -118,7 +118,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
         {
         }
 
-        protected MealEntry()
+        public MealEntry()
         {
         }
     }

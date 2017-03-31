@@ -16,7 +16,9 @@
 
 using Android.Widget;
 
+using EnergonSoftware.BackpackPlanner.DAL.Models;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters;
+using EnergonSoftware.BackpackPlanner.Droid.DAL;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 {
@@ -41,6 +43,40 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             }
         }
 
+        protected void SetItemEntryList<TM, TI, TE>(TM model, ItemEntries<TM, TI, TE> itemEntry)
+            where TM: BaseModel where TI: BaseModel, IBackpackPlannerItem where TE: BaseModelEntry<TI>
+        {
+            for(int i=0; i<itemEntry.Items.Length; ++i) {
+                TI item = itemEntry.Items[i];
+
+                TE entry = itemEntry.GetItemEntry(item);
+                if(null != entry) {
+                    itemEntry.SelectedItems[i] = true;
+                    itemEntry.ItemListAdapter.AddItem(entry);
+                }
+            }
+        }
+
+        protected void UpdateItemEntryList<TM, TI, TE>(TM model, ItemEntries<TM, TI, TE> itemEntry, int index, bool isSelected)
+            where TM: BaseModel where TI: BaseModel, IBackpackPlannerItem where TE: BaseModelEntry<TI>, new()
+        {
+            itemEntry.SelectedItems[index] = isSelected;
+
+            TI item = itemEntry.Items[index];
+            if(isSelected) {
+                TE entry = new TE
+                {
+                    Model = item,
+                    Count = 1
+                };
+                itemEntry.ItemListAdapter.AddItem(entry);
+            } else {
+                itemEntry.ItemListAdapter.RemoveItem(item);
+            }
+
+            UpdateView();
+        }
+
         public bool DoDataExchange()
         {
             if(!OnValidate()) {
@@ -51,6 +87,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
             return true;
         }
+
+        protected abstract void UpdateView();
 
         protected abstract bool OnValidate();
 

@@ -27,6 +27,7 @@ using EnergonSoftware.BackpackPlanner.DAL;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear;
+using EnergonSoftware.BackpackPlanner.Droid.DAL.Gear;
 using EnergonSoftware.BackpackPlanner.Droid.Util;
 
 using Microsoft.EntityFrameworkCore;
@@ -54,15 +55,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
         private Android.Support.Design.Widget.TextInputLayout _gearSystemNoteEditText;
 #endregion
 
-#region Gear Items
-        private GearItem[] _gearItems;
+        private GearSystemGearItemEntries _gearItemEntries;
 
-        private string[] _gearItemsNames;
+        public override void OnCreate(Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);
 
-        private bool[] _selectedGearItems;
-
-        private GearItemEntryListAdapter _gearItemListAdapter;
-#endregion
+            _gearItemEntries = new GearSystemGearItemEntries(Item);
+        }
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
@@ -74,10 +74,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
             _noGearItemsTextView = View.FindViewById<TextView>(Resource.Id.no_gear_items);
             _noGearItemsAddedTextView = View.FindViewById<TextView>(Resource.Id.no_gear_items_added);
 
-            _gearItemListAdapter = new GearItemEntryListAdapter(this);
+            _gearItemEntries.ItemListAdapter = new GearItemEntryListAdapter(this);
 
             _gearItemsListView = View.FindViewById<ListView>(Resource.Id.gear_items_list);
-            _gearItemsListView.Adapter = _gearItemListAdapter;
+            _gearItemsListView.Adapter = _gearItemEntries.ItemListAdapter;
 
             _addGearItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(Resource.Id.fab_add_gear_item);
             _addGearItemButton.Click += AddGearItemButtonClickEventHandler;
@@ -92,9 +92,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
             Task.Run(async () =>
                 {
                     using(DatabaseContext dbContext = BaseActivity.BackpackPlannerState.DatabaseState.CreateContext()) {
-                        _gearItems = await dbContext.GearItems.ToArrayAsync().ConfigureAwait(false);
-                        _gearItemsNames = (from x in _gearItems select x.Name).ToArray();
-                        _selectedGearItems = new bool[_gearItems.Length];
+                        _gearItemEntries.Items = await dbContext.GearItems.ToArrayAsync().ConfigureAwait(false);
                     }
 
                     OnItemsLoaded(progressDialog);
@@ -104,7 +102,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 
         private void OnItemsLoaded(ProgressDialog progressDialog)
         {
-            if(null == _gearItems) {
+            if(null == _gearItemEntries.Items) {
                 return;
             }
 
@@ -116,10 +114,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
             });
         }
 
-        private void UpdateView()
+        protected override void UpdateView()
         {
-            bool hasGearItems = null != _gearItems && _gearItems.Any();
-            bool hasGearItemsAdded = _gearItemListAdapter.Count > 0;
+            bool hasGearItems = null != _gearItemEntries.Items && _gearItemEntries.Items.Any();
+            bool hasGearItemsAdded = _gearItemEntries.ItemListAdapter.Count > 0;
 
             _noGearItemsTextView.Visibility = hasGearItems ? ViewStates.Gone : ViewStates.Visible;
             _noGearItemsAddedTextView.Visibility =  hasGearItemsAdded ? ViewStates.Gone : ViewStates.Visible;
@@ -129,37 +127,17 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 
         private void AddGearItemButtonClickEventHandler(object sender, EventArgs args)
         {
-            DialogUtil.ShowMultiChoiceAlertWithSearch(Activity, Resource.String.label_add_gear_items, _gearItemsNames, _selectedGearItems,
+            DialogUtil.ShowMultiChoiceAlertWithSearch(Activity, Resource.String.label_add_gear_items,
+                _gearItemEntries.ItemNames, _gearItemEntries.SelectedItems,
                 (a, b) =>
                 {
-                    _gearItemListAdapter.Filter.InvokeFilter(b.NewText, new FilterListener<GearItemEntry>(_gearItemListAdapter));
+                    _gearItemEntries.ItemListAdapter.Filter.InvokeFilter(b.NewText, new FilterListener<GearItemEntry>(_gearItemEntries.ItemListAdapter));
                 },
                 (a, b) =>
                 {
-                    UpdateGearItemList(b.Which, b.IsChecked);
+                    UpdateItemEntryList(Item, _gearItemEntries, b.Which, b.IsChecked);
                 }
             );
-        }
-
-        private void UpdateGearItemList(int index, bool isSelected)
-        {
-            _selectedGearItems[index] = isSelected;
-
-            GearItem gearItem = _gearItems[index];
-            if(isSelected) {
-                GearItemEntry gearItemEntry = new GearItemEntry(gearItem)
-                {
-                    Count = 1
-                };
-                _gearItemListAdapter.AddItem(gearItemEntry);
-            } else {
-                _gearItemListAdapter.RemoveItem(gearItem);
-            }
-
-            // TODO: this may be unnecessary
-            _gearItemListAdapter.NotifyDataSetChanged();
-
-            UpdateView();
         }
 
         protected override GearSystem CreateItem()
@@ -175,7 +153,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
         protected override void OnDoDataExchange()
         {
             Item.Name = _gearSystemNameEditText.EditText.Text;
-            Item.AddGearItems(_gearItemListAdapter.Items);
+            Item.AddGearItems(_gearItemEntries.ItemListAdapter.Items);
             Item.Note = _gearSystemNoteEditText.EditText.Text;
         }
 

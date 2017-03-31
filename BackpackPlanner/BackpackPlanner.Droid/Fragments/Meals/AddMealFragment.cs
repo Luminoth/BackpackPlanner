@@ -75,6 +75,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
             );
         }
 
+        protected override void UpdateView()
+        {
+        }
+
         protected override Meal CreateItem()
         {
             return new Meal();

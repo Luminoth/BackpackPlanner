@@ -92,7 +92,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
         [Required, ForeignKey("Model")]
         public override int ModelId { get; protected set; }
 
-        public override GearItem Model { get; protected set; }
+        public override GearItem Model { get; set; }
 #endregion
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
         {
         }
 
-        protected GearItemEntry()
+        public GearItemEntry()
         {
         }
     }

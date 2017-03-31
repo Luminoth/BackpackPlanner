@@ -49,6 +49,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
             _gearCollectionNoteEditText.EditText.Text = Item.Note;
         }
 
+        protected override void UpdateView()
+        {
+        }
+
         protected override void OnDoDataExchange()
         {
             Item.Name = _gearCollectionNameEditText.EditText.Text;

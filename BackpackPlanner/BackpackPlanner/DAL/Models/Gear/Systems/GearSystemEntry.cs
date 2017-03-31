@@ -71,7 +71,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems
         [Required, ForeignKey("Model")]
         public override int ModelId { get; protected set; }
 
-        public override GearSystem Model { get; protected set; }
+        public override GearSystem Model { get; set; }
 #endregion
 
         public GearSystemEntry(GearSystem gearSystem)
@@ -79,7 +79,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems
         {
         }
 
-        protected GearSystemEntry()
+        public GearSystemEntry()
         {
         }
 

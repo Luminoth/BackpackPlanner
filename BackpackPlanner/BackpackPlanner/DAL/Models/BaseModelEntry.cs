@@ -60,7 +60,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models
         /// <value>
         /// The model.
         /// </value>
-        public abstract T Model { get; protected set; }
+        public abstract T Model { get; set; }
 
         private int _count;
 

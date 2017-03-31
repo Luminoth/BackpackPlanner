@@ -45,6 +45,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries
             _tripItineraryNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.add_trip_itinerary_note);
         }
 
+        protected override void UpdateView()
+        {
+        }
+
         protected override TripItinerary CreateItem()
         {
             return new TripItinerary();
