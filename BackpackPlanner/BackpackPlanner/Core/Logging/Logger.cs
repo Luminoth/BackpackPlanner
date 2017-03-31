@@ -84,9 +84,9 @@ namespace EnergonSoftware.BackpackPlanner.Core.Logging
             set { _platformLogger = value ?? new DiagnosticsLogger(); }
         }
 
-        private const int MaxLogBuffer = 50;
-
 #if DEBUG
+        private const int MaxLogBuffer = 150;
+
         public static event EventHandler<LogMessageEventArgs> LogMessageEvent;
 
         private static LinkedList<LogMessageEventArgs> _logMessages = new LinkedList<LogMessageEventArgs>();
