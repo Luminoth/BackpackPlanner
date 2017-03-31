@@ -16,7 +16,7 @@
 
 using System;
 
-namespace EnergonSoftware.BackpackPlanner.Droid.Logging
+namespace EnergonSoftware.BackpackPlanner.Core.Logging
 {
     public sealed class LogMessageEventArgs : EventArgs
     {

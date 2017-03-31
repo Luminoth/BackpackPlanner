@@ -44,7 +44,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 
         static BaseActivity()
         {
-            DroidLogger.ReverseLogBufferDirection = true;
+            CustomLogger.ReverseLogBufferDirection = true;
             CustomLogger.PlatformLogger = new DroidLogger();
         }
 

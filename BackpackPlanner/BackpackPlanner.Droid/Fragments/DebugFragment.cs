@@ -21,7 +21,6 @@ using Android.Views;
 using Android.Widget;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
-using EnergonSoftware.BackpackPlanner.Droid.Logging;
 using EnergonSoftware.BackpackPlanner.Droid.Util;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
@@ -60,17 +59,17 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             };
 
             _logTextAdapter = new ArrayAdapter<LogMessageEventArgs>(Context, Android.Resource.Layout.SimpleListItem1,
-                DroidLogger.LogMessages.ToArray());
+                CustomLogger.LogMessages.ToArray());
 
             _logTextListView = view.FindViewById<ListView>(Resource.Id.log_text_list);
             _logTextListView.Adapter = _logTextAdapter;
 
-            DroidLogger.LogMessageEvent += LogMessageEventHandler;
+            CustomLogger.LogMessageEvent += LogMessageEventHandler;
         }
 
         public override void OnDestroyView()
         {
-            DroidLogger.LogMessageEvent -= LogMessageEventHandler;
+            CustomLogger.LogMessageEvent -= LogMessageEventHandler;
 
             base.OnDestroyView();
         }

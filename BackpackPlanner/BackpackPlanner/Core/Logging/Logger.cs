@@ -16,6 +16,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace EnergonSoftware.BackpackPlanner.Core.Logging
@@ -82,6 +84,41 @@ namespace EnergonSoftware.BackpackPlanner.Core.Logging
             set { _platformLogger = value ?? new DiagnosticsLogger(); }
         }
 
+        private const int MaxLogBuffer = 50;
+
+#if DEBUG
+        public static event EventHandler<LogMessageEventArgs> LogMessageEvent;
+
+        private static LinkedList<LogMessageEventArgs> _logMessages = new LinkedList<LogMessageEventArgs>();
+
+        public static IReadOnlyCollection<LogMessageEventArgs> LogMessages => _logMessages;
+
+        private static bool _reverseLogBufferDirection;
+
+        public static bool ReverseLogBufferDirection
+        {
+            get { return _reverseLogBufferDirection; }
+
+            set
+            {
+                _reverseLogBufferDirection = value;
+
+                _logMessages = new LinkedList<LogMessageEventArgs>(_logMessages.Reverse());
+            }
+        }
+
+        private static void PruneLogBuffer()
+        {
+            while(_logMessages.Count > MaxLogBuffer) {
+                if(ReverseLogBufferDirection) {
+                    _logMessages.RemoveLast();
+                } else {
+                    _logMessages.RemoveFirst();
+                }
+            }
+        }
+#endif
+
         private static readonly object CacheLock = new object();
         
         private static readonly Dictionary<Type, CustomLogger> LoggerCache = new Dictionary<Type, CustomLogger>();
@@ -109,12 +146,50 @@ namespace EnergonSoftware.BackpackPlanner.Core.Logging
             return $"{DateTime.Now} [{TaskScheduler.Current.Id}] {type.Name} {level}: {message}";
         }
 
+        [Conditional("DEBUG")]
+        private static void AddLog(string message)
+        {
+            LogMessageEventArgs messageEvent = new LogMessageEventArgs
+            {
+                Message = message
+            };
+
+            if(ReverseLogBufferDirection) {
+                _logMessages.AddFirst(messageEvent);
+            } else {
+                _logMessages.AddLast(messageEvent);
+            }
+            PruneLogBuffer();
+
+            LogMessageEvent?.Invoke(null, messageEvent);
+        }
+
+        [Conditional("DEBUG")]
+        private static void AddLog(string message, Exception ex)
+        {
+            LogMessageEventArgs messageEvent = new LogMessageEventArgs
+            {
+                Message = message,
+                Exception = ex
+            };
+
+            if(ReverseLogBufferDirection) {
+                _logMessages.AddFirst(messageEvent);
+            } else {
+                _logMessages.AddLast(messageEvent);
+            }
+            PruneLogBuffer();
+
+            LogMessageEvent?.Invoke(null, messageEvent);
+        }
+
         private readonly Type _type;
 
         public void Debug(string message)
         {
 #if DEBUG
             PlatformLogger.Debug(BuildMessage(_type, "DEBUG", message));
+            AddLog(message);
 #endif
         }
 
@@ -122,37 +197,44 @@ namespace EnergonSoftware.BackpackPlanner.Core.Logging
         {
 #if DEBUG
             PlatformLogger.Debug(BuildMessage(_type, "DEBUG", message), ex);
+            AddLog(message);
 #endif
         }
 
         public void Info(string message)
         {
             PlatformLogger.Debug(BuildMessage(_type, "INFO", message));
+            AddLog(message);
         }
 
         public void Info(string message, Exception ex)
         {
             PlatformLogger.Debug(BuildMessage(_type, "INFO", message), ex);
+            AddLog(message);
         }
 
         public void Warn(string message)
         {
             PlatformLogger.Debug(BuildMessage(_type, "WARNING", message));
+            AddLog(message);
         }
 
         public void Warn(string message, Exception ex)
         {
             PlatformLogger.Debug(BuildMessage(_type, "WARNING", message), ex);
+            AddLog(message);
         }
 
         public void Error(string message)
         {
             PlatformLogger.Debug(BuildMessage(_type, "ERROR", message));
+            AddLog(message);
         }
 
         public void Error(string message, Exception ex)
         {
             PlatformLogger.Debug(BuildMessage(_type, "ERROR", message), ex);
+            AddLog(message);
         }
 
         public CustomLogger(Type type)
