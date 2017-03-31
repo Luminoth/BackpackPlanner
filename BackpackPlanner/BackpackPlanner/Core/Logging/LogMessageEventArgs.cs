@@ -15,6 +15,7 @@
 */
 
 using System;
+using System.Text;
 
 namespace EnergonSoftware.BackpackPlanner.Core.Logging
 {
@@ -26,7 +27,17 @@ namespace EnergonSoftware.BackpackPlanner.Core.Logging
 
         public override string ToString()
         {
-            return null == Exception ? $"{Message}" : $"{Message}\n${Exception.StackTrace}";
+            if(null == Exception) {
+                return Message;
+            }
+
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine(Message);
+            if(null != Exception.InnerException) {
+                builder.AppendLine($"Inner Exception: {Exception.InnerException.Message}");
+            }
+            builder.AppendLine(Exception.StackTrace);
+            return builder.ToString();
         }
     }
 }
