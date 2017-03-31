@@ -69,6 +69,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
             CrashManager.Register(activity, AppId, new CustomCrashManagerListener());
             MetricsManager.Register(activity.Application, AppId);
             UpdateManager.Register(activity, AppId);
+
+            Logger.Debug($"Crash count: {CrashManager.HasStackTraces(new Java.Lang.Ref.WeakReference(activity))}");
         }
 
         public void OnDestroy()

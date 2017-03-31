@@ -94,8 +94,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Logging
         public static ILogger GetLogger(Type type)
         {
             lock(CacheLock) {
-                CustomLogger logger;
-                if(LoggerCache.TryGetValue(type, out logger)) {
+                if(LoggerCache.TryGetValue(type, out CustomLogger logger)) {
                     return logger;
                 }
 

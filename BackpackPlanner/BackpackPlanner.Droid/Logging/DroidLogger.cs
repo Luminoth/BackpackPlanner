@@ -17,6 +17,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 using Android.Util;
 
@@ -28,12 +29,39 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Logging
     {
         public const string LogTag = "BackpackPlanner.Droid";
 
+        private const int MaxLogBuffer = 50;
+
 #if DEBUG
         public static event EventHandler<LogMessageEventArgs> LogMessageEvent;
 
-        private static readonly List<LogMessageEventArgs> _logMessages = new List<LogMessageEventArgs>();
+        private static LinkedList<LogMessageEventArgs> _logMessages = new LinkedList<LogMessageEventArgs>();
 
         public static IReadOnlyCollection<LogMessageEventArgs> LogMessages => _logMessages;
+
+        private static bool _reverseLogBufferDirection;
+
+        public static bool ReverseLogBufferDirection
+        {
+            get { return _reverseLogBufferDirection; }
+
+            set
+            {
+                _reverseLogBufferDirection = value;
+
+                _logMessages = new LinkedList<LogMessageEventArgs>(_logMessages.Reverse());
+            }
+        }
+
+        private static void PruneLogBuffer()
+        {
+            while(_logMessages.Count > MaxLogBuffer) {
+                if(ReverseLogBufferDirection) {
+                    _logMessages.RemoveLast();
+                } else {
+                    _logMessages.RemoveFirst();
+                }
+            }
+        }
 #endif
 
         [Conditional("DEBUG")]
@@ -44,7 +72,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Logging
                 Message = message
             };
 
-            _logMessages.Add(messageEvent);
+            if(ReverseLogBufferDirection) {
+                _logMessages.AddFirst(messageEvent);
+            } else {
+                _logMessages.AddLast(messageEvent);
+            }
+            PruneLogBuffer();
+
             LogMessageEvent?.Invoke(null, messageEvent);
         }
 
@@ -57,7 +91,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Logging
                 Exception = ex
             };
 
-            _logMessages.Add(messageEvent);
+            if(ReverseLogBufferDirection) {
+                _logMessages.AddFirst(messageEvent);
+            } else {
+                _logMessages.AddLast(messageEvent);
+            }
+            PruneLogBuffer();
+
             LogMessageEvent?.Invoke(null, messageEvent);
         }
 

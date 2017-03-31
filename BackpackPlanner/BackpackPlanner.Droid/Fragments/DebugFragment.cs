@@ -14,7 +14,6 @@
    limitations under the License.
 */
 
-using System;
 using System.Linq;
 
 using Android.OS;
@@ -41,6 +40,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
 #region Controls
         private ListView _logTextListView;
+        private ArrayAdapter<LogMessageEventArgs> _logTextAdapter;
 #endregion
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
@@ -59,8 +59,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                 DialogUtil.ShowOkAlert(Activity, "TODO", "Database reset not implemented!");
             };
 
+            _logTextAdapter = new ArrayAdapter<LogMessageEventArgs>(Context, Android.Resource.Layout.SimpleListItem1,
+                DroidLogger.LogMessages.ToArray());
+
             _logTextListView = view.FindViewById<ListView>(Resource.Id.log_text_list);
-            _logTextListView.Adapter = new ArrayAdapter<LogMessageEventArgs>(Context, Android.Resource.Layout.SimpleListItem1);
+            _logTextListView.Adapter = _logTextAdapter;
 
             DroidLogger.LogMessageEvent += LogMessageEventHandler;
         }
@@ -72,9 +75,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             base.OnDestroyView();
         }
 
-        private void LogMessageEventHandler(object sender, EventArgs args)
+        private void LogMessageEventHandler(object sender, LogMessageEventArgs args)
         {
-            ((ArrayAdapter<LogMessageEventArgs>)_logTextListView.Adapter).AddAll(DroidLogger.LogMessages.Reverse().ToList());
+            // this is definitely not efficient
+            _logTextAdapter.Insert(args, 0);
         }
     }
 }
