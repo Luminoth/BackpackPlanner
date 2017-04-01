@@ -15,7 +15,7 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.2.0-preview1-24146");
+                .HasAnnotation("ProductVersion", "1.2.0-preview1-24224");
 
             modelBuilder.Entity("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections.GearCollection", b =>
                 {
