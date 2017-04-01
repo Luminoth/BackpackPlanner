@@ -16,6 +16,7 @@
 
 using Android.Widget;
 
+using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.DAL.Models;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters;
 using EnergonSoftware.BackpackPlanner.Droid.DAL;
@@ -27,6 +28,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
     /// </summary>
     public abstract class DataFragment : BaseFragment
     {
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(DataFragment));
+
         protected sealed class FilterListener<T> : Java.Lang.Object, Filter.IFilterListener
         {
             private readonly BaseListViewAdapter<T> _adapter;
@@ -48,6 +51,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         {
             for(int i=0; i<itemEntry.Items.Length; ++i) {
                 TI item = itemEntry.Items[i];
+                if(null == item) {
+                    Logger.Error($"Found null item at index {i} while setting item entries!");
+                    continue;
+                }
 
                 TE entry = itemEntry.GetItemEntry(item);
                 if(null != entry) {
@@ -60,9 +67,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         protected void UpdateItemEntryList<TM, TI, TE>(TM model, ItemEntries<TM, TI, TE> itemEntry, int index, bool isSelected)
             where TM: BaseModel where TI: BaseModel, IBackpackPlannerItem where TE: BaseModelEntry<TI>, new()
         {
-            itemEntry.SelectedItems[index] = isSelected;
-
             TI item = itemEntry.Items[index];
+            if(null == item) {
+                Logger.Error($"Found null item at index {index} while updating item entries!");
+                return;
+            }
+
+            itemEntry.SelectedItems[index] = isSelected;
             if(isSelected) {
                 TE entry = new TE
                 {
