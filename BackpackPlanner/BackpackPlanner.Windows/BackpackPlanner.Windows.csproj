@@ -29,7 +29,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Google.Apis.Drive.v3" Version="1.23.0.809" />
+    <PackageReference Include="Google.Apis.Drive.v3" Version="1.24.1.809" />
     <PackageReference Include="HockeySDK.Core" Version="4.1.6" />
     <PackageReference Include="HockeySDK.UWP" Version="4.1.6" />
     <PackageReference Include="JetBrains.Annotations" Version="10.4.0" />
