@@ -70,7 +70,13 @@ namespace EnergonSoftware.BackpackPlanner.Core.Logging
     /// </summary>
     public sealed class CustomLogger : ILogger
     {
+        private const int MaxLogBuffer = 500;
+
         private static ILogger _platformLogger = new DiagnosticsLogger();
+
+#region Events
+        public static event EventHandler<LogMessageEventArgs> LogMessageEvent;
+#endregion
 
         /// <summary>
         /// Gets the platform logger.
@@ -83,11 +89,6 @@ namespace EnergonSoftware.BackpackPlanner.Core.Logging
             get { return _platformLogger; }
             set { _platformLogger = value ?? new DiagnosticsLogger(); }
         }
-
-#if DEBUG
-        private const int MaxLogBuffer = 500;
-
-        public static event EventHandler<LogMessageEventArgs> LogMessageEvent;
 
         private static LinkedList<LogMessageEventArgs> _logMessages = new LinkedList<LogMessageEventArgs>();
 
@@ -117,7 +118,6 @@ namespace EnergonSoftware.BackpackPlanner.Core.Logging
                 }
             }
         }
-#endif
 
         private static readonly object CacheLock = new object();
         
@@ -206,42 +206,42 @@ namespace EnergonSoftware.BackpackPlanner.Core.Logging
         public void Info(string message)
         {
             message = BuildMessage(_type, "INFO", message);
-            PlatformLogger.Debug(message);
+            PlatformLogger.Info(message);
             AddLog(message);
         }
 
         public void Info(string message, Exception ex)
         {
             message = BuildMessage(_type, "INFO", message);
-            PlatformLogger.Debug(message, ex);
+            PlatformLogger.Info(message, ex);
             AddLog(message, ex);
         }
 
         public void Warn(string message)
         {
             message = BuildMessage(_type, "WARNING", message);
-            PlatformLogger.Debug(message);
+            PlatformLogger.Warn(message);
             AddLog(message);
         }
 
         public void Warn(string message, Exception ex)
         {
             message = BuildMessage(_type, "WARNING", message);
-            PlatformLogger.Debug(message, ex);
+            PlatformLogger.Warn(message, ex);
             AddLog(message, ex);
         }
 
         public void Error(string message)
         {
             message = BuildMessage(_type, "ERROR", message);
-            PlatformLogger.Debug(message);
+            PlatformLogger.Error(message);
             AddLog(message);
         }
 
         public void Error(string message, Exception ex)
         {
             message = BuildMessage(_type, "ERROR", message);
-            PlatformLogger.Debug(message, ex);
+            PlatformLogger.Error(message, ex);
             AddLog(message, ex);
         }
 
