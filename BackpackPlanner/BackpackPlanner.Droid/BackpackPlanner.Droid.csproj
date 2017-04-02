@@ -107,7 +107,7 @@
       <HintPath>..\..\packages\Microsoft.Extensions.Logging.Abstractions.1.2.0-preview1-24224\lib\netstandard1.1\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Options, Version=1.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Extensions.Options.1.2.0-preview1-24224\lib\netstandard1.0\Microsoft.Extensions.Options.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.Extensions.Options.1.2.0-preview1-24224\lib\netstandard1.1\Microsoft.Extensions.Options.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Primitives, Version=1.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Extensions.Primitives.1.2.0-preview1-24224\lib\netstandard1.0\Microsoft.Extensions.Primitives.dll</HintPath>
