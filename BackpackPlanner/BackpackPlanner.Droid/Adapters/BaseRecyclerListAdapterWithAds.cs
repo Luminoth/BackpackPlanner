@@ -25,7 +25,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 {
     public abstract class BaseRecyclerListAdapterWithAds<T> : BaseRecyclerListAdapter<T> where T: class
     {
+#if DEBUG
         private const int AdFrequency = 2;
+#else
+        private const int AdFrequencey = 10;
+#endif
 
         protected const int AdViewType = 1;
 

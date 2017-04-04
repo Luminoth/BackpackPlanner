@@ -1,5 +1,5 @@
 /*
-   Copyright 2015 Shane Lillie
+   Copyright 2017 Shane Lillie
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -16,24 +16,17 @@
 
 using Android.OS;
 using Android.Views;
-using Android.Widget;
-
-using EnergonSoftware.BackpackPlanner.Droid.Activities;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.FTUE
 {
-    public sealed class FinishFragment : BaseFTUEFragment
+    // ReSharper disable once InconsistentNaming
+    public abstract class BaseFTUEFragment : Android.Support.V4.App.Fragment
     {
-        protected override int LayoutResource => Resource.Layout.fragment_ftue_finish;
+        protected abstract int LayoutResource { get; }
 
-        public override void OnViewCreated(View view, Bundle savedInstanceState)
+        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            base.OnViewCreated(view, savedInstanceState);
-
-            Button finishButton = view.FindViewById<Button>(Resource.Id.button_ftue_finish);
-            finishButton.Click += (sender, args) => {
-                ((FTUEActivity)Activity).FinishFTUE();
-            };
+            return inflater.Inflate(LayoutResource, container, false);
         }
     }
 }

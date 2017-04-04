@@ -22,21 +22,22 @@ using EnergonSoftware.BackpackPlanner.Droid.Activities;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.FTUE
 {
-    public sealed class WelcomeFragment : Android.Support.V4.App.Fragment
+    public sealed class WelcomeFragment : BaseFTUEFragment
     {
-        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-        {
-            return inflater.Inflate(Resource.Layout.fragment_ftue_welcome, container, false);
-        }
+        protected override int LayoutResource => Resource.Layout.fragment_ftue_welcome;
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
             base.OnViewCreated(view, savedInstanceState);
 
             Button skipButton = view.FindViewById<Button>(Resource.Id.button_ftue_skip);
+#if DEBUG
             skipButton.Click += (sender, args) => {
                 ((FTUEActivity)Activity).FinishFTUE();
             };
+#else
+            skipButton.Visibility = ViewStates.Gone;
+#endif
         }
     }
 }

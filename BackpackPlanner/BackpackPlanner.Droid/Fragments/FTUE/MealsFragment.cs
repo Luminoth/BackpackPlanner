@@ -14,16 +14,10 @@
    limitations under the License.
 */
 
-using Android.OS;
-using Android.Views;
-
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.FTUE
 {
-    public sealed class MealsFragment : Android.Support.V4.App.Fragment
+    public sealed class MealsFragment : BaseFTUEFragment
     {
-        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-        {
-            return inflater.Inflate(Resource.Layout.fragment_ftue_meals, container, false);
-        }
+        protected override int LayoutResource => Resource.Layout.fragment_ftue_meals;
     }
 }

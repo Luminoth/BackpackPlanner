@@ -323,6 +323,7 @@
     <Compile Include="Fragments\DataFragment.cs" />
     <Compile Include="Fragments\DebugFragment.cs" />
     <Compile Include="Fragments\FTUE\FinishFragment.cs" />
+    <Compile Include="Fragments\FTUE\BaseFTUEFragment.cs" />
     <Compile Include="Fragments\FTUE\GearFragment.cs" />
     <Compile Include="Fragments\FTUE\MealsFragment.cs" />
     <Compile Include="Fragments\FTUE\TripsFragment.cs" />
