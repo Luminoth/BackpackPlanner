@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 using EnergonSoftware.BackpackPlanner.DAL;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters;
-using EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear;
+using EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Collections;
 
 using Microsoft.EntityFrameworkCore;
 

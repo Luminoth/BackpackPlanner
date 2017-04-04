@@ -29,7 +29,7 @@ using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items;
 using EnergonSoftware.BackpackPlanner.Units;
 using EnergonSoftware.BackpackPlanner.Units.Units;
 
-namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
+namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items
 {
     public sealed class GearItemListAdapter : BaseModelRecyclerListAdapter<GearItem>
     {

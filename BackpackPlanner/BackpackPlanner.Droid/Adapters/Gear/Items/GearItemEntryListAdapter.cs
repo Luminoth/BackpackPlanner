@@ -23,7 +23,7 @@ using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 using EnergonSoftware.BackpackPlanner.Units.Units;
 
-namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
+namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items
 {
     public sealed class GearItemEntryListAdapter : BaseModelEntryListViewAdapter<GearItemEntry, GearItem>
     {

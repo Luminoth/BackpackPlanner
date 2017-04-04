@@ -26,7 +26,7 @@ using Android.Widget;
 using EnergonSoftware.BackpackPlanner.DAL;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems;
-using EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear;
+using EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items;
 using EnergonSoftware.BackpackPlanner.Droid.DAL.Gear;
 using EnergonSoftware.BackpackPlanner.Droid.Util;
 

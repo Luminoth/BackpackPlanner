@@ -23,7 +23,7 @@ using EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Itineraries;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries;
 
-namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips
+namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Itineraries
 {
     public sealed class TripItineraryListAdapter : BaseModelRecyclerListAdapter<TripItinerary>
     {

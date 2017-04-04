@@ -19,27 +19,27 @@ using System;
 using Android.Views;
 using Android.Widget;
 
-using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections;
+using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 using EnergonSoftware.BackpackPlanner.Units.Units;
 
-namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
+namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Systems
 {
-    public sealed class GearCollectionEntryListAdapter : BaseModelEntryListViewAdapter<GearCollectionEntry, GearCollection>
+    public sealed class GearSystemEntryListAdapter : BaseModelEntryListViewAdapter<GearSystemEntry, GearSystem>
     {
-        private sealed class GearCollectionEntryViewHolder : ViewHolder
+        private sealed class GearSystemEntryViewHolder : ViewHolder
         {
             private readonly TextView _textViewName;
             private readonly TextView _textViewTotalWeight;
             private readonly Android.Support.Design.Widget.TextInputLayout _editTextQuantity;
 
-            public GearCollectionEntryViewHolder(View itemView, GearCollectionEntryListAdapter adapter)
+            public GearSystemEntryViewHolder(View itemView, GearSystemEntryListAdapter adapter)
                 : base(itemView, adapter)
             {
-                _textViewName = itemView.FindViewById<TextView>(Resource.Id.view_gear_collection_name);
-                _textViewTotalWeight = itemView.FindViewById<TextView>(Resource.Id.view_gear_collection_total_weight);
+                _textViewName = itemView.FindViewById<TextView>(Resource.Id.view_gear_system_name);
+                _textViewTotalWeight = itemView.FindViewById<TextView>(Resource.Id.view_gear_system_total_weight);
 
-                _editTextQuantity = itemView.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.view_gear_collection_quantity);
+                _editTextQuantity = itemView.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.view_gear_system_quantity);
                 _editTextQuantity.EditText.AfterTextChanged += (sender, args) =>
                 {
                     UpdateTotalWeight();
@@ -67,21 +67,21 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
             }
         }
 
-        public override int LayoutResource => Resource.Layout.view_gear_collection_entry;
+        public override int LayoutResource => Resource.Layout.view_gear_system_entry;
 
-        public GearCollectionEntryListAdapter(BaseFragment fragment)
+        public GearSystemEntryListAdapter(BaseFragment fragment)
             : base(fragment)
         {
         }
 
-        public GearCollectionEntryListAdapter(BaseFragment fragment, GearCollectionEntry[] items)
+        public GearSystemEntryListAdapter(BaseFragment fragment, GearSystemEntry[] items)
             : base(fragment, items)
         {
         }
 
         protected override ViewHolder CreateViewHolder(View itemView)
         {
-            return new GearCollectionEntryViewHolder(itemView, this);
+            return new GearSystemEntryViewHolder(itemView, this);
         }
     }
 }

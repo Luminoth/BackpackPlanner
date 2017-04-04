@@ -26,7 +26,7 @@ using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans;
 using EnergonSoftware.BackpackPlanner.Units.Units;
 
-namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips
+namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Plans
 {
     public sealed class TripPlanListAdapter : BaseModelRecyclerListAdapter<TripPlan>
     {
