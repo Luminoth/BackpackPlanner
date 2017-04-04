@@ -14,16 +14,54 @@
    limitations under the License.
 */
 
+using System.Collections.Generic;
 using System.Linq;
 
+using EnergonSoftware.BackpackPlanner.DAL.Models;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans;
+using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
 {
-    public sealed class GearCollectionGearSystemEntries : ItemEntries<GearCollection, GearSystem, GearSystemEntry>
+    public abstract class GearSystemEntries<T> : ItemEntries<T, GearSystem, GearSystemEntry>
+        where T: BaseModel
     {
+        public abstract class GearSystemEntryViewHolder : DataFragment<T>.ItemEntryViewHolder<GearSystem, GearSystemEntry>
+        {
+            protected override int NoItemsResource => Resource.Id.no_gear_systems;
+
+            protected override int NoItemsAddedResource => Resource.Id.no_gear_systems_added;
+
+            protected override int ItemListAdapterResource => Resource.Id.gear_systems_list;
+
+            protected override int AddItemButtonResource => Resource.Id.fab_add_gear_system;
+
+            protected override int AddItemDialogTitleResource => Resource.String.label_add_gear_systems;
+
+            protected GearSystemEntryViewHolder(DataFragment<T> fragment, T item, GearSystemEntries<T> itemEntries)
+                : base(fragment, item, itemEntries)
+            {
+            }
+        }
+
+        protected GearSystemEntries(T model, IReadOnlyCollection<GearSystemEntry> entries)
+            : base(model, entries)
+        {
+        }
+    }
+
+    public sealed class GearCollectionGearSystemEntries : GearSystemEntries<GearCollection>
+    {
+        public sealed class GearCollectionGearSystemEntryViewHolder : GearSystemEntryViewHolder
+        {
+            public GearCollectionGearSystemEntryViewHolder(DataFragment<GearCollection> fragment, GearCollection item, GearCollectionGearSystemEntries itemEntries)
+                : base(fragment, item, itemEntries)
+            {
+            }
+        }
+
         public override GearSystemEntry GetItemEntry(GearSystem gearSystem)
         {
             return Model.GearSystems.FirstOrDefault(x => x.Model.Id == gearSystem.Id);
@@ -35,8 +73,16 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
         }
     }
 
-    public sealed class TripPlanGearSystemEntries : ItemEntries<TripPlan, GearSystem, GearSystemEntry>
+    public sealed class TripPlanGearSystemEntries : GearSystemEntries<TripPlan>
     {
+        public sealed class TripPlanGearSystemEntryViewHolder : GearSystemEntryViewHolder
+        {
+            public TripPlanGearSystemEntryViewHolder(DataFragment<TripPlan> fragment, TripPlan item, TripPlanGearSystemEntries itemEntries)
+                : base(fragment, item, itemEntries)
+            {
+            }
+        }
+
         public override GearSystemEntry GetItemEntry(GearSystem gearSystem)
         {
             return Model.GearSystems.FirstOrDefault(x => x.Model.Id == gearSystem.Id);

@@ -1,40 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".BackpackPlannerActivity">
-    <LinearLayout
-        android:orientation="vertical"
+    <!-- Name -->
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <android.support.design.widget.TextInputLayout
+        android:layout_height="wrap_content"
+        android:id="@+id/view_gear_collection_name">
+        <android.support.design.widget.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/view_gear_collection_name">
-            <android.support.design.widget.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/label_gear_collection_name"
-                android:inputType="text|textCapWords" />
-        </android.support.design.widget.TextInputLayout>
-        <android.support.design.widget.TextInputLayout
+            android:hint="@string/label_gear_collection_name"
+            android:inputType="text|textCapWords" />
+    </android.support.design.widget.TextInputLayout>
+    <!-- Gear Systems -->
+    <TextView
+        android:id="@+id/gear_systems"
+        android:text="@string/label_gear_systems"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/no_gear_systems"
+        android:text="@string/label_no_gear_systems"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/no_gear_systems_added"
+        android:text="@string/label_no_gear_systems_collection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+    <ListView
+        android:id="@+id/gear_systems_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:isScrollContainer="false"
+        android:visibility="gone" />
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_add_gear_system"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:elevation="@dimen/fab_elevation"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_add"
+        android:visibility="gone" />
+    <!-- Gear Items -->
+    <TextView
+        android:id="@+id/gear_items"
+        android:text="@string/label_gear_items"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/no_gear_items"
+        android:text="@string/label_no_gear_items"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/no_gear_items_added"
+        android:text="@string/label_no_gear_items_collection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+    <ListView
+        android:id="@+id/gear_items_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:isScrollContainer="false"
+        android:visibility="gone" />
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_add_gear_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:elevation="@dimen/fab_elevation"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_add"
+        android:visibility="gone" />
+    <!-- Note -->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/view_gear_collection_note">
+        <android.support.design.widget.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/view_gear_collection_note">
-            <android.support.design.widget.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/label_gear_collection_note"
-                android:inputType="text|textMultiLine" />
-        </android.support.design.widget.TextInputLayout>
-    </LinearLayout>
+            android:hint="@string/label_gear_collection_note"
+            android:inputType="text|textMultiLine" />
+    </android.support.design.widget.TextInputLayout>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:gravity="center">
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_save_gear_collection"
@@ -60,4 +125,4 @@
             app:backgroundTint="@color/red"
             android:src="@drawable/ic_delete" />
     </LinearLayout>
-</RelativeLayout>
+</LinearLayout>

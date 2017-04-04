@@ -14,15 +14,53 @@
    limitations under the License.
 */
 
+using System.Collections.Generic;
 using System.Linq;
 
+using EnergonSoftware.BackpackPlanner.DAL.Models;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans;
+using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
 {
-    public sealed class TripPlanGearCollectionEntries : ItemEntries<TripPlan, GearCollection, GearCollectionEntry>
+    public abstract class GearCollectionEntries<T> : ItemEntries<T, GearCollection, GearCollectionEntry>
+        where T: BaseModel
     {
+        public abstract class GearCollectionEntryViewHolder : DataFragment<T>.ItemEntryViewHolder<GearCollection, GearCollectionEntry>
+        {
+            protected override int NoItemsResource => Resource.Id.no_gear_collections;
+
+            protected override int NoItemsAddedResource => Resource.Id.no_gear_collections_added;
+
+            protected override int ItemListAdapterResource => Resource.Id.gear_collections_list;
+
+            protected override int AddItemButtonResource => Resource.Id.fab_add_gear_collection;
+
+            protected override int AddItemDialogTitleResource => Resource.String.label_add_gear_collections;
+
+            protected GearCollectionEntryViewHolder(DataFragment<T> fragment, T item, GearCollectionEntries<T> itemEntries)
+                : base(fragment, item, itemEntries)
+            {
+            }
+        }
+
+        protected GearCollectionEntries(T model, IReadOnlyCollection<GearCollectionEntry> entries)
+            : base(model, entries)
+        {
+        }
+    }
+
+    public sealed class TripPlanGearCollectionEntries : GearCollectionEntries<TripPlan>
+    {
+        public sealed class TripPlanGearCollectionEntryViewHolder : GearCollectionEntryViewHolder
+        {
+            public TripPlanGearCollectionEntryViewHolder(DataFragment<TripPlan> fragment, TripPlan item, TripPlanGearCollectionEntries itemEntries)
+                : base(fragment, item, itemEntries)
+            {
+            }
+        }
+
         public override GearCollectionEntry GetItemEntry(GearCollection gearCollection)
         {
             return Model.GearCollections.FirstOrDefault(x => x.Model.Id == gearCollection.Id);

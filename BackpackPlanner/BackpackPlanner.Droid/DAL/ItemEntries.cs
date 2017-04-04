@@ -25,13 +25,14 @@ using JetBrains.Annotations;
 namespace EnergonSoftware.BackpackPlanner.Droid.DAL
 {
     // ReSharper disable once InconsistentNaming
-    public abstract class ItemEntries<TM, TI, TIE> where TM: BaseModel where TI: BaseModel, IBackpackPlannerItem where TIE: BaseModelEntry<TI>
+    public abstract class ItemEntries<TM, TI, TIE>
+        where TM: BaseModel where TI: BaseModel, IBackpackPlannerItem where TIE: BaseModelEntry<TI>
     {
         [CanBeNull]
-        private TI[] _items;
+        private List<TI> _items;
 
         [CanBeNull]
-        public TI[] Items
+        public List<TI> Items
         {
             get { return _items; }
 
@@ -44,12 +45,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL
                     SelectedItems = null;
                 } else {
                     ItemNames = (from x in _items select x.Name).ToArray();
-                    SelectedItems = new bool[_items.Length];
+                    SelectedItems = new bool[_items.Count];
                 }
             }
         }
 
-        public int ItemCount => Items?.Length ?? 0;
+        public int ItemCount => Items?.Count ?? 0;
 
         [CanBeNull]
         public string[] ItemNames { get; private set; }

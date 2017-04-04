@@ -1,40 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".BackpackPlannerActivity">
-    <LinearLayout
-        android:orientation="vertical"
+    <!-- Name -->
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <android.support.design.widget.TextInputLayout
+        android:layout_height="wrap_content"
+        android:id="@+id/view_trip_itinerary_name">
+        <android.support.design.widget.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/view_trip_itinerary_name">
-            <android.support.design.widget.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/label_trip_itinerary_name"
-                android:inputType="text|textCapWords" />
-        </android.support.design.widget.TextInputLayout>
-        <android.support.design.widget.TextInputLayout
+            android:hint="@string/label_trip_itinerary_name"
+            android:inputType="text|textCapWords" />
+    </android.support.design.widget.TextInputLayout>
+    <!-- Note -->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/view_trip_itinerary_note">
+        <android.support.design.widget.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/view_trip_itinerary_note">
-            <android.support.design.widget.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/label_trip_itinerary_note"
-                android:inputType="text|textMultiLine" />
-        </android.support.design.widget.TextInputLayout>
-    </LinearLayout>
+            android:hint="@string/label_trip_itinerary_note"
+            android:inputType="text|textMultiLine" />
+    </android.support.design.widget.TextInputLayout>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:gravity="center">
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_save_trip_itinerary"
@@ -60,4 +57,4 @@
             app:backgroundTint="@color/red"
             android:src="@drawable/ic_delete" />
     </LinearLayout>
-</RelativeLayout>
+</LinearLayout>

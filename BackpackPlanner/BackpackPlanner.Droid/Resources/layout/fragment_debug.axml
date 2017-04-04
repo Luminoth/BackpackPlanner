@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".BackpackPlannerActivity">
+    <!-- Reset FTUE -->
     <Button
         android:id="@+id/button_reset_ftue"
         android:layout_width="wrap_content"
@@ -12,6 +13,7 @@
         android:layout_gravity="center_horizontal"
         android:text="@string/label_reset_ftue"
         android:textColor="@android:color/white" />
+    <!-- Reset Database -->
     <Button
         android:id="@+id/button_reset_database"
         android:layout_width="wrap_content"
@@ -19,6 +21,7 @@
         android:layout_gravity="center_horizontal"
         android:text="@string/label_reset_database"
         android:textColor="@android:color/white" />
+    <!-- Clear Logs -->
     <Button
         android:id="@+id/button_clear_logs"
         android:layout_width="wrap_content"
@@ -26,6 +29,7 @@
         android:layout_gravity="center_horizontal"
         android:text="@string/label_clear_logs"
         android:textColor="@android:color/white" />
+    <!-- Logs -->
 <!-- TODO: make a string resource for this -->
     <TextView
         android:id="@+id/title_log_text"

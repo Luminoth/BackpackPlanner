@@ -14,15 +14,53 @@
    limitations under the License.
 */
 
+using System.Collections.Generic;
 using System.Linq;
 
+using EnergonSoftware.BackpackPlanner.DAL.Models;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Meals;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans;
+using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
 {
-    public sealed class TripPlanMealEntries : ItemEntries<TripPlan, Meal, MealEntry>
+    public abstract class MealEntries<T> : ItemEntries<T, Meal, MealEntry>
+        where T: BaseModel
     {
+        public abstract class MealEntryViewHolder : DataFragment<T>.ItemEntryViewHolder<Meal, MealEntry>
+        {
+            protected override int NoItemsResource => Resource.Id.no_meals;
+
+            protected override int NoItemsAddedResource => Resource.Id.no_meals_added;
+
+            protected override int ItemListAdapterResource => Resource.Id.meals_list;
+
+            protected override int AddItemButtonResource => Resource.Id.fab_add_meal;
+
+            protected override int AddItemDialogTitleResource => Resource.String.label_add_meals;
+
+            protected MealEntryViewHolder(DataFragment<T> fragment, T item, MealEntries<T> itemEntries)
+                : base(fragment, item, itemEntries)
+            {
+            }
+        }
+
+        protected MealEntries(T model, IReadOnlyCollection<MealEntry> entries)
+            : base(model, entries)
+        {
+        }
+    }
+
+    public sealed class TripPlanMealEntries : MealEntries<TripPlan>
+    {
+        public sealed class TripPlanMealEntryViewHolder : MealEntryViewHolder
+        {
+            public TripPlanMealEntryViewHolder(DataFragment<TripPlan> fragment, TripPlan item, TripPlanMealEntries itemEntries)
+                : base(fragment, item, itemEntries)
+            {
+            }
+        }
+
         public override MealEntry GetItemEntry(Meal meal)
         {
             return Model.Meals.FirstOrDefault(x => x.Model.Id == meal.Id);

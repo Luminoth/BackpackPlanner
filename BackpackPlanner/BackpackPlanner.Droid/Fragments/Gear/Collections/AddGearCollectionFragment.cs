@@ -14,7 +14,6 @@
    limitations under the License.
 */
 
-using System;
 using System.Threading.Tasks;
 
 using Android.App;
@@ -23,8 +22,8 @@ using Android.Views;
 
 using EnergonSoftware.BackpackPlanner.DAL;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections;
-using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items;
-using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems;
+using EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items;
+using EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Systems;
 using EnergonSoftware.BackpackPlanner.Droid.DAL.Gear;
 using EnergonSoftware.BackpackPlanner.Droid.Util;
 
@@ -44,6 +43,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
 
 #region Controls
         private Android.Support.Design.Widget.TextInputLayout _gearCollectionNameEditText;
+
+        private GearCollectionGearSystemEntries.GearCollectionGearSystemEntryViewHolder _gearSystemEntryViewHolder;
+        private GearCollectionGearItemEntries.GearCollectionGearItemEntryViewHolder _gearItemEntryViewHolder;
+
         private Android.Support.Design.Widget.TextInputLayout _gearCollectionNoteEditText;
 #endregion
 
@@ -55,7 +58,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
             base.OnCreate(savedInstanceState);
 
             _gearSystemEntries = new GearCollectionGearSystemEntries(Item);
+            _gearSystemEntryViewHolder = new GearCollectionGearSystemEntries.GearCollectionGearSystemEntryViewHolder(this, Item, _gearSystemEntries);
+
             _gearItemEntries = new GearCollectionGearItemEntries(Item);
+            _gearItemEntryViewHolder = new GearCollectionGearItemEntries.GearCollectionGearItemEntryViewHolder(this, Item, _gearItemEntries);
         }
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
@@ -64,6 +70,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
 
             _gearCollectionNameEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.add_gear_collection_name);
             _gearCollectionNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.add_gear_collection_note);
+
+            _gearSystemEntries.ItemListAdapter = new GearSystemEntryListAdapter(this);
+            _gearSystemEntryViewHolder.OnViewCreated(view, _gearSystemEntries.ItemListAdapter);
+
+            _gearItemEntries.ItemListAdapter = new GearItemEntryListAdapter(this);
+            _gearItemEntryViewHolder.OnViewCreated(view, _gearItemEntries.ItemListAdapter);
         }
 
         public override void OnResume()
@@ -75,8 +87,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
             Task.Run(async () =>
                 {
                     using(DatabaseContext dbContext = BaseActivity.BackpackPlannerState.DatabaseState.CreateContext()) {
-                        _gearSystemEntries.Items = await dbContext.GearSystems.ToArrayAsync().ConfigureAwait(false);
-                        _gearItemEntries.Items = await dbContext.GearItems.ToArrayAsync().ConfigureAwait(false);
+                        _gearSystemEntries.Items = await dbContext.GearSystems.ToListAsync().ConfigureAwait(false);
+                        _gearItemEntries.Items = await dbContext.GearItems.ToListAsync().ConfigureAwait(false);
                     }
 
                     Activity.RunOnUiThread(() =>
@@ -91,36 +103,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
 
         protected override void UpdateView()
         {
-        }
-
-        private void AddGearSystemButtonClickEventHandler(object sender, EventArgs args)
-        {
-            DialogUtil.ShowMultiChoiceAlertWithSearch(Activity, Resource.String.label_add_gear_systems,
-                _gearSystemEntries.ItemNames, _gearSystemEntries.SelectedItems,
-                (a, b) =>
-                {
-                    _gearSystemEntries.ItemListAdapter?.Filter.InvokeFilter(b.NewText, new FilterListener<GearSystemEntry>(_gearSystemEntries.ItemListAdapter));
-                },
-                (a, b) =>
-                {
-                    UpdateItemEntryList(Item, _gearSystemEntries, b.Which, b.IsChecked);
-                }
-            );
-        }
-
-        private void AddGearItemButtonClickEventHandler(object sender, EventArgs args)
-        {
-            DialogUtil.ShowMultiChoiceAlertWithSearch(Activity, Resource.String.label_add_gear_items,
-                _gearItemEntries.ItemNames, _gearItemEntries.SelectedItems,
-                (a, b) =>
-                {
-                    _gearItemEntries.ItemListAdapter?.Filter.InvokeFilter(b.NewText, new FilterListener<GearItemEntry>(_gearItemEntries.ItemListAdapter));
-                },
-                (a, b) =>
-                {
-                    UpdateItemEntryList(Item, _gearItemEntries, b.Which, b.IsChecked);
-                }
-            );
+            _gearSystemEntryViewHolder.UpdateView();
+            _gearItemEntryViewHolder.UpdateView();
         }
 
         protected override GearCollection CreateItem()
