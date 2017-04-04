@@ -8,10 +8,10 @@
     <!-- https://en.wikipedia.org/wiki/Web_colors -->
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
-    <color name="gray">#808080</color>
-    <color name="grey">#808080</color>
-    <color name="aqua">#00FFFF</color>
-    <color name="green">#008000</color>
-    <color name="yellow">#FFFF00</color>
-    <color name="red">#FF0000</color>
+    <color name="gray">#888888</color>
+    <color name="grey">#888888</color>
+    <color name="cyan">#00A8A8</color>
+    <color name="green">#00A800</color>
+    <color name="yellow">#A8A800</color>
+    <color name="red">#A80000</color>
 </resources>

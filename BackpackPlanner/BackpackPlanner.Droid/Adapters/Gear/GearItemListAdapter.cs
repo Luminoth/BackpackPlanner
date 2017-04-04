@@ -86,26 +86,26 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear
 
                 // TODO: is there any way to turn this into a core-extension?
                 // we would somehow have to convert to the appropriate android color
-                Color categoryStickerColor = Color.Gray;
+                int categoryStickerColor = Android.Support.V4.Content.ContextCompat.GetColor(Adapter.Fragment.Context, Resource.Color.gray);
                 switch(weightCategory)
                 {
                 case WeightCategory.None:
-                    categoryStickerColor = Color.Gray;
+                    categoryStickerColor = Android.Support.V4.Content.ContextCompat.GetColor(Adapter.Fragment.Context, Resource.Color.gray);
                     break;
                 case WeightCategory.Ultralight:
-                    categoryStickerColor = Color.White;
+                    categoryStickerColor = Android.Support.V4.Content.ContextCompat.GetColor(Adapter.Fragment.Context, Resource.Color.white);
                     break;
                 case WeightCategory.Light:
-                    categoryStickerColor = Color.Aqua;
+                    categoryStickerColor = Android.Support.V4.Content.ContextCompat.GetColor(Adapter.Fragment.Context, Resource.Color.cyan);
                     break;
                 case WeightCategory.Medium:
-                    categoryStickerColor = Color.Green;
+                    categoryStickerColor = Android.Support.V4.Content.ContextCompat.GetColor(Adapter.Fragment.Context, Resource.Color.green);
                     break;
                 case WeightCategory.Heavy:
-                    categoryStickerColor = Color.Yellow;
+                    categoryStickerColor = Android.Support.V4.Content.ContextCompat.GetColor(Adapter.Fragment.Context, Resource.Color.yellow);
                     break;
                 case WeightCategory.ExtraHeavy:
-                    categoryStickerColor = Color.Red;
+                    categoryStickerColor = Android.Support.V4.Content.ContextCompat.GetColor(Adapter.Fragment.Context, Resource.Color.red);
                     break;
                 }
 

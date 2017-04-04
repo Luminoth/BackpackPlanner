@@ -54,12 +54,12 @@
         </p>
         <p>Gear Items are categorized by weight using the following scheme:
             <ul>
-                <li><font color="black">No weight or not carried</font></li>
-                <li><font color="grey">Ultralight (under 8 ounces)</font></li>
-                <li><font color="aqua">Light (under 16 ounces)</font></li>
-                <li><font color="green">Medium (under 48 ounces)</font></li>
-                <li><font color="yellow">Heavy (under 80 ounces)</font></li>
-                <li><font color="red">Extra Heavy (over 80 ounces)</font></li>
+                <li><font color="#000000">No weight or not carried</font></li>
+                <li><font color="#888888">Ultralight (under 8 ounces)</font></li>
+                <li><font color="#00A8A8">Light (under 16 ounces)</font></li>
+                <li><font color="#00A800">Medium (under 48 ounces)</font></li>
+                <li><font color="#A8A800">Heavy (under 80 ounces)</font></li>
+                <li><font color="#A80000">Extra Heavy (over 80 ounces)</font></li>
             </ul>
         </p>
         ]]>
