@@ -124,7 +124,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
         protected override void UpdateView()
         {
             bool hasGearItems = null != _gearItemEntries.Items && _gearItemEntries.Items.Any();
-            bool hasGearItemsAdded = _gearItemEntries.ItemListAdapter.Count > 0;
+            bool hasGearItemsAdded = _gearItemEntries.EntryCount > 0;
 
             _noGearItemsTextView.Visibility = hasGearItems ? ViewStates.Gone : ViewStates.Visible;
             _noGearItemsAddedTextView.Visibility =  hasGearItemsAdded ? ViewStates.Gone : ViewStates.Visible;

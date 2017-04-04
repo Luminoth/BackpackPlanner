@@ -49,7 +49,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL
             }
         }
 
-        public int Count => Items?.Length ?? 0;
+        public int ItemCount => Items?.Length ?? 0;
 
         [CanBeNull]
         public string[] ItemNames { get; private set; }
@@ -59,6 +59,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL
 
         [CanBeNull]
         public BaseModelEntryListViewAdapter<TIE, TI> ItemListAdapter { get; set; }
+
+        public int EntryCount => ItemListAdapter?.Count ?? 0;
 
         protected TM Model { get; }
 

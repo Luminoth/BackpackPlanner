@@ -52,7 +52,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         protected void SetItemEntryList<TI, TE>(T model, ItemEntries<T, TI, TE> itemEntry)
             where TI: BaseModel, IBackpackPlannerItem where TE: BaseModelEntry<TI>
         {
-            for(int i=0; i<itemEntry.Count; ++i) {
+            for(int i=0; i<itemEntry.ItemCount; ++i) {
                 TI item = itemEntry.Items?[i];
                 if(null == item) {
                     Logger.Error($"Found null item at index {i} while setting item entries!");
