@@ -33,9 +33,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         private sealed class LogMessageEvent
         {
-            public static LogMessageEvent[] Create(IReadOnlyCollection<LogMessageEventArgs> eventArgs)
+            public static List<LogMessageEvent> Create(IReadOnlyCollection<LogMessageEventArgs> eventArgs)
             {
-                return (from x in eventArgs select new LogMessageEvent(x)).ToArray();
+                return (from x in eventArgs select new LogMessageEvent(x)).ToList();
             }
 
             private static string ToHtml(LogMessageEventArgs eventArgs)
@@ -108,7 +108,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             Button clearLogsButton = view.FindViewById<Button>(Resource.Id.button_clear_logs);
             clearLogsButton.Click += (sender, args) =>
             {
-                //_logTextAdapter.Clear();
+                _logTextAdapter.Clear();
             };
 
             CustomLogger.LogMessageEvent += LogMessageEventHandler;
