@@ -28,7 +28,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 #if DEBUG
         private const int AdFrequency = 2;
 #else
-        private const int AdFrequencey = 10;
+        private const int AdFrequency = 10;
 #endif
 
         protected const int AdViewType = 1;
