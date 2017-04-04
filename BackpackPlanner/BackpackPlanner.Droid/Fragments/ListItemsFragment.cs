@@ -179,6 +179,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                         try {
                             item.IsDeleted = true;
                             count = await dbContext.SaveChangesAsync().ConfigureAwait(false);
+                            item.OnRemove();
                         } catch(Exception e) {
                             Logger.Error($"Error deleting {typeof(T)}: {e.Message}", e);
 
@@ -216,6 +217,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                         try {
                             item.IsDeleted = false;
                             count = await dbContext.SaveChangesAsync().ConfigureAwait(false);
+                            // TODO: re-hook any PropertyChanged listeners
                         } catch(Exception e) {
                             Logger.Error($"Error restoring {typeof(T)}: {e.Message}", e);
 

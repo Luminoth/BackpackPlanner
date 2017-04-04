@@ -88,6 +88,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models
             var newItemMap = new Dictionary<int, TE>();
             foreach(TE item in newEntryItems) {
                 if(newItemMap.TryGetValue(item.Model.Id, out TE currentItem)) {
+                    Logger.Debug($"Found duplicate item {item.Model.Id}, collapsing ({currentItem.Count} + {item.Count})");
                     currentItem.Count += item.Count;
                 }  else {
                     newItemMap.Add(item.Model.Id, item);
@@ -117,6 +118,11 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models
                     dbContext.Entry(item.Model).State = EntityState.Unchanged;
                 }
             }
+        }
+
+        public void OnRemove()
+        {
+            PropertyChanged = null;
         }
 
         protected void NotifyPropertyChanged([CallerMemberName] string propertyName="")

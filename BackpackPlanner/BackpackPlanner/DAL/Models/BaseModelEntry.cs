@@ -31,7 +31,9 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models
     [Serializable]
     public abstract class BaseModelEntry<T> : INotifyPropertyChanged where T: BaseModel, IBackpackPlannerItem
     {
+#region Events
         public event PropertyChangedEventHandler PropertyChanged;
+#endregion
 
         /// <summary>
         /// Gets the item entry identifier.
