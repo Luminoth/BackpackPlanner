@@ -84,6 +84,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         {
             base.OnViewCreated(view, savedInstanceState);
 
+            // ReSharper disable once InconsistentNaming
             Button resetFTUEButton = view.FindViewById<Button>(Resource.Id.button_reset_ftue);
             resetFTUEButton.Click += (sender, args) =>
             {
