@@ -28,7 +28,7 @@ using EnergonSoftware.BackpackPlanner.Droid.Util;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 {
-    public abstract class AddItemFragment<T> : DataFragment where T: BaseModel
+    public abstract class AddItemFragment<T> : DataFragment<T> where T: BaseModel
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(AddItemFragment<T>));
 
@@ -59,17 +59,18 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
             Android.Support.Design.Widget.FloatingActionButton addItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(AddItemResource);
             addItemButton.Click += (sender, args) => {
-                if(!DoDataExchange()) {
-                    return;
-                }
-
                 ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_adding_item, false, true);
 
                 Task.Run(async () =>
                     {
                         int count;
                         using(DatabaseContext dbContext = BaseActivity.BackpackPlannerState.DatabaseState.CreateContext()) {
+                            if(!await DoDataExchange(dbContext).ConfigureAwait(false)) {
+                                return;
+                            }
+
                             try {
+                                Logger.Info($"Adding {typeof(T)}...");
                                 await AddItemAsync(dbContext).ConfigureAwait(false);
                                 count = await dbContext.SaveChangesAsync().ConfigureAwait(false);
                             } catch(Exception e) {

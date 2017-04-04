@@ -18,7 +18,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
 
 using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems;
@@ -26,7 +25,7 @@ using EnergonSoftware.BackpackPlanner.Settings;
 using EnergonSoftware.BackpackPlanner.Units.Currency;
 using EnergonSoftware.BackpackPlanner.Units.Units;
 
-using Newtonsoft.Json;
+using JetBrains.Annotations;
 
 namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections
 {
@@ -107,30 +106,6 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections
         }
 #endregion
 
-#if DEBUG
-        [NotMapped, JsonIgnore]
-        public List<GearSystemEntry> TestGearSystems
-        {
-            get { return _gearSystems; }
-            set
-            {
-                _gearSystems.Clear();
-                _gearSystems.AddRange(value);
-            }
-        }
-
-        [NotMapped, JsonIgnore]
-        public List<GearItemEntry> TestGearItems
-        {
-            get { return _gearItems; }
-            set
-            {
-                _gearItems.Clear();
-                _gearItems.AddRange(value);
-            }
-        }
-#endif
-
         public int GetTotalGearItemCount()
         {
             var visitedGearItems = new List<int>();
@@ -139,99 +114,33 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections
         }
 
 #region Gear Systems
-        public void AddGearSystem(GearSystemEntry gearSystem)
+        public void SetGearSystems(DatabaseContext dbContext, [CanBeNull] IReadOnlyCollection<GearSystemEntry> gearSystems)
         {
-            GearSystemEntry entry = (from item in _gearSystems where item.ModelId == gearSystem.ModelId select item).FirstOrDefault();
-            if(null != entry) {
-                entry.Count += gearSystem.Count;
-                return;
-            }
-
-            gearSystem.PropertyChanged += (sender, args) => {
-                NotifyPropertyChanged(nameof(GearSystems));
-            };
-
-            _gearSystems.Add(gearSystem);
+            UpdateItemEntries<GearSystemEntry, GearSystem>(dbContext, _gearSystems, gearSystems);
             NotifyPropertyChanged(nameof(GearSystems));
         }
 
-        public void AddGearSystems(IReadOnlyCollection<GearSystemEntry> gearSystems)
-        {
-            foreach(GearSystemEntry gearSystem in gearSystems) {
-                AddGearSystem(gearSystem);
-            }
-        }
-
-        public void RemoveGearSystem(GearSystem gearSystem)
-        {
-            RemoveGearSystems(new List<GearSystem> { gearSystem });
-        }
-
-        public void RemoveGearSystems(IReadOnlyCollection<GearSystem> gearSystems)
-        {
-            var removeItems = (from item in _gearSystems where gearSystems.Any(x => x.Id == item.ModelId) select item).ToList();
-            foreach(GearSystemEntry item in removeItems) {
-                item.OnRemove();
-                _gearSystems.Remove(item);
-            }
-
-            NotifyPropertyChanged(nameof(GearSystems));
-        } 
-
-        public int GetGearSystemCount(List<int> visitedGearSystems=null)
+        public int GetGearSystemCount(ICollection<int> visitedGearSystems=null)
         {
             return GearSystemEntry.GetGearSystemCount(_gearSystems, visitedGearSystems);
         } 
 #endregion
 
 #region Gear Items
-        public void AddGearItem(GearItemEntry gearItem)
+        public void SetGearItems(DatabaseContext dbContext, [CanBeNull] IReadOnlyCollection<GearItemEntry> gearItems)
         {
-            GearItemEntry entry = (from item in _gearItems where item.ModelId == gearItem.ModelId select item).FirstOrDefault();
-            if(null != entry) {
-                entry.Count += gearItem.Count;
-                return;
-            }
-
-            gearItem.PropertyChanged += (sender, args) => {
-                NotifyPropertyChanged(nameof(GearItems));
-            };
-
-            _gearItems.Add(gearItem);
+            UpdateItemEntries<GearItemEntry, GearItem>(dbContext, _gearItems, gearItems);
             NotifyPropertyChanged(nameof(GearItems));
         }
 
-        public void AddGearItems(IReadOnlyCollection<GearItemEntry> gearItems)
-        {
-            foreach(GearItemEntry gearItem in gearItems) {
-                AddGearItem(gearItem);
-            }
-        }
-
-        public void RemoveGearItem(GearItem gearItem)
-        {
-            RemoveGearItems(new List<GearItem> { gearItem });
-        }
-
-        public void RemoveGearItems(IReadOnlyCollection<GearItem> gearItems)
-        {
-            var removeItems = (from item in _gearItems where gearItems.Any(x => x.Id == item.ModelId) select item).ToList();
-            foreach(GearItemEntry item in removeItems) {
-                item.OnRemove();
-                _gearItems.Remove(item);
-            }
-
-            NotifyPropertyChanged(nameof(GearItems));
-        } 
-
-        public int GetGearItemCount(List<int> visitedGearItems=null)
+        public int GetGearItemCount(ICollection<int> visitedGearItems=null)
         {
             return GearItemEntry.GetGearItemCount(_gearItems, visitedGearItems);
         }
 #endregion
 
 #region Weight
-        public int GetTotalWeightInGrams(List<int> visitedGearItems=null)
+        public int GetTotalWeightInGrams(ICollection<int> visitedGearItems=null)
         {
             return GearSystemEntry.GetTotalWeightInGrams(_gearSystems, visitedGearItems)
                 + GearItemEntry.GetTotalWeightInGrams(_gearItems, visitedGearItems);
@@ -245,7 +154,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections
 #endregion
 
 #region Cost
-        public int GetTotalCostInUSDP(List<int> visitedGearItems=null)
+        // ReSharper disable once InconsistentNaming
+        public int GetTotalCostInUSDP(ICollection<int> visitedGearItems=null)
         {
             return GearSystemEntry.GetTotalCostInUSDP(_gearSystems, visitedGearItems)
                 + GearItemEntry.GetTotalCostInUSDP(_gearItems, visitedGearItems);
@@ -253,6 +163,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections
 
         public float GetTotalCostInCurrency(BackpackPlannerSettings settings)
         {
+            // ReSharper disable once InconsistentNaming
             int costInUSDP = GetTotalCostInUSDP();
             return settings.Currency.CurrencyFromUSDP(costInUSDP);
         }
@@ -260,7 +171,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections
         public float GetCostInCurrencyPerWeightInUnits(BackpackPlannerSettings settings)
         {
             float weightInUnits = GetTotalWeightInUnits(settings);
-            return 0.0f == weightInUnits ? 0.0f : GetTotalCostInCurrency(settings) / weightInUnits;
+            return Math.Abs(weightInUnits) < 0.01f ? 0.0f : GetTotalCostInCurrency(settings) / weightInUnits;
         }
 #endregion
 

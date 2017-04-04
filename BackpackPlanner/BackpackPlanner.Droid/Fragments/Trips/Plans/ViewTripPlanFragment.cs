@@ -16,11 +16,13 @@
 
 using System;
 using System.Globalization;
+using System.Threading.Tasks;
 
 using Android.OS;
 using Android.Views;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
+using EnergonSoftware.BackpackPlanner.DAL;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Util;
 
@@ -94,7 +96,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
         {
         }
 
-        protected override void OnDoDataExchange()
+        protected override async Task OnDoDataExchange(DatabaseContext dbContext)
         {
             Item.Name = _tripPlanNameEditText.EditText.Text;
 
@@ -111,6 +113,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
             }
 
             Item.Note = _tripPlanNoteEditText.EditText.Text;
+
+            await Task.Delay(0).ConfigureAwait(false);
         }
 
         protected override bool OnValidate()

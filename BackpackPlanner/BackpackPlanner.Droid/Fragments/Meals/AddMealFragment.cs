@@ -89,7 +89,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
             await dbContext.Meals.AddAsync(Item).ConfigureAwait(false);
         }
 
-        protected override void OnDoDataExchange()
+        protected override async Task OnDoDataExchange(DatabaseContext dbContext)
         {
             Item.Name = _mealNameEditText.EditText.Text;
             Item.Url = _mealWebsiteEditText.EditText.Text;
@@ -101,6 +101,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
             Item.ProteinInGrams = Convert.ToInt32(_mealProteinEditText.EditText.Text);
             Item.FiberInGrams = Convert.ToInt32(_mealFiberEditText.EditText.Text);
             Item.Note = _mealNoteEditText.EditText.Text;
+
+            await Task.Delay(0).ConfigureAwait(false);
         }
 
         protected override bool OnValidate()

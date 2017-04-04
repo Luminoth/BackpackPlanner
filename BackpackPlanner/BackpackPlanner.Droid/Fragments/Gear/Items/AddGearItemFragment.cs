@@ -93,7 +93,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
             await dbContext.GearItems.AddAsync(Item).ConfigureAwait(false);
         }
 
-        protected override void OnDoDataExchange()
+        protected override async Task OnDoDataExchange(DatabaseContext dbContext)
         {
             Item.Name = _gearItemNameEditText.EditText.Text;
             Item.Make = _gearItemMakeEditText.EditText.Text;
@@ -116,6 +116,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
                 Item.Carried = GearCarried.NotCarried;
                 break;
             }
+
+            await Task.Delay(0).ConfigureAwait(false);
         }
 
         protected override bool OnValidate()

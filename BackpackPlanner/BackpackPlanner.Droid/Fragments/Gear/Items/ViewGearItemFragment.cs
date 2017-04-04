@@ -15,11 +15,13 @@
 */
 
 using System;
+using System.Threading.Tasks;
 
 using Android.OS;
 using Android.Views;
 using Android.Widget;
 
+using EnergonSoftware.BackpackPlanner.DAL;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items;
 using EnergonSoftware.BackpackPlanner.Units.Currency;
 using EnergonSoftware.BackpackPlanner.Units.Units;
@@ -117,7 +119,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
         {
         }
 
-        protected override void OnDoDataExchange()
+        protected override async Task OnDoDataExchange(DatabaseContext dbContext)
         {
             Item.Name = _gearItemNameEditText.EditText.Text;
             Item.Make = _gearItemMakeEditText.EditText.Text;
@@ -140,6 +142,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
                 Item.Carried = GearCarried.NotCarried;
                 break;
             }
+
+            await Task.Delay(0).ConfigureAwait(false);
         }
 
         protected override bool OnValidate()

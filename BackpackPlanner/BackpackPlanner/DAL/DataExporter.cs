@@ -30,8 +30,6 @@ namespace EnergonSoftware.BackpackPlanner.DAL
 {
     public static class DataExporter
     {
-// TODO: all model classes need to be serializable
-
         [Serializable]
         private sealed class ExportedData
         {

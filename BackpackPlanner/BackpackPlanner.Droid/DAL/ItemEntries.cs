@@ -14,17 +14,23 @@
    limitations under the License.
 */
 
+using System.Collections.Generic;
 using System.Linq;
 
 using EnergonSoftware.BackpackPlanner.DAL.Models;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters;
 
+using JetBrains.Annotations;
+
 namespace EnergonSoftware.BackpackPlanner.Droid.DAL
 {
-    public abstract class ItemEntries<TM, TI, TE> where TM: BaseModel where TI: BaseModel, IBackpackPlannerItem where TE: BaseModelEntry<TI>
+    // ReSharper disable once InconsistentNaming
+    public abstract class ItemEntries<TM, TI, TIE> where TM: BaseModel where TI: BaseModel, IBackpackPlannerItem where TIE: BaseModelEntry<TI>
     {
+        [CanBeNull]
         private TI[] _items;
 
+        [CanBeNull]
         public TI[] Items
         {
             get { return _items; }
@@ -43,19 +49,33 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL
             }
         }
 
+        public int Count => Items?.Length ?? 0;
+
+        [CanBeNull]
         public string[] ItemNames { get; private set; }
 
+        [CanBeNull]
         public bool[] SelectedItems { get; private set; }
 
-        public BaseModelEntryListViewAdapter<TE, TI> ItemListAdapter { get; set; }
+        [CanBeNull]
+        public BaseModelEntryListViewAdapter<TIE, TI> ItemListAdapter { get; set; }
 
         protected TM Model { get; }
 
-        public abstract TE GetItemEntry(TI item);
+        public abstract TIE GetItemEntry(TI item);
 
-        protected ItemEntries(TM model)
+        public void SelectItem(int index, bool isSelected)
+        {
+            if(null != SelectedItems) {
+                SelectedItems[index] = isSelected;
+            }
+        }
+
+        protected ItemEntries(TM model, IReadOnlyCollection<TIE> entries)
         {
             Model = model;
+
+            ItemListAdapter?.AddAll(entries);
         }
     }
 }

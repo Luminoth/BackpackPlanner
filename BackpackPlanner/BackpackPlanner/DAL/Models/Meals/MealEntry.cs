@@ -28,7 +28,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
     public class MealEntry : BaseModelEntry<Meal>
     {
 #region Static Helpers
-        public static int GetMealCount<TE>(List<TE> meals, [CanBeNull] List<int> visitedMeals) where TE: MealEntry
+        public static int GetMealCount<TE>(IReadOnlyCollection<TE> meals, [CanBeNull] ICollection<int> visitedMeals) where TE: MealEntry
         {
             int count = 0;
             foreach(TE meal in meals) {
@@ -42,7 +42,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
             return count;
         }
 
-        public static int GetTotalCalories<TE>(List<TE> meals, [CanBeNull] List<int> visitedMeals) where TE: MealEntry
+        public static int GetTotalCalories<TE>(IReadOnlyCollection<TE> meals, [CanBeNull] ICollection<int> visitedMeals) where TE: MealEntry
         {
             int calories = 0;
             foreach(TE meal in meals) {
@@ -56,7 +56,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
             return calories;
         }
 
-        public static int GetTotalWeightInGrams<TE>(List<TE> meals, [CanBeNull] List<int> visitedMeals) where TE: MealEntry
+        public static int GetTotalWeightInGrams<TE>(IReadOnlyCollection<TE> meals, [CanBeNull] ICollection<int> visitedMeals) where TE: MealEntry
         {
             int weightInGrams = 0;
             foreach(TE meal in meals) {
@@ -70,8 +70,10 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
             return weightInGrams;
         }
 
-        public static int GetTotalCostInUSDP<TE>(List<TE> meals, [CanBeNull] List<int> visitedMeals) where TE: MealEntry
+        // ReSharper disable once InconsistentNaming
+        public static int GetTotalCostInUSDP<TE>(IReadOnlyCollection<TE> meals, [CanBeNull] ICollection<int> visitedMeals) where TE: MealEntry
         {
+            // ReSharper disable once InconsistentNaming
             int costInUSDP = 0;
             foreach(TE meal in meals) {
                 if(visitedMeals?.Contains(meal.ModelId) ?? false) {
@@ -100,7 +102,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
         [Required, ForeignKey("Model")]
         public override int ModelId { get; protected set; }
 
-        public override Meal Model { get; set; }
+        public override Meal Model { get; protected set; }
 #endregion
 
         [NotMapped, JsonIgnore]

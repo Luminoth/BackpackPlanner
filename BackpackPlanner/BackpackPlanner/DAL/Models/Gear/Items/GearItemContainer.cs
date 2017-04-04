@@ -24,17 +24,17 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
 {
     public interface IGearItemContainer
     {
-        int GetGearItemCount(List<int> visitedGearItems=null);
+        int GetGearItemCount(ICollection<int> visitedGearItems=null);
 
-        int GetTotalWeightInGrams(List<int> visitedGearItems=null);
+        int GetTotalWeightInGrams(ICollection<int> visitedGearItems=null);
 
         // ReSharper disable once InconsistentNaming
-        int GetTotalCostInUSDP(List<int> visitedGearItems=null);
+        int GetTotalCostInUSDP(ICollection<int> visitedGearItems=null);
     }
 
     public static class GearItemContainerExtensions
     {
-        public static int GetGearItemCount<T>(List<T> containers, [CanBeNull] List<int> visitedGearItems) where T: IGearItemContainer
+        public static int GetGearItemCount<T>(ICollection<T> containers, [CanBeNull] ICollection<int> visitedGearItems) where T: IGearItemContainer
         {
             return containers.Sum(container => container?.GetGearItemCount(visitedGearItems) ?? 0);
         }

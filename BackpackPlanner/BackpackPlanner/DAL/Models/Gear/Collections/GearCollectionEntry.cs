@@ -30,7 +30,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections
     public class GearCollectionEntry : BaseModelEntry<GearCollection>, IGearItemContainer
     {
 #region Static Helpers
-        public static int GetGearCollectionCount<TE>(List<TE> gearCollections, [CanBeNull] List<int> visitedGearCollections) where TE: GearCollectionEntry
+        public static int GetGearCollectionCount<TE>(IReadOnlyCollection<TE> gearCollections, [CanBeNull] ICollection<int> visitedGearCollections) where TE: GearCollectionEntry
         {
             int count = 0;
             foreach(TE gearCollection in gearCollections) {
@@ -44,12 +44,13 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections
             return count;
         }
 
-        public static int GetTotalWeightInGrams<TE>(List<TE> gearCollections, [CanBeNull] List<int> visitedGearItems) where TE: GearCollectionEntry
+        public static int GetTotalWeightInGrams<TE>(IReadOnlyCollection<TE> gearCollections, [CanBeNull] ICollection<int> visitedGearItems) where TE: GearCollectionEntry
         {
             return gearCollections.Sum(gearSystem => gearSystem.GetTotalWeightInGrams(visitedGearItems));
         }
 
-        public static int GetTotalCostInUSDP<TE>(List<TE> gearCollections, [CanBeNull] List<int> visitedGearItems) where TE: GearCollectionEntry
+        // ReSharper disable once InconsistentNaming
+        public static int GetTotalCostInUSDP<TE>(IReadOnlyCollection<TE> gearCollections, [CanBeNull] ICollection<int> visitedGearItems) where TE: GearCollectionEntry
         {
             return gearCollections.Sum(gearSystem => gearSystem.GetTotalCostInUSDP(visitedGearItems));
         }
@@ -70,7 +71,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections
         [Required, ForeignKey("Model")]
         public override int ModelId { get; protected set; }
 
-        public override GearCollection Model { get; set; }
+        public override GearCollection Model { get; protected set; }
 #endregion
 
         public GearCollectionEntry(GearCollection gearCollection)
@@ -82,17 +83,17 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections
         {
         }
 
-        public int GetGearItemCount(List<int> visitedGearItems = null)
+        public int GetGearItemCount(ICollection<int> visitedGearItems = null)
         {
             return Model?.GetGearItemCount(visitedGearItems) ?? 0;
         }
 
-        public int GetTotalWeightInGrams(List<int> visitedGearItems = null)
+        public int GetTotalWeightInGrams(ICollection<int> visitedGearItems = null)
         {
             return Model?.GetTotalWeightInGrams(visitedGearItems) ?? 0;
         }
 
-        public int GetTotalCostInUSDP(List<int> visitedGearItems = null)
+        public int GetTotalCostInUSDP(ICollection<int> visitedGearItems = null)
         {
             return Model?.GetTotalCostInUSDP(visitedGearItems) ?? 0;
         }

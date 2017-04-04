@@ -47,7 +47,11 @@ namespace EnergonSoftware.BackpackPlanner
             {
                 public bool IsEnabled(Microsoft.Extensions.Logging.LogLevel logLevel)
                 {
+#if DEBUG
                     return true;
+#else
+                    return false;
+#endif
                 }
 
                 public void Log<T>(Microsoft.Extensions.Logging.LogLevel logLevel, Microsoft.Extensions.Logging.EventId eventId, T state, Exception exception, Func<T, Exception, string> formatter)
@@ -256,97 +260,113 @@ namespace EnergonSoftware.BackpackPlanner
                 new GearSystem
                 {
                     Name = "New Hammock Setup",
-                    TestGearItems = new List<GearItemEntry>
-                    {
-                        // Hammock
-                        new GearItemEntry(gearItems[1])
-                        {
-                            Count = 1
-                        },
-
-                        // Tree Straps
-                        new GearItemEntry(gearItems[2])
-                        {
-                            Count = 1
-                        },
-
-                        // Overquilt
-                        new GearItemEntry(gearItems[4])
-                        {
-                            Count = 1
-                        },
-
-                        // New Underquilt
-                        new GearItemEntry(gearItems[5])
-                        {
-                            Count = 1
-                        }
-                    },
                     Note = "3 season"
                 },
                 new GearSystem
                 {
                     Name = "Old Hammock Setup",
-                    TestGearItems = new List<GearItemEntry>
-                    {
-                        // Hammock
-                        new GearItemEntry(gearItems[1])
-                        {
-                            Count = 1
-                        },
-
-                        // Tree Straps
-                        new GearItemEntry(gearItems[2])
-                        {
-                            Count = 1
-                        },
-
-                        // Old Underquilt
-                        new GearItemEntry(gearItems[3])
-                        {
-                            Count = 1
-                        },
-
-                        // Overquilt
-                        new GearItemEntry(gearItems[4])
-                        {
-                            Count = 1
-                        }
-                    },
                     Note = "3 season"
                 },
                 new GearSystem
                 {
                     Name = "Car Camping",
-                    TestGearItems = new List<GearItemEntry>
-                    {
-                        // 5g Water Jug
-                        new GearItemEntry(gearItems[8])
-                        {
-                            Count = 2
-                        }
-                    },
                     Note = "Leave this junk in the car"
                 },
                 new GearSystem
                 {
-                    Name = "Cook System",
-                    TestGearItems = new List<GearItemEntry>
-                    {
-                        // Alcohol Stove
-                        new GearItemEntry(gearItems[10])
-                        {
-                            Count = 1
-                        },
-
-                        // Wind Screen
-                        new GearItemEntry(gearItems[11])
-                        {
-                            Count = 1
-                        }
-                    }
+                    Name = "Cook System"
                 }
             };
+
+            // New Hammock Setup
+            gearSystems[0].SetGearItems(dbContext,
+                new List<GearItemEntry>
+                {
+                    // Hammock
+                    new GearItemEntry(gearItems[1])
+                    {
+                        Count = 1
+                    },
+
+                    // Tree Straps
+                    new GearItemEntry(gearItems[2])
+                    {
+                        Count = 1
+                    },
+
+                    // Overquilt
+                    new GearItemEntry(gearItems[4])
+                    {
+                        Count = 1
+                    },
+
+                    // New Underquilt
+                    new GearItemEntry(gearItems[5])
+                    {
+                        Count = 1
+                    }
+                }
+            );
+
+            // Old Hammock Setup
+            gearSystems[1].SetGearItems(dbContext,
+                new List<GearItemEntry>
+                {
+                    // Hammock
+                    new GearItemEntry(gearItems[1])
+                    {
+                        Count = 1
+                    },
+
+                    // Tree Straps
+                    new GearItemEntry(gearItems[2])
+                    {
+                        Count = 1
+                    },
+
+                    // Old Underquilt
+                    new GearItemEntry(gearItems[3])
+                    {
+                        Count = 1
+                    },
+
+                    // Overquilt
+                    new GearItemEntry(gearItems[4])
+                    {
+                        Count = 1
+                    }
+                }
+            );
+
+            // Car Camping
+            gearSystems[2].SetGearItems(dbContext,
+                new List<GearItemEntry>
+                {
+                    // 5g Water Jug
+                    new GearItemEntry(gearItems[8])
+                    {
+                        Count = 2
+                    }
+                }
+            );
+
+            // Cook System
+            gearSystems[3].SetGearItems(dbContext,
+                new List<GearItemEntry>
+                {
+                    // Alcohol Stove
+                    new GearItemEntry(gearItems[10])
+                    {
+                        Count = 1
+                    },
+
+                    // Wind Screen
+                    new GearItemEntry(gearItems[11])
+                    {
+                        Count = 1
+                    }
+                }
+            );
 
             Logger.Debug("Inserting test gear systems...");
             await dbContext.GearSystems.AddRangeAsync(gearSystems).ConfigureAwait(false);
@@ -359,37 +379,44 @@ namespace EnergonSoftware.BackpackPlanner
                 new GearCollection
                 {
                     Name = "3 Season Hammock",
-                    TestGearSystems = new List<GearSystemEntry>
-                    {
-                        // New Hammock Setup
-                        new GearSystemEntry(gearSystems[0])
-                        {
-                            Count = 1
-                        },
-
-                        // Cook System
-                        new GearSystemEntry(gearSystems[3])
-                        {
-                            Count = 1
-                        }
-                    },
-                    TestGearItems = new List<GearItemEntry>
-                    {
-                        // Backpack
-                        new GearItemEntry(gearItems[0])
-                        {
-                            Count = 1
-                        },
-
-                        // Head Lamp
-                        new GearItemEntry(gearItems[9])
-                        {
-                            Count = 1
-                        }
-                    },
                     Note = "Test Collection"
                 }
             };
+
+            // 3 Season Hammock
+            gearCollections[0].SetGearSystems(dbContext,
+                new List<GearSystemEntry>
+                {
+                    // New Hammock Setup
+                    new GearSystemEntry(gearSystems[0])
+                    {
+                        Count = 1
+                    },
+
+                    // Cook System
+                    new GearSystemEntry(gearSystems[3])
+                    {
+                        Count = 1
+                    }
+                }
+            );
+
+            gearCollections[0].SetGearItems(dbContext,
+                new List<GearItemEntry>
+                {
+                    // Backpack
+                    new GearItemEntry(gearItems[0])
+                    {
+                        Count = 1
+                    },
+
+                    // Head Lamp
+                    new GearItemEntry(gearItems[9])
+                    {
+                        Count = 1
+                    }
+                }
+            );
 
             Logger.Debug("Inserting test gear collections...");
             await dbContext.GearCollections.AddRangeAsync(gearCollections).ConfigureAwait(false);
@@ -439,45 +466,56 @@ namespace EnergonSoftware.BackpackPlanner
                 {
                     Name = "Turkey Camp 2015",
                     StartDate = DateTime.Now,
-                    EndDate = DateTime.Now,
-
-                    // Turkey Camp 2015
-                    TripItinerary = tripItineraries[0],
-
-                    TestGearCollections = new List<GearCollectionEntry>
-                    {
-                        // 3 Season Hammock
-                        new GearCollectionEntry(gearCollections[0])
-                        {
-                            Count = 1
-                        }
-                    },
-                    TestGearSystems = new List<GearSystemEntry>
-                    {
-                        // Cook System
-                        new GearSystemEntry(gearSystems[3])
-                        {
-                            Count = 1
-                        }
-                    },
-                    TestGearItems = new List<GearItemEntry>
-                    {
-                        // 5g Water Jug
-                        new GearItemEntry(gearItems[8])
-                        {
-                            Count = 1
-                        }
-                    },
-                    TestMeals = new List<MealEntry>
-                    {
-                        // Cheese Chicken Dinner
-                        new MealEntry(meals[0])
-                        {
-                            Count = 1
-                        }
-                    }
+                    EndDate = DateTime.Now
                 }
             };
+
+            // Turkey Camp 2015
+            tripPlans[0].SetTripItinerary(dbContext, tripItineraries[0]);
+
+            tripPlans[0].SetGearCollections(dbContext,
+                new List<GearCollectionEntry>
+                {
+                    // 3 Season Hammock
+                    new GearCollectionEntry(gearCollections[0])
+                    {
+                        Count = 1
+                    }
+                }
+            );
+
+            tripPlans[0].SetGearSystems(dbContext,
+                new List<GearSystemEntry>
+                {
+                    // Cook System
+                    new GearSystemEntry(gearSystems[3])
+                    {
+                        Count = 1
+                    }
+                }
+            );
+
+            tripPlans[0].SetGearItems(dbContext,
+                new List<GearItemEntry>
+                {
+                    // 5g Water Jug
+                    new GearItemEntry(gearItems[8])
+                    {
+                        Count = 1
+                    }
+                }
+            );
+
+            tripPlans[0].SetMeals(dbContext,
+                new List<MealEntry>
+                {
+                    // Cheese Chicken Dinner
+                    new MealEntry(meals[0])
+                    {
+                        Count = 1
+                    }
+                }
+            );
 
             Logger.Debug("Inserting test trip plans...");
             await dbContext.TripPlans.AddRangeAsync(tripPlans).ConfigureAwait(false);

@@ -293,13 +293,13 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
         public float GetCostInCurrencyPerWeightInUnits(BackpackPlannerSettings settings)
         {
             float weightInUnits = GetWeightInUnits(settings);
-            return 0.0f == weightInUnits ? 0.0f : GetCostInCurrency(settings) / weightInUnits;
+            return Math.Abs(weightInUnits) < 0.01f ? 0.0f : GetCostInCurrency(settings) / weightInUnits;
         }
 
         public float GetCaloriesPerWeightInUnits(BackpackPlannerSettings settings)
         {
             float weightInUnits = GetWeightInUnits(settings);
-            return 0.0f == weightInUnits ? 0.0f : Calories / weightInUnits;
+            return Math.Abs(weightInUnits) < 0.01f ? 0.0f : Calories / weightInUnits;
         }
 
         public Meal()

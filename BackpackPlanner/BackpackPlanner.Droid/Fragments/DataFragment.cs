@@ -14,9 +14,12 @@
    limitations under the License.
 */
 
+using System.Threading.Tasks;
+
 using Android.Widget;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
+using EnergonSoftware.BackpackPlanner.DAL;
 using EnergonSoftware.BackpackPlanner.DAL.Models;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters;
 using EnergonSoftware.BackpackPlanner.Droid.DAL;
@@ -26,15 +29,15 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
     /// <summary>
     /// Helper for the data entry fragments
     /// </summary>
-    public abstract class DataFragment : BaseFragment
+    public abstract class DataFragment<T> : BaseFragment where T: BaseModel
     {
-        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(DataFragment));
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(DataFragment<T>));
 
-        protected sealed class FilterListener<T> : Java.Lang.Object, Filter.IFilterListener
+        protected sealed class FilterListener<TE> : Java.Lang.Object, Filter.IFilterListener
         {
-            private readonly BaseListViewAdapter<T> _adapter;
+            private readonly BaseListViewAdapter<TE> _adapter;
 
-            public FilterListener(BaseListViewAdapter<T> adapter)
+            public FilterListener(BaseListViewAdapter<TE> adapter)
             {
                 _adapter = adapter;
             }
@@ -46,11 +49,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             }
         }
 
-        protected void SetItemEntryList<TM, TI, TE>(TM model, ItemEntries<TM, TI, TE> itemEntry)
-            where TM: BaseModel where TI: BaseModel, IBackpackPlannerItem where TE: BaseModelEntry<TI>
+        protected void SetItemEntryList<TI, TE>(T model, ItemEntries<T, TI, TE> itemEntry)
+            where TI: BaseModel, IBackpackPlannerItem where TE: BaseModelEntry<TI>
         {
-            for(int i=0; i<itemEntry.Items.Length; ++i) {
-                TI item = itemEntry.Items[i];
+            for(int i=0; i<itemEntry.Count; ++i) {
+                TI item = itemEntry.Items?[i];
                 if(null == item) {
                     Logger.Error($"Found null item at index {i} while setting item entries!");
                     continue;
@@ -58,43 +61,46 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
                 TE entry = itemEntry.GetItemEntry(item);
                 if(null != entry) {
-                    itemEntry.SelectedItems[i] = true;
-                    itemEntry.ItemListAdapter.AddItem(entry);
+                    itemEntry.SelectItem(i, true);
+                    itemEntry.ItemListAdapter?.AddItem(entry);
                 }
             }
         }
 
-        protected void UpdateItemEntryList<TM, TI, TE>(TM model, ItemEntries<TM, TI, TE> itemEntry, int index, bool isSelected)
-            where TM: BaseModel where TI: BaseModel, IBackpackPlannerItem where TE: BaseModelEntry<TI>, new()
+        protected void UpdateItemEntryList<TI, TE>(T model, ItemEntries<T, TI, TE> itemEntry, int index, bool isSelected)
+            where TI: BaseModel, IBackpackPlannerItem where TE: BaseModelEntry<TI>, new()
         {
-            TI item = itemEntry.Items[index];
+            TI item = itemEntry.Items?[index];
             if(null == item) {
                 Logger.Error($"Found null item at index {index} while updating item entries!");
                 return;
             }
 
-            itemEntry.SelectedItems[index] = isSelected;
+            itemEntry.SelectItem(index, isSelected);
             if(isSelected) {
                 TE entry = new TE
                 {
-                    Model = item,
                     Count = 1
                 };
-                itemEntry.ItemListAdapter.AddItem(entry);
+                entry.SetModel(item);
+
+                itemEntry.ItemListAdapter?.AddItem(entry);
             } else {
-                itemEntry.ItemListAdapter.RemoveItem(item);
+                itemEntry.ItemListAdapter?.RemoveItem(item);
             }
 
             UpdateView();
         }
 
-        public bool DoDataExchange()
+        public async Task<bool> DoDataExchange(DatabaseContext dbContext)
         {
+            Logger.Debug($"DDX {GetType()} => {typeof(T)}");
+
             if(!OnValidate()) {
                 return false;
             }
 
-            OnDoDataExchange();
+            await OnDoDataExchange(dbContext).ConfigureAwait(false);
 
             return true;
         }
@@ -103,7 +109,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         protected abstract bool OnValidate();
 
-        protected abstract void OnDoDataExchange();
+        protected abstract Task OnDoDataExchange(DatabaseContext dbContext);
 
         protected abstract void OnReset();
     }

@@ -26,9 +26,11 @@ using EnergonSoftware.BackpackPlanner.DAL;
 using EnergonSoftware.BackpackPlanner.DAL.Models;
 using EnergonSoftware.BackpackPlanner.Droid.Util;
 
+using Microsoft.EntityFrameworkCore;
+
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 {
-    public abstract class ViewItemFragment<T> : DataFragment where T: BaseModel
+    public abstract class ViewItemFragment<T> : DataFragment<T> where T: BaseModel
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(ViewItemFragment<T>));
 
@@ -50,17 +52,19 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
             Android.Support.Design.Widget.FloatingActionButton saveItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(SaveItemResource);
             saveItemButton.Click += (sender, args) => {
-                if(!DoDataExchange()) {
-                    return;
-                }
-
                 ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_saving_item, false, true);
 
                 Task.Run(async () =>
                     {
                         int count;
                         using(DatabaseContext dbContext = BaseActivity.BackpackPlannerState.DatabaseState.CreateContext()) {
+                            if(!await DoDataExchange(dbContext).ConfigureAwait(false)) {
+                                return;
+                            }
+
                             try {
+                                Logger.Info($"Saving {typeof(T)}...");
+                                dbContext.Entry(Item).State = EntityState.Modified;
                                 count = await dbContext.SaveChangesAsync().ConfigureAwait(false);
                             } catch(Exception e) {
                                 Logger.Error($"Error saving {typeof(T)}: {e.Message}", e);

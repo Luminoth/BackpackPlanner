@@ -102,7 +102,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
             await dbContext.TripPlans.AddAsync(Item).ConfigureAwait(false);
         }
 
-        protected override void OnDoDataExchange()
+        protected override async Task OnDoDataExchange(DatabaseContext dbContext)
         {
             Item.Name = _tripPlanNameEditText.EditText.Text;
 
@@ -119,6 +119,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
             }
 
             Item.Note = _tripPlanNoteEditText.EditText.Text;
+
+            await Task.Delay(0).ConfigureAwait(false);
         }
 
         protected override bool OnValidate()

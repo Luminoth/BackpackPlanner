@@ -33,7 +33,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
    public class GearItemEntry : BaseModelEntry<GearItem>
     {
 #region Static Helpers
-        public static int GetGearItemCount<TE>(List<TE> gearItems, [CanBeNull] List<int> visitedGearItems) where TE: GearItemEntry
+        public static int GetGearItemCount<TE>(IReadOnlyCollection<TE> gearItems, [CanBeNull] ICollection<int> visitedGearItems) where TE: GearItemEntry
         {
             int count = 0;
             foreach(TE gearItem in gearItems) {
@@ -47,7 +47,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
             return count;
         }
 
-        public static int GetTotalWeightInGrams<TE>(List<TE> gearItems, [CanBeNull] List<int> visitedGearItems) where TE: GearItemEntry
+        public static int GetTotalWeightInGrams<TE>(IReadOnlyCollection<TE> gearItems, [CanBeNull] ICollection<int> visitedGearItems) where TE: GearItemEntry
         {
             int weightInGrams = 0;
             foreach(TE gearItem in gearItems) {
@@ -62,8 +62,9 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
         }
 
         // ReSharper disable once InconsistentNaming
-        public static int GetTotalCostInUSDP<TE>(List<TE> gearItems, [CanBeNull] List<int> visitedGearItems) where TE: GearItemEntry
+        public static int GetTotalCostInUSDP<TE>(IReadOnlyCollection<TE> gearItems, [CanBeNull] ICollection<int> visitedGearItems) where TE: GearItemEntry
         {
+            // ReSharper disable once InconsistentNaming
             int costInUSDP = 0;
             foreach(TE gearItem in gearItems) {
                 if(visitedGearItems?.Contains(gearItem.ModelId) ?? false) {
@@ -92,7 +93,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
         [Required, ForeignKey("Model")]
         public override int ModelId { get; protected set; }
 
-        public override GearItem Model { get; set; }
+        public override GearItem Model { get; protected set; }
 #endregion
 
         /// <summary>

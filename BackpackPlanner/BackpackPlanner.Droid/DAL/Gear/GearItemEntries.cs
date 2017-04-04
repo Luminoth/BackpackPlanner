@@ -31,7 +31,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
         }
 
         public GearSystemGearItemEntries(GearSystem gearSystem)
-            : base(gearSystem)
+            : base(gearSystem, gearSystem.GearItems)
         {
         }
     }
@@ -44,7 +44,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
         }
 
         public GearCollectionGearItemEntries(GearCollection gearCollection)
-            : base(gearCollection)
+            : base(gearCollection, gearCollection.GearItems)
         {
         }
     }
@@ -57,7 +57,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
         }
 
         public TripPlanGearItemEntries(TripPlan tripPlan)
-            : base(tripPlan)
+            : base(tripPlan, tripPlan.GearItems)
         {
         }
     }

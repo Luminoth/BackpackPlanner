@@ -60,7 +60,10 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models
         /// <value>
         /// The model.
         /// </value>
-        public abstract T Model { get; set; }
+        /// <remarks>
+        /// If this is set, the ModelId should also be set to match it
+        /// </remarks>
+        public abstract T Model { get; protected set; }
 
         private int _count;
 
@@ -82,6 +85,12 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models
         }
 #endregion
 
+        public void SetModel(T model)
+        {
+            Model = model;
+            ModelId = model.Id;
+        }
+
         public void OnRemove()
         {
             PropertyChanged = null;
@@ -94,7 +103,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models
 
         protected BaseModelEntry(T model)
         {
-            Model = model;
+            SetModel(model);
         }
 
         protected BaseModelEntry()

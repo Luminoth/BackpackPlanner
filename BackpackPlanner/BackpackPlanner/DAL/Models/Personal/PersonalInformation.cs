@@ -175,7 +175,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Personal
         public float WeightInUnits
         {
             get { return _settings?.Units.WeightFromGrams(WeightInGrams) ?? WeightInGrams; }
-            set { WeightInGrams = (int)(_settings?.Units.GramsFromWeight(value) ?? WeightInGrams); }
+            set { WeightInGrams = _settings?.Units.GramsFromWeight(value) ?? WeightInGrams; }
         }
 
         private readonly SettingsManager _settingsManager;

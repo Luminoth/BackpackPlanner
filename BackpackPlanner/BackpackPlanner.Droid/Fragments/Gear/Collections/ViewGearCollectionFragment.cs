@@ -14,9 +14,12 @@
    limitations under the License.
 */
 
+using System.Threading.Tasks;
+
 using Android.OS;
 using Android.Views;
 
+using EnergonSoftware.BackpackPlanner.DAL;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
@@ -53,10 +56,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
         {
         }
 
-        protected override void OnDoDataExchange()
+        protected override async Task OnDoDataExchange(DatabaseContext dbContext)
         {
             Item.Name = _gearCollectionNameEditText.EditText.Text;
             Item.Note = _gearCollectionNoteEditText.EditText.Text;
+
+            await Task.Delay(0).ConfigureAwait(false);
         }
 
         protected override bool OnValidate()

@@ -131,7 +131,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
                 _gearItemEntries.ItemNames, _gearItemEntries.SelectedItems,
                 (a, b) =>
                 {
-                    _gearItemEntries.ItemListAdapter.Filter.InvokeFilter(b.NewText, new FilterListener<GearItemEntry>(_gearItemEntries.ItemListAdapter));
+                    _gearItemEntries.ItemListAdapter?.Filter.InvokeFilter(b.NewText, new FilterListener<GearItemEntry>(_gearItemEntries.ItemListAdapter));
                 },
                 (a, b) =>
                 {
@@ -150,11 +150,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
             await dbContext.GearSystems.AddAsync(Item).ConfigureAwait(false);
         }
 
-        protected override void OnDoDataExchange()
+        protected override async Task OnDoDataExchange(DatabaseContext dbContext)
         {
             Item.Name = _gearSystemNameEditText.EditText.Text;
-            Item.AddGearItems(_gearItemEntries.ItemListAdapter.Items);
+            Item.SetGearItems(dbContext, _gearItemEntries.ItemListAdapter?.Items);
             Item.Note = _gearSystemNoteEditText.EditText.Text;
+
+            await Task.Delay(0).ConfigureAwait(false);
         }
 
         protected override bool OnValidate()
