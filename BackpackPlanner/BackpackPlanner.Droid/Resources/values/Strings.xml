@@ -406,6 +406,7 @@
 
     <string name="label_reset_ftue">Reset FTUE</string>
     <string name="label_reset_database">Reset Database</string>
+    <string name="label_clear_logs">Clear Logs</string>
 
     <!-- FTUE -->
     <string name="label_ftue_welcome">Welcome to the backpacking planner! This is the FTUE that will eventually help new users understand how to use it!</string>

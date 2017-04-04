@@ -50,4 +50,5 @@ The following is necessary to fix Proguard failing:
   * cp BackpackPlanner.db /mnt/sdcard
   * chmod 600 BackpackPlanner.db
   * exit
+  * exit
 * adb pull /mnt/sdcard/BackpackPlanner.db

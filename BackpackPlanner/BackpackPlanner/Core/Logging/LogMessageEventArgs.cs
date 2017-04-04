@@ -21,6 +21,8 @@ namespace EnergonSoftware.BackpackPlanner.Core.Logging
 {
     public sealed class LogMessageEventArgs : EventArgs
     {
+        public CustomLogger.Level Level { get; set; }
+
         public string Message { get; set; }
 
         public Exception Exception { get; set; }

@@ -19,6 +19,14 @@
         android:layout_gravity="center_horizontal"
         android:text="@string/label_reset_database"
         android:textColor="@android:color/white" />
+    <Button
+        android:id="@+id/button_clear_logs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/label_clear_logs"
+        android:textColor="@android:color/white" />
+<!-- TODO: make a string resource for this -->
     <TextView
         android:id="@+id/title_log_text"
         android:layout_width="match_parent"

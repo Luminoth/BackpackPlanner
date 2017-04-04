@@ -20,6 +20,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
+using EnergonSoftware.BackpackPlanner.Core.Util;
+
 namespace EnergonSoftware.BackpackPlanner.Core.Logging
 {
     /// <summary>
@@ -70,6 +72,21 @@ namespace EnergonSoftware.BackpackPlanner.Core.Logging
     /// </summary>
     public sealed class CustomLogger : ILogger
     {
+        public enum Level
+        {
+            [Description("DEBUG")]
+            Debug,
+
+            [Description("INFO")]
+            Info,
+
+            [Description("WARNING")]
+            Warning,
+
+            [Description("ERROR")]
+            Error
+        }
+
         private const int MaxLogBuffer = 500;
 
         private static ILogger _platformLogger = new DiagnosticsLogger();
@@ -147,10 +164,11 @@ namespace EnergonSoftware.BackpackPlanner.Core.Logging
         }
 
         [Conditional("DEBUG")]
-        private static void AddLog(string message)
+        private static void AddLog(Level level, string message)
         {
             LogMessageEventArgs messageEvent = new LogMessageEventArgs
             {
+                Level = level,
                 Message = message
             };
 
@@ -165,10 +183,11 @@ namespace EnergonSoftware.BackpackPlanner.Core.Logging
         }
 
         [Conditional("DEBUG")]
-        private static void AddLog(string message, Exception ex)
+        private static void AddLog(Level level, string message, Exception ex)
         {
             LogMessageEventArgs messageEvent = new LogMessageEventArgs
             {
+                Level = level,
                 Message = message,
                 Exception = ex
             };
@@ -188,61 +207,61 @@ namespace EnergonSoftware.BackpackPlanner.Core.Logging
         public void Debug(string message)
         {
 #if DEBUG
-            message = BuildMessage(_type, "DEBUG", message);
+            message = BuildMessage(_type, EnumDescription.GetDescriptionFromEnumValue(Level.Debug), message);
             PlatformLogger.Debug(message);
-            AddLog(message);
+            AddLog(Level.Debug, message);
 #endif
         }
 
         public void Debug(string message, Exception ex)
         {
 #if DEBUG
-            message = BuildMessage(_type, "DEBUG", message);
+            message = BuildMessage(_type, EnumDescription.GetDescriptionFromEnumValue(Level.Debug), message);
             PlatformLogger.Debug(message, ex);
-            AddLog(message, ex);
+            AddLog(Level.Debug, message, ex);
 #endif
         }
 
         public void Info(string message)
         {
-            message = BuildMessage(_type, "INFO", message);
+            message = BuildMessage(_type, EnumDescription.GetDescriptionFromEnumValue(Level.Info), message);
             PlatformLogger.Info(message);
-            AddLog(message);
+            AddLog(Level.Info, message);
         }
 
         public void Info(string message, Exception ex)
         {
-            message = BuildMessage(_type, "INFO", message);
+            message = BuildMessage(_type, EnumDescription.GetDescriptionFromEnumValue(Level.Info), message);
             PlatformLogger.Info(message, ex);
-            AddLog(message, ex);
+            AddLog(Level.Info, message, ex);
         }
 
         public void Warn(string message)
         {
-            message = BuildMessage(_type, "WARNING", message);
+            message = BuildMessage(_type, EnumDescription.GetDescriptionFromEnumValue(Level.Warning), message);
             PlatformLogger.Warn(message);
-            AddLog(message);
+            AddLog(Level.Warning, message);
         }
 
         public void Warn(string message, Exception ex)
         {
-            message = BuildMessage(_type, "WARNING", message);
+            message = BuildMessage(_type, EnumDescription.GetDescriptionFromEnumValue(Level.Warning), message);
             PlatformLogger.Warn(message, ex);
-            AddLog(message, ex);
+            AddLog(Level.Warning, message, ex);
         }
 
         public void Error(string message)
         {
-            message = BuildMessage(_type, "ERROR", message);
+            message = BuildMessage(_type, EnumDescription.GetDescriptionFromEnumValue(Level.Error), message);
             PlatformLogger.Error(message);
-            AddLog(message);
+            AddLog(Level.Error, message);
         }
 
         public void Error(string message, Exception ex)
         {
-            message = BuildMessage(_type, "ERROR", message);
+            message = BuildMessage(_type, EnumDescription.GetDescriptionFromEnumValue(Level.Error), message);
             PlatformLogger.Error(message, ex);
-            AddLog(message, ex);
+            AddLog(Level.Error, message, ex);
         }
 
         public CustomLogger(Type type)
