@@ -299,13 +299,16 @@
     <Compile Include="Adapters\BaseListViewAdapter.cs" />
     <Compile Include="Adapters\BaseRecyclerListAdapter.cs" />
     <Compile Include="Adapters\BaseRecyclerListAdapterWithAds.cs" />
+    <Compile Include="Adapters\Gear\GearCollectionEntryListAdapter.cs" />
     <Compile Include="Adapters\Gear\GearItemEntryListAdapter.cs" />
     <Compile Include="Adapters\BaseModelEntryListViewAdapter.cs" />
     <Compile Include="Adapters\BaseModelRecyclerListAdapter.cs" />
     <Compile Include="Adapters\Gear\GearCollectionListAdapter.cs" />
     <Compile Include="Adapters\Gear\GearItemListAdapter.cs" />
+    <Compile Include="Adapters\Gear\GearSystemEntryListAdapter.cs" />
     <Compile Include="Adapters\Gear\GearSystemListAdapter.cs" />
     <Compile Include="Adapters\HtmlArrayAdapter.cs" />
+    <Compile Include="Adapters\Meals\MealEntryListAdapter.cs" />
     <Compile Include="Adapters\Meals\MealListAdapter.cs" />
     <Compile Include="Adapters\Trips\TripItineraryListAdapter.cs" />
     <Compile Include="Adapters\Trips\TripPlanListAdapter.cs" />
@@ -387,6 +390,15 @@
     </AndroidResource>
     <AndroidResource Include="Resources\layout\alert_dialog_filter.axml" />
     <AndroidResource Include="Resources\layout\view_ad.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\view_gear_system_entry.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\view_gear_collection_entry.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\view_meal_entry.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
     <ProguardConfiguration Include="proguard.cfg" />

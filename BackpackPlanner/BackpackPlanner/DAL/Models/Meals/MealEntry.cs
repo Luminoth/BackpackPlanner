@@ -19,7 +19,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
+using EnergonSoftware.BackpackPlanner.Settings;
+using EnergonSoftware.BackpackPlanner.Units.Units;
+
 using JetBrains.Annotations;
+
 using Newtonsoft.Json;
 
 namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
@@ -110,6 +114,11 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
 
         [NotMapped, JsonIgnore]
         public int TotalWeightInGrams => Count * (Model?.WeightInGrams ?? 0);
+
+        public float GetTotalWeightInUnits(BackpackPlannerSettings settings)
+        {
+            return settings.Units.WeightFromGrams(TotalWeightInGrams);
+        }
 
         [NotMapped, JsonIgnore]
         // ReSharper disable once InconsistentNaming

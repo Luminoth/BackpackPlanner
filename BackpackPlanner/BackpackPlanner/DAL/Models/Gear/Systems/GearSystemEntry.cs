@@ -21,6 +21,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
 using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items;
+using EnergonSoftware.BackpackPlanner.Settings;
+using EnergonSoftware.BackpackPlanner.Units.Units;
 
 using JetBrains.Annotations;
 
@@ -92,6 +94,11 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems
         public int GetTotalWeightInGrams(ICollection<int> visitedGearItems=null)
         {
             return Model?.GetTotalWeightInGrams(visitedGearItems) ?? 0;
+        }
+
+        public float GetTotalWeightInUnits(BackpackPlannerSettings settings, ICollection<int> visitedGearItems=null)
+        {
+            return settings.Units.WeightFromGrams(GetTotalWeightInGrams(visitedGearItems));
         }
 
         public int GetTotalCostInUSDP(ICollection<int> visitedGearItems=null)
