@@ -18,13 +18,22 @@ using System;
 using System.Globalization;
 using System.Threading.Tasks;
 
+using Android.App;
 using Android.OS;
 using Android.Views;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.DAL;
+using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections;
+using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items;
+using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems;
+using EnergonSoftware.BackpackPlanner.DAL.Models.Meals;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans;
+using EnergonSoftware.BackpackPlanner.Droid.DAL.Gear;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Util;
+using EnergonSoftware.BackpackPlanner.Droid.Util;
+
+using Microsoft.EntityFrameworkCore;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
 {
@@ -46,6 +55,21 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
         private Android.Support.Design.Widget.TextInputLayout _tripPlanEndDateText;
         private Android.Support.Design.Widget.TextInputLayout _tripPlanNoteEditText;
 #endregion
+
+        private TripPlanGearCollectionEntries _gearCollectionEntries;
+        private TripPlanGearSystemEntries _gearSystemEntries;
+        private TripPlanGearItemEntries _gearItemEntries;
+        private TripPlanMealEntries _mealEntries;
+
+        public override void OnCreate(Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);
+
+            _gearCollectionEntries = new TripPlanGearCollectionEntries(Item);
+            _gearSystemEntries = new TripPlanGearSystemEntries(Item);
+            _gearItemEntries = new TripPlanGearItemEntries(Item);
+            _mealEntries = new TripPlanMealEntries(Item);
+        }
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
@@ -88,8 +112,93 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
             _tripPlanNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.add_trip_plan_note);
         }
 
+        public override void OnResume()
+        {
+            base.OnResume();
+
+            ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_loading_items, false, true);
+
+            Task.Run(async () =>
+                {
+                    using(DatabaseContext dbContext = BaseActivity.BackpackPlannerState.DatabaseState.CreateContext()) {
+                        _gearCollectionEntries.Items = await dbContext.GearCollections.ToArrayAsync().ConfigureAwait(false);
+                        _gearSystemEntries.Items = await dbContext.GearSystems.ToArrayAsync().ConfigureAwait(false);
+                        _gearItemEntries.Items = await dbContext.GearItems.ToArrayAsync().ConfigureAwait(false);
+                        _mealEntries.Items = await dbContext.Meals.ToArrayAsync().ConfigureAwait(false);
+                    }
+
+                    Activity.RunOnUiThread(() =>
+                    {
+                        progressDialog.Dismiss();
+
+                        UpdateView();
+                    });
+                }
+            );
+        }
+
         protected override void UpdateView()
         {
+        }
+
+        private void AddGearCollectionButtonClickEventHandler(object sender, EventArgs args)
+        {
+            DialogUtil.ShowMultiChoiceAlertWithSearch(Activity, Resource.String.label_add_gear_collections,
+                _gearCollectionEntries.ItemNames, _gearCollectionEntries.SelectedItems,
+                (a, b) =>
+                {
+                    _gearCollectionEntries.ItemListAdapter?.Filter.InvokeFilter(b.NewText, new FilterListener<GearCollectionEntry>(_gearCollectionEntries.ItemListAdapter));
+                },
+                (a, b) =>
+                {
+                    UpdateItemEntryList(Item, _gearCollectionEntries, b.Which, b.IsChecked);
+                }
+            );
+        }
+
+        private void AddGearSystemButtonClickEventHandler(object sender, EventArgs args)
+        {
+            DialogUtil.ShowMultiChoiceAlertWithSearch(Activity, Resource.String.label_add_gear_systems,
+                _gearSystemEntries.ItemNames, _gearSystemEntries.SelectedItems,
+                (a, b) =>
+                {
+                    _gearSystemEntries.ItemListAdapter?.Filter.InvokeFilter(b.NewText, new FilterListener<GearSystemEntry>(_gearSystemEntries.ItemListAdapter));
+                },
+                (a, b) =>
+                {
+                    UpdateItemEntryList(Item, _gearSystemEntries, b.Which, b.IsChecked);
+                }
+            );
+        }
+
+        private void AddGearItemButtonClickEventHandler(object sender, EventArgs args)
+        {
+            DialogUtil.ShowMultiChoiceAlertWithSearch(Activity, Resource.String.label_add_gear_items,
+                _gearItemEntries.ItemNames, _gearItemEntries.SelectedItems,
+                (a, b) =>
+                {
+                    _gearItemEntries.ItemListAdapter?.Filter.InvokeFilter(b.NewText, new FilterListener<GearItemEntry>(_gearItemEntries.ItemListAdapter));
+                },
+                (a, b) =>
+                {
+                    UpdateItemEntryList(Item, _gearItemEntries, b.Which, b.IsChecked);
+                }
+            );
+        }
+
+        private void AddMealButtonClickEventHandler(object sender, EventArgs args)
+        {
+            DialogUtil.ShowMultiChoiceAlertWithSearch(Activity, Resource.String.label_add_meals,
+                _mealEntries.ItemNames, _mealEntries.SelectedItems,
+                (a, b) =>
+                {
+                    _mealEntries.ItemListAdapter?.Filter.InvokeFilter(b.NewText, new FilterListener<MealEntry>(_mealEntries.ItemListAdapter));
+                },
+                (a, b) =>
+                {
+                    UpdateItemEntryList(Item, _mealEntries, b.Which, b.IsChecked);
+                }
+            );
         }
 
         protected override TripPlan CreateItem()
@@ -117,6 +226,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
             } catch(FormatException) {
                 Logger.Error("Error parsing end date!");
             }
+
+            Item.SetGearCollections(dbContext, _gearCollectionEntries.ItemListAdapter?.Items);
+            Item.SetGearSystems(dbContext, _gearSystemEntries.ItemListAdapter?.Items);
+            Item.SetGearItems(dbContext, _gearItemEntries.ItemListAdapter?.Items);
+            Item.SetMeals(dbContext, _mealEntries.ItemListAdapter?.Items);
 
             Item.Note = _tripPlanNoteEditText.EditText.Text;
 

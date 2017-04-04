@@ -95,23 +95,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
                         _gearItemEntries.Items = await dbContext.GearItems.ToArrayAsync().ConfigureAwait(false);
                     }
 
-                    OnItemsLoaded(progressDialog);
+                    Activity.RunOnUiThread(() =>
+                    {
+                        progressDialog.Dismiss();
+
+                        UpdateView();
+                    });
                 }
             );
-        }
-
-        private void OnItemsLoaded(ProgressDialog progressDialog)
-        {
-            if(null == _gearItemEntries.Items) {
-                return;
-            }
-
-            Activity.RunOnUiThread(() =>
-            {
-                progressDialog.Dismiss();
-
-                UpdateView();
-            });
         }
 
         protected override void UpdateView()
