@@ -305,6 +305,7 @@
     <Compile Include="Adapters\Gear\GearCollectionListAdapter.cs" />
     <Compile Include="Adapters\Gear\GearItemListAdapter.cs" />
     <Compile Include="Adapters\Gear\GearSystemListAdapter.cs" />
+    <Compile Include="Adapters\HtmlArrayAdapter.cs" />
     <Compile Include="Adapters\Meals\MealListAdapter.cs" />
     <Compile Include="Adapters\Trips\TripItineraryListAdapter.cs" />
     <Compile Include="Adapters\Trips\TripPlanListAdapter.cs" />
