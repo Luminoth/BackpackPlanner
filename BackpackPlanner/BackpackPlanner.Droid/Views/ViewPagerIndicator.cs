@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-namespace EnergonSoftware.BackpackPlanner.Droid.Util
+namespace EnergonSoftware.BackpackPlanner.Droid.Views
 {
     /// <summary>
     /// https://github.com/xamarin/monodroid-samples/tree/master/ViewPagerIndicator

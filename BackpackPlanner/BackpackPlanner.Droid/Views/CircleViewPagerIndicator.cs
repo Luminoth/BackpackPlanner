@@ -23,7 +23,7 @@ using Android.Views;
 using Java.Interop;
 
 // TODO: can this be replaced with something based on this: https://developer.android.com/training/animation/screen-slide.html ?
-namespace EnergonSoftware.BackpackPlanner.Droid.Util
+namespace EnergonSoftware.BackpackPlanner.Droid.Views
 {
     /// <summary>
     /// https://github.com/xamarin/monodroid-samples/blob/master/ViewPagerIndicator/ViewPagerIndicator/Resources/layout/simple_circles.xml
