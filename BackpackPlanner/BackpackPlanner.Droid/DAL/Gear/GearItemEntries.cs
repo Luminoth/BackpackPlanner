@@ -27,7 +27,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
     {
         public override GearItemEntry GetItemEntry(GearItem gearItem)
         {
-            return Model.GearItems.FirstOrDefault(x => x.ModelId == gearItem.Id);
+            return Model.GearItems.FirstOrDefault(x => x.Model.Id == gearItem.Id);
         }
 
         public GearSystemGearItemEntries(GearSystem gearSystem)
@@ -40,7 +40,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
     {
         public override GearItemEntry GetItemEntry(GearItem gearItem)
         {
-            return Model.GearItems.FirstOrDefault(x => x.ModelId == gearItem.Id);
+            return Model.GearItems.FirstOrDefault(x => x.Model.Id == gearItem.Id);
         }
 
         public GearCollectionGearItemEntries(GearCollection gearCollection)
@@ -53,7 +53,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
     {
         public override GearItemEntry GetItemEntry(GearItem gearItem)
         {
-            return Model.GearItems.FirstOrDefault(x => x.ModelId == gearItem.Id);
+            return Model.GearItems.FirstOrDefault(x => x.Model.Id == gearItem.Id);
         }
 
         public TripPlanGearItemEntries(TripPlan tripPlan)
