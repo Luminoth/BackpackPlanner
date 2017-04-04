@@ -34,6 +34,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
             Add(item);
         }
 
+        public void AddAll(IReadOnlyCollection<T> items)
+        {
+            foreach(T item in items) {
+                AddItem(item);
+            }
+        } 
+
         public void RemoveItem(T item)
         {
             _items.Remove(item);
@@ -47,6 +54,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
                 RemoveItem(entry);
             }
         }
+
+        public void RemoveAll(IReadOnlyCollection<T> items)
+        {
+            foreach(T item in items) {
+                RemoveItem(item);
+            }
+        } 
 
         protected BaseModelEntryListViewAdapter(BaseFragment fragment)
             : base(fragment)
