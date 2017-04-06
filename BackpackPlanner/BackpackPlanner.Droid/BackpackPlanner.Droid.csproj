@@ -25,7 +25,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;DEBUG_FRAGMENT</DefineConstants>
+    <DefineConstants>DEBUG;DEBUG_FRAGMENT;ENABLE_ADS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AndroidLinkMode>None</AndroidLinkMode>
@@ -359,6 +359,7 @@
     <Compile Include="DroidSettingsManager.cs" />
     <Compile Include="Permissions\DroidPermissionRequest.cs" />
     <Compile Include="Permissions\DroidPermissionRequestFactory.cs" />
+    <Compile Include="TestDevices.cs" />
     <Compile Include="Views\CircleViewPagerIndicator.cs" />
     <Compile Include="Util\DialogUtil.cs" />
     <Compile Include="Util\DrawerToggle.cs" />

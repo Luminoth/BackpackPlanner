@@ -21,6 +21,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Android.Content.PM;
+using Android.Gms.Ads;
 using Android.OS;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
@@ -70,6 +71,22 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 #endif
 
             base.OnCreate(savedInstanceState);
+
+#if DEBUG
+            Logger.Debug($"Android ID: {Android.Provider.Settings.Secure.GetString(ContentResolver, Android.Provider.Settings.Secure.AndroidId)}");
+#endif
+
+#if ENABLE_ADS
+            Logger.Info("Initializing ads...");
+            MobileAds.Initialize(this, GetString(
+                #if USE_REAL_ADS
+                    Resource.String.ad_app_id
+                #else
+                    Resource.String.test_ad_app_id
+                #endif
+                )
+            );
+#endif
 
             if(null == _permissionRequestFactory) {
                 _permissionRequestFactory = new DroidPermissionRequestFactory();

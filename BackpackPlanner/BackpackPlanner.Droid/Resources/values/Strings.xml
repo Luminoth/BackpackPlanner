@@ -22,6 +22,14 @@
     <string name="title_initializing">Initializing</string>
     <string name="message_initializing">Initializing application...</string>
 
+    <!-- Ads -->
+
+    <string name="test_ad_app_id">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="ad_app_id">ca-app-pub-7081307647202932~4476850808</string>
+
+    <string name="test_native_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="native_ad_unit_id">ca-app-pub-7081307647202932/2720916004</string>
+
     <!-- Generic Errors -->
 
     <string name="title_error_initialization">Initialization Error</string>

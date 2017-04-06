@@ -41,6 +41,13 @@ The following is necessary to fix Proguard failing:
 * https://developer.xamarin.com/guides/android/deployment,_testing,_and_metrics/publishing_an_application/part_2_-_signing_the_android_application_package/
   * This has a PowerShell example that is useful for working with Jenkins
 
+# Useful Defines
+
+* USE_ADS
+  * Enables ads
+* USE_REAL_ADS
+  * Enables using real ads, otherwise will only show test ads
+
 # Pulling the database from a debug install
 
 * adb shell
