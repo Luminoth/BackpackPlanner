@@ -21,6 +21,8 @@ using Android.Views;
 
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 
+using JetBrains.Annotations;
+
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 {
     public abstract class BaseRecyclerListAdapter<T> : Android.Support.V7.Widget.RecyclerView.Adapter where T: class
@@ -33,6 +35,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
             private T _listItem;
 
+            [CanBeNull]
             public T ListItem
             {
                 get { return _listItem; }
@@ -59,10 +62,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
         public abstract int LayoutResource { get; }
 
-        public override int ItemCount => ListItems?.Count ?? 0;
+        public override int ItemCount => ListItems.Count;
 
+        [NotNull]
         private List<T> _listItems = new List<T>();
 
+        [NotNull]
         public IReadOnlyCollection<T> ListItems => _listItems;
 
 #region ViewHolder
@@ -77,8 +82,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
         public override void OnBindViewHolder(Android.Support.V7.Widget.RecyclerView.ViewHolder holder, int position)
         {
             BaseViewHolder baseViewHolder = (BaseViewHolder)holder;
-            T gearItem = ListItems.ElementAt(position);
-            baseViewHolder.ListItem = gearItem;
+            T item = ListItems.ElementAt(position);
+            baseViewHolder.ListItem = item;
         }
 #endregion
 

@@ -14,7 +14,6 @@
    limitations under the License.
 */
 
-using System;
 using System.Globalization;
 using System.Linq;
 
@@ -138,13 +137,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items
             switch(position)
             {
             case 0:         // Name
-                FilteredListItems = FilteredListItems.OrderBy(x => x.Name, StringComparer.CurrentCulture);
+                FilteredListItems = from x in FilteredListItems orderby x?.Name select x;
                 break;
             case 1:         // Weight
-                FilteredListItems = FilteredListItems.OrderBy(x => x.WeightInGrams);
+                FilteredListItems = from x in FilteredListItems orderby x?.WeightInGrams select x;
                 break;
             case 2:         // Cost
-                FilteredListItems = FilteredListItems.OrderBy(x => x.CostInUSDP);
+                FilteredListItems = from x in FilteredListItems orderby x?.CostInUSDP select x;
                 break;
             case 3:         // Cost / Weight
                 // TODO

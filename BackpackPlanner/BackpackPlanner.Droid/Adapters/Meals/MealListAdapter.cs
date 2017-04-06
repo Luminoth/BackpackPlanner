@@ -125,16 +125,16 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
             switch(position)
             {
             case 0:         // Name
-                FilteredListItems = FilteredListItems.OrderBy(x => x.Name, StringComparer.CurrentCulture);
+                FilteredListItems = from x in FilteredListItems orderby x?.Name select x;
                 break;
             case 1:         // Meal
-                FilteredListItems = FilteredListItems.OrderBy(x => x.MealTime);
+                FilteredListItems = from x in FilteredListItems orderby x?.MealTime select x;
                 break;
             case 2:         // Weight
-                FilteredListItems = FilteredListItems.OrderBy(x => x.WeightInGrams);
+                FilteredListItems = from x in FilteredListItems orderby x?.WeightInGrams select x;
                 break;
             case 3:         // Cost
-                FilteredListItems = FilteredListItems.OrderBy(x => x.CostInUSDP);
+                FilteredListItems = from x in FilteredListItems orderby x?.CostInUSDP select x;
                 break;
             case 4:         // Cost / Weight
                 // TODO

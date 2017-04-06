@@ -26,6 +26,8 @@ using EnergonSoftware.BackpackPlanner.Droid.Util;
 
 using Java.Lang;
 
+using JetBrains.Annotations;
+
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 {
 #if ENABLE_ADS
@@ -73,8 +75,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
                 // NOTE: not checking vs whitespace because that might be useful to filter on
                 var filteredItemEnumerable = string.IsNullOrEmpty(filterConstraint)
-                    ? from item in _adapter.ListItems select item.ToJavaObject()
-                    : from item in _adapter.ListItems where item.Name.ToLower().Contains(filterConstraint) select item.ToJavaObject();
+                    ? from item in _adapter.ListItems select item?.ToJavaObject()
+                    : from item in _adapter.ListItems where null != item && item.Name.ToLower().Contains(filterConstraint) select item.ToJavaObject();
 
                 var filteredObjectArray = filteredItemEnumerable.ToArray();
                 results.Values = filteredObjectArray;
@@ -86,7 +88,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
             protected override void PublishResults(ICharSequence constraint, FilterResults results)
             {
                 var filteredItems = results.Values.ToArray<ObjectWrapper>();
-                _adapter.FilteredListItems = from item in filteredItems select (T)item.Instance;
+                _adapter.FilteredListItems = from item in filteredItems select (T)item?.Instance;
             }
 
             public ItemFilter(BaseModelRecyclerListAdapter<T> adapter)
@@ -112,10 +114,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
         public ListItemsFragment<T> ListItemsFragment => (ListItemsFragment<T>)Fragment;
 
-        public override int ItemCount => FilteredListItems?.Count() ?? 0;
+        public override int ItemCount => FilteredListItems.Count();
 
+        [NotNull]
         private IEnumerable<T> _filteredListItems = new List<T>();
 
+        [NotNull]
         protected IEnumerable<T> FilteredListItems
         {
             get { return _filteredListItems; }
@@ -135,8 +139,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
             base.OnBindViewHolder(holder, position);
 
             BaseViewHolder baseViewHolder = (BaseViewHolder)holder;
-            T gearItem = FilteredListItems.ElementAt(position);
-            baseViewHolder.ListItem = gearItem;
+            T item = FilteredListItems.ElementAt(position);
+            baseViewHolder.ListItem = item;
         }
 
 #region Add/Remove Items
@@ -166,6 +170,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
         private void FilterItems()
         {
             if(null == Fragment.FilterView) {
+                // setting null here will ensure we re-create the full list
                 FilteredListItems = null;
                 return;
             }

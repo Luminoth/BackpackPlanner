@@ -67,7 +67,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Itineraries
             switch(position)
             {
             case 0:         // Name
-                FilteredListItems = FilteredListItems.OrderBy(x => x.Name, StringComparer.CurrentCulture);
+                FilteredListItems = from x in FilteredListItems orderby x?.Name select x;
                 break;
             }
         }
