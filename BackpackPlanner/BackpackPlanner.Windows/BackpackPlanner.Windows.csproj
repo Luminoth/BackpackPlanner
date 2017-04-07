@@ -22,6 +22,7 @@
     <ApplicationIcon />
     <OutputTypeEx>winexe</OutputTypeEx>
     <StartupObject />
+    <RootNamespace>EnergonSoftware.BackpackPlanner.Windows</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -33,7 +34,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Google.Apis.Drive.v3" Version="1.24.1.809" />
+    <PackageReference Include="Google.Apis.Drive.v3" Version="1.24.1.812" />
     <PackageReference Include="HockeySDK.Core" Version="4.1.6" />
     <PackageReference Include="HockeySDK.UWP" Version="4.1.6" />
     <PackageReference Include="JetBrains.Annotations" Version="10.4.0" />
@@ -42,8 +43,10 @@
     <PackageReference Include="Microsoft.ApplicationInsights.WindowsApps" Version="1.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="1.2.0-preview1-24224" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="1.2.0-preview1-24224" />
-    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="5.3.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.1" />
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="5.3.2" />
+    <PackageReference Include="NETStandard.Library" Version="1.6.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />
+    <PackageReference Include="System.Runtime.WindowsRuntime.UI.Xaml" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>
