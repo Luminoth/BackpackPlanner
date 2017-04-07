@@ -122,7 +122,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
         [NotNull]
         protected IEnumerable<T> FilteredListItems
         {
-            get { return _filteredListItems; }
+            get => _filteredListItems;
 
             set
             {

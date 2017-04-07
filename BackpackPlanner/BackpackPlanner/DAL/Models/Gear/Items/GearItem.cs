@@ -55,7 +55,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
         [Required, MaxLength(64)]
         public string Name
         {
-            get { return _name; }
+            get => _name;
+
             set
             {
                 _name = value ?? string.Empty;
@@ -74,7 +75,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
         [MaxLength(32)]
         public string Make
         {
-            get { return _make; }
+            get => _make;
+
             set
             {
                 _make = value ?? string.Empty;
@@ -93,7 +95,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
         [MaxLength(32)]
         public string Model
         {
-            get { return _model; }
+            get => _model;
+
             set
             {
                 _model = value ?? string.Empty;
@@ -112,7 +115,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
         [MaxLength(2048)]
         public string Url
         {
-            get { return _url; }
+            get => _url;
+
             set
             {
                 _url = value ?? string.Empty;
@@ -131,7 +135,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
         [Required]
         public GearCarried Carried
         {
-            get { return _gearCarried; }
+            get => _gearCarried;
+
             set
             {
                 _gearCarried = value;
@@ -150,7 +155,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
         [Required]
         public bool IsConsumable
         {
-            get { return _isConsumable; }
+            get => _isConsumable;
+
             set
             {
                 _isConsumable = value;
@@ -169,7 +175,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
         [Required]
         public int ConsumedPerDay
         {
-            get { return _consumedPerDay; }
+            get => _consumedPerDay;
+
             set
             {
                 _consumedPerDay = value < 1 ? 1 : value;
@@ -191,7 +198,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
         [Required]
         public int WeightInGrams
         {
-            get { return _weightInGrams; }
+            get => _weightInGrams;
+
             set
             {
                 _weightInGrams = value < 0 ? 0 : value;
@@ -212,7 +220,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
         // ReSharper disable once InconsistentNaming
         public int CostInUSDP
         {
-            get { return _costInUSDP; }
+            get => _costInUSDP;
+
             set
             {
                 _costInUSDP = value < 0 ? 0 : value;
@@ -231,7 +240,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
         [MaxLength(1024)]
         public string Note
         {
-            get { return _note; }
+            get => _note;
+
             set
             {
                 _note = value ?? string.Empty;

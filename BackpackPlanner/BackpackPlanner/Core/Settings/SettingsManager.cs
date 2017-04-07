@@ -118,8 +118,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Settings
             case BackpackPlannerSettings.UnitSystemPreferenceKey:
                 string unitSystemPreference = GetString(BackpackPlannerSettings.UnitSystemPreferenceKey, settings.Units.ToString());
 
-                UnitSystem unitSystem;
-                if(Enum.TryParse(unitSystemPreference, out unitSystem)) {
+                if(Enum.TryParse(unitSystemPreference, out UnitSystem unitSystem)) {
                     settings.Units = unitSystem;
                 } else {
                     Logger.Error("Error parsing unit system preference!");
@@ -128,8 +127,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Settings
             case BackpackPlannerSettings.CurrencyPreferenceKey:
                 string currencyPreference = GetString(BackpackPlannerSettings.CurrencyPreferenceKey, settings.Currency.ToString());
 
-                Currency currency;
-                if(Enum.TryParse(currencyPreference, out currency)) {
+                if(Enum.TryParse(currencyPreference, out Currency currency)) {
                     settings.Currency = currency;
                 } else {
                     Logger.Error("Error parsing currency preference!");
@@ -153,8 +151,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Settings
             case PersonalInformation.UserSexPreferenceKey:
                 string userSexPreference = GetString(PersonalInformation.UserSexPreferenceKey, personalInformation.Sex.ToString());
 
-                UserSex userSex;
-                if(Enum.TryParse(userSexPreference, out userSex)) {
+                if(Enum.TryParse(userSexPreference, out UserSex userSex)) {
                     personalInformation.Sex = userSex;
                 } else {
                     Logger.Error("Error parsing user sex preference!");

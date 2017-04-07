@@ -49,7 +49,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Itineraries
         [Required, MaxLength(64)]
         public string Name
         {
-            get { return _name; }
+            get => _name;
+
             set
             {
                 _name = value ?? string.Empty;
@@ -68,7 +69,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Itineraries
         [MaxLength(1024)]
         public string Note
         {
-            get { return _note; }
+            get => _note;
+
             set
             {
                 _note = value ?? string.Empty;

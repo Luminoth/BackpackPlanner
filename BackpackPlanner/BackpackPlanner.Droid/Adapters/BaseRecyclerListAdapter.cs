@@ -38,7 +38,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
             [CanBeNull]
             public T ListItem
             {
-                get { return _listItem; }
+                get => _listItem;
 
                 set
                 {

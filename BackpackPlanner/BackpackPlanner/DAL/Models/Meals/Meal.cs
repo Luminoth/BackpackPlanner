@@ -56,7 +56,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
         [Required, MaxLength(64)]
         public string Name
         {
-            get { return _name; }
+            get => _name;
+
             set
             {
                 _name = value ?? string.Empty;
@@ -75,7 +76,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
         [MaxLength(2048)]
         public string Url
         {
-            get { return _url; }
+            get => _url;
+
             set
             {
                 _url = value ?? string.Empty;
@@ -94,7 +96,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
         [Required]
         public MealTime MealTime
         {
-            get { return _mealTime; }
+            get => _mealTime;
+
             set
             {
                 _mealTime = value;
@@ -113,7 +116,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
         [Required]
         public int ServingCount
         {
-            get { return _servingCount; }
+            get => _servingCount;
+
             set
             {
                 _servingCount = value < 1 ? 1 : value;
@@ -132,7 +136,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
         [Required]
         public int Calories
         {
-            get { return _calories; }
+            get => _calories;
+
             set
             {
                 _calories = value < 0 ? 0 : value;
@@ -151,7 +156,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
         [Required]
         public int ProteinInGrams
         {
-            get { return _proteinInGrams; }
+            get => _proteinInGrams;
+
             set
             {
                 _proteinInGrams = value < 0 ? 0 : value;
@@ -170,7 +176,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
         [Required]
         public int FiberInGrams
         {
-            get { return _fiberInGrams; }
+            get => _fiberInGrams;
+
             set
             {
                 _fiberInGrams = value < 0 ? 0 : value;
@@ -189,7 +196,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
         [Required]
         public int WeightInGrams
         {
-            get { return _weightInGrams; }
+            get => _weightInGrams;
+
             set
             {
                 _weightInGrams = value < 0 ? 0 : value;
@@ -210,7 +218,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
         // ReSharper disable once InconsistentNaming
         public int CostInUSDP
         {
-            get { return _costInUSDP; }
+            get => _costInUSDP;
+
             set
             {
                 _costInUSDP = value < 0 ? 0 : value;
@@ -229,7 +238,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
         [MaxLength(1024)] 
         public string Note
         {
-            get { return _note; }
+            get => _note;
+
             set
             {
                 _note = value ?? string.Empty;

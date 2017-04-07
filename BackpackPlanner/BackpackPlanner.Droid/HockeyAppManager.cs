@@ -47,7 +47,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid
         // TODO: set this from jenkins so we can have dev vs production builds
         public string AppId => "32a2c37622529305ec763b7e2c224deb";
 
-        public bool IsInitialized { get { return _isInitialized; } private set { _isInitialized = value; } }
+        public bool IsInitialized
+        {
+            get => _isInitialized;
+            private set => _isInitialized = value;
+        }
 
         public async Task InitAsync()
         {

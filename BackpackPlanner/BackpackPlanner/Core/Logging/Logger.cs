@@ -103,8 +103,8 @@ namespace EnergonSoftware.BackpackPlanner.Core.Logging
         /// </value>
         public static ILogger PlatformLogger
         {
-            get { return _platformLogger; }
-            set { _platformLogger = value ?? new DiagnosticsLogger(); }
+            get => _platformLogger;
+            set => _platformLogger = value ?? new DiagnosticsLogger();
         }
 
         private static LinkedList<LogMessageEventArgs> _logMessages = new LinkedList<LogMessageEventArgs>();
@@ -115,7 +115,7 @@ namespace EnergonSoftware.BackpackPlanner.Core.Logging
 
         public static bool ReverseLogBufferDirection
         {
-            get { return _reverseLogBufferDirection; }
+            get => _reverseLogBufferDirection;
 
             set
             {

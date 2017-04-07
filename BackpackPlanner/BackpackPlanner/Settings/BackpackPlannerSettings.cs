@@ -64,7 +64,7 @@ namespace EnergonSoftware.BackpackPlanner.Settings
         /// <value>
         /// The meta settings.
         /// </value>
-        public MetaSettings MetaSettings { get; private set; }
+        public MetaSettings MetaSettings { get; }
 
         private bool _connectGooglePlayServices;
 
@@ -76,7 +76,7 @@ namespace EnergonSoftware.BackpackPlanner.Settings
         /// </value>
         public bool ConnectGooglePlayServices
         {
-            get { return _connectGooglePlayServices; }
+            get => _connectGooglePlayServices;
 
             set
             {
@@ -95,7 +95,7 @@ namespace EnergonSoftware.BackpackPlanner.Settings
         /// </value>
         public string GooglePlayServicesUser
         {
-            get { return _googlePlayServicesUser; }
+            get => _googlePlayServicesUser;
 
             set
             {
@@ -114,7 +114,7 @@ namespace EnergonSoftware.BackpackPlanner.Settings
         /// </value>
         public UnitSystem Units
         {
-            get { return _units; }
+            get => _units;
 
             set
             {
@@ -133,7 +133,7 @@ namespace EnergonSoftware.BackpackPlanner.Settings
         /// </value>
         public Currency Currency
         {
-            get { return _currency; }
+            get => _currency;
 
             set
             {

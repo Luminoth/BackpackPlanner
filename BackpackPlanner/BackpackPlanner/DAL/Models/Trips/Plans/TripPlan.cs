@@ -66,7 +66,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
         [Required, MaxLength(64)]
         public string Name
         {
-            get { return _name; }
+            get => _name;
+
             set
             {
                 _name = value ?? string.Empty;
@@ -84,7 +85,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
         /// </value>
         public DateTime StartDate
         {
-            get { return _startDate; }
+            get => _startDate;
+
             set
             {
                 _startDate = value;
@@ -102,7 +104,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
         /// </value>
         public DateTime EndDate
         {
-            get { return _endDateTime; }
+            get => _endDateTime;
+
             set
             {
                 _endDateTime = value;
@@ -180,7 +183,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
         [MaxLength(1024)]
         public string Note
         {
-            get { return _note; }
+            get => _note;
+
             set
             {
                 _note = value ?? string.Empty;

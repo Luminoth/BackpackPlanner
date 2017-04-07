@@ -78,7 +78,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models
         [Required]
         public int Count
         {
-            get { return _count; }
+            get => _count;
+
             set
             {
                 _count = value < 0 ? 0 : value;

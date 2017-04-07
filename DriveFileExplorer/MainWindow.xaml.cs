@@ -97,7 +97,7 @@ namespace EnergonSoftware.BackpackPlanner.DriveFileExplorer
                 return;
             }
 
-            var files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            var files = (string[])e.Data.GetData(DataFormats.FileDrop) ?? new string[0];
             foreach(string filePath in files) {
                 string fileName = Path.GetFileName(filePath);
                 Google.Apis.Drive.v3.Data.File existingDriveFile = _files.FirstOrDefault(x => x.Name == fileName);

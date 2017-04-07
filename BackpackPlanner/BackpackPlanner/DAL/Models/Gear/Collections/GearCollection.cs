@@ -58,7 +58,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections
         [Required, MaxLength(64)]
         public string Name
         {
-            get { return _name; }
+            get => _name;
             set
             {
                 _name = value ?? string.Empty;

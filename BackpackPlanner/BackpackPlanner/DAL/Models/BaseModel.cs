@@ -72,7 +72,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models
         [Required]
         public bool IsDeleted
         {
-            get { return _isDeleted; }
+            get => _isDeleted;
+
             set
             {
                 _isDeleted = value;

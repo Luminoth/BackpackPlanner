@@ -33,7 +33,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
             public T ListItem
             {
-                get { return _listItem; }
+                get => _listItem;
 
                 set
                 {

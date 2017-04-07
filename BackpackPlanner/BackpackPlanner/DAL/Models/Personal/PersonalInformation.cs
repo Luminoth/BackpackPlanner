@@ -69,7 +69,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Personal
         /// </value>
         public string Name
         {
-            get { return _name; }
+            get => _name;
 
             set
             {
@@ -88,7 +88,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Personal
         /// </value>
         public DateTime? DateOfBirth
         {
-            get { return _dateOfBirth; }
+            get => _dateOfBirth;
 
             set
             {
@@ -107,7 +107,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Personal
         /// </value>
         public UserSex Sex
         {
-            get { return _userSex; }
+            get => _userSex;
 
             set
             {
@@ -126,7 +126,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Personal
         /// </value>
         public int HeightInCm
         {
-            get { return _heightInCm; }
+            get => _heightInCm;
 
             set
             {
@@ -143,8 +143,9 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Personal
         /// </value>
         public float HeightInUnits
         {
-            get { return _settings?.Units.LengthFromCentimeters(HeightInCm) ?? HeightInCm; }
-            set { HeightInCm = (int)(_settings?.Units.CentimetersFromLength(value) ?? value); }
+            get => _settings?.Units.LengthFromCentimeters(HeightInCm) ?? HeightInCm;
+
+            set => HeightInCm = (int)(_settings?.Units.CentimetersFromLength(value) ?? value);
         }
 
         private int _weightInGrams;
@@ -157,7 +158,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Personal
         /// </value>
         public int WeightInGrams
         {
-            get { return _weightInGrams; }
+            get => _weightInGrams;
 
             set
             {
@@ -174,8 +175,9 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Personal
         /// </value>
         public float WeightInUnits
         {
-            get { return _settings?.Units.WeightFromGrams(WeightInGrams) ?? WeightInGrams; }
-            set { WeightInGrams = _settings?.Units.GramsFromWeight(value) ?? WeightInGrams; }
+            get => _settings?.Units.WeightFromGrams(WeightInGrams) ?? WeightInGrams;
+
+            set => WeightInGrams = _settings?.Units.GramsFromWeight(value) ?? WeightInGrams;
         }
 
         private readonly SettingsManager _settingsManager;

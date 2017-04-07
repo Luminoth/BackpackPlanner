@@ -34,7 +34,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL
         [CanBeNull]
         public List<TI> Items
         {
-            get { return _items; }
+            get => _items;
 
             set
             {

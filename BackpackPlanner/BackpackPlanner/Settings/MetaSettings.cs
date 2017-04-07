@@ -42,7 +42,7 @@ namespace EnergonSoftware.BackpackPlanner.Settings
         /// </value>
         public bool FirstRun
         {
-            get { return _firstRun; }
+            get => _firstRun;
 
             set
             {
@@ -56,7 +56,7 @@ namespace EnergonSoftware.BackpackPlanner.Settings
 
         public bool TestDataEntered
         {
-            get { return _testDataEntered; }
+            get => _testDataEntered;
 
             set
             {

@@ -76,34 +76,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             Logger.Debug($"Android ID: {Android.Provider.Settings.Secure.GetString(ContentResolver, Android.Provider.Settings.Secure.AndroidId)}");
 #endif
 
-#if ENABLE_ADS
-            Logger.Info("Initializing ads...");
-            MobileAds.Initialize(this, GetString(
-                #if USE_REAL_ADS
-                    Resource.String.ad_app_id
-                #else
-                    Resource.String.test_ad_app_id
-                #endif
-                )
-            );
-#endif
+            InitAds();
 
-            if(null == _permissionRequestFactory) {
-                _permissionRequestFactory = new DroidPermissionRequestFactory();
-            }
-            _permissionRequestFactory.Activity = this;
+            InitPermissions();
 
-            if(null == _backpackPlannerStateInstance) {
-                _backpackPlannerStateInstance = new BackpackPlannerState(
-                    new HockeyAppManager(),
-                    new DroidSettingsManager(Android.Support.V7.Preferences.PreferenceManager.GetDefaultSharedPreferences(this)),
-                    new DroidPlayServicesManager(),
-                    _permissionRequestFactory
-                );
-
-                // have to do this on the main thread
-                _backpackPlannerStateInstance.InitAsync().Wait();
-            }
+            InitBackpackPlannerState().Wait();
 
             LoadPreferences(this);
 
@@ -267,6 +244,47 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             requests.Add(permissionRequest);
         }
 #endregion
+
+        [Conditional("ENABLE_ADS")]
+        private void InitAds()
+        {
+#if ENABLE_ADS
+            Logger.Info("Initializing ads...");
+            MobileAds.Initialize(this, GetString(
+#if USE_REAL_ADS
+                    Resource.String.ad_app_id
+                #else
+                    Resource.String.test_ad_app_id
+#endif
+                )
+            );
+#endif
+        }
+
+        private void InitPermissions()
+        {
+            if(null == _permissionRequestFactory) {
+                _permissionRequestFactory = new DroidPermissionRequestFactory();
+            }
+            _permissionRequestFactory.Activity = this;
+        }
+
+        private async Task InitBackpackPlannerState()
+        {
+            if(null != _backpackPlannerStateInstance) {
+                return;
+            }
+
+            _backpackPlannerStateInstance = new BackpackPlannerState(
+                new HockeyAppManager(),
+                new DroidSettingsManager(Android.Support.V7.Preferences.PreferenceManager.GetDefaultSharedPreferences(this)),
+                new DroidPlayServicesManager(),
+                _permissionRequestFactory
+            );
+
+            // have to do this on the main thread
+            await _backpackPlannerStateInstance.InitAsync().ConfigureAwait(false);
+        }
 
         private void LoadPreferences(BaseActivity activity)
         {
