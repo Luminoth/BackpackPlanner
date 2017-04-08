@@ -30,12 +30,7 @@ using JetBrains.Annotations;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 {
-#if ENABLE_ADS
-    public abstract class BaseModelRecyclerListAdapter<T> : BaseRecyclerListAdapterWithAds<T>, IFilterable where T: BaseModel, IBackpackPlannerItem
-
-#else
     public abstract class BaseModelRecyclerListAdapter<T> : BaseRecyclerListAdapter<T>, IFilterable where T: BaseModel, IBackpackPlannerItem
-#endif
     {
         protected abstract class BaseModelViewHolder : BaseViewHolder, Android.Support.V7.Widget.Toolbar.IOnMenuItemClickListener
         {

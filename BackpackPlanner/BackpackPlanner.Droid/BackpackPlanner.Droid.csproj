@@ -300,7 +300,6 @@
     <Compile Include="Activities\FTUEActivity.cs" />
     <Compile Include="Adapters\BaseListViewAdapter.cs" />
     <Compile Include="Adapters\BaseRecyclerListAdapter.cs" />
-    <Compile Include="Adapters\BaseRecyclerListAdapterWithAds.cs" />
     <Compile Include="Adapters\Gear\Collections\GearCollectionEntryListAdapter.cs" />
     <Compile Include="Adapters\Gear\Items\GearItemEntryListAdapter.cs" />
     <Compile Include="Adapters\BaseModelEntryListViewAdapter.cs" />
