@@ -248,7 +248,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
         [Conditional("ENABLE_ADS")]
         private void InitAds()
         {
-#if ENABLE_ADS
             Logger.Info("Initializing ads...");
             MobileAds.Initialize(this, GetString(
 #if USE_REAL_ADS
@@ -258,7 +257,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 #endif
                 )
             );
-#endif
         }
 
         private void InitPermissions()
