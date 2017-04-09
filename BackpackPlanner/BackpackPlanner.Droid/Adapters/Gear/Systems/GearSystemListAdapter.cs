@@ -14,6 +14,7 @@
    limitations under the License.
 */
 
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
@@ -88,26 +89,26 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Systems
         {
         }
 
-        protected override void SortItemsByPosition(int position)
+        protected override IEnumerable<GearSystem> SortItemsByPosition(int position, IEnumerable<GearSystem> items)
         {
             switch(position)
             {
             case 0:         // Name
-                FilteredListItems = from x in FilteredListItems orderby x?.Name select x;
-                break;
+                return from x in items orderby x?.Name select x;
             case 1:         // Items
                 // TODO
-                break;
+                return items;
             case 2:         // Weight
                 // TODO
-                break;
+                return items;
             case 3:         // Cost
                 // TODO
-                break;
+                return items;
             case 4:         // Cost / Weight
                 // TODO
-                break;
+                return items;
             }
+            return items;
         }
 
         protected override BaseViewHolder CreateViewHolder(View itemView)

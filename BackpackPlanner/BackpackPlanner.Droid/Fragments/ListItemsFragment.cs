@@ -156,7 +156,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                         }
 
                         Logger.Debug($"Read {items.Count} {typeof(T)}s...");
-                        Adapter.SetItems(items);
+                        Adapter.FullListItems = items;
                     });
                 }
             );

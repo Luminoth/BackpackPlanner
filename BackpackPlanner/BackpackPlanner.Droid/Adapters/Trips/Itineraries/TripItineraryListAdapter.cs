@@ -14,6 +14,7 @@
    limitations under the License.
 */
 
+using System.Collections.Generic;
 using System.Linq;
 
 using Android.Views;
@@ -61,14 +62,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Itineraries
         {
         }
 
-        protected override void SortItemsByPosition(int position)
+        protected override IEnumerable<TripItinerary> SortItemsByPosition(int position, IEnumerable<TripItinerary> items)
         {
             switch(position)
             {
             case 0:         // Name
-                FilteredListItems = from x in FilteredListItems orderby x?.Name select x;
-                break;
+                return from x in items orderby x?.Name select x;
             }
+            return items;
         }
 
         protected override BaseViewHolder CreateViewHolder(View itemView)

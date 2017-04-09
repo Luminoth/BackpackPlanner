@@ -15,6 +15,7 @@
 */
 
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 using Android.Gms.Ads;
@@ -46,6 +47,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
         {
             protected BaseRecyclerListAdapter<T> Adapter { get; }
 
+            [CanBeNull]
             private T _listItem;
 
             [CanBeNull]
@@ -56,6 +58,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
                 set
                 {
                     _listItem = value;
+                    if(null == _listItem) {
+                        Logger.Error("Null list item found!");
+                    }
                     UpdateView();
                 }
             }
@@ -83,13 +88,37 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
         public abstract int LayoutResource { get; }
 
-        public override int ItemCount => ListItems.Count;
+        public override int ItemCount => ProcessedListItems.Count;
 
         [NotNull]
-        private List<T> _listItems = new List<T>();
+        private List<T> _fullListItems = new List<T>();
+
+        public IReadOnlyCollection<T> FullListItems
+        {
+            get => _fullListItems;
+
+            set
+            {
+                _fullListItems = null == value ? new List<T>() : new List<T>(value);
+
+                ProcessItems();
+            }
+        }
 
         [NotNull]
-        public IReadOnlyCollection<T> ListItems => _listItems;
+        private List<T> _processedListItems = new List<T>();
+
+        protected IReadOnlyCollection<T> ProcessedListItems
+        {
+            get => _processedListItems;
+
+            set 
+            {
+                _processedListItems = null == value ? new List<T>(FullListItems) : new List<T>(value);
+
+                NotifyDataSetChanged();
+            }
+        }
 
 #region ViewHolder
         private BaseViewHolder CreateAdViewHolder(ViewGroup parent)
@@ -162,7 +191,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
         private void BindItemViewHolder(Android.Support.V7.Widget.RecyclerView.ViewHolder holder, int position)
         {
             BaseViewHolder baseViewHolder = (BaseViewHolder)holder;
-            T item = ListItems.ElementAt(position);
+            T item = ProcessedListItems.ElementAt(position);
             baseViewHolder.ListItem = item;
         }
 
@@ -183,34 +212,50 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 #endregion
 
 #region Add/Remove items
-        public virtual void SetItems(IReadOnlyCollection<T> items)
-        {
-            var newItemList = new List<T>(items);
-#if ENABLE_ADS
-            for(int i=AdFrequency-1; i<newItemList.Count; i+=AdFrequency) {
-                newItemList.Insert(i, null);
-            }
-#endif
-            _listItems = newItemList;
-        }
-
         // used when undoing deleting an item
-        public virtual void AddItem(T item)
+        public void AddItem(T item)
         {
-            _listItems.Add(item);
+            _fullListItems.Add(item);
+            ProcessItems();
         }
 
         // used when deleting an item
-        public virtual void RemoveItem(T item)
+        public void RemoveItem(T item)
         {
-            _listItems.Remove(item);
+            _fullListItems.Remove(item);
+            ProcessItems();
         }
 #endregion
+
+        // do NOT call this if setting the ProcessedListItems
+        // or NotifyDataSetChanged() will get over-called
+        protected virtual void ProcessItems()
+        {
+            ProcessedListItems = null;
+        }
+
+        [Conditional("ENABLE_ADS")]
+        protected void InjectAds()
+        {
+            int loopEnd = ProcessedListItems.Count;
+
+            // make sure we don't have a final ad too close to the end
+            int itemsAfterFinalAd = ProcessedListItems.Count % AdFrequency;
+            if(itemsAfterFinalAd < (AdFrequency / 2)) {
+                loopEnd -= itemsAfterFinalAd + 1;
+            }
+
+            for(int i=AdFrequency-1; i<loopEnd; i+=AdFrequency) {
+                _processedListItems.Insert(i, null);
+            }
+
+            NotifyDataSetChanged();
+        }
 
         private bool IsAdPosition(int position)
         {
 #if ENABLE_ADS
-            return 0 != position && 0 == (position + 1) % AdFrequency;
+            return null == ProcessedListItems.ElementAt(position);
 #else
             return false;
 #endif
@@ -218,8 +263,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
         public override int GetItemViewType(int position)
         {
-            bool isAd = IsAdPosition(position);
-            return isAd ? ViewTypeAdItem : ViewTypeListItem;
+            return IsAdPosition(position) ? ViewTypeAdItem : ViewTypeListItem;
         }
 
         protected BaseRecyclerListAdapter(RecyclerFragment fragment)

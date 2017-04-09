@@ -70,8 +70,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
                 // NOTE: not checking vs whitespace because that might be useful to filter on
                 var filteredItemEnumerable = string.IsNullOrEmpty(filterConstraint)
-                    ? from item in _adapter.ListItems select item?.ToJavaObject()
-                    : from item in _adapter.ListItems where null != item && item.Name.ToLower().Contains(filterConstraint) select item.ToJavaObject();
+                    ? from item in _adapter.FullListItems select item?.ToJavaObject()
+                    : from item in _adapter.FullListItems where null != item && item.Name.ToLower().Contains(filterConstraint) select item.ToJavaObject();
 
                 var filteredObjectArray = filteredItemEnumerable.ToArray();
                 results.Values = filteredObjectArray;
@@ -83,7 +83,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
             protected override void PublishResults(ICharSequence constraint, FilterResults results)
             {
                 var filteredItems = results.Values.ToArray<ObjectWrapper>();
-                _adapter.FilteredListItems = from item in filteredItems select (T)item?.Instance;
+                _adapter._filteredListItems = from item in filteredItems select (T)item?.Instance;
             }
 
             public ItemFilter(BaseModelRecyclerListAdapter<T> adapter)
@@ -109,78 +109,36 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
         public ListItemsFragment<T> ListItemsFragment => (ListItemsFragment<T>)Fragment;
 
-        public override int ItemCount => FilteredListItems.Count();
-
         [NotNull]
         private IEnumerable<T> _filteredListItems = new List<T>();
 
-        [NotNull]
-        protected IEnumerable<T> FilteredListItems
-        {
-            get => _filteredListItems;
-
-            set
-            {
-                _filteredListItems = value ?? new List<T>(ListItems);
-
-                NotifyDataSetChanged();
-            }
-        }
-
         public Filter Filter { get; }
 
-        public override void OnBindViewHolder(Android.Support.V7.Widget.RecyclerView.ViewHolder holder, int position)
+        protected override void ProcessItems()
         {
-            base.OnBindViewHolder(holder, position);
-
-            BaseViewHolder baseViewHolder = (BaseViewHolder)holder;
-            T item = FilteredListItems.ElementAt(position);
-            baseViewHolder.ListItem = item;
-        }
-
-#region Add/Remove Items
-        public override void SetItems(IReadOnlyCollection<T> items)
-        {
-            base.SetItems(items);
-
-            FilterItems();
-        } 
-
-        public override void AddItem(T item)
-        {
-            base.AddItem(item);
-
             FilterItems();
         }
-
-        public override void RemoveItem(T item)
-        {
-            base.RemoveItem(item);
-
-            FilterItems();
-        }
-#endregion
 
 #region Filter and Sort
         private void FilterItems()
         {
             if(null == Fragment.FilterView) {
-                // setting null here will ensure we re-create the full list
-                FilteredListItems = null;
-                return;
+                _filteredListItems = new List<T>(FullListItems);
+                SortFilteredItems();
+            } else {
+                Filter.InvokeFilter(Fragment.FilterView.Query, new FilterListener(this));
             }
-
-            Filter.InvokeFilter(Fragment.FilterView.Query, new FilterListener(this));
         }
 
-        protected abstract void SortItemsByPosition(int position);
+        protected abstract IEnumerable<T> SortItemsByPosition(int position, IEnumerable<T> items);
 
         private void SortFilteredItems()
         {
-            if(null == ListItemsFragment.SortItemsSpinner) {
-                return;
-            }
-            SortItemsByPosition(ListItemsFragment.SortItemsSpinner.SelectedItemPosition);
+            ProcessedListItems = null == ListItemsFragment.SortItemsSpinner
+                ? new List<T>(_filteredListItems)
+                : SortItemsByPosition(ListItemsFragment.SortItemsSpinner.SelectedItemPosition, _filteredListItems).ToList();
+
+            InjectAds();
         }
 
         public void SortByItemSelectedEventHander(object sender, AdapterView.ItemSelectedEventArgs args)
