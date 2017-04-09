@@ -17,20 +17,27 @@
 using Android.Views;
 using Android.Widget;
 
+using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
+
+using JetBrains.Annotations;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 {
     public abstract class BaseListViewAdapter<T> : ArrayAdapter<T>
     {
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(BaseListViewAdapter<T>));
+
         protected abstract class ViewHolder : Java.Lang.Object
         {
             public View View { get; }
 
             protected BaseListViewAdapter<T> Adapter { get; }
 
+            [CanBeNull]
             private T _listItem;
 
+            [CanBeNull]
             public T ListItem
             {
                 get => _listItem;
@@ -38,11 +45,16 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
                 set
                 {
                     _listItem = value;
+                    if(null == _listItem) {
+                        Logger.Error("Null list item found!");
+                    }
                     UpdateView();
                 }
             }
 
-            protected abstract void UpdateView();
+            protected virtual void UpdateView()
+            {
+            }
                 
             protected ViewHolder(View itemView, BaseListViewAdapter<T> adapter)
             {
