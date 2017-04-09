@@ -73,6 +73,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
                     ? from item in _adapter.FullListItems select item?.ToJavaObject()
                     : from item in _adapter.FullListItems where null != item && item.Name.ToLower().Contains(filterConstraint) select item.ToJavaObject();
 
+                // convert to JavaObject array
                 var filteredObjectArray = filteredItemEnumerable.ToArray();
                 results.Values = filteredObjectArray;
                 results.Count = filteredObjectArray.Length;
@@ -82,6 +83,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
             protected override void PublishResults(ICharSequence constraint, FilterResults results)
             {
+                // convert back to C# array
                 var filteredItems = results.Values.ToArray<ObjectWrapper>();
                 _adapter._filteredListItems = from item in filteredItems select (T)item?.Instance;
             }
@@ -138,6 +140,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
                 ? new List<T>(_filteredListItems)
                 : SortItemsByPosition(ListItemsFragment.SortItemsSpinner.SelectedItemPosition, _filteredListItems).ToList();
 
+            // side-effect :\
             InjectAds();
         }
 
