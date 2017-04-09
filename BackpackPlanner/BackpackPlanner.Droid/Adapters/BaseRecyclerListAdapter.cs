@@ -42,6 +42,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 #else
         private const int AdFrequency = 10;
 #endif
+        private const int HalfAdFrequencey = AdFrequency / 2;
 
         protected abstract class BaseViewHolder : Android.Support.V7.Widget.RecyclerView.ViewHolder
         {
@@ -241,11 +242,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
             // make sure we don't have a final ad too close to the end
             int itemsAfterFinalAd = ProcessedListItems.Count % AdFrequency;
-            if(itemsAfterFinalAd < (AdFrequency / 2)) {
-                loopEnd -= itemsAfterFinalAd + 1;
+            if(itemsAfterFinalAd < HalfAdFrequencey) {
+                loopEnd -= HalfAdFrequencey;
             }
 
-            for(int i=AdFrequency-1; i<loopEnd; i+=AdFrequency) {
+            for(int i=AdFrequency-1; i<=loopEnd; i+=AdFrequency, ++loopEnd) {
                 _processedListItems.Insert(i, null);
             }
 
