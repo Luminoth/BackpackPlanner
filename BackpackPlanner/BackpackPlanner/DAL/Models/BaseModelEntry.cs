@@ -88,10 +88,14 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models
         }
 #endregion
 
-        public void SetModel(T model)
+        public void SetModel(T model, bool notify=true)
         {
             Model = model;
-            ModelId = model.Id;
+            ModelId = model?.Id ?? 0;
+
+            if(notify) {
+                NotifyPropertyChanged(nameof(Model));
+            }
         }
 
         public void OnRemove()
@@ -106,7 +110,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models
 
         protected BaseModelEntry(T model)
         {
-            SetModel(model);
+            SetModel(model, false);
         }
 
         protected BaseModelEntry()
