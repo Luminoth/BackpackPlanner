@@ -19,6 +19,8 @@
     <Authors />
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|AnyCPU'" />
+
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="10.4.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="1.2.0-preview1-24224" />
