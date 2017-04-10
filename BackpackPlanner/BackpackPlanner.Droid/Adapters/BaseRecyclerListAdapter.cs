@@ -38,7 +38,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 #endregion
 
 #if DEBUG
-        private const int AdFrequency = 2;
+        private const int AdFrequency = 5;
 #else
         private const int AdFrequency = 10;
 #endif
@@ -150,6 +150,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
         private NativeExpressAdView CreateAdView()
         {
+            // TODO: do we have to keep re-creating everything in here?
+
             NativeExpressAdView adView = new NativeExpressAdView(Fragment.Context)
             {
             #if USE_REAL_ADS
@@ -163,7 +165,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
             float density = Fragment.Resources.DisplayMetrics.Density;
             adView.AdSize = new AdSize((int)(Fragment.Layout.Width / density), 150);
 
-            // TODO: do we have to keep re-creating this?
             AdRequest.Builder builder = new AdRequest.Builder();
             TestDevices.AddTestDevices(builder);
             TestDevices.SetGender(Fragment.BaseActivity.BackpackPlannerState.PersonalInformation, builder);
@@ -238,12 +239,19 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
         [Conditional("ENABLE_ADS")]
         protected void InjectAds()
         {
+            // make sure we actually need to inject any ads
+            int adCount = ProcessedListItems.Count / AdFrequency;
+            if(0 == adCount) {
+                return;
+            }
+
             int loopEnd = ProcessedListItems.Count;
 
             // make sure we don't have a final ad too close to the end
-            int itemsAfterFinalAd = ProcessedListItems.Count % AdFrequency;
+            // (it looks really bad when that happens)
+            int itemsAfterFinalAd = ProcessedListItems.Count % adCount;
             if(itemsAfterFinalAd < HalfAdFrequencey) {
-                loopEnd -= HalfAdFrequencey;
+                loopEnd -= HalfAdFrequencey + 1;
             }
 
             for(int i=AdFrequency-1; i<=loopEnd; i+=AdFrequency, ++loopEnd) {
