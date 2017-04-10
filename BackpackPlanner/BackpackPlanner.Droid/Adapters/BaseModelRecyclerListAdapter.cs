@@ -30,9 +30,11 @@ using JetBrains.Annotations;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 {
-    public abstract class BaseModelRecyclerListAdapter<T> : BaseRecyclerListAdapter<T>, IFilterable where T: BaseModel, IBackpackPlannerItem
+    public abstract class BaseModelRecyclerListAdapter<T>
+        : BaseRecyclerListAdapter<T>, IFilterable where T: BaseModel, IBackpackPlannerItem
     {
-        protected abstract class BaseModelViewHolder : BaseViewHolder, Android.Support.V7.Widget.Toolbar.IOnMenuItemClickListener
+        protected abstract class BaseModelViewHolder
+            : BaseViewHolder, Android.Support.V7.Widget.Toolbar.IOnMenuItemClickListener
         {
             protected BaseModelRecyclerListAdapter<T> BaseModelAdapter => (BaseModelRecyclerListAdapter<T>)Adapter;
 
