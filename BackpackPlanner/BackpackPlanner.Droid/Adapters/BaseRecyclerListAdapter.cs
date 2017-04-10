@@ -154,7 +154,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
             NativeExpressAdView adView = new NativeExpressAdView(Fragment.Context)
             {
-            #if USE_REAL_ADS
+            #if DISTRIBUTION
                 AdUnitId = Fragment.GetString(Resource.String.native_ad_unit_id)
             #else
                 AdUnitId = Fragment.GetString(Resource.String.test_native_ad_unit_id)

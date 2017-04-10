@@ -19,7 +19,9 @@
     <Authors />
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|AnyCPU'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|AnyCPU'">
+    <Optimize>True</Optimize>
+  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="10.4.0" />

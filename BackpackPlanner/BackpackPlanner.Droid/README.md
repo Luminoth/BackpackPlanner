@@ -45,8 +45,8 @@ The following is necessary to fix Proguard failing:
 
 * USE_ADS
   * Enables ads
-* USE_REAL_ADS
-  * Enables using real ads, otherwise will only show test ads
+* DISTRIBUTION
+  * Enables using real ads when ads are enabled, (other distribution stuff?)
 
 # Pulling the database from a debug install
 
