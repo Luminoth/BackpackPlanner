@@ -44,6 +44,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 #endif
         private const int HalfAdFrequencey = AdFrequency / 2;
 
+#region View Holder Types
         protected abstract class BaseViewHolder : Android.Support.V7.Widget.RecyclerView.ViewHolder
         {
             protected BaseRecyclerListAdapter<T> Adapter { get; }
@@ -79,11 +80,52 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
         private sealed class AdViewHolder : BaseViewHolder
         {
+            private readonly ViewGroup _adCardView;
+
             public AdViewHolder(View itemView, BaseRecyclerListAdapter<T> adapter)
                 : base(itemView, adapter)
             {
+                _adCardView = itemView.FindViewById<Android.Support.V7.Widget.CardView>(Resource.Id.view_ad);
+            }
+
+            protected override void UpdateView()
+            {
+                _adCardView.RemoveAllViews();
+
+                if(!Adapter._adViews.TryGetValue(AdapterPosition, out NativeExpressAdView adView)) {
+                    adView = CreateAdView(Adapter.Fragment);
+                    Adapter._adViews.Add(AdapterPosition, adView);
+                }
+                _adCardView.AddView(adView);
+            }
+
+            private NativeExpressAdView CreateAdView(RecyclerFragment fragment)
+            {
+                NativeExpressAdView adView = new NativeExpressAdView(fragment.Context)
+                {
+                #if DISTRIBUTION
+                    AdUnitId = Fragment.GetString(Resource.String.native_ad_unit_id)
+                #else
+                    AdUnitId = fragment.GetString(Resource.String.test_native_ad_unit_id)
+                #endif
+                };
+
+                // NOTE: this works because we create the view *after* the recycler has been sized
+                float density = fragment.Resources.DisplayMetrics.Density;
+                adView.AdSize = new AdSize((int)(fragment.Layout.Width / density), 150);
+
+                AdRequest.Builder builder = new AdRequest.Builder();
+                TestDevices.AddTestDevices(builder);
+                TestDevices.SetGender(fragment.BaseActivity.BackpackPlannerState.PersonalInformation, builder);
+                AdRequest adRequest = builder.Build();
+
+                Logger.Debug($"Loading ad, is test device: {adRequest.IsTestDevice(fragment.Context)}");
+                adView.LoadAd(adRequest);
+
+                return adView;
             }
         }
+#endregion
 
         public RecyclerFragment Fragment { get; }
 
@@ -121,6 +163,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
             }
         }
 
+        private readonly Dictionary<int, NativeExpressAdView> _adViews = new Dictionary<int, NativeExpressAdView>();
+
 #region ViewHolder
         private BaseViewHolder CreateAdViewHolder(ViewGroup parent)
         {
@@ -148,46 +192,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
             }
         }
 
-        private NativeExpressAdView CreateAdView()
-        {
-            // TODO: do we have to keep re-creating everything in here?
-
-            NativeExpressAdView adView = new NativeExpressAdView(Fragment.Context)
-            {
-            #if DISTRIBUTION
-                AdUnitId = Fragment.GetString(Resource.String.native_ad_unit_id)
-            #else
-                AdUnitId = Fragment.GetString(Resource.String.test_native_ad_unit_id)
-            #endif
-            };
-
-            // NOTE: this works because we create the view *after* the recycler has been sized
-            float density = Fragment.Resources.DisplayMetrics.Density;
-            adView.AdSize = new AdSize((int)(Fragment.Layout.Width / density), 150);
-
-            AdRequest.Builder builder = new AdRequest.Builder();
-            TestDevices.AddTestDevices(builder);
-            TestDevices.SetGender(Fragment.BaseActivity.BackpackPlannerState.PersonalInformation, builder);
-            AdRequest adRequest = builder.Build();
-
-            Logger.Debug($"Loading ad, is test device: {adRequest.IsTestDevice(Fragment.Context)}");
-            adView.LoadAd(adRequest);
-
-            return adView;
-        }
-
         private void BindAdViewHolder(Android.Support.V7.Widget.RecyclerView.ViewHolder holder)
         {
-            AdViewHolder adHolder = (AdViewHolder)holder;
-            ViewGroup adCardView = (ViewGroup)adHolder.ItemView;
-            adCardView.RemoveAllViews();
-
-            // TODO: probably not the best idea to create this every time we view the thing
-            // TODO: and this might be a bigger problem for the app as a whole
-            // where we are creating views every time we see something
-            // rather than holding references to the views as the "list items"
-            NativeExpressAdView adView = CreateAdView();
-            adCardView.AddView(adView);
+            BaseViewHolder baseViewHolder = (BaseViewHolder)holder;
+            baseViewHolder.ListItem = null;
         }
 
         private void BindItemViewHolder(Android.Support.V7.Widget.RecyclerView.ViewHolder holder, int position)
