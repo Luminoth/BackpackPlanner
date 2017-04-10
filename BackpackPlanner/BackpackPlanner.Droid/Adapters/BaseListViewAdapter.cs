@@ -30,7 +30,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
         protected abstract class ViewHolder : Java.Lang.Object
         {
-            public View View { get; }
+            public View ItemView { get; }
 
             protected BaseListViewAdapter<T> Adapter { get; }
 
@@ -58,7 +58,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
                 
             protected ViewHolder(View itemView, BaseListViewAdapter<T> adapter)
             {
-                View = itemView;
+                ItemView = itemView;
                 Adapter = adapter;
             }
         }

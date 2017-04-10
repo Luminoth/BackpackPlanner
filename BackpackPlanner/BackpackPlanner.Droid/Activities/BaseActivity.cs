@@ -250,11 +250,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
         {
             Logger.Info("Initializing ads...");
             MobileAds.Initialize(this, GetString(
-#if DISTRIBUTION
+                #if DISTRIBUTION
                     Resource.String.ad_app_id
                 #else
                     Resource.String.test_ad_app_id
-#endif
+                #endif
                 )
             );
         }
