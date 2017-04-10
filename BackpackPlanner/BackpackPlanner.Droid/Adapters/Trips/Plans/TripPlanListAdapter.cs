@@ -32,9 +32,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Plans
     {
         private sealed class TripPlanViewHolder : BaseModelViewHolder
         {
-            protected override int DeleteActionResourceId => Resource.Id.action_delete_trip_plan;
+            protected override int ToolbarResourceId => Resource.Id.view_trip_plan_toolbar;
 
-            private readonly Android.Support.V7.Widget.Toolbar _toolbar;
+            protected override int MenuResourceId => Resource.Menu.trip_plan_menu;
+
+            protected override int DeleteActionResourceId => Resource.Id.action_delete_trip_plan;
 
             private readonly TextView _textViewDays;
             private readonly TextView _textViewMeals;
@@ -49,10 +51,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Plans
             public TripPlanViewHolder(View itemView, BaseModelRecyclerListAdapter<TripPlan> adapter)
                 : base(itemView, adapter)
             {
-                _toolbar = itemView.FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.view_trip_plan_toolbar);
-                _toolbar.InflateMenu(Resource.Menu.trip_plan_menu);
-                _toolbar.SetOnMenuItemClickListener(this);
-
                 _textViewDays = itemView.FindViewById<TextView>(Resource.Id.view_trip_plan_days);
                 _textViewMeals = itemView.FindViewById<TextView>(Resource.Id.view_trip_plan_meals);
                 _textViewCollections = itemView.FindViewById<TextView>(Resource.Id.view_trip_plan_collections);
@@ -74,7 +72,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Plans
 
             protected override void UpdateView()
             {
-                _toolbar.Title = ListItem.Name;
+                base.UpdateView();
 
                 _textViewDays.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_trip_plan_days),
                     ListItem.Days

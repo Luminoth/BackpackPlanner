@@ -35,9 +35,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items
     {
         private sealed class GearItemViewHolder : BaseModelViewHolder
         {
-            protected override int DeleteActionResourceId => Resource.Id.action_delete_gear_item;
+            protected override int ToolbarResourceId => Resource.Id.view_gear_item_toolbar;
 
-            private readonly Android.Support.V7.Widget.Toolbar _toolbar;
+            protected override int MenuResourceId => Resource.Menu.gear_item_menu;
+
+            protected override int DeleteActionResourceId => Resource.Id.action_delete_gear_item;
 
             private readonly TextView _textViewMakeModel;
             private readonly TextView _textViewWeightCategory;
@@ -47,10 +49,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items
             public GearItemViewHolder(View itemView, BaseModelRecyclerListAdapter<GearItem> adapter)
                 : base(itemView, adapter)
             {
-                _toolbar = itemView.FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.view_gear_item_toolbar);
-                _toolbar.InflateMenu(Resource.Menu.gear_item_menu);
-                _toolbar.SetOnMenuItemClickListener(this);
-
                 _textViewMakeModel = itemView.FindViewById<TextView>(Resource.Id.view_gear_item_make_model);
                 _textViewWeightCategory = itemView.FindViewById<TextView>(Resource.Id.view_gear_item_weight_category);
                 _textViewWeight = itemView.FindViewById<TextView>(Resource.Id.view_gear_item_weight);
@@ -67,7 +65,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items
 
             protected override void UpdateView()
             {
-                _toolbar.Title = ListItem.Name;
+                base.UpdateView();
 
                 string makeModel = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_gear_item_make_model),
                     ListItem.Make, ListItem.Model

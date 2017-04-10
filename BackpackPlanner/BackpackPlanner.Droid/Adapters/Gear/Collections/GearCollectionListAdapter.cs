@@ -32,9 +32,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Collections
     {
         private sealed class GearCollectionViewHolder : BaseModelViewHolder
         {
-            protected override int DeleteActionResourceId => Resource.Id.action_delete_gear_collection;
+            protected override int ToolbarResourceId => Resource.Id.view_gear_collection_toolbar;
 
-            private readonly Android.Support.V7.Widget.Toolbar _toolbar;
+            protected override int MenuResourceId => Resource.Menu.gear_collection_menu;
+
+            protected override int DeleteActionResourceId => Resource.Id.action_delete_gear_collection;
 
             private readonly TextView _textViewSystems;
             private readonly TextView _textViewItems;
@@ -44,10 +46,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Collections
             public GearCollectionViewHolder(View itemView, BaseModelRecyclerListAdapter<GearCollection> adapter)
                 : base(itemView, adapter)
             {
-                _toolbar = itemView.FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.view_gear_collection_toolbar);
-                _toolbar.InflateMenu(Resource.Menu.gear_collection_menu);
-                _toolbar.SetOnMenuItemClickListener(this);
-
                 _textViewSystems = itemView.FindViewById<TextView>(Resource.Id.view_gear_collection_systems);
                 _textViewItems = itemView.FindViewById<TextView>(Resource.Id.view_gear_collection_items);
                 _textViewWeight = itemView.FindViewById<TextView>(Resource.Id.view_gear_collection_weight);
@@ -64,7 +62,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Collections
 
             protected override void UpdateView()
             {
-                _toolbar.Title = ListItem.Name;
+                base.UpdateView();
 
                 _textViewSystems.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_gear_collection_systems),
                     ListItem.GearSystems.Count

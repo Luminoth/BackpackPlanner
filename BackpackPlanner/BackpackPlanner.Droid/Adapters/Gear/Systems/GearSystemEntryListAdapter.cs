@@ -48,6 +48,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Systems
 
             protected override void UpdateView()
             {
+                base.UpdateView();
+
                 _textViewName.Text = ListItem.Model.Name;
                 _editTextQuantity.EditText.Text = ListItem.Count.ToString();
 

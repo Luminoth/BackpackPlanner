@@ -90,6 +90,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
             protected override void UpdateView()
             {
+                base.UpdateView();
+
                 _adCardView.RemoveAllViews();
 
                 if(!Adapter._adViews.TryGetValue(AdapterPosition, out NativeExpressAdView adView)) {

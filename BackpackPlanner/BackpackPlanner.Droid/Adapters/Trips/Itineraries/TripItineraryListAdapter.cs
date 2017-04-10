@@ -29,16 +29,15 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Itineraries
     {
         private sealed class TripItineraryViewHolder : BaseModelViewHolder
         {
-            protected override int DeleteActionResourceId => Resource.Id.action_delete_trip_itinerary;
+            protected override int ToolbarResourceId => Resource.Id.view_trip_itinerary_toolbar;
 
-            private readonly Android.Support.V7.Widget.Toolbar _toolbar;
+            protected override int MenuResourceId => Resource.Menu.trip_itinerary_menu;
+
+            protected override int DeleteActionResourceId => Resource.Id.action_delete_trip_itinerary;
 
             public TripItineraryViewHolder(View itemView, BaseModelRecyclerListAdapter<TripItinerary> adapter)
                 : base(itemView, adapter)
             {
-                _toolbar = itemView.FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.view_trip_itinerary_toolbar);
-                _toolbar.InflateMenu(Resource.Menu.trip_itinerary_menu);
-                _toolbar.SetOnMenuItemClickListener(this);
             }
 
             protected override Android.Support.V4.App.Fragment CreateViewItemFragment()
@@ -51,7 +50,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Itineraries
 
             protected override void UpdateView()
             {
-                _toolbar.Title = ListItem.Name;
+                base.UpdateView();
             }
         }
 

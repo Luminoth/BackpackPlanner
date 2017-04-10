@@ -38,16 +38,38 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
         {
             protected BaseModelRecyclerListAdapter<T> BaseModelAdapter => (BaseModelRecyclerListAdapter<T>)Adapter;
 
+            protected abstract int ToolbarResourceId { get; }
+
+            protected abstract int MenuResourceId { get; }
+
             protected abstract int DeleteActionResourceId { get; }
+
+            private Android.Support.V7.Widget.Toolbar _toolbar;
 
             protected abstract Android.Support.V4.App.Fragment CreateViewItemFragment();
 
             protected BaseModelViewHolder(View itemView, BaseModelRecyclerListAdapter<T> adapter)
                 : base(itemView, adapter)
             {
+                InitToolbar();
+
                 itemView.Click += (sender, args) => {
                     Adapter.Fragment.TransitionToFragment(Resource.Id.frame_content, CreateViewItemFragment(), null);
                 };
+            }
+
+            private void InitToolbar()
+            {
+                _toolbar = ItemView.FindViewById<Android.Support.V7.Widget.Toolbar>(ToolbarResourceId);
+                _toolbar.InflateMenu(MenuResourceId);
+                _toolbar.SetOnMenuItemClickListener(this);
+            }
+
+            protected override void UpdateView()
+            {
+                base.UpdateView();
+
+                _toolbar.Title = ListItem.Name;
             }
 
             public virtual bool OnMenuItemClick(IMenuItem menuItem)

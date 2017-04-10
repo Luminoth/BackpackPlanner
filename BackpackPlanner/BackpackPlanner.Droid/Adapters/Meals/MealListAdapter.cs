@@ -32,9 +32,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
     {
         private sealed class MealViewHolder : BaseModelViewHolder
         {
-            protected override int DeleteActionResourceId => Resource.Id.action_delete_meal;
+            protected override int ToolbarResourceId => Resource.Id.view_meal_toolbar;
 
-            private readonly Android.Support.V7.Widget.Toolbar _toolbar;
+            protected override int MenuResourceId => Resource.Menu.meal_menu;
+
+            protected override int DeleteActionResourceId => Resource.Id.action_delete_meal;
 
             private readonly TextView _textViewServings;
             private readonly TextView _textViewWeightPerServing;
@@ -48,10 +50,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
             public MealViewHolder(View itemView, BaseModelRecyclerListAdapter<Meal> adapter)
                 : base(itemView, adapter)
             {
-                _toolbar = itemView.FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.view_meal_toolbar);
-                _toolbar.InflateMenu(Resource.Menu.meal_menu);
-                _toolbar.SetOnMenuItemClickListener(this);
-
                 _textViewServings = itemView.FindViewById<TextView>(Resource.Id.view_meal_servings);
                 _textViewWeightPerServing = itemView.FindViewById<TextView>(Resource.Id.view_meal_weight_per_serving);
                 _textViewCaloriesPerServing = itemView.FindViewById<TextView>(Resource.Id.view_meal_calories_per_serving);
@@ -72,7 +70,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
 
             protected override void UpdateView()
             {
-                _toolbar.Title = ListItem.Name;
+                base.UpdateView();
 
                 _textViewServings.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_meal_servings),
                     ListItem.ServingCount, ListItem.MealTime.ToString()
