@@ -116,6 +116,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
         public Filter Filter { get; }
 
+        private readonly FilterListener _filterListener;
+
         protected override void ProcessItems()
         {
             FilterItems();
@@ -126,9 +128,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
         {
             if(null == Fragment.FilterView) {
                 _filteredListItems = new List<T>(FullListItems);
-                SortFilteredItems();
+                _filterListener.OnFilterComplete(FullListItems.Count);
             } else {
-                Filter.InvokeFilter(Fragment.FilterView.Query, new FilterListener(this));
+                Filter.InvokeFilter(Fragment.FilterView.Query, _filterListener);
             }
         }
 
@@ -140,7 +142,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
                 ? new List<T>(_filteredListItems)
                 : SortItemsByPosition(ListItemsFragment.SortItemsSpinner.SelectedItemPosition, _filteredListItems).ToList();
 
-            // side-effect :\
+            OnSortComplete();
+        }
+
+        private void OnSortComplete()
+        {
             InjectAds();
         }
 
@@ -159,6 +165,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
             : base(fragment)
         {
             Filter = new ItemFilter(this);
+            _filterListener = new FilterListener(this);
         }
     }
 }
