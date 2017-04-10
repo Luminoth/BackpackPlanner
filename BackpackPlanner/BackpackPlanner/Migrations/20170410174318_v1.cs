@@ -121,6 +121,12 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TripPlans", x => x.TripPlanId);
+                    table.ForeignKey(
+                        name: "FK_TripPlans_TripItineraries_TripItineraryId",
+                        column: x => x.TripItineraryId,
+                        principalTable: "TripItineraries",
+                        principalColumn: "TripItineraryId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -306,6 +312,11 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
                 name: "IX_MealEntry_TripPlanId",
                 table: "MealEntry",
                 column: "TripPlanId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TripPlans_TripItineraryId",
+                table: "TripPlans",
+                column: "TripItineraryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -323,9 +334,6 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
                 name: "MealEntry");
 
             migrationBuilder.DropTable(
-                name: "TripItineraries");
-
-            migrationBuilder.DropTable(
                 name: "GearItems");
 
             migrationBuilder.DropTable(
@@ -339,6 +347,9 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
 
             migrationBuilder.DropTable(
                 name: "TripPlans");
+
+            migrationBuilder.DropTable(
+                name: "TripItineraries");
         }
     }
 }

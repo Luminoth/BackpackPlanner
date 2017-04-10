@@ -274,6 +274,8 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
 
                     b.HasKey("TripPlanId");
 
+                    b.HasIndex("TripItineraryId");
+
                     b.ToTable("TripPlans");
                 });
 
@@ -335,6 +337,14 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
                     b.HasOne("EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans.TripPlan")
                         .WithMany("Meals")
                         .HasForeignKey("TripPlanId");
+                });
+
+            modelBuilder.Entity("EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans.TripPlan", b =>
+                {
+                    b.HasOne("EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Itineraries.TripItinerary", "TripItinerary")
+                        .WithMany()
+                        .HasForeignKey("TripItineraryId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
         }
     }

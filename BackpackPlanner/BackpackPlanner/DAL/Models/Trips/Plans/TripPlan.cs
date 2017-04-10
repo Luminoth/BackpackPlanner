@@ -56,7 +56,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
                     .ThenInclude(gearItem => gearItem.Model)
                 .Include(tripPlan => tripPlan.Meals)
                     .ThenInclude(meal => meal.Model)
-                .Include(tripPlan => tripPlan.TripItinerary)    // TODO: this is failing
+                .Include(tripPlan => tripPlan.TripItinerary)
                 .ToListAsync().ConfigureAwait(false);
         }
 #endregion
@@ -148,7 +148,17 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
         /// <value>
         /// The trip itinerary.
         /// </value>
-        public virtual TripItinerary TripItinerary => _tripItinerary;
+        public virtual TripItinerary TripItinerary
+        {
+            get => _tripItinerary;
+
+            private set
+            {
+                _tripItinerary = value;
+                TripItineraryId = _tripItinerary?.Id ?? 0;
+                NotifyPropertyChanged();
+            }
+        }
 
         private readonly List<GearCollectionEntry> _gearCollections = new List<GearCollectionEntry>();
 
@@ -236,14 +246,10 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
 #region Trip Itinerary
         public void SetTripItinerary(DatabaseContext dbContext, [CanBeNull] TripItinerary tripItinerary)
         {
-            _tripItinerary = tripItinerary;
-            TripItineraryId = _tripItinerary?.Id ?? 0;
-
+            TripItinerary = tripItinerary;
             if(null != TripItinerary) {
                 dbContext.Entry(TripItinerary).State = EntityState.Unchanged;
             }
-
-            NotifyPropertyChanged(nameof(TripItinerary));
         }
 #endregion
 
