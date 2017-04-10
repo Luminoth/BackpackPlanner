@@ -15,12 +15,16 @@
 */
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Settings;
 using EnergonSoftware.BackpackPlanner.Units.Currency;
 using EnergonSoftware.BackpackPlanner.Units.Units;
+
+using Microsoft.EntityFrameworkCore;
 
 using Newtonsoft.Json;
 
@@ -33,6 +37,13 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
     [Serializable]
     public sealed class Meal : BaseModel, IBackpackPlannerItem
     {
+#region Static Helpers
+        public static async Task<IReadOnlyCollection<Meal>> GetAll(DatabaseContext dbContext)
+        {
+            return await dbContext.Meals.ToListAsync().ConfigureAwait(false);
+        }
+#endregion
+
         public override int Id => MealId;
 
 #region Database Properties

@@ -22,8 +22,6 @@ using EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Plans;
 
-using Microsoft.EntityFrameworkCore;
-
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
 {
     public sealed class TripPlansFragment : ListItemsFragment<TripPlan>
@@ -50,19 +48,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
 
         protected override int AddItemResource => Resource.Id.fab_add_trip_plan;
 
-        protected override async Task<List<TripPlan>> GetItemsAsync(DatabaseContext dbContext)
+        protected override async Task<IReadOnlyCollection<TripPlan>> GetItemsAsync(DatabaseContext dbContext)
         {
-            return await dbContext.TripPlans
-                .Include(tripPlan => tripPlan.GearCollections)
-                    .ThenInclude(gearCollection => gearCollection.Model)
-                .Include(tripPlan => tripPlan.GearSystems)
-                    .ThenInclude(gearSystem => gearSystem.Model)
-                .Include(tripPlan => tripPlan.GearItems)
-                    .ThenInclude(gearItem => gearItem.Model)
-                .Include(tripPlan => tripPlan.Meals)
-                    .ThenInclude(meal => meal.Model)
-                .Include(tripPlan => tripPlan.TripItinerary)
-                .ToListAsync().ConfigureAwait(false);
+            return await TripPlan.GetAll(dbContext).ConfigureAwait(false);
         }
 
         protected override Android.Support.V4.App.Fragment CreateAddItemFragment()

@@ -15,8 +15,12 @@
 */
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Threading.Tasks;
+
+using Microsoft.EntityFrameworkCore;
 
 namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Itineraries
 {
@@ -26,6 +30,13 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Itineraries
     [Serializable]
     public sealed class TripItinerary : BaseModel, IBackpackPlannerItem
     {
+#region Static Helpers
+        public static async Task<IReadOnlyCollection<TripItinerary>> GetAll(DatabaseContext dbContext)
+        {
+            return await dbContext.TripItineraries.ToListAsync().ConfigureAwait(false);
+        }
+#endregion
+
         public override int Id => TripItineraryId;
 
 #region Database Properties

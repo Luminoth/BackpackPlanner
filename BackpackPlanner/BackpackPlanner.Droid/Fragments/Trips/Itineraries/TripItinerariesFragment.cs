@@ -22,8 +22,6 @@ using EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Itineraries;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Itineraries;
 
-using Microsoft.EntityFrameworkCore;
-
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries
 {
     public sealed class TripItinerariesFragment : ListItemsFragment<TripItinerary>
@@ -50,9 +48,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries
 
         protected override int AddItemResource => Resource.Id.fab_add_trip_itinerary;
 
-        protected override async Task<List<TripItinerary>> GetItemsAsync(DatabaseContext dbContext)
+        protected override async Task<IReadOnlyCollection<TripItinerary>> GetItemsAsync(DatabaseContext dbContext)
         {
-            return await dbContext.TripItineraries.ToListAsync().ConfigureAwait(false);
+            return await TripItinerary.GetAll(dbContext).ConfigureAwait(false);
         }
 
         protected override Android.Support.V4.App.Fragment CreateAddItemFragment()

@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items;
@@ -43,6 +44,23 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
     [Serializable]
     public class TripPlan : BaseModel, IBackpackPlannerItem
     {
+#region Static Helpers
+        public static async Task<IReadOnlyCollection<TripPlan>> GetAll(DatabaseContext dbContext)
+        {
+            return await dbContext.TripPlans
+                .Include(tripPlan => tripPlan.GearCollections)
+                    .ThenInclude(gearCollection => gearCollection.Model)
+                .Include(tripPlan => tripPlan.GearSystems)
+                    .ThenInclude(gearSystem => gearSystem.Model)
+                .Include(tripPlan => tripPlan.GearItems)
+                    .ThenInclude(gearItem => gearItem.Model)
+                .Include(tripPlan => tripPlan.Meals)
+                    .ThenInclude(meal => meal.Model)
+                .Include(tripPlan => tripPlan.TripItinerary)    // TODO: this is failing
+                .ToListAsync().ConfigureAwait(false);
+        }
+#endregion
+
         public override int Id => TripPlanId;
 
 #region Database Properties

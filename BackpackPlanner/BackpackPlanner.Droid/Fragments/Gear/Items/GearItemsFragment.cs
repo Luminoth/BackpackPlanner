@@ -22,8 +22,6 @@ using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items;
 
-using Microsoft.EntityFrameworkCore;
-
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
 {
     public sealed class GearItemsFragment : ListItemsFragment<GearItem>
@@ -50,9 +48,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
 
         protected override int AddItemResource => Resource.Id.fab_add_gear_item;
 
-        protected override async Task<List<GearItem>> GetItemsAsync(DatabaseContext dbContext)
+        protected override async Task<IReadOnlyCollection<GearItem>> GetItemsAsync(DatabaseContext dbContext)
         {
-            return await dbContext.GearItems.ToListAsync().ConfigureAwait(false);
+            return await GearItem.GetAll(dbContext).ConfigureAwait(false);
         }
 
         protected override Android.Support.V4.App.Fragment CreateAddItemFragment()

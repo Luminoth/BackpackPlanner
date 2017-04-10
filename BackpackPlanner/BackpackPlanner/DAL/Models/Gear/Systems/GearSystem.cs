@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items;
 using EnergonSoftware.BackpackPlanner.Settings;
@@ -25,6 +26,8 @@ using EnergonSoftware.BackpackPlanner.Units.Currency;
 using EnergonSoftware.BackpackPlanner.Units.Units;
 
 using JetBrains.Annotations;
+
+using Microsoft.EntityFrameworkCore;
 
 namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems
 {
@@ -35,6 +38,16 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems
     [Serializable]
     public class GearSystem : BaseModel, IBackpackPlannerItem
     {
+#region Static Helpers
+        public static async Task<IReadOnlyCollection<GearSystem>> GetAll(DatabaseContext dbContext)
+        {
+            return await dbContext.GearSystems
+                .Include(gearSystem => gearSystem.GearItems)
+                    .ThenInclude(gearItem => gearItem.Model)
+                .ToListAsync().ConfigureAwait(false);
+        }
+#endregion
+
         public override int Id => GearSystemId;
 
 #region Database Properties

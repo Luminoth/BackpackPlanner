@@ -22,8 +22,6 @@ using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Systems;
 
-using Microsoft.EntityFrameworkCore;
-
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 {
     public sealed class GearSystemsFragment : ListItemsFragment<GearSystem>
@@ -50,12 +48,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 
         protected override int AddItemResource => Resource.Id.fab_add_gear_system;
 
-        protected override async Task<List<GearSystem>> GetItemsAsync(DatabaseContext dbContext)
+        protected override async Task<IReadOnlyCollection<GearSystem>> GetItemsAsync(DatabaseContext dbContext)
         {
-            return await dbContext.GearSystems
-                .Include(gearSystem => gearSystem.GearItems)
-                    .ThenInclude(gearItem => gearItem.Model)
-                .ToListAsync().ConfigureAwait(false);
+            return await GearSystem.GetAll(dbContext).ConfigureAwait(false);
         }
 
         protected override Android.Support.V4.App.Fragment CreateAddItemFragment()

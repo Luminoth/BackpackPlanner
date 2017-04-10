@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems;
@@ -27,6 +28,8 @@ using EnergonSoftware.BackpackPlanner.Units.Units;
 
 using JetBrains.Annotations;
 
+using Microsoft.EntityFrameworkCore;
+
 namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections
 {
     /// <summary>
@@ -35,6 +38,18 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections
     [Serializable]
     public class GearCollection : BaseModel, IBackpackPlannerItem
     {
+#region Static Helpers
+        public static async Task<IReadOnlyCollection<GearCollection>> GetAll(DatabaseContext dbContext)
+        {
+            return await dbContext.GearCollections
+                .Include(gearCollection => gearCollection.GearSystems)
+                    .ThenInclude(gearSystem => gearSystem.Model)
+                .Include(gearCollection => gearCollection.GearItems)
+                    .ThenInclude(gearItem => gearItem.Model)
+                .ToListAsync().ConfigureAwait(false);
+        }
+#endregion
+
         public override int Id => GearCollectionId;
 
 #region Database Properties
@@ -59,6 +74,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections
         public string Name
         {
             get => _name;
+
             set
             {
                 _name = value ?? string.Empty;
@@ -97,7 +113,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections
         [MaxLength(1024)]
         public string Note
         {
-            get { return _note; }
+            get => _note;
+
             set
             {
                 _note = value ?? string.Empty;

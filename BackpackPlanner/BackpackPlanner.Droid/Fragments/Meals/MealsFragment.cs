@@ -22,8 +22,6 @@ using EnergonSoftware.BackpackPlanner.DAL.Models.Meals;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals;
 
-using Microsoft.EntityFrameworkCore;
-
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
 {
     public sealed class MealsFragment : ListItemsFragment<Meal>
@@ -50,9 +48,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
 
         protected override int AddItemResource => Resource.Id.fab_add_meal;
 
-        protected override async Task<List<Meal>> GetItemsAsync(DatabaseContext dbContext)
+        protected override async Task<IReadOnlyCollection<Meal>> GetItemsAsync(DatabaseContext dbContext)
         {
-            return await dbContext.Meals.ToListAsync().ConfigureAwait(false);
+            return await Meal.GetAll(dbContext).ConfigureAwait(false);
         }
 
         protected override Android.Support.V4.App.Fragment CreateAddItemFragment()

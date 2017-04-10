@@ -127,7 +127,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             FilterView.QueryTextChange += Adapter.FilterItemsEventHandler;
         }
 
-        protected abstract Task<List<T>> GetItemsAsync(DatabaseContext dbContext);
+        protected abstract Task<IReadOnlyCollection<T>> GetItemsAsync(DatabaseContext dbContext);
 
         protected void PopulateList()
         {
@@ -135,7 +135,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
             Task.Run(async () =>
                 {
-                    List<T> items;
+                    IReadOnlyCollection<T> items;
                     using(DatabaseContext dbContext = BaseActivity.BackpackPlannerState.DatabaseState.CreateContext()) {
                         try {
                             items = await GetItemsAsync(dbContext).ConfigureAwait(false);

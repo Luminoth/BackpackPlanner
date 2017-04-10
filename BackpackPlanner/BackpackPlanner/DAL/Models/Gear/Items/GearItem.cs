@@ -15,13 +15,17 @@
 */
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Threading.Tasks;
 
 using EnergonSoftware.BackpackPlanner.Settings;
 using EnergonSoftware.BackpackPlanner.Units;
 using EnergonSoftware.BackpackPlanner.Units.Currency;
 using EnergonSoftware.BackpackPlanner.Units.Units;
+
+using Microsoft.EntityFrameworkCore;
 
 namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
 {
@@ -32,6 +36,13 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
     [Serializable]
     public class GearItem : BaseModel, IBackpackPlannerItem
     {
+#region Static Helpers
+        public static async Task<IReadOnlyCollection<GearItem>> GetAll(DatabaseContext dbContext)
+        {
+            return await dbContext.GearItems.ToListAsync().ConfigureAwait(false);
+        }
+#endregion
+
         public override int Id => GearItemId;
 
 #region Database Properties
