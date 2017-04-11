@@ -29,7 +29,10 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models
     /// 
     /// </summary>
     [Serializable]
-    public abstract class BaseModelEntry<T> : INotifyPropertyChanged where T: BaseModel, IBackpackPlannerItem
+    public abstract class BaseModelEntry<T, TM, TI>
+        : INotifyPropertyChanged where T: BaseModelEntry<T, TM, TI>, new()
+            where TM: BaseModel<TM>, new()
+            where TI: BaseModel<TI>, IBackpackPlannerItem, new()
     {
 #region Events
         public event PropertyChangedEventHandler PropertyChanged;
@@ -65,7 +68,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models
         /// <remarks>
         /// If this is set, the ModelId should also be set to match it
         /// </remarks>
-        public abstract T Model { get; protected set; }
+        public abstract TI Model { get; protected set; }
 
         private int _count;
 
@@ -88,7 +91,17 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models
         }
 #endregion
 
-        public void SetModel(T model, bool notify=true)
+        public virtual T DeepCopy()
+        {
+            return new T
+            {
+                ModelId = ModelId,
+                Model = Model,          // TODO: should we copy this as well? we shouldn't be able to edit it, so probably not?
+                Count = Count
+            };
+        }
+
+        public void SetModel(TI model, bool notify=true)
         {
             Model = model;
             ModelId = model?.Id ?? 0;
@@ -108,7 +121,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        protected BaseModelEntry(T model)
+        protected BaseModelEntry(TI model)
         {
             SetModel(model, false);
         }

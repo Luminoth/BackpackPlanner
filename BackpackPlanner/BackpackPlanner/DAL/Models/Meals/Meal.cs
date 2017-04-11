@@ -35,7 +35,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
     /// </summary>
 
     [Serializable]
-    public sealed class Meal : BaseModel, IBackpackPlannerItem
+    public sealed class Meal : BaseModel<Meal>, IBackpackPlannerItem
     {
 #region Static Helpers
         public static async Task<IReadOnlyCollection<Meal>> GetAll(DatabaseContext dbContext)
@@ -258,6 +258,25 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
             }
         }
 #endregion
+
+        public override Meal DeepCopy()
+        {
+            Meal meal = base.DeepCopy();
+
+            meal.MealId = MealId;
+            meal.Name = Name;
+            meal.Url = Url;
+            meal.MealTime = MealTime;
+            meal.ServingCount = ServingCount;
+            meal.Calories = Calories;
+            meal.ProteinInGrams = ProteinInGrams;
+            meal.FiberInGrams = FiberInGrams;
+            meal.WeightInGrams = WeightInGrams;
+            meal.CostInUSDP = CostInUSDP;
+            meal.Note = Note;
+
+            return meal;
+        }
 
         [NotMapped, JsonIgnore]
         public float CaloriesPerServing => Calories / (float)ServingCount;

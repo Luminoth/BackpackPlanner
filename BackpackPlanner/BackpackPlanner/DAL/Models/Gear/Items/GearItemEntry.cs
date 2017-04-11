@@ -30,10 +30,11 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
 {
  
     [Serializable]
-   public class GearItemEntry : BaseModelEntry<GearItem>
+   public class GearItemEntry<T> : BaseModelEntry<GearItemEntry<T>, T, GearItem> where T: BaseModel<T>, new()
     {
 #region Static Helpers
-        public static int GetGearItemCount<TE>(IReadOnlyCollection<TE> gearItems, [CanBeNull] ICollection<int> visitedGearItems) where TE: GearItemEntry
+        public static int GetGearItemCount<TE>(IReadOnlyCollection<TE> gearItems, [CanBeNull] ICollection<int> visitedGearItems)
+            where TE: GearItemEntry<T>
         {
             int count = 0;
             foreach(TE gearItem in gearItems) {
@@ -47,7 +48,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
             return count;
         }
 
-        public static int GetTotalWeightInGrams<TE>(IReadOnlyCollection<TE> gearItems, [CanBeNull] ICollection<int> visitedGearItems) where TE: GearItemEntry
+        public static int GetTotalWeightInGrams<TE>(IReadOnlyCollection<TE> gearItems, [CanBeNull] ICollection<int> visitedGearItems)
+            where TE: GearItemEntry<T>
         {
             int weightInGrams = 0;
             foreach(TE gearItem in gearItems) {
@@ -62,7 +64,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
         }
 
         // ReSharper disable once InconsistentNaming
-        public static int GetTotalCostInUSDP<TE>(IReadOnlyCollection<TE> gearItems, [CanBeNull] ICollection<int> visitedGearItems) where TE: GearItemEntry
+        public static int GetTotalCostInUSDP<TE>(IReadOnlyCollection<TE> gearItems, [CanBeNull] ICollection<int> visitedGearItems)
+            where TE: GearItemEntry<T>
         {
             // ReSharper disable once InconsistentNaming
             int costInUSDP = 0;
@@ -95,6 +98,15 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
 
         public override GearItem Model { get; protected set; }
 #endregion
+
+        public override GearItemEntry<T> DeepCopy()
+        {
+            GearItemEntry<T> gearItemEntry = base.DeepCopy();
+
+            gearItemEntry.GearItemEntryId = GearItemEntryId;
+
+            return gearItemEntry;
+        }
 
         /// <summary>
         /// Gets or sets the total weight of these gear items in grams.

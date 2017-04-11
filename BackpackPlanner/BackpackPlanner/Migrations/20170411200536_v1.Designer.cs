@@ -10,7 +10,7 @@ using EnergonSoftware.BackpackPlanner.DAL.Models.Meals;
 namespace EnergonSoftware.BackpackPlanner.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20170410174318_v1")]
+    [Migration("20170411200536_v1")]
     partial class v1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,7 +39,7 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
                     b.ToTable("GearCollections");
                 });
 
-            modelBuilder.Entity("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections.GearCollectionEntry", b =>
+            modelBuilder.Entity("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections.GearCollectionEntry<EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans.TripPlan>", b =>
                 {
                     b.Property<int>("GearCollectionEntryId")
                         .ValueGeneratedOnAdd();
@@ -56,7 +56,7 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
 
                     b.HasIndex("TripPlanId");
 
-                    b.ToTable("GearCollectionEntry");
+                    b.ToTable("GearCollectionEntry<TripPlan>");
                 });
 
             modelBuilder.Entity("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items.GearItem", b =>
@@ -99,7 +99,7 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
                     b.ToTable("GearItems");
                 });
 
-            modelBuilder.Entity("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items.GearItemEntry", b =>
+            modelBuilder.Entity("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items.GearItemEntry<EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections.GearCollection>", b =>
                 {
                     b.Property<int>("GearItemEntryId")
                         .ValueGeneratedOnAdd();
@@ -108,7 +108,43 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
 
                     b.Property<int?>("GearCollectionId");
 
+                    b.Property<int>("ModelId");
+
+                    b.HasKey("GearItemEntryId");
+
+                    b.HasIndex("GearCollectionId");
+
+                    b.HasIndex("ModelId");
+
+                    b.ToTable("GearItemEntry<GearCollection>");
+                });
+
+            modelBuilder.Entity("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items.GearItemEntry<EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems.GearSystem>", b =>
+                {
+                    b.Property<int>("GearItemEntryId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Count");
+
                     b.Property<int?>("GearSystemId");
+
+                    b.Property<int>("ModelId");
+
+                    b.HasKey("GearItemEntryId");
+
+                    b.HasIndex("GearSystemId");
+
+                    b.HasIndex("ModelId");
+
+                    b.ToTable("GearItemEntry<GearSystem>");
+                });
+
+            modelBuilder.Entity("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items.GearItemEntry<EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans.TripPlan>", b =>
+                {
+                    b.Property<int>("GearItemEntryId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Count");
 
                     b.Property<int>("ModelId");
 
@@ -116,15 +152,11 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
 
                     b.HasKey("GearItemEntryId");
 
-                    b.HasIndex("GearCollectionId");
-
-                    b.HasIndex("GearSystemId");
-
                     b.HasIndex("ModelId");
 
                     b.HasIndex("TripPlanId");
 
-                    b.ToTable("GearItemEntry");
+                    b.ToTable("GearItemEntry<TripPlan>");
                 });
 
             modelBuilder.Entity("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems.GearSystem", b =>
@@ -148,7 +180,7 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
                     b.ToTable("GearSystems");
                 });
 
-            modelBuilder.Entity("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems.GearSystemEntry", b =>
+            modelBuilder.Entity("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems.GearSystemEntry<EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections.GearCollection>", b =>
                 {
                     b.Property<int>("GearSystemEntryId")
                         .ValueGeneratedOnAdd();
@@ -159,17 +191,33 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
 
                     b.Property<int>("ModelId");
 
-                    b.Property<int?>("TripPlanId");
-
                     b.HasKey("GearSystemEntryId");
 
                     b.HasIndex("GearCollectionId");
 
                     b.HasIndex("ModelId");
 
+                    b.ToTable("GearSystemEntry<GearCollection>");
+                });
+
+            modelBuilder.Entity("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems.GearSystemEntry<EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans.TripPlan>", b =>
+                {
+                    b.Property<int>("GearSystemEntryId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Count");
+
+                    b.Property<int>("ModelId");
+
+                    b.Property<int?>("TripPlanId");
+
+                    b.HasKey("GearSystemEntryId");
+
+                    b.HasIndex("ModelId");
+
                     b.HasIndex("TripPlanId");
 
-                    b.ToTable("GearSystemEntry");
+                    b.ToTable("GearSystemEntry<TripPlan>");
                 });
 
             modelBuilder.Entity("EnergonSoftware.BackpackPlanner.DAL.Models.Meals.Meal", b =>
@@ -210,7 +258,7 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
                     b.ToTable("Meals");
                 });
 
-            modelBuilder.Entity("EnergonSoftware.BackpackPlanner.DAL.Models.Meals.MealEntry", b =>
+            modelBuilder.Entity("EnergonSoftware.BackpackPlanner.DAL.Models.Meals.MealEntry<EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans.TripPlan>", b =>
                 {
                     b.Property<int>("MealEntryId")
                         .ValueGeneratedOnAdd();
@@ -227,7 +275,7 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
 
                     b.HasIndex("TripPlanId");
 
-                    b.ToTable("MealEntry");
+                    b.ToTable("MealEntry<TripPlan>");
                 });
 
             modelBuilder.Entity("EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Itineraries.TripItinerary", b =>
@@ -280,7 +328,7 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
                     b.ToTable("TripPlans");
                 });
 
-            modelBuilder.Entity("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections.GearCollectionEntry", b =>
+            modelBuilder.Entity("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections.GearCollectionEntry<EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans.TripPlan>", b =>
                 {
                     b.HasOne("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections.GearCollection", "Model")
                         .WithMany()
@@ -292,16 +340,32 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
                         .HasForeignKey("TripPlanId");
                 });
 
-            modelBuilder.Entity("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items.GearItemEntry", b =>
+            modelBuilder.Entity("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items.GearItemEntry<EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections.GearCollection>", b =>
                 {
                     b.HasOne("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections.GearCollection")
                         .WithMany("GearItems")
                         .HasForeignKey("GearCollectionId");
 
+                    b.HasOne("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items.GearItem", "Model")
+                        .WithMany()
+                        .HasForeignKey("ModelId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items.GearItemEntry<EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems.GearSystem>", b =>
+                {
                     b.HasOne("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems.GearSystem")
                         .WithMany("GearItems")
                         .HasForeignKey("GearSystemId");
 
+                    b.HasOne("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items.GearItem", "Model")
+                        .WithMany()
+                        .HasForeignKey("ModelId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items.GearItemEntry<EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans.TripPlan>", b =>
+                {
                     b.HasOne("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items.GearItem", "Model")
                         .WithMany()
                         .HasForeignKey("ModelId")
@@ -312,12 +376,20 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
                         .HasForeignKey("TripPlanId");
                 });
 
-            modelBuilder.Entity("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems.GearSystemEntry", b =>
+            modelBuilder.Entity("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems.GearSystemEntry<EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections.GearCollection>", b =>
                 {
                     b.HasOne("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections.GearCollection")
                         .WithMany("GearSystems")
                         .HasForeignKey("GearCollectionId");
 
+                    b.HasOne("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems.GearSystem", "Model")
+                        .WithMany()
+                        .HasForeignKey("ModelId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems.GearSystemEntry<EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans.TripPlan>", b =>
+                {
                     b.HasOne("EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems.GearSystem", "Model")
                         .WithMany()
                         .HasForeignKey("ModelId")
@@ -328,7 +400,7 @@ namespace EnergonSoftware.BackpackPlanner.Migrations
                         .HasForeignKey("TripPlanId");
                 });
 
-            modelBuilder.Entity("EnergonSoftware.BackpackPlanner.DAL.Models.Meals.MealEntry", b =>
+            modelBuilder.Entity("EnergonSoftware.BackpackPlanner.DAL.Models.Meals.MealEntry<EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans.TripPlan>", b =>
                 {
                     b.HasOne("EnergonSoftware.BackpackPlanner.DAL.Models.Meals.Meal", "Model")
                         .WithMany()

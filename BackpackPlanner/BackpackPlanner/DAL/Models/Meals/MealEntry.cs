@@ -29,10 +29,11 @@ using Newtonsoft.Json;
 namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
 {
     [Serializable]
-    public class MealEntry : BaseModelEntry<Meal>
+    public class MealEntry<T> : BaseModelEntry<MealEntry<T>, T, Meal> where T: BaseModel<T>, new()
     {
 #region Static Helpers
-        public static int GetMealCount<TE>(IReadOnlyCollection<TE> meals, [CanBeNull] ICollection<int> visitedMeals) where TE: MealEntry
+        public static int GetMealCount<TE>(IReadOnlyCollection<TE> meals, [CanBeNull] ICollection<int> visitedMeals)
+            where TE: MealEntry<T>
         {
             int count = 0;
             foreach(TE meal in meals) {
@@ -46,7 +47,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
             return count;
         }
 
-        public static int GetTotalCalories<TE>(IReadOnlyCollection<TE> meals, [CanBeNull] ICollection<int> visitedMeals) where TE: MealEntry
+        public static int GetTotalCalories<TE>(IReadOnlyCollection<TE> meals, [CanBeNull] ICollection<int> visitedMeals)
+            where TE: MealEntry<T>
         {
             int calories = 0;
             foreach(TE meal in meals) {
@@ -60,7 +62,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
             return calories;
         }
 
-        public static int GetTotalWeightInGrams<TE>(IReadOnlyCollection<TE> meals, [CanBeNull] ICollection<int> visitedMeals) where TE: MealEntry
+        public static int GetTotalWeightInGrams<TE>(IReadOnlyCollection<TE> meals, [CanBeNull] ICollection<int> visitedMeals)
+            where TE: MealEntry<T>
         {
             int weightInGrams = 0;
             foreach(TE meal in meals) {
@@ -75,7 +78,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
         }
 
         // ReSharper disable once InconsistentNaming
-        public static int GetTotalCostInUSDP<TE>(IReadOnlyCollection<TE> meals, [CanBeNull] ICollection<int> visitedMeals) where TE: MealEntry
+        public static int GetTotalCostInUSDP<TE>(IReadOnlyCollection<TE> meals, [CanBeNull] ICollection<int> visitedMeals)
+            where TE: MealEntry<T>
         {
             // ReSharper disable once InconsistentNaming
             int costInUSDP = 0;
@@ -108,6 +112,15 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Meals
 
         public override Meal Model { get; protected set; }
 #endregion
+
+        public override MealEntry<T> DeepCopy()
+        {
+            MealEntry<T> mealEntry = base.DeepCopy();
+
+            mealEntry.MealEntryId = MealEntryId;
+
+            return mealEntry;
+        }
 
         [NotMapped, JsonIgnore]
         public int Calories => Count * (Model?.Calories ?? 0);

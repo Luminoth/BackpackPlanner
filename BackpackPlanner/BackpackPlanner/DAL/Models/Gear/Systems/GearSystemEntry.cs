@@ -30,10 +30,11 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems
 {
 
     [Serializable]
-    public class GearSystemEntry : BaseModelEntry<GearSystem>, IGearItemContainer
+    public class GearSystemEntry<T> : BaseModelEntry<GearSystemEntry<T>, T, GearSystem>, IGearItemContainer where T: BaseModel<T>, new()
     {
 #region Static Helpers
-        public static int GetGearSystemCount<TE>(IReadOnlyCollection<TE> gearSystems, [CanBeNull] ICollection<int> visitedGearSystems) where TE: GearSystemEntry
+        public static int GetGearSystemCount<TE>(IReadOnlyCollection<TE> gearSystems, [CanBeNull] ICollection<int> visitedGearSystems)
+            where TE: GearSystemEntry<T>
         {
             int count = 0;
             foreach(TE gearSystem in gearSystems) {
@@ -47,13 +48,15 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems
             return count;
         }
 
-        public static int GetTotalWeightInGrams<TE>(IReadOnlyCollection<TE> gearSystems, [CanBeNull] ICollection<int> visitedGearItems) where TE: GearSystemEntry
+        public static int GetTotalWeightInGrams<TE>(IReadOnlyCollection<TE> gearSystems, [CanBeNull] ICollection<int> visitedGearItems)
+            where TE: GearSystemEntry<T>
         {
             return gearSystems.Sum(gearSystem => gearSystem.GetTotalWeightInGrams(visitedGearItems));
         }
 
         // ReSharper disable once InconsistentNaming
-        public static int GetTotalCostInUSDP<TE>(IReadOnlyCollection<TE> gearSystems, [CanBeNull] ICollection<int> visitedGearItems) where TE: GearSystemEntry
+        public static int GetTotalCostInUSDP<TE>(IReadOnlyCollection<TE> gearSystems, [CanBeNull] ICollection<int> visitedGearItems)
+            where TE: GearSystemEntry<T>
         {
             return gearSystems.Sum(gearSystem => gearSystem.GetTotalCostInUSDP(visitedGearItems));
         }
@@ -76,6 +79,15 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems
 
         public override GearSystem Model { get; protected set; }
 #endregion
+
+        public override GearSystemEntry<T> DeepCopy()
+        {
+            GearSystemEntry<T> gearSysstemEntry = base.DeepCopy();
+
+            gearSysstemEntry.GearSystemEntryId = GearSystemEntryId;
+
+            return gearSysstemEntry;
+        }
 
         public GearSystemEntry(GearSystem gearSystem)
             : base(gearSystem)

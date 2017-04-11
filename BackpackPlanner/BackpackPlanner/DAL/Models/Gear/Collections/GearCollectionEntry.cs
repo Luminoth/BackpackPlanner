@@ -29,10 +29,11 @@ using JetBrains.Annotations;
 namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections
 {
     [Serializable]
-    public class GearCollectionEntry : BaseModelEntry<GearCollection>, IGearItemContainer
+    public class GearCollectionEntry<T> : BaseModelEntry<GearCollectionEntry<T>, T, GearCollection>, IGearItemContainer where T: BaseModel<T>, new()
     {
 #region Static Helpers
-        public static int GetGearCollectionCount<TE>(IReadOnlyCollection<TE> gearCollections, [CanBeNull] ICollection<int> visitedGearCollections) where TE: GearCollectionEntry
+        public static int GetGearCollectionCount<TE>(IReadOnlyCollection<TE> gearCollections, [CanBeNull] ICollection<int> visitedGearCollections)
+            where TE: GearCollectionEntry<T>
         {
             int count = 0;
             foreach(TE gearCollection in gearCollections) {
@@ -46,13 +47,15 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections
             return count;
         }
 
-        public static int GetTotalWeightInGrams<TE>(IReadOnlyCollection<TE> gearCollections, [CanBeNull] ICollection<int> visitedGearItems) where TE: GearCollectionEntry
+        public static int GetTotalWeightInGrams<TE>(IReadOnlyCollection<TE> gearCollections, [CanBeNull] ICollection<int> visitedGearItems)
+            where TE: GearCollectionEntry<T>
         {
             return gearCollections.Sum(gearSystem => gearSystem.GetTotalWeightInGrams(visitedGearItems));
         }
 
         // ReSharper disable once InconsistentNaming
-        public static int GetTotalCostInUSDP<TE>(IReadOnlyCollection<TE> gearCollections, [CanBeNull] ICollection<int> visitedGearItems) where TE: GearCollectionEntry
+        public static int GetTotalCostInUSDP<TE>(IReadOnlyCollection<TE> gearCollections, [CanBeNull] ICollection<int> visitedGearItems)
+            where TE: GearCollectionEntry<T>
         {
             return gearCollections.Sum(gearSystem => gearSystem.GetTotalCostInUSDP(visitedGearItems));
         }
@@ -75,6 +78,15 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections
 
         public override GearCollection Model { get; protected set; }
 #endregion
+
+        public override GearCollectionEntry<T> DeepCopy()
+        {
+            GearCollectionEntry<T> gearCollectionEntry = base.DeepCopy();
+
+            gearCollectionEntry.GearCollectionEntryId = GearCollectionEntryId;
+
+            return gearCollectionEntry;
+        }
 
         public GearCollectionEntry(GearCollection gearCollection)
             : base(gearCollection)

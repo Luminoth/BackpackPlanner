@@ -36,7 +36,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems
     /// </summary>
 
     [Serializable]
-    public class GearSystem : BaseModel, IBackpackPlannerItem
+    public class GearSystem : BaseModel<GearSystem>, IBackpackPlannerItem
     {
 #region Static Helpers
         public static async Task<IReadOnlyCollection<GearSystem>> GetAll(DatabaseContext dbContext)
@@ -80,7 +80,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems
             }
         }
 
-        private readonly List<GearItemEntry> _gearItems = new List<GearItemEntry>();
+        private readonly List<GearItemEntry<GearSystem>> _gearItems = new List<GearItemEntry<GearSystem>>();
 
         /// <summary>
         /// Gets or sets the gear items contained in this system.
@@ -88,7 +88,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems
         /// <value>
         /// The gear items contained in this system.
         /// </value>
-        public virtual IReadOnlyCollection<GearItemEntry> GearItems => _gearItems;
+        public virtual IReadOnlyCollection<GearItemEntry<GearSystem>> GearItems => _gearItems;
 
         private string _note = string.Empty;
 
@@ -112,22 +112,22 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems
 #endregion
 
 #region Gear Items
-        public void SetGearItems(DatabaseContext dbContext, [CanBeNull] IReadOnlyCollection<GearItemEntry> gearItems)
+        public void SetGearItems(DatabaseContext dbContext, [CanBeNull] IReadOnlyCollection<GearItemEntry<GearSystem>> gearItems)
         {
-            UpdateItemEntries<GearItemEntry, GearItem>(dbContext, _gearItems, gearItems);
+            UpdateItemEntries<GearItemEntry<GearSystem>, GearItem>(dbContext, _gearItems, gearItems);
             NotifyPropertyChanged(nameof(GearItems));
         }
 
         public int GetGearItemCount(ICollection<int> visitedGearItems=null)
         {
-            return GearItemEntry.GetGearItemCount(_gearItems, visitedGearItems);
+            return GearItemEntry<GearSystem>.GetGearItemCount(_gearItems, visitedGearItems);
         }
 #endregion
 
 #region Weight
         public int GetTotalWeightInGrams(ICollection<int> visitedGearItems=null)
         {
-            return GearItemEntry.GetTotalWeightInGrams(_gearItems, visitedGearItems);
+            return GearItemEntry<GearSystem>.GetTotalWeightInGrams(_gearItems, visitedGearItems);
         }
 
         public float GetTotalWeightInUnits(BackpackPlannerSettings settings)
@@ -141,7 +141,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems
         // ReSharper disable once InconsistentNaming
         public int GetTotalCostInUSDP(ICollection<int> visitedGearItems=null)
         {
-            return GearItemEntry.GetTotalCostInUSDP(_gearItems, visitedGearItems);
+            return GearItemEntry<GearSystem>.GetTotalCostInUSDP(_gearItems, visitedGearItems);
         }
 
         public float GetTotalCostInCurrency(BackpackPlannerSettings settings)
@@ -157,6 +157,21 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems
             return Math.Abs(weightInUnits) < 0.01f ? 0.0f : GetTotalCostInCurrency(settings) / weightInUnits;
         }
 #endregion
+
+        public override GearSystem DeepCopy()
+        {
+            GearSystem gearSystem = base.DeepCopy();
+
+            gearSystem.GearSystemId = GearSystemId;
+            gearSystem.Name = Name;
+            gearSystem.Note = Note;
+
+            foreach(var gearItem in GearItems) {
+                gearSystem._gearItems.Add(gearItem.DeepCopy());
+            }
+
+            return gearSystem;
+        }
 
         public GearSystem()
         {

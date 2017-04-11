@@ -34,7 +34,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
     /// </summary>
 
     [Serializable]
-    public class GearItem : BaseModel, IBackpackPlannerItem
+    public class GearItem : BaseModel<GearItem>, IBackpackPlannerItem
     {
 #region Static Helpers
         public static async Task<IReadOnlyCollection<GearItem>> GetAll(DatabaseContext dbContext)
@@ -260,6 +260,25 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items
             }
         }
 #endregion
+
+        public override GearItem DeepCopy()
+        {
+            GearItem gearItem = base.DeepCopy();
+
+            gearItem.GearItemId = GearItemId;
+            gearItem.Name = Name;
+            gearItem.Make = Make;
+            gearItem.Model = Model;
+            gearItem.Url = Url;
+            gearItem.Carried = Carried;
+            gearItem.IsConsumable = IsConsumable;
+            gearItem.ConsumedPerDay = ConsumedPerDay;
+            gearItem.WeightInGrams = WeightInGrams;
+            gearItem.CostInUSDP = CostInUSDP;
+            gearItem.Note = Note;
+
+            return gearItem;
+        }
 
         /// <summary>
         /// Gets the weight of this gear item in weight units.

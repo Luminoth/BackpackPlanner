@@ -28,7 +28,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Itineraries
     /// 
     /// </summary>
     [Serializable]
-    public sealed class TripItinerary : BaseModel, IBackpackPlannerItem
+    public sealed class TripItinerary : BaseModel<TripItinerary>, IBackpackPlannerItem
     {
 #region Static Helpers
         public static async Task<IReadOnlyCollection<TripItinerary>> GetAll(DatabaseContext dbContext)
@@ -89,6 +89,17 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Itineraries
             }
         }
 #endregion
+
+        public override TripItinerary DeepCopy()
+        {
+            TripItinerary tripItinerary = base.DeepCopy();
+
+            tripItinerary.TripItineraryId = TripItineraryId;
+            tripItinerary.Name = Name;
+            tripItinerary.Note = Note;
+
+            return tripItinerary;
+        }
 
         public TripItinerary()
         {

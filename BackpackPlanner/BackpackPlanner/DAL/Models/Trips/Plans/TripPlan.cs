@@ -42,7 +42,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
     /// 
     /// </summary>
     [Serializable]
-    public class TripPlan : BaseModel, IBackpackPlannerItem
+    public class TripPlan : BaseModel<TripPlan>, IBackpackPlannerItem
     {
 #region Static Helpers
         public static async Task<IReadOnlyCollection<TripPlan>> GetAll(DatabaseContext dbContext)
@@ -160,7 +160,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
             }
         }
 
-        private readonly List<GearCollectionEntry> _gearCollections = new List<GearCollectionEntry>();
+        private readonly List<GearCollectionEntry<TripPlan>> _gearCollections = new List<GearCollectionEntry<TripPlan>>();
 
         /// <summary>
         /// Gets or sets the gear collections contained in this plan.
@@ -168,9 +168,9 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
         /// <value>
         /// The gear collections contained in this plan.
         /// </value>
-        public virtual IReadOnlyCollection<GearCollectionEntry> GearCollections => _gearCollections;
+        public virtual IReadOnlyCollection<GearCollectionEntry<TripPlan>> GearCollections => _gearCollections;
 
-        private readonly List<GearSystemEntry> _gearSystems = new List<GearSystemEntry>();
+        private readonly List<GearSystemEntry<TripPlan>> _gearSystems = new List<GearSystemEntry<TripPlan>>();
 
         /// <summary>
         /// Gets or sets the gear systems contained in this plan.
@@ -178,9 +178,9 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
         /// <value>
         /// The gear systems contained in this plan.
         /// </value>
-        public virtual IReadOnlyCollection<GearSystemEntry> GearSystems => _gearSystems;
+        public virtual IReadOnlyCollection<GearSystemEntry<TripPlan>> GearSystems => _gearSystems;
 
-        private readonly List<GearItemEntry> _gearItems = new List<GearItemEntry>();
+        private readonly List<GearItemEntry<TripPlan>> _gearItems = new List<GearItemEntry<TripPlan>>();
 
         /// <summary>
         /// Gets or sets the gear items contained in this plan.
@@ -188,9 +188,9 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
         /// <value>
         /// The gear items contained in this plan.
         /// </value>
-        public virtual IReadOnlyCollection<GearItemEntry> GearItems => _gearItems;
+        public virtual IReadOnlyCollection<GearItemEntry<TripPlan>> GearItems => _gearItems;
 
-        private readonly List<MealEntry> _meals = new List<MealEntry>();
+        private readonly List<MealEntry<TripPlan>> _meals = new List<MealEntry<TripPlan>>();
 
         /// <summary>
         /// Gets or sets the meals contained in this plan.
@@ -198,7 +198,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
         /// <value>
         /// The meals contained in this plan.
         /// </value>
-        public virtual IReadOnlyCollection<MealEntry> Meals => _meals;
+        public virtual IReadOnlyCollection<MealEntry<TripPlan>> Meals => _meals;
 
         private string _note = string.Empty;
 
@@ -221,6 +221,37 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
         }
 #endregion
 
+        public override TripPlan DeepCopy()
+        {
+            TripPlan tripPlan = base.DeepCopy();
+
+            tripPlan.TripPlanId = TripPlanId;
+            tripPlan.Name = Name;
+            tripPlan.StartDate = StartDate;
+            tripPlan.EndDate = EndDate;
+            tripPlan.TripItineraryId = TripItineraryId;
+            tripPlan.TripItinerary = TripItinerary;         // TODO: should we copy this as well? we shouldn't be able to edit it, so probably not?
+            tripPlan.Note = Note;
+
+            foreach(var gearCollection in GearCollections) {
+                tripPlan._gearCollections.Add(gearCollection.DeepCopy());
+            }
+
+            foreach(var gearSystem in GearSystems) {
+                tripPlan._gearSystems.Add(gearSystem.DeepCopy());
+            }
+
+            foreach(var gearItem in GearItems) {
+                tripPlan._gearItems.Add(gearItem.DeepCopy());
+            }
+
+            foreach(var meal in Meals) {
+                tripPlan._meals.Add(meal.DeepCopy());
+            }
+
+            return tripPlan;
+        }
+
         [NotMapped, JsonIgnore]
         public int Days => (StartDate - EndDate).Days;
 
@@ -240,7 +271,7 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
         public int GetTotalCalories()
         {
             var visitedMeals = new List<int>();
-            return MealEntry.GetTotalCalories(_meals, visitedMeals);
+            return MealEntry<TripPlan>.GetTotalCalories(_meals, visitedMeals);
         }
 
 #region Trip Itinerary
@@ -254,64 +285,64 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
 #endregion
 
 #region Gear Collections
-        public void SetGearCollections(DatabaseContext dbContext, [CanBeNull] IReadOnlyCollection<GearCollectionEntry> gearCollections)
+        public void SetGearCollections(DatabaseContext dbContext, [CanBeNull] IReadOnlyCollection<GearCollectionEntry<TripPlan>> gearCollections)
         {
-            UpdateItemEntries<GearCollectionEntry, GearCollection>(dbContext, _gearCollections, gearCollections);
+            UpdateItemEntries<GearCollectionEntry<TripPlan>, GearCollection>(dbContext, _gearCollections, gearCollections);
             NotifyPropertyChanged(nameof(GearCollections));
         }
 
         public int GetGearCollectionCount(ICollection<int> visitedGearCollections=null)
         {
-            return GearCollectionEntry.GetGearCollectionCount(_gearCollections, visitedGearCollections);
+            return GearCollectionEntry<TripPlan>.GetGearCollectionCount(_gearCollections, visitedGearCollections);
         } 
 #endregion
 
 #region Gear Systems
-        public void SetGearSystems(DatabaseContext dbContext, [CanBeNull] IReadOnlyCollection<GearSystemEntry> gearSystems)
+        public void SetGearSystems(DatabaseContext dbContext, [CanBeNull] IReadOnlyCollection<GearSystemEntry<TripPlan>> gearSystems)
         {
-            UpdateItemEntries<GearSystemEntry, GearSystem>(dbContext, _gearSystems, gearSystems);
+            UpdateItemEntries<GearSystemEntry<TripPlan>, GearSystem>(dbContext, _gearSystems, gearSystems);
             NotifyPropertyChanged(nameof(GearSystems));
         }
 
         public int GetGearSystemCount(ICollection<int> visitedGearSystems=null)
         {
-            return GearSystemEntry.GetGearSystemCount(_gearSystems, visitedGearSystems);
+            return GearSystemEntry<TripPlan>.GetGearSystemCount(_gearSystems, visitedGearSystems);
         } 
 #endregion
 
 #region Gear Items
-        public void SetGearItems(DatabaseContext dbContext, [CanBeNull] IReadOnlyCollection<GearItemEntry> gearItems)
+        public void SetGearItems(DatabaseContext dbContext, [CanBeNull] IReadOnlyCollection<GearItemEntry<TripPlan>> gearItems)
         {
-            UpdateItemEntries<GearItemEntry, GearItem>(dbContext, _gearItems, gearItems);
+            UpdateItemEntries<GearItemEntry<TripPlan>, GearItem>(dbContext, _gearItems, gearItems);
             NotifyPropertyChanged(nameof(GearItems));
         }
 
         public int GetGearItemCount(ICollection<int> visitedGearItems=null)
         {
-            return GearItemEntry.GetGearItemCount(_gearItems, visitedGearItems);
+            return GearItemEntry<TripPlan>.GetGearItemCount(_gearItems, visitedGearItems);
         }
 #endregion
 
 #region Meals
-        public void SetMeals(DatabaseContext dbContext, [CanBeNull] IReadOnlyCollection<MealEntry> meals)
+        public void SetMeals(DatabaseContext dbContext, [CanBeNull] IReadOnlyCollection<MealEntry<TripPlan>> meals)
         {
-            UpdateItemEntries<MealEntry, Meal>(dbContext, _meals, meals);
+            UpdateItemEntries<MealEntry<TripPlan>, Meal>(dbContext, _meals, meals);
             NotifyPropertyChanged(nameof(Meals));
         }
 
         public int GetMealCount(ICollection<int> visitedMeals=null)
         {
-            return MealEntry.GetMealCount(_meals, visitedMeals);
+            return MealEntry<TripPlan>.GetMealCount(_meals, visitedMeals);
         }
 #endregion
 
 #region Weight
         public int GetTotalWeightInGrams(ICollection<int> visitedGearItems=null, ICollection<int> visitedMeals=null)
         {
-            return GearCollectionEntry.GetTotalWeightInGrams(_gearCollections, visitedGearItems)
-                + GearSystemEntry.GetTotalWeightInGrams(_gearSystems, visitedGearItems)
-                + GearItemEntry.GetTotalWeightInGrams(_gearItems, visitedGearItems)
-                + MealEntry.GetTotalWeightInGrams(_meals, visitedMeals);
+            return GearCollectionEntry<TripPlan>.GetTotalWeightInGrams(_gearCollections, visitedGearItems)
+                + GearSystemEntry<TripPlan>.GetTotalWeightInGrams(_gearSystems, visitedGearItems)
+                + GearItemEntry<TripPlan>.GetTotalWeightInGrams(_gearItems, visitedGearItems)
+                + MealEntry<TripPlan>.GetTotalWeightInGrams(_meals, visitedMeals);
         }
 
         public float GetTotalWeightInUnits(BackpackPlannerSettings settings)
@@ -349,10 +380,10 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans
         // ReSharper disable once InconsistentNaming
         public int GetTotalCostInUSDP(ICollection<int> visitedGearItems=null, ICollection<int> visitedMeals=null)
         {
-            return GearCollectionEntry.GetTotalCostInUSDP(_gearCollections, visitedGearItems)
-                + GearSystemEntry.GetTotalCostInUSDP(_gearSystems, visitedGearItems)
-                + GearItemEntry.GetTotalCostInUSDP(_gearItems, visitedGearItems)
-                + MealEntry.GetTotalCostInUSDP(_meals, visitedMeals);
+            return GearCollectionEntry<TripPlan>.GetTotalCostInUSDP(_gearCollections, visitedGearItems)
+                + GearSystemEntry<TripPlan>.GetTotalCostInUSDP(_gearSystems, visitedGearItems)
+                + GearItemEntry<TripPlan>.GetTotalCostInUSDP(_gearItems, visitedGearItems)
+                + MealEntry<TripPlan>.GetTotalCostInUSDP(_meals, visitedMeals);
         }
 
         public float GetTotalCostInCurrency(BackpackPlannerSettings settings)

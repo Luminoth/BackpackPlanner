@@ -34,9 +34,9 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models
     /// 
     /// </summary>
     [Serializable]
-    public abstract class BaseModel : INotifyPropertyChanged
+    public abstract class BaseModel<T> : INotifyPropertyChanged where T: BaseModel<T>, new()
     {
-        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(BaseModel));
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(BaseModel<T>));
 
 #region Events
         public event PropertyChangedEventHandler PropertyChanged;
@@ -82,8 +82,18 @@ namespace EnergonSoftware.BackpackPlanner.DAL.Models
         }
 #endregion
 
+        public virtual T DeepCopy()
+        {
+            return new T
+            {
+                LastUpdated = LastUpdated,
+                IsDeleted = IsDeleted
+            };
+        }
+
         protected void UpdateItemEntries<TE, TI>(DatabaseContext dbContext, ICollection<TE> currentEntryItems, IReadOnlyCollection<TE> newEntryItems)
-            where TE: BaseModelEntry<TI> where TI: BaseModel, IBackpackPlannerItem
+            where TE: BaseModelEntry<TE, T, TI>, new()
+            where TI: BaseModel<TI>, IBackpackPlannerItem, new()
         {
             // put the new set of items into a dictionary, collapsing any duplicates
             var newItemMap = new Dictionary<int, TE>();

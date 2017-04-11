@@ -280,28 +280,28 @@ namespace EnergonSoftware.BackpackPlanner
 
             // New Hammock Setup
             gearSystems[0].SetGearItems(dbContext,
-                new List<GearItemEntry>
+                new List<GearItemEntry<GearSystem>>
                 {
                     // Hammock
-                    new GearItemEntry(gearItems[1])
+                    new GearItemEntry<GearSystem>(gearItems[1])
                     {
                         Count = 1
                     },
 
                     // Tree Straps
-                    new GearItemEntry(gearItems[2])
+                    new GearItemEntry<GearSystem>(gearItems[2])
                     {
                         Count = 1
                     },
 
                     // Overquilt
-                    new GearItemEntry(gearItems[4])
+                    new GearItemEntry<GearSystem>(gearItems[4])
                     {
                         Count = 1
                     },
 
                     // New Underquilt
-                    new GearItemEntry(gearItems[5])
+                    new GearItemEntry<GearSystem>(gearItems[5])
                     {
                         Count = 1
                     }
@@ -310,28 +310,28 @@ namespace EnergonSoftware.BackpackPlanner
 
             // Old Hammock Setup
             gearSystems[1].SetGearItems(dbContext,
-                new List<GearItemEntry>
+                new List<GearItemEntry<GearSystem>>
                 {
                     // Hammock
-                    new GearItemEntry(gearItems[1])
+                    new GearItemEntry<GearSystem>(gearItems[1])
                     {
                         Count = 1
                     },
 
                     // Tree Straps
-                    new GearItemEntry(gearItems[2])
+                    new GearItemEntry<GearSystem>(gearItems[2])
                     {
                         Count = 1
                     },
 
                     // Old Underquilt
-                    new GearItemEntry(gearItems[3])
+                    new GearItemEntry<GearSystem>(gearItems[3])
                     {
                         Count = 1
                     },
 
                     // Overquilt
-                    new GearItemEntry(gearItems[4])
+                    new GearItemEntry<GearSystem>(gearItems[4])
                     {
                         Count = 1
                     }
@@ -340,10 +340,10 @@ namespace EnergonSoftware.BackpackPlanner
 
             // Car Camping
             gearSystems[2].SetGearItems(dbContext,
-                new List<GearItemEntry>
+                new List<GearItemEntry<GearSystem>>
                 {
                     // 5g Water Jug
-                    new GearItemEntry(gearItems[8])
+                    new GearItemEntry<GearSystem>(gearItems[8])
                     {
                         Count = 2
                     }
@@ -352,16 +352,16 @@ namespace EnergonSoftware.BackpackPlanner
 
             // Cook System
             gearSystems[3].SetGearItems(dbContext,
-                new List<GearItemEntry>
+                new List<GearItemEntry<GearSystem>>
                 {
                     // Alcohol Stove
-                    new GearItemEntry(gearItems[10])
+                    new GearItemEntry<GearSystem>(gearItems[10])
                     {
                         Count = 1
                     },
 
                     // Wind Screen
-                    new GearItemEntry(gearItems[11])
+                    new GearItemEntry<GearSystem>(gearItems[11])
                     {
                         Count = 1
                     }
@@ -385,16 +385,16 @@ namespace EnergonSoftware.BackpackPlanner
 
             // 3 Season Hammock
             gearCollections[0].SetGearSystems(dbContext,
-                new List<GearSystemEntry>
+                new List<GearSystemEntry<GearCollection>>
                 {
                     // New Hammock Setup
-                    new GearSystemEntry(gearSystems[0])
+                    new GearSystemEntry<GearCollection>(gearSystems[0])
                     {
                         Count = 1
                     },
 
                     // Cook System
-                    new GearSystemEntry(gearSystems[3])
+                    new GearSystemEntry<GearCollection>(gearSystems[3])
                     {
                         Count = 1
                     }
@@ -402,16 +402,16 @@ namespace EnergonSoftware.BackpackPlanner
             );
 
             gearCollections[0].SetGearItems(dbContext,
-                new List<GearItemEntry>
+                new List<GearItemEntry<GearCollection>>
                 {
                     // Backpack
-                    new GearItemEntry(gearItems[0])
+                    new GearItemEntry<GearCollection>(gearItems[0])
                     {
                         Count = 1
                     },
 
                     // Head Lamp
-                    new GearItemEntry(gearItems[9])
+                    new GearItemEntry<GearCollection>(gearItems[9])
                     {
                         Count = 1
                     }
@@ -474,10 +474,10 @@ namespace EnergonSoftware.BackpackPlanner
             tripPlans[0].SetTripItinerary(dbContext, tripItineraries[0]);
 
             tripPlans[0].SetGearCollections(dbContext,
-                new List<GearCollectionEntry>
+                new List<GearCollectionEntry<TripPlan>>
                 {
                     // 3 Season Hammock
-                    new GearCollectionEntry(gearCollections[0])
+                    new GearCollectionEntry<TripPlan>(gearCollections[0])
                     {
                         Count = 1
                     }
@@ -485,10 +485,10 @@ namespace EnergonSoftware.BackpackPlanner
             );
 
             tripPlans[0].SetGearSystems(dbContext,
-                new List<GearSystemEntry>
+                new List<GearSystemEntry<TripPlan>>
                 {
                     // Cook System
-                    new GearSystemEntry(gearSystems[3])
+                    new GearSystemEntry<TripPlan>(gearSystems[3])
                     {
                         Count = 1
                     }
@@ -496,10 +496,10 @@ namespace EnergonSoftware.BackpackPlanner
             );
 
             tripPlans[0].SetGearItems(dbContext,
-                new List<GearItemEntry>
+                new List<GearItemEntry<TripPlan>>
                 {
                     // 5g Water Jug
-                    new GearItemEntry(gearItems[8])
+                    new GearItemEntry<TripPlan>(gearItems[8])
                     {
                         Count = 1
                     }
@@ -507,10 +507,10 @@ namespace EnergonSoftware.BackpackPlanner
             );
 
             tripPlans[0].SetMeals(dbContext,
-                new List<MealEntry>
+                new List<MealEntry<TripPlan>>
                 {
                     // Cheese Chicken Dinner
-                    new MealEntry(meals[0])
+                    new MealEntry<TripPlan>(meals[0])
                     {
                         Count = 1
                     }
