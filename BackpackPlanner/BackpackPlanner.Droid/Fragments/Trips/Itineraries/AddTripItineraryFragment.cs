@@ -39,8 +39,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries
         {
             base.OnViewCreated(view, savedInstanceState);
 
-            _tripItineraryNameEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.add_trip_itinerary_name);
-            _tripItineraryNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.add_trip_itinerary_note);
+            _tripItineraryNameEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.trip_itinerary_name);
+            _tripItineraryNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.trip_itinerary_note);
         }
 
         protected override void UpdateView()

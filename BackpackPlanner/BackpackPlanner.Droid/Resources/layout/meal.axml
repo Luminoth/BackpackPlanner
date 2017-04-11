@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Name -->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/meal_name">
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_meal_name"
+            android:inputType="text|textCapWords" />
+    </android.support.design.widget.TextInputLayout>
+    <!-- Website -->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/meal_website">
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_meal_website"
+            android:inputType="textUri" />
+    </android.support.design.widget.TextInputLayout>
+    <!-- Meal Time -->
+    <Spinner
+        android:id="@+id/meal_mealtime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/label_meal_mealtime"
+        android:entries="@array/meal_mealtime" />
+    <!-- Servings -->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/meal_servings">
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_meal_servings"
+            android:inputType="number"
+            android:text="1" />
+    </android.support.design.widget.TextInputLayout>
+    <!-- Weight -->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/meal_weight">
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_meal_weight"
+            android:inputType="number"
+            android:text="0" />
+    </android.support.design.widget.TextInputLayout>
+    <!-- Cost -->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/meal_cost">
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_meal_cost"
+            android:inputType="number"
+            android:text="0" />
+    </android.support.design.widget.TextInputLayout>
+    <!-- Calories -->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/meal_calories">
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_meal_calories"
+            android:inputType="number"
+            android:text="0" />
+    </android.support.design.widget.TextInputLayout>
+    <!-- Protein -->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/meal_protein">
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_meal_protein"
+            android:inputType="number"
+            android:text="0" />
+    </android.support.design.widget.TextInputLayout>
+    <!-- Fiber -->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/meal_fiber">
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_meal_fiber"
+            android:inputType="number"
+            android:text="0" />
+    </android.support.design.widget.TextInputLayout>
+    <!-- Note -->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/meal_note">
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_meal_note"
+            android:inputType="text|textMultiLine" />
+    </android.support.design.widget.TextInputLayout>
+</merge>

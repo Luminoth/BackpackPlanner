@@ -9,69 +9,9 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <!-- Name -->
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/view_trip_plan_name">
-            <android.support.design.widget.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/label_trip_plan_name"
-                android:inputType="text|textCapWords" />
-        </android.support.design.widget.TextInputLayout>
-        <!-- Start Date -->
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/view_trip_plan_startdate">
-            <android.support.design.widget.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:focusableInTouchMode="false"
-                android:hint="@string/label_trip_plan_startdate"
-                android:inputType="date" />
-        </android.support.design.widget.TextInputLayout>
-        <!-- End Date -->
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/view_trip_plan_enddate">
-            <android.support.design.widget.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:focusableInTouchMode="false"
-                android:hint="@string/label_trip_plan_enddate"
-                android:inputType="date" />
-        </android.support.design.widget.TextInputLayout>
-        <!-- TODO: trip itinerary -->
-        <!-- Gear Collections -->
         <include
-            android:id="@+id/gear_collection_entries"
-            layout="@layout/gear_collection_entries" />
-        <!-- Gear Systems -->
-        <include
-            android:id="@+id/gear_system_entries"
-            layout="@layout/gear_system_entries" />
-        <!-- Gear Items -->
-        <include
-            android:id="@+id/gear_item_entries"
-            layout="@layout/gear_item_entries" />
-        <!-- Meals -->
-        <include
-            android:id="@+id/meal_entries"
-            layout="@layout/meal_entries" />
-        <!-- Note -->
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/view_trip_plan_note">
-            <android.support.design.widget.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/label_trip_plan_note"
-                android:inputType="text|textMultiLine" />
-        </android.support.design.widget.TextInputLayout>
+            android:id="@+id/trip_plan"
+            layout="@layout/trip_plan" />
         <include
             android:id="@+id/view_item_buttons"
             layout="@layout/view_item_buttons" />

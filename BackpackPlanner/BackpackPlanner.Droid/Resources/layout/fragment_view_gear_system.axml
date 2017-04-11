@@ -9,32 +9,9 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <!-- Name -->
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/view_gear_system_name">
-            <android.support.design.widget.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/label_gear_system_name"
-                android:inputType="text|textCapWords" />
-        </android.support.design.widget.TextInputLayout>
-        <!-- Gear Items -->
         <include
-            android:id="@+id/gear_item_entries"
-            layout="@layout/gear_item_entries" />
-        <!-- Note -->
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/view_gear_system_note">
-            <android.support.design.widget.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/label_gear_system_note"
-                android:inputType="text|textMultiLine" />
-        </android.support.design.widget.TextInputLayout>
+            android:id="@+id/gear_system"
+            layout="@layout/gear_system" />
         <include
             android:id="@+id/view_item_buttons"
             layout="@layout/view_item_buttons" />

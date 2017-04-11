@@ -39,10 +39,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries
         {
             base.OnViewCreated(view, savedInstanceState);
 
-            _tripItineraryNameEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.view_trip_itinerary_name);
+            _tripItineraryNameEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.trip_itinerary_name);
             _tripItineraryNameEditText.EditText.Text = Item.Name;
 
-            _tripItineraryNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.view_trip_itinerary_note);
+            _tripItineraryNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.trip_itinerary_note);
             _tripItineraryNoteEditText.EditText.Text = Item.Note;
         }
 

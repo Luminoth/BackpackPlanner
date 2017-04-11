@@ -51,16 +51,16 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
         {
             base.OnViewCreated(view, savedInstanceState);
 
-            _gearItemNameEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.add_gear_item_name);
-            _gearItemMakeEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.add_gear_item_make);
-            _gearItemModelEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.add_gear_item_model);
-            _gearItemWebsiteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.add_gear_item_website);
-            _gearItemCarriedRadioGroup = view.FindViewById<RadioGroup>(Resource.Id.add_gear_item_carried);
-            _gearItemConsumableSwitch = view.FindViewById<Android.Support.V7.Widget.SwitchCompat>(Resource.Id.add_gear_item_consumable);
-            _gearItemConsumedEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.add_gear_item_consumed);
-            _gearItemWeightEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.add_gear_item_weight);
-            _gearItemCostEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.add_gear_item_cost);
-            _gearItemNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.add_gear_item_note);
+            _gearItemNameEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_name);
+            _gearItemMakeEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_make);
+            _gearItemModelEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_model);
+            _gearItemWebsiteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_website);
+            _gearItemCarriedRadioGroup = view.FindViewById<RadioGroup>(Resource.Id.gear_item_carried);
+            _gearItemConsumableSwitch = view.FindViewById<Android.Support.V7.Widget.SwitchCompat>(Resource.Id.gear_item_consumable);
+            _gearItemConsumedEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_consumed);
+            _gearItemWeightEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_weight);
+            _gearItemCostEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_cost);
+            _gearItemNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_note);
 
             _gearItemConsumableSwitch.CheckedChange += (sender, args) => {
                 _gearItemConsumedEditText.Visibility = args.IsChecked ? ViewStates.Visible : ViewStates.Gone;
@@ -102,13 +102,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
             int carriedSelectionResId = _gearItemCarriedRadioGroup.CheckedRadioButtonId;
             switch(carriedSelectionResId)
             {
-            case Resource.Id.add_gear_item_carried_carried:
+            case Resource.Id.gear_item_carried_carried:
                 Item.Carried = GearCarried.Carried;
                 break;
-            case Resource.Id.add_gear_item_carried_worn:
+            case Resource.Id.gear_item_carried_worn:
                 Item.Carried = GearCarried.Worn;
                 break;
-            case Resource.Id.add_gear_item_carried_not_carried:
+            case Resource.Id.gear_item_carried_not_carried:
                 Item.Carried = GearCarried.NotCarried;
                 break;
             }

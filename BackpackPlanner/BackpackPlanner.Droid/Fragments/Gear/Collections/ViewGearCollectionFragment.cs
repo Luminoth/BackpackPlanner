@@ -64,10 +64,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
         {
             base.OnViewCreated(view, savedInstanceState);
 
-            _gearCollectionNameEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.view_gear_collection_name);
+            _gearCollectionNameEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_collection_name);
             _gearCollectionNameEditText.EditText.Text = Item.Name;
 
-            _gearCollectionNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.view_gear_collection_note);
+            _gearCollectionNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_collection_note);
             _gearCollectionNoteEditText.EditText.Text = Item.Note;
 
             _gearSystemEntries.ItemListAdapter = new GearSystemEntryListAdapter(this);

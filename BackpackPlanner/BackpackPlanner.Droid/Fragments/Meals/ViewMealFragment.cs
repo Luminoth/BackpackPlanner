@@ -51,34 +51,34 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
         {
             base.OnViewCreated(view, savedInstanceState);
 
-            _mealNameEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.view_meal_name);
+            _mealNameEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.meal_name);
             _mealNameEditText.EditText.Text = Item.Name;
 
-            _mealWebsiteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.view_meal_website);
+            _mealWebsiteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.meal_website);
             _mealWebsiteEditText.EditText.Text = Item.Url;
 
-            _mealMealTimeSpinner = view.FindViewById<Spinner>(Resource.Id.view_meal_mealtime);
+            _mealMealTimeSpinner = view.FindViewById<Spinner>(Resource.Id.meal_mealtime);
             _mealMealTimeSpinner.SetSelection(((ArrayAdapter)_mealMealTimeSpinner.Adapter).GetPosition(Item.MealTime.ToString()));
 
-            _mealServingsEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.view_meal_servings);
+            _mealServingsEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.meal_servings);
             _mealServingsEditText.EditText.Text = Item.ServingCount.ToString();
 
-            _mealWeightEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.view_meal_weight);
+            _mealWeightEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.meal_weight);
             _mealWeightEditText.EditText.Text = ((int)Item.GetWeightInUnits(BaseActivity.BackpackPlannerState.Settings)).ToString();
 
-            _mealCostEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.view_meal_cost);
+            _mealCostEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.meal_cost);
             _mealCostEditText.EditText.Text = ((int)Item.GetCostInCurrency(BaseActivity.BackpackPlannerState.Settings)).ToString();
 
-            _mealCaloriesEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.view_meal_calories);
+            _mealCaloriesEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.meal_calories);
             _mealCaloriesEditText.EditText.Text = Item.Calories.ToString();
 
-            _mealProteinEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.view_meal_protein);
+            _mealProteinEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.meal_protein);
             _mealProteinEditText.EditText.Text = Item.ProteinInGrams.ToString();
 
-            _mealFiberEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.view_meal_fiber);
+            _mealFiberEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.meal_fiber);
             _mealFiberEditText.EditText.Text = Item.FiberInGrams.ToString();
 
-            _mealNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.view_meal_note);
+            _mealNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.meal_note);
             _mealNoteEditText.EditText.Text = Item.Note;
 
             _mealWeightEditText.Hint = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_meal_weight),

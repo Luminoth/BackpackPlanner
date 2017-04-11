@@ -84,10 +84,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
         {
             base.OnViewCreated(view, savedInstanceState);
 
-            _tripPlanNameEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.view_trip_plan_name);
+            _tripPlanNameEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.trip_plan_name);
             _tripPlanNameEditText.EditText.Text = Item.Name;
 
-            _tripPlanStartDateText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.view_trip_plan_startdate);
+            _tripPlanStartDateText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.trip_plan_startdate);
             _tripPlanStartDateText.EditText.Text = Item.StartDate.ToString("yyyy-MM-dd", CultureInfo.CurrentCulture);
             _tripPlanStartDateText.EditText.Click += (sender, args) => {
                 DateTime dateTime = DateTime.Now;
@@ -103,7 +103,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
                 picker.Show(Activity.SupportFragmentManager, null);
             };
 
-            _tripPlanEndDateText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.view_trip_plan_enddate);
+            _tripPlanEndDateText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.trip_plan_enddate);
             _tripPlanEndDateText.EditText.Text = Item.EndDate.ToString("yyyy-MM-dd", CultureInfo.CurrentCulture);
             _tripPlanEndDateText.EditText.Click += (sender, args) => {
                 DateTime dateTime = DateTime.Now;
@@ -131,7 +131,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
             _mealEntries.ItemListAdapter = new MealEntryListAdapter(this);
             _mealEntryViewHolder.OnViewCreated(view, _mealEntries.ItemListAdapter);
 
-            _tripPlanNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.view_trip_plan_note);
+            _tripPlanNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.trip_plan_note);
             _tripPlanNoteEditText.EditText.Text = Item.Note;
         }
 
