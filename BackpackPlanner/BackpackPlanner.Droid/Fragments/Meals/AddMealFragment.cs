@@ -112,10 +112,5 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
 
             return valid;
         }
-
-        protected override void Reset()
-        {
-// TODO
-        }
     }
 }

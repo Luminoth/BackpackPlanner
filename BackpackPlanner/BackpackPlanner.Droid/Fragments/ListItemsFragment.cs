@@ -35,7 +35,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
     /// <summary>
     /// Helper for the data listing fragments
     /// </summary>
-    public abstract class ListItemsFragment<T> : RecyclerFragment where T: BaseModel, IBackpackPlannerItem
+    public abstract class ListItemsFragment<T> : RecyclerFragment where T: BaseModel<T>, IBackpackPlannerItem, new()
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(ListItemsFragment<T>));
 
@@ -243,8 +243,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             );
         }
 
-        private void UpdateView()
+        protected override void UpdateView()
         {
+            base.UpdateView();
+
             bool hasItems = Adapter.ItemCount > 0;
 
             _noItemsTextView.Visibility = hasItems ? ViewStates.Gone : ViewStates.Visible;

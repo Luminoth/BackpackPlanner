@@ -26,10 +26,10 @@ using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
 {
-    public abstract class GearItemEntries<T> : ItemEntries<T, GearItem, GearItemEntry>
-        where T: BaseModel
+    public abstract class GearItemEntries<T> : ItemEntries<T, GearItem, GearItemEntry<T>>
+        where T: BaseModel<T>, new()
     {
-        public abstract class GearItemEntryViewHolder : DataFragment<T>.ItemEntryViewHolder<GearItem, GearItemEntry>
+        public abstract class GearItemEntryViewHolder : DataFragment<T>.ItemEntryViewHolder<GearItem, GearItemEntry<T>>
         {
             protected override int NoItemsResource => Resource.Id.no_gear_items;
 
@@ -47,7 +47,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
             }
         }
 
-        protected GearItemEntries(T model, IReadOnlyCollection<GearItemEntry> entries)
+        protected GearItemEntries(T model, IReadOnlyCollection<GearItemEntry<T>> entries)
             : base(model, entries)
         {
         }
@@ -63,7 +63,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
             }
         }
 
-        public override GearItemEntry GetItemEntry(GearItem gearItem)
+        public override GearItemEntry<GearSystem> GetItemEntry(GearItem gearItem)
         {
             return Model.GearItems.FirstOrDefault(x => x.Model.Id == gearItem.Id);
         }
@@ -84,7 +84,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
             }
         }
 
-        public override GearItemEntry GetItemEntry(GearItem gearItem)
+        public override GearItemEntry<GearCollection> GetItemEntry(GearItem gearItem)
         {
             return Model.GearItems.FirstOrDefault(x => x.Model.Id == gearItem.Id);
         }
@@ -105,7 +105,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
             }
         }
 
-        public override GearItemEntry GetItemEntry(GearItem gearItem)
+        public override GearItemEntry<TripPlan> GetItemEntry(GearItem gearItem)
         {
             return Model.GearItems.FirstOrDefault(x => x.Model.Id == gearItem.Id);
         }

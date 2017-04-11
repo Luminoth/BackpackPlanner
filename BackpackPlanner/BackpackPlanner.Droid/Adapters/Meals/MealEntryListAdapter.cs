@@ -19,13 +19,16 @@ using System;
 using Android.Views;
 using Android.Widget;
 
+using EnergonSoftware.BackpackPlanner.DAL.Models;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Meals;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 using EnergonSoftware.BackpackPlanner.Units.Units;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
 {
-    public sealed class MealEntryListAdapter : BaseModelEntryListViewAdapter<MealEntry, Meal>
+    public sealed class MealEntryListAdapter<T>
+        : BaseModelEntryListViewAdapter<MealEntry<T>, T, Meal>
+            where T: BaseModel<T>, new()
     {
         private sealed class MealEntryViewHolder : ViewHolder
         {
@@ -33,7 +36,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
             private readonly TextView _textViewTotalWeight;
             private readonly Android.Support.Design.Widget.TextInputLayout _editTextQuantity;
 
-            public MealEntryViewHolder(View itemView, MealEntryListAdapter adapter)
+            public MealEntryViewHolder(View itemView, MealEntryListAdapter<T> adapter)
                 : base(itemView, adapter)
             {
                 _textViewName = itemView.FindViewById<TextView>(Resource.Id.view_meal_name);
@@ -76,7 +79,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
         {
         }
 
-        public MealEntryListAdapter(BaseFragment fragment, MealEntry[] items)
+        public MealEntryListAdapter(BaseFragment fragment, MealEntry<T>[] items)
             : base(fragment, items)
         {
         }

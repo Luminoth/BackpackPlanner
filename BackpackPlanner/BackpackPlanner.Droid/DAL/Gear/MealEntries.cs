@@ -24,10 +24,10 @@ using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
 {
-    public abstract class MealEntries<T> : ItemEntries<T, Meal, MealEntry>
-        where T: BaseModel
+    public abstract class MealEntries<T> : ItemEntries<T, Meal, MealEntry<T> >
+        where T: BaseModel<T>, new()
     {
-        public abstract class MealEntryViewHolder : DataFragment<T>.ItemEntryViewHolder<Meal, MealEntry>
+        public abstract class MealEntryViewHolder : DataFragment<T>.ItemEntryViewHolder<Meal, MealEntry<T>>
         {
             protected override int NoItemsResource => Resource.Id.no_meals;
 
@@ -45,7 +45,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
             }
         }
 
-        protected MealEntries(T model, IReadOnlyCollection<MealEntry> entries)
+        protected MealEntries(T model, IReadOnlyCollection<MealEntry<T>> entries)
             : base(model, entries)
         {
         }
@@ -61,7 +61,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
             }
         }
 
-        public override MealEntry GetItemEntry(Meal meal)
+        public override MealEntry<TripPlan> GetItemEntry(Meal meal)
         {
             return Model.Meals.FirstOrDefault(x => x.Model.Id == meal.Id);
         }

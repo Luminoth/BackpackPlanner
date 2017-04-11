@@ -151,10 +151,5 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
 
             return valid;
         }
-
-        protected override void Reset()
-        {
-// TODO
-        }
     }
 }

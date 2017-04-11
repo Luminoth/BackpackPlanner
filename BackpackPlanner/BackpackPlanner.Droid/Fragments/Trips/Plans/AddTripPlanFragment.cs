@@ -118,16 +118,16 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
                 picker.Show(Activity.SupportFragmentManager, null);
             };
 
-            _gearCollectionEntries.ItemListAdapter = new GearCollectionEntryListAdapter(this);
+            _gearCollectionEntries.ItemListAdapter = new GearCollectionEntryListAdapter<TripPlan>(this);
             _gearCollectionEntryViewHolder.OnViewCreated(view, _gearCollectionEntries.ItemListAdapter);
 
-            _gearSystemEntries.ItemListAdapter = new GearSystemEntryListAdapter(this);
+            _gearSystemEntries.ItemListAdapter = new GearSystemEntryListAdapter<TripPlan>(this);
             _gearSystemEntryViewHolder.OnViewCreated(view, _gearSystemEntries.ItemListAdapter);
 
-            _gearItemEntries.ItemListAdapter = new GearItemEntryListAdapter(this);
+            _gearItemEntries.ItemListAdapter = new GearItemEntryListAdapter<TripPlan>(this);
             _gearItemEntryViewHolder.OnViewCreated(view, _gearItemEntries.ItemListAdapter);
 
-            _mealEntries.ItemListAdapter = new MealEntryListAdapter(this);
+            _mealEntries.ItemListAdapter = new MealEntryListAdapter<TripPlan>(this);
             _mealEntryViewHolder.OnViewCreated(view, _mealEntries.ItemListAdapter);
 
             _tripPlanNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.trip_plan_note);
@@ -211,12 +211,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
                 valid = false;                
             }
 
-            return valid;
-        }
 
-        protected override void Reset()
-        {
-// TODO
+            return valid;
         }
     }
 }

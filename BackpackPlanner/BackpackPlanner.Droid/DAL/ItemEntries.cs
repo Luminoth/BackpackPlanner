@@ -26,7 +26,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL
 {
     // ReSharper disable once InconsistentNaming
     public abstract class ItemEntries<TM, TI, TIE>
-        where TM: BaseModel where TI: BaseModel, IBackpackPlannerItem where TIE: BaseModelEntry<TI>
+        where TM: BaseModel<TM>, new()
+        where TI: BaseModel<TI>, IBackpackPlannerItem, new()
+        where TIE: BaseModelEntry<TIE, TM, TI>, new()
     {
         [CanBeNull]
         private List<TI> _items;
@@ -59,7 +61,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL
         public bool[] SelectedItems { get; private set; }
 
         [CanBeNull]
-        public BaseModelEntryListViewAdapter<TIE, TI> ItemListAdapter { get; set; }
+        public BaseModelEntryListViewAdapter<TIE, TM, TI> ItemListAdapter { get; set; }
 
         public int EntryCount => ItemListAdapter?.Count ?? 0;
 

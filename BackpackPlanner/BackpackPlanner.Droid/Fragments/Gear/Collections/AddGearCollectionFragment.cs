@@ -67,10 +67,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
             _gearCollectionNameEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_collection_name);
             _gearCollectionNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_collection_note);
 
-            _gearSystemEntries.ItemListAdapter = new GearSystemEntryListAdapter(this);
+            _gearSystemEntries.ItemListAdapter = new GearSystemEntryListAdapter<GearCollection>(this);
             _gearSystemEntryViewHolder.OnViewCreated(view, _gearSystemEntries.ItemListAdapter);
 
-            _gearItemEntries.ItemListAdapter = new GearItemEntryListAdapter(this);
+            _gearItemEntries.ItemListAdapter = new GearItemEntryListAdapter<GearCollection>(this);
             _gearItemEntryViewHolder.OnViewCreated(view, _gearItemEntries.ItemListAdapter);
         }
 
@@ -132,12 +132,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
                 valid = false;                
             }
 
-            return valid;
-        }
 
-        protected override void Reset()
-        {
-// TODO
+            return valid;
         }
     }
 }

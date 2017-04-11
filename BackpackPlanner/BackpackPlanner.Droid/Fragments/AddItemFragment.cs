@@ -28,7 +28,7 @@ using EnergonSoftware.BackpackPlanner.Droid.Util;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 {
-    public abstract class AddItemFragment<T> : DataFragment<T> where T: BaseModel
+    public abstract class AddItemFragment<T> : DataFragment<T> where T: BaseModel<T>, new()
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(AddItemFragment<T>));
 
@@ -54,7 +54,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             base.OnViewCreated(view, savedInstanceState);
 
             Android.Support.Design.Widget.FloatingActionButton addItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(Resource.Id.fab_add);
-            addItemButton.Click += (sender, args) => {
+            addItemButton.Click += (sender, args) =>
+            {
                 if(!Validate()) {
                     return;
                 }
@@ -95,8 +96,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             };
 
             Android.Support.Design.Widget.FloatingActionButton resetItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(Resource.Id.fab_reset);
-            resetItemButton.Click += (sender, args) => {
-                Reset();
+            resetItemButton.Click += (sender, args) =>
+            {
+                Item = CreateItem();
+
+                UpdateView();
             };
         }
     }

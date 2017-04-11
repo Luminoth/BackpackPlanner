@@ -81,6 +81,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                 Logger.Debug($"Time to Fragment.Start(): {_startupStopwatch.ElapsedMilliseconds}ms");
             }
 #endif
+
+            UpdateView();
         }
 
         public override void OnStop()
@@ -156,6 +158,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         public void TransitionToFragment(int frameResId, Android.Support.V4.App.Fragment fragment, string tags)
         {
             FragmentTransitionUtil.StackTransition(Activity, FragmentManager.BeginTransaction(), frameResId, fragment, tags);
+        }
+
+        protected virtual void UpdateView()
+        {
         }
     }
 }

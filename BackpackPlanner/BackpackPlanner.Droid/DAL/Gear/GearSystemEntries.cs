@@ -25,10 +25,10 @@ using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
 {
-    public abstract class GearSystemEntries<T> : ItemEntries<T, GearSystem, GearSystemEntry>
-        where T: BaseModel
+    public abstract class GearSystemEntries<T> : ItemEntries<T, GearSystem, GearSystemEntry<T>>
+        where T: BaseModel<T>, new()
     {
-        public abstract class GearSystemEntryViewHolder : DataFragment<T>.ItemEntryViewHolder<GearSystem, GearSystemEntry>
+        public abstract class GearSystemEntryViewHolder : DataFragment<T>.ItemEntryViewHolder<GearSystem, GearSystemEntry<T>>
         {
             protected override int NoItemsResource => Resource.Id.no_gear_systems;
 
@@ -46,7 +46,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
             }
         }
 
-        protected GearSystemEntries(T model, IReadOnlyCollection<GearSystemEntry> entries)
+        protected GearSystemEntries(T model, IReadOnlyCollection<GearSystemEntry<T>> entries)
             : base(model, entries)
         {
         }
@@ -62,7 +62,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
             }
         }
 
-        public override GearSystemEntry GetItemEntry(GearSystem gearSystem)
+        public override GearSystemEntry<GearCollection> GetItemEntry(GearSystem gearSystem)
         {
             return Model.GearSystems.FirstOrDefault(x => x.Model.Id == gearSystem.Id);
         }
@@ -83,7 +83,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
             }
         }
 
-        public override GearSystemEntry GetItemEntry(GearSystem gearSystem)
+        public override GearSystemEntry<TripPlan> GetItemEntry(GearSystem gearSystem)
         {
             return Model.GearSystems.FirstOrDefault(x => x.Model.Id == gearSystem.Id);
         }

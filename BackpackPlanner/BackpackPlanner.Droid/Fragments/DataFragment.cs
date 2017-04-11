@@ -33,12 +33,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
     /// <summary>
     /// Helper for the data entry fragments
     /// </summary>
-    public abstract class DataFragment<T> : BaseFragment where T: BaseModel
+    public abstract class DataFragment<T> : BaseFragment where T: BaseModel<T>, new()
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(DataFragment<T>));
 
         public abstract class ItemEntryViewHolder<TI, TIE>
-            where TI: BaseModel, IBackpackPlannerItem where TIE: BaseModelEntry<TI>, new()
+            where TI: BaseModel<TI>, IBackpackPlannerItem, new()
+            where TIE: BaseModelEntry<TIE, T, TI>, new()
         {
             protected abstract int NoItemsResource { get; }
 
@@ -126,7 +127,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         }
 
         protected void SetItemEntryList<TI, TE>(T model, ItemEntries<T, TI, TE> itemEntry)
-            where TI: BaseModel, IBackpackPlannerItem where TE: BaseModelEntry<TI>
+            where TI: BaseModel<TI>, IBackpackPlannerItem, new()
+            where TE: BaseModelEntry<TE, T, TI>, new()
         {
             for(int i=0; i<itemEntry.ItemCount; ++i) {
                 TI item = itemEntry.Items?[i];
@@ -144,7 +146,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         }
 
         protected void UpdateItemEntryList<TI, TE>(T model, ItemEntries<T, TI, TE> itemEntry, int index, bool isSelected)
-            where TI: BaseModel, IBackpackPlannerItem where TE: BaseModelEntry<TI>, new()
+            where TI: BaseModel<TI>, IBackpackPlannerItem, new()
+            where TE: BaseModelEntry<TE, T, TI>, new()
         {
             TI item = itemEntry.Items?[index];
             if(null == item) {
@@ -168,12 +171,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             UpdateView();
         }
 
-        protected abstract void UpdateView();
-
         protected abstract bool Validate();
 
         protected abstract Task DoDataExchange(DatabaseContext dbContext);
-
-        protected abstract void Reset();
     }
 }

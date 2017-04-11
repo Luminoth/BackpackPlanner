@@ -76,10 +76,5 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries
 
             return valid;
         }
-
-        protected override void Reset()
-        {
-// TODO
-        }
     }
 }

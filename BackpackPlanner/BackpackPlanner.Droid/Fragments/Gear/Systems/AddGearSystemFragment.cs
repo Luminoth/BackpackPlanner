@@ -61,7 +61,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
             _gearSystemNameEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_system_name);
             _gearSystemNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_system_note);
 
-            _gearItemEntries.ItemListAdapter = new GearItemEntryListAdapter(this);
+            _gearItemEntries.ItemListAdapter = new GearItemEntryListAdapter<GearSystem>(this);
             _gearItemEntryViewHolder.OnViewCreated(view, _gearItemEntries.ItemListAdapter);
         }
 
@@ -120,12 +120,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
                 valid = false;                
             }
 
-            return valid;
-        }
 
-        protected override void Reset()
-        {
-// TODO
+            return valid;
         }
     }
 }

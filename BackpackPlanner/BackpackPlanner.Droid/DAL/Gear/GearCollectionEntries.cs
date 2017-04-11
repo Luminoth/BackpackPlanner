@@ -24,10 +24,10 @@ using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
 {
-    public abstract class GearCollectionEntries<T> : ItemEntries<T, GearCollection, GearCollectionEntry>
-        where T: BaseModel
+    public abstract class GearCollectionEntries<T> : ItemEntries<T, GearCollection, GearCollectionEntry<T>>
+        where T: BaseModel<T>, new()
     {
-        public abstract class GearCollectionEntryViewHolder : DataFragment<T>.ItemEntryViewHolder<GearCollection, GearCollectionEntry>
+        public abstract class GearCollectionEntryViewHolder : DataFragment<T>.ItemEntryViewHolder<GearCollection, GearCollectionEntry<T>>
         {
             protected override int NoItemsResource => Resource.Id.no_gear_collections;
 
@@ -45,7 +45,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
             }
         }
 
-        protected GearCollectionEntries(T model, IReadOnlyCollection<GearCollectionEntry> entries)
+        protected GearCollectionEntries(T model, IReadOnlyCollection<GearCollectionEntry<T>> entries)
             : base(model, entries)
         {
         }
@@ -61,7 +61,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
             }
         }
 
-        public override GearCollectionEntry GetItemEntry(GearCollection gearCollection)
+        public override GearCollectionEntry<TripPlan> GetItemEntry(GearCollection gearCollection)
         {
             return Model.GearCollections.FirstOrDefault(x => x.Model.Id == gearCollection.Id);
         }

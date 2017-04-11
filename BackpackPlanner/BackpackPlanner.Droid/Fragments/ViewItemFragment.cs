@@ -30,7 +30,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 {
-    public abstract class ViewItemFragment<T> : DataFragment<T> where T: BaseModel
+    public abstract class ViewItemFragment<T> : DataFragment<T> where T: BaseModel<T>, new()
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(ViewItemFragment<T>));
 
@@ -38,14 +38,26 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         protected override bool CanExport => false;
 
-        public T Item { get; set; }
+        private T _item, _workingItem;
+
+        public T Item
+        {
+            get => _workingItem;
+
+            set
+            {
+                _item = value;
+                _workingItem = _item?.DeepCopy();
+            }
+        }
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
             base.OnViewCreated(view, savedInstanceState);
 
             Android.Support.Design.Widget.FloatingActionButton saveItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(Resource.Id.fab_save);
-            saveItemButton.Click += (sender, args) => {
+            saveItemButton.Click += (sender, args) =>
+            {
                 if(!Validate()) {
                     return;
                 }
@@ -86,13 +98,16 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             };
 
             Android.Support.Design.Widget.FloatingActionButton resetItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(Resource.Id.fab_reset);
-            resetItemButton.Click += (sender, args) => {
-                Reset();
+            resetItemButton.Click += (sender, args) =>
+            {
+                _workingItem = _item?.DeepCopy();
+
+                UpdateView();
             };
 
             Android.Support.Design.Widget.FloatingActionButton deleteItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(Resource.Id.fab_delete);
-            deleteItemButton.Click += (sender, args) => {
-// TODO
+            deleteItemButton.Click += (sender, args) =>
+            {
             };
         }
     }

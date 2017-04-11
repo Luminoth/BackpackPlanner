@@ -31,7 +31,7 @@ using JetBrains.Annotations;
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 {
     public abstract class BaseModelRecyclerListAdapter<T>
-        : BaseRecyclerListAdapter<T>, IFilterable where T: BaseModel, IBackpackPlannerItem
+        : BaseRecyclerListAdapter<T>, IFilterable where T: BaseModel<T>, IBackpackPlannerItem, new()
     {
         protected abstract class BaseModelViewHolder
             : BaseViewHolder, Android.Support.V7.Widget.Toolbar.IOnMenuItemClickListener

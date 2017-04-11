@@ -19,13 +19,16 @@ using System;
 using Android.Views;
 using Android.Widget;
 
+using EnergonSoftware.BackpackPlanner.DAL.Models;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 using EnergonSoftware.BackpackPlanner.Units.Units;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Collections
 {
-    public sealed class GearCollectionEntryListAdapter : BaseModelEntryListViewAdapter<GearCollectionEntry, GearCollection>
+    public sealed class GearCollectionEntryListAdapter<T>
+        : BaseModelEntryListViewAdapter<GearCollectionEntry<T>, T, GearCollection>
+            where T: BaseModel<T>, new()
     {
         private sealed class GearCollectionEntryViewHolder : ViewHolder
         {
@@ -33,7 +36,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Collections
             private readonly TextView _textViewTotalWeight;
             private readonly Android.Support.Design.Widget.TextInputLayout _editTextQuantity;
 
-            public GearCollectionEntryViewHolder(View itemView, GearCollectionEntryListAdapter adapter)
+            public GearCollectionEntryViewHolder(View itemView, GearCollectionEntryListAdapter<T> adapter)
                 : base(itemView, adapter)
             {
                 _textViewName = itemView.FindViewById<TextView>(Resource.Id.view_gear_collection_name);
@@ -76,7 +79,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Collections
         {
         }
 
-        public GearCollectionEntryListAdapter(BaseFragment fragment, GearCollectionEntry[] items)
+        public GearCollectionEntryListAdapter(BaseFragment fragment, GearCollectionEntry<T>[] items)
             : base(fragment, items)
         {
         }
