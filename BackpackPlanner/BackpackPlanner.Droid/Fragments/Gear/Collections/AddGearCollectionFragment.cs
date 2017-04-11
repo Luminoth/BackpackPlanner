@@ -113,7 +113,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
             await dbContext.GearCollections.AddAsync(Item).ConfigureAwait(false);
         }
 
-        protected override async Task OnDoDataExchange(DatabaseContext dbContext)
+        protected override async Task DoDataExchange(DatabaseContext dbContext)
         {
             Item.Name = _gearCollectionNameEditText.EditText.Text;
             Item.SetGearSystems(dbContext, _gearSystemEntries.ItemListAdapter?.Items);
@@ -123,7 +123,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
             await Task.Delay(0).ConfigureAwait(false);
         }
 
-        protected override bool OnValidate()
+        protected override bool Validate()
         {
             bool valid = true;
 
@@ -135,7 +135,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
             return valid;
         }
 
-        protected override void OnReset()
+        protected override void Reset()
         {
 // TODO
         }

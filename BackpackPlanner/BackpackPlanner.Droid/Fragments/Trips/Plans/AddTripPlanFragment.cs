@@ -176,7 +176,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
             await dbContext.TripPlans.AddAsync(Item).ConfigureAwait(false);
         }
 
-        protected override async Task OnDoDataExchange(DatabaseContext dbContext)
+        protected override async Task DoDataExchange(DatabaseContext dbContext)
         {
             Item.Name = _tripPlanNameEditText.EditText.Text;
 
@@ -202,7 +202,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
             await Task.Delay(0).ConfigureAwait(false);
         }
 
-        protected override bool OnValidate()
+        protected override bool Validate()
         {
             bool valid = true;
 
@@ -214,7 +214,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
             return valid;
         }
 
-        protected override void OnReset()
+        protected override void Reset()
         {
 // TODO
         }

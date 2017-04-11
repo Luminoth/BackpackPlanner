@@ -52,15 +52,17 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
             Android.Support.Design.Widget.FloatingActionButton saveItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(SaveItemResource);
             saveItemButton.Click += (sender, args) => {
+                if(!Validate()) {
+                    return;
+                }
+
                 ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_saving_item, false, true);
 
                 Task.Run(async () =>
                     {
                         int count;
                         using(DatabaseContext dbContext = BaseActivity.BackpackPlannerState.DatabaseState.CreateContext()) {
-                            if(!await DoDataExchange(dbContext).ConfigureAwait(false)) {
-                                return;
-                            }
+                            await DoDataExchange(dbContext).ConfigureAwait(false);
 
                             try {
                                 Logger.Info($"Saving {typeof(T)}...");
@@ -91,11 +93,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
             Android.Support.Design.Widget.FloatingActionButton resetItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(ResetItemResource);
             resetItemButton.Click += (sender, args) => {
-                OnReset();
+                Reset();
             };
 
             Android.Support.Design.Widget.FloatingActionButton deleteItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(DeleteItemResource);
             deleteItemButton.Click += (sender, args) => {
+// TODO
             };
         }
     }

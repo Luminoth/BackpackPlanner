@@ -55,15 +55,17 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
             Android.Support.Design.Widget.FloatingActionButton addItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(Resource.Id.fab_add);
             addItemButton.Click += (sender, args) => {
+                if(!Validate()) {
+                    return;
+                }
+
                 ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_adding_item, false, true);
 
                 Task.Run(async () =>
                     {
                         int count;
                         using(DatabaseContext dbContext = BaseActivity.BackpackPlannerState.DatabaseState.CreateContext()) {
-                            if(!await DoDataExchange(dbContext).ConfigureAwait(false)) {
-                                return;
-                            }
+                            await DoDataExchange(dbContext).ConfigureAwait(false);
 
                             try {
                                 Logger.Info($"Adding {typeof(T)}...");
@@ -94,7 +96,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
             Android.Support.Design.Widget.FloatingActionButton resetItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(Resource.Id.fab_reset);
             resetItemButton.Click += (sender, args) => {
-                OnReset();
+                Reset();
             };
         }
     }

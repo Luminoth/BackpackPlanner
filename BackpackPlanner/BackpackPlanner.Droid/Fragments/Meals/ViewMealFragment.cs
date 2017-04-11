@@ -100,7 +100,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
         {
         }
 
-        protected override async Task OnDoDataExchange(DatabaseContext dbContext)
+        protected override async Task DoDataExchange(DatabaseContext dbContext)
         {
             Item.Name = _mealNameEditText.EditText.Text;
             Item.Url = _mealWebsiteEditText.EditText.Text;
@@ -116,7 +116,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
             await Task.Delay(0).ConfigureAwait(false);
         }
 
-        protected override bool OnValidate()
+        protected override bool Validate()
         {
             bool valid = true;
 
@@ -128,7 +128,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
             return valid;
         }
 
-        protected override void OnReset()
+        protected override void Reset()
         {
 // TODO
         }

@@ -168,25 +168,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             UpdateView();
         }
 
-        public async Task<bool> DoDataExchange(DatabaseContext dbContext)
-        {
-            Logger.Debug($"DDX {GetType()} => {typeof(T)}");
-
-            if(!OnValidate()) {
-                return false;
-            }
-
-            await OnDoDataExchange(dbContext).ConfigureAwait(false);
-
-            return true;
-        }
-
         protected abstract void UpdateView();
 
-        protected abstract bool OnValidate();
+        protected abstract bool Validate();
 
-        protected abstract Task OnDoDataExchange(DatabaseContext dbContext);
+        protected abstract Task DoDataExchange(DatabaseContext dbContext);
 
-        protected abstract void OnReset();
+        protected abstract void Reset();
     }
 }
