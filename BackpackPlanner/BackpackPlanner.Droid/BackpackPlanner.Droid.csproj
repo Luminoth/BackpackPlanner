@@ -427,6 +427,18 @@
     <AndroidResource Include="Resources\layout\view_meal_entry.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
+    <AndroidResource Include="Resources\layout\gear_system_entries.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\gear_item_entries.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\gear_collection_entries.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\meal_entries.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
     <ProguardConfiguration Include="proguard.cfg" />
     <None Include="packages.config" />
     <None Include="README.md" />

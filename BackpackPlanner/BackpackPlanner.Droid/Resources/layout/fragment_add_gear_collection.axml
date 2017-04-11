@@ -24,75 +24,13 @@
                 android:inputType="text|textCapWords" />
         </android.support.design.widget.TextInputLayout>
         <!-- Gear Systems -->
-        <TextView
-            android:id="@+id/gear_systems"
-            android:text="@string/label_gear_systems"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/no_gear_systems"
-            android:text="@string/label_no_gear_systems"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/no_gear_systems_added"
-            android:text="@string/label_no_gear_systems_collection"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
-        <ListView
-            android:id="@+id/gear_systems_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:isScrollContainer="false"
-            android:nestedScrollingEnabled="true"
-            android:visibility="gone" />
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_add_gear_system"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:elevation="@dimen/fab_elevation"
-            android:layout_margin="@dimen/fab_margin"
-            android:src="@drawable/ic_add"
-            android:visibility="gone" />
+        <include
+            android:id="@+id/gear_system_entries"
+            layout="@layout/gear_system_entries" />
         <!-- Gear Items -->
-        <TextView
-            android:id="@+id/gear_items"
-            android:text="@string/label_gear_items"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/no_gear_items"
-            android:text="@string/label_no_gear_items"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/no_gear_items_added"
-            android:text="@string/label_no_gear_items_collection"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
-        <ListView
-            android:id="@+id/gear_items_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:isScrollContainer="false"
-            android:nestedScrollingEnabled="true"
-            android:visibility="gone" />
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_add_gear_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:elevation="@dimen/fab_elevation"
-            android:layout_margin="@dimen/fab_margin"
-            android:src="@drawable/ic_add"
-            android:visibility="gone" />
+        <include
+            android:id="@+id/gear_item_entries"
+            layout="@layout/gear_item_entries" />
         <!-- Note -->
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
