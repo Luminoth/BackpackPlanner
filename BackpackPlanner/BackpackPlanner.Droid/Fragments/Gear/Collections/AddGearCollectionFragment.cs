@@ -37,10 +37,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
 
         protected override int TitleResource => Resource.String.title_add_gear_collection;
 
-        protected override int AddItemResource => Resource.Id.fab_add_gear_collection;
-
-        protected override int ResetItemResource => Resource.Id.fab_reset_gear_collection;
-
 #region Controls
         private Android.Support.Design.Widget.TextInputLayout _gearCollectionNameEditText;
 

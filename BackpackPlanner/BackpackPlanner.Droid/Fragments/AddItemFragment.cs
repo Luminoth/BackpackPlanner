@@ -32,10 +32,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(AddItemFragment<T>));
 
-        protected abstract int AddItemResource { get; }
-
-        protected abstract int ResetItemResource { get; }
-
         protected override bool HasSearchView => false;
 
         protected override bool CanExport => false;
@@ -57,7 +53,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         {
             base.OnViewCreated(view, savedInstanceState);
 
-            Android.Support.Design.Widget.FloatingActionButton addItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(AddItemResource);
+            Android.Support.Design.Widget.FloatingActionButton addItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(Resource.Id.fab_add);
             addItemButton.Click += (sender, args) => {
                 ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_adding_item, false, true);
 
@@ -96,7 +92,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                 );
             };
 
-            Android.Support.Design.Widget.FloatingActionButton resetItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(ResetItemResource);
+            Android.Support.Design.Widget.FloatingActionButton resetItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(Resource.Id.fab_reset);
             resetItemButton.Click += (sender, args) => {
                 OnReset();
             };

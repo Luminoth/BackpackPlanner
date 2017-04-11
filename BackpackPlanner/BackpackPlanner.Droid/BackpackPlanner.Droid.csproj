@@ -439,6 +439,9 @@
     <AndroidResource Include="Resources\layout\meal_entries.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
+    <AndroidResource Include="Resources\layout\add_item_buttons.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
     <ProguardConfiguration Include="proguard.cfg" />
     <None Include="packages.config" />
     <None Include="README.md" />

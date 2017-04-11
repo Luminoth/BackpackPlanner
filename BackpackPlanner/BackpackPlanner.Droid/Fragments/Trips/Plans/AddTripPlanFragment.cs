@@ -45,10 +45,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
 
         protected override int TitleResource => Resource.String.title_add_trip_plan;
 
-        protected override int AddItemResource => Resource.Id.fab_add_trip_plan;
-
-        protected override int ResetItemResource => Resource.Id.fab_reset_trip_plan;
-
 #region Controls
         private Android.Support.Design.Widget.TextInputLayout _tripPlanNameEditText;
         private Android.Support.Design.Widget.TextInputLayout _tripPlanStartDateText;
