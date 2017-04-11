@@ -34,12 +34,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(ViewItemFragment<T>));
 
-        protected abstract int SaveItemResource { get; }
-
-        protected abstract int ResetItemResource { get; }
-
-        protected abstract int DeleteItemResource { get; }
-
         protected override bool HasSearchView => false;
 
         protected override bool CanExport => false;
@@ -50,7 +44,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         {
             base.OnViewCreated(view, savedInstanceState);
 
-            Android.Support.Design.Widget.FloatingActionButton saveItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(SaveItemResource);
+            Android.Support.Design.Widget.FloatingActionButton saveItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(Resource.Id.fab_save);
             saveItemButton.Click += (sender, args) => {
                 if(!Validate()) {
                     return;
@@ -91,12 +85,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                 );
             };
 
-            Android.Support.Design.Widget.FloatingActionButton resetItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(ResetItemResource);
+            Android.Support.Design.Widget.FloatingActionButton resetItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(Resource.Id.fab_reset);
             resetItemButton.Click += (sender, args) => {
                 Reset();
             };
 
-            Android.Support.Design.Widget.FloatingActionButton deleteItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(DeleteItemResource);
+            Android.Support.Design.Widget.FloatingActionButton deleteItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(Resource.Id.fab_delete);
             deleteItemButton.Click += (sender, args) => {
 // TODO
             };
