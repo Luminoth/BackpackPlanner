@@ -14,11 +14,15 @@
    limitations under the License.
 */
 
+using System.Collections.Generic;
+using System.Linq;
+
 using Android.App;
 using Android.Content.Res;
 using Android.OS;
 using Android.Views;
 
+using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items;
@@ -33,9 +37,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme")]
     public sealed class BackpackPlannerActivity : BaseActivity, View.IOnClickListener
     {
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(BackpackPlannerActivity));
+
         // TODO: this could use a ViewHolder
 
         private readonly NavigationDrawerManager _navigationDrawerManager = new NavigationDrawerManager();
+
+        private readonly HashSet<IBackPressedListener> _backPressedListeners = new HashSet<IBackPressedListener>();
 
 #region Activity Lifecycle
         protected override void OnCreate(Bundle savedInstanceState)
@@ -71,7 +79,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 #endif
 
             // setup the fragment drawer indicator state
-            SupportFragmentManager.BackStackChanged += (sender, args) => {
+            SupportFragmentManager.BackStackChanged += (sender, args) =>
+            {
                 if(SupportFragmentManager.BackStackEntryCount > 0) {
                     _navigationDrawerManager.Toggle.DrawerIndicatorEnabled = false;
                     _navigationDrawerManager.LockDrawer(false);
@@ -123,6 +132,26 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             return base.OnOptionsItemSelected(item);
         }
 
+        public override void OnBackPressed()
+        {
+            if(_backPressedListeners.Any(listener => !listener.OnBackPressed())) {
+                return;
+            }
+            base.OnBackPressed();
+        }
+
+#region BackPressed Listeners
+        public void RegisterBackPressedListener(IBackPressedListener listener)
+        {
+            _backPressedListeners.Add(listener);
+        }
+
+        public void DeregisterBackPressedListener(IBackPressedListener listener)
+        {
+            _backPressedListeners.Remove(listener);
+        }
+#endregion
+
         public void OnClick(View view)
         {
             // TODO: this needs to verify the view that's being clicked => if(view == blah) ...
@@ -173,11 +202,29 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
                 break;
             }
 
-            if(null != fragment) {
-                FragmentTransitionUtil.Transition(this, SupportFragmentManager.BeginTransaction(), Resource.Id.frame_content, fragment);
-            }
+            TransitionToFragment(fragment);
 
             menuItem.SetChecked(true);
+        }
+
+        private void TransitionToFragment(Android.Support.V4.App.Fragment fragment)
+        {
+            if(null == fragment) {
+                Logger.Error("Unable to transition to null fragment!");
+                return;
+            }
+
+            FragmentTransitionUtil.Transition(this, SupportFragmentManager.BeginTransaction(), Resource.Id.frame_content, fragment);
+        }
+
+        public void TransitionToFragment(Android.Support.V4.App.FragmentManager fragmentManager, int frameResId, Android.Support.V4.App.Fragment fragment, string tags)
+        {
+            if(null == fragment) {
+                Logger.Error("Unable to transition to null fragment!");
+                return;
+            }
+
+            FragmentTransitionUtil.StackTransition(this, fragmentManager.BeginTransaction(), frameResId, fragment, tags);
         }
     }
 }
