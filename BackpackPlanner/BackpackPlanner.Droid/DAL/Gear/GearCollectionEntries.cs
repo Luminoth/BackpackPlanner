@@ -17,17 +17,21 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using Android.Views;
+
+using EnergonSoftware.BackpackPlanner.DAL;
 using EnergonSoftware.BackpackPlanner.DAL.Models;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans;
-using EnergonSoftware.BackpackPlanner.Droid.Fragments;
+using EnergonSoftware.BackpackPlanner.Droid.Activities;
+using EnergonSoftware.BackpackPlanner.Droid.Views;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
 {
     public abstract class GearCollectionEntries<T> : ItemEntries<T, GearCollection, GearCollectionEntry<T>>
         where T: BaseModel<T>, new()
     {
-        public abstract class GearCollectionEntryViewHolder : DataFragment<T>.ItemEntryViewHolder<GearCollection, GearCollectionEntry<T>>
+        public abstract class GearCollectionEntryViewHolder : BaseModelEntryViewHolder<T, GearCollection, GearCollectionEntry<T>>
         {
             protected override int NoItemsResource => Resource.Id.no_gear_collections;
 
@@ -39,8 +43,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
 
             protected override int AddItemDialogTitleResource => Resource.String.label_add_gear_collections;
 
-            protected GearCollectionEntryViewHolder(DataFragment<T> fragment, T item, GearCollectionEntries<T> itemEntries)
-                : base(fragment, item, itemEntries)
+            protected GearCollectionEntryViewHolder(BaseActivity activity, View view)
+                : base(activity, view)
             {
             }
         }
@@ -55,9 +59,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
     {
         public sealed class TripPlanGearCollectionEntryViewHolder : GearCollectionEntryViewHolder
         {
-            public TripPlanGearCollectionEntryViewHolder(DataFragment<TripPlan> fragment, TripPlan item, TripPlanGearCollectionEntries itemEntries)
-                : base(fragment, item, itemEntries)
+            public TripPlanGearCollectionEntryViewHolder(BaseActivity activity, View view)
+                : base(activity, view)
             {
+            }
+
+            public override void DoDataExchange(TripPlan item, ItemEntries<TripPlan, GearCollection, GearCollectionEntry<TripPlan>> itemEntries, DatabaseContext dbContext)
+            {
+                item.SetGearCollections(dbContext, itemEntries.ItemListAdapter?.Items);
             }
         }
 

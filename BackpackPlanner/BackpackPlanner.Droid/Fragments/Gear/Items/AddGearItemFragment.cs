@@ -14,17 +14,15 @@
    limitations under the License.
 */
 
-using System;
 using System.Threading.Tasks;
 
-using Android.OS;
 using Android.Views;
-using Android.Widget;
 
 using EnergonSoftware.BackpackPlanner.DAL;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items;
-using EnergonSoftware.BackpackPlanner.Units.Currency;
-using EnergonSoftware.BackpackPlanner.Units.Units;
+using EnergonSoftware.BackpackPlanner.Droid.Activities;
+using EnergonSoftware.BackpackPlanner.Droid.Views;
+using EnergonSoftware.BackpackPlanner.Droid.Views.Gear;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
 {
@@ -34,98 +32,19 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
 
         protected override int TitleResource => Resource.String.title_add_gear_item;
 
-#region Controls
-        private Android.Support.Design.Widget.TextInputLayout _gearItemNameEditText;
-        private Android.Support.Design.Widget.TextInputLayout _gearItemMakeEditText;
-        private Android.Support.Design.Widget.TextInputLayout _gearItemModelEditText;
-        private Android.Support.Design.Widget.TextInputLayout _gearItemWebsiteEditText;
-        private RadioGroup _gearItemCarriedRadioGroup;
-        private Android.Support.V7.Widget.SwitchCompat _gearItemConsumableSwitch;
-        private Android.Support.Design.Widget.TextInputLayout _gearItemConsumedEditText;
-        private Android.Support.Design.Widget.TextInputLayout _gearItemWeightEditText;
-        private Android.Support.Design.Widget.TextInputLayout _gearItemCostEditText;
-        private Android.Support.Design.Widget.TextInputLayout _gearItemNoteEditText;
-#endregion
-
-        public override void OnViewCreated(View view, Bundle savedInstanceState)
-        {
-            base.OnViewCreated(view, savedInstanceState);
-
-            _gearItemNameEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_name);
-            _gearItemMakeEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_make);
-            _gearItemModelEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_model);
-            _gearItemWebsiteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_website);
-            _gearItemCarriedRadioGroup = view.FindViewById<RadioGroup>(Resource.Id.gear_item_carried);
-            _gearItemConsumableSwitch = view.FindViewById<Android.Support.V7.Widget.SwitchCompat>(Resource.Id.gear_item_consumable);
-            _gearItemConsumedEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_consumed);
-            _gearItemWeightEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_weight);
-            _gearItemCostEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_cost);
-            _gearItemNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_note);
-
-            _gearItemConsumableSwitch.CheckedChange += (sender, args) => {
-                _gearItemConsumedEditText.Visibility = args.IsChecked ? ViewStates.Visible : ViewStates.Gone;
-            };
-
-            _gearItemWeightEditText.Hint = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_gear_item_weight),
-                BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(true)
-            );
-
-            _gearItemCostEditText.Hint = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_gear_item_cost),
-                BaseActivity.BackpackPlannerState.Settings.Currency.GetCurrencyString()
-            );
-        }
-
-        protected override void UpdateView()
-        {
-        }
-
         protected override GearItem CreateItem()
         {
             return new GearItem();
         }
 
+        protected override BaseModelViewHolder<GearItem> CreateViewHolder(BaseActivity activity, View view)
+        {
+            return new GearItemViewHolder(activity, view);
+        }
+
         protected override async Task AddItemAsync(DatabaseContext dbContext)
         {
             await dbContext.GearItems.AddAsync(Item).ConfigureAwait(false);
-        }
-
-        protected override async Task DoDataExchange(DatabaseContext dbContext)
-        {
-            Item.Name = _gearItemNameEditText.EditText.Text;
-            Item.Make = _gearItemMakeEditText.EditText.Text;
-            Item.Model = _gearItemModelEditText.EditText.Text;
-            Item.Url = _gearItemWebsiteEditText.EditText.Text;
-            Item.SetWeightInUnits(BaseActivity.BackpackPlannerState.Settings, Convert.ToSingle(_gearItemWeightEditText.EditText.Text));
-            Item.SetCostInCurrency(BaseActivity.BackpackPlannerState.Settings, Convert.ToSingle(_gearItemCostEditText.EditText.Text));
-            Item.Note = _gearItemNoteEditText.EditText.Text;
-
-            int carriedSelectionResId = _gearItemCarriedRadioGroup.CheckedRadioButtonId;
-            switch(carriedSelectionResId)
-            {
-            case Resource.Id.gear_item_carried_carried:
-                Item.Carried = GearCarried.Carried;
-                break;
-            case Resource.Id.gear_item_carried_worn:
-                Item.Carried = GearCarried.Worn;
-                break;
-            case Resource.Id.gear_item_carried_not_carried:
-                Item.Carried = GearCarried.NotCarried;
-                break;
-            }
-
-            await Task.Delay(0).ConfigureAwait(false);
-        }
-
-        protected override bool Validate()
-        {
-            bool valid = true;
-
-            if(string.IsNullOrWhiteSpace(_gearItemNameEditText.EditText.Text)) {
-                _gearItemNameEditText.EditText.Error = "A name is required!";
-                valid = false;                
-            }
-
-            return valid;
         }
     }
 }

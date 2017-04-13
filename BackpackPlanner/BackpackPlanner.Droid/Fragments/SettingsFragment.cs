@@ -32,7 +32,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
     {
         public BaseActivity BaseActivity => (BaseActivity)Activity;
 
-#region Controls
+        // TODO: this could use a ViewHolder
+
         private Android.Support.V7.Preferences.PreferenceCategory _personalInformationCategory;
         //private Android.Support.V7.Preferences.EditTextPreference _namePreference;
         //private Android.Support.V7.Preferences.EditTextPreference _birthDatePreference;
@@ -43,7 +44,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         private Android.Support.V7.Preferences.PreferenceCategory _unitsCategory;
         private Android.Support.V7.Preferences.ListPreference _unitSystemPreference;
         private Android.Support.V7.Preferences.ListPreference _currencyPreference;
-#endregion
 
         public override void OnCreatePreferences(Bundle savedInstanceState, string rootKey)
         {

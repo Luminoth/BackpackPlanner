@@ -35,7 +35,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             base.OnViewCreated(view, savedInstanceState);
 
             Button buttonFeedback = view.FindViewById<Button>(Resource.Id.button_feedback);
-            buttonFeedback.Click += (sender, args) => {
+            buttonFeedback.Click += (sender, args) => 
+            {
                 ((HockeyAppManager)BaseActivity.BackpackPlannerState.PlatformHockeyAppManager).ShowFeedback(Activity);
             };
         }

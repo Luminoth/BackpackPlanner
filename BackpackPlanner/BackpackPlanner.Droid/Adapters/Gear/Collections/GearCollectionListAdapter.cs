@@ -43,49 +43,46 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Collections
             private readonly TextView _textViewWeight;
             private readonly TextView _textViewCost;
 
-            public GearCollectionViewHolder(View itemView, BaseModelRecyclerListAdapter<GearCollection> adapter)
-                : base(itemView, adapter)
+            public GearCollectionViewHolder(View view, BaseRecyclerListAdapter<GearCollection> adapter)
+                : base(view, adapter)
             {
-                _textViewSystems = itemView.FindViewById<TextView>(Resource.Id.view_gear_collection_systems);
-                _textViewItems = itemView.FindViewById<TextView>(Resource.Id.view_gear_collection_items);
-                _textViewWeight = itemView.FindViewById<TextView>(Resource.Id.view_gear_collection_weight);
-                _textViewCost = itemView.FindViewById<TextView>(Resource.Id.view_gear_collection_cost);
+                _textViewSystems = view.FindViewById<TextView>(Resource.Id.view_gear_collection_systems);
+                _textViewItems = view.FindViewById<TextView>(Resource.Id.view_gear_collection_items);
+                _textViewWeight = view.FindViewById<TextView>(Resource.Id.view_gear_collection_weight);
+                _textViewCost = view.FindViewById<TextView>(Resource.Id.view_gear_collection_cost);
             }
 
             protected override Android.Support.V4.App.Fragment CreateViewItemFragment()
             {
-                return new ViewGearCollectionFragment
-                {
-                    Item = ListItem
-                };
+                return new ViewGearCollectionFragment(Item);
             }
 
-            protected override void UpdateView()
+            public override void UpdateView(GearCollection gearCollection)
             {
-                base.UpdateView();
+                base.UpdateView(gearCollection);
 
-                _textViewSystems.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_gear_collection_systems),
-                    ListItem.GearSystems.Count
+                _textViewSystems.Text = Java.Lang.String.Format(BaseActivity.Resources.GetString(Resource.String.label_view_gear_collection_systems),
+                    gearCollection.GearSystems.Count
                 );
 
-                _textViewItems.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_gear_collection_items),
-                    ListItem.GearItems.Count, ListItem.GetTotalGearItemCount()
+                _textViewItems.Text = Java.Lang.String.Format(BaseActivity.Resources.GetString(Resource.String.label_view_gear_collection_items),
+                    gearCollection.GearItems.Count, gearCollection.GetTotalGearItemCount()
                 );
 
-                int weightInUnits = (int)ListItem.GetTotalWeightInUnits(Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings);
-                _textViewWeight.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_gear_collection_weight),
-                    weightInUnits, Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(weightInUnits != 1)
+                int weightInUnits = (int)gearCollection.GetTotalWeightInUnits(BaseActivity.BackpackPlannerState.Settings);
+                _textViewWeight.Text = Java.Lang.String.Format(BaseActivity.Resources.GetString(Resource.String.label_view_gear_collection_weight),
+                    weightInUnits, BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(weightInUnits != 1)
                 );
 
-                string formattedCost = ListItem.GetTotalCostInCurrency(Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings).ToString("C", CultureInfo.CurrentCulture);
-                string formattedCostPerWeight = ListItem.GetCostInCurrencyPerWeightInUnits(Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings).ToString("C", CultureInfo.CurrentCulture);
-                _textViewCost.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_gear_collection_cost),
-                    formattedCost, formattedCostPerWeight, Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(false)
+                string formattedCost = gearCollection.GetTotalCostInCurrency(BaseActivity.BackpackPlannerState.Settings).ToString("C", CultureInfo.CurrentCulture);
+                string formattedCostPerWeight = gearCollection.GetCostInCurrencyPerWeightInUnits(BaseActivity.BackpackPlannerState.Settings).ToString("C", CultureInfo.CurrentCulture);
+                _textViewCost.Text = Java.Lang.String.Format(BaseActivity.Resources.GetString(Resource.String.label_view_gear_collection_cost),
+                    formattedCost, formattedCostPerWeight, BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(false)
                 );
             }
         }
 
-        public override int LayoutResource => Resource.Layout.view_gear_collection;
+        protected override int LayoutResource => Resource.Layout.view_gear_collection;
 
         public GearCollectionListAdapter(ListItemsFragment<GearCollection> fragment)
             : base(fragment)
@@ -114,9 +111,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Collections
             return items;
         }
 
-        protected override BaseViewHolder CreateViewHolder(View itemView)
+        protected override BaseViewHolder CreateViewHolder(View view, BaseRecyclerListAdapter<GearCollection> adapter)
         {
-            return new GearCollectionViewHolder(itemView, this);
+            return new GearCollectionViewHolder(view, adapter);
         }
     }
 }

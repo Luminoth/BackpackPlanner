@@ -17,17 +17,21 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using Android.Views;
+
+using EnergonSoftware.BackpackPlanner.DAL;
 using EnergonSoftware.BackpackPlanner.DAL.Models;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Meals;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans;
-using EnergonSoftware.BackpackPlanner.Droid.Fragments;
+using EnergonSoftware.BackpackPlanner.Droid.Activities;
+using EnergonSoftware.BackpackPlanner.Droid.Views;
 
-namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
+namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Meals
 {
     public abstract class MealEntries<T> : ItemEntries<T, Meal, MealEntry<T> >
         where T: BaseModel<T>, new()
     {
-        public abstract class MealEntryViewHolder : DataFragment<T>.ItemEntryViewHolder<Meal, MealEntry<T>>
+        public abstract class MealEntryViewHolder : BaseModelEntryViewHolder<T, Meal, MealEntry<T>>
         {
             protected override int NoItemsResource => Resource.Id.no_meals;
 
@@ -39,8 +43,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
 
             protected override int AddItemDialogTitleResource => Resource.String.label_add_meals;
 
-            protected MealEntryViewHolder(DataFragment<T> fragment, T item, MealEntries<T> itemEntries)
-                : base(fragment, item, itemEntries)
+            protected MealEntryViewHolder(BaseActivity activity, View view)
+                : base(activity, view)
             {
             }
         }
@@ -55,9 +59,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
     {
         public sealed class TripPlanMealEntryViewHolder : MealEntryViewHolder
         {
-            public TripPlanMealEntryViewHolder(DataFragment<TripPlan> fragment, TripPlan item, TripPlanMealEntries itemEntries)
-                : base(fragment, item, itemEntries)
+            public TripPlanMealEntryViewHolder(BaseActivity activity, View view)
+                : base(activity, view)
             {
+            }
+
+            public override void DoDataExchange(TripPlan item, ItemEntries<TripPlan, Meal, MealEntry<TripPlan>> itemEntries, DatabaseContext dbContext)
+            {
+                item.SetMeals(dbContext, itemEntries.ItemListAdapter?.Items);
             }
         }
 

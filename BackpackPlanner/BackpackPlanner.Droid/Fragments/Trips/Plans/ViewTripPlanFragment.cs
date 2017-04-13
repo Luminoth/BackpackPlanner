@@ -14,24 +14,24 @@
    limitations under the License.
 */
 
-using System;
-using System.Globalization;
 using System.Threading.Tasks;
 
 using Android.App;
 using Android.OS;
 using Android.Views;
 
-using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.DAL;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans;
+using EnergonSoftware.BackpackPlanner.Droid.Activities;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Systems;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals;
 using EnergonSoftware.BackpackPlanner.Droid.DAL.Gear;
-using EnergonSoftware.BackpackPlanner.Droid.Fragments.Util;
+using EnergonSoftware.BackpackPlanner.Droid.DAL.Meals;
 using EnergonSoftware.BackpackPlanner.Droid.Util;
+using EnergonSoftware.BackpackPlanner.Droid.Views;
+using EnergonSoftware.BackpackPlanner.Droid.Views.Trips;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -39,100 +39,52 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
 {
     public sealed class ViewTripPlanFragment : ViewItemFragment<TripPlan>
     {
-        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(ViewTripPlanFragment));
-
         protected override int LayoutResource => Resource.Layout.fragment_view_trip_plan;
 
         protected override int TitleResource => Resource.String.title_view_trip_plan;
 
-#region Controls
-        private Android.Support.Design.Widget.TextInputLayout _tripPlanNameEditText;
-        private Android.Support.Design.Widget.TextInputLayout _tripPlanStartDateText;
-        private Android.Support.Design.Widget.TextInputLayout _tripPlanEndDateText;
-
+        private TripPlanGearCollectionEntries _gearCollectionEntries;
         private TripPlanGearCollectionEntries.TripPlanGearCollectionEntryViewHolder _gearCollectionEntryViewHolder;
+
+        private TripPlanGearSystemEntries _gearSystemEntries;
         private TripPlanGearSystemEntries.TripPlanGearSystemEntryViewHolder _gearSystemEntryViewHolder;
+
+        private TripPlanGearItemEntries _gearItemEntries;
         private TripPlanGearItemEntries.TripPlanGearItemEntryViewHolder _gearItemEntryViewHolder;
+
+        private TripPlanMealEntries _mealEntries;
         private TripPlanMealEntries.TripPlanMealEntryViewHolder _mealEntryViewHolder;
 
-        private Android.Support.Design.Widget.TextInputLayout _tripPlanNoteEditText;
-#endregion
-
-        private TripPlanGearCollectionEntries _gearCollectionEntries;
-        private TripPlanGearSystemEntries _gearSystemEntries;
-        private TripPlanGearItemEntries _gearItemEntries;
-        private TripPlanMealEntries _mealEntries;
+        public ViewTripPlanFragment(TripPlan tripPlan)
+            : base(tripPlan)
+        {
+        }
 
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
             _gearCollectionEntries = new TripPlanGearCollectionEntries(Item);
-            _gearCollectionEntryViewHolder = new TripPlanGearCollectionEntries.TripPlanGearCollectionEntryViewHolder(this, Item, _gearCollectionEntries);
-
             _gearSystemEntries = new TripPlanGearSystemEntries(Item);
-            _gearSystemEntryViewHolder = new TripPlanGearSystemEntries.TripPlanGearSystemEntryViewHolder(this, Item, _gearSystemEntries);
-
             _gearItemEntries = new TripPlanGearItemEntries(Item);
-            _gearItemEntryViewHolder = new TripPlanGearItemEntries.TripPlanGearItemEntryViewHolder(this, Item, _gearItemEntries);
-
             _mealEntries = new TripPlanMealEntries(Item);
-            _mealEntryViewHolder = new TripPlanMealEntries.TripPlanMealEntryViewHolder(this, Item, _mealEntries);
         }
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
             base.OnViewCreated(view, savedInstanceState);
 
-            _tripPlanNameEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.trip_plan_name);
-            _tripPlanNameEditText.EditText.Text = Item.Name;
+            _gearCollectionEntries.ItemListAdapter = new GearCollectionEntryListAdapter<TripPlan>(BaseActivity);
+            _gearCollectionEntryViewHolder = new TripPlanGearCollectionEntries.TripPlanGearCollectionEntryViewHolder(BaseActivity, view);
 
-            _tripPlanStartDateText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.trip_plan_startdate);
-            _tripPlanStartDateText.EditText.Text = Item.StartDate.ToString("yyyy-MM-dd", CultureInfo.CurrentCulture);
-            _tripPlanStartDateText.EditText.Click += (sender, args) => {
-                DateTime dateTime = DateTime.Now;
-                try {
-                    dateTime = Convert.ToDateTime(_tripPlanStartDateText.EditText.Text);
-                } catch(FormatException) {
-                }
+            _gearSystemEntries.ItemListAdapter = new GearSystemEntryListAdapter<TripPlan>(BaseActivity);
+            _gearSystemEntryViewHolder = new TripPlanGearSystemEntries.TripPlanGearSystemEntryViewHolder(BaseActivity, view);
 
-                DatePickerFragment picker = new DatePickerFragment(dateTime);
-                picker.DateSetEvent += (s, a) => {
-                    _tripPlanStartDateText.EditText.Text = a.Date.ToString("yyyy-MM-dd", CultureInfo.CurrentCulture);
-                };
-                picker.Show(Activity.SupportFragmentManager, null);
-            };
+            _gearItemEntries.ItemListAdapter = new GearItemEntryListAdapter<TripPlan>(BaseActivity);
+            _gearItemEntryViewHolder = new TripPlanGearItemEntries.TripPlanGearItemEntryViewHolder(BaseActivity, view);
 
-            _tripPlanEndDateText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.trip_plan_enddate);
-            _tripPlanEndDateText.EditText.Text = Item.EndDate.ToString("yyyy-MM-dd", CultureInfo.CurrentCulture);
-            _tripPlanEndDateText.EditText.Click += (sender, args) => {
-                DateTime dateTime = DateTime.Now;
-                try {
-                    dateTime = Convert.ToDateTime(_tripPlanEndDateText.EditText.Text);
-                } catch(FormatException) {
-                }
-
-                DatePickerFragment picker = new DatePickerFragment(dateTime);
-                picker.DateSetEvent += (s, a) => {
-                    _tripPlanEndDateText.EditText.Text = a.Date.ToString("yyyy-MM-dd", CultureInfo.CurrentCulture);
-                };
-                picker.Show(Activity.SupportFragmentManager, null);
-            };
-
-            _gearCollectionEntries.ItemListAdapter = new GearCollectionEntryListAdapter<TripPlan>(this);
-            _gearCollectionEntryViewHolder.OnViewCreated(view, _gearCollectionEntries.ItemListAdapter);
-
-            _gearSystemEntries.ItemListAdapter = new GearSystemEntryListAdapter<TripPlan>(this);
-            _gearSystemEntryViewHolder.OnViewCreated(view, _gearSystemEntries.ItemListAdapter);
-
-            _gearItemEntries.ItemListAdapter = new GearItemEntryListAdapter<TripPlan>(this);
-            _gearItemEntryViewHolder.OnViewCreated(view, _gearItemEntries.ItemListAdapter);
-
-            _mealEntries.ItemListAdapter = new MealEntryListAdapter<TripPlan>(this);
-            _mealEntryViewHolder.OnViewCreated(view, _mealEntries.ItemListAdapter);
-
-            _tripPlanNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.trip_plan_note);
-            _tripPlanNoteEditText.EditText.Text = Item.Note;
+            _mealEntries.ItemListAdapter = new MealEntryListAdapter<TripPlan>(BaseActivity);
+            _mealEntryViewHolder = new TripPlanMealEntries.TripPlanMealEntryViewHolder(BaseActivity, view);
         }
 
         public override void OnResume()
@@ -152,10 +104,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
 
                     Activity.RunOnUiThread(() =>
                     {
-                        SetItemEntryList(Item, _gearCollectionEntries);
-                        SetItemEntryList(Item, _gearSystemEntries);
-                        SetItemEntryList(Item, _gearItemEntries);
-                        SetItemEntryList(Item, _mealEntries);
+                        _gearCollectionEntryViewHolder.SetItemEntryList(_gearCollectionEntries);
+                        _gearSystemEntryViewHolder.SetItemEntryList(_gearSystemEntries);
+                        _gearItemEntryViewHolder.SetItemEntryList(_gearItemEntries);
+                        _mealEntryViewHolder.SetItemEntryList(_mealEntries);
 
                         progressDialog.Dismiss();
 
@@ -167,49 +119,52 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
 
         protected override void UpdateView()
         {
-            _gearCollectionEntryViewHolder.UpdateView();
-            _gearSystemEntryViewHolder.UpdateView();
-            _gearItemEntryViewHolder.UpdateView();
-            _mealEntryViewHolder.UpdateView();
+            base.UpdateView();
+
+            _gearCollectionEntryViewHolder.UpdateView(_gearCollectionEntries);
+            _gearSystemEntryViewHolder.UpdateView(_gearSystemEntries);
+            _gearItemEntryViewHolder.UpdateView(_gearItemEntries);
+            _mealEntryViewHolder.UpdateView(_mealEntries);
         }
 
-        protected override async Task DoDataExchange(DatabaseContext dbContext)
+        protected override BaseModelViewHolder<TripPlan> CreateViewHolder(BaseActivity activity, View view)
         {
-            Item.Name = _tripPlanNameEditText.EditText.Text;
-
-            try {
-                Item.StartDate = Convert.ToDateTime(_tripPlanStartDateText.EditText.Text);
-            } catch(FormatException) {
-                Logger.Error("Error parsing start date!");
-            }
-
-            try {
-                Item.EndDate = Convert.ToDateTime(_tripPlanEndDateText.EditText.Text);
-            } catch(FormatException) {
-                Logger.Error("Error parsing end date!");
-            }
-
-            Item.SetGearCollections(dbContext, _gearCollectionEntries.ItemListAdapter?.Items);
-            Item.SetGearSystems(dbContext, _gearSystemEntries.ItemListAdapter?.Items);
-            Item.SetGearItems(dbContext, _gearItemEntries.ItemListAdapter?.Items);
-            Item.SetMeals(dbContext, _mealEntries.ItemListAdapter?.Items);
-
-            Item.Note = _tripPlanNoteEditText.EditText.Text;
-
-            await Task.Delay(0).ConfigureAwait(false);
+            return new TripPlanViewHolder(activity, view);
         }
 
         protected override bool Validate()
         {
-            bool valid = true;
-
-            if(string.IsNullOrWhiteSpace(_tripPlanNameEditText.EditText.Text)) {
-                _tripPlanNameEditText.EditText.Error = "A name is required!";
-                valid = false;                
+            if(!base.Validate()) {
+                return false;
             }
 
+            if(!_gearCollectionEntryViewHolder.Validate()) {
+                return false;
+            }
 
-            return valid;
+            if(!_gearSystemEntryViewHolder.Validate()) {
+                return false;
+            }
+
+            if(!_gearItemEntryViewHolder.Validate()) {
+                return false;
+            }
+
+            if(!_mealEntryViewHolder.Validate()) {
+                return false;
+            }
+
+            return true;
+        }
+
+        protected override void DoDataExchange(DatabaseContext dbContext)
+        {
+            base.DoDataExchange(dbContext);
+
+            _gearCollectionEntryViewHolder.DoDataExchange(Item, _gearCollectionEntries, dbContext);
+            _gearSystemEntryViewHolder.DoDataExchange(Item, _gearSystemEntries, dbContext);
+            _gearItemEntryViewHolder.DoDataExchange(Item, _gearItemEntries, dbContext);
+            _mealEntryViewHolder.DoDataExchange(Item, _mealEntries, dbContext);
         }
     }
 }

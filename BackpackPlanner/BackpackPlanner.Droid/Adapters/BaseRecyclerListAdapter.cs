@@ -22,13 +22,15 @@ using Android.Gms.Ads;
 using Android.Views;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
+using EnergonSoftware.BackpackPlanner.Droid.Activities;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 
 using JetBrains.Annotations;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 {
-    public abstract class BaseRecyclerListAdapter<T> : Android.Support.V7.Widget.RecyclerView.Adapter where T: class
+    public abstract class BaseRecyclerListAdapter<T> : Android.Support.V7.Widget.RecyclerView.Adapter
+        where T: class
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(BaseRecyclerListAdapter<T>));
 
@@ -44,35 +46,24 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 #endif
         private const int HalfAdFrequencey = AdFrequency / 2;
 
-#region View Holder Types
+#region View Holders
         protected abstract class BaseViewHolder : Android.Support.V7.Widget.RecyclerView.ViewHolder
         {
+            protected BaseActivity BaseActivity => Adapter.Fragment.BaseActivity;
+
+            protected RecyclerFragment Fragment => Adapter.Fragment;
+
             protected BaseRecyclerListAdapter<T> Adapter { get; }
 
-            [CanBeNull]
-            private T _listItem;
+            protected T Item { get; private set; }
 
-            [CanBeNull]
-            public T ListItem
+            public virtual void UpdateView(T item)
             {
-                get => _listItem;
-
-                set
-                {
-                    _listItem = value;
-                    if(null == _listItem) {
-                        Logger.Error("Null list item found!");
-                    }
-                    UpdateView();
-                }
+                Item = item;
             }
 
-            protected virtual void UpdateView()
-            {
-            }
-
-            protected BaseViewHolder(View itemView, BaseRecyclerListAdapter<T> adapter)
-                : base(itemView)
+            protected BaseViewHolder(View view, BaseRecyclerListAdapter<T> adapter)
+                : base(view)
             {
                 Adapter = adapter;
             }
@@ -82,15 +73,15 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
         {
             private readonly ViewGroup _adCardView;
 
-            public AdViewHolder(View itemView, BaseRecyclerListAdapter<T> adapter)
-                : base(itemView, adapter)
+            public AdViewHolder(View view, BaseRecyclerListAdapter<T> adapter)
+                : base(view, adapter)
             {
-                _adCardView = itemView.FindViewById<Android.Support.V7.Widget.CardView>(Resource.Id.view_ad);
+                _adCardView = view.FindViewById<Android.Support.V7.Widget.CardView>(Resource.Id.view_ad);
             }
 
-            protected override void UpdateView()
+            public override void UpdateView(T item)
             {
-                base.UpdateView();
+                //base.UpdateView(item);
 
                 _adCardView.RemoveAllViews();
 
@@ -129,9 +120,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
         }
 #endregion
 
-        public RecyclerFragment Fragment { get; }
+        protected RecyclerFragment Fragment { get; }
 
-        public abstract int LayoutResource { get; }
+        protected abstract int LayoutResource { get; }
 
         public override int ItemCount => ProcessedListItems.Count;
 
@@ -170,16 +161,16 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 #region ViewHolder
         private BaseViewHolder CreateAdViewHolder(ViewGroup parent)
         {
-            View itemView = LayoutInflater.From(parent.Context).Inflate(Resource.Layout.view_ad, parent, false);
-            return new AdViewHolder(itemView, this);
+            View view = LayoutInflater.From(parent.Context).Inflate(Resource.Layout.view_ad, parent, false);
+            return new AdViewHolder(view, this);
         }
 
-        protected abstract BaseViewHolder CreateViewHolder(View itemView);
+        protected abstract BaseViewHolder CreateViewHolder(View view, BaseRecyclerListAdapter<T> adapter);
 
         private BaseViewHolder CreateItemViewHolder(ViewGroup parent)
         {
-            View itemView = LayoutInflater.From(parent.Context).Inflate(LayoutResource, parent, false);
-            return CreateViewHolder(itemView);
+            View view = LayoutInflater.From(parent.Context).Inflate(LayoutResource, parent, false);
+            return CreateViewHolder(view, this);
         }
 
         public override Android.Support.V7.Widget.RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
@@ -197,14 +188,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
         private void BindAdViewHolder(Android.Support.V7.Widget.RecyclerView.ViewHolder holder)
         {
             BaseViewHolder baseViewHolder = (BaseViewHolder)holder;
-            baseViewHolder.ListItem = null;
+            baseViewHolder.UpdateView(null);
         }
 
         private void BindItemViewHolder(Android.Support.V7.Widget.RecyclerView.ViewHolder holder, int position)
         {
             BaseViewHolder baseViewHolder = (BaseViewHolder)holder;
             T item = ProcessedListItems.ElementAt(position);
-            baseViewHolder.ListItem = item;
+            baseViewHolder.UpdateView(item);
         }
 
         public override void OnBindViewHolder(Android.Support.V7.Widget.RecyclerView.ViewHolder holder, int position)

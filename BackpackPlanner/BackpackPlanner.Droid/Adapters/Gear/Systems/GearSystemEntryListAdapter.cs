@@ -21,72 +21,72 @@ using Android.Widget;
 
 using EnergonSoftware.BackpackPlanner.DAL.Models;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems;
-using EnergonSoftware.BackpackPlanner.Droid.Fragments;
+using EnergonSoftware.BackpackPlanner.Droid.Activities;
+using EnergonSoftware.BackpackPlanner.Droid.Views;
 using EnergonSoftware.BackpackPlanner.Units.Units;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Systems
 {
-    public sealed class GearSystemEntryListAdapter<T>
-        : BaseModelEntryListViewAdapter<GearSystemEntry<T>, T, GearSystem>
-            where T: BaseModel<T>, new()
+    public sealed class GearSystemEntryListAdapter<T> : BaseModelEntryListViewAdapter<GearSystemEntry<T>, T, GearSystem>
+        where T: BaseModel<T>, new()
     {
-        private sealed class GearSystemEntryViewHolder : ViewHolder
+        private sealed class GearSystemEntryViewHolder : BaseViewHolder<GearSystemEntry<T>>
         {
             private readonly TextView _textViewName;
             private readonly TextView _textViewTotalWeight;
             private readonly Android.Support.Design.Widget.TextInputLayout _editTextQuantity;
 
-            public GearSystemEntryViewHolder(View itemView, GearSystemEntryListAdapter<T> adapter)
-                : base(itemView, adapter)
+            public GearSystemEntryViewHolder(View view, BaseActivity activity)
+                : base(activity)
             {
-                _textViewName = itemView.FindViewById<TextView>(Resource.Id.view_gear_system_name);
-                _textViewTotalWeight = itemView.FindViewById<TextView>(Resource.Id.view_gear_system_total_weight);
+                _textViewName = view.FindViewById<TextView>(Resource.Id.view_gear_system_name);
+                _textViewTotalWeight = view.FindViewById<TextView>(Resource.Id.view_gear_system_total_weight);
 
-                _editTextQuantity = itemView.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.view_gear_system_quantity);
+                _editTextQuantity = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.view_gear_system_quantity);
                 _editTextQuantity.EditText.AfterTextChanged += (sender, args) =>
                 {
-                    UpdateTotalWeight();
+                    UpdateTotalWeight(Item);
                 };
             }
 
-            protected override void UpdateView()
+            public override void UpdateView(GearSystemEntry<T> item)
             {
-                base.UpdateView();
+                base.UpdateView(item);
 
-                _textViewName.Text = ListItem.Model.Name;
-                _editTextQuantity.EditText.Text = ListItem.Count.ToString();
+                _textViewName.Text = item.Model.Name;
+                _editTextQuantity.EditText.Text = item.Count.ToString();
 
-                UpdateTotalWeight();
+                UpdateTotalWeight(item);
             }
 
-            private void UpdateTotalWeight()
+            private void UpdateTotalWeight(GearSystemEntry<T> item)
             {
-                ListItem.Count = string.IsNullOrWhiteSpace(_editTextQuantity.EditText.Text)
+                item.Count = string.IsNullOrWhiteSpace(_editTextQuantity.EditText.Text)
                     ? 0
                     : Convert.ToInt32(_editTextQuantity.EditText.Text);
 
-                int totalWeightInUnits = (int)ListItem.GetTotalWeightInUnits(Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings);
-                _textViewTotalWeight.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_gear_item_total_weight),
-                    totalWeightInUnits, Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(totalWeightInUnits != 1)
+                int totalWeightInUnits = (int)item.GetTotalWeightInUnits(BaseActivity.BackpackPlannerState.Settings);
+                _textViewTotalWeight.Text = Java.Lang.String.Format(BaseActivity.Resources.GetString(Resource.String.label_view_gear_item_total_weight),
+                    totalWeightInUnits, BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(totalWeightInUnits != 1)
                 );
             }
         }
 
         public override int LayoutResource => Resource.Layout.view_gear_system_entry;
 
-        public GearSystemEntryListAdapter(BaseFragment fragment)
-            : base(fragment)
+        public GearSystemEntryListAdapter(BaseActivity activity)
+            : base(activity)
         {
         }
 
-        public GearSystemEntryListAdapter(BaseFragment fragment, GearSystemEntry<T>[] items)
-            : base(fragment, items)
+        public GearSystemEntryListAdapter(BaseActivity activity, GearSystemEntry<T>[] items)
+            : base(activity, items)
         {
         }
 
-        protected override ViewHolder CreateViewHolder(View itemView)
+        protected override BaseViewHolder<GearSystemEntry<T>> CreateViewHolder(View view)
         {
-            return new GearSystemEntryViewHolder(itemView, this);
+            return new GearSystemEntryViewHolder(view, BaseActivity);
         }
     }
 }

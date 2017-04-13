@@ -40,11 +40,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         private T _item, _workingItem;
 
-        public T Item
+        public override T Item
         {
             get => _workingItem;
 
-            set
+            protected set
             {
                 _item = value;
                 _workingItem = _item?.DeepCopy();
@@ -68,7 +68,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                     {
                         int count;
                         using(DatabaseContext dbContext = BaseActivity.BackpackPlannerState.DatabaseState.CreateContext()) {
-                            await DoDataExchange(dbContext).ConfigureAwait(false);
+                            DoDataExchange(dbContext);
 
                             try {
                                 Logger.Info($"Saving {typeof(T)}...");
@@ -109,6 +109,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             deleteItemButton.Click += (sender, args) =>
             {
             };
+        }
+
+        protected ViewItemFragment(T item)
+        {
+            Item = item;
         }
     }
 }

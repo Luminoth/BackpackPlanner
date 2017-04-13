@@ -33,9 +33,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme")]
     public sealed class BackpackPlannerActivity : BaseActivity, View.IOnClickListener
     {
-#region Controls
+        // TODO: this could use a ViewHolder
+
         private readonly NavigationDrawerManager _navigationDrawerManager = new NavigationDrawerManager();
-#endregion
 
 #region Activity Lifecycle
         protected override void OnCreate(Bundle savedInstanceState)

@@ -78,11 +78,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         protected BaseModelRecyclerListAdapter<T> Adapter { get; private set; } 
 
-#region Controls
         private TextView _noItemsTextView;
 
         public Spinner SortItemsSpinner { get; private set; }
-#endregion
 
         protected abstract Android.Support.V4.App.Fragment CreateAddItemFragment();
 
@@ -103,12 +101,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             SortItemsSpinner.ItemSelected += Adapter.SortByItemSelectedEventHander;
 
             Button whatIsAButton = view.FindViewById<Button>(WhatIsAnItemButtonResource);
-            whatIsAButton.Click += (sender, args) => {
+            whatIsAButton.Click += (sender, args) =>
+            {
                 DialogUtil.ShowOkAlert(Activity, WhatIsAnItemTextResource, WhatIsAnItemTitleResource);
             };
 
             Android.Support.Design.Widget.FloatingActionButton addItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(AddItemResource);
-            addItemButton.Click += (sender, args) => {
+            addItemButton.Click += (sender, args) =>
+            {
                 TransitionToFragment(Resource.Id.frame_content, CreateAddItemFragment(), null);
             };
         }

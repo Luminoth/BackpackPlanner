@@ -75,10 +75,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         protected override bool CanExport => false;
 
-#region Controls
+        // TODO: this could use a ViewHolder
+
         private ListView _logTextListView;
         private ArrayAdapter<LogMessageEvent> _logTextAdapter;
-#endregion
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {

@@ -14,13 +14,12 @@
    limitations under the License.
 */
 
-using System.Threading.Tasks;
-
-using Android.OS;
 using Android.Views;
 
-using EnergonSoftware.BackpackPlanner.DAL;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Itineraries;
+using EnergonSoftware.BackpackPlanner.Droid.Activities;
+using EnergonSoftware.BackpackPlanner.Droid.Views;
+using EnergonSoftware.BackpackPlanner.Droid.Views.Trips;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries
 {
@@ -30,44 +29,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries
 
         protected override int TitleResource => Resource.String.title_view_trip_itinerary;
 
-#region Controls
-        private Android.Support.Design.Widget.TextInputLayout _tripItineraryNameEditText;
-        private Android.Support.Design.Widget.TextInputLayout _tripItineraryNoteEditText;
-#endregion
-
-        public override void OnViewCreated(View view, Bundle savedInstanceState)
-        {
-            base.OnViewCreated(view, savedInstanceState);
-
-            _tripItineraryNameEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.trip_itinerary_name);
-            _tripItineraryNameEditText.EditText.Text = Item.Name;
-
-            _tripItineraryNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.trip_itinerary_note);
-            _tripItineraryNoteEditText.EditText.Text = Item.Note;
-        }
-
-        protected override void UpdateView()
+        public ViewTripItineraryFragment(TripItinerary tripItinerary)
+            : base(tripItinerary)
         {
         }
 
-        protected override async Task DoDataExchange(DatabaseContext dbContext)
+        protected override BaseModelViewHolder<TripItinerary> CreateViewHolder(BaseActivity activity, View view)
         {
-            Item.Name = _tripItineraryNameEditText.EditText.Text;
-            Item.Note = _tripItineraryNoteEditText.EditText.Text;
-
-            await Task.Delay(0).ConfigureAwait(false);
-        }
-
-        protected override bool Validate()
-        {
-            bool valid = true;
-
-            if(string.IsNullOrWhiteSpace(_tripItineraryNameEditText.EditText.Text)) {
-                _tripItineraryNameEditText.EditText.Error = "A name is required!";
-                valid = false;                
-            }
-
-            return valid;
+            return new TripItineraryViewHolder(activity, view);
         }
     }
 }

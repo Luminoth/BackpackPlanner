@@ -14,165 +14,50 @@
    limitations under the License.
 */
 
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-
+using Android.OS;
 using Android.Views;
-using Android.Widget;
 
-using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.DAL;
 using EnergonSoftware.BackpackPlanner.DAL.Models;
-using EnergonSoftware.BackpackPlanner.Droid.Adapters;
-using EnergonSoftware.BackpackPlanner.Droid.DAL;
-using EnergonSoftware.BackpackPlanner.Droid.Util;
+using EnergonSoftware.BackpackPlanner.Droid.Activities;
+using EnergonSoftware.BackpackPlanner.Droid.Views;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 {
     /// <summary>
     /// Helper for the data entry fragments
     /// </summary>
-    public abstract class DataFragment<T> : BaseFragment where T: BaseModel<T>, new()
+    public abstract class DataFragment<T> : BaseFragment
+        where T: BaseModel<T>, new()
     {
-        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(DataFragment<T>));
+        public abstract T Item { get; protected set; }
 
-        public abstract class ItemEntryViewHolder<TI, TIE>
-            where TI: BaseModel<TI>, IBackpackPlannerItem, new()
-            where TIE: BaseModelEntry<TIE, T, TI>, new()
+        private BaseModelViewHolder<T> _viewHolder;
+
+        protected abstract BaseModelViewHolder<T> CreateViewHolder(BaseActivity activity, View view);
+
+        public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
-            protected abstract int NoItemsResource { get; }
+            base.OnViewCreated(view, savedInstanceState);
 
-            protected abstract int NoItemsAddedResource { get; }
-
-            protected abstract int ItemListAdapterResource { get; }
-
-            protected abstract int AddItemButtonResource { get; }
-
-            protected abstract int AddItemDialogTitleResource { get; }
-
-#region Controls
-            private TextView _noItemsTextView;
-            private TextView _noItemsAddedTextView;
-            private ListView _itemListView;
-            private Android.Support.Design.Widget.FloatingActionButton _addItemButton;
-#endregion
-
-            private readonly DataFragment<T> _fragment;
-
-            private readonly T _item;
-
-            private readonly ItemEntries<T, TI, TIE> _itemEntires;
-
-            public void OnViewCreated(View view, IListAdapter itemListAdapter)
-            {
-                _noItemsTextView = view.FindViewById<TextView>(NoItemsResource);
-                _noItemsAddedTextView = view.FindViewById<TextView>(NoItemsAddedResource);
-
-                _itemListView = view.FindViewById<ListView>(ItemListAdapterResource);
-                _itemListView.Adapter = itemListAdapter;
-
-                _addItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(AddItemButtonResource);
-                _addItemButton.Click += AddItemButtonClickEventHandler;
-            }
-
-            public void UpdateView()
-            {
-                bool hasItems = null != _itemEntires.Items && _itemEntires.Items.Any();
-                bool hasItemsAdded = _itemEntires.EntryCount > 0;
-
-                _noItemsTextView.Visibility = hasItems ? ViewStates.Gone : ViewStates.Visible;
-                _noItemsAddedTextView.Visibility =  hasItemsAdded ? ViewStates.Gone : ViewStates.Visible;
-                _itemListView.Visibility = hasItemsAdded ? ViewStates.Visible : ViewStates.Gone;
-                _addItemButton.Visibility = hasItems ? ViewStates.Visible : ViewStates.Gone;
-            }
-
-            private void AddItemButtonClickEventHandler(object sender, EventArgs args)
-            {
-                DialogUtil.ShowMultiChoiceAlertWithSearch(_fragment.Activity, AddItemDialogTitleResource,
-                    _itemEntires.ItemNames, _itemEntires.SelectedItems,
-                    (a, b) =>
-                    {
-                        _itemEntires.ItemListAdapter?.Filter.InvokeFilter(b.NewText, new FilterListener<TIE>(_itemEntires.ItemListAdapter));
-                    },
-                    (a, b) =>
-                    {
-                        _fragment.UpdateItemEntryList(_item, _itemEntires, b.Which, b.IsChecked);
-                    }
-                );
-            }
-
-            protected ItemEntryViewHolder(DataFragment<T> fragment, T item, ItemEntries<T, TI, TIE> itemEntries)
-            {
-                _fragment = fragment;
-                _item = item;
-                _itemEntires = itemEntries;
-            }
+            _viewHolder = CreateViewHolder(BaseActivity, view);
         }
 
-        protected sealed class FilterListener<TE> : Java.Lang.Object, Filter.IFilterListener
+        protected override void UpdateView()
         {
-            private readonly BaseListViewAdapter<TE> _adapter;
+            base.UpdateView();
 
-            public FilterListener(BaseListViewAdapter<TE> adapter)
-            {
-                _adapter = adapter;
-            }
-
-            public void OnFilterComplete(int count)
-            {
-                // TODO: need a method to build an IComparator
-                //_adapter.Sort();
-            }
+            _viewHolder.UpdateView(Item);
         }
 
-        protected void SetItemEntryList<TI, TE>(T model, ItemEntries<T, TI, TE> itemEntry)
-            where TI: BaseModel<TI>, IBackpackPlannerItem, new()
-            where TE: BaseModelEntry<TE, T, TI>, new()
+        protected virtual bool Validate()
         {
-            for(int i=0; i<itemEntry.ItemCount; ++i) {
-                TI item = itemEntry.Items?[i];
-                if(null == item) {
-                    Logger.Error($"Found null item at index {i} while setting item entries!");
-                    continue;
-                }
-
-                TE entry = itemEntry.GetItemEntry(item);
-                if(null != entry) {
-                    itemEntry.SelectItem(i, true);
-                    itemEntry.ItemListAdapter?.AddItem(entry);
-                }
-            }
+            return _viewHolder.Validate();
         }
 
-        protected void UpdateItemEntryList<TI, TE>(T model, ItemEntries<T, TI, TE> itemEntry, int index, bool isSelected)
-            where TI: BaseModel<TI>, IBackpackPlannerItem, new()
-            where TE: BaseModelEntry<TE, T, TI>, new()
+        protected virtual void DoDataExchange(DatabaseContext dbContext)
         {
-            TI item = itemEntry.Items?[index];
-            if(null == item) {
-                Logger.Error($"Found null item at index {index} while updating item entries!");
-                return;
-            }
-
-            itemEntry.SelectItem(index, isSelected);
-            if(isSelected) {
-                TE entry = new TE
-                {
-                    Count = 1
-                };
-                entry.SetModel(item);
-
-                itemEntry.ItemListAdapter?.AddItem(entry);
-            } else {
-                itemEntry.ItemListAdapter?.RemoveItem(item);
-            }
-
-            UpdateView();
+            _viewHolder.DoDataExchange(Item, dbContext);
         }
-
-        protected abstract bool Validate();
-
-        protected abstract Task DoDataExchange(DatabaseContext dbContext);
     }
 }

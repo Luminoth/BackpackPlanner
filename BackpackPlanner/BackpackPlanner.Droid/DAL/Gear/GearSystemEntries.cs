@@ -17,18 +17,22 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using Android.Views;
+
+using EnergonSoftware.BackpackPlanner.DAL;
 using EnergonSoftware.BackpackPlanner.DAL.Models;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans;
-using EnergonSoftware.BackpackPlanner.Droid.Fragments;
+using EnergonSoftware.BackpackPlanner.Droid.Activities;
+using EnergonSoftware.BackpackPlanner.Droid.Views;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
 {
     public abstract class GearSystemEntries<T> : ItemEntries<T, GearSystem, GearSystemEntry<T>>
         where T: BaseModel<T>, new()
     {
-        public abstract class GearSystemEntryViewHolder : DataFragment<T>.ItemEntryViewHolder<GearSystem, GearSystemEntry<T>>
+        public abstract class GearSystemEntryViewHolder : BaseModelEntryViewHolder<T, GearSystem, GearSystemEntry<T>>
         {
             protected override int NoItemsResource => Resource.Id.no_gear_systems;
 
@@ -40,8 +44,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
 
             protected override int AddItemDialogTitleResource => Resource.String.label_add_gear_systems;
 
-            protected GearSystemEntryViewHolder(DataFragment<T> fragment, T item, GearSystemEntries<T> itemEntries)
-                : base(fragment, item, itemEntries)
+            protected GearSystemEntryViewHolder(BaseActivity activity, View view)
+                : base(activity, view)
             {
             }
         }
@@ -56,9 +60,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
     {
         public sealed class GearCollectionGearSystemEntryViewHolder : GearSystemEntryViewHolder
         {
-            public GearCollectionGearSystemEntryViewHolder(DataFragment<GearCollection> fragment, GearCollection item, GearCollectionGearSystemEntries itemEntries)
-                : base(fragment, item, itemEntries)
+            public GearCollectionGearSystemEntryViewHolder(BaseActivity activity, View view)
+                : base(activity, view)
             {
+            }
+
+            public override void DoDataExchange(GearCollection item, ItemEntries<GearCollection, GearSystem, GearSystemEntry<GearCollection>> itemEntries, DatabaseContext dbContext)
+            {
+                item.SetGearSystems(dbContext, itemEntries.ItemListAdapter?.Items);
             }
         }
 
@@ -77,9 +86,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
     {
         public sealed class TripPlanGearSystemEntryViewHolder : GearSystemEntryViewHolder
         {
-            public TripPlanGearSystemEntryViewHolder(DataFragment<TripPlan> fragment, TripPlan item, TripPlanGearSystemEntries itemEntries)
-                : base(fragment, item, itemEntries)
+            public TripPlanGearSystemEntryViewHolder(BaseActivity activity, View view)
+                : base(activity, view)
             {
+            }
+
+            public override void DoDataExchange(TripPlan item, ItemEntries<TripPlan, GearSystem, GearSystemEntry<TripPlan>> itemEntries, DatabaseContext dbContext)
+            {
+                item.SetGearSystems(dbContext, itemEntries.ItemListAdapter?.Items);
             }
         }
 

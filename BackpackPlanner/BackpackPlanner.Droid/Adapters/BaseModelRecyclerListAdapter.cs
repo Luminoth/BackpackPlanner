@@ -30,13 +30,13 @@ using JetBrains.Annotations;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 {
-    public abstract class BaseModelRecyclerListAdapter<T>
-        : BaseRecyclerListAdapter<T>, IFilterable where T: BaseModel<T>, IBackpackPlannerItem, new()
+    public abstract class BaseModelRecyclerListAdapter<T> : BaseRecyclerListAdapter<T>, IFilterable
+        where T: BaseModel<T>, IBackpackPlannerItem, new()
     {
         protected abstract class BaseModelViewHolder
             : BaseViewHolder, Android.Support.V7.Widget.Toolbar.IOnMenuItemClickListener
         {
-            protected BaseModelRecyclerListAdapter<T> BaseModelAdapter => (BaseModelRecyclerListAdapter<T>)Adapter;
+            protected ListItemsFragment<T> ListItemsFragment => (ListItemsFragment<T>)Fragment;
 
             protected abstract int ToolbarResourceId { get; }
 
@@ -48,13 +48,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
             protected abstract Android.Support.V4.App.Fragment CreateViewItemFragment();
 
-            protected BaseModelViewHolder(View itemView, BaseModelRecyclerListAdapter<T> adapter)
-                : base(itemView, adapter)
+            protected BaseModelViewHolder(View view, BaseRecyclerListAdapter<T> adapter)
+                : base(view, adapter)
             {
                 InitToolbar();
 
-                itemView.Click += (sender, args) => {
-                    Adapter.Fragment.TransitionToFragment(Resource.Id.frame_content, CreateViewItemFragment(), null);
+                view.Click += (sender, args) =>
+                {
+                    Fragment.TransitionToFragment(Resource.Id.frame_content, CreateViewItemFragment(), null);
                 };
             }
 
@@ -65,23 +66,24 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
                 _toolbar.SetOnMenuItemClickListener(this);
             }
 
-            protected override void UpdateView()
+            public override void UpdateView(T item)
             {
-                base.UpdateView();
+                base.UpdateView(item);
 
-                _toolbar.Title = ListItem.Name;
+                _toolbar.Title = Item.Name;
             }
 
             public virtual bool OnMenuItemClick(IMenuItem menuItem)
             {
                 if(DeleteActionResourceId == menuItem.ItemId) {
-                    BaseModelAdapter.ListItemsFragment.DeleteItem(ListItem);
+                    ListItemsFragment.DeleteItem(Item);
                     return true;
                 }
                 return false;
             }
         }
 
+#region Filtering
         private sealed class ItemFilter : Filter
         {
             private readonly BaseModelRecyclerListAdapter<T> _adapter;
@@ -132,6 +134,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
                 _adapter.SortFilteredItems();
             }
         }
+#endregion
 
         public ListItemsFragment<T> ListItemsFragment => (ListItemsFragment<T>)Fragment;
 

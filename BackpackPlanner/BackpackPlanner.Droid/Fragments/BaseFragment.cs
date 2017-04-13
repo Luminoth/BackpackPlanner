@@ -37,7 +37,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         private readonly Stopwatch _startupStopwatch = new Stopwatch();
 #endif
 
-        public BaseActivity BaseActivity => (BaseActivity)Activity;
+        public BackpackPlannerActivity BaseActivity => (BackpackPlannerActivity)Activity;
 
         protected abstract int LayoutResource { get; }
 
@@ -157,7 +157,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         public void TransitionToFragment(int frameResId, Android.Support.V4.App.Fragment fragment, string tags)
         {
-            FragmentTransitionUtil.StackTransition(Activity, FragmentManager.BeginTransaction(), frameResId, fragment, tags);
+            BaseActivity.TransitionToFragment(FragmentManager, frameResId, fragment, tags);
         }
 
         protected virtual void UpdateView()

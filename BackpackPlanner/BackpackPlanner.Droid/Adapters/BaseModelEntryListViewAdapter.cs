@@ -18,15 +18,17 @@ using System.Collections.Generic;
 using System.Linq;
 
 using EnergonSoftware.BackpackPlanner.DAL.Models;
-using EnergonSoftware.BackpackPlanner.Droid.Fragments;
+using EnergonSoftware.BackpackPlanner.Droid.Activities;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 {
-    public abstract class BaseModelEntryListViewAdapter<T, TM, TV>
-        : BaseListViewAdapter<T> where T: BaseModelEntry<T, TM, TV>, new()
-            where TM: BaseModel<TM>, new()
-            where TV: BaseModel<TV>, IBackpackPlannerItem, new()
+    public abstract class BaseModelEntryListViewAdapter<T, TM, TV> : BaseListViewAdapter<T>
+        where T: BaseModelEntry<T, TM, TV>, new()
+        where TM: BaseModel<TM>, new()
+        where TV: BaseModel<TV>, IBackpackPlannerItem, new()
     {
+        protected BaseActivity BaseActivity { get; }
+
         private readonly List<T> _items = new List<T>();
 
         public IReadOnlyCollection<T> Items => _items;
@@ -65,14 +67,16 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
             }
         } 
 
-        protected BaseModelEntryListViewAdapter(BaseFragment fragment)
-            : base(fragment)
+        protected BaseModelEntryListViewAdapter(BaseActivity activity)
+            : base(activity)
         {
+            BaseActivity = activity;
         }
 
-        protected BaseModelEntryListViewAdapter(BaseFragment fragment, T[] items)
-            : base(fragment, items)
+        protected BaseModelEntryListViewAdapter(BaseActivity activity, T[] items)
+            : base(activity, items)
         {
+            BaseActivity = activity;
         }
     }
 }

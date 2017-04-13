@@ -47,71 +47,68 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
             private readonly TextView _textViewCalories;
             private readonly TextView _textViewCost;
 
-            public MealViewHolder(View itemView, BaseModelRecyclerListAdapter<Meal> adapter)
-                : base(itemView, adapter)
+            public MealViewHolder(View view, BaseRecyclerListAdapter<Meal> adapter)
+                : base(view, adapter)
             {
-                _textViewServings = itemView.FindViewById<TextView>(Resource.Id.view_meal_servings);
-                _textViewWeightPerServing = itemView.FindViewById<TextView>(Resource.Id.view_meal_weight_per_serving);
-                _textViewCaloriesPerServing = itemView.FindViewById<TextView>(Resource.Id.view_meal_calories_per_serving);
-                _textViewProteinPerServing = itemView.FindViewById<TextView>(Resource.Id.view_meal_protein_per_serving);
-                _textViewFiberPerServing = itemView.FindViewById<TextView>(Resource.Id.view_meal_fiber_per_serving);
-                _textViewWeight = itemView.FindViewById<TextView>(Resource.Id.view_meal_weight);
-                _textViewCalories = itemView.FindViewById<TextView>(Resource.Id.view_meal_calories);
-                _textViewCost = itemView.FindViewById<TextView>(Resource.Id.view_meal_cost);
+                _textViewServings = view.FindViewById<TextView>(Resource.Id.view_meal_servings);
+                _textViewWeightPerServing = view.FindViewById<TextView>(Resource.Id.view_meal_weight_per_serving);
+                _textViewCaloriesPerServing = view.FindViewById<TextView>(Resource.Id.view_meal_calories_per_serving);
+                _textViewProteinPerServing = view.FindViewById<TextView>(Resource.Id.view_meal_protein_per_serving);
+                _textViewFiberPerServing = view.FindViewById<TextView>(Resource.Id.view_meal_fiber_per_serving);
+                _textViewWeight = view.FindViewById<TextView>(Resource.Id.view_meal_weight);
+                _textViewCalories = view.FindViewById<TextView>(Resource.Id.view_meal_calories);
+                _textViewCost = view.FindViewById<TextView>(Resource.Id.view_meal_cost);
             }
 
             protected override Android.Support.V4.App.Fragment CreateViewItemFragment()
             {
-                return new ViewMealFragment
-                {
-                    Item = ListItem
-                };
+                return new ViewMealFragment(Item);
             }
 
-            protected override void UpdateView()
+            public override void UpdateView(Meal meal)
             {
-                base.UpdateView();
+                base.UpdateView(meal);
 
-                _textViewServings.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_meal_servings),
-                    ListItem.ServingCount, ListItem.MealTime.ToString()
+                _textViewServings.Text = Java.Lang.String.Format(BaseActivity.Resources.GetString(Resource.String.label_view_meal_servings),
+                    meal.ServingCount, meal.MealTime.ToString()
                 );
 
-                int weightInUnitsPerServing = (int)ListItem.GetWeightInUnitsPerServing(Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings);
-                _textViewWeightPerServing.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_meal_weight_per_serving),
-                    weightInUnitsPerServing, Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(weightInUnitsPerServing != 1)
+                int weightInUnitsPerServing = (int)meal.GetWeightInUnitsPerServing(BaseActivity.BackpackPlannerState.Settings);
+                _textViewWeightPerServing.Text = Java.Lang.String.Format(BaseActivity.Resources.GetString(Resource.String.label_view_meal_weight_per_serving),
+                    weightInUnitsPerServing, BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(weightInUnitsPerServing != 1)
                 );
 
-                _textViewCaloriesPerServing.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_meal_calories_per_serving),
-                    (int)ListItem.CaloriesPerServing
+                _textViewCaloriesPerServing.Text = Java.Lang.String.Format(BaseActivity.Resources.GetString(Resource.String.label_view_meal_calories_per_serving),
+                    (int)meal.CaloriesPerServing
                 );
 
-                _textViewProteinPerServing.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_meal_protein_per_serving),
-                    (int)ListItem.ProteinPerServing
+                _textViewProteinPerServing.Text = Java.Lang.String.Format(BaseActivity.Resources.GetString(Resource.String.label_view_meal_protein_per_serving),
+                    (int)meal.ProteinPerServing
                 );
 
-                _textViewFiberPerServing.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_meal_fiber_per_serving),
-                    (int)ListItem.FiberPerServing
+                _textViewFiberPerServing.Text = Java.Lang.String.Format(BaseActivity.Resources.GetString(Resource.String.label_view_meal_fiber_per_serving),
+                    (int)meal.FiberPerServing
                 );                
 
-                int weightInUnits = (int)ListItem.GetWeightInUnits(Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings);
-                _textViewWeight.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_meal_weight),
-                    weightInUnits, Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(weightInUnits != 1)
+                int weightInUnits = (int)meal.GetWeightInUnits(BaseActivity.BackpackPlannerState.Settings);
+                _textViewWeight.Text = Java.Lang.String.Format(BaseActivity.Resources.GetString(Resource.String.label_view_meal_weight),
+                    weightInUnits, BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(weightInUnits != 1)
                 );
 
-                int caloriesPerWeight = (int)ListItem.GetCaloriesPerWeightInUnits(Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings);
-                _textViewCalories.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_meal_calories),
-                    caloriesPerWeight, Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(false)
+                int caloriesPerWeight = (int)meal.GetCaloriesPerWeightInUnits(BaseActivity.BackpackPlannerState.Settings);
+                _textViewCalories.Text = Java.Lang.String.Format(BaseActivity.Resources.GetString(Resource.String.label_view_meal_calories),
+                    caloriesPerWeight, BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(false)
                 );
 
-                string formattedCost = ListItem.GetCostInCurrency(Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings).ToString("C", CultureInfo.CurrentCulture);
-                string formattedCostPerWeight = ListItem.GetCostInCurrencyPerWeightInUnits(Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings).ToString("C", CultureInfo.CurrentCulture);
-                _textViewCost.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_meal_cost),
-                    formattedCost, formattedCostPerWeight, Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(false)
+                string formattedCost = meal.GetCostInCurrency(BaseActivity.BackpackPlannerState.Settings).ToString("C", CultureInfo.CurrentCulture);
+                string formattedCostPerWeight = meal.GetCostInCurrencyPerWeightInUnits(BaseActivity.BackpackPlannerState.Settings).ToString("C", CultureInfo.CurrentCulture);
+                _textViewCost.Text = Java.Lang.String.Format(BaseActivity.Resources.GetString(Resource.String.label_view_meal_cost),
+                    formattedCost, formattedCostPerWeight, BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(false)
                 );
             }
         }
 
-        public override int LayoutResource => Resource.Layout.view_meal;
+        protected override int LayoutResource => Resource.Layout.view_meal;
 
         public MealListAdapter(ListItemsFragment<Meal> fragment)
             : base(fragment)
@@ -140,9 +137,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
             return items;
         }
 
-        protected override BaseViewHolder CreateViewHolder(View itemView)
+        protected override BaseViewHolder CreateViewHolder(View view, BaseRecyclerListAdapter<Meal> adapter)
         {
-            return new MealViewHolder(itemView, this);
+            return new MealViewHolder(view, adapter);
         }
     }
 }

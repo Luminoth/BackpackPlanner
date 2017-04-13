@@ -14,17 +14,12 @@
    limitations under the License.
 */
 
-using System;
-using System.Threading.Tasks;
-
-using Android.OS;
 using Android.Views;
-using Android.Widget;
 
-using EnergonSoftware.BackpackPlanner.DAL;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Meals;
-using EnergonSoftware.BackpackPlanner.Units.Currency;
-using EnergonSoftware.BackpackPlanner.Units.Units;
+using EnergonSoftware.BackpackPlanner.Droid.Activities;
+using EnergonSoftware.BackpackPlanner.Droid.Views;
+using EnergonSoftware.BackpackPlanner.Droid.Views.Meals;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
 {
@@ -34,92 +29,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
 
         protected override int TitleResource => Resource.String.title_view_meal;
 
-#region Controls
-        private Android.Support.Design.Widget.TextInputLayout _mealNameEditText;
-        private Android.Support.Design.Widget.TextInputLayout _mealWebsiteEditText;
-        private Spinner _mealMealTimeSpinner;
-        private Android.Support.Design.Widget.TextInputLayout _mealServingsEditText;
-        private Android.Support.Design.Widget.TextInputLayout _mealWeightEditText;
-        private Android.Support.Design.Widget.TextInputLayout _mealCostEditText;
-        private Android.Support.Design.Widget.TextInputLayout _mealCaloriesEditText;
-        private Android.Support.Design.Widget.TextInputLayout _mealProteinEditText;
-        private Android.Support.Design.Widget.TextInputLayout _mealFiberEditText;
-        private Android.Support.Design.Widget.TextInputLayout _mealNoteEditText;
-#endregion
-
-        public override void OnViewCreated(View view, Bundle savedInstanceState)
-        {
-            base.OnViewCreated(view, savedInstanceState);
-
-            _mealNameEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.meal_name);
-            _mealNameEditText.EditText.Text = Item.Name;
-
-            _mealWebsiteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.meal_website);
-            _mealWebsiteEditText.EditText.Text = Item.Url;
-
-            _mealMealTimeSpinner = view.FindViewById<Spinner>(Resource.Id.meal_mealtime);
-            _mealMealTimeSpinner.SetSelection(((ArrayAdapter)_mealMealTimeSpinner.Adapter).GetPosition(Item.MealTime.ToString()));
-
-            _mealServingsEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.meal_servings);
-            _mealServingsEditText.EditText.Text = Item.ServingCount.ToString();
-
-            _mealWeightEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.meal_weight);
-            _mealWeightEditText.EditText.Text = ((int)Item.GetWeightInUnits(BaseActivity.BackpackPlannerState.Settings)).ToString();
-
-            _mealCostEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.meal_cost);
-            _mealCostEditText.EditText.Text = ((int)Item.GetCostInCurrency(BaseActivity.BackpackPlannerState.Settings)).ToString();
-
-            _mealCaloriesEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.meal_calories);
-            _mealCaloriesEditText.EditText.Text = Item.Calories.ToString();
-
-            _mealProteinEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.meal_protein);
-            _mealProteinEditText.EditText.Text = Item.ProteinInGrams.ToString();
-
-            _mealFiberEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.meal_fiber);
-            _mealFiberEditText.EditText.Text = Item.FiberInGrams.ToString();
-
-            _mealNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.meal_note);
-            _mealNoteEditText.EditText.Text = Item.Note;
-
-            _mealWeightEditText.Hint = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_meal_weight),
-                BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(true)
-            );
-
-            _mealCostEditText.Hint = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_meal_cost),
-                BaseActivity.BackpackPlannerState.Settings.Currency.GetCurrencyString()
-            );
-        }
-
-        protected override void UpdateView()
+        public ViewMealFragment(Meal meal)
+            : base(meal)
         {
         }
 
-        protected override async Task DoDataExchange(DatabaseContext dbContext)
+        protected override BaseModelViewHolder<Meal> CreateViewHolder(BaseActivity activity, View view)
         {
-            Item.Name = _mealNameEditText.EditText.Text;
-            Item.Url = _mealWebsiteEditText.EditText.Text;
-            Item.MealTime = (MealTime)Enum.Parse(typeof(MealTime), _mealMealTimeSpinner.SelectedItem.ToString());
-            Item.ServingCount = Convert.ToInt32(_mealServingsEditText.EditText.Text);
-            Item.SetWeightInUnits(BaseActivity.BackpackPlannerState.Settings, Convert.ToSingle(_mealWeightEditText.EditText.Text));
-            Item.SetCostInCurrency(BaseActivity.BackpackPlannerState.Settings, Convert.ToSingle(_mealCostEditText.EditText.Text));
-            Item.Calories = Convert.ToInt32(_mealCaloriesEditText.EditText.Text);
-            Item.ProteinInGrams = Convert.ToInt32(_mealProteinEditText.EditText.Text);
-            Item.FiberInGrams = Convert.ToInt32(_mealFiberEditText.EditText.Text);
-            Item.Note = _mealNoteEditText.EditText.Text;
-
-            await Task.Delay(0).ConfigureAwait(false);
-        }
-
-        protected override bool Validate()
-        {
-            bool valid = true;
-
-            if(string.IsNullOrWhiteSpace(_mealNameEditText.EditText.Text)) {
-                _mealNameEditText.EditText.Error = "A name is required!";
-                valid = false;                
-            }
-
-            return valid;
+            return new MealViewHolder(activity, view);
         }
     }
 }

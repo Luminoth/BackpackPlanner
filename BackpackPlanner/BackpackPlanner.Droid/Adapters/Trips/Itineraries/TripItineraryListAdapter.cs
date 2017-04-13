@@ -35,26 +35,23 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Itineraries
 
             protected override int DeleteActionResourceId => Resource.Id.action_delete_trip_itinerary;
 
-            public TripItineraryViewHolder(View itemView, BaseModelRecyclerListAdapter<TripItinerary> adapter)
-                : base(itemView, adapter)
+            public TripItineraryViewHolder(View view, BaseRecyclerListAdapter<TripItinerary> adapter)
+                : base(view, adapter)
             {
             }
 
             protected override Android.Support.V4.App.Fragment CreateViewItemFragment()
             {
-                return new ViewTripItineraryFragment
-                {
-                    Item = ListItem
-                };
+                return new ViewTripItineraryFragment(Item);
             }
 
-            protected override void UpdateView()
+            public override void UpdateView(TripItinerary tripItinerary)
             {
-                base.UpdateView();
+                base.UpdateView(tripItinerary);
             }
         }
 
-        public override int LayoutResource => Resource.Layout.view_trip_itinerary;
+        protected override int LayoutResource => Resource.Layout.view_trip_itinerary;
 
         public TripItineraryListAdapter(ListItemsFragment<TripItinerary> fragment)
             : base(fragment)
@@ -71,9 +68,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Itineraries
             return items;
         }
 
-        protected override BaseViewHolder CreateViewHolder(View itemView)
+        protected override BaseViewHolder CreateViewHolder(View view, BaseRecyclerListAdapter<TripItinerary> adapter)
         {
-            return new TripItineraryViewHolder(itemView, this);
+            return new TripItineraryViewHolder(view, adapter);
         }
     }
 }

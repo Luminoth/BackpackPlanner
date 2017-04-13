@@ -17,19 +17,23 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using Android.Views;
+
+using EnergonSoftware.BackpackPlanner.DAL;
 using EnergonSoftware.BackpackPlanner.DAL.Models;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Collections;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans;
-using EnergonSoftware.BackpackPlanner.Droid.Fragments;
+using EnergonSoftware.BackpackPlanner.Droid.Activities;
+using EnergonSoftware.BackpackPlanner.Droid.Views;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
 {
     public abstract class GearItemEntries<T> : ItemEntries<T, GearItem, GearItemEntry<T>>
         where T: BaseModel<T>, new()
     {
-        public abstract class GearItemEntryViewHolder : DataFragment<T>.ItemEntryViewHolder<GearItem, GearItemEntry<T>>
+        public abstract class GearItemEntryViewHolder : BaseModelEntryViewHolder<T, GearItem, GearItemEntry<T>>
         {
             protected override int NoItemsResource => Resource.Id.no_gear_items;
 
@@ -41,8 +45,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
 
             protected override int AddItemDialogTitleResource => Resource.String.label_add_gear_items;
 
-            protected GearItemEntryViewHolder(DataFragment<T> fragment, T item, GearItemEntries<T> itemEntries)
-                : base(fragment, item, itemEntries)
+            protected GearItemEntryViewHolder(BaseActivity activity, View view)
+                : base(activity, view)
             {
             }
         }
@@ -57,9 +61,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
     {
         public sealed class GearSystemGearItemEntryViewHolder : GearItemEntryViewHolder
         {
-            public GearSystemGearItemEntryViewHolder(DataFragment<GearSystem> fragment, GearSystem item, GearSystemGearItemEntries itemEntries)
-                : base(fragment, item, itemEntries)
+            public GearSystemGearItemEntryViewHolder(BaseActivity activity, View view)
+                : base(activity, view)
             {
+            }
+
+            public override void DoDataExchange(GearSystem item, ItemEntries<GearSystem, GearItem, GearItemEntry<GearSystem>> itemEntries, DatabaseContext dbContext)
+            {
+                item.SetGearItems(dbContext, itemEntries.ItemListAdapter?.Items);
             }
         }
 
@@ -78,9 +87,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
     {
         public sealed class GearCollectionGearItemEntryViewHolder : GearItemEntryViewHolder
         {
-            public GearCollectionGearItemEntryViewHolder(DataFragment<GearCollection> fragment, GearCollection item, GearCollectionGearItemEntries itemEntries)
-                : base(fragment, item, itemEntries)
+            public GearCollectionGearItemEntryViewHolder(BaseActivity activity, View view)
+                : base(activity, view)
             {
+            }
+
+            public override void DoDataExchange(GearCollection item, ItemEntries<GearCollection, GearItem, GearItemEntry<GearCollection>> itemEntries, DatabaseContext dbContext)
+            {
+                item.SetGearItems(dbContext, itemEntries.ItemListAdapter?.Items);
             }
         }
 
@@ -99,9 +113,14 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
     {
         public sealed class TripPlanGearItemEntryViewHolder : GearItemEntryViewHolder
         {
-            public TripPlanGearItemEntryViewHolder(DataFragment<TripPlan> fragment, TripPlan item, TripPlanGearItemEntries itemEntries)
-                : base(fragment, item, itemEntries)
+            public TripPlanGearItemEntryViewHolder(BaseActivity activity, View view)
+                : base(activity, view)
             {
+            }
+
+            public override void DoDataExchange(TripPlan item, ItemEntries<TripPlan, GearItem, GearItemEntry<TripPlan>> itemEntries, DatabaseContext dbContext)
+            {
+                item.SetGearItems(dbContext, itemEntries.ItemListAdapter?.Items);
             }
         }
 

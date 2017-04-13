@@ -46,29 +46,26 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items
             private readonly TextView _textViewWeight;
             private readonly TextView _textViewCost;
 
-            public GearItemViewHolder(View itemView, BaseModelRecyclerListAdapter<GearItem> adapter)
-                : base(itemView, adapter)
+            public GearItemViewHolder(View view, BaseRecyclerListAdapter<GearItem> adapter)
+                : base(view, adapter)
             {
-                _textViewMakeModel = itemView.FindViewById<TextView>(Resource.Id.view_gear_item_make_model);
-                _textViewWeightCategory = itemView.FindViewById<TextView>(Resource.Id.view_gear_item_weight_category);
-                _textViewWeight = itemView.FindViewById<TextView>(Resource.Id.view_gear_item_weight);
-                _textViewCost = itemView.FindViewById<TextView>(Resource.Id.view_gear_item_cost);
+                _textViewMakeModel = view.FindViewById<TextView>(Resource.Id.view_gear_item_make_model);
+                _textViewWeightCategory = view.FindViewById<TextView>(Resource.Id.view_gear_item_weight_category);
+                _textViewWeight = view.FindViewById<TextView>(Resource.Id.view_gear_item_weight);
+                _textViewCost = view.FindViewById<TextView>(Resource.Id.view_gear_item_cost);
             }
 
             protected override Android.Support.V4.App.Fragment CreateViewItemFragment()
             {
-                return new ViewGearItemFragment
-                {
-                    Item = ListItem
-                };
+                return new ViewGearItemFragment(Item);
             }
 
-            protected override void UpdateView()
+            public override void UpdateView(GearItem gearItem)
             {
-                base.UpdateView();
+                base.UpdateView(gearItem);
 
-                string makeModel = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_gear_item_make_model),
-                    ListItem.Make, ListItem.Model
+                string makeModel = Java.Lang.String.Format(BaseActivity.Resources.GetString(Resource.String.label_view_gear_item_make_model),
+                    gearItem.Make, gearItem.Model
                 );
 
                 if(string.IsNullOrWhiteSpace(makeModel)) {
@@ -79,31 +76,31 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items
                     _textViewMakeModel.Text = makeModel;
                 }
 
-                WeightCategory weightCategory = ListItem.GetWeightCategory(Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings);
+                WeightCategory weightCategory = gearItem.GetWeightCategory(BaseActivity.BackpackPlannerState.Settings);
                 _textViewWeightCategory.Text = weightCategory.ShortName();
 
                 // TODO: is there any way to turn this into a core-extension?
                 // we would somehow have to convert to the appropriate android color
-                int categoryStickerColor = Android.Support.V4.Content.ContextCompat.GetColor(Adapter.Fragment.Context, Resource.Color.gray);
+                int categoryStickerColor = Android.Support.V4.Content.ContextCompat.GetColor(BaseActivity, Resource.Color.gray);
                 switch(weightCategory)
                 {
                 case WeightCategory.None:
-                    categoryStickerColor = Android.Support.V4.Content.ContextCompat.GetColor(Adapter.Fragment.Context, Resource.Color.gray);
+                    categoryStickerColor = Android.Support.V4.Content.ContextCompat.GetColor(BaseActivity, Resource.Color.gray);
                     break;
                 case WeightCategory.Ultralight:
-                    categoryStickerColor = Android.Support.V4.Content.ContextCompat.GetColor(Adapter.Fragment.Context, Resource.Color.white);
+                    categoryStickerColor = Android.Support.V4.Content.ContextCompat.GetColor(BaseActivity, Resource.Color.white);
                     break;
                 case WeightCategory.Light:
-                    categoryStickerColor = Android.Support.V4.Content.ContextCompat.GetColor(Adapter.Fragment.Context, Resource.Color.cyan);
+                    categoryStickerColor = Android.Support.V4.Content.ContextCompat.GetColor(BaseActivity, Resource.Color.cyan);
                     break;
                 case WeightCategory.Medium:
-                    categoryStickerColor = Android.Support.V4.Content.ContextCompat.GetColor(Adapter.Fragment.Context, Resource.Color.green);
+                    categoryStickerColor = Android.Support.V4.Content.ContextCompat.GetColor(BaseActivity, Resource.Color.green);
                     break;
                 case WeightCategory.Heavy:
-                    categoryStickerColor = Android.Support.V4.Content.ContextCompat.GetColor(Adapter.Fragment.Context, Resource.Color.yellow);
+                    categoryStickerColor = Android.Support.V4.Content.ContextCompat.GetColor(BaseActivity, Resource.Color.yellow);
                     break;
                 case WeightCategory.ExtraHeavy:
-                    categoryStickerColor = Android.Support.V4.Content.ContextCompat.GetColor(Adapter.Fragment.Context, Resource.Color.red);
+                    categoryStickerColor = Android.Support.V4.Content.ContextCompat.GetColor(BaseActivity, Resource.Color.red);
                     break;
                 }
 
@@ -111,20 +108,20 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items
                 categoryStickerDrawable.SetColor(categoryStickerColor);
                 categoryStickerDrawable.SetStroke(5, Color.Black);
 
-                int weightInUnits = (int)ListItem.GetWeightInUnits(Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings);
-                _textViewWeight.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_gear_item_weight),
-                    weightInUnits, Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(weightInUnits != 1)
+                int weightInUnits = (int)gearItem.GetWeightInUnits(BaseActivity.BackpackPlannerState.Settings);
+                _textViewWeight.Text = Java.Lang.String.Format(BaseActivity.Resources.GetString(Resource.String.label_view_gear_item_weight),
+                    weightInUnits, BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(weightInUnits != 1)
                 );
 
-                string formattedCost = ListItem.GetCostInCurrency(Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings).ToString("C", CultureInfo.CurrentCulture);
-                string formattedCostPerWeight = ListItem.GetCostInCurrencyPerWeightInUnits(Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings).ToString("C", CultureInfo.CurrentCulture);
-                _textViewCost.Text = Java.Lang.String.Format(Adapter.Fragment.BaseActivity.Resources.GetString(Resource.String.label_view_gear_item_cost),
-                    formattedCost, formattedCostPerWeight, Adapter.Fragment.BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(false)
+                string formattedCost = gearItem.GetCostInCurrency(BaseActivity.BackpackPlannerState.Settings).ToString("C", CultureInfo.CurrentCulture);
+                string formattedCostPerWeight = gearItem.GetCostInCurrencyPerWeightInUnits(BaseActivity.BackpackPlannerState.Settings).ToString("C", CultureInfo.CurrentCulture);
+                _textViewCost.Text = Java.Lang.String.Format(BaseActivity.Resources.GetString(Resource.String.label_view_gear_item_cost),
+                    formattedCost, formattedCostPerWeight, BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(false)
                 );
             }
         }
 
-        public override int LayoutResource => Resource.Layout.view_gear_item;
+        protected override int LayoutResource => Resource.Layout.view_gear_item;
 
         public GearItemListAdapter(ListItemsFragment<GearItem> fragment)
             : base(fragment)
@@ -148,9 +145,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items
             return items;
         }
 
-        protected override BaseViewHolder CreateViewHolder(View itemView)
+        protected override BaseViewHolder CreateViewHolder(View view, BaseRecyclerListAdapter<GearItem> adapter)
         {
-            return new GearItemViewHolder(itemView, this);
+            return new GearItemViewHolder(view, adapter);
         }
     }
 }

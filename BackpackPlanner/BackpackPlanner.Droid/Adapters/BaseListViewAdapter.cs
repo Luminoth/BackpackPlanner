@@ -14,94 +14,49 @@
    limitations under the License.
 */
 
+using Android.Content;
 using Android.Views;
 using Android.Widget;
 
-using EnergonSoftware.BackpackPlanner.Core.Logging;
-using EnergonSoftware.BackpackPlanner.Droid.Fragments;
-
-using JetBrains.Annotations;
+using EnergonSoftware.BackpackPlanner.Droid.Views;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 {
     public abstract class BaseListViewAdapter<T> : ArrayAdapter<T>
     {
-        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(BaseListViewAdapter<T>));
-
-        protected abstract class ViewHolder : Java.Lang.Object
-        {
-            public View ItemView { get; }
-
-            protected BaseListViewAdapter<T> Adapter { get; }
-
-            [CanBeNull]
-            private T _listItem;
-
-            [CanBeNull]
-            public T ListItem
-            {
-                get => _listItem;
-
-                set
-                {
-                    _listItem = value;
-                    if(null == _listItem) {
-                        Logger.Error("Null list item found!");
-                    }
-                    UpdateView();
-                }
-            }
-
-            protected virtual void UpdateView()
-            {
-            }
-                
-            protected ViewHolder(View itemView, BaseListViewAdapter<T> adapter)
-            {
-                ItemView = itemView;
-                Adapter = adapter;
-            }
-        }
-
-        public BaseFragment Fragment { get; }
-
         public abstract int LayoutResource { get; }
 
         public override View GetView(int position, View convertView, ViewGroup parent)
         {
-            ViewHolder viewHolder;
+            BaseViewHolder<T> viewHolder;
             if(convertView == null) {
                 convertView = LayoutInflater.From(Context).Inflate(LayoutResource, parent, false);
                 viewHolder = CreateViewHolder(convertView);
                 convertView.Tag = viewHolder;
             } else {
-                viewHolder = (ViewHolder)convertView.Tag;
+                viewHolder = (BaseViewHolder<T>)convertView.Tag;
             }
 
             BindViewHolder(viewHolder, position);
             return convertView;
         }
 
-#region ViewHolder
-        protected abstract ViewHolder CreateViewHolder(View itemView);
+        protected abstract BaseViewHolder<T> CreateViewHolder(View view);
 
-        private void BindViewHolder(ViewHolder viewHolder, int position)
+        private void BindViewHolder(BaseViewHolder<T> viewHolder, int position)
         {
             T item = GetItem(position);
-            viewHolder.ListItem = item;
-        }
-#endregion
-
-        protected BaseListViewAdapter(BaseFragment fragment)
-            : base(fragment.Context, 0)
-        {
-            Fragment = fragment;
+            viewHolder.UpdateView(item);
         }
 
-        protected BaseListViewAdapter(BaseFragment fragment, T[] items)
-            : base(fragment.Context, 0, items)
+        protected BaseListViewAdapter(Context context)
+            : base(context, 0)
         {
-            Fragment = fragment;
+        }
+
+        protected BaseListViewAdapter(Context context, T[] items)
+            : base(context, 0, items)
+        {
         }
     }
 }

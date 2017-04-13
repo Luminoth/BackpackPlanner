@@ -36,7 +36,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
         protected override bool CanExport => false;
 
-        public T Item { get; private set; }
+        public override T Item { get; protected set; }
 
         protected abstract T CreateItem();
 
@@ -66,7 +66,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                     {
                         int count;
                         using(DatabaseContext dbContext = BaseActivity.BackpackPlannerState.DatabaseState.CreateContext()) {
-                            await DoDataExchange(dbContext).ConfigureAwait(false);
+                            DoDataExchange(dbContext);
 
                             try {
                                 Logger.Info($"Adding {typeof(T)}...");

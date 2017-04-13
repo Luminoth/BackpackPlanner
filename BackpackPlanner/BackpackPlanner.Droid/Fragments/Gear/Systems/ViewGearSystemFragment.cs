@@ -22,9 +22,12 @@ using Android.Views;
 
 using EnergonSoftware.BackpackPlanner.DAL;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems;
+using EnergonSoftware.BackpackPlanner.Droid.Activities;
 using EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items;
 using EnergonSoftware.BackpackPlanner.Droid.DAL.Gear;
 using EnergonSoftware.BackpackPlanner.Droid.Util;
+using EnergonSoftware.BackpackPlanner.Droid.Views;
+using EnergonSoftware.BackpackPlanner.Droid.Views.Gear;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -36,36 +39,27 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 
         protected override int TitleResource => Resource.String.title_view_gear_system;
 
-#region Controls
-        private Android.Support.Design.Widget.TextInputLayout _gearSystemNameEditText;
-
+        private GearSystemGearItemEntries _gearItemEntries;
         private GearSystemGearItemEntries.GearSystemGearItemEntryViewHolder _gearItemEntryViewHolder;
 
-        private Android.Support.Design.Widget.TextInputLayout _gearSystemNoteEditText;
-#endregion
-
-        private GearSystemGearItemEntries _gearItemEntries;
+        public ViewGearSystemFragment(GearSystem gearSystem)
+            : base(gearSystem)
+        {
+        }
 
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
             _gearItemEntries = new GearSystemGearItemEntries(Item);
-            _gearItemEntryViewHolder = new GearSystemGearItemEntries.GearSystemGearItemEntryViewHolder(this, Item, _gearItemEntries);
         }
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
             base.OnViewCreated(view, savedInstanceState);
 
-            _gearSystemNameEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_system_name);
-            _gearSystemNameEditText.EditText.Text = Item.Name;
-
-            _gearSystemNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_system_note);
-            _gearSystemNoteEditText.EditText.Text = Item.Note;
-
-            _gearItemEntries.ItemListAdapter = new GearItemEntryListAdapter<GearSystem>(this);
-            _gearItemEntryViewHolder.OnViewCreated(view, _gearItemEntries.ItemListAdapter);
+            _gearItemEntries.ItemListAdapter = new GearItemEntryListAdapter<GearSystem>(BaseActivity);
+            _gearItemEntryViewHolder = new GearSystemGearItemEntries.GearSystemGearItemEntryViewHolder(BaseActivity, view);
         }
 
         public override void OnResume()
@@ -82,7 +76,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 
                     Activity.RunOnUiThread(() =>
                     {
-                        SetItemEntryList(Item, _gearItemEntries);
+                        _gearItemEntryViewHolder.SetItemEntryList(_gearItemEntries);
 
                         progressDialog.Dismiss();
 
@@ -94,28 +88,34 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 
         protected override void UpdateView()
         {
-            _gearItemEntryViewHolder.UpdateView();
+            base.UpdateView();
+
+            _gearItemEntryViewHolder.UpdateView(_gearItemEntries);
         }
 
-        protected override async Task DoDataExchange(DatabaseContext dbContext)
+        protected override BaseModelViewHolder<GearSystem> CreateViewHolder(BaseActivity activity, View view)
         {
-            Item.Name = _gearSystemNameEditText.EditText.Text;
-            Item.SetGearItems(dbContext, _gearItemEntries.ItemListAdapter?.Items);
-            Item.Note = _gearSystemNoteEditText.EditText.Text;
-
-            await Task.Delay(0).ConfigureAwait(false);
+            return new GearSystemViewHolder(activity, view);
         }
 
         protected override bool Validate()
         {
-            bool valid = true;
-
-            if(string.IsNullOrWhiteSpace(_gearSystemNameEditText.EditText.Text)) {
-                _gearSystemNameEditText.EditText.Error = "A name is required!";
-                valid = false;                
+            if(!base.Validate()) {
+                return false;
             }
 
-            return valid;
+            if(!_gearItemEntryViewHolder.Validate()) {
+                return false;
+            }
+
+            return true;
+        }
+
+        protected override void DoDataExchange(DatabaseContext dbContext)
+        {
+            base.DoDataExchange(dbContext);
+
+            _gearItemEntryViewHolder.DoDataExchange(Item, _gearItemEntries, dbContext);
         }
     }
 }

@@ -340,7 +340,7 @@
     <Compile Include="DAL\Gear\GearCollectionEntries.cs" />
     <Compile Include="DAL\Gear\GearItemEntries.cs" />
     <Compile Include="DAL\Gear\GearSystemEntries.cs" />
-    <Compile Include="DAL\Gear\MealEntries.cs" />
+    <Compile Include="DAL\Meals\MealEntries.cs" />
     <Compile Include="DAL\ItemEntries.cs" />
     <Compile Include="Fragments\AddItemFragment.cs" />
     <Compile Include="Fragments\BaseFragment.cs" />
@@ -383,6 +383,9 @@
     <Compile Include="Permissions\DroidPermissionRequest.cs" />
     <Compile Include="Permissions\DroidPermissionRequestFactory.cs" />
     <Compile Include="TestDevices.cs" />
+    <Compile Include="Views\BaseModelEntryViewHolder.cs" />
+    <Compile Include="Views\BaseModelViewHolder.cs" />
+    <Compile Include="Views\BaseViewHolder.cs" />
     <Compile Include="Views\CircleViewPagerIndicator.cs" />
     <Compile Include="Util\DialogUtil.cs" />
     <Compile Include="Util\DrawerToggle.cs" />
@@ -397,6 +400,12 @@
     <Compile Include="Util\ObjectWrapper.cs" />
     <Compile Include="Util\SnackbarUtil.cs" />
     <Compile Include="Util\TextUtil.cs" />
+    <Compile Include="Views\Gear\GearCollectionViewHolder.cs" />
+    <Compile Include="Views\Gear\GearItemViewHolder.cs" />
+    <Compile Include="Views\Gear\GearSystemViewHolder.cs" />
+    <Compile Include="Views\Meals\MealViewHolder.cs" />
+    <Compile Include="Views\Trips\TripItineraryViewHolder.cs" />
+    <Compile Include="Views\Trips\TripPlanViewHolder.cs" />
     <Compile Include="Views\ViewPagerIndicator.cs" />
   </ItemGroup>
   <ItemGroup>
