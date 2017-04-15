@@ -108,8 +108,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
                 adView.AdSize = new AdSize((int)(fragment.Layout.Width / density), 150);
 
                 AdRequest.Builder builder = new AdRequest.Builder();
-                TestDevices.AddTestDevices(builder);
-                TestDevices.SetGender(fragment.BaseActivity.BackpackPlannerState.PersonalInformation, builder);
+                BaseActivity.AdManager.AddTestDevices(builder);
+                BaseActivity.AdManager.SetGender(fragment.BaseActivity.BackpackPlannerState.PersonalInformation, builder);
                 AdRequest adRequest = builder.Build();
 
                 Logger.Debug($"Loading ad, is test device: {adRequest.IsTestDevice(fragment.Context)}");

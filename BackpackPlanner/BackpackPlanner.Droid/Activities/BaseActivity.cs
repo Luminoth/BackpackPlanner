@@ -21,7 +21,6 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Android.Content.PM;
-using Android.Gms.Ads;
 using Android.OS;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
@@ -51,6 +50,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 
         public BackpackPlannerState BackpackPlannerState => _backpackPlannerStateInstance;
 
+        public AdManager AdManager { get; } = new AdManager();
+
 #if DEBUG_LIFECYCLE
         private readonly Stopwatch _startupStopwatch = new Stopwatch();
 #endif
@@ -76,7 +77,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             Logger.Debug($"Android ID: {Android.Provider.Settings.Secure.GetString(ContentResolver, Android.Provider.Settings.Secure.AndroidId)}");
 #endif
 
-            InitAds();
+            AdManager.Initialize(this);
 
             InitPermissions();
 
@@ -244,20 +245,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             requests.Add(permissionRequest);
         }
 #endregion
-
-        [Conditional("ENABLE_ADS")]
-        private void InitAds()
-        {
-            Logger.Info("Initializing ads...");
-            MobileAds.Initialize(this, GetString(
-                #if DISTRIBUTION
-                    Resource.String.ad_app_id
-                #else
-                    Resource.String.test_ad_app_id
-                #endif
-                )
-            );
-        }
 
         private void InitPermissions()
         {

@@ -382,7 +382,7 @@
     <Compile Include="DroidSettingsManager.cs" />
     <Compile Include="Permissions\DroidPermissionRequest.cs" />
     <Compile Include="Permissions\DroidPermissionRequestFactory.cs" />
-    <Compile Include="TestDevices.cs" />
+    <Compile Include="AdManager.cs" />
     <Compile Include="Util\BackPressedListener.cs" />
     <Compile Include="Views\BaseModelEntryViewHolder.cs" />
     <Compile Include="Views\BaseModelViewHolder.cs" />

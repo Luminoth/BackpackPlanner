@@ -14,6 +14,9 @@
    limitations under the License.
 */
 
+using System.Diagnostics;
+
+using Android.App;
 using Android.Gms.Ads;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
@@ -22,30 +25,46 @@ using EnergonSoftware.BackpackPlanner.DAL.Models.Personal;
 
 namespace EnergonSoftware.BackpackPlanner.Droid
 {
-    public static class TestDevices
+    public sealed class AdManager
     {
-        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(TestDevices));
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(AdManager));
 
-        public static readonly string[] TestDeviceIds = 
+        private static readonly string[] TestDeviceIds = 
         {
             // add test devices here (do not commit to github)
+
+// Shane's Nexus 6p
+"9a295123f5418647"
         };
 
-        private static readonly Hasher Hasher = new MD5();
+        private readonly Hasher _hasher = new MD5();
 
-        // TODO: this could be an extension (given a more appropriate name)
-        public static AdRequest.Builder AddTestDevices(AdRequest.Builder builder)
+        [Conditional("ENABLE_ADS")]
+        public void Initialize(Activity activity)
+        {
+            Logger.Info("Initializing ads...");
+            MobileAds.Initialize(activity, activity.GetString(
+                #if DISTRIBUTION
+                    Resource.String.ad_app_id
+                #else
+                    Resource.String.test_ad_app_id
+                #endif
+                )
+            );
+        }
+
+        public AdRequest.Builder AddTestDevices(AdRequest.Builder builder)
         {
             builder.AddTestDevice(AdRequest.DeviceIdEmulator);
             foreach(string testDeviceId in TestDeviceIds) {
-                string deviceIdHash = Hasher.HashHexAsync(testDeviceId).Result.ToUpper();
+                string deviceIdHash = _hasher.HashHexAsync(testDeviceId).Result.ToUpper();
                 Logger.Debug($"Adding test device hash {deviceIdHash}");
                 builder.AddTestDevice(deviceIdHash);
             }
             return builder;
         }
 
-        public static AdRequest.Builder SetGender(PersonalInformation personalInfo, AdRequest.Builder builder)
+        public AdRequest.Builder SetGender(PersonalInformation personalInfo, AdRequest.Builder builder)
         {
             switch(personalInfo.Sex)
             {
