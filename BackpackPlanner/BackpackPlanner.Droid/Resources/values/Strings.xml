@@ -38,6 +38,9 @@
     <string name="title_error_adding_item">Error Adding Item</string>
     <string name="message_error_adding_item">There was an error adding the item!</string>
 
+    <string name="title_error_saving_item">Error Saving Item</string>
+    <string name="message_error_saving_item">There was an error saving the item!</string>
+
     <string name="title_error_deleting_item">Error Deleting Item</string>
     <string name="message_error_deleting_item">There was an error deleting the item!</string>
 
