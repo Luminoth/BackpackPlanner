@@ -14,17 +14,14 @@
    limitations under the License.
 */
 
-using System;
 using System.Threading.Tasks;
 
-using Android.App;
 using Android.OS;
 using Android.Views;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.DAL;
 using EnergonSoftware.BackpackPlanner.DAL.Models;
-using EnergonSoftware.BackpackPlanner.Droid.Util;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -58,42 +55,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             Android.Support.Design.Widget.FloatingActionButton saveItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(Resource.Id.fab_save);
             saveItemButton.Click += (sender, args) =>
             {
-                if(!Validate()) {
-                    return;
-                }
-
-                ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_saving_item, false, true);
-
-                Task.Run(async () =>
+                Save(() =>
                     {
-                        int count;
-                        using(DatabaseContext dbContext = BaseActivity.BackpackPlannerState.DatabaseState.CreateContext()) {
-                            DoDataExchange(dbContext);
-
-                            try {
-                                Logger.Info($"Saving {typeof(T)}...");
-                                dbContext.Entry(Item).State = EntityState.Modified;
-                                count = await dbContext.SaveChangesAsync().ConfigureAwait(false);
-                            } catch(Exception e) {
-                                Logger.Error($"Error saving {typeof(T)}: {e.Message}", e);
-
-                                count = -1;
-                            }
-                        }
-
-                        Activity.RunOnUiThread(() =>
-                        {
-                            progressDialog.Dismiss();
-
-                            if(count < 0) {
-                                DialogUtil.ShowOkAlert(Activity, Resource.String.message_error_saving_item, Resource.String.title_error_saving_item);
-                                return;
-                            }
-
-                            SnackbarUtil.ShowSnackbar(View, Resource.String.label_saved_item, Android.Support.Design.Widget.Snackbar.LengthShort);
-
-                            Activity.SupportFragmentManager.PopBackStack();
-                        });
+                        Activity.SupportFragmentManager.PopBackStack();
                     }
                 );
             };
@@ -101,15 +65,31 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             Android.Support.Design.Widget.FloatingActionButton resetItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(Resource.Id.fab_reset);
             resetItemButton.Click += (sender, args) =>
             {
-                _workingItem = _item?.DeepCopy();
-
-                UpdateView();
+                Reset();
             };
 
             Android.Support.Design.Widget.FloatingActionButton deleteItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(Resource.Id.fab_delete);
             deleteItemButton.Click += (sender, args) =>
             {
             };
+        }
+
+        protected override async Task<bool> DoSave(DatabaseContext dbContext)
+        {
+            if(!await base.DoSave(dbContext).ConfigureAwait(false)) {
+                return false;
+            }
+
+            Logger.Info($"Saving {typeof(T)}...");
+            dbContext.Entry(Item).State = EntityState.Modified;
+            return await dbContext.SaveChangesAsync().ConfigureAwait(false) > 0;    // TODO: should be >= ?
+        }
+
+        protected override void Reset()
+        {
+            _workingItem = _item?.DeepCopy();
+
+            base.Reset();
         }
 
         protected ViewItemFragment(T item)

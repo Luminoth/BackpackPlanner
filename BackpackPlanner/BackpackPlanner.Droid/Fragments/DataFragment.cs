@@ -14,12 +14,18 @@
    limitations under the License.
 */
 
+using System;
+using System.Threading.Tasks;
+
+using Android.App;
 using Android.OS;
 using Android.Views;
 
+using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.DAL;
 using EnergonSoftware.BackpackPlanner.DAL.Models;
 using EnergonSoftware.BackpackPlanner.Droid.Activities;
+using EnergonSoftware.BackpackPlanner.Droid.Util;
 using EnergonSoftware.BackpackPlanner.Droid.Views;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
@@ -30,6 +36,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
     public abstract class DataFragment<T> : BaseFragment
         where T: BaseModel<T>, new()
     {
+        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(DataFragment<T>));
+
         public abstract T Item { get; protected set; }
 
         private BaseModelViewHolder<T> _viewHolder;
@@ -55,9 +63,65 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             return _viewHolder.Validate();
         }
 
+        protected bool Save(Action onSuccess=null, Action onFailure=null)
+        {
+            if(!Validate()) {
+                return false;
+            }
+
+            ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_adding_item, false, true);
+
+            Task.Run(async () =>
+                {
+                    bool success;
+                    using(DatabaseContext dbContext = BaseActivity.BackpackPlannerState.DatabaseState.CreateContext()) {
+                        try {
+                            success = await DoSave(dbContext).ConfigureAwait(false);
+                        } catch(Exception e) {
+                            Logger.Error($"Error saving {typeof(T)}: {e.Message}", e);
+                            success = false;
+                        }
+                    }
+
+                    Activity.RunOnUiThread(() =>
+                    {
+                        progressDialog.Dismiss();
+
+                        if(!success) {
+                            DialogUtil.ShowOkAlert(Activity, Resource.String.message_error_adding_item, Resource.String.title_error_adding_item);
+                            onFailure?.Invoke();
+                            return;
+                        }
+
+                        IsDirty = false;
+
+                        SnackbarUtil.ShowSnackbar(View, Resource.String.label_added_item, Android.Support.Design.Widget.Snackbar.LengthShort);
+                        onSuccess?.Invoke();
+                    });
+                }
+            );
+
+            return true;
+        }
+
         protected virtual void DoDataExchange(DatabaseContext dbContext)
         {
             _viewHolder.DoDataExchange(Item, dbContext);
+        }
+
+        protected virtual async Task<bool> DoSave(DatabaseContext dbContext)
+        {
+            DoDataExchange(dbContext);
+await Task.Delay(0).ConfigureAwait(false);
+
+            return true;
+        }
+
+        protected virtual void Reset()
+        {
+            IsDirty = false;
+
+            UpdateView();
         }
     }
 }

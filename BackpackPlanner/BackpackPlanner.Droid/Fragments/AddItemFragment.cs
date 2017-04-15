@@ -14,17 +14,14 @@
    limitations under the License.
 */
 
-using System;
 using System.Threading.Tasks;
 
-using Android.App;
 using Android.OS;
 using Android.Views;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.DAL;
 using EnergonSoftware.BackpackPlanner.DAL.Models;
-using EnergonSoftware.BackpackPlanner.Droid.Util;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 {
@@ -56,41 +53,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             Android.Support.Design.Widget.FloatingActionButton addItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(Resource.Id.fab_add);
             addItemButton.Click += (sender, args) =>
             {
-                if(!Validate()) {
-                    return;
-                }
-
-                ProgressDialog progressDialog = DialogUtil.ShowProgressDialog(Activity, Resource.String.label_adding_item, false, true);
-
-                Task.Run(async () =>
+                Save(() =>
                     {
-                        int count;
-                        using(DatabaseContext dbContext = BaseActivity.BackpackPlannerState.DatabaseState.CreateContext()) {
-                            DoDataExchange(dbContext);
-
-                            try {
-                                Logger.Info($"Adding {typeof(T)}...");
-                                await AddItemAsync(dbContext).ConfigureAwait(false);
-                                count = await dbContext.SaveChangesAsync().ConfigureAwait(false);
-                            } catch(Exception e) {
-                                Logger.Error($"Error adding {typeof(T)}: {e.Message}", e);
-                                count = -1;
-                            }
-                        }
-
-                        Activity.RunOnUiThread(() =>
-                        {
-                            progressDialog.Dismiss();
-
-                            if(count < 1) {
-                                DialogUtil.ShowOkAlert(Activity, Resource.String.message_error_adding_item, Resource.String.title_error_adding_item);
-                                return;
-                            }
-
-                            SnackbarUtil.ShowSnackbar(View, Resource.String.label_added_item, Android.Support.Design.Widget.Snackbar.LengthShort);
-
-                            Activity.SupportFragmentManager.PopBackStack();
-                        });
+                        Activity.SupportFragmentManager.PopBackStack();
                     }
                 );
             };
@@ -98,10 +63,26 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             Android.Support.Design.Widget.FloatingActionButton resetItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(Resource.Id.fab_reset);
             resetItemButton.Click += (sender, args) =>
             {
-                Item = CreateItem();
-
-                UpdateView();
+                Reset();
             };
+        }
+
+        protected override async Task<bool> DoSave(DatabaseContext dbContext)
+        {
+            if(!await base.DoSave(dbContext).ConfigureAwait(false)) {
+                return false;
+            }
+
+            Logger.Info($"Adding {typeof(T)}...");
+            await AddItemAsync(dbContext).ConfigureAwait(false);
+            return await dbContext.SaveChangesAsync().ConfigureAwait(false) > 0;
+        }
+
+        protected override void Reset()
+        {
+            Item = CreateItem();
+
+            base.Reset();
         }
     }
 }
