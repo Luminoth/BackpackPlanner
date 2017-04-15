@@ -4862,8 +4862,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f090011
 			public const int accept = 2131296273;
 			
-			// aapt resource value: 0x7f09009e
-			public const int ad_app_id = 2131296414;
+			// aapt resource value: 0x7f09009c
+			public const int ad_app_id = 2131296412;
 			
 			// aapt resource value: 0x7f09008e
 			public const int app_name = 2131296398;
@@ -5252,8 +5252,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f09016f
 			public const int label_currency = 2131296623;
 			
-			// aapt resource value: 0x7f090094
-			public const int label_delete = 2131296404;
+			// aapt resource value: 0x7f090092
+			public const int label_delete = 2131296402;
 			
 			// aapt resource value: 0x7f0900dd
 			public const int label_deleted_item = 2131296477;
@@ -5267,8 +5267,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0900dc
 			public const int label_deleting_item = 2131296476;
 			
-			// aapt resource value: 0x7f090098
-			public const int label_export = 2131296408;
+			// aapt resource value: 0x7f090096
+			public const int label_export = 2131296406;
 			
 			// aapt resource value: 0x7f090171
 			public const int label_feedback = 2131296625;
@@ -5405,9 +5405,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f09015c
 			public const int label_name = 2131296604;
 			
-			// aapt resource value: 0x7f090092
-			public const int label_no = 2131296402;
-			
 			// aapt resource value: 0x7f09010e
 			public const int label_no_gear_collections = 2131296526;
 			
@@ -5447,8 +5444,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f090141
 			public const int label_no_trip_plans = 2131296577;
 			
-			// aapt resource value: 0x7f090096
-			public const int label_reset = 2131296406;
+			// aapt resource value: 0x7f090094
+			public const int label_reset = 2131296404;
 			
 			// aapt resource value: 0x7f090173
 			public const int label_reset_database = 2131296627;
@@ -5456,8 +5453,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f090172
 			public const int label_reset_ftue = 2131296626;
 			
-			// aapt resource value: 0x7f090093
-			public const int label_save = 2131296403;
+			// aapt resource value: 0x7f090091
+			public const int label_save = 2131296401;
 			
 			// aapt resource value: 0x7f090116
 			public const int label_save_gear_collection = 2131296534;
@@ -5483,11 +5480,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0900e0
 			public const int label_saving_item = 2131296480;
 			
-			// aapt resource value: 0x7f090097
-			public const int label_search = 2131296407;
+			// aapt resource value: 0x7f090095
+			public const int label_search = 2131296405;
 			
-			// aapt resource value: 0x7f09009a
-			public const int label_sort = 2131296410;
+			// aapt resource value: 0x7f090098
+			public const int label_sort = 2131296408;
 			
 			// aapt resource value: 0x7f090136
 			public const int label_trip_itineraries = 2131296566;
@@ -5513,8 +5510,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f09013f
 			public const int label_trip_plans = 2131296575;
 			
-			// aapt resource value: 0x7f090095
-			public const int label_undo = 2131296405;
+			// aapt resource value: 0x7f090093
+			public const int label_undo = 2131296403;
 			
 			// aapt resource value: 0x7f09016c
 			public const int label_unit_system = 2131296620;
@@ -5645,32 +5642,32 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f090140
 			public const int label_what_trip_plan = 2131296576;
 			
-			// aapt resource value: 0x7f090091
-			public const int label_yes = 2131296401;
-			
 			// aapt resource value: 0x7f090046
 			public const int library_name = 2131296326;
 			
-			// aapt resource value: 0x7f0900a6
-			public const int message_error_adding_item = 2131296422;
-			
-			// aapt resource value: 0x7f0900a8
-			public const int message_error_deleting_item = 2131296424;
-			
-			// aapt resource value: 0x7f0900a2
-			public const int message_error_initialization = 2131296418;
-			
 			// aapt resource value: 0x7f0900a4
-			public const int message_error_reading_items = 2131296420;
+			public const int message_error_adding_item = 2131296420;
 			
-			// aapt resource value: 0x7f0900aa
-			public const int message_error_restoring_item = 2131296426;
-			
-			// aapt resource value: 0x7f09009c
-			public const int message_initializing = 2131296412;
+			// aapt resource value: 0x7f0900a6
+			public const int message_error_deleting_item = 2131296422;
 			
 			// aapt resource value: 0x7f0900a0
-			public const int native_ad_unit_id = 2131296416;
+			public const int message_error_initialization = 2131296416;
+			
+			// aapt resource value: 0x7f0900a2
+			public const int message_error_reading_items = 2131296418;
+			
+			// aapt resource value: 0x7f0900a8
+			public const int message_error_restoring_item = 2131296424;
+			
+			// aapt resource value: 0x7f09009a
+			public const int message_initializing = 2131296410;
+			
+			// aapt resource value: 0x7f0900aa
+			public const int message_unsaved_changes = 2131296426;
+			
+			// aapt resource value: 0x7f09009e
+			public const int native_ad_unit_id = 2131296414;
 			
 			// aapt resource value: 0x7f090041
 			public const int password_toggle_content_description = 2131296321;
@@ -5687,8 +5684,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f090045
 			public const int path_password_strike_through = 2131296325;
 			
-			// aapt resource value: 0x7f090099
-			public const int search_hint = 2131296409;
+			// aapt resource value: 0x7f090097
+			public const int search_hint = 2131296407;
 			
 			// aapt resource value: 0x7f090030
 			public const int search_menu_title = 2131296304;
@@ -5726,11 +5723,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f090169
 			public const int summary_weight = 2131296617;
 			
-			// aapt resource value: 0x7f09009d
-			public const int test_ad_app_id = 2131296413;
+			// aapt resource value: 0x7f09009b
+			public const int test_ad_app_id = 2131296411;
 			
-			// aapt resource value: 0x7f09009f
-			public const int test_native_ad_unit_id = 2131296415;
+			// aapt resource value: 0x7f09009d
+			public const int test_native_ad_unit_id = 2131296413;
 			
 			// aapt resource value: 0x7f0900c6
 			public const int title_add_gear_collection = 2131296454;
@@ -5783,20 +5780,20 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0900bb
 			public const int title_delete_confirmation_trip_plan = 2131296443;
 			
-			// aapt resource value: 0x7f0900a5
-			public const int title_error_adding_item = 2131296421;
+			// aapt resource value: 0x7f0900a3
+			public const int title_error_adding_item = 2131296419;
 			
-			// aapt resource value: 0x7f0900a7
-			public const int title_error_deleting_item = 2131296423;
+			// aapt resource value: 0x7f0900a5
+			public const int title_error_deleting_item = 2131296421;
+			
+			// aapt resource value: 0x7f09009f
+			public const int title_error_initialization = 2131296415;
 			
 			// aapt resource value: 0x7f0900a1
-			public const int title_error_initialization = 2131296417;
+			public const int title_error_reading_items = 2131296417;
 			
-			// aapt resource value: 0x7f0900a3
-			public const int title_error_reading_items = 2131296419;
-			
-			// aapt resource value: 0x7f0900a9
-			public const int title_error_restoring_item = 2131296425;
+			// aapt resource value: 0x7f0900a7
+			public const int title_error_restoring_item = 2131296423;
 			
 			// aapt resource value: 0x7f0900c5
 			public const int title_gear_collections = 2131296453;
@@ -5816,8 +5813,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			// aapt resource value: 0x7f0900d6
 			public const int title_help = 2131296470;
 			
-			// aapt resource value: 0x7f09009b
-			public const int title_initializing = 2131296411;
+			// aapt resource value: 0x7f090099
+			public const int title_initializing = 2131296409;
 			
 			// aapt resource value: 0x7f0900c9
 			public const int title_meals = 2131296457;
@@ -5842,6 +5839,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid
 			
 			// aapt resource value: 0x7f09016a
 			public const int title_units = 2131296618;
+			
+			// aapt resource value: 0x7f0900a9
+			public const int title_unsaved_changes = 2131296425;
 			
 			// aapt resource value: 0x7f090161
 			public const int title_user_sex = 2131296609;

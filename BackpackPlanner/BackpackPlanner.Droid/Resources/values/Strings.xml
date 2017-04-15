@@ -5,9 +5,6 @@
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
 
-    <string name="label_yes">Yes</string>
-    <string name="label_no">No</string>
-
     <string name="label_save">Save</string>
     <string name="label_delete">Delete</string>
     <string name="label_undo">Undo</string>
@@ -46,6 +43,11 @@
 
     <string name="title_error_restoring_item">Error Restoring Item</string>
     <string name="message_error_restoring_item">There was an error restoring the item!</string>
+
+    <!-- Save confirmation -->
+
+    <string name="title_unsaved_changes">Unsaved Changes</string>
+    <string name="message_unsaved_changes">Do you wish to save before exiting?</string>
 
     <!-- What is a text -->
 
