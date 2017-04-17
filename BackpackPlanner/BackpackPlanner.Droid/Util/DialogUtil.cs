@@ -70,7 +70,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
             return builder.SetTitle(titleResId)
                 .SetMessage(TextUtil.GetHtmlString(activity, messageResId))
                 .SetPositiveButton(Android.Resource.String.Ok, okEventHandler ?? ((sender, args) => { }))
-                .SetNeutralButton(Android.Resource.String.Cancel, cancelEventHandler ?? ((sender, args) => { }))
+                .SetNegativeButton(Android.Resource.String.Cancel, cancelEventHandler ?? ((sender, args) => { }))
                 .Show();
         }
 
@@ -79,8 +79,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
             Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(activity, Resource.Style.AppTheme_AlertDialog);
             return builder.SetTitle(titleResId)
                 .SetMessage(TextUtil.GetHtmlString(activity, messageResId))
-                .SetPositiveButton(Android.Resource.String.Yes, yesEventHandler ?? ((sender, args) => { }))
-                .SetNegativeButton(Android.Resource.String.No, noEventHandler ?? ((sender, args) => { }))
+                .SetPositiveButton(Resource.String.label_yes, yesEventHandler ?? ((sender, args) => { }))
+                .SetNegativeButton(Resource.String.label_no, noEventHandler ?? ((sender, args) => { }))
                 .Show();
         }
 
@@ -89,8 +89,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Util
             Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(activity, Resource.Style.AppTheme_AlertDialog);
             return builder.SetTitle(titleResId)
                 .SetMessage(TextUtil.GetHtmlString(activity, messageResId))
-                .SetPositiveButton(Android.Resource.String.Yes, yesEventHandler ?? ((sender, args) => { }))
-                .SetNegativeButton(Android.Resource.String.No, noEventHandler ?? ((sender, args) => { }))
+                .SetPositiveButton(Resource.String.label_yes, yesEventHandler ?? ((sender, args) => { }))
+                .SetNegativeButton(Resource.String.label_no, noEventHandler ?? ((sender, args) => { }))
                 .SetNeutralButton(Android.Resource.String.Cancel, cancelEventHandler ?? ((sender, args) => { }))
                 .Show();
         }
