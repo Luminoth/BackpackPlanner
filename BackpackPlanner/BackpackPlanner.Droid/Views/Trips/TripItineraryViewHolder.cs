@@ -31,7 +31,16 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Views.Trips
             : base(activity)
         {
             _tripItineraryNameEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.trip_itinerary_name);
+            _tripItineraryNameEditText.EditText.AfterTextChanged += (sender, args) =>
+            {
+                NotifyPropertyChanged("Name");
+            };
+
             _tripItineraryNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.trip_itinerary_note);
+            _tripItineraryNoteEditText.EditText.AfterTextChanged += (sender, args) =>
+            {
+                NotifyPropertyChanged("Note");
+            };
         }
 
         public override void UpdateView(TripItinerary tripItinerary)
@@ -58,6 +67,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Views.Trips
         {
             tripItinerary.Name = _tripItineraryNameEditText.EditText.Text;
             tripItinerary.Note = _tripItineraryNoteEditText.EditText.Text;
+
+            base.DoDataExchange(tripItinerary, dbContext);
         }
     }
 }

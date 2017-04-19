@@ -38,7 +38,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
     {
         protected override int LayoutResource => Resource.Layout.fragment_view_gear_collection;
 
-        protected override int TitleResource => Resource.String.title_view_gear_collection;
+        protected override int CleanTitleResource => Resource.String.title_view_gear_collection;
+
+        protected override int DirtyTitleResource => Resource.String.title_view_gear_collection_dirty;
 
         private GearCollectionGearSystemEntries _gearSystemEntries;
         private GearCollectionGearSystemEntries.GearCollectionGearSystemEntryViewHolder _gearSystemEntryViewHolder;
@@ -65,9 +67,17 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
 
             _gearSystemEntries.ItemListAdapter = new GearSystemEntryListAdapter<GearCollection>(BaseActivity);
             _gearSystemEntryViewHolder = new GearCollectionGearSystemEntries.GearCollectionGearSystemEntryViewHolder(BaseActivity, view);
+            _gearSystemEntryViewHolder.AddItemEvent += (sender, args) =>
+            {
+                AddItemEntry(Resource.String.label_add_gear_systems, _gearSystemEntries, _gearSystemEntryViewHolder);
+            };
 
             _gearItemEntries.ItemListAdapter = new GearItemEntryListAdapter<GearCollection>(BaseActivity);
             _gearItemEntryViewHolder = new GearCollectionGearItemEntries.GearCollectionGearItemEntryViewHolder(BaseActivity, view);
+            _gearItemEntryViewHolder.AddItemEvent += (sender, args) =>
+            {
+                AddItemEntry(Resource.String.label_add_gear_items, _gearItemEntries, _gearItemEntryViewHolder);
+            };
         }
 
         public override void OnResume()
@@ -85,8 +95,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
 
                     Activity.RunOnUiThread(() =>
                     {
-                        _gearSystemEntryViewHolder.SetItemEntryList(_gearSystemEntries);
-                        _gearItemEntryViewHolder.SetItemEntryList(_gearItemEntries);
+                        SetItemEntryList(_gearSystemEntries, _gearSystemEntryViewHolder);
+                        SetItemEntryList(_gearItemEntries, _gearItemEntryViewHolder);
 
                         progressDialog.Dismiss();
 

@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2015 Shane Lillie
+   Copyright 2017 Shane Lillie
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -14,14 +14,12 @@
    limitations under the License.
 */
 
-using System.ComponentModel;
+using Android.Runtime;
 
-namespace EnergonSoftware.BackpackPlanner.Core.Util
+namespace EnergonSoftware.BackpackPlanner.Droid.Views
 {
-    public interface IDirtyMarker : INotifyPropertyChanged
+    public interface IViewHolder<T> : IJavaObject
     {
-        bool IsDirty { get; }
-
-        void Clean();
+        void UpdateView(T item);
     }
 }

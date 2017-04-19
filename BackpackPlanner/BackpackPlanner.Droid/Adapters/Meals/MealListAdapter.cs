@@ -30,7 +30,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
 {
     public sealed class MealListAdapter : BaseModelRecyclerListAdapter<Meal>
     {
-        private sealed class MealViewHolder : BaseModelViewHolder
+        private sealed class MealViewHolder : BaseModelRecyclerViewHolder
         {
             protected override int ToolbarResourceId => Resource.Id.view_meal_toolbar;
 
@@ -137,7 +137,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
             return items;
         }
 
-        protected override BaseViewHolder CreateViewHolder(View view, BaseRecyclerListAdapter<Meal> adapter)
+        protected override BaseRecyclerViewHolder CreateViewHolder(View view, BaseRecyclerListAdapter<Meal> adapter)
         {
             return new MealViewHolder(view, adapter);
         }

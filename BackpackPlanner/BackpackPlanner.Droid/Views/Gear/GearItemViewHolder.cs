@@ -44,27 +44,73 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Views.Gear
             : base(activity)
         {
             _gearItemNameEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_name);
-            _gearItemMakeEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_make);
-            _gearItemModelEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_model);
-            _gearItemWebsiteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_website);
-            _gearItemCarriedRadioGroup = view.FindViewById<RadioGroup>(Resource.Id.gear_item_carried);
-            _gearItemConsumableSwitch = view.FindViewById<Android.Support.V7.Widget.SwitchCompat>(Resource.Id.gear_item_consumable);
-            _gearItemConsumedEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_consumed);
-            _gearItemWeightEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_weight);
-            _gearItemCostEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_cost);
-            _gearItemNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_note);
+            _gearItemNameEditText.EditText.AfterTextChanged += (sender, args) =>
+            {
+                NotifyPropertyChanged("Name");
+            };
 
-            _gearItemConsumableSwitch.CheckedChange += (sender, args) => {
+            _gearItemMakeEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_make);
+            _gearItemMakeEditText.EditText.AfterTextChanged += (sender, args) =>
+            {
+                NotifyPropertyChanged("Make");
+            };
+
+            _gearItemModelEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_model);
+            _gearItemModelEditText.EditText.AfterTextChanged += (sender, args) =>
+            {
+                NotifyPropertyChanged("Model");
+            };
+
+            _gearItemWebsiteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_website);
+            _gearItemWebsiteEditText.EditText.AfterTextChanged += (sender, args) =>
+            {
+                NotifyPropertyChanged("Website");
+            };
+
+            _gearItemCarriedRadioGroup = view.FindViewById<RadioGroup>(Resource.Id.gear_item_carried);
+            _gearItemCarriedRadioGroup.CheckedChange += (sender, args) =>
+            {
+                NotifyPropertyChanged("Carried");
+            };
+
+            _gearItemConsumableSwitch = view.FindViewById<Android.Support.V7.Widget.SwitchCompat>(Resource.Id.gear_item_consumable);
+            _gearItemConsumableSwitch.CheckedChange += (sender, args) =>
+            {
                 _gearItemConsumedEditText.Visibility = args.IsChecked ? ViewStates.Visible : ViewStates.Gone;
+                NotifyPropertyChanged("Consumable");
+            };
+
+            _gearItemConsumedEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_consumed);
+            _gearItemConsumedEditText.EditText.AfterTextChanged += (sender, args) =>
+            {
+                NotifyPropertyChanged("Consumed");
+            };
+
+            _gearItemWeightEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_weight);
+            _gearItemWeightEditText.EditText.AfterTextChanged += (sender, args) =>
+            {
+                NotifyPropertyChanged("Weight");
             };
 
             _gearItemWeightEditText.Hint = Java.Lang.String.Format(BaseActivity.Resources.GetString(Resource.String.label_gear_item_weight),
                 BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(true)
             );
 
+            _gearItemCostEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_cost);
+            _gearItemCostEditText.EditText.AfterTextChanged += (sender, args) =>
+            {
+                NotifyPropertyChanged("Cost");
+            };
+
             _gearItemCostEditText.Hint = Java.Lang.String.Format(BaseActivity.Resources.GetString(Resource.String.label_gear_item_cost),
                 BaseActivity.BackpackPlannerState.Settings.Currency.GetCurrencyString()
             );
+
+            _gearItemNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_note);
+            _gearItemNoteEditText.EditText.AfterTextChanged += (sender, args) =>
+            {
+                NotifyPropertyChanged("Note");
+            };
         }
 
         public override void UpdateView(GearItem gearItem)
@@ -135,6 +181,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Views.Gear
                 gearItem.Carried = GearCarried.NotCarried;
                 break;
             }
+
+            base.DoDataExchange(gearItem, dbContext);
         }
     }
 }

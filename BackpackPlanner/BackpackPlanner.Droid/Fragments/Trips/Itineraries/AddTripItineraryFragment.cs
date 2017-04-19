@@ -30,7 +30,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries
     {
         protected override int LayoutResource => Resource.Layout.fragment_add_trip_itinerary;
 
-        protected override int TitleResource => Resource.String.title_add_trip_itinerary;
+        protected override int CleanTitleResource => Resource.String.title_add_trip_itinerary;
+
+        protected override int DirtyTitleResource => Resource.String.title_add_trip_itinerary_dirty;
 
         protected override TripItinerary CreateItem()
         {

@@ -30,7 +30,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Collections
 {
     public sealed class GearCollectionListAdapter : BaseModelRecyclerListAdapter<GearCollection>
     {
-        private sealed class GearCollectionViewHolder : BaseModelViewHolder
+        private sealed class GearCollectionViewHolder : BaseModelRecyclerViewHolder
         {
             protected override int ToolbarResourceId => Resource.Id.view_gear_collection_toolbar;
 
@@ -111,7 +111,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Collections
             return items;
         }
 
-        protected override BaseViewHolder CreateViewHolder(View view, BaseRecyclerListAdapter<GearCollection> adapter)
+        protected override BaseRecyclerViewHolder CreateViewHolder(View view, BaseRecyclerListAdapter<GearCollection> adapter)
         {
             return new GearCollectionViewHolder(view, adapter);
         }

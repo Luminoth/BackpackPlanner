@@ -30,7 +30,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Plans
 {
     public sealed class TripPlanListAdapter : BaseModelRecyclerListAdapter<TripPlan>
     {
-        private sealed class TripPlanViewHolder : BaseModelViewHolder
+        private sealed class TripPlanViewHolder : BaseModelRecyclerViewHolder
         {
             protected override int ToolbarResourceId => Resource.Id.view_trip_plan_toolbar;
 
@@ -143,7 +143,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Plans
             return items;
         }
 
-        protected override BaseViewHolder CreateViewHolder(View view, BaseRecyclerListAdapter<TripPlan> adapter)
+        protected override BaseRecyclerViewHolder CreateViewHolder(View view, BaseRecyclerListAdapter<TripPlan> adapter)
         {
             return new TripPlanViewHolder(view, adapter);
         }

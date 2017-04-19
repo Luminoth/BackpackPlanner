@@ -41,7 +41,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
     {
         protected override int LayoutResource => Resource.Layout.fragment_view_trip_plan;
 
-        protected override int TitleResource => Resource.String.title_view_trip_plan;
+        protected override int CleanTitleResource => Resource.String.title_view_trip_plan;
+
+        protected override int DirtyTitleResource => Resource.String.title_view_trip_plan_dirty;
 
         private TripPlanGearCollectionEntries _gearCollectionEntries;
         private TripPlanGearCollectionEntries.TripPlanGearCollectionEntryViewHolder _gearCollectionEntryViewHolder;
@@ -76,15 +78,31 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
 
             _gearCollectionEntries.ItemListAdapter = new GearCollectionEntryListAdapter<TripPlan>(BaseActivity);
             _gearCollectionEntryViewHolder = new TripPlanGearCollectionEntries.TripPlanGearCollectionEntryViewHolder(BaseActivity, view);
+            _gearCollectionEntryViewHolder.AddItemEvent += (sender, args) =>
+            {
+                AddItemEntry(Resource.String.label_add_gear_collections, _gearCollectionEntries, _gearCollectionEntryViewHolder);
+            };
 
             _gearSystemEntries.ItemListAdapter = new GearSystemEntryListAdapter<TripPlan>(BaseActivity);
             _gearSystemEntryViewHolder = new TripPlanGearSystemEntries.TripPlanGearSystemEntryViewHolder(BaseActivity, view);
+            _gearSystemEntryViewHolder.AddItemEvent += (sender, args) =>
+            {
+                AddItemEntry(Resource.String.label_add_gear_systems, _gearSystemEntries, _gearSystemEntryViewHolder);
+            };
 
             _gearItemEntries.ItemListAdapter = new GearItemEntryListAdapter<TripPlan>(BaseActivity);
             _gearItemEntryViewHolder = new TripPlanGearItemEntries.TripPlanGearItemEntryViewHolder(BaseActivity, view);
+            _gearItemEntryViewHolder.AddItemEvent += (sender, args) =>
+            {
+                AddItemEntry(Resource.String.label_add_gear_items, _gearItemEntries, _gearItemEntryViewHolder);
+            };
 
             _mealEntries.ItemListAdapter = new MealEntryListAdapter<TripPlan>(BaseActivity);
             _mealEntryViewHolder = new TripPlanMealEntries.TripPlanMealEntryViewHolder(BaseActivity, view);
+            _mealEntryViewHolder.AddItemEvent += (sender, args) =>
+            {
+                AddItemEntry(Resource.String.label_add_meals, _mealEntries, _mealEntryViewHolder);
+            };
         }
 
         public override void OnResume()
@@ -104,10 +122,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
 
                     Activity.RunOnUiThread(() =>
                     {
-                        _gearCollectionEntryViewHolder.SetItemEntryList(_gearCollectionEntries);
-                        _gearSystemEntryViewHolder.SetItemEntryList(_gearSystemEntries);
-                        _gearItemEntryViewHolder.SetItemEntryList(_gearItemEntries);
-                        _mealEntryViewHolder.SetItemEntryList(_mealEntries);
+                        SetItemEntryList(_gearCollectionEntries, _gearCollectionEntryViewHolder);
+                        SetItemEntryList(_gearSystemEntries, _gearSystemEntryViewHolder);
+                        SetItemEntryList(_gearItemEntries, _gearItemEntryViewHolder);
+                        SetItemEntryList(_mealEntries, _mealEntryViewHolder);
 
                         progressDialog.Dismiss();
 

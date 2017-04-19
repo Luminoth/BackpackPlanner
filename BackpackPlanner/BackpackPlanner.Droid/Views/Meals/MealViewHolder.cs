@@ -44,23 +44,72 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Views.Meals
             : base(activity)
         {
             _mealNameEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.meal_name);
+            _mealNameEditText.EditText.AfterTextChanged += (sender, args) =>
+            {
+                NotifyPropertyChanged("Name");
+            };
+
             _mealWebsiteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.meal_website);
+            _mealWebsiteEditText.EditText.AfterTextChanged += (sender, args) =>
+            {
+                NotifyPropertyChanged("Website");
+            };
+
             _mealMealTimeSpinner = view.FindViewById<Spinner>(Resource.Id.meal_mealtime);
+            _mealMealTimeSpinner.ItemSelected += (sender, args) =>
+            {
+                NotifyPropertyChanged("Mealtime");
+            };
+
             _mealServingsEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.meal_servings);
+            _mealServingsEditText.EditText.AfterTextChanged += (sender, args) =>
+            {
+                NotifyPropertyChanged("Servings");
+            };
+
             _mealWeightEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.meal_weight);
-            _mealCostEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.meal_cost);
-            _mealCaloriesEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.meal_calories);
-            _mealProteinEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.meal_protein);
-            _mealFiberEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.meal_fiber);
-            _mealNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.meal_note);
+            _mealWeightEditText.EditText.AfterTextChanged += (sender, args) =>
+            {
+                NotifyPropertyChanged("Weight");
+            };
 
             _mealWeightEditText.Hint = Java.Lang.String.Format(BaseActivity.Resources.GetString(Resource.String.label_meal_weight),
                 BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(true)
             );
 
+            _mealCostEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.meal_cost);
+            _mealCostEditText.EditText.AfterTextChanged += (sender, args) =>
+            {
+                NotifyPropertyChanged("Cost");
+            };
+
             _mealCostEditText.Hint = Java.Lang.String.Format(BaseActivity.Resources.GetString(Resource.String.label_meal_cost),
                 BaseActivity.BackpackPlannerState.Settings.Currency.GetCurrencyString()
             );
+
+            _mealCaloriesEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.meal_calories);
+            _mealCaloriesEditText.EditText.AfterTextChanged += (sender, args) =>
+            {
+                NotifyPropertyChanged("Calories");
+            };
+
+            _mealProteinEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.meal_protein);
+            _mealProteinEditText.EditText.AfterTextChanged += (sender, args) =>
+            {
+                NotifyPropertyChanged("Protein");
+            };
+
+            _mealFiberEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.meal_fiber);
+            _mealFiberEditText.EditText.AfterTextChanged += (sender, args) =>
+            {
+                NotifyPropertyChanged("Fiber");
+            };
+
+            _mealNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.meal_note);
+            _mealNoteEditText.EditText.AfterTextChanged += (sender, args) =>
+            {
+                NotifyPropertyChanged("Note");
+            };
         }
 
         public override void UpdateView(Meal meal)
@@ -103,6 +152,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Views.Meals
             meal.ProteinInGrams = Convert.ToInt32(_mealProteinEditText.EditText.Text);
             meal.FiberInGrams = Convert.ToInt32(_mealFiberEditText.EditText.Text);
             meal.Note = _mealNoteEditText.EditText.Text;
+
+            base.DoDataExchange(meal, dbContext);
         }
     }
 }

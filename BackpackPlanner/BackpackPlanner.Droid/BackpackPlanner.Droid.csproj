@@ -407,6 +407,7 @@
     <Compile Include="Views\Meals\MealViewHolder.cs" />
     <Compile Include="Views\Trips\TripItineraryViewHolder.cs" />
     <Compile Include="Views\Trips\TripPlanViewHolder.cs" />
+    <Compile Include="Views\ViewHolder.cs" />
     <Compile Include="Views\ViewPagerIndicator.cs" />
   </ItemGroup>
   <ItemGroup>

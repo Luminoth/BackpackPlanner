@@ -30,7 +30,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
     {
         protected override int LayoutResource => Resource.Layout.fragment_add_meal;
 
-        protected override int TitleResource => Resource.String.title_add_meal;
+        protected override int CleanTitleResource => Resource.String.title_add_meal;
+
+        protected override int DirtyTitleResource => Resource.String.title_add_meal_dirty;
 
         protected override Meal CreateItem()
         {

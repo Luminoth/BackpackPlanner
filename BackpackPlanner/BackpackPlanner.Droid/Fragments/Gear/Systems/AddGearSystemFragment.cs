@@ -37,7 +37,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
     {
         protected override int LayoutResource => Resource.Layout.fragment_add_gear_system;
 
-        protected override int TitleResource => Resource.String.title_add_gear_system;
+        protected override int CleanTitleResource => Resource.String.title_add_gear_system;
+
+        protected override int DirtyTitleResource => Resource.String.title_add_gear_system_dirty;
 
         private GearSystemGearItemEntries _gearItemEntries;
         private GearSystemGearItemEntries.GearSystemGearItemEntryViewHolder _gearItemEntryViewHolder;
@@ -55,6 +57,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 
             _gearItemEntries.ItemListAdapter = new GearItemEntryListAdapter<GearSystem>(BaseActivity);
             _gearItemEntryViewHolder = new GearSystemGearItemEntries.GearSystemGearItemEntryViewHolder(BaseActivity, view);
+            _gearItemEntryViewHolder.AddItemEvent += (sender, args) =>
+            {
+                AddItemEntry(Resource.String.label_add_gear_items, _gearItemEntries, _gearItemEntryViewHolder);
+            };
         }
 
         public override void OnResume()

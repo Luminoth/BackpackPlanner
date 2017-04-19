@@ -43,8 +43,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
 
             protected override int AddItemButtonResource => Resource.Id.fab_add_gear_item;
 
-            protected override int AddItemDialogTitleResource => Resource.String.label_add_gear_items;
-
             protected GearItemEntryViewHolder(BaseActivity activity, View view)
                 : base(activity, view)
             {

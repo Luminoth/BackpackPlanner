@@ -33,8 +33,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
     public abstract class BaseModelRecyclerListAdapter<T> : BaseRecyclerListAdapter<T>, IFilterable
         where T: BaseModel<T>, IBackpackPlannerItem, new()
     {
-        protected abstract class BaseModelViewHolder
-            : BaseViewHolder, Android.Support.V7.Widget.Toolbar.IOnMenuItemClickListener
+        protected abstract class BaseModelRecyclerViewHolder
+            : BaseRecyclerViewHolder, Android.Support.V7.Widget.Toolbar.IOnMenuItemClickListener
         {
             protected ListItemsFragment<T> ListItemsFragment => (ListItemsFragment<T>)Fragment;
 
@@ -48,7 +48,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
             protected abstract Android.Support.V4.App.Fragment CreateViewItemFragment();
 
-            protected BaseModelViewHolder(View view, BaseRecyclerListAdapter<T> adapter)
+            protected BaseModelRecyclerViewHolder(View view, BaseRecyclerListAdapter<T> adapter)
                 : base(view, adapter)
             {
                 InitToolbar();

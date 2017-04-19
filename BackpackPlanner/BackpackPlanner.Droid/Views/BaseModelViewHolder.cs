@@ -14,16 +14,40 @@
    limitations under the License.
 */
 
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
 using EnergonSoftware.BackpackPlanner.DAL;
 using EnergonSoftware.BackpackPlanner.DAL.Models;
 using EnergonSoftware.BackpackPlanner.Droid.Activities;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Views
 {
-    public abstract class BaseModelViewHolder<T> : BaseViewHolder<T>
+    public abstract class BaseModelViewHolder<T> : BaseViewHolder<T>, INotifyPropertyChanged
         where T: BaseModel<T>, new()
     {
-        public abstract void DoDataExchange(T item, DatabaseContext dbContext);
+#region Events
+        public event PropertyChangedEventHandler PropertyChanged;
+#endregion
+
+        public bool PropertyChangedNotificationEnabled { get; set; }
+
+        public virtual bool Validate()
+        {
+            return true;
+        }
+
+        public virtual void DoDataExchange(T item, DatabaseContext dbContext)
+        {
+        }
+
+        protected void NotifyPropertyChanged([CallerMemberName] string propertyName="")
+        {
+            if(!PropertyChangedNotificationEnabled) {
+                return;
+            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         protected BaseModelViewHolder(BaseActivity activity)
             : base(activity)

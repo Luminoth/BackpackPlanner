@@ -27,7 +27,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries
     {
         protected override int LayoutResource => Resource.Layout.fragment_view_trip_itinerary;
 
-        protected override int TitleResource => Resource.String.title_view_trip_itinerary;
+        protected override int CleanTitleResource => Resource.String.title_view_trip_itinerary;
+
+        protected override int DirtyTitleResource => Resource.String.title_view_trip_itinerary_dirty;
 
         public ViewTripItineraryFragment(TripItinerary tripItinerary)
             : base(tripItinerary)

@@ -30,7 +30,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
     {
         protected override int LayoutResource => Resource.Layout.fragment_add_gear_item;
 
-        protected override int TitleResource => Resource.String.title_add_gear_item;
+        protected override int CleanTitleResource => Resource.String.title_add_gear_item;
+
+        protected override int DirtyTitleResource => Resource.String.title_add_gear_item_dirty;
 
         protected override GearItem CreateItem()
         {

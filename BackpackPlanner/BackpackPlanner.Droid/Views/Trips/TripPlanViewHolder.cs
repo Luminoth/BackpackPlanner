@@ -40,6 +40,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Views.Trips
             : base(activity)
         {
             _tripPlanNameEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.trip_plan_name);
+            _tripPlanNameEditText.EditText.AfterTextChanged += (sender, args) =>
+            {
+                NotifyPropertyChanged("Name");
+            };
 
             _tripPlanStartDateText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.trip_plan_startdate);
             _tripPlanStartDateText.EditText.Click += (sender, args) =>
@@ -54,6 +58,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Views.Trips
                 picker.DateSetEvent += (s, a) =>
                 {
                     _tripPlanStartDateText.EditText.Text = a.Date.ToString("yyyy-MM-dd", CultureInfo.CurrentCulture);
+                    NotifyPropertyChanged("StartDate");
                 };
                 picker.Show(BaseActivity.SupportFragmentManager, null);
             };
@@ -71,11 +76,16 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Views.Trips
                 picker.DateSetEvent += (s, a) =>
                 {
                     _tripPlanEndDateText.EditText.Text = a.Date.ToString("yyyy-MM-dd", CultureInfo.CurrentCulture);
+                    NotifyPropertyChanged("EndDate");
                 };
                 picker.Show(BaseActivity.SupportFragmentManager, null);
             };
 
             _tripPlanNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.trip_plan_note);
+            _tripPlanNoteEditText.EditText.AfterTextChanged += (sender, args) =>
+            {
+                NotifyPropertyChanged("Note");
+            };
         }
 
         public override void UpdateView(TripPlan tripPlan)
@@ -117,6 +127,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Views.Trips
             }
 
             tripPlan.Note = _tripPlanNoteEditText.EditText.Text;
+
+            base.DoDataExchange(tripPlan, dbContext);
         }
     }
 }

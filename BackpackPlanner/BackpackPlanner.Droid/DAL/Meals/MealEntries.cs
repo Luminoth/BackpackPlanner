@@ -41,8 +41,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Meals
 
             protected override int AddItemButtonResource => Resource.Id.fab_add_meal;
 
-            protected override int AddItemDialogTitleResource => Resource.String.label_add_meals;
-
             protected MealEntryViewHolder(BaseActivity activity, View view)
                 : base(activity, view)
             {

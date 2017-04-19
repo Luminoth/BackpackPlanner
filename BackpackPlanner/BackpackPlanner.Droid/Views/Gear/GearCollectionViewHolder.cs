@@ -31,7 +31,16 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Views.Gear
             : base(activity)
         {
             _gearCollectionNameEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_collection_name);
+            _gearCollectionNameEditText.EditText.AfterTextChanged += (sender, args) =>
+            {
+                NotifyPropertyChanged("Name");
+            };
+
             _gearCollectionNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_collection_note);
+            _gearCollectionNoteEditText.EditText.AfterTextChanged += (sender, args) =>
+            {
+                NotifyPropertyChanged("Note");
+            };
         }
 
         public override void UpdateView(GearCollection gearCollection)
@@ -58,6 +67,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Views.Gear
         {
             gearCollection.Name = _gearCollectionNameEditText.EditText.Text;
             gearCollection.Note = _gearCollectionNoteEditText.EditText.Text;
+
+            base.DoDataExchange(gearCollection, dbContext);
         }
     }
 }

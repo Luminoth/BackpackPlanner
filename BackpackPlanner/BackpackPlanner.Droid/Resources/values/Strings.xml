@@ -161,32 +161,44 @@
 
     <string name="title_gear_items">Gear Items</string>
     <string name="title_add_gear_item">Add a Gear Item</string>
+    <string name="title_add_gear_item_dirty">Add a Gear Item *</string>
     <string name="title_view_gear_item">Gear Item</string>
+    <string name="title_view_gear_item_dirty">Gear Item *</string>
     <string name="title_what_gear_item">What is a Gear Item</string>
 
     <string name="title_gear_systems">Gear Systems</string>
     <string name="title_add_gear_system">Add a Gear System</string>
+    <string name="title_add_gear_system_dirty">Add a Gear System *</string>
     <string name="title_view_gear_system">Gear System</string>
+    <string name="title_view_gear_system_dirty">Gear System *</string>
     <string name="title_what_gear_system">What is a Gear System</string>
 
     <string name="title_gear_collections">Gear Collections</string>
     <string name="title_add_gear_collection">Add a Gear Collection</string>
+    <string name="title_add_gear_collection_dirty">Add a Gear Collection *</string>
     <string name="title_view_gear_collection">Gear Collection</string>
+    <string name="title_view_gear_collection_dirty">Gear Collection *</string>
     <string name="title_what_gear_collection">What is a Gear Collection</string>
 
     <string name="title_meals">Meals</string>
     <string name="title_add_meal">Add a Meal</string>
+    <string name="title_add_meal_dirty">Add a Meal *</string>
     <string name="title_view_meal">Meal</string>
+    <string name="title_view_meal_dirty">Meal *</string>
     <string name="title_what_meal">What is a Meal</string>
 
     <string name="title_trip_itineraries">Trip Itineraries</string>
     <string name="title_add_trip_itinerary">Add a Trip Itinerary</string>
+    <string name="title_add_trip_itinerary_dirty">Add a Trip Itinerary *</string>
     <string name="title_view_trip_itinerary">Trip Itinerary</string>
+    <string name="title_view_trip_itinerary_dirty">Trip Itinerary *</string>
     <string name="title_what_trip_itinerary">What is a Trip Itinerary</string>
 
     <string name="title_trip_plans">Trip Plans</string>
     <string name="title_add_trip_plan">Add a Trip Plan</string>
+    <string name="title_add_trip_plan_dirty">Add a Trip Plan *</string>
     <string name="title_view_trip_plan">Trip Plan</string>
+    <string name="title_view_trip_plan_dirty">Trip Plan *</string>
     <string name="title_what_trip_plan">What is a Trip Plan</string>
 
     <string name="title_settings">Settings</string>

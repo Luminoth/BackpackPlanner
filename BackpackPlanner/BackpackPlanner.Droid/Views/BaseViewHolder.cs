@@ -18,7 +18,7 @@ using EnergonSoftware.BackpackPlanner.Droid.Activities;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Views
 {
-    public abstract class BaseViewHolder<T> : Java.Lang.Object
+    public abstract class BaseViewHolder<T> : Java.Lang.Object, IViewHolder<T>
     {
         protected BaseActivity BaseActivity { get; }
 
@@ -27,11 +27,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Views
         public virtual void UpdateView(T item)
         {
             Item = item;
-        }
-
-        public virtual bool Validate()
-        {
-            return true;
         }
 
         protected BaseViewHolder(BaseActivity activity)

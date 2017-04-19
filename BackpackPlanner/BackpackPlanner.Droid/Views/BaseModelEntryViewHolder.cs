@@ -14,18 +14,16 @@
    limitations under the License.
 */
 
+using System;
 using System.Linq;
 
 using Android.Views;
 using Android.Widget;
 
-using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.DAL;
 using EnergonSoftware.BackpackPlanner.DAL.Models;
 using EnergonSoftware.BackpackPlanner.Droid.Activities;
-using EnergonSoftware.BackpackPlanner.Droid.Adapters;
 using EnergonSoftware.BackpackPlanner.Droid.DAL;
-using EnergonSoftware.BackpackPlanner.Droid.Util;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Views
 {
@@ -34,23 +32,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Views
         where TI: BaseModel<TI>, IBackpackPlannerItem, new()
         where TIE: BaseModelEntry<TIE, TM, TI>, new()
     {
-        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(BaseModelEntryViewHolder<TM, TI, TIE>));
-
-        private sealed class FilterListener<TE> : Java.Lang.Object, Filter.IFilterListener
-        {
-            private readonly BaseListViewAdapter<TE> _adapter;
-
-            public FilterListener(BaseListViewAdapter<TE> adapter)
-            {
-                _adapter = adapter;
-            }
-
-            public void OnFilterComplete(int count)
-            {
-                // TODO: need a method to build an IComparator
-                //_adapter.Sort();
-            }
-        }
+#region Events
+        public event EventHandler AddItemEvent;
+#endregion
 
         protected abstract int NoItemsResource { get; }
 
@@ -59,8 +43,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Views
         protected abstract int ItemListAdapterResource { get; }
 
         protected abstract int AddItemButtonResource { get; }
-
-        protected abstract int AddItemDialogTitleResource { get; }
 
         private readonly TextView _noItemsTextView;
         private readonly TextView _noItemsAddedTextView;
@@ -82,58 +64,17 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Views
             _addItemButton.Visibility = hasItems ? ViewStates.Visible : ViewStates.Gone;
         }
 
-        public override bool Validate()
+        public virtual bool Validate()
         {
-            bool valid = base.Validate();
+            bool valid = true;
 
 // TODO: validate no item quantities are < 1
 
             return valid;
         }
 
-        public abstract void DoDataExchange(TM item, ItemEntries<TM, TI, TIE> itemEntries, DatabaseContext dbContext);
-
-        public void SetItemEntryList(ItemEntries<TM, TI, TIE> itemEntries)
+        public virtual void DoDataExchange(TM item, ItemEntries<TM, TI, TIE> itemEntries, DatabaseContext dbContext)
         {
-            for(int i=0; i<itemEntries.ItemCount; ++i) {
-                TI item = itemEntries.Items?[i];
-                if(null == item) {
-                    Logger.Error($"Found null item at index {i} while setting item entries!");
-                    continue;
-                }
-
-                TIE entry = itemEntries.GetItemEntry(item);
-                if(null != entry) {
-                    itemEntries.SelectItem(i, true);
-                    itemEntries.ItemListAdapter?.AddItem(entry);
-                }
-            }
-
-            UpdateView(itemEntries);
-        }
-
-        private void UpdateItemEntryList(ItemEntries<TM, TI, TIE> itemEntries, int index, bool isSelected)
-        {
-            TI item = itemEntries.Items?[index];
-            if(null == item) {
-                Logger.Error($"Found null item at index {index} while updating item entries!");
-                return;
-            }
-
-            itemEntries.SelectItem(index, isSelected);
-            if(isSelected) {
-                TIE entry = new TIE
-                {
-                    Count = 1
-                };
-                entry.SetModel(item);
-
-                itemEntries.ItemListAdapter?.AddItem(entry);
-            } else {
-                itemEntries.ItemListAdapter?.RemoveItem(item);
-            }
-
-            UpdateView(itemEntries);
         }
 
         protected BaseModelEntryViewHolder(BaseActivity activity, View view)
@@ -147,17 +88,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Views
             _addItemButton = view.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(AddItemButtonResource);
             _addItemButton.Click += (sender, args) =>
             {
-                DialogUtil.ShowMultiChoiceAlertWithSearch(BaseActivity, AddItemDialogTitleResource,
-                    Item.ItemNames, Item.SelectedItems,
-                    (a, b) =>
-                    {
-                        Item.ItemListAdapter?.Filter.InvokeFilter(b.NewText, new FilterListener<TIE>(Item.ItemListAdapter));
-                    },
-                    (a, b) =>
-                    {
-                        UpdateItemEntryList(Item, b.Which, b.IsChecked);
-                    }
-                );
+                AddItemEvent?.Invoke(this, EventArgs.Empty);
             };
         }
     }
