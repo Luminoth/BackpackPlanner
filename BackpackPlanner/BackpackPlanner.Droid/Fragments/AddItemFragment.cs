@@ -22,6 +22,7 @@ using Android.Views;
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.DAL;
 using EnergonSoftware.BackpackPlanner.DAL.Models;
+using EnergonSoftware.BackpackPlanner.Droid.Util;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 {
@@ -55,7 +56,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             {
                 Save(() =>
                     {
+                        SnackbarUtil.ShowSnackbar(View, Resource.String.label_added_item, Android.Support.Design.Widget.Snackbar.LengthShort);
                         Activity.SupportFragmentManager.PopBackStack();
+                    },
+                    () =>
+                    {
+                        DialogUtil.ShowOkAlert(Activity, Resource.String.message_error_adding_item, Resource.String.title_error_adding_item);
                     }
                 );
             };

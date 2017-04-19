@@ -245,15 +245,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                         progressDialog.Dismiss();
 
                         if(!success) {
-                            DialogUtil.ShowOkAlert(Activity, Resource.String.message_error_adding_item, Resource.String.title_error_adding_item);
                             onFailure?.Invoke();
                             return;
                         }
 
-                        SnackbarUtil.ShowSnackbar(View, Resource.String.label_added_item, Android.Support.Design.Widget.Snackbar.LengthShort);
-                        onSuccess?.Invoke();
-
                         Clean();
+
+                        onSuccess?.Invoke();
                     });
                 }
             );
