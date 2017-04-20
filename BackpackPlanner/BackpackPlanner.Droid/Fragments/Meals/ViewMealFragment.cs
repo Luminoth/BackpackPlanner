@@ -31,11 +31,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Meals
 
         protected override int DirtyTitleResource => Resource.String.title_view_meal_dirty;
 
-        public ViewMealFragment(Meal meal)
-            : base(meal)
-        {
-        }
-
         protected override BaseModelViewHolder<Meal> CreateViewHolder(BaseActivity activity, View view)
         {
             return new MealViewHolder(activity, view);

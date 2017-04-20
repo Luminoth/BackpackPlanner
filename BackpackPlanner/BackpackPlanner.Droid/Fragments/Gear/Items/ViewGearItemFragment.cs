@@ -31,11 +31,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items
 
         protected override int DirtyTitleResource => Resource.String.title_view_gear_item_dirty;
 
-        public ViewGearItemFragment(GearItem gearItem)
-            : base(gearItem)
-        {
-        }
-
         protected override BaseModelViewHolder<GearItem> CreateViewHolder(BaseActivity activity, View view)
         {
             return new GearItemViewHolder(activity, view);

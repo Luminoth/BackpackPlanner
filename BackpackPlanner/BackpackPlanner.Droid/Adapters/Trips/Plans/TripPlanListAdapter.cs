@@ -62,9 +62,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Plans
                 _textViewCost = view.FindViewById<TextView>(Resource.Id.view_trip_plan_cost);
             }
 
-            protected override Android.Support.V4.App.Fragment CreateViewItemFragment()
+            protected override ViewItemFragment<TripPlan> CreateViewItemFragment()
             {
-                return new ViewTripPlanFragment(Item);
+                return new ViewTripPlanFragment();
             }
 
             public override void UpdateView(TripPlan tripPlan)

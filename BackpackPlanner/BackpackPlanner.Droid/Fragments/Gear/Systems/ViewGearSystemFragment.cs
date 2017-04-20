@@ -44,11 +44,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
         private GearSystemGearItemEntries _gearItemEntries;
         private GearSystemGearItemEntries.GearSystemGearItemEntryViewHolder _gearItemEntryViewHolder;
 
-        public ViewGearSystemFragment(GearSystem gearSystem)
-            : base(gearSystem)
-        {
-        }
-
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);

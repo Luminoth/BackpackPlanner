@@ -46,7 +46,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
             private Android.Support.V7.Widget.Toolbar _toolbar;
 
-            protected abstract Android.Support.V4.App.Fragment CreateViewItemFragment();
+            protected abstract ViewItemFragment<T> CreateViewItemFragment();
 
             protected BaseModelRecyclerViewHolder(View view, BaseRecyclerListAdapter<T> adapter)
                 : base(view, adapter)
@@ -55,7 +55,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
                 view.Click += (sender, args) =>
                 {
-                    Fragment.TransitionToFragment(Resource.Id.frame_content, CreateViewItemFragment(), null);
+                    ViewItemFragment<T> viewItemFragment = CreateViewItemFragment();
+                    viewItemFragment.SetItem(Item);
+
+                    Fragment.TransitionToFragment(Resource.Id.frame_content, viewItemFragment, null);
                 };
             }
 

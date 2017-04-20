@@ -31,11 +31,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries
 
         protected override int DirtyTitleResource => Resource.String.title_view_trip_itinerary_dirty;
 
-        public ViewTripItineraryFragment(TripItinerary tripItinerary)
-            : base(tripItinerary)
-        {
-        }
-
         protected override BaseModelViewHolder<TripItinerary> CreateViewHolder(BaseActivity activity, View view)
         {
             return new TripItineraryViewHolder(activity, view);

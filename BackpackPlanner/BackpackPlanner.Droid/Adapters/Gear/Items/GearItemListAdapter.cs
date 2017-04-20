@@ -55,9 +55,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Items
                 _textViewCost = view.FindViewById<TextView>(Resource.Id.view_gear_item_cost);
             }
 
-            protected override Android.Support.V4.App.Fragment CreateViewItemFragment()
+            protected override ViewItemFragment<GearItem> CreateViewItemFragment()
             {
-                return new ViewGearItemFragment(Item);
+                return new ViewGearItemFragment();
             }
 
             public override void UpdateView(GearItem gearItem)

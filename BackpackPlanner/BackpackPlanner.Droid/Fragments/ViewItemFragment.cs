@@ -80,6 +80,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             };
         }
 
+        public void SetItem(T item)
+        {
+            Item = item;
+        }
+
         protected override async Task<bool> DoSave(DatabaseContext dbContext)
         {
             if(!await base.DoSave(dbContext).ConfigureAwait(false)) {
@@ -96,11 +101,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             _workingItem = _item?.DeepCopy();
 
             base.Reset();
-        }
-
-        protected ViewItemFragment(T item)
-        {
-            Item = item;
         }
     }
 }

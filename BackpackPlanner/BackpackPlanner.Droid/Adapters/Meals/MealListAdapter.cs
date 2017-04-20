@@ -60,9 +60,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
                 _textViewCost = view.FindViewById<TextView>(Resource.Id.view_meal_cost);
             }
 
-            protected override Android.Support.V4.App.Fragment CreateViewItemFragment()
+            protected override ViewItemFragment<Meal> CreateViewItemFragment()
             {
-                return new ViewMealFragment(Item);
+                return new ViewMealFragment();
             }
 
             public override void UpdateView(Meal meal)

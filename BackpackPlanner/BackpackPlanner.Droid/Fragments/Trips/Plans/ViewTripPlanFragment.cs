@@ -57,11 +57,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
         private TripPlanMealEntries _mealEntries;
         private TripPlanMealEntries.TripPlanMealEntryViewHolder _mealEntryViewHolder;
 
-        public ViewTripPlanFragment(TripPlan tripPlan)
-            : base(tripPlan)
-        {
-        }
-
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
