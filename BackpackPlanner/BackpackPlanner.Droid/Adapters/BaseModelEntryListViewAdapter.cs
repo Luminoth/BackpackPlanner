@@ -54,7 +54,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
         public void RemoveItem(TV item)
         {
-            var removeItems = from entry in Items where entry.Model.Id == item.Id select entry;
+            var removeItems = (from entry in Items where entry.Model.Id == item.Id select entry).ToList();
             foreach(T entry in removeItems) {
                 RemoveItem(entry);
             }
