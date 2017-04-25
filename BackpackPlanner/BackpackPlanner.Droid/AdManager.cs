@@ -32,9 +32,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid
         private static readonly string[] TestDeviceIds = 
         {
             // add test devices here (do not commit to github)
-
-// Shane's Nexus 6p
-"9a295123f5418647"
         };
 
         private readonly Hasher _hasher = new MD5();
