@@ -27,7 +27,7 @@ using EnergonSoftware.BackpackPlanner.Droid.DAL;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Views
 {
-    public abstract class BaseModelEntryViewHolder<TM, TI, TIE> : BaseViewHolder<ItemEntries<TM, TI, TIE>>
+    public abstract class BaseModelEntryContainerViewHolder<TM, TI, TIE> : BaseViewHolder<ItemEntries<TM, TI, TIE>>
         where TM: BaseModel<TM>, new()
         where TI: BaseModel<TI>, IBackpackPlannerItem, new()
         where TIE: BaseModelEntry<TIE, TM, TI>, new()
@@ -77,7 +77,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Views
         {
         }
 
-        protected BaseModelEntryViewHolder(BaseActivity activity, View view)
+        protected BaseModelEntryContainerViewHolder(BaseActivity activity, View view)
             : base(activity)
         {
             _noItemsTextView = view.FindViewById<TextView>(NoItemsResource);

@@ -31,7 +31,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Meals
     public abstract class MealEntries<T> : ItemEntries<T, Meal, MealEntry<T> >
         where T: BaseModel<T>, new()
     {
-        public abstract class MealEntryViewHolder : BaseModelEntryViewHolder<T, Meal, MealEntry<T>>
+        public abstract class MealEntryViewHolder : BaseModelEntryContainerViewHolder<T, Meal, MealEntry<T>>
         {
             protected override int NoItemsResource => Resource.Id.no_meals;
 

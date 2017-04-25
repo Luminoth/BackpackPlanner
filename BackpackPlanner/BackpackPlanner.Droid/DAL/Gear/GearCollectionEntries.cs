@@ -31,7 +31,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL.Gear
     public abstract class GearCollectionEntries<T> : ItemEntries<T, GearCollection, GearCollectionEntry<T>>
         where T: BaseModel<T>, new()
     {
-        public abstract class GearCollectionEntryViewHolder : BaseModelEntryViewHolder<T, GearCollection, GearCollectionEntry<T>>
+        public abstract class GearCollectionEntryViewHolder : BaseModelEntryContainerViewHolder<T, GearCollection, GearCollectionEntry<T>>
         {
             protected override int NoItemsResource => Resource.Id.no_gear_collections;
 

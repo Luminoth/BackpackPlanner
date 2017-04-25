@@ -154,7 +154,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
         }
 
 #region Model Entries
-        protected void SetItemEntryList<TI, TIE>(ItemEntries<T, TI, TIE> itemEntries, BaseModelEntryViewHolder<T, TI, TIE> itemEntryViewHolder)
+        protected void SetItemEntryList<TI, TIE>(ItemEntries<T, TI, TIE> itemEntries, BaseModelEntryContainerViewHolder<T, TI, TIE> itemEntryViewHolder)
             where TI: BaseModel<TI>, IBackpackPlannerItem, new()
             where TIE: BaseModelEntry<TIE, T, TI>, new()
         {
@@ -178,7 +178,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             itemEntryViewHolder.UpdateView(itemEntries);
         }
 
-        private void UpdateItemEntryList<TI, TIE>(ItemEntries<T, TI, TIE> itemEntries, BaseModelEntryViewHolder<T, TI, TIE> itemEntryViewHolder, int index, bool isSelected)
+        private void UpdateItemEntryList<TI, TIE>(ItemEntries<T, TI, TIE> itemEntries, BaseModelEntryContainerViewHolder<T, TI, TIE> itemEntryViewHolder, int index, bool isSelected)
             where TI: BaseModel<TI>, IBackpackPlannerItem, new()
             where TIE: BaseModelEntry<TIE, T, TI>, new()
         {
@@ -204,7 +204,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             itemEntryViewHolder.UpdateView(itemEntries);
         }
 
-        protected void AddItemEntry<TI, TIE>(int addItemDialogTitleResource, ItemEntries<T, TI, TIE> itemEntries, BaseModelEntryViewHolder<T, TI, TIE> itemEntryViewHolder)
+        protected void AddItemEntry<TI, TIE>(int addItemDialogTitleResource, ItemEntries<T, TI, TIE> itemEntries, BaseModelEntryContainerViewHolder<T, TI, TIE> itemEntryViewHolder)
             where TI: BaseModel<TI>, IBackpackPlannerItem, new()
             where TIE: BaseModelEntry<TIE, T, TI>, new()
         {
