@@ -15,18 +15,24 @@
 */
 
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 using EnergonSoftware.BackpackPlanner.DAL.Models;
 using EnergonSoftware.BackpackPlanner.Droid.Activities;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 {
-    public abstract class BaseModelEntryListViewAdapter<T, TM, TV> : BaseListViewAdapter<T>
+    public abstract class BaseModelEntryListViewAdapter<T, TM, TV> : BaseListViewAdapter<T>, INotifyPropertyChanged
         where T: BaseModelEntry<T, TM, TV>, new()
         where TM: BaseModel<TM>, new()
         where TV: BaseModel<TV>, IBackpackPlannerItem, new()
     {
+#region Events
+        public event PropertyChangedEventHandler PropertyChanged;
+#endregion
+
         protected BaseActivity BaseActivity { get; }
 
         private readonly List<T> _items = new List<T>();
@@ -35,42 +41,70 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
         public void AddItem(T item)
         {
+            AddItem(item, true);
+        }
+
+        private void AddItem(T item, bool notify)
+        {
             _items.Add(item);
             Add(item);
+
+            if(notify) {
+                NotifyPropertyChanged("Items");
+            }
         }
 
         public void AddAll(IReadOnlyCollection<T> items)
         {
             foreach(T item in items) {
-                AddItem(item);
+                AddItem(item, false);
             }
+            NotifyPropertyChanged("Items");
         } 
 
         public void RemoveItem(T item)
         {
+            RemoveItem(item, true);
+        }
+
+        private void RemoveItem(T item, bool notify)
+        {
             _items.Remove(item);
             Remove(item);
+
+            if(notify) {
+                NotifyPropertyChanged("Items");
+            }
         }
 
         public void RemoveItem(TV item)
         {
             var removeItems = (from entry in Items where entry.Model.Id == item.Id select entry).ToList();
             foreach(T entry in removeItems) {
-                RemoveItem(entry);
+                RemoveItem(entry, false);
             }
+            NotifyPropertyChanged("Items");
         }
 
         public void RemoveAll(IReadOnlyCollection<T> items)
         {
             foreach(T item in items) {
-                RemoveItem(item);
+                RemoveItem(item, false);
             }
+            NotifyPropertyChanged("Items");
         } 
 
         public void ClearItems()
         {
             _items.Clear();
             Clear();
+
+            NotifyPropertyChanged("Items");
+        }
+
+        protected void NotifyPropertyChanged([CallerMemberName] string propertyName="")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         protected BaseModelEntryListViewAdapter(BaseActivity activity)

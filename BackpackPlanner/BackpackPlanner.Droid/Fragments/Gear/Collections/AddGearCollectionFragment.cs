@@ -61,6 +61,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
             base.OnViewCreated(view, savedInstanceState);
 
             _gearSystemEntries.ItemListAdapter = new GearSystemEntryListAdapter<GearCollection>(BaseActivity);
+            _gearSystemEntries.ItemListAdapter.PropertyChanged += (sender, args) =>
+            {
+                IsDirty = true;
+            };
+
             _gearSystemEntryViewHolder = new GearCollectionGearSystemEntries.GearCollectionGearSystemEntryViewHolder(BaseActivity, view);
             _gearSystemEntryViewHolder.AddItemEvent += (sender, args) =>
             {
@@ -68,6 +73,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
             };
 
             _gearItemEntries.ItemListAdapter = new GearItemEntryListAdapter<GearCollection>(BaseActivity);
+            _gearItemEntries.ItemListAdapter.PropertyChanged += (sender, args) =>
+            {
+                IsDirty = true;
+            };
+
             _gearItemEntryViewHolder = new GearCollectionGearItemEntries.GearCollectionGearItemEntryViewHolder(BaseActivity, view);
             _gearItemEntryViewHolder.AddItemEvent += (sender, args) =>
             {

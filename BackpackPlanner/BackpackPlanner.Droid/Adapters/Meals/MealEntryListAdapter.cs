@@ -87,7 +87,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
 
         protected override BaseViewHolder<MealEntry<T>> CreateViewHolder(View view)
         {
-            return new MealEntryViewHolder(view, BaseActivity);
+            MealEntryViewHolder viewHolder = new MealEntryViewHolder(view, BaseActivity);
+            viewHolder.PropertyChanged += (sender, args) =>
+            {
+                NotifyPropertyChanged(args.PropertyName);
+            };
+            return viewHolder;
         }
     }
 }

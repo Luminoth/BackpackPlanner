@@ -56,6 +56,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
             base.OnViewCreated(view, savedInstanceState);
 
             _gearItemEntries.ItemListAdapter = new GearItemEntryListAdapter<GearSystem>(BaseActivity);
+            _gearItemEntries.ItemListAdapter.PropertyChanged += (sender, args) =>
+            {
+                IsDirty = true;
+            };
+
             _gearItemEntryViewHolder = new GearSystemGearItemEntries.GearSystemGearItemEntryViewHolder(BaseActivity, view);
             _gearItemEntryViewHolder.AddItemEvent += (sender, args) =>
             {

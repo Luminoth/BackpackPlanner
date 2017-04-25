@@ -72,6 +72,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
             base.OnViewCreated(view, savedInstanceState);
 
             _gearCollectionEntries.ItemListAdapter = new GearCollectionEntryListAdapter<TripPlan>(BaseActivity);
+            _gearCollectionEntries.ItemListAdapter.PropertyChanged += (sender, args) =>
+            {
+                IsDirty = true;
+            };
+
             _gearCollectionEntryViewHolder = new TripPlanGearCollectionEntries.TripPlanGearCollectionEntryViewHolder(BaseActivity, view);
             _gearCollectionEntryViewHolder.AddItemEvent += (sender, args) =>
             {
@@ -79,6 +84,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
             };
 
             _gearSystemEntries.ItemListAdapter = new GearSystemEntryListAdapter<TripPlan>(BaseActivity);
+            _gearSystemEntries.ItemListAdapter.PropertyChanged += (sender, args) =>
+            {
+                IsDirty = true;
+            };
+
             _gearSystemEntryViewHolder = new TripPlanGearSystemEntries.TripPlanGearSystemEntryViewHolder(BaseActivity, view);
             _gearSystemEntryViewHolder.AddItemEvent += (sender, args) =>
             {
@@ -86,6 +96,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
             };
 
             _gearItemEntries.ItemListAdapter = new GearItemEntryListAdapter<TripPlan>(BaseActivity);
+            _gearItemEntries.ItemListAdapter.PropertyChanged += (sender, args) =>
+            {
+                IsDirty = true;
+            };
+
             _gearItemEntryViewHolder = new TripPlanGearItemEntries.TripPlanGearItemEntryViewHolder(BaseActivity, view);
             _gearItemEntryViewHolder.AddItemEvent += (sender, args) =>
             {
@@ -93,6 +108,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
             };
 
             _mealEntries.ItemListAdapter = new MealEntryListAdapter<TripPlan>(BaseActivity);
+            _mealEntries.ItemListAdapter.PropertyChanged += (sender, args) =>
+            {
+                IsDirty = true;
+            };
+
             _mealEntryViewHolder = new TripPlanMealEntries.TripPlanMealEntryViewHolder(BaseActivity, view);
             _mealEntryViewHolder.AddItemEvent += (sender, args) =>
             {

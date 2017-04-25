@@ -87,7 +87,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Systems
 
         protected override BaseViewHolder<GearSystemEntry<T>> CreateViewHolder(View view)
         {
-            return new GearSystemEntryViewHolder(view, BaseActivity);
+            GearSystemEntryViewHolder viewHolder = new GearSystemEntryViewHolder(view, BaseActivity);
+            viewHolder.PropertyChanged += (sender, args) =>
+            {
+                NotifyPropertyChanged(args.PropertyName);
+            };
+            return viewHolder;
         }
     }
 }
