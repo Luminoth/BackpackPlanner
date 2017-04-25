@@ -21,6 +21,7 @@ using System.Runtime.CompilerServices;
 
 using EnergonSoftware.BackpackPlanner.DAL.Models;
 using EnergonSoftware.BackpackPlanner.Droid.Activities;
+using EnergonSoftware.BackpackPlanner.Droid.Views;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 {
@@ -105,6 +106,15 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
         protected void NotifyPropertyChanged([CallerMemberName] string propertyName="")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected override void BindViewHolder(BaseViewHolder<T> viewHolder, int position)
+        {
+            var modelEntryViewHolder = (BaseModelEntryViewHolder<T, TM, TV>)viewHolder;
+
+            modelEntryViewHolder.PropertyChangedNotificationEnabled = false;
+            base.BindViewHolder(modelEntryViewHolder, position);
+            modelEntryViewHolder.PropertyChangedNotificationEnabled = true;
         }
 
         protected BaseModelEntryListViewAdapter(BaseActivity activity)

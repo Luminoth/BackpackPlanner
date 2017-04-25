@@ -43,7 +43,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
         protected abstract BaseViewHolder<T> CreateViewHolder(View view);
 
-        private void BindViewHolder(BaseViewHolder<T> viewHolder, int position)
+        protected virtual void BindViewHolder(BaseViewHolder<T> viewHolder, int position)
         {
             T item = GetItem(position);
             viewHolder.UpdateView(item);
