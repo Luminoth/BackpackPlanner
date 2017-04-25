@@ -77,8 +77,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
 
                     Activity.RunOnUiThread(() =>
                     {
-                        SetItemEntryList(_gearItemEntries, _gearItemEntryViewHolder);
-
                         progressDialog.Dismiss();
 
                         UpdateView();
@@ -91,7 +89,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
         {
             base.UpdateView();
 
-            _gearItemEntryViewHolder.UpdateView(_gearItemEntries);
+            SetItemEntryList(_gearItemEntries, _gearItemEntryViewHolder);
         }
 
         protected override BaseModelViewHolder<GearSystem> CreateViewHolder(BaseActivity activity, View view)

@@ -67,6 +67,12 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
             }
         } 
 
+        public void ClearItems()
+        {
+            _items.Clear();
+            Clear();
+        }
+
         protected BaseModelEntryListViewAdapter(BaseActivity activity)
             : base(activity)
         {

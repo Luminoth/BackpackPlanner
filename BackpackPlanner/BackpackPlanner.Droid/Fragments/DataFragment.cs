@@ -158,6 +158,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             where TI: BaseModel<TI>, IBackpackPlannerItem, new()
             where TIE: BaseModelEntry<TIE, T, TI>, new()
         {
+            itemEntries.ItemListAdapter?.ClearItems();
             for(int i=0; i<itemEntries.ItemCount; ++i) {
                 TI item = itemEntries.Items?[i];
                 if(null == item) {
@@ -169,6 +170,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                 if(null != entry) {
                     itemEntries.SelectItem(i, true);
                     itemEntries.ItemListAdapter?.AddItem(entry);
+                } else {
+                    itemEntries.SelectItem(i, false);
                 }
             }
 

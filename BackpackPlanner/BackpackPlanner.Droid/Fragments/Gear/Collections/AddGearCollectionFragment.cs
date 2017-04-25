@@ -102,8 +102,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Collections
         {
             base.UpdateView();
 
-            _gearSystemEntryViewHolder.UpdateView(_gearSystemEntries);
-            _gearItemEntryViewHolder.UpdateView(_gearItemEntries);
+            SetItemEntryList(_gearSystemEntries, _gearSystemEntryViewHolder);
+            SetItemEntryList(_gearItemEntries, _gearItemEntryViewHolder);
         }
 
         protected override GearCollection CreateItem()

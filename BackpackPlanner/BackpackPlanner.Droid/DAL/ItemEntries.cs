@@ -71,9 +71,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.DAL
 
         public void SelectItem(int index, bool isSelected)
         {
-            if(null != SelectedItems) {
-                SelectedItems[index] = isSelected;
+            if(null == SelectedItems || index < 0 || index >= SelectedItems.Length) {
+                return;
             }
+            SelectedItems[index] = isSelected;
         }
 
         protected ItemEntries(TM model, IReadOnlyCollection<TIE> entries)

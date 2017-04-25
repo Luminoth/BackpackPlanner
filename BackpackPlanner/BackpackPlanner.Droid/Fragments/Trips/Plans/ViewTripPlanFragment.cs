@@ -117,11 +117,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
 
                     Activity.RunOnUiThread(() =>
                     {
-                        SetItemEntryList(_gearCollectionEntries, _gearCollectionEntryViewHolder);
-                        SetItemEntryList(_gearSystemEntries, _gearSystemEntryViewHolder);
-                        SetItemEntryList(_gearItemEntries, _gearItemEntryViewHolder);
-                        SetItemEntryList(_mealEntries, _mealEntryViewHolder);
-
                         progressDialog.Dismiss();
 
                         UpdateView();
@@ -134,10 +129,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans
         {
             base.UpdateView();
 
-            _gearCollectionEntryViewHolder.UpdateView(_gearCollectionEntries);
-            _gearSystemEntryViewHolder.UpdateView(_gearSystemEntries);
-            _gearItemEntryViewHolder.UpdateView(_gearItemEntries);
-            _mealEntryViewHolder.UpdateView(_mealEntries);
+            SetItemEntryList(_gearCollectionEntries, _gearCollectionEntryViewHolder);
+            SetItemEntryList(_gearSystemEntries, _gearSystemEntryViewHolder);
+            SetItemEntryList(_gearItemEntries, _gearItemEntryViewHolder);
+            SetItemEntryList(_mealEntries, _mealEntryViewHolder);
         }
 
         protected override BaseModelViewHolder<TripPlan> CreateViewHolder(BaseActivity activity, View view)

@@ -89,7 +89,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems
         {
             base.UpdateView();
 
-            _gearItemEntryViewHolder.UpdateView(_gearItemEntries);
+            SetItemEntryList(_gearItemEntries, _gearItemEntryViewHolder);
         }
 
         protected override GearSystem CreateItem()
