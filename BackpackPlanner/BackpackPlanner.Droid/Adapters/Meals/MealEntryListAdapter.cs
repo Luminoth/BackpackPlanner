@@ -30,7 +30,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
     public sealed class MealEntryListAdapter<T> : BaseModelEntryListViewAdapter<MealEntry<T>, T, Meal>
         where T: BaseModel<T>, new()
     {
-        private sealed class MealEntryViewHolder : BaseViewHolder<MealEntry<T>>
+        private sealed class MealEntryViewHolder : BaseModelEntryViewHolder<MealEntry<T>, T, Meal>
         {
             private readonly TextView _textViewName;
             private readonly TextView _textViewTotalWeight;
@@ -46,6 +46,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Meals
                 _editTextQuantity.EditText.AfterTextChanged += (sender, args) =>
                 {
                     UpdateTotalWeight(Item);
+                    NotifyPropertyChanged("Quantity");
                 };
             }
 

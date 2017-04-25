@@ -30,7 +30,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Systems
     public sealed class GearSystemEntryListAdapter<T> : BaseModelEntryListViewAdapter<GearSystemEntry<T>, T, GearSystem>
         where T: BaseModel<T>, new()
     {
-        private sealed class GearSystemEntryViewHolder : BaseViewHolder<GearSystemEntry<T>>
+        private sealed class GearSystemEntryViewHolder : BaseModelEntryViewHolder<GearSystemEntry<T>, T, GearSystem>
         {
             private readonly TextView _textViewName;
             private readonly TextView _textViewTotalWeight;
@@ -46,6 +46,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Systems
                 _editTextQuantity.EditText.AfterTextChanged += (sender, args) =>
                 {
                     UpdateTotalWeight(Item);
+                    NotifyPropertyChanged("Quantity");
                 };
             }
 
