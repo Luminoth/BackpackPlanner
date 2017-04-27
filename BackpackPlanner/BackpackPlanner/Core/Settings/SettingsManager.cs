@@ -33,6 +33,9 @@ namespace EnergonSoftware.BackpackPlanner.Core.Settings
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(SettingsManager));
 
+// TODO: wow, this sucks... we have to remember to add setting management stuff here
+// and that is definitely going to lead to bugs developing later on (it already has in fact!)
+
         /// <summary>
         /// Loads all of the settings.
         /// </summary>
@@ -43,10 +46,14 @@ namespace EnergonSoftware.BackpackPlanner.Core.Settings
             // TODO: put these in a LoadMetaSettings() method
 
             settings.MetaSettings.FirstRun = GetBoolean(MetaSettings.FirstRunPreferenceKey, settings.MetaSettings.FirstRun);
+#if DEBUG
+            settings.MetaSettings.TestDataEntered = GetBoolean(MetaSettings.TestDataEnteredKey, settings.MetaSettings.TestDataEntered);
+#endif
 
             // TODO: put these in a LoadSettings() method
 
             settings.ConnectGooglePlayServices = GetBoolean(BackpackPlannerSettings.ConnectGooglePlayServicesPreferenceKey, settings.ConnectGooglePlayServices);
+            settings.GooglePlayServicesUser = GetString(BackpackPlannerSettings.GooglePlayServicesUserPreferenceKey, settings.GooglePlayServicesUser);
 
             // NOTE: have to read the unit system/currency settings first in order
             // to properly interpret the rest of the settings
@@ -111,9 +118,17 @@ namespace EnergonSoftware.BackpackPlanner.Core.Settings
             case MetaSettings.FirstRunPreferenceKey:
                 settings.MetaSettings.FirstRun = GetBoolean(MetaSettings.FirstRunPreferenceKey, settings.MetaSettings.FirstRun);
                 break;
+#if DEBUG
+            case MetaSettings.TestDataEnteredKey:
+                settings.MetaSettings.TestDataEntered = GetBoolean(MetaSettings.TestDataEnteredKey, settings.MetaSettings.TestDataEntered);
+                break;
+#endif
             // TODO: put these in an UpdateSettingsFromPreferences() method
             case BackpackPlannerSettings.ConnectGooglePlayServicesPreferenceKey:
                 settings.ConnectGooglePlayServices = GetBoolean(BackpackPlannerSettings.ConnectGooglePlayServicesPreferenceKey, settings.ConnectGooglePlayServices);
+                break;
+            case BackpackPlannerSettings.GooglePlayServicesUserPreferenceKey:
+                settings.GooglePlayServicesUser = GetString(BackpackPlannerSettings.GooglePlayServicesUserPreferenceKey, settings.GooglePlayServicesUser);
                 break;
             case BackpackPlannerSettings.UnitSystemPreferenceKey:
                 string unitSystemPreference = GetString(BackpackPlannerSettings.UnitSystemPreferenceKey, settings.Units.ToString());

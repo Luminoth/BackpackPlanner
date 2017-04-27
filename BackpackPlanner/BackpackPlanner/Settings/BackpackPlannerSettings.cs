@@ -28,11 +28,6 @@ namespace EnergonSoftware.BackpackPlanner.Settings
     {
 #region Preference Keys
         /// <summary>
-        /// The google play services preference key
-        /// </summary>
-        public const string GooglePlayServicesPreferenceKey = "googlePlayServices";
-
-        /// <summary>
         /// The connect google play services preference key
         /// </summary>
         public const string ConnectGooglePlayServicesPreferenceKey = "connectGooglePlayServices";
