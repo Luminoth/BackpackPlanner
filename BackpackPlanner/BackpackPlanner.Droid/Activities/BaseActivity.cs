@@ -83,6 +83,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 
             InitBackpackPlannerState().Wait();
 
+            BackpackPlannerState.DatabaseState.Init(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal));
+
             LoadPreferences(this);
 
             ((HockeyAppManager)_backpackPlannerStateInstance.PlatformHockeyAppManager).OnCreate(this);

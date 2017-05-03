@@ -73,20 +73,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             _initStopwatch.Start();
 #endif
 
-            bool success = await InitDatabase().ConfigureAwait(false);
+            bool success = await BackpackPlannerState.DatabaseState.MigrateAsync(BackpackPlannerState).ConfigureAwait(false)
 
             InitFinished(progressDialog, success);
-        }
-
-// TODO: if we resume the app from the background, this is never called
-// and we end up with broken database state. most likely the base activity should be responsible for this happening
-// and the main activity can just deal with setting up the test data
-        private async Task<bool> InitDatabase()
-        {
-            return await BackpackPlannerState.DatabaseState.InitAsync(
-                BackpackPlannerState,
-                System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal),
-                DatabaseState.DatabaseName).ConfigureAwait(false);
         }
 
         private void InitFinished([CanBeNull] ProgressDialog progressDialog, bool initSuccess)

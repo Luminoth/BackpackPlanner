@@ -80,6 +80,11 @@ namespace EnergonSoftware.BackpackPlanner
         /// </summary>
         public const string DatabaseName = "BackpackPlanner.db";
 
+        private bool _isInitialized;
+
+        /// <summary>
+        /// The database file path
+        /// </summary>
         public string DatabasePath { get; private set; }
 
         public DatabaseContext CreateContext()
@@ -88,18 +93,32 @@ namespace EnergonSoftware.BackpackPlanner
         }
 
         /// <summary>
-        /// Connects the library database connections.
+        /// Initializes the database state.
         /// </summary>
-        /// <param name="state">The system state.</param>
         /// <param name="dbPath">The database path.</param>
-        /// <param name="dbName">Name of the database.</param>
-        public async Task<bool> InitAsync(BackpackPlannerState state, string dbPath, string dbName)
+        public void Init(string dbPath)
         {
-            DatabasePath = Path.Combine(dbPath, dbName);
+            DatabasePath = Path.Combine(dbPath, DatabaseName);
+
+            if(_isInitialized) {
+                return;
+            }
+
             using(DatabaseContext dbContext = CreateContext()) {
                 Microsoft.Extensions.Logging.ILoggerFactory loggerFactory = dbContext.GetService<Microsoft.Extensions.Logging.ILoggerFactory>();
                 loggerFactory.AddProvider(new LoggingProvider());
+            }
 
+            _isInitialized = true;
+        }
+
+        /// <summary>
+        /// Migrates the database.
+        /// </summary>
+        /// <param name="state">The system state.</param>
+        public async Task<bool> MigrateAsync(BackpackPlannerState state)
+        {
+            using(DatabaseContext dbContext = CreateContext()) {
                 Logger.Info("Migrating database...");
                 try {
                     await dbContext.Database.MigrateAsync().ConfigureAwait(false);
@@ -118,12 +137,14 @@ namespace EnergonSoftware.BackpackPlanner
             return true;
         }
 
+#if DEBUG
         private async Task SaveChangesAsync(DatabaseContext dbContext)
         {
             Logger.Debug("Saving changes...");
             int count = await dbContext.SaveChangesAsync().ConfigureAwait(false);
             Logger.Debug($"Saved {count} objects!");
         }
+#endif
 
         private async Task PopulateInitialDatabaseAsync(DatabaseContext dbContext, BackpackPlannerState state)
         {
