@@ -73,7 +73,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
             _initStopwatch.Start();
 #endif
 
-            bool success = await BackpackPlannerState.DatabaseState.MigrateAsync(BackpackPlannerState).ConfigureAwait(false)
+            bool success = await BackpackPlannerState.DatabaseState.MigrateAsync(BackpackPlannerState).ConfigureAwait(false);
 
             InitFinished(progressDialog, success);
         }
