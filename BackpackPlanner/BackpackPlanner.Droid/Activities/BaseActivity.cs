@@ -29,7 +29,7 @@ using EnergonSoftware.BackpackPlanner.Droid.Permissions;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 {
-    public class BaseActivity : Android.Support.V7.App.AppCompatActivity
+    public abstract class BaseActivity : Android.Support.V7.App.AppCompatActivity
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(BaseActivity));
 
@@ -52,6 +52,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 
         public AdManager AdManager { get; } = new AdManager();
 
+        public virtual int AppTheme => Resource.Style.AppTheme;
+
 #if DEBUG_LIFECYCLE
         private readonly Stopwatch _startupStopwatch = new Stopwatch();
 #endif
@@ -72,6 +74,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 #endif
 
             base.OnCreate(savedInstanceState);
+
+            SetTheme(AppTheme);
 
 #if DEBUG
             Logger.Debug($"Android ID: {Android.Provider.Settings.Secure.GetString(ContentResolver, Android.Provider.Settings.Secure.AndroidId)}");

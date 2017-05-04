@@ -32,6 +32,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(MainActivity));
 
+        public override int AppTheme => Resource.Style.AppTheme_Splash;
+
 #if DEBUG
         private readonly Stopwatch _initStopwatch = new Stopwatch();
 #endif

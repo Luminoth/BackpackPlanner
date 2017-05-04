@@ -25,7 +25,7 @@ using EnergonSoftware.BackpackPlanner.Droid.Views;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 {
-    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme")]
+    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.Splash")]
     // ReSharper disable once InconsistentNaming
     public sealed class FTUEActivity : BaseActivity
     {

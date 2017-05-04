@@ -34,7 +34,7 @@ using EnergonSoftware.BackpackPlanner.Droid.Util;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Activities
 {
-    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme")]
+    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.Splash")]
     public sealed class BackpackPlannerActivity : BaseActivity, View.IOnClickListener
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(BackpackPlannerActivity));
