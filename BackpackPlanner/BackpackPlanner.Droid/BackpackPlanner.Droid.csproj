@@ -383,10 +383,14 @@
     <Compile Include="Permissions\DroidPermissionRequest.cs" />
     <Compile Include="Permissions\DroidPermissionRequestFactory.cs" />
     <Compile Include="AdManager.cs" />
+    <Compile Include="Util\AdViewContainer.cs" />
     <Compile Include="Util\BackPressedListener.cs" />
+    <Compile Include="Views\AdViewHolder.cs" />
     <Compile Include="Views\BaseModelEntryContainerViewHolder.cs" />
     <Compile Include="Views\BaseModelEntryViewHolder.cs" />
+    <Compile Include="Views\BaseModelRecyclerViewHolder.cs" />
     <Compile Include="Views\BaseModelViewHolder.cs" />
+    <Compile Include="Views\BaseRecyclerViewHolder.cs" />
     <Compile Include="Views\BaseViewHolder.cs" />
     <Compile Include="Views\CircleViewPagerIndicator.cs" />
     <Compile Include="Util\DialogUtil.cs" />

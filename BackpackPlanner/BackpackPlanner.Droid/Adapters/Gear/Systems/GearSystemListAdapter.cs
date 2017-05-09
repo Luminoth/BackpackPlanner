@@ -15,67 +15,19 @@
 */
 
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 
 using Android.Views;
-using Android.Widget;
 
 using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Systems;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
-using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Systems;
-using EnergonSoftware.BackpackPlanner.Units.Units;
+using EnergonSoftware.BackpackPlanner.Droid.Views;
+using EnergonSoftware.BackpackPlanner.Droid.Views.Gear;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Systems
 {
     public sealed class GearSystemListAdapter : BaseModelRecyclerListAdapter<GearSystem>
     {
-        private sealed class GearSystemViewHolder : BaseModelRecyclerViewHolder
-        {
-            protected override int ToolbarResourceId => Resource.Id.view_gear_system_toolbar;
-
-            protected override int MenuResourceId => Resource.Menu.gear_system_menu;
-
-            protected override int DeleteActionResourceId => Resource.Id.action_delete_gear_system;
-
-            private readonly TextView _textViewItems;
-            private readonly TextView _textViewWeight;
-            private readonly TextView _textViewCost;
-
-            public GearSystemViewHolder(View view, BaseRecyclerListAdapter<GearSystem> adapter)
-                : base(view, adapter)
-            {
-                _textViewItems = view.FindViewById<TextView>(Resource.Id.view_gear_system_items);
-                _textViewWeight = view.FindViewById<TextView>(Resource.Id.view_gear_system_weight);
-                _textViewCost = view.FindViewById<TextView>(Resource.Id.view_gear_system_cost);
-            }
-
-            protected override ViewItemFragment<GearSystem> CreateViewItemFragment()
-            {
-                return new ViewGearSystemFragment();
-            }
-
-            public override void UpdateView(GearSystem gearSystem)
-            {
-                base.UpdateView(gearSystem);
-
-                _textViewItems.Text = Java.Lang.String.Format(BaseActivity.Resources.GetString(Resource.String.label_view_gear_system_items),
-                    gearSystem.GearItems.Count
-                );
-
-                int weightInUnits = (int)gearSystem.GetTotalWeightInUnits(BaseActivity.BackpackPlannerState.Settings);
-                _textViewWeight.Text = Java.Lang.String.Format(BaseActivity.Resources.GetString(Resource.String.label_view_gear_system_weight),
-                    weightInUnits, BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(weightInUnits != 1)
-                );
-
-                string formattedCost = gearSystem.GetTotalCostInCurrency(BaseActivity.BackpackPlannerState.Settings).ToString("C", CultureInfo.CurrentCulture);
-                string formattedCostPerWeight = gearSystem.GetCostInCurrencyPerWeight(BaseActivity.BackpackPlannerState.Settings).ToString("C", CultureInfo.CurrentCulture);
-                _textViewCost.Text = Java.Lang.String.Format(BaseActivity.Resources.GetString(Resource.String.label_view_gear_system_cost),
-                    formattedCost, formattedCostPerWeight, BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(false)
-                );
-            }
-        }
-
         protected override int LayoutResource => Resource.Layout.view_gear_system;
 
 
@@ -106,9 +58,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Gear.Systems
             return items;
         }
 
-        protected override BaseRecyclerViewHolder CreateViewHolder(View view, BaseRecyclerListAdapter<GearSystem> adapter)
+        protected override BaseRecyclerViewHolder<GearSystem> CreateViewHolder(View view, BaseRecyclerListAdapter<GearSystem> adapter)
         {
-            return new GearSystemViewHolder(view, adapter);
+            return new GearSystemListViewHolder(view, adapter);
         }
     }
 }

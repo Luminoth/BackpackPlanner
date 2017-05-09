@@ -14,13 +14,22 @@
    limitations under the License.
 */
 
+using Android.Views;
+
 using EnergonSoftware.BackpackPlanner.Droid.Activities;
+using EnergonSoftware.BackpackPlanner.Droid.Adapters;
+using EnergonSoftware.BackpackPlanner.Droid.Fragments;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Views
 {
-    public abstract class BaseViewHolder<T> : Java.Lang.Object, IViewHolder<T>
+    public abstract class BaseRecyclerViewHolder<T> : Android.Support.V7.Widget.RecyclerView.ViewHolder, IViewHolder<T>
+        where T: class
     {
-        public BaseActivity Activity { get; }
+        public BaseActivity Activity => Adapter.Fragment.BaseActivity;
+
+        protected RecyclerFragment Fragment => Adapter.Fragment;
+
+        protected BaseRecyclerListAdapter<T> Adapter { get; }
 
         public T Item { get; private set; }
 
@@ -29,9 +38,10 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Views
             Item = item;
         }
 
-        protected BaseViewHolder(BaseActivity activity)
+        protected BaseRecyclerViewHolder(View view, BaseRecyclerListAdapter<T> adapter)
+            : base(view)
         {
-            Activity = activity;
+            Adapter = adapter;
         }
     }
 }

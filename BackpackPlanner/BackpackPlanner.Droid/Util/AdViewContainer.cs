@@ -14,18 +14,16 @@
    limitations under the License.
 */
 
-using Android.Runtime;
+using System.Collections.Generic;
 
-using EnergonSoftware.BackpackPlanner.Droid.Activities;
+using Android.Gms.Ads;
 
-namespace EnergonSoftware.BackpackPlanner.Droid.Views
+namespace EnergonSoftware.BackpackPlanner.Droid.Util
 {
-    public interface IViewHolder<T> : IJavaObject
+    public interface IAdViewContainer
     {
-        BaseActivity Activity { get; }
+        IReadOnlyDictionary<int, NativeExpressAdView> AdViews { get; }
 
-        T Item { get; }
-
-        void UpdateView(T item);
+        void AddAdView(int position, NativeExpressAdView adView);
     }
 }

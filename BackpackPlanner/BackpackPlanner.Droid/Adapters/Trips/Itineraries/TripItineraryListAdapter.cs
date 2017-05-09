@@ -21,36 +21,13 @@ using Android.Views;
 
 using EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Itineraries;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
-using EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries;
+using EnergonSoftware.BackpackPlanner.Droid.Views;
+using EnergonSoftware.BackpackPlanner.Droid.Views.Trips;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Itineraries
 {
     public sealed class TripItineraryListAdapter : BaseModelRecyclerListAdapter<TripItinerary>
     {
-        private sealed class TripItineraryViewHolder : BaseModelRecyclerViewHolder
-        {
-            protected override int ToolbarResourceId => Resource.Id.view_trip_itinerary_toolbar;
-
-            protected override int MenuResourceId => Resource.Menu.trip_itinerary_menu;
-
-            protected override int DeleteActionResourceId => Resource.Id.action_delete_trip_itinerary;
-
-            public TripItineraryViewHolder(View view, BaseRecyclerListAdapter<TripItinerary> adapter)
-                : base(view, adapter)
-            {
-            }
-
-            protected override ViewItemFragment<TripItinerary> CreateViewItemFragment()
-            {
-                return new ViewTripItineraryFragment();
-            }
-
-            public override void UpdateView(TripItinerary tripItinerary)
-            {
-                base.UpdateView(tripItinerary);
-            }
-        }
-
         protected override int LayoutResource => Resource.Layout.view_trip_itinerary;
 
         public TripItineraryListAdapter(ListItemsFragment<TripItinerary> fragment)
@@ -68,9 +45,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters.Trips.Itineraries
             return items;
         }
 
-        protected override BaseRecyclerViewHolder CreateViewHolder(View view, BaseRecyclerListAdapter<TripItinerary> adapter)
+        protected override BaseRecyclerViewHolder<TripItinerary> CreateViewHolder(View view, BaseRecyclerListAdapter<TripItinerary> adapter)
         {
-            return new TripItineraryViewHolder(view, adapter);
+            return new TripItineraryListViewHolder(view, adapter);
         }
     }
 }

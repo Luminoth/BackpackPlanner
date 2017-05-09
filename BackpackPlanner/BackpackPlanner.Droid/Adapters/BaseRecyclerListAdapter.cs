@@ -21,20 +21,17 @@ using System.Linq;
 using Android.Gms.Ads;
 using Android.Views;
 
-using EnergonSoftware.BackpackPlanner.Core.Logging;
-using EnergonSoftware.BackpackPlanner.Droid.Activities;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments;
+using EnergonSoftware.BackpackPlanner.Droid.Util;
 using EnergonSoftware.BackpackPlanner.Droid.Views;
 
 using JetBrains.Annotations;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 {
-    public abstract class BaseRecyclerListAdapter<T> : Android.Support.V7.Widget.RecyclerView.Adapter
+    public abstract class BaseRecyclerListAdapter<T> : Android.Support.V7.Widget.RecyclerView.Adapter, IAdViewContainer
         where T: class
     {
-        private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(BaseRecyclerListAdapter<T>));
-
 #region View Types
         private const int ViewTypeListItem = 0;
         private const int ViewTypeAdItem = 1;
@@ -47,81 +44,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 #endif
         private const int HalfAdFrequencey = AdFrequency / 2;
 
-#region View Holders
-        protected abstract class BaseRecyclerViewHolder : Android.Support.V7.Widget.RecyclerView.ViewHolder, IViewHolder<T>
-        {
-            protected BaseActivity BaseActivity => Adapter.Fragment.BaseActivity;
-
-            protected RecyclerFragment Fragment => Adapter.Fragment;
-
-            protected BaseRecyclerListAdapter<T> Adapter { get; }
-
-            protected T Item { get; private set; }
-
-            public virtual void UpdateView(T item)
-            {
-                Item = item;
-            }
-
-            protected BaseRecyclerViewHolder(View view, BaseRecyclerListAdapter<T> adapter)
-                : base(view)
-            {
-                Adapter = adapter;
-            }
-        }
-
-        private sealed class AdViewHolder : BaseRecyclerViewHolder
-        {
-            private readonly ViewGroup _adCardView;
-
-            public AdViewHolder(View view, BaseRecyclerListAdapter<T> adapter)
-                : base(view, adapter)
-            {
-                _adCardView = view.FindViewById<Android.Support.V7.Widget.CardView>(Resource.Id.view_ad);
-            }
-
-            public override void UpdateView(T item)
-            {
-                //base.UpdateView(item);
-
-                _adCardView.RemoveAllViews();
-
-                if(!Adapter._adViews.TryGetValue(AdapterPosition, out NativeExpressAdView adView)) {
-                    adView = CreateAdView(Adapter.Fragment);
-                    Adapter._adViews.Add(AdapterPosition, adView);
-                }
-                _adCardView.AddView(adView);
-            }
-
-            private NativeExpressAdView CreateAdView(RecyclerFragment fragment)
-            {
-                NativeExpressAdView adView = new NativeExpressAdView(fragment.Context)
-                {
-                #if DISTRIBUTION
-                    AdUnitId = Fragment.GetString(Resource.String.native_ad_unit_id)
-                #else
-                    AdUnitId = fragment.GetString(Resource.String.test_native_ad_unit_id)
-                #endif
-                };
-
-                // NOTE: this works because we create the view *after* the recycler has been sized
-                float density = fragment.Resources.DisplayMetrics.Density;
-                adView.AdSize = new AdSize((int)(fragment.Layout.Width / density), 150);
-
-                AdRequest.Builder builder = new AdRequest.Builder();
-                BaseActivity.AdManager.AddTestDevices(builder);
-                BaseActivity.AdManager.SetGender(fragment.BaseActivity.BackpackPlannerState.PersonalInformation, builder);
-                AdRequest adRequest = builder.Build();
-
-                Logger.Debug($"Loading ad, is test device: {adRequest.IsTestDevice(fragment.Context)}");
-                adView.LoadAd(adRequest);
-
-                return adView;
-            }
-        }
-#endregion
-
-        protected RecyclerFragment Fragment { get; }
+        public RecyclerFragment Fragment { get; }
 
         protected abstract int LayoutResource { get; }
 
@@ -159,16 +82,23 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
         private readonly Dictionary<int, NativeExpressAdView> _adViews = new Dictionary<int, NativeExpressAdView>();
 
-#region ViewHolder
-        private BaseRecyclerViewHolder CreateAdViewHolder(ViewGroup parent)
+        public IReadOnlyDictionary<int, NativeExpressAdView> AdViews => _adViews;
+
+        public void AddAdView(int position, NativeExpressAdView adView)
         {
-            View view = LayoutInflater.From(parent.Context).Inflate(Resource.Layout.view_ad, parent, false);
-            return new AdViewHolder(view, this);
+            _adViews.Add(position, adView);
         }
 
-        protected abstract BaseRecyclerViewHolder CreateViewHolder(View view, BaseRecyclerListAdapter<T> adapter);
+#region ViewHolder
+        private BaseRecyclerViewHolder<T> CreateAdViewHolder(ViewGroup parent)
+        {
+            View view = LayoutInflater.From(parent.Context).Inflate(Resource.Layout.view_ad, parent, false);
+            return new AdViewHolder<T>(view, this);
+        }
 
-        private BaseRecyclerViewHolder CreateItemViewHolder(ViewGroup parent)
+        protected abstract BaseRecyclerViewHolder<T> CreateViewHolder(View view, BaseRecyclerListAdapter<T> adapter);
+
+        private BaseRecyclerViewHolder<T> CreateItemViewHolder(ViewGroup parent)
         {
             View view = LayoutInflater.From(parent.Context).Inflate(LayoutResource, parent, false);
             return CreateViewHolder(view, this);
@@ -188,13 +118,13 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Adapters
 
         private void BindAdViewHolder(Android.Support.V7.Widget.RecyclerView.ViewHolder holder)
         {
-            BaseRecyclerViewHolder baseViewHolder = (BaseRecyclerViewHolder)holder;
+            BaseRecyclerViewHolder<T> baseViewHolder = (BaseRecyclerViewHolder<T>)holder;
             baseViewHolder.UpdateView(null);
         }
 
         private void BindItemViewHolder(Android.Support.V7.Widget.RecyclerView.ViewHolder holder, int position)
         {
-            BaseRecyclerViewHolder baseViewHolder = (BaseRecyclerViewHolder)holder;
+            BaseRecyclerViewHolder<T> baseViewHolder = (BaseRecyclerViewHolder<T>)holder;
             T item = ProcessedListItems.ElementAt(position);
             baseViewHolder.UpdateView(item);
         }

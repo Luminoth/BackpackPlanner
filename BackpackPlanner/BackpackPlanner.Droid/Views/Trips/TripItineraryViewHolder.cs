@@ -19,6 +19,9 @@ using Android.Views;
 using EnergonSoftware.BackpackPlanner.DAL;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Itineraries;
 using EnergonSoftware.BackpackPlanner.Droid.Activities;
+using EnergonSoftware.BackpackPlanner.Droid.Adapters;
+using EnergonSoftware.BackpackPlanner.Droid.Fragments;
+using EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Itineraries;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Views.Trips
 {
@@ -69,6 +72,30 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Views.Trips
             tripItinerary.Note = _tripItineraryNoteEditText.EditText.Text;
 
             base.DoDataExchange(tripItinerary, dbContext);
+        }
+    }
+
+    public sealed class TripItineraryListViewHolder : BaseModelRecyclerViewHolder<TripItinerary>
+    {
+        protected override int ToolbarResourceId => Resource.Id.view_trip_itinerary_toolbar;
+
+        protected override int MenuResourceId => Resource.Menu.trip_itinerary_menu;
+
+        protected override int DeleteActionResourceId => Resource.Id.action_delete_trip_itinerary;
+
+        public TripItineraryListViewHolder(View view, BaseRecyclerListAdapter<TripItinerary> adapter)
+            : base(view, adapter)
+        {
+        }
+
+        protected override ViewItemFragment<TripItinerary> CreateViewItemFragment()
+        {
+            return new ViewTripItineraryFragment();
+        }
+
+        public override void UpdateView(TripItinerary tripItinerary)
+        {
+            base.UpdateView(tripItinerary);
         }
     }
 }

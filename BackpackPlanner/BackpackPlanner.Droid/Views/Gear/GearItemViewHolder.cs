@@ -15,13 +15,21 @@
 */
 
 using System;
+using System.Globalization;
 
+using Android.Graphics;
+using Android.Graphics.Drawables;
 using Android.Views;
 using Android.Widget;
 
 using EnergonSoftware.BackpackPlanner.DAL;
+using EnergonSoftware.BackpackPlanner.DAL.Models;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Gear.Items;
 using EnergonSoftware.BackpackPlanner.Droid.Activities;
+using EnergonSoftware.BackpackPlanner.Droid.Adapters;
+using EnergonSoftware.BackpackPlanner.Droid.Fragments;
+using EnergonSoftware.BackpackPlanner.Droid.Fragments.Gear.Items;
+using EnergonSoftware.BackpackPlanner.Units;
 using EnergonSoftware.BackpackPlanner.Units.Currency;
 using EnergonSoftware.BackpackPlanner.Units.Units;
 
@@ -92,8 +100,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Views.Gear
                 NotifyPropertyChanged("Weight");
             };
 
-            _gearItemWeightEditText.Hint = Java.Lang.String.Format(BaseActivity.Resources.GetString(Resource.String.label_gear_item_weight),
-                BaseActivity.BackpackPlannerState.Settings.Units.GetSmallWeightString(true)
+            _gearItemWeightEditText.Hint = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_gear_item_weight),
+                Activity.BackpackPlannerState.Settings.Units.GetSmallWeightString(true)
             );
 
             _gearItemCostEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_cost);
@@ -102,8 +110,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Views.Gear
                 NotifyPropertyChanged("Cost");
             };
 
-            _gearItemCostEditText.Hint = Java.Lang.String.Format(BaseActivity.Resources.GetString(Resource.String.label_gear_item_cost),
-                BaseActivity.BackpackPlannerState.Settings.Currency.GetCurrencyString()
+            _gearItemCostEditText.Hint = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_gear_item_cost),
+                Activity.BackpackPlannerState.Settings.Currency.GetCurrencyString()
             );
 
             _gearItemNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.gear_item_note);
@@ -137,8 +145,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Views.Gear
 
             _gearItemConsumableSwitch.Checked = gearItem.IsConsumable;
             _gearItemConsumedEditText.EditText.Text = gearItem.ConsumedPerDay.ToString();
-            _gearItemWeightEditText.EditText.Text = ((int)gearItem.GetWeightInUnits(BaseActivity.BackpackPlannerState.Settings)).ToString();
-            _gearItemCostEditText.EditText.Text = ((int)gearItem.GetCostInCurrency(BaseActivity.BackpackPlannerState.Settings)).ToString();
+            _gearItemWeightEditText.EditText.Text = ((int)gearItem.GetWeightInUnits(Activity.BackpackPlannerState.Settings)).ToString();
+            _gearItemCostEditText.EditText.Text = ((int)gearItem.GetCostInCurrency(Activity.BackpackPlannerState.Settings)).ToString();
             _gearItemNoteEditText.EditText.Text = gearItem.Note;
 
             if(gearItem.IsConsumable) {
@@ -164,8 +172,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Views.Gear
             gearItem.Make = _gearItemMakeEditText.EditText.Text;
             gearItem.Model = _gearItemModelEditText.EditText.Text;
             gearItem.Url = _gearItemWebsiteEditText.EditText.Text;
-            gearItem.SetWeightInUnits(BaseActivity.BackpackPlannerState.Settings, Convert.ToSingle(_gearItemWeightEditText.EditText.Text));
-            gearItem.SetCostInCurrency(BaseActivity.BackpackPlannerState.Settings, Convert.ToSingle(_gearItemCostEditText.EditText.Text));
+            gearItem.SetWeightInUnits(Activity.BackpackPlannerState.Settings, Convert.ToSingle(_gearItemWeightEditText.EditText.Text));
+            gearItem.SetCostInCurrency(Activity.BackpackPlannerState.Settings, Convert.ToSingle(_gearItemCostEditText.EditText.Text));
             gearItem.Note = _gearItemNoteEditText.EditText.Text;
 
             int carriedSelectionResId = _gearItemCarriedRadioGroup.CheckedRadioButtonId;
@@ -185,4 +193,137 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Views.Gear
             base.DoDataExchange(gearItem, dbContext);
         }
     }
+
+    public sealed class GearItemListViewHolder : BaseModelRecyclerViewHolder<GearItem>
+    {
+        protected override int ToolbarResourceId => Resource.Id.view_gear_item_toolbar;
+
+        protected override int MenuResourceId => Resource.Menu.gear_item_menu;
+
+        protected override int DeleteActionResourceId => Resource.Id.action_delete_gear_item;
+
+        private readonly TextView _textViewMakeModel;
+        private readonly TextView _textViewWeightCategory;
+        private readonly TextView _textViewWeight;
+        private readonly TextView _textViewCost;
+
+        public GearItemListViewHolder(View view, BaseRecyclerListAdapter<GearItem> adapter)
+            : base(view, adapter)
+        {
+            _textViewMakeModel = view.FindViewById<TextView>(Resource.Id.view_gear_item_make_model);
+            _textViewWeightCategory = view.FindViewById<TextView>(Resource.Id.view_gear_item_weight_category);
+            _textViewWeight = view.FindViewById<TextView>(Resource.Id.view_gear_item_weight);
+            _textViewCost = view.FindViewById<TextView>(Resource.Id.view_gear_item_cost);
+        }
+
+        protected override ViewItemFragment<GearItem> CreateViewItemFragment()
+        {
+            return new ViewGearItemFragment();
+        }
+
+        public override void UpdateView(GearItem gearItem)
+        {
+            base.UpdateView(gearItem);
+
+            string makeModel = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_view_gear_item_make_model),
+                gearItem.Make, gearItem.Model
+            );
+
+            if(string.IsNullOrWhiteSpace(makeModel)) {
+                _textViewMakeModel.Visibility = ViewStates.Gone;
+                _textViewMakeModel.Text = string.Empty;
+            } else {
+                _textViewMakeModel.Visibility = ViewStates.Visible;
+                _textViewMakeModel.Text = makeModel;
+            }
+
+            WeightCategory weightCategory = gearItem.GetWeightCategory(Activity.BackpackPlannerState.Settings);
+            _textViewWeightCategory.Text = weightCategory.ShortName();
+
+            // TODO: is there any way to turn this into a core-extension?
+            // we would somehow have to convert to the appropriate android color
+            int categoryStickerColor = Android.Support.V4.Content.ContextCompat.GetColor(Activity, Resource.Color.gray);
+            switch(weightCategory)
+            {
+                case WeightCategory.None:
+                    categoryStickerColor = Android.Support.V4.Content.ContextCompat.GetColor(Activity, Resource.Color.gray);
+                    break;
+                case WeightCategory.Ultralight:
+                    categoryStickerColor = Android.Support.V4.Content.ContextCompat.GetColor(Activity, Resource.Color.white);
+                    break;
+                case WeightCategory.Light:
+                    categoryStickerColor = Android.Support.V4.Content.ContextCompat.GetColor(Activity, Resource.Color.cyan);
+                    break;
+                case WeightCategory.Medium:
+                    categoryStickerColor = Android.Support.V4.Content.ContextCompat.GetColor(Activity, Resource.Color.green);
+                    break;
+                case WeightCategory.Heavy:
+                    categoryStickerColor = Android.Support.V4.Content.ContextCompat.GetColor(Activity, Resource.Color.yellow);
+                    break;
+                case WeightCategory.ExtraHeavy:
+                    categoryStickerColor = Android.Support.V4.Content.ContextCompat.GetColor(Activity, Resource.Color.red);
+                    break;
+            }
+
+            GradientDrawable categoryStickerDrawable = (GradientDrawable)_textViewWeightCategory.Background;
+            categoryStickerDrawable.SetColor(categoryStickerColor);
+            categoryStickerDrawable.SetStroke(5, Color.Black);
+
+            int weightInUnits = (int)gearItem.GetWeightInUnits(Activity.BackpackPlannerState.Settings);
+            _textViewWeight.Text = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_view_gear_item_weight),
+                weightInUnits, Activity.BackpackPlannerState.Settings.Units.GetSmallWeightString(weightInUnits != 1)
+            );
+
+            string formattedCost = gearItem.GetCostInCurrency(Activity.BackpackPlannerState.Settings).ToString("C", CultureInfo.CurrentCulture);
+            string formattedCostPerWeight = gearItem.GetCostInCurrencyPerWeightInUnits(Activity.BackpackPlannerState.Settings).ToString("C", CultureInfo.CurrentCulture);
+            _textViewCost.Text = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_view_gear_item_cost),
+                formattedCost, formattedCostPerWeight, Activity.BackpackPlannerState.Settings.Units.GetSmallWeightString(false)
+            );
+        }
+    }
+
+    public sealed class GearItemEntryViewHolder<T> : BaseModelEntryViewHolder<GearItemEntry<T>, T, GearItem>
+        where T: BaseModel<T>, new()
+    {
+        private readonly TextView _textViewName;
+        private readonly TextView _textViewTotalWeight;
+        private readonly Android.Support.Design.Widget.TextInputLayout _editTextQuantity;
+
+        public GearItemEntryViewHolder(View view, BaseActivity activity)
+            : base(activity)
+        {
+            _textViewName = view.FindViewById<TextView>(Resource.Id.view_gear_item_name);
+            _textViewTotalWeight = view.FindViewById<TextView>(Resource.Id.view_gear_item_total_weight);
+
+            _editTextQuantity = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.view_gear_item_quantity);
+            _editTextQuantity.EditText.AfterTextChanged += (sender, args) =>
+            {
+                UpdateTotalWeight(Item);
+                NotifyPropertyChanged("Quantity");
+            };
+        }
+
+        public override void UpdateView(GearItemEntry<T> item)
+        {
+            base.UpdateView(item);
+
+            _textViewName.Text = item.Model.Name;
+            _editTextQuantity.EditText.Text = item.Count.ToString();
+
+            UpdateTotalWeight(item);
+        }
+
+        private void UpdateTotalWeight(GearItemEntry<T> item)
+        {
+            item.Count = string.IsNullOrWhiteSpace(_editTextQuantity.EditText.Text)
+                ? 0
+                : Convert.ToInt32(_editTextQuantity.EditText.Text);
+
+            int totalWeightInUnits = (int)item.GetTotalWeightInUnits(Activity.BackpackPlannerState.Settings);
+            _textViewTotalWeight.Text = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_view_gear_item_total_weight),
+                totalWeightInUnits, Activity.BackpackPlannerState.Settings.Units.GetSmallWeightString(totalWeightInUnits != 1)
+            );
+        }
+    }
+
 }

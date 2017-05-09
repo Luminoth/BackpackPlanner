@@ -18,12 +18,17 @@ using System;
 using System.Globalization;
 
 using Android.Views;
+using Android.Widget;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
 using EnergonSoftware.BackpackPlanner.DAL;
 using EnergonSoftware.BackpackPlanner.DAL.Models.Trips.Plans;
 using EnergonSoftware.BackpackPlanner.Droid.Activities;
+using EnergonSoftware.BackpackPlanner.Droid.Adapters;
+using EnergonSoftware.BackpackPlanner.Droid.Fragments;
+using EnergonSoftware.BackpackPlanner.Droid.Fragments.Trips.Plans;
 using EnergonSoftware.BackpackPlanner.Droid.Fragments.Util;
+using EnergonSoftware.BackpackPlanner.Units.Units;
 
 namespace EnergonSoftware.BackpackPlanner.Droid.Views.Trips
 {
@@ -60,7 +65,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Views.Trips
                     _tripPlanStartDateText.EditText.Text = a.Date.ToString("yyyy-MM-dd", CultureInfo.CurrentCulture);
                     NotifyPropertyChanged("StartDate");
                 };
-                picker.Show(BaseActivity.SupportFragmentManager, null);
+                picker.Show(Activity.SupportFragmentManager, null);
             };
 
             _tripPlanEndDateText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.trip_plan_enddate);
@@ -78,7 +83,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Views.Trips
                     _tripPlanEndDateText.EditText.Text = a.Date.ToString("yyyy-MM-dd", CultureInfo.CurrentCulture);
                     NotifyPropertyChanged("EndDate");
                 };
-                picker.Show(BaseActivity.SupportFragmentManager, null);
+                picker.Show(Activity.SupportFragmentManager, null);
             };
 
             _tripPlanNoteEditText = view.FindViewById<Android.Support.Design.Widget.TextInputLayout>(Resource.Id.trip_plan_note);
@@ -129,6 +134,90 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Views.Trips
             tripPlan.Note = _tripPlanNoteEditText.EditText.Text;
 
             base.DoDataExchange(tripPlan, dbContext);
+        }
+    }
+
+    public sealed class TripPlanListViewHolder : BaseModelRecyclerViewHolder<TripPlan>
+    {
+        protected override int ToolbarResourceId => Resource.Id.view_trip_plan_toolbar;
+
+        protected override int MenuResourceId => Resource.Menu.trip_plan_menu;
+
+        protected override int DeleteActionResourceId => Resource.Id.action_delete_trip_plan;
+
+        private readonly TextView _textViewDays;
+        private readonly TextView _textViewMeals;
+        private readonly TextView _textViewCollections;
+        private readonly TextView _textViewSystems;
+        private readonly TextView _textViewItems;
+        private readonly TextView _textViewBaseWeight;
+        private readonly TextView _textViewPackWeight;
+        private readonly TextView _textViewSkinOutWeight;
+        private readonly TextView _textViewCost;
+
+        public TripPlanListViewHolder(View view, BaseRecyclerListAdapter<TripPlan> adapter)
+            : base(view, adapter)
+        {
+            _textViewDays = view.FindViewById<TextView>(Resource.Id.view_trip_plan_days);
+            _textViewMeals = view.FindViewById<TextView>(Resource.Id.view_trip_plan_meals);
+            _textViewCollections = view.FindViewById<TextView>(Resource.Id.view_trip_plan_collections);
+            _textViewSystems = view.FindViewById<TextView>(Resource.Id.view_trip_plan_systems);
+            _textViewItems = view.FindViewById<TextView>(Resource.Id.view_trip_plan_items);
+            _textViewBaseWeight = view.FindViewById<TextView>(Resource.Id.view_trip_plan_base_weight);
+            _textViewPackWeight = view.FindViewById<TextView>(Resource.Id.view_trip_plan_pack_weight);
+            _textViewSkinOutWeight = view.FindViewById<TextView>(Resource.Id.view_trip_plan_skinout_weight);
+            _textViewCost = view.FindViewById<TextView>(Resource.Id.view_trip_plan_cost);
+        }
+
+        protected override ViewItemFragment<TripPlan> CreateViewItemFragment()
+        {
+            return new ViewTripPlanFragment();
+        }
+
+        public override void UpdateView(TripPlan tripPlan)
+        {
+            base.UpdateView(tripPlan);
+
+            _textViewDays.Text = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_view_trip_plan_days),
+                tripPlan.Days
+            );
+
+            _textViewMeals.Text = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_view_trip_plan_meals),
+                tripPlan.Meals.Count, tripPlan.GetTotalCalories()
+            );
+
+            _textViewCollections.Text = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_view_trip_plan_collections),
+                tripPlan.GearCollections.Count
+            );
+
+            _textViewSystems.Text = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_view_trip_plan_systems),
+                tripPlan.GearSystems.Count
+            );
+
+            _textViewItems.Text = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_view_trip_plan_items),
+                tripPlan.GearItems.Count, tripPlan.GetTotalGearItemCount()
+            );
+
+            int weightInUnits = (int)tripPlan.GetBaseWeightInUnits();
+            _textViewBaseWeight.Text = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_view_trip_plan_base_weight),
+                weightInUnits, Activity.BackpackPlannerState.Settings.Units.GetSmallWeightString(weightInUnits != 1)
+            );
+
+            weightInUnits = (int)tripPlan.GetBaseWeightInUnits();
+            _textViewPackWeight.Text = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_view_trip_plan_pack_weight),
+                weightInUnits, Activity.BackpackPlannerState.Settings.Units.GetSmallWeightString(weightInUnits != 1)
+            );
+
+            weightInUnits = (int)tripPlan.GetSkinOutWeightInUnits();
+            _textViewSkinOutWeight.Text = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_view_trip_plan_skinout_weight),
+                weightInUnits, Activity.BackpackPlannerState.Settings.Units.GetSmallWeightString(weightInUnits != 1)
+            );
+
+            string formattedCost = tripPlan.GetTotalCostInCurrency(Activity.BackpackPlannerState.Settings).ToString("C", CultureInfo.CurrentCulture);
+            string formattedCostPerWeight = tripPlan.GetCostPerWeightInCurrency(Activity.BackpackPlannerState.Settings).ToString("C", CultureInfo.CurrentCulture);
+            _textViewCost.Text = Java.Lang.String.Format(Activity.Resources.GetString(Resource.String.label_view_trip_plan_cost),
+                formattedCost, formattedCostPerWeight, Activity.BackpackPlannerState.Settings.Units.GetSmallWeightString(false)
+            );
         }
     }
 }
