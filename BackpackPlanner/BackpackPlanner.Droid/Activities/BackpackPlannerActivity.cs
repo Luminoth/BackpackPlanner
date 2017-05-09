@@ -39,10 +39,9 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
     {
         private static readonly ILogger Logger = CustomLogger.GetLogger(typeof(BackpackPlannerActivity));
 
-        // TODO: this could use a ViewHolder
-
         private readonly NavigationDrawerManager _navigationDrawerManager = new NavigationDrawerManager();
 
+        // TODO: this should move to BaseActivity, just in case
         private readonly HashSet<IBackPressedListener> _backPressedListeners = new HashSet<IBackPressedListener>();
 
 #region Activity Lifecycle

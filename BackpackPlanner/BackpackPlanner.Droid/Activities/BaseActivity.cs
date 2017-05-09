@@ -58,8 +58,6 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Activities
         private readonly Stopwatch _startupStopwatch = new Stopwatch();
 #endif
 
-        // TODO: this could use a ViewHolder
-
         public Android.Support.V7.Widget.Toolbar Toolbar { get; private set; }
 
         private readonly Dictionary<DroidPermissionRequest.DroidPermissionRequestCode, List<DroidPermissionRequest>> _permissionRequests = new Dictionary<DroidPermissionRequest.DroidPermissionRequestCode, List<DroidPermissionRequest>>();
