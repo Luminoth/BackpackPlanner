@@ -42,6 +42,8 @@ namespace EnergonSoftware.BackpackPlanner.DAL
 
         public string DatabasePath { get; }
 
+        //public bool FilterDeleted { get; } = true;
+
         public DatabaseContext(string databasePath)
         {
             DatabasePath = databasePath;
@@ -65,6 +67,38 @@ namespace EnergonSoftware.BackpackPlanner.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+/*
+EF Core 2.0 stuff:
+            // https://www.youtube.com/watch?v=VYa7EdMnP4E&t=2368s
+
+            // map fields to conceptual-properties (this replaces SetPropertyAccessModeField() method and calls)
+            // TODO: do this for all of the relevant fields
+            modelBuilder.Entity<TripPlan>()
+                .Property<int>("TripPlanId")
+                .HasField("_id");
+
+            // add conceptual IsDeleted property for database tracking
+            modelBuilder.Entity<TripPlan>()
+                .Property<bool>("IsDeleted");
+
+            // TODO: remove the IsDeleted field from the models (how do we set it then???)
+            // should the id field be removed as well maybe?
+
+            // filter out deleted items if we should (lazy evaluated)
+            modelBuilder.Entity<TripPlan>()
+                .HasQueryFilter(tripPlan => !FilterDeleted || !EF.Property<bool>(tripPlan, "IsDeleted"));
+            modelBuilder.Entity<TripItinerary>()
+                .HasQueryFilter(tripItinerary => !FilterDeleted || !EF.Property<bool>(tripItinerary, "IsDeleted"));
+            modelBuilder.Entity<Meal>()
+                .HasQueryFilter(meal => !FilterDeleted || !EF.Property<bool>(meal, "IsDeleted"));
+            modelBuilder.Entity<GearCollection>()
+                .HasQueryFilter(gearCollection => !FilterDeleted || !EF.Property<bool>(gearCollection, "IsDeleted"));
+            modelBuilder.Entity<GearSystem>()
+                .HasQueryFilter(gearSystem => !FilterDeleted || !EF.Property<bool>(gearSystem, "IsDeleted"));
+            modelBuilder.Entity<GearItem>()
+                .HasQueryFilter(gearItem => !FilterDeleted || !EF.Property<bool>(gearItem, "IsDeleted"));
+*/
+
             SetPropertyAccessModeField<GearSystem>(modelBuilder, nameof(GearSystem.GearItems));
 
             SetPropertyAccessModeField<GearCollection>(modelBuilder, nameof(GearCollection.GearSystems));
