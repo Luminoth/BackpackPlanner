@@ -39,5 +39,11 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
             LayoutManager = new Android.Support.V7.Widget.LinearLayoutManager(Activity);
             Layout.SetLayoutManager(LayoutManager);
         }
+
+        protected void AttachSwipeHandler(Android.Support.V7.Widget.Helper.ItemTouchHelper.SimpleCallback callback)
+        {
+            Android.Support.V7.Widget.Helper.ItemTouchHelper touchHelper = new Android.Support.V7.Widget.Helper.ItemTouchHelper(callback);
+            touchHelper.AttachToRecyclerView(Layout);
+        }
     }
 }

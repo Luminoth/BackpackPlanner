@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 
 using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
@@ -53,6 +54,56 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
                 base.OnChanged();
 
                 _fragment.UpdateView();
+            }
+        }
+
+        private sealed class SwipeHandler : Android.Support.V7.Widget.Helper.ItemTouchHelper.SimpleCallback
+        {
+            private readonly BaseModelRecyclerListAdapter<T> _adapter;
+            private readonly Paint _paint = new Paint();
+            private readonly Bitmap _deleteIcon;
+
+            public SwipeHandler(BaseModelRecyclerListAdapter<T> adapter, int dragDirs, int swipeDirs)
+                : base(dragDirs, swipeDirs)
+            {
+                _adapter = adapter;
+                _deleteIcon = BitmapFactory.DecodeResource(_adapter.Fragment.Context.Resources, Resource.Drawable.ic_delete);
+            }
+
+            public override bool OnMove(Android.Support.V7.Widget.RecyclerView recyclerView, Android.Support.V7.Widget.RecyclerView.ViewHolder viewHolder, Android.Support.V7.Widget.RecyclerView.ViewHolder target)
+            {
+                return false;
+            }
+
+            public override void OnSwiped(Android.Support.V7.Widget.RecyclerView.ViewHolder viewHolder, int direction)
+            {
+// http://stackoverflow.com/questions/27293960/swipe-to-dismiss-for-recyclerview
+
+                int position = viewHolder.AdapterPosition;
+
+// TODO: this is the remove "cancel" code just to prevent the swipe from fucking up the UI
+// this still needs to be fully implemented
+                _adapter.NotifyItemRemoved(position /*+ 1*/);
+                _adapter.NotifyItemRangeChanged(position, _adapter.ItemCount);
+            }
+
+            public override void OnChildDraw(Canvas c, Android.Support.V7.Widget.RecyclerView recyclerView, Android.Support.V7.Widget.RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, bool isCurrentlyActive)
+            {
+// http://stackoverflow.com/questions/30820806/adding-a-colored-background-with-text-icon-under-swiped-row-when-using-androids
+
+                View itemView = viewHolder.ItemView;
+                if(Android.Support.V7.Widget.Helper.ItemTouchHelper.ActionStateSwipe == actionState) {
+                    if(dX > 0) {
+                        // background
+                        _paint.SetARGB(255, 255, 0, 0);
+                        c.DrawRect(itemView.Left, itemView.Top, dX, itemView.Bottom, _paint);
+
+                        // icon
+                        c.DrawBitmap(_deleteIcon, itemView.Left + DisplayUtil.DpToPx(16.0f, _adapter.Fragment.Context), itemView.Top + (itemView.Bottom - itemView.Top - itemView.Height / 2.0f), _paint);
+                    }
+                }
+
+                base.OnChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
             }
         }
 
@@ -92,6 +143,8 @@ namespace EnergonSoftware.BackpackPlanner.Droid.Fragments
 
             Adapter = CreateAdapter();
             Layout.SetAdapter(Adapter);
+
+            AttachSwipeHandler(new SwipeHandler(Adapter, 0, Android.Support.V7.Widget.Helper.ItemTouchHelper.Right));
 
             Adapter.RegisterAdapterDataObserver(new ListAdapterDataObserver(this));
 
