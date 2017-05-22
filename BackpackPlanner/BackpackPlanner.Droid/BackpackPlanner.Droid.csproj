@@ -353,6 +353,7 @@
     <Compile Include="AdManager.cs" />
     <Compile Include="Util\AdViewContainer.cs" />
     <Compile Include="Util\BackPressedListener.cs" />
+    <Compile Include="Util\DisplayUtil.cs" />
     <Compile Include="Views\AdViewHolder.cs" />
     <Compile Include="Views\BaseModelEntryContainerViewHolder.cs" />
     <Compile Include="Views\BaseModelEntryViewHolder.cs" />
