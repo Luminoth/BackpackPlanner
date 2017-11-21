@@ -16,7 +16,6 @@
 
 using System.Diagnostics;
 
-using Android.App;
 using Android.Gms.Ads;
 
 using EnergonSoftware.BackpackPlanner.Core.Logging;
@@ -37,7 +36,7 @@ namespace EnergonSoftware.BackpackPlanner.Droid
         private readonly Hasher _hasher = new MD5();
 
         [Conditional("ENABLE_ADS")]
-        public void Initialize(Activity activity)
+        public void Initialize(Android.App.Activity activity)
         {
             Logger.Info("Initializing ads...");
             MobileAds.Initialize(activity, activity.GetString(
